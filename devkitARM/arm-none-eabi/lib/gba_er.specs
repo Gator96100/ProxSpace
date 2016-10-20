@@ -1,0 +1,8 @@
+%rename link		old_link
+%rename endfile		old_endfile
+
+*link:
+-T gba_er.ld%s %(old_link)
+
+*startfile:
+er_crt0%O%s

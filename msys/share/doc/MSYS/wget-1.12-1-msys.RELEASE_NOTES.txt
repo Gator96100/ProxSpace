@@ -1,0 +1,110 @@
+msys wget
+========================================================================
+Wget is a network utility to retrieve files from the Web using http(s)
+and ftp, the two most widely used Internet protocols. The program
+supports recursive retrieval of web-authoring pages as well as ftp
+sites -- you can use wget to make mirrors of archives and home pages or
+to travel the Web like a WWW robot.
+
+Wget works particularly well with slow or unstable connections by
+continuing to retrieve a document until the document is fully downloaded.
+Re-getting files from where it left off works on servers (both http and
+ftp) that support it. Both http and ftp retrievals can be time stamped,
+so wget can see if the remote file has changed since the last retrieval
+and automatically retrieve the new version if it has.
+
+Wget supports proxy servers; this can lighten the network load, speed up
+retrieval, and provide access behind firewalls.
+
+This version has been modified and compiled for use in the MSYS
+environment. It should be installed into the / == /usr directory, which
+is usually but not always, C:\msys\1.0.
+
+Runtime requirements:
+  msysCORE-1.0.13-2-msys-1.0.13-bin
+  libintl-0.17-2-msys-1.0.13-dll-8
+  libiconv-1.13.1-2-msys-dll-2
+  libopenssl-1.0.0-1-msys-1.0.13-dll-100
+
+Build requirements (these, or newer)
+  MSYS toolchain
+    binutils-2.19.51-3-msys-1.0.13-bin
+    gcc-3.4.4-3-msys-1.0.13-bin
+    w32api-3.14-3-msys-1.0.12-dev
+    msysCORE-1.0.13-2-msys-1.0.13-dev
+
+  Devel Tools and Dependent Libraries
+    autoconf-2.65-1-msys-1.0.13-bin
+    automake-1.11.1-1-msys-1.0.13-bin
+    libiconv-1.13.1-2-msys-1.0.13-bin
+    libiconv-1.13.1-2-msys-1.0.13-dev
+    gettext-0.17-2-msys-1.0.13-bin
+    gettext-0.17-2-msys-1.0.13-dev
+    libgettextpo-0.17-2-msys-1.0.13-dll-0
+    libtool-2.2.7a-2-msys-1.0.13-bin
+    libopenssl-1.0.0-1-msys-1.0.13-dev
+
+  MSYS Environment
+    perl-5.6.1_2-2-msys-1.0.13-bin
+    libcrypt-1.1_1-3-msys-1.0.13-dll-0
+    libgdbm-1.8.3-3-msys-1.0.13-dll-3
+    zlib-1.2.3-2-msys-1.0.13-dll
+    coreutils-5.97-2-msys-1.0.11-bin
+    make-3.81-2-msys-1.0.11-bin
+    bash-3.1.17-2-msys-1.0.11-bin
+    tar-1.22-1-msys-1.0.11-bin
+    xz-4.999.9beta_20100401-1-msys-1.0.13-bin
+    liblzma-4.999.9beta_20100401-1-msys-1.0.13-dll-1
+    file-5.04-2-msys-1.0.13-bin
+    grep-2.5.4-2-msys-1.0.13-bin
+    sed-4.2.1-2-msys-1.0.13-bin
+    gawk-3.1.7-2-msys-1.0.13-bin
+    cvs-1.12.13-1-msys-1.0.11-bin
+
+Canonical homepage:
+  http://www.gnu.org/software/wget/
+
+Canonical download:
+  http://ftp.gnu.org/pub/gnu/wget/
+
+License:
+  GPLv3
+
+Language:
+  C
+
+========================================================================
+
+Build instructions:
+  unpack wget-1.12-1-msys-1.0.13-src.tar.lzma
+  ./msys-build-wget wget-1.12.tar.lzma
+
+This will create:
+  wget-1.12-1-msys-1.0.13-src.tar.lzma
+  wget-1.12-1-msys-1.0.13-bin.tar.lzma
+  wget-1.12-1-msys-1.0.13-lang.tar.lzma
+  wget-1.12-1-msys-1.0.13-doc.tar.lzma
+  wget-1.12-1-msys-1.0.13-lic.tar.lzma
+
+========================================================================
+
+Test suite results
+
+This section of this document is updated with each new release.
+No history is maintained here.
+
+===================
+64 tests were run
+2 PASS, 2 FAIL
+13 SKIP, 47 UNKNOWN
+===================
+Lots of failures, simply because msys-perl doesn't have a working
+Daemon.pm. However, the application seems to work ok.
+
+========================================================================
+
+Port Notes:
+
+----------  wget-1.12-1 -- 2010 Apr 18 -----------
+* First release of wget for msys
+

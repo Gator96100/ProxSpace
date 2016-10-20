@@ -1,0 +1,121 @@
+.TH DFU-UTIL 1 "February 29, 2008"
+.SH NAME
+dfu-util \- Device firmware update (DFU) USB programmer
+.SH SYNOPSIS
+.B dfu-util \fR[\fB\-ldpciatUDRhvV\fR]
+.SH DESCRIPTION
+.B dfu-util
+is a program that implements the host (computer) side of the USB DFU
+(Universal Serial Bus Device Firmware Upgrade) protocol.
+.sp
+In the OpenMoko project (for example), this program is used to communicate
+with the specially enhanced u-boot boot loader, which implements the DFU
+device side.
+.SH OPTIONS
+.TP
+.B "\-l, \-\-list"
+List the currently attached DFU capable USB devices.
+.TP
+.BR "\-d, \-\-device" " VENDOR:PRODUCT"
+Specify vendor/product ID of the DFU device. Both
+.B VENDOR
+and
+.B PRODUCT
+are hexadecimal numbers (no prefix needed).
+Example:
+.sp
+.B "  $ dfu-util --device 1457:51ab"
+.sp
+If you only have one standards-compliant DFU device attached to your PC,
+this is optional. However, as soon as you have multiple DFU devices,
+dfu-util will detect this and abort, asking you to specify which device
+it shall use.
+.TP
+.BR "\-p, \-\-path" " BUS-PORT. ... .PORT"
+Specify the path to the DFU device.
+.TP
+.BR "\-c, \-\-cfg" " CONFIG-NR"
+Specify the configuration of the DFU device.
+.TP
+.BR "\-i, \-\-intf" " INTF-NR"
+Specify the DFU interface number.
+.TP
+.BR "\-a, \-\-alt" " ALT"
+Specify the altsetting of the DFU interface by name or by number.
+.TP
+.B "\-t, \-\-transfer-size"
+Specify the number of bytes per USB transfer. If you don't supply this
+option, the maximum possible size for your combination of host OS and
+USB device is chosen (for optimal performance).
+.TP
+.BR "\-U, \-\-upload" " FILE"
+Read firmware from device into
+.BR FILE .
+.sp
+.B Note:
+Upload support is currently broken.
+.TP
+.BR "\-D, \-\-download" " FILE"
+Write firmware from
+.B FILE
+into device.
+.TP
+.B "\-R, \-\-reset"
+Issue USB reset signalling once we are finished.
+.TP
+.B "\-s, \-\-dfuse-address"
+Specify target address for raw binary download/upload on DfuSe devices.
+Do not use this for downloading DfuSe files.
+.TP
+.B "\-h, \-\-help"
+Show a help text and exit.
+.TP
+.B "\-v, \-\-verbose"
+Print more information about dfu-util's operation. A second
+.B -v
+will turn on verbose logging of USB requests.
+.TP
+.B "\-V, \-\-version"
+Show version information and exit.
+.SH EXAMPLES
+Here are some examples for the usage of dfu-util in the OpenMoko project
+(working with the Neo1973 hardware):
+.PP
+Flashing the rootfs:
+.br
+.B "  $ dfu-util -a rootfs -R -D /path/to/openmoko-devel-image.jffs2"
+.PP
+Flashing the kernel:
+.br
+.B "  $ dfu-util -a kernel -R -D /path/to/uImage"
+.PP
+Flashing the bootloader:
+.br
+.B "  $ dfu-util -a u-boot -R -D /path/to/u-boot.bin"
+.PP
+Copying a kernel into RAM:
+.br
+.B "  $ dfu-util -a 0 -R -D /path/to/uImage"
+.sp
+Once this has finished, the kernel will be available at the default load
+address of 0x32000000 in Neo1973 RAM.
+.sp
+.B Note:
+You cannot transfer more than 2MB of data into RAM using this method.
+.SH BUGS
+Please see
+.B http://wiki.openmoko.org/wiki/Dfu-util
+for some limitations and bugs in the current dfu-util code.
+.PP
+Please report any further bugs at on the openmoko mailing list at
+.BR openmoko@lists.openmoko.org .
+.SH LICENCE
+.B dfu-util
+is covered by the GNU General Public License (GPL), version 2 or later.
+.SH AUTHORS
+Weston Schmidt <weston_schmidt@yahoo.com>
+.br
+Harald Welte <hwelte@hmw-consulting.de>
+.PP
+This manual page was written by Uwe Hermann <uwe@hermann-uwe.de>.
+It is licensed under the terms of the GNU GPL (version 2 or later).

@@ -1,0 +1,8 @@
+%rename link                old_link
+
+*link:
+%(old_link) -T gba_cart.ld%s
+
+*startfile:
+gba_crt0%O%s crti%O%s crtbegin%O%s
+

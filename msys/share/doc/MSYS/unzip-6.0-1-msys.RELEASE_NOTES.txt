@@ -1,0 +1,72 @@
+msys unzip
+========================================================================
+UnZip is an open-source, command-line alternative to other zip-format
+archives such as WinZip, etc.  unzip-6.0 is the latest release from
+Info-Zip, http://www.info-zip.org/pub/infozip/UnZip.html.
+
+This version has been modified and compiled for use in the MSYS
+environment. It should be installed into the / == /usr directory, which
+is usually but not always, C:\msys\1.0.
+
+Runtime requirements:
+  msysCORE-1.0.13-2-msys-1.0.13-bin
+
+Build requirements (these, or newer)
+  MSYS toolchain
+    binutils-2.19.51-3-msys-1.0.13-bin
+    gcc-3.4.4-3-msys-1.0.13-bin
+    w32api-3.14-3-msys-1.0.12-dev
+    msysCORE-1.0.13-2-msys-1.0.13-dev
+
+  MSYS Environment
+    coreutils-5.97-2-msys-1.0.11-bin
+    make-3.81-2-msys-1.0.11-bin
+    bash-3.1.17-2-msys-1.0.11-bin
+    tar-1.22-1-msys-1.0.11-bin
+    xz-4.999.9beta_20100401-1-msys-1.0.13-bin
+    liblzma-4.999.9beta_20100401-1-msys-1.0.13-dll-1
+    file-5.04-2-msys-1.0.13-bin
+    grep-2.5.4-2-msys-1.0.13-bin
+    sed-4.2.1-2-msys-1.0.13-bin
+    gawk-3.1.7-2-msys-1.0.13-bin
+
+Canonical homepage:
+  http://www.info-zip.org
+
+Canonical download:
+  ftp://ftp.info-zip.org/pub/infozip/src/
+
+License:
+  Info-ZIP (Mostly BSD-ish)
+
+Language:
+  C
+
+========================================================================
+
+Build instructions:
+  unpack unzip-6.0-1-msys-1.0.13-src.tar.lzma
+  ./msys-build-unzip unzip60.tgz
+
+This will create:
+  unzip-6.0-1-msys-1.0.13-src.tar.lzma
+  unzip-6.0-1-msys-1.0.13-bin.tar.lzma
+  unzip-6.0-1-msys-1.0.13-doc.tar.lzma
+  unzip-6.0-1-msys-1.0.13-lic.tar.lzma
+
+========================================================================
+
+Test suite results
+
+This section of this document is updated with each new release.
+No history is maintained here.
+
+All tests pass.
+
+========================================================================
+
+Port Notes:
+
+----------  unzip-6.0-1 -- 2010 Apr 18 -----------
+* First release of unzip for msys
+

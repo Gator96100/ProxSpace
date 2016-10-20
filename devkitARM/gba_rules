@@ -1,0 +1,23 @@
+ifeq ($(strip $(DEVKITPRO)),)
+$(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>devkitPro)
+endif
+
+include $(DEVKITARM)/base_rules
+
+LIBGBA	:=	$(DEVKITPRO)/libgba
+
+#---------------------------------------------------------------------------------
+%.gba: %.elf
+	@$(OBJCOPY) -O binary $< $@
+	@echo built ... $(notdir $@)
+	@gbafix $@
+
+#---------------------------------------------------------------------------------
+%_mb.elf:
+	@echo linking multiboot
+	@$(LD) -specs=gba_mb.specs $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
+
+#---------------------------------------------------------------------------------
+%.elf:
+	@echo linking cartridge
+	@$(LD)  $(LDFLAGS) -specs=gba.specs $(OFILES) $(LIBPATHS) $(LIBS) -o $@

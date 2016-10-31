@@ -1,0 +1,112 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV SPARK_05
+
+U ada.text_io.float_io%b  a-tiflio.adb		6b59f9d4 NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.text_io.float_aux%s  a-tiflau.adb		a-tiflau.ali
+
+U ada.text_io.float_io%s  a-tiflio.ads		6e962fdd BN NE OL PK GE
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20140129155348 386df5d4
+D a-tiflau.ads		20090409150020 c0393f21
+D a-tiflio.ads		20090409150020 56fbda09
+D a-tiflio.adb		20090409150020 fd9b1cfc
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 9|45r9 88r5 10|32r6 34r14 36r24 145r5
+X 7 a-textio.ads
+49K13*Text_IO 1|16k9 7|471e16 9|45r13 88r9 10|32r10 34r18 36r28 145r9
+52P9*File_Type 9|52r15 61r14 10|43r15 115r14
+73I12*Field{integer} 9|47r19 48r19 49r19 54r15 58r15 63r14 64r14 65r14 69r14
+. 70r14 71r14 81r14 82r14 10|45r15 67r15 117r14 118r14 119r14 127r14 128r14
+. 129r14 138r14 139r14
+298X4*Data_Error 10|58r16 62r38 80r16 84r38 103r16 107r38
+455p4 Current_In{52P9} 10|72r16
+456p4 Current_Out{52P9} 10|132r16
+X 8 a-tiflau.ads
+40K29*Float_Aux 72e26 10|32w18 36r36
+49U14*Get 10|50s11 72s11
+54U14*Put 10|122s11 132s11
+61U14*Gets 10|95s11
+66U14*Puts 10|142s11
+X 9 a-tiflio.ads
+43F9 Num 48r28 53r19 57r19 62r14 68r14 75r18 80r14 10|44r19 66r19 89r18 116r14
+. 126r14 137r14
+45k21*Float_IO 7|49k13 9|43z9 88l17 88e25 10|34b26 145l17 145t25
+47i4*Default_Fore{7|73I12} 63r23 69r23 10|117r23 127r23
+48i4*Default_Aft{7|73I12} 64r23 70r23 81r23 10|118r23 128r23 138r23
+49i4*Default_Exp{7|73I12} 65r23 71r23 82r23 10|119r23 129r23 139r23
+51U14*Get 52>7 53<7 54>7 10|42b14 63l8 63t11
+52p7 File{7|52P9} 10|43b7 50r16
+53*7 Item{43F9} 10|44b7 50m39 50r39 57r14
+54i7 Width{7|73I12} 10|45b7 50r46
+56U14*Get 57<7 58>7 10|65b14 85l8 85t11
+57*7 Item{43F9} 10|66b7 72m45 72r45 79r14
+58i7 Width{7|73I12} 10|67b7 72r52
+60U14*Put 61>7 62>7 63>7 64>7 65>7 10|114b14 123l8 123t11
+61p7 File{7|52P9} 10|115b7 122r16
+62*7 Item{43F9} 10|116b7 122r39
+63i7 Fore{7|73I12} 10|117b7 122r46
+64i7 Aft{7|73I12} 10|118b7 122r52
+65i7 Exp{7|73I12} 10|119b7 122r57
+67U14*Put 68>7 69>7 70>7 71>7 10|125b14 133l8 133t11
+68*7 Item{43F9} 10|126b7 132r46
+69i7 Fore{7|73I12} 10|127b7 132r53
+70i7 Aft{7|73I12} 10|128b7 132r59
+71i7 Exp{7|73I12} 10|129b7 132r64
+73U14*Get 74>7 75<7 76<7 10|87b14 108l8 108t11
+74s7 From{string} 10|88b7 95r17
+75*7 Item{43F9} 10|89b7 95m40 95r40 102r14
+76i7 Last{positive} 10|90b7 95m47
+78U14*Put 79<7 80>7 81>7 82>7 10|135b14 143l8 143t11
+79s7 To{string} 10|136b7 142m17
+80*7 Item{43F9} 10|137b7 142r38
+81i7 Aft{7|73I12} 10|138b7 142r45
+82i7 Exp{7|73I12} 10|139b7 142r50
+X 10 a-tiflio.adb
+36K12 Aux=36:36 50r7 72r7 95r7 122r7 132r7 142r7
+

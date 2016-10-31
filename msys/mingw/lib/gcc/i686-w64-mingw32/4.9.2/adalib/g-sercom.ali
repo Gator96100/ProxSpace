@@ -1,0 +1,292 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_DEALLOCATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U gnat.serial_communications%b  g-sercom.adb	37f8a75d NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.unchecked_deallocation%s
+W gnat%s		gnat.ads		gnat.ali
+W gnat.os_lib%s		g-os_lib.ads		g-os_lib.ali
+W system%s		system.ads		system.ali
+W system.communication%s  s-commun.adb		s-commun.ali
+W system.crtl%s		s-crtl.ads		s-crtl.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.os_constants%s	s-oscons.ads		s-oscons.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+W system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+W system.win32%s	s-win32.ads		s-win32.ali
+W system.win32.ext%s	s-winext.ads		s-winext.ali
+
+U gnat.serial_communications%s  g-sercom.ads	305db0a7 EE OL PF PK
+W ada%s			ada.ads			ada.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+W system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D gnat.ads		20110801150502 fd2ad2f1
+D g-os_lib.ads		20090409150020 0db74523
+D g-sercom.ads		20120806084142 83ce348d
+D g-sercom.adb		20140224171440 59e21adb
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D system.ads		20121001083726 5fc8ae56
+D s-commun.ads		20120709130952 06400110
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-imgint.ads		20090409150020 02dbe0c2
+D s-oscons.ads		20141221155618 ccb65532
+D s-os_lib.ads		20140225151140 73b554c6
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-string.ads		20140225151140 8fe54fb7
+D s-traent.ads		20140225151140 b5116092
+D s-win32.ads		20140120152906 b7f96285
+D s-winext.ads		20110830145646 ad68255f
+X 1 ada.ads
+16K9*Ada 19e8 10|34r6 68r28 97r20 98r20 106r16 117r28 11|34r6 34r38 35r6
+. 35r38
+X 4 a-stream.ads
+36K13*Streams 84e16 10|34w10 68r32 97r24 98r24 106r20 117r32 11|34w10 34r42
+39H9*Root_Stream_Type 67e64 10|68r40 117r40
+42M9*Stream_Element
+44I9*Stream_Element_Offset<integer> 10|98r32 11|156r20 296r17
+51A9*Stream_Element_Array(42M9)<44I9> 10|97r32 106r28 11|155r20 277r16
+X 7 a-uncdea.ads
+20u15*Unchecked_Deallocation 11|35w10 73r13
+X 8 gnat.ads
+34K9*GNAT 37e9 10|37r9 131r5 11|44r6 46r14 145r24 302r5
+X 9 g-os_lib.ads
+51K14*OS_Lib=51:36 11|44w11 145r29
+X 10 g-sercom.ads
+37K14*Serial_Communications 8|34k9 10|114E9 131l10 131e31 11|46b19 302l10
+. 302t31
+39X4*Serial_Error 11|143r13
+42A9*Port_Name<string><integer> 45r45 72r14 11|92r45 97r12 100r12 110r14
+45V13*Name{42A9} 45>19 11|92b13 102l8 102t12
+45i19 Number{positive} 11|92b19 93r50 95r10
+52E9*Data_Rate 53e67 78r19 121r38 11|187r19
+53n7*B1200{52E9} 122r25
+53n14*B2400{52E9} 123r25
+53n21*B4800{52E9} 124r25
+53n28*B9600{52E9} 78r39 125r25 11|187r39
+53n35*B19200{52E9} 126r25
+53n43*B38400{52E9} 127r25
+53n51*B57600{52E9} 128r25
+53n59*B115200{52E9} 129r25
+56E9*Data_Bits 56e32 79r19 11|54r34 188r19
+56n23*CS8{56E9} 79r39 11|188r39
+56n28*CS7{56E9}
+59E9*Stop_Bits_Number 59e39 80r19 11|57r34 189r19
+59n30*One{59E9} 80r39 11|58r21 189r39
+59n35*Two{59E9} 11|58r40
+62E9*Parity_Check 62e42 81r19 11|55r34 190r19
+62n26*None{62E9} 81r39 11|56r21 190r39
+62n32*Even{62E9} 11|56r57
+62n38*Odd{62E9} 11|56r39
+65E9*Flow_Control 65e50 84r19 11|193r19
+65n26*None{65E9} 84r39 11|193r39 225r15
+65n32*RTS_CTS{65E9} 11|229r15
+65n41*Xon_Xoff{65E9} 11|233r15
+68R9*Serial_Port<4|39R9> 70p14 71r18 76p14 77r19 95P25 96r23 104P25 105r23
+. 109p14 109r35 117c9 119e14 11|71r35 109r18 154r23 186r19 276r23
+70U14*Open 71<7 72>7 11|108b14 135l8 135t12
+71r7 Port{68R9} 11|109b7 117r10 118m10 120r42 123r7 132r10
+72a7 Name{42A9} 11|110b7 112r44
+76U14*Set 77>7 78>7 79>7 80>7 81>7 82>7 83>7 84>7 85>7 11|185b14 269l8 269t11
+77r7 Port{68R9} 11|186b7 203r10 207r40 210r42 211r10 243r40 246r42 247r10
+. 263r38
+78e7 Rate{52E9} 11|187b7 215r63
+79e7 Bits{56E9} 11|188b7 239r51
+80e7 Stop_Bits{59E9} 11|189b7 241r56
+81e7 Parity{62E9} 11|190b7 240r53
+82b7 Block{boolean} 11|191b7 253r10
+83b7 Local{boolean} 11|192b7 196r28
+84e7 Flow{65E9} 11|193b7 224r12
+85o7 Timeout{duration} 11|194b7 257r55
+95U25*Read<4|54p14> 96=7 97<7 98<7 11|153b25 179l8 179t12
+96r7 Port{68R9} 11|154b7 162r10 168r44
+97a7 Buffer{4|51A9} 11|155b7 169m36 169r36 169r44 170r43 178r27
+98i7 Last{4|44I9} 11|156b7 178m7
+104U25*Write<4|60p14> 105=7 106>7 11|275b25 300l8 300t13
+105r7 Port{68R9} 11|276b7 283r10 289r46
+106a7 Buffer{4|51A9} 11|277b7 290r38 291r45 296r54
+109U14*Close 109=21 11|71b14 86l8 86t13
+109r21 Port{68R9} 11|71b21 78r10 79r42 80m26 80r26
+114I9 Port_Data 115r36 11|52c9 73r37 118r24 132r23
+115P9 Port_Data_Access(114I9) 118r11 11|73r48
+118p7 H{115P9} 11|78r15 79r47 80m31 117r15 118m15 120r47 123r12 132r15 162r15
+. 168r49 203r15 207r45 210r47 211r15 243r45 246r47 247r15 263r43 283r15 289r51
+121a4 Data_Rate_Value(13|43M9) 11|215r46
+X 11 g-sercom.adb
+48K12 OSC=48:31 220r39 222r39
+52I9 Port_Data<35|55I9>
+54a4 C_Bits(13|43M9) 239r43
+55a4 C_Parity(13|43M9) 240r43
+57a4 C_Stop_Bits(13|43M9) 241r43
+64U14 Raise_Error 64>27 64>45 65r22 83s13 133s10 141b14 147l8 147t19 163s10
+. 175s10 204s10 212s10 248s10 267s10 284s10 298s10
+64s27 Message{string} 141b27 143r31
+64m45 Error{35|60M9} 141b45 144r15 145r67
+72U17 Unchecked_Free[7|20] 80s10
+75i7 Success{35|66I9} 79m10 82r13
+93a7 N_Img{string} 97r35 97r42 97r61 100r31 100r38 100r57
+112a7 C_Name=112:50{string} 124r35 124r43
+113i7 Success{35|66I9} 114r28 120m10
+158i7 Success{35|66I9} 166m7 174r10
+159m7 Read_Last{35|60M9} 171m36 171r36 178r49
+198i7 Success{35|66I9} 207m7 209r10 210m10 243m7 245r10 246m10 261m7 266r10
+199r7 Com_Time_Out{36|106R9} 254m10 256m10 264m30 264r30
+200r7 Com_Settings{36|73R9} 207m53 207r53 215m7 216m7 217m7 218m7 219m7 220m7
+. 221m7 222m7 226m13 227m13 230m13 231m13 234m13 235m13 238m7 239m7 240m7
+. 241m7 243m53 243r53
+279i7 Success{35|66I9} 287m7 295r10
+280m7 Temp_Last{35|60M9} 292m38 292r38 296r40
+X 12 interfac.ads
+38K9*Interfaces 10|35r6 121r52 11|54r48 55r51 57r55 12|179e15
+X 13 i-c.ads
+18K20*C 10|35w17 121r63 11|54r59 55r62 57r66 13|230e17
+35I9*int<integer>
+43M9*unsigned 10|121r65 11|54r61 55r64 57r68
+45M9*unsigned_long
+47M9*unsigned_char
+56I9*ptrdiff_t<integer>
+X 14 system.ads
+37K9*System 11|37w6 37r32 38r6 38r32 39r6 39r32 40r6 41r6 41r32 42r6 42r32
+. 48r24 217r46 14|196e11
+64M9*Address
+X 15 s-commun.ads
+37K16*Communication 11|38w13 38r39 15|50e25
+40V13*Last_Index{4|44I9} 11|178s15
+X 16 s-crtl.ads
+38K16*CRTL 11|39w13 39r39 16|233e16
+60M9*size_t 11|178r41
+X 21 s-oscons.ads
+44K16*OS_Constants 11|40w13 48r31 21|304e24
+158N4*DTR_CONTROL_ENABLE 11|220r43
+159N4*RTS_CONTROL_ENABLE 11|222r43
+X 22 s-os_lib.ads
+968V13*Errno_Message{string} 11|145s36
+969i7 Err{integer} 11|145r51
+X 35 s-win32.ads
+39K16*Win32 11|41w13 41r39 42r13 42r39 82r23 174r20 209r20 217r53 245r20
+. 266r20 295r20 35|342e17
+55I9*HANDLE<13|56I9> 11|52r26 79r34 120r34 168r36 207r32 210r34 243r32 246r34
+. 263r30 289r38
+57i4*INVALID_HANDLE_VALUE{55I9} 11|132r34
+60M9*DWORD<13|45M9> 11|64r53 141r53 159r27 170r36 215r39 257r41 280r27 291r38
+62M9*BYTE<13|47M9> 11|239r37 240r37 241r37
+66I9*BOOL<13|35I9> 11|75r17 113r17 158r19 198r22 279r19
+69I9*Bits1<short_short_integer> 11|217r39
+70I9*Bits2<short_short_integer>
+80N4*FALSE 11|82r29 174r26 209r26 245r26 266r26 295r26
+81N4*TRUE 11|217r59
+84V13*GetLastError{60M9} 11|64s62 141s62
+94N4*GENERIC_READ 11|125r35
+95N4*GENERIC_WRITE 11|125r51
+99N4*OPEN_EXISTING 11|128r35
+173V13*CreateFileA{55I9} 11|123s21
+174m7 lpFileName{14|64M9} 11|124r10
+175m7 dwDesiredAccess{60M9} 11|125r10
+176m7 dwShareMode{60M9} 11|126r10
+177p7 lpSecurityAttributes(167R9) 11|127r10
+178m7 dwCreationDisposition{60M9} 11|128r10
+179m7 dwFlagsAndAttributes{60M9} 11|129r10
+180i7 hTemplateFile{11|52I9} 11|130r10
+205V13*WriteFile{66I9} 11|288s9
+206i7 hFile{55I9} 11|289r12
+207m7 lpBuffer{14|64M9} 11|290r12
+208m7 nNumberOfBytesToWrite{60M9} 11|291r12
+209p7 lpNumberOfBytesWritten(60M9) 11|292r12
+210p7 lpOverlapped(159R9) 11|293r12
+213V13*ReadFile{66I9} 11|167s9
+214i7 hFile{55I9} 11|168r12
+215m7 lpBuffer{14|64M9} 11|169r12
+216m7 nNumberOfBytesToRead{60M9} 11|170r12
+217p7 lpNumberOfBytesRead(60M9) 11|171r12
+218p7 lpOverlapped(159R9) 11|172r12
+221V13*CloseHandle{66I9} 11|79s21 120s21 210s21 246s21
+X 36 s-winext.ads
+35K22*Ext 11|42w19 42r45 36|130e21
+67N4*NOPARITY 11|56r29
+68N4*ODDPARITY 11|56r46
+69N4*EVENPARITY 11|56r65
+70N4*ONESTOPBIT 11|58r28
+71N4*TWOSTOPBITS 11|58r47
+73R9*DCB 11|200r30 36|102e14
+75m7*BaudRate{35|60M9} 11|215m20
+76i7*fBinary{35|69I9} 11|217m20
+77i7*fParity{35|69I9} 11|216m20
+78i7*fOutxCtsFlow{35|69I9} 11|227m26 231m26 235m26
+79i7*fOutxDsrFlow{35|69I9} 11|218m20
+80i7*fDtrControl{35|70I9} 11|220m20
+81i7*fDsrSensitivity{35|69I9} 11|219m20
+83i7*fOutX{35|69I9} 11|226m26 230m26 234m26
+84i7*fInX{35|69I9} 11|221m20
+87i7*fRtsControl{35|70I9} 11|222m20
+88i7*fAbortOnError{35|69I9} 11|238m20
+93m7*ByteSize{35|62M9} 11|239m20
+94m7*Parity{35|62M9} 11|240m20
+95m7*StopBits{35|62M9} 11|241m20
+106R9*COMMTIMEOUTS 11|199r30 36|112e14
+109m7*ReadTotalTimeoutConstant{35|60M9} 11|257m13
+115V13*GetCommState{35|66I9} 11|207s18
+120V13*SetCommState{35|66I9} 11|243s18
+125V13*SetCommTimeouts{35|66I9} 11|262s9
+126i7 hFile{35|55I9} 11|263r12
+127p7 lpCommTimeouts(106R9) 11|264r12
+

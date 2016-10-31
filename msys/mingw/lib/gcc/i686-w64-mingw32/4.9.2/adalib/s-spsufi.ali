@@ -1,0 +1,85 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DISPATCHING_CALLS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_DEALLOCATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.storage_pools.subpools.finalization%b  s-spsufi.adb  aba9f469 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.unchecked_deallocation%s
+W system%s		system.ads		system.ali
+W system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+W system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+
+U system.storage_pools.subpools.finalization%s  s-spsufi.ads  9662cb63 NE OL PR PK
+W system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-spsufi.ads		20140225151140 69896aa6
+D s-spsufi.adb		20121005142256 b2376eda
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 21|32r6 43r29
+X 7 a-uncdea.ads
+20u15*Unchecked_Deallocation 21|32w10 43r33
+X 8 system.ads
+37K9*System 196e11 20|34r9 48r5 21|34r6 34r39 36r14 76r5
+X 10 s-finmas.ads
+38K16*Finalization_Masters 209e32 21|34w13 34r46
+96U25*Finalize<3|59p14> 21|58s7
+X 18 s-stopoo.ads
+39K16*Storage_Pools 8|37k9 18|100e25 20|34r16 48r12 21|36r21 76r12
+X 19 s-stposu.ads
+40K30*Subpools 18|39k16 19|358e34 20|34r30 48r26 21|36r35 76r26
+54P9*Subpool_Handle(50R9) 20|41r56 21|42r56
+94x14*Deallocate_Subpool 21|71R7
+112V13*Pool_Of_Subpool(43R9) 21|71s27
+158P9 Any_Storage_Pool_With_Subpools_Ptr(43R9)
+172R9 SP_Node 179e14 21|43r57
+173P9 SP_Node_Ptr(172R9) 21|43r66
+241p7*Owner{158P9} 21|50r25
+244r7*Master{10|67R9} 21|58m25
+247p7*Node{173P9} 21|51r25 62r23 67m21
+328U14 Detach 21|62s7
+X 20 s-spsufi.ads
+34K39*Finalization 19|40k30 20|48l35 48e47 21|36b44 76l35 76t47
+41U14*Finalize_And_Deallocate 41=39 21|42b14 74l8 74t31
+41p39 Subpool{19|54P9} 21|42b39 49r10 50r17 51r17 58r17 62r15 67r13 71r44
+. 71m58 73m7
+X 21 s-spsufi.adb
+43U17 Free[7|20] 67s7
+

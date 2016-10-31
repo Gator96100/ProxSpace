@@ -1,0 +1,64 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV SPARK_05
+
+U system.wwd_wchar%b	s-wwdwch.adb		974ba7f5 NE OL PK
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.wwd_char%s	s-wwdcha.adb		s-wwdcha.ali
+
+U system.wwd_wchar%s	s-wwdwch.ads		4ec7379d NE OL PU PK
+W system%s		system.ads		system.ali
+
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-wwdcha.ads		20090409150020 86257ce5
+D s-wwdwch.ads		20090409150020 110f99cb
+D s-wwdwch.adb		20090409150020 69ccf362
+X 1 interfac.ads
+38K9*Interfaces 179e15 5|32w6 32r22
+63M9*Unsigned_32 5|60r21 61r21 82r36 93r21 94r21 115r36
+X 2 system.ads
+37K9*System 196e11 4|34r9 61r5 5|34r6 36r14 80r12 113r12 130r5
+X 3 s-wwdcha.ads
+34K16*WWd_Char 45e20 5|34w13 80r19 113r19
+37V13*Wide_Width_Character{natural} 5|113s28
+37e35 Lo{character} 5|114r15
+37e39 Hi{character} 5|115r15
+41V13*Wide_Wide_Width_Character{natural} 5|80s28
+41e40 Lo{character} 5|81r15
+41e44 Hi{character} 5|82r15
+X 4 s-wwdwch.ads
+34K16*Wwd_WChar 2|37k9 4|61l12 61e21 5|36b21 130l12 130t21
+37V13*Wide_Width_Wide_Character{natural} 38>7 38>11 5|50s14 90b13 117l8 117t33
+38e7 Lo{wide_character} 5|91b7 93r56
+38e11 Hi{wide_character} 5|91b11 94r56
+43V13*Wide_Width_Wide_Wide_Character{natural} 44>7 44>11 5|123b13 128l8 128t38
+44e7 Lo{wide_wide_character} 5|124b7 127r46
+44e11 Hi{wide_wide_character} 5|124b11 127r50
+49V13*Wide_Wide_Width_Wide_Character{natural} 50>7 50>11 5|46b13 51l8 51t38
+50e7 Lo{wide_character} 5|47b7 50r41
+50e11 Hi{wide_character} 5|47b11 50r45
+55V13*Wide_Wide_Width_Wide_Wide_Char{natural} 56>7 56>11 5|57b13 84l8 84t38
+. 127s14
+56e7 Lo{wide_wide_character} 5|58b7 60r61
+56e11 Hi{wide_wide_character} 5|58b11 61r61
+X 5 s-wwdwch.adb
+60m7 LV{1|63M9} 66r10 81r36
+61m7 HV{1|63M9} 66r15 71r13 82r58
+93m7 LV{1|63M9} 99r10 114r36
+94m7 HV{1|63M9} 99r15 104r13 115r58
+

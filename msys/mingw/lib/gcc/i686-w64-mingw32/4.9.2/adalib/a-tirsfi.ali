@@ -1,0 +1,61 @@
+V "GNAT Lib v4.9"
+M P W=b
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IO
+RV SPARK_05
+
+U ada.text_io.reset_standard_files%b  a-tirsfi.adb  7d493014 NE OL SU
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+U ada.text_io.reset_standard_files%s  a-tirsfi.ads  6ff2140b NE OL SU
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20140129155348 386df5d4
+D a-tirsfi.ads		20130104124956 579fe1df
+D a-tirsfi.adb		20130104124956 2ad6d1cb
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 8|39r11 9|36r11 38r4 39r5
+X 7 a-textio.ads
+49K13*Text_IO 471e16 8|39r15 9|36r15 38r8 39r9
+466U14 Initialize_Standard_Files 9|38s16
+X 8 a-tirsfi.ads
+39U23*Reset_Standard_Files 7|49k13 9|36b23 39l17 39t37
+

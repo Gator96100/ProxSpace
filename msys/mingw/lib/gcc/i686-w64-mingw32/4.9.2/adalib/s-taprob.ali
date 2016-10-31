@@ -1,0 +1,164 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.tasking.protected_objects%b  s-taprob.adb  65fc3619 OL PK
+W system%s		system.ads		system.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.soft_links.tasking%s  s-solita.adb	s-solita.ali
+W system.task_primitives%s  s-taspri.ads	s-taspri.ali
+W system.task_primitives.operations%s  s-taprop.adb  s-taprop.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.traces%s	s-traces.adb		s-traces.ali
+
+U system.tasking.protected_objects%s  s-taprob.ads  6fa056d1 EB EE NE OL PK
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-multip.ads		20101011073010 38ac9f73
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-solita.ads		20090409150020 4e08c3ec
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taprop.ads		20111212143340 1dd2e1b6
+D s-taskin.ads		20140131154342 3f821f32
+D s-taprob.ads		20110927094500 502249e3
+D s-taprob.adb		20110927094500 3f958160
+D s-traent.ads		20140225151140 b5116092
+D s-traces.ads		20090409150020 f21d68aa
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 7 system.ads
+37K9*System 196e11 24|48r9 131r16 141r13 142r13 174r42 199r16 215r17 218r21
+. 242r5 25|37r6 38r6 39r6 40r6 42r14 44r8 45r8 75r28 79r25 80r29 89r42 215r16
+. 259r13 278r4 279r5
+64M9*Address 24|131r23 141r20 142r20
+97I12*Any_Priority{integer} 24|174r49 199r23 215r24 218r28 25|79r32 80r36
+. 89r49 215r23
+98I12*Priority{97I12} 25|75r35
+X 12 s-parame.ads
+51K16*Parameters 213e22 25|38w13 125r10 182r10 268r10
+193b4*Runtime_Traces{boolean} 25|125r21 182r21 268r21
+X 13 s-soflin.ads
+45K16*Soft_Links 408e22 25|40r13 278r11
+X 14 s-solita.ads
+37K27*Tasking 43e30 25|40w24 278r22
+39U14*Init_Tasking_Soft_Links 25|278s30
+X 16 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 21 s-taspri.ads
+41K16*Task_Primitives 124e27 24|212r19 25|37r13 44r15 259r20
+44R9*Lock 82e14 24|212r35
+X 22 s-taprop.ads
+39K32*Operations 571e38 25|37w29 44r31 259r36
+148U14*Initialize_Lock 25|78s7
+175U14*Finalize_Lock 25|60s7
+181U14*Write_Lock 25|123s7
+212U14*Read_Lock 25|180s7
+236U14*Unlock 25|266s7
+302U14*Set_Ceiling 25|259s47
+X 23 s-taskin.ads
+47K16*Tasking 7|37k9 23|1216e19 24|48r16 242r12 25|42r21 277r4 279r12
+107P9*Task_Id(105R9) 24|228r15 25|139r32 195r32 232r32
+110p4*Null_Task{107P9} 25|81r23 244r29
+114V13*Self{107P9} 25|119s50 139s43 176s50 195s43 232s43
+221N4*Null_Entry 24|122r39
+223N4*Max_Entry 24|124r38
+229I9*Entry_Index<integer> 24|126r38
+450V13*Detect_Blocking{boolean} 25|119s10 137s10 176s10 193s10 230s10
+552i7*Protected_Action_Nesting{natural} 25|147m28 148r30 203m28 204r30 239r43
+. 249m28 250r30
+775i4*Unspecified_Priority{integer} 25|74r26
+960r7*Common{505R9} 25|147m21 148r23 203m21 204r23 239r36 249m21 250r23
+1167U14*Initialize 25|277s12
+X 24 s-taprob.ads
+48K24*Protected_Objects 23|47k16 24|126E4 242l20 242e37 25|42b29 279l20 279t37
+122N4*Null_Protected_Entry 127r12
+124N4*Max_Protected_Entry 127r36
+126I9*Protected_Entry_Index<23|229I9> 132r16 143r13
+129P9*Barrier_Function_Pointer(boolean) 131>9 132>9 151r17
+131m9 O{7|64M9}
+132i9 E{126I9}
+139P9*Entry_Action_Pointer 141>9 142>9 143>9 152r17
+141m9 O{7|64M9}
+142m9 P{7|64M9}
+143i9 E{126I9}
+150R9*Entry_Body 153e14 157r41
+151p7*Barrier{129P9}
+152p7*Action{139P9}
+157P9*Entry_Body_Access(150R9)
+159R9*Protection 169r41 211c9 235e14 237r51 25|58r51
+169P9*Protection_Access(159R9) 171r23 174r16 178r26 183r29 189r39 198r16
+. 202r31 25|68r26 89r16 98r29 157r39 214r16 224r31
+171p4*Null_PO{169P9}
+173V13*Get_Ceiling{7|97I12} 174>7 25|88b13 92l8 92t19
+174p7 Object{169P9} 25|89b7 91r14
+177U14*Initialize_Protection 178>7 179>7 25|67b14 82l8 82t29
+178p7 Object{169P9} 25|68b7 78r39 79r7 80r7 81r7
+179i7 Ceiling_Priority{integer} 25|69b7 71r34
+183U14*Lock 183>20 25|98b14 151l8 151t12
+183p20 Object{169P9} 25|98b20 119r35 123r19 143r13
+189U14*Lock_Read_Only 189>30 25|157b14 207l8 207t22
+189p30 Object{169P9} 25|157b30 176r35 180r18 199r13
+197U14*Set_Ceiling 198>7 199>7 25|213b14 218l8 218t19
+198p7 Object{169P9} 25|214b7 217r7
+199i7 Prio{7|97I12} 25|215b7 217r29
+202U14*Unlock 202>22 25|224b14 271l8 271t14
+202p22 Object{169P9} 25|224b22 240r39 244r13 257r10 257r32 260r16 260r33
+. 263r10 263r28 266r15
+212r7*L{21|44R9} 25|60m29 78m46 123m26 180m25 260m23 266m22
+215i7*Ceiling{7|97I12} 25|79m14 257r39 263m17
+218i7*New_Ceiling{7|97I12} 25|80m14 91r21 217m14 257r17 260r40 263r35
+228p7*Owner{23|107P9} 25|81m14 119r42 143m20 176r42 199m20 240r46 244m20
+237U14 Finalize_Protection 237=35 25|58b14 61l8 61t27
+237r35 Object{159R9} 25|58b35 60m22 60r22
+X 25 s-taprob.adb
+51e4 Locking_Policy{character} 52m22 52r22 258r13
+71i7 Init_Priority{integer} 74r10 75m10 78r24 79r46 80r50
+99b7 Ceiling_Violation{boolean} 123m36 129r10
+139p13 Self_Id{23|107P9} 143r29 147r13 148r15
+158b7 Ceiling_Violation{boolean} 180m35 186r10
+195p13 Self_Id{23|107P9} 199r29 203r13 204r15
+232p13 Self_Id{23|107P9} 239r28 240r54 249r13 250r15
+X 27 s-traces.ads
+55K16*Traces 25|39w13 45r15 27|114e18
+94n7*PO_Lock{58E9} 25|126r27 183r27
+95n7*PO_Unlock{58E9} 25|269r27
+110U14*Send_Trace_Info 25|126s10 183s10 269s10
+

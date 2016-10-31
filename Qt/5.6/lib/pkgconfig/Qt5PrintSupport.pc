@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 PrintSupport
+Description: Qt PrintSupport module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5PrintSupportd 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:\Users\qt\work\qt\qtbase\lib C:\Users\qt\work\qt\qtbase\lib\libQt5Widgetsd.a C:\Users\qt\work\qt\qtbase\lib\libQt5Guid.a C:\Users\qt\work\qt\qtbase\lib\libQt5Cored.a .obj\debug\Qt5PrintSupportd_resource_res.o -lwinspool -lcomdlg32 -lgdi32 -luser32  
+Cflags: -I${includedir}/QtPrintSupport -I${includedir}
+Requires: Qt5Core Qt5Gui Qt5Widgets
+

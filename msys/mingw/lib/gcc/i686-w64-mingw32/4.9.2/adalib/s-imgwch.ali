@@ -1,0 +1,53 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.img_wchar%b	s-imgwch.adb		8e97610d NE OL PK
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.img_char%s	s-imgcha.adb		s-imgcha.ali
+
+U system.img_wchar%s	s-imgwch.ads		ad9bccfb NE OL PU PK
+W system%s		system.ads		system.ali
+
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-imgcha.ads		20101008123408 9c3458e7
+D s-imgwch.ads		20090409150020 f25362ad
+D s-imgwch.adb		20101008123408 895deafe
+X 1 interfac.ads
+38K9*Interfaces 179e15 5|32w6 32r22
+63M9*Unsigned_32 5|93r13 109r35
+X 2 system.ads
+37K9*System 196e11 4|34r9 56r5 5|34r6 34r27 36r14 125r5
+X 3 s-imgcha.ads
+34K16*Img_Char 55e20 5|34w13 34r34
+45U14*Image_Character_05 5|102s10
+X 4 s-imgwch.ads
+34K16*Img_WChar 2|37k9 4|56l12 56e21 5|36b21 125l12 125t21
+37U14*Image_Wide_Character 38>7 39=7 40<7 41>7 5|42b14 80l8 80t28
+38e7 V{wide_character} 5|43b7 53r10 56r13 66r13 78r58
+39s7 S{string} 5|44b7 48r22 57m13 59m13 70m10 71m10 72m10 78m63
+40i7 P{natural} 5|45b7 62m10 69m10 78m66
+41b7 Ada_2005{boolean} 5|46b7 54r22 67r22
+48U14*Image_Wide_Wide_Character 49>7 50=7 51<7 5|77s10 86b14 123l8 123t33
+49e7 V{wide_wide_character} 5|87b7 93r53 103r53
+50s7 S{string} 5|88b7 91r22 103m58 113m13 116m16
+51i7 P{natural} 5|89b7 103m61 120m13
+X 5 s-imgwch.adb
+93m7 Val{1|63M9} 101r10 116r30 117m16 117r23
+109a13 Hex(character) 116r25
+115i17 J{integer} 116r19
+

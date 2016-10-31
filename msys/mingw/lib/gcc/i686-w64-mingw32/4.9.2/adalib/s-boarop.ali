@@ -1,0 +1,75 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.boolean_array_operations%s  s-boarop.ads  67686322 EE OL PU PK
+Z ada%s			ada.ads			ada.ali
+Z ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+Z system.address_operations%s  s-addope.adb	s-addope.ali
+W system.generic_vector_operations%s
+Z system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.vectors%s	s-vector.ads		s-vector.ali
+W system.vectors.boolean_operations%s  s-veboop.adb  s-veboop.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-addope.ads		20140225151544 130cbe33
+D s-addope.adb		20140225151544 b595c660
+D s-boarop.ads		20090409150020 853124f2
+D s-geveop.ads		20090409150020 747f96b6
+D s-geveop.adb		20090409150020 a66f4168
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-vector.ads		20090409150020 7dc5afb0
+D s-veboop.ads		20090409150020 c9ee7f30
+D s-veboop.adb		20090409150020 564bb20a
+X 3 system.ads
+37K9*System 196e11 6|34r6 35r6 37r9 42r39 55r57 56r55 57r57 65r5
+X 6 s-boarop.ads
+37K16*Boolean_Array_Operations 3|37k9 6|65l12 65e36
+40A9*Boolean_Array(boolean)<integer> 45r56
+42K12*Boolean_Operations=42:54 54r35 60r29 60r54 62r29 62r53 64r29 64r54
+44K12*Vector_Operations[7|50] 48r15 51r15
+47u22*Binary_Operation 55r32 56r31 57r32 60r11 62r11 64r11
+50u22*Unary_Operation 54r11
+53U14*Vector_Not[7|63]
+55U14*Vector_And[7|56]
+56U14*Vector_Or[7|56]
+57U14*Vector_Xor[7|56]
+59U14*Vector_Nand[7|56]
+61U14*Vector_Nor[7|56]
+63U14*Vector_Nxor[7|56]
+X 7 s-geveop.ads
+50k16*Generic_Vector_Operations 6|34w13 45r11 7|66e37
+56u14*Binary_Operation 6|48r33[44]
+63u14*Unary_Operation 6|51r33[44]
+X 11 s-vector.ads
+41K16*Vectors 6|35r13 42r46 55r64 56r62 57r64 11|49e19
+44M9*Vector
+X 12 s-veboop.ads
+34K24*Boolean_Operations 6|35w21 42r54 12|66e38
+42V14*"not"{11|44M9} 6|54r55
+54V13*Nand{boolean} 6|60r48
+55V13*Nor{boolean} 6|62r48
+56V13*Nxor{boolean} 6|64r48
+58V13*Nand{11|44M9} 6|60r73
+59V13*Nor{11|44M9} 6|62r72
+60V13*Nxor{11|44M9} 6|64r73
+

@@ -1,18 +1,15 @@
 #!/bin/sh
 #
 # File: mount
-# $Id: mount,v 1.2 2010/03/24 21:28:27 keithmarshall Exp $
+# $Id$
 #
 # =====================================================================
 #
-# Copyright (C) 2006, 2007, 2009, 2010 by Keith Marshall
+# Copyright (C) 2006, 2007 by Keith Marshall
 #  mailto:keithmarshall@users.sourceforge.net
 #
 # This file is part of MSYS
 #  http://www.mingw.org/msys.shtml
-#
-# 2009-04-06: First published implementation for MSYS-1.0.11
-# 2010-03-24: Updated for MSYS-1.0.14: --replace option added
 #
 # MSYS is free software.  It is provided "as is", in the hope that it
 # may be useful; there is NO WARRANTY OF ANY KIND, not even an implied
@@ -41,14 +38,6 @@
 # Ensure the the `fstab' mount registry exists, and is writeable.
 #
   >> ${MNTTAB="/etc/fstab"}
-#
-# Check for '--replace' option, so we can honour requests to reassign
-# an existing mount table entry.
-#
-  case $1 in
-    --replace | --replac | --repla | --repl) shift ; replace=yes ;;
-    *) replace=no ;;
-  esac
 #
 # Select the operation to be performed, based on number of argumemnts.
 #
@@ -142,21 +131,9 @@
 	  echo >&2 "$0: $FSTAB: configuration file not found"
 	fi
 #
-      elif test x"$replace" = xyes
-      then
-#
-#       Found a conflicting active mount,
-#       but the 'replace' option WAS specified...
-#       Tear it down, and remount.
-#
-        umount $MNTPATH
-        mount $MNTPATH
-        exit $?
-#
       else
 #
-#       Found a conflicting active mount,
-#       and the 'replace' option was NOT specified...
+#       Found a conflicting active mount...
 #       Display an appropriate diagnostic message, depending on
 #       whether the argument represented a directory path name,
 #       or a mount point, and bail out.
@@ -194,20 +171,9 @@
 #
 	echo -e "$WINPATH\t$MNTPATH" >> "$MNTTAB"
 #
-      elif test x"$replace" = xyes
-      then
-#
-#       The mount point is already in use,
-#       but the 'replace' option WAS specified...
-#       Tear it down, and remount.
-#
-        umount $MNTPATH
-	echo -e "$WINPATH\t$MNTPATH" >> "$MNTTAB"
-#
       else
 #
-#       Mount point is already in use,
-#       and the 'replace' option was NOT specified...
+#       Specified mount point is already in use...
 #       Diagnose, and bail out.
 #
 	echo >&2 "$0: mount point '$MNTPATH' is already in use"
@@ -220,7 +186,7 @@
 #     Complain, and bail out.
 #
       echo >&2 "$0: incorrect number of arguments"
-      echo >&2 "usage: mount [--replace] [<win32path> <msyspath>]"
+      echo >&2 "usage: mount [<win32path> <msyspath>]"
       exit 2 ;;
   esac
 #
@@ -228,4 +194,4 @@
 #
   exit 0
 #
-# $RCSfile: mount,v $: end of file
+# $RCSfile$: end of file

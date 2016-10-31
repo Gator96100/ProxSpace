@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 SerialPort
+Description: Qt SerialPort module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5SerialPortd 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:/Qt/5.6/mingw49_32\lib C:/Qt/5.6/mingw49_32\lib\libQt5Cored.a .obj\debug\Qt5SerialPortd_resource_res.o -lsetupapi -ladvapi32  
+Cflags: -I${includedir}/QtSerialPort -I${includedir}
+Requires: Qt5Core
+

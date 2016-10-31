@@ -2,7 +2,7 @@
 %rename endfile		old_endfile
 
 *link:
--T gba_er.ld%s %(old_link)
+-T gba_er.ld%s %(old_link) --gc-sections
 
 *startfile:
 er_crt0%O%s

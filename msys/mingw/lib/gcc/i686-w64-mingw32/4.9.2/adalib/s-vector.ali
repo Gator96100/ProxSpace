@@ -1,0 +1,29 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_ATTRIBUTES
+
+U system.vectors%s	s-vector.ads		220d01e6 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-vector.ads		20090409150020 7dc5afb0
+X 1 system.ads
+37K9*System 196e11 2|41r9 44r26 46r35 46r54 47r24 49r5
+68N4*Storage_Unit 2|46r61
+69N4*Word_Size 2|44r33 46r42 47r31
+X 2 s-vector.ads
+41K16*Vectors 1|37k9 2|49l12 49e19
+44M9*Vector 45r8 47r8
+

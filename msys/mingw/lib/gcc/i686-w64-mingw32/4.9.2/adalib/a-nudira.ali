@@ -1,0 +1,85 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.numerics.discrete_random%b  a-nudira.adb	ca93cb39 NE OL PK GE
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+
+U ada.numerics.discrete_random%s  a-nudira.ads	ca0dd242 BN NE OL PK GE
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W system%s		system.ads		system.ali
+W system.random_numbers%s  s-rannum.adb		s-rannum.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-numeri.ads		20080324174808 bb51c45a
+D a-nudira.ads		20100622172942 2fef2912
+D a-nudira.adb		20100622172942 e57ce22b
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-rannum.ads		20140124162202 5eb33f0a
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 3|44r9 73r5 4|32r14 94r5
+X 2 a-numeri.ads
+16K13*Numerics 1|16k9 2|32e17 3|44r13 73r9 4|32r18 94r9
+X 3 a-nudira.ads
+42E9 Result_Subtype 50r45 4|50r45 52r34 52r50
+44k22*Discrete_Random 2|16k13 3|42z9 69E9 73l18 73e33 4|32b27 94l18 94t33
+48R9*Generator<9|58R9> 50r27 52r27 53r27 59r27 60r27 69c9 4|50r27 61r27 66r27
+. 71r27 80r26
+50V13*Random{42E9} 50>21 4|50b13 55l8 55t14
+50r21 Gen{48R9} 4|50b21 54r37
+52U14*Reset<9|101p14> 52>21 52>38 4|66b14 69l8 69t13
+52r21 Gen{48R9} 4|66b21 68r29
+52i38 Initiator{integer} 4|66b38 68r35
+53U14*Reset<9|95p14> 53>21 4|61b14 64l8 64t13
+53r21 Gen{48R9} 4|61b21 63r29
+57A9*State<9|63A9> 59r55 60r51 64r34 65r49 71c9 4|41r31 71r51 80r54 89r49
+. 91r14
+59U14*Save 59>21 59<38 4|80b14 83l8 83t12
+59r21 Gen{48R9} 4|80b20 82r28
+59a38 To_State{57A9} 4|80b37 82m45 82r45
+60U14*Reset 60>21 60>38 4|71b14 74l8 74t13
+60r21 Gen{48R9} 4|71b21 73r29
+60a38 From_State{57A9} 4|71b38 73r46
+62N4*Max_Image_Width
+64V13*Image{string}<9|124p13> 64>20 4|41b13 44l8 44t13
+64a20 Of_State{57A9} 4|41b20 43r32
+65V13*Value{57A9}<9|128p13> 65>20 4|89b13 92l8 92t13
+65s20 Coded_State{string} 4|89b20 91r39
+X 4 a-nudira.adb
+34K12 SRN=34:31 35r8 43r21 52r13 54r22 63r14 68r14 73r14 73r35 82r13 82r34
+. 91r21
+51V16 Random[9|78]{3|42E9} 54s14
+X 6 interfac.ads
+63M9*Unsigned_32
+X 7 system.ads
+37K9*System 3|39r6 62r34 69r26 71r22 4|34r24 7|196e11
+X 9 s-rannum.ads
+56K16*Random_Numbers 3|39w13 62r41 69r33 71r29 4|34r31 9|157e26
+58R9*Generator 3|69r48 4|54r26 63r18 68r18 73r18 82r17
+63A9*State(139M12) 3|71r44 4|43r25 73r39 82r38 91r25
+78v13*Random_Discrete 4|52r17
+95U14*Reset 4|63s7
+101U14*Reset 4|68s7
+109U14*Reset 4|73s7
+110U14*Save 4|82s7
+121N4*Max_Image_Width 3|62r56
+124V13*Image{string} 4|43s14
+128V13*Value{63A9} 4|91s32
+139M12 State_Val{6|63M9}
+

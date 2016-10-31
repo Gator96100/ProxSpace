@@ -1,0 +1,71 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.command_line%b	a-comlin.adb		d9fb597b NE OL PK
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.command_line%s	a-comlin.ads		d59e21a4 NE OL PR PK
+W ada%s			ada.ads			ada.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-comlin.ads		20140225151544 ea62afbc
+D a-comlin.adb		20140225151544 6c515891
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 2|38r9 139r5 3|36r14 131r5
+X 2 a-comlin.ads
+38K13*Command_Line 1|16k9 2|112E4 139l9 139e21 3|36b18 131l9 131t21
+41V13*Argument_Count{natural} 3|64s19 86b13 98l8 98t22
+48V13*Argument{string} 48>23 3|60b13 80l8 80t16
+48i23 Number{positive} 3|60b23 64r10 69r17 71r30
+57V13*Command_Name{string} 3|116b13 129l8 129t20
+65I9*Exit_Status<integer> 67r23 68r23 70r38 112r23 113r23
+67i4*Success{65I9} 112c4
+68i4*Failure{65I9} 113c4
+70U14*Set_Exit_Status 70>31 137b<c,__gnat_set_exit_status>22
+70i31 Code{65I9}
+122i4 Remove_Count{natural} 3|96r17
+126A9 Arg_Nums(positive)<integer> 127r32
+127P9 Arg_Nums_Ptr(126A9) 132r18
+132p4 Remove_Args{127P9} 3|68r10 71r17 93r10
+X 3 a-comlin.adb
+38V13 Arg_Count{natural} 39b<c,__gnat_arg_count>22 94s17
+41U14 Fill_Arg 41>24 41>44 42b<c,__gnat_fill_arg>22 77s10 126s10
+41m24 A{5|64M9}
+41i44 Arg_Num{integer}
+44V13 Len_Arg{integer} 44>22 45b<c,__gnat_len_arg>22 75s37 123s37
+44i22 Arg_Num{integer}
+51V13 Initialized{boolean} 88s14 104b13 110l8 110t19 118s14
+61i7 Num{positive} 69m10 71m10 75r46 77r33
+75a10 Arg{string} 77m20 77r20 78r17
+105m7*gnat_argv{5|64M9} 106m25 106r25 109r14
+123a10 Arg{string} 126m20 126r20 127r17
+X 5 system.ads
+37K9*System 3|34w6 34r18 41r28 105r19 109r27 5|196e11
+64M9*Address 3|41r35 105r26
+66m4*Null_Address{64M9} 3|109r34
+78V14*"="{boolean} 3|109r24
+

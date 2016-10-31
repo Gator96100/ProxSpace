@@ -1,17 +1,15 @@
 #!/bin/sh
 #
 # File: umount
-# $Id: umount,v 1.2 2010/03/24 21:28:30 keithmarshall Exp $
+# $Id$
 #
 # =====================================================================
 #
-# Copyright (C) 2006, 2007, 2009 by Keith Marshall
+# Copyright (C) 2006, 2007 by Keith Marshall
 #  mailto:keithmarshall@users.sourceforge.net
 #
 # This file is part of MSYS
 #  http://www.mingw.org/msys.shtml
-#
-# 2009-04-06: First published implementation for MSYS-1.0.11
 #
 # MSYS is free software.  It is provided "as is", in the hope that it
 # may be useful; there is NO WARRANTY OF ANY KIND, not even an implied
@@ -98,4 +96,4 @@
 #
   exit 0
 #
-# $RCSfile: umount,v $: end of file
+# $RCSfile$: end of file

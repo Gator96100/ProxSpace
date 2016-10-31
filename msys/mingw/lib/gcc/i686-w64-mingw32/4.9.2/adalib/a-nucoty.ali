@@ -1,0 +1,61 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.numerics.complex_types%b  a-nucoty.ads	b8c59445 NE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+Z ada.numerics.aux%s	a-numaux.adb		a-numaux.ali
+W ada.numerics.generic_complex_types%s
+W system.exn_llf%s	s-exnllf.adb		s-exnllf.ali
+W system.fat_flt%s	s-fatflt.ads		s-fatflt.ali
+
+U ada.numerics.complex_types%s  a-nucoty.ads	e4100fcf EB NE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.generic_complex_types%s
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-numeri.ads		20080324174808 bb51c45a
+D a-numaux.ads		20140129155348 243fe0b7
+D a-nucoty.ads		20070406091342 b8c59445
+D a-nucoty.ads		20070406091342 b8c59445
+D a-ngcoty.ads		20090409150020 e7845fd0
+D a-ngcoty.adb		20100622171758 c98acde0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-exnllf.ads		20121004090554 81841eef
+D s-fatflt.ads		20090409150020 11beb392
+D s-fatgen.ads		20140129155348 9267ca45
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 6|16r6 18r9 19r8
+X 3 a-numeri.ads
+16K13*Numerics 1|16k9 3|32e17 6|16r10 18r13 19r12
+X 6 a-nucoty.ads
+18K22*Complex_Types[7|39] 3|16k13 6|21r14
+X 7 a-ngcoty.ads
+39k22*Generic_Complex_Types 6|16w19 19r21 7|157e39
+

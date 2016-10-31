@@ -1,0 +1,33 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV SPARK_05
+
+U gnat.sse%s		g-sse.ads		f3f4e206 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-sse.ads		20120402094718 0ede30f7
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|112r9 139r5
+X 2 g-sse.ads
+112K14*SSE 1|34k9 2|139l10 139e13
+118N4*VECTOR_BYTES
+121N4*VECTOR_ALIGN
+135F9*Float32<float>
+136F9*Float64<long_float>
+137I9*Integer64<long_long_integer>
+

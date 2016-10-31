@@ -1,0 +1,34 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.img_bool%b	s-imgboo.adb		7268f812 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.img_bool%s	s-imgboo.ads		aa11dfbd NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgboo.ads		20090409150020 f5d971eb
+D s-imgboo.adb		20090409150020 87b189f9
+X 1 system.ads
+37K9*System 196e11 2|34r9 45r5 3|32r14 54r5
+X 2 s-imgboo.ads
+34K16*Img_Bool 1|37k9 2|45l12 45e20 3|32b21 54l12 54t20
+37U14*Image_Boolean 38>7 39=7 40<7 3|38b14 52l8 52t21
+38b7 V{boolean} 3|39b7 45r10
+39s7 S{string} 3|40b7 43r22 46m10 49m10
+40i7 P{natural} 3|41b7 47m10 50m10
+

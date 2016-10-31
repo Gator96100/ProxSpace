@@ -1,0 +1,35 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.exceptions%s	g-except.ads		b7ec9f3f NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-except.ads		20110801150502 4ac64dce
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|43r9 82r5
+X 2 g-except.ads
+43K14*Exceptions 1|34k9 2|76E26 82l10 82e20
+46R9*Exception_Type 64r18 65r18 66r18 67r18 70r35
+64r4*CE{46R9} 76m22 76r22
+65r4*PE{46R9} 77m22 77r22
+66r4*SE{46R9} 78m22 78r22
+67r4*TE{46R9} 79m22 79r22
+70U14*Raise_Exception 70>31 70>51 71b<ada,__gnat_raise_exception>24 72r22
+70r31 E{46R9}
+70s51 Message{string}
+

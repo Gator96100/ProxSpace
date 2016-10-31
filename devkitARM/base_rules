@@ -1,36 +1,10 @@
-#---------------------------------------------------------------------------------
-# change shell on Snow Leopard
-#---------------------------------------------------------------------------------
-UNAME_S	:=	$(shell uname -s)
-UNAME_R	:=	$(shell uname -r)
-
-ifneq (,$(findstring Darwin,$(UNAME_S)))
-	ifneq (,$(findstring 10.8.0,$(UNAME_R)))
-		export SHELL=/bin/bash
-	endif
-endif
-#---------------------------------------------------------------------------------
-# path to tools
-#---------------------------------------------------------------------------------
-export PORTLIBS	:=	$(DEVKITPRO)/portlibs/arm
-export PATH	:=	$(DEVKITARM)/bin:$(PORTLIBS)/bin:$(PATH)
+include $(DEVKITARM)/base_tools
 
 #---------------------------------------------------------------------------------
-# the prefix on the compiler executables
+# add portlibs path
 #---------------------------------------------------------------------------------
-PREFIX		:=	arm-none-eabi-
+export PORTLIBS_PATH	:=	$(DEVKITPRO)/portlibs
 
-export CC	:=	$(PREFIX)gcc
-export CXX	:=	$(PREFIX)g++
-export AS	:=	$(PREFIX)as
-export AR	:=	$(PREFIX)ar
-export OBJCOPY	:=	$(PREFIX)objcopy
-
-ISVC=$(or $(VCBUILDHELPER_COMMAND),$(MSBUILDEXTENSIONSPATH32),$(MSBUILDEXTENSIONSPATH))
-
-ifneq (,$(ISVC))
-	ERROR_FILTER	:=	2>&1 | sed -e 's/\(.[a-zA-Z]\+\):\([0-9]\+\):/\1(\2):/g'
-endif
 
 #---------------------------------------------------------------------------------
 %.a:
@@ -43,7 +17,7 @@ endif
 %.arm.o: %.arm.cpp
 	@echo $(notdir $<)
 	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.arm.d $(CXXFLAGS) -marm -c $< -o $@ $(ERROR_FILTER)
-	
+
 #---------------------------------------------------------------------------------
 %.arm.o: %.arm.c
 	@echo $(notdir $<)
@@ -58,7 +32,7 @@ endif
 %.thumb.o: %.thumb.cpp
 	@echo $(notdir $<)
 	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.thumb.d $(CXXFLAGS) -mthumb -c $< -o $@ $(ERROR_FILTER)
-	
+
 #---------------------------------------------------------------------------------
 %.thumb.o: %.thumb.c
 	@echo $(notdir $<)
@@ -73,7 +47,7 @@ endif
 %.iwram.o: %.iwram.cpp
 	@echo $(notdir $<)
 	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.iwram.d $(CXXFLAGS) -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
-	
+
 #---------------------------------------------------------------------------------
 %.iwram.o: %.iwram.c
 	@echo $(notdir $<)
@@ -88,7 +62,7 @@ endif
 %.itcm.o: %.itcm.cpp
 	@echo $(notdir $<)
 	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.itcm.d $(CXXFLAGS) -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
-	
+
 #---------------------------------------------------------------------------------
 %.itcm.o: %.itcm.c
 	@echo $(notdir $<)
@@ -104,7 +78,7 @@ endif
 %.o: %.cpp
 	@echo $(notdir $<)
 	$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.d $(CXXFLAGS) -c $< -o $@ $(ERROR_FILTER)
-	
+
 #---------------------------------------------------------------------------------
 %.o: %.c
 	@echo $(notdir $<)

@@ -1,0 +1,4 @@
+
+QMAKE_PRO_INPUT = libEGL.pro
+QMAKE_PRL_TARGET = liblibEGLd.a
+QMAKE_PRL_CONFIG = lex yacc debug exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin incremental_off windows qt_build_extra file_copies warn_on link_prl debug_and_release precompile_header shared rtti no_plugin_manifest directwrite qpa win32 mingw gcc copy_dir_files precompile_header pcre compile_examples sse2 sse3 ssse3 sse4_1 sse4_2 avx avx2 largefile prefix_build force_independent create_prl link_prl prepare_docs qt_docs_targets no_private_qt_headers_warning QTDIR_build qt_example_installs testcase_exceptions debug DebugBuild Debug build_pass c++11 installed installed angle_d3d11 stl exceptions c++11 git_build c++11 strict_c++ c++14 debug_and_release build_all debug DebugBuild Debug build_pass have_target dll no_plist exclusive_builds debug_info no_autoqmake

@@ -1,0 +1,37 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV SPARK_05
+
+U system.wid_lli%b	s-widlli.adb		5bd534f5 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.wid_lli%s	s-widlli.ads		c9b0a949 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-widlli.ads		20090409150020 9678071f
+D s-widlli.adb		20090409150020 cdad33ea
+X 1 system.ads
+37K9*System 196e11 2|36r9 45r5 3|32r14 73r5
+X 2 s-widlli.ads
+36K16*Wid_LLI 1|37k9 2|45l12 45e19 3|32b21 73l12 73t19
+39V13*Width_Long_Long_Integer{natural} 40>7 40>11 3|38b13 71l8 71t31
+40i7 Lo{long_long_integer} 3|39b7 46r10 58r45
+40i11 Hi{long_long_integer} 3|39b11 46r15 59r45
+X 3 s-widlli.adb
+42i7 W{natural} 52m10 65m13 65r18 68r17
+43i7 T{long_long_integer} 57m10 63r16 64m13 64r18
+

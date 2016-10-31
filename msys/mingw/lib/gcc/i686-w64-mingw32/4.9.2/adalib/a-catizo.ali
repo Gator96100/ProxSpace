@@ -1,0 +1,60 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.calendar.time_zones%b  a-catizo.adb	e3cca715 NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+
+U ada.calendar.time_zones%s  a-catizo.ads	98f012d7 EE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-catizo.ads		20120123093332 409d7e5b
+D a-catizo.adb		20121001094122 a351d94e
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 3|19r9 32r5 4|32r14 69r5
+X 2 a-calend.ads
+36K13*Calendar 1|16k9 2|375e17 3|19r13 32r9 4|32r18 69r9
+38I9*Time<200I9> 3|27r37 4|45r37
+52V13*Clock{38I9} 3|27s45 4|45s45
+200I9 Time_Rep<long_long_integer>
+210i4 Invalid_Time_Zone_Offset{long_integer} 4|51r21
+367K12 Time_Zones_Operations 373e29 4|47r9
+369V16*UTC_Time_Offset{long_integer} 4|47s31
+X 3 a-catizo.ads
+19K22*Time_Zones 2|36k13 3|32l18 32e28 4|32b27 69l18 69t28
+23I9*Time_Offset<short_integer> 27r59 4|45r59 48r18 58r17
+25X4*Unknown_Zone_Error 4|52r16 63r16
+27V13*UTC_Time_Offset{23I9} 27>30 4|45b13 67l8 67t23
+27i30 Date{2|38I9} 4|45b30 47r48
+X 4 a-catizo.adb
+46i7 Offset_L{long_integer} 51r10 58r30
+48i7 Offset{3|23I9} 58m7 62r14 66r14
+

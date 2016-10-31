@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Test
+Description: Qt Test module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5Testd 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:\Users\qt\work\qt\qtbase\lib C:\Users\qt\work\qt\qtbase\lib\libQt5Cored.a .obj\debug\Qt5Testd_resource_res.o   
+Cflags: -I${includedir}/QtTest -I${includedir}
+Requires: Qt5Core
+

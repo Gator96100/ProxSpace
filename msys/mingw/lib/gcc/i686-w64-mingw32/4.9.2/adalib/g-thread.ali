@@ -1,0 +1,188 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_ALLOCATORS
+RV NO_LOCAL_ALLOCATORS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_TASK_ALLOCATORS
+RV NO_TASKING
+RV NO_UNCHECKED_CONVERSION
+RV STATIC_PRIORITIES
+RV STATIC_STORAGE_SIZE
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+RV MAX_TASKS=1+
+
+U gnat.threads%b	g-thread.adb		64ed4fd7 OL PK
+W ada%s			ada.ads			ada.ali
+W ada.real_time%s	a-reatim.adb		a-reatim.ali
+W ada.task_identification%s  a-taside.adb	a-taside.ali
+W ada.unchecked_conversion%s
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.os_interface%s	s-osinte.ads		s-osinte.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.task_info%s	s-tasinf.adb		s-tasinf.ali
+W system.task_primitives%s  s-taspri.ads	s-taspri.ali
+W system.task_primitives.operations%s  s-taprop.adb  s-taprop.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+
+U gnat.threads%s	g-thread.ads		2be53c61 EE NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.task_identification%s  a-taside.adb	a-taside.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-reatim.ads		20090409150020 63f07669
+D a-taside.ads		20140124142722 68549ce6
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-thread.ads		20110801150502 e153dc20
+D g-thread.adb		20110801150502 00579e3f
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-multip.ads		20101011073010 38ac9f73
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taprop.ads		20111212143340 1dd2e1b6
+D s-taskin.ads		20140131154342 3f821f32
+D s-tassta.ads		20121029110946 70812003
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 1 ada.ads
+16K9*Ada 19e8 7|47r6 144r14 8|32r6 32r35 38r6 52r28 53r28 54r28 55r28 56r16
+. 57r30 92r29 180r35
+X 4 a-taside.ads
+39K13*Task_Identification 77e28 7|47w10 144r18 8|32w10 32r39 56r20 180r39
+43P9*Task_Id<27|107P9> 7|144r38 8|52r54 53r63 56r40 160r22 180r59
+53V13*Current_Task{43P9} 8|75s26
+59U14*Abort_Task 8|162s7
+X 5 a-unccon.ads
+20v14*Unchecked_Conversion 8|38w10 52r32 53r32 54r32 55r32 57r34 92r33
+X 6 gnat.ads
+34K9*GNAT 37e9 7|49r9 149r5 8|40r14 186r5
+X 7 g-thread.ads
+49K14*Threads 6|34k9 7|149l10 149e17 8|40b19 186l10 186t17
+51P9*Void_Ptr(integer) 55r14 8|61r61 66r14 86r14
+53V13*Create_Thread{12|64M9} 54>7 55>7 56>7 57>7 59i<c,__gnat_create_thread>22
+. 8|84b13 97l8 97t21
+54m7 Code{12|64M9} 8|85b7 95r50
+55p7 Parm{51P9} 8|86b7 95r37
+56i7 Size{natural} 8|87b7 95r25
+57i7 Prio{integer} 8|88b7 95r31
+80V13*Register_Thread{12|64M9} 81i<c,__gnat_register_thread>22 8|103b13 106l8
+. 106t23
+101U14*Unregister_Thread 102i<c,__gnat_unregister_thread>22 8|112b14 118l8
+. 118t25
+110U14*Unregister_Thread_Id 110>36 111i<c,__gnat_unregister_thread_id>22
+. 8|124b14 153l8 153t28
+110m36 Thread{12|64M9} 8|124b36 125r46
+120U14*Destroy_Thread 120>30 121i<c,__gnat_destroy_thread>22 8|159b14 163l8
+. 163t22
+120m30 Id{12|64M9} 8|159b30 160r40
+130U14*Get_Thread 130>26 130>47 131i<c,__gnat_get_thread>22 8|169b14 173l8
+. 173t18
+130m26 Id{12|64M9} 8|169b26 172r67
+130m47 Thread{12|64M9} 8|169b40 170r50
+142V13*To_Task_Id{4|43P9} 143>7 8|179b13 184l8 184t18
+143m7 Id{12|64M9} 8|180b7 183r22
+X 8 g-thread.adb
+44K12 STPO=44:48 137r7 141r37 146r7
+46P9 Thread_Id_Ptr(16|68I12) 57r65 170r22
+52V13 To_Addr[5|20]{12|64M9} 75s17 96s14
+53V13 To_Id[5|20]{4|43P9} 160s33
+54V13 To_Id[5|20]{27|107P9} 172s60
+55V13 To_Tid[5|20]{4|43P9} 183s14
+57V13 To_Thread[5|20]{46P9} 125s35 170s39
+61P9 Code_Proc 61>40 61>54 67r14 92r64
+61m40 Id{12|64M9}
+61p54 Parm{7|51P9}
+63T14 Thread 64d7 65d7 66d7 67d7 71l8 71e14 73b14 76l8 76t14 78r24 95r17
+64i7 Stsz{natural} 70r28
+65i7 Prio{12|97I12} 69r24
+66p7 Parm{7|51P9} 75r41
+67p7 Code{61P9} 75r7
+78P9 Tptr(63T14) 90r12
+90p7 TP{78P9} 95m7 96r23
+92V16 To_CP[5|20]{61P9} 95s43
+113p7 Self_Id{27|107P9} 115r7 116r20 117r18
+125i7 Thr{16|68I12} 141r62
+126p7 T{27|107P9} 139m7 141r20 141r57 143m10 143r15 148r10 149r10 150r23
+. 151r21
+160p7 Tid{4|43P9} 162r19
+170p7 Thr{46P9} 172r7
+X 10 i-c.ads
+56I9*ptrdiff_t<integer>
+X 12 system.ads
+37K9*System 7|46w6 54r14 58r14 80r36 110r45 120r35 130r31 130r56 143r12 8|33r6
+. 34r6 35r6 35r35 36r6 36r35 37r6 37r35 42r8 44r25 88r30 103r36 124r45 133r16
+. 180r12 12|196e11
+64M9*Address 7|54r21 58r21 80r43 110r52 120r42 130r38 130r63 143r19 8|52r63
+. 53r54 54r54 56r7 57r56 61r45 85r14 88r37 92r55 103r43 124r52 159r35 169r31
+. 169r49 180r19
+97I12*Any_Priority{integer} 8|65r14
+X 16 s-osinte.ads
+48K16*OS_Interface 8|36w13 36r42 133r23 16|361e24
+68I12*Thread_Id{31|55I9} 8|46r37 125r22 133r36
+X 18 s-soflin.ads
+45K16*Soft_Links 8|37w13 37r42 18|408e22
+361U14*Destroy_TSD 8|116s7 150s10
+X 20 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 25 s-taspri.ads
+41K16*Task_Primitives 8|33r13 44r32 105r14 113r45 172r18 25|124e27
+X 26 s-taprop.ads
+39K32*Operations 8|33w29 44r48 105r30 113r61 172r34 26|571e38
+135V13*Self{27|107P9} 8|113s72
+411V13*Get_Thread_Id{16|68I12} 8|141s42 172s45
+418V13*Register_Foreign_Thread{27|107P9} 8|105s41
+434U14*Lock_RTS 8|137s12
+437U14*Unlock_RTS 8|146s12
+X 27 s-taskin.ads
+47K16*Tasking 8|34w13 35r13 35r42 54r63 113r26 115r31 126r13 128r16 139r12
+. 149r28 27|1216e19
+107P9*Task_Id(105R9) 8|54r71 113r34 126r21 128r24
+150n7*Terminated{130E9} 8|115r39 149r36
+506e7*State{130E9} 8|115m22 149m19
+601r7*Compiler_Data{18|325R9} 8|116m35 150m32
+607p7*All_Tasks_Link{107P9} 8|143r24
+742p4*All_Tasks_List{107P9} 8|139r20
+960r7*Common{505R9} 8|115m15 116m28 143r17 149m12 150m25
+X 28 s-tassta.ads
+47K24*Stages 8|35w21 35r50 28|303e26
+264U14*Free_Task 8|117s7 151s10
+X 31 s-win32.ads
+55I9*HANDLE<10|56I9>
+

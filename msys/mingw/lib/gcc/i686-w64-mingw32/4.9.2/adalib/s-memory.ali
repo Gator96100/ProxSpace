@@ -1,0 +1,97 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.memory%b	s-memory.adb		81f4984c NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+
+U system.memory%s	s-memory.ads		06b5c862 EB NE OL PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-memory.ads		20140225151140 597d6634
+D s-memory.adb		20090409150020 8a958429
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 6|41r6 46r8
+X 2 a-except.ads
+53K13*Exceptions 360e19 6|41w10 46r12
+89U14*Raise_Exception 6|96s10 123s10 156s10 193s10 215s10
+X 4 system.ads
+37K9*System 196e11 5|45r9 53r42 68r26 77r14 78r29 107r5 6|42r6 44r14 47r8
+. 49r45 52r28 56r13 56r51 59r26 62r42 65r25 90r42 91r21 116r20 122r19 134r27
+. 143r34 165r26 169r17 183r14 185r14 187r21 208r20 214r19 221r5
+64M9*Address 5|53r49 68r33 77r21 78r36 6|49r52 52r35 56r20 56r58 59r33 62r49
+. 65r32 90r49 91r28 134r34 165r33 183r21 185r21 187r28
+66m4*Null_Address{64M9} 6|116r27 122r26 143r41 169r24 208r27 214r26
+78V14*"="{boolean} 6|116r17 122r17 143r31 169r14 208r17 214r17
+X 5 s-memory.ads
+45K16*Memory 4|37k9 5|103E31 107l12 107e18 6|44b21 221l12 221t18
+48M9*size_t 53r27 78r14 6|49r30 56r36 59r49 68r23 78r45 90r27 92r21 95r17
+. 133r45 145r15 147r33 184r14 188r30 189r21 192r17
+53V13*Alloc{4|64M9} 53>20 103i<c,__gnat_malloc>22 6|90b13 127l8 127t13
+53m20 Size{48M9} 6|90b20 92r31 95r10 104r10 111r34
+68U14*Free 68>20 104i<c,__gnat_free>22 6|165b14 176l8 176t12
+68m20 Ptr{4|64M9} 6|165b20 169r10 170r56 173r15
+76V13*Realloc{4|64M9} 77>7 78>7 105i<c,__gnat_realloc>22 6|182b13 219l8 219t15
+77m7 Ptr{4|64M9} 6|183b7 198r26 206r28
+78m7 Size{48M9} 6|184b7 188r40 192r10 202r10 203r34
+X 6 s-memory.adb
+49V13 c_malloc{4|64M9} 49>23 50b<c,malloc>22 114s17
+49m23 Size{5|48M9}
+52U14 c_free 52>22 53b<c,free>22 173s7
+52m22 Ptr{4|64M9}
+55V13 c_realloc{4|64M9} 56>7 56>29 57b<c,realloc>22 206s17
+56m7 Ptr{4|64M9}
+56m29 Size{5|48M9}
+59V13 msize{5|48M9} 59>20 60b<c,_msize>22 117s49 170s49 198s19 209s60
+59m20 Ptr{4|64M9}
+62V13 getenv{4|64M9} 62>21 63b<c,getenv>22 141s31
+62s21 Str{string}
+65V13 atoi{integer} 65>19 66b<c,atoi>22 145s23
+65m19 Str{4|64M9}
+68m4 Available_Memory{5|48M9} 110r42 117m10 117r30 137r10 144m13 147m13 151r18
+. 170m10 170r30 202r35 209m10 209r30
+72N4 Msize_Accuracy 110r24 111r41 145r58 202r17 203r41
+78U14 Check_Available_Memory 78>38 111s10 133b14 159l8 159t30 203s10
+78m38 Size{5|48M9} 133b38 151r10
+91m7 Result{4|64M9} 114m7 116r10 117r56 122r10 126r14
+92m7 Actual_Size{5|48M9} 105m10 110r10 114r27
+134m7 Gnat_Memory_Limit{4|64M9} 141m10 143r13 145r29
+187m7 Result{4|64M9} 206m7 208r10 209r67 214r10 218r14
+188m7 Actual_Size{5|48M9} 206r33
+189m7 Old_Size{5|48M9} 198m7 209r49
+X 8 s-soflin.ads
+45K16*Soft_Links 6|42w13 47r15 8|408e22
+60P9*No_Param_Proc
+187p4*Lock_Task{60P9} 6|108r7 167r7 196r7
+197p4*Unlock_Task{60P9} 6|120r7 155r10 175r7 212r7
+

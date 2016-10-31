@@ -1,3 +1,8 @@
-#!/bin/sh
-PATH=${GZIP_BINDIR-'/usr/bin'}:$PATH
-exec gzip -d "$@"
+#! /bin/sh
+# Copyright (C) 2002, Earnie Boyd
+#   mailto:earnie@users.sf.net
+# This file is a part of Minimal SYStem
+#   http://www.mingw.org/msys.html
+# File: gunzip
+
+gzip -d $@

@@ -1,0 +1,47 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.fat_ieee_long_float%s  s-filofl.ads	97f20435 EE OL PU PK
+Z ada%s			ada.ads			ada.ali
+Z ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.fat_gen%s
+W system.fat_lflt%s	s-fatlfl.ads		s-fatlfl.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-fatgen.ads		20140129155348 9267ca45
+D s-fatgen.adb		20140129155348 9ba81cee
+D s-filofl.ads		20100618123254 5a5d6026
+D s-fatlfl.ads		20090409150020 378cba9f
+D s-unstyp.ads		20140225151140 510692af
+X 3 system.ads
+37K9*System 196e11 6|37r6 39r9 50r34 52r5
+X 4 s-fatgen.ads
+41k16*Fat_Gen 129e19 6|37w13 50r41
+X 6 s-filofl.ads
+39K16*Fat_IEEE_Long_Float 3|37k9 6|52l12 52e31
+42F9*Fat_IEEE_Long<long_float> 43r45 50r50
+50K12*Attr_IEEE_Long[4|41]
+

@@ -1,0 +1,95 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.dim.mks_io%b	s-dimkio.ads		c55bfd4c EE OL PK
+Z ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.float_aux%s  a-tiflau.adb		a-tiflau.ali
+W ada.text_io.float_io%s
+W system%s		system.ads		system.ali
+W system.dim%s		s-dim.ads		s-dim.ali
+W system.dim.float_io%s
+W system.dim.mks%s	s-dimmks.ads		s-dimmks.ali
+W system.fat_llf%s	s-fatllf.ads		s-fatllf.ali
+
+U system.dim.mks_io%s	s-dimkio.ads		b864b20e EB EE NE OL PK
+Z ada%s			ada.ads			ada.ali
+Z ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.text_io.float_io%s
+W system%s		system.ads		system.ali
+W system.dim%s		s-dim.ads		s-dim.ali
+W system.dim.float_io%s
+W system.dim.mks%s	s-dimmks.ads		s-dimmks.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-numeri.ads		20080324174808 bb51c45a
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20140129155348 386df5d4
+D a-tiflau.ads		20090409150020 c0393f21
+D a-tiflio.ads		20090409150020 56fbda09
+D a-tiflio.adb		20090409150020 fd9b1cfc
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-dim.ads		20130206100810 ec3077cc
+D s-diflio.ads		20140224154940 1adf2dfd
+D s-diflio.adb		20120614105622 ac5727a4
+D s-dimmks.ads		20140224154940 8bd01573
+D s-dimkio.ads		20120208101354 c55bfd4c
+D s-dimkio.ads		20120208101354 c55bfd4c
+D s-exctab.ads		20140225151140 54135002
+D s-fatgen.ads		20140129155348 9267ca45
+D s-fatllf.ads		20090409150020 4d5c1475
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 15 system.ads
+37K9*System 196e11 22|35r6 35r26 36r6 38r9 38r34
+X 17 s-dim.ads
+65K16*Dim 15|37k9 17|68e15 22|35r13 35r33 36r13 38r16 38r41
+X 18 s-diflio.ads
+133k20*Float_IO 178e24 22|36w17 38r45
+X 20 s-dimmks.ads
+42K20*Mks 388e19 22|35w17 35r37
+49F9*Mks_Type<long_long_float> 22|38r55
+X 22 s-dimkio.ads
+38K20*Mks_IO[18|133] 17|65k16
+

@@ -1,0 +1,121 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.streams.stream_io.c_streams%b  a-ssicst.adb  7c8e6307 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.streams.stream_io%s  a-ststio.adb		a-ststio.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.unchecked_conversion%s
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c_streams%s  i-cstrea.adb		i-cstrea.ali
+W system%s		system.ads		system.ali
+W system.file_control_block%s  s-ficobl.ads	s-ficobl.ali
+W system.file_io%s	s-fileio.adb		s-fileio.ali
+
+U ada.streams.stream_io.c_streams%s  a-ssicst.ads  050c0f0b NE OL PK
+W ada.streams.stream_io%s  a-ststio.adb		a-ststio.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c_streams%s  i-cstrea.adb		i-cstrea.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-ststio.ads		20120709130952 c3455b31
+D a-ssicst.ads		20090409150020 47610751
+D a-ssicst.adb		20090409150020 53458a77
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-fileio.ads		20120709130952 45ce2f0f
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 7|38r9 53r5 8|35r6 37r14 44r27 84r5
+X 5 a-stream.ads
+36K13*Streams 1|16k9 5|84e16 7|38r13 53r9 8|37r18 84r9
+X 6 a-ststio.ads
+39K21*Stream_IO 5|36k13 6|223e26 7|38r21 53r17 8|37r26 84r17
+44P9*File_Type 7|42r27 46r25 8|50r27 61r25
+46E9*File_Mode 46e54 7|47r18 8|44r53 62r18
+185R9 Stream_AFCB<16|84R9> 202e14 8|67r34
+X 7 a-ssicst.ads
+38K31*C_Streams 6|39k21 7|53l27 53e36 8|37b36 84l27 84t36
+40K12*ICS=40:35 42r45 48r18
+42V13*C_Stream{12|41M12} 42>23 8|50b13 54l8 54t16
+42p23 F{6|44P9} 8|50b23 52r32 53r14
+45U14*Open 46=7 47>7 48>7 49>7 50>7 8|60b14 82l8 82t12
+46p7 File{6|44P9} 8|61b7 73m34 73r34
+47e7 Mode{6|46E9} 8|62b7 75r38
+48m7 C_Stream{12|41M12} 8|63b7 81r30
+49s7 Form{string} 8|64b7 77r30
+50s7 Name{string} 8|65b7 76r30
+X 8 a-ssicst.adb
+39K12 FIO=39:31 52r7 73r7
+40K12 FCB=40:31 42r18 44r64
+42P12 AP{16|82P9} 52r28 73r30
+44V13 To_FCB[10|20]{16|63E9} 75s30
+67r7 Dummy_File_Control_Block{6|185R9} 68r29 74r30
+X 10 a-unccon.ads
+20v14*Unchecked_Conversion 8|35w10 44r31
+X 11 interfac.ads
+38K9*Interfaces 7|36r6 40r24 8|32r6 32r32 11|179e15
+X 12 i-cstrea.ads
+37K20*C_Streams 7|36w17 40r35 8|32w17 32r43 12|285e25
+41M12*FILEs{14|50M12} 7|42r49 48r22 8|50r45 63r18
+X 13 system.ads
+37K9*System 8|33r6 34r6 39r24 40r24 13|196e11
+64M9*Address
+X 14 s-crtl.ads
+50M12*FILEs{13|64M9}
+X 16 s-ficobl.ads
+42K16*File_Control_Block 8|34w13 40r31 16|162e30
+63E9*File_Mode 8|44r68 16|63e66
+82P9*AFCB_Ptr(84R9) 8|42r22
+86m7*Stream{12|41M12} 8|53r16
+X 17 s-fileio.ads
+39K16*File_IO 8|33w13 39r31 17|255e19
+49U14*Open 8|73s11
+50p7 File_Ptr{16|82P9} 8|73r17
+51c7 Dummy_FCB<16|84R9> 8|74r17
+52e7 Mode{16|63E9} 8|75r17
+53s7 Name{string} 8|76r17
+54s7 Form{string} 8|77r17
+55e7 Amethod{character} 8|78r17
+56b7 Creat{boolean} 8|79r17
+57b7 Text{boolean} 8|80r17
+58m7 C_Stream{12|41M12} 8|81r17
+152U14*Check_File_Open 8|52s11
+

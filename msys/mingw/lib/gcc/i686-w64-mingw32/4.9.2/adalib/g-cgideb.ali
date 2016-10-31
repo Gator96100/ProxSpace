@@ -1,0 +1,169 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_DISPATCH
+RV NO_DISPATCHING_CALLS
+RV NO_ENUMERATION_MAPS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_IMPLICIT_LOOPS
+RV NO_NESTED_FINALIZATION
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U gnat.cgi.debug%b	g-cgideb.adb		9fa3378a OL PF PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat.cgi%s		g-cgi.adb		g-cgi.ali
+W system%s		system.ads		system.ali
+W system.img_enum_new%s	s-imenne.adb		s-imenne.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+U gnat.cgi.debug%s	g-cgideb.ads		c45107eb EE NE OL PK
+W gnat.cgi%s		g-cgi.adb		g-cgi.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150020 9cb836fb
+D a-strunb.ads		20120426100352 3f91d4c5
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-cgi.ads		20110801150502 8a26177f
+D g-cgideb.ads		20110801150502 4e771094
+D g-cgideb.adb		20110801150502 ee45f3db
+D system.ads		20121001083726 5fc8ae56
+D s-atocou.ads		20131010110730 cd7c94ca
+D s-atocou.adb		20131010110730 276bb8fc
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-imenne.ads		20140225151140 614c06c0
+D s-maccod.ads		20110906094622 0fbb7bce
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-stratt.ads		20131014135146 aedef97e
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 15|32r6 36r8
+X 7 a-string.ads
+16K13*Strings 35e16 15|32r10 36r12
+X 9 a-strunb.ads
+76K21*Unbounded 489e26 15|32w18 36r20
+79R9*Unbounded_String<5|48R9> 473e14 15|129r19
+94V13*To_Unbounded_String{79R9} 15|133s12
+100V13*To_String{string} 15|159s17
+123V14*"&"{79R9} 15|140s15 141s15 145s12 146s12 147s12 152s18 155s18
+X 12 gnat.ads
+34K9*GNAT 37e9 14|35r9 47r5 15|34r14 314r5
+X 13 g-cgi.ads
+104K14*CGI 12|34k9 13|255e13 14|35r14 47r10 15|34r19 314r10
+129E9*Metavariable_Name 164e23 15|149r19 153r30
+189V13*Metavariable{string} 15|154s30
+196V13*Metavariable_Exists{boolean} 15|150s16
+204V13*Argument_Count{natural} 15|138s24
+220V13*Value{string} 15|140s42
+228V13*Key{string} 15|140s33
+X 14 g-cgideb.ads
+35K18*Debug 13|104k14 14|47l14 47e19 15|34b23 314l14 314t19
+41V13*Text_Output{string} 15|308b13 312l8 312t19
+44V13*HTML_Output{string} 15|298b13 302l8 302t19
+X 15 g-cgideb.adb
+44K12 IO 70l8 70e10 80r26 103r26 122b17 162l8 162t10 301r14 311r14
+46H12*Format 46e49 48r31 50p16 51r18 56p16 56r33 60p16 60r30 64p16 65r17
+. 80r29 103r29 128r31
+48V16*Output{string} 48>24 128b16 160l11 160t17 301s17 311s17
+48c24 Mode<46R12> 128b24 134r22 135r25 136r27 140r27 141r27 145r24 146r22
+. 147r24 152r30 155r30 301r25 311r25
+50y16*Variable{string} 51>10 52>10 53>10 140R17 152R20
+51r10 Mode{46R12}
+52s10 Name{string}
+53s10 Value{string}
+56y16*New_Line{string} 56>26 136R17 141R17 145R14 147R14 155R20
+56r26 Mode{46R12}
+60y16*Title{string} 60>23 60>38 134R15
+60r23 Mode{46R12}
+60s38 Str{string}
+64y16*Header{string} 65>10 66>10 135R17 146R14
+65r10 Mode{46R12}
+66s10 Str{string}
+76K12 HTML_IO 93l8 93e15 168b17 240l8 240t15 299r14
+80R12*Format<46R12> 80e52 82P16 83r18 87P16 87r31 89P16 89r28 91P16 91r29
+. 191r29 210r31 220r28 231r18 299r22
+82V16*Variable{string}<50p16> 83>10 84>10 85>10 230b16 238l11 238t19
+83r10 IO{80R12} 231b10 235r31
+84s10 Name{string} 232b10 237r23
+85s10 Value{string} 233b10 237r47
+87V16*New_Line{string}<56p16> 87>26 210b16 214l11 214t19
+87r26 IO{80R12} 210b26 211r31
+89V16*Title{string}<60p16> 89>23 89>36 220b16 224l11 224t16
+89r23 IO{80R12} 220b23 221r31
+89s36 Str{string} 220b36 223r52
+91V16*Header{string}<64p16> 91>24 91>37 191b16 195l11 195t17
+91r24 IO{80R12} 191b24 192r31
+91s37 Str{string} 191b37 194r26
+99K12 Text_IO 116l8 116e15 246b17 292l8 292t15 309r14
+103R12*Format<46R12> 103e52 105P16 106r18 110P16 110r31 112P16 112r28 114P16
+. 114r29 252r29 261r31 271r28 283r18 309r22
+105V16*Variable{string}<50p16> 106>10 107>10 108>10 282b16 290l11 290t19
+106r10 IO{103R12} 283b10 287r31
+107s10 Name{string} 284b10 289r25
+108s10 Value{string} 285b10 289r40
+110V16*New_Line{string}<56p16> 110>26 254s32 261b16 265l11 265t19 275s32
+110r26 IO{103R12} 261b26 262r31
+112V16*Title{string}<60p16> 112>23 112>36 271b16 276l11 276t16
+112r23 IO{103R12} 271b23 275r42
+112s36 Str{string} 271b36 272r45 275r26
+114V16*Header{string}<64p16> 114>24 114>37 252b16 255l11 255t17
+114r24 IO{103R12} 252b24 254r42
+114s37 Str{string} 252b37 254r26
+129r10 Result{9|79R9} 132m10 139m13 139r23 144m10 144r20 151m16 151r26 159r28
+138i14 K{integer} 140r38 140r49
+149e14 P{13|129E9} 150r37 153r55 154r44
+170a7 NL{string} 194r42 213r26 223r74
+172V16 Bold{string} 172>22 182b16 185l11 185t15 237s17
+172s22 S{string} 182b22 184r25
+175V16 Italic{string} 175>24 201b16 204l11 204t17 237s39
+175s24 S{string} 201b24 203r25
+272i10 Spaces{natural} 273r41
+273a10 Indent{string} 275r17
+299r7 HTML{80R12} 301r33
+309r7 Text{103R12} 311r33
+

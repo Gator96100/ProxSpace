@@ -1,0 +1,118 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_LOOPS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U gnat.exception_actions%b  g-excact.adb	99005a2c NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+U gnat.exception_actions%s  g-excact.ads	1839c778 EE NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W gnat%s		gnat.ads		gnat.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-excact.ads		20130102093808 1d79548a
+D g-excact.adb		20111104135534 1146d503
+D g-eacodu.adb		20090409150020 65e8899a gnat.exception_actions.core_dump
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 5|52r6 52r26 6|32r6 49r36 53r28 55r26
+X 2 a-except.ads
+53K13*Exceptions 360e19 5|52w10 52r30
+57P9*Exception_Id<13|85P9> 5|71r16 78r47 96r59 6|54r7 56r27 74r16 98r47
+60p4*Null_Id{57P9} 6|78r15
+62R9*Exception_Occurrence 328e14 5|57r30 112r38 6|92r38 7|35r35
+X 3 a-unccon.ads
+20v14*Unchecked_Conversion 6|32w10 49r40 53r32 55r30
+X 4 gnat.ads
+34K9*GNAT 37e9 5|54r9 118r5 6|38r14 131r5 7|34r11
+X 5 g-excact.ads
+54K14*Exception_Actions 4|34k9 5|118l10 118e27 6|38b19 131l10 131t27 7|34r16
+56P9*Exception_Action 57>17 62r47 72r16 6|40r20 50r7 62r47 75r16
+57r17 Occurrence{2|62R9}
+62U14*Register_Global_Action 62>38 6|62b14 67l8 67t30
+62p38 Action{56P9} 6|62b38 65r24
+70U14*Register_Id_Action 71>7 72>7 6|73b14 86l8 86t26
+71p7 Id{2|57P9} 6|74b7 78r10 83r16
+72p7 Action{56P9} 6|75b7 83r51
+78V13*Name_To_Id{2|57P9} 78>25 6|98b13 101l8 101t18
+78s25 Name{string} 6|98b25 100r41
+88V13*Registered_Exceptions_Count{natural} 6|107b13
+96A9*Exception_Id_Array(2|57P9)<integer> 99r18 6|119r18
+98U14*Get_Registered_Exceptions 99<7 100<7 6|118b14 129l8 129t33
+99a7 List{96A9} 6|119b7 122r35 126r16 127m10
+100i7 Last{integer} 6|120b7 124m39 126r30
+112U14*Core_Dump 112>25 6|92b14 7|35b11 49l5 49t14
+112r25 Occurrence{2|62R9} 6|92b25 7|35b22 36r25
+X 6 g-excact.adb
+40p4 Global_Action{5|56P9} 41m22 41r22 65m7
+45b4 Raise_Hook_Initialized{boolean} 47m12 47r12 84m7
+49V13 To_Raise_Action[3|20]{13|81P9} 83s34
+53V13 To_Data[3|20]{13|85P9} 83s7
+55V13 To_Id[3|20]{2|57P9} 100s14 127s22
+122a7 Ids{9|67A9} 124m34 127r29
+126i11 L{integer} 127r16 127r34
+X 7 g-eacodu.adb
+37N4 SIG_ABORT 47r12
+38U14*C_Abort 39b<c,abort>22 48s4
+40U14*Signal 40>22 40>40 41b<c,signal>22 47s4
+40i22 Signum{integer}
+40m40 Handler{8|64M9}
+X 8 system.ads
+37K9*System 6|33w6 34r6 34r35 35r6 35r35 36r6 36r35 108r6 7|40r50 47r23 8|196e11
+64M9*Address 7|40r57
+66m4*Null_Address{64M9} 7|47r30
+X 9 s-exctab.ads
+40K16*Exception_Table 6|36w13 36r42 108r13 9|75e27
+56V13*Internal_Exception{13|85P9} 6|100s21
+58b7 Create_If_Not_Exist{boolean} 6|100r47
+64V13*Registered_Exceptions_Count{natural} 6|108r29
+67A9*Exception_Data_Array(13|85P9)<integer> 6|122r13
+70U14*Get_Registered_Exceptions 6|124s7
+X 11 s-soflin.ads
+45K16*Soft_Links 6|34w13 34r42 11|408e22
+60P9*No_Param_Proc
+187p4*Lock_Task{60P9} 6|64r7 82r7
+197p4*Unlock_Task{60P9} 6|66r7 85r7
+X 13 s-stalib.ads
+55K16*Standard_Library 6|35w13 35r42 13|252e28
+81P9*Raise_Action 6|50r25
+85P9*Exception_Data_Ptr(84R9) 6|54r21 56r7
+129p7*Raise_Hook{81P9} 6|83m20
+

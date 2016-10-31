@@ -1,0 +1,65 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+
+U system.dsa_services%s	s-dsaser.ads		72a5f722 NE OL PK
+W system%s		system.ads		system.ali
+W system.partition_interface%s  s-parint.adb	s-parint.ali
+W system.rpc%s		s-rpc.adb		s-rpc.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-dsaser.ads		20090409150020 d15176d8
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-parint.ads		20110829141750 249c047e
+D s-pooglo.ads		20110804083314 542f33d0
+D s-rpc.ads		20130104124956 d8a02bd2
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stratt.ads		20131014135146 aedef97e
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 8 system.ads
+37K9*System 196e11 9|35r6 36r6 38r9 54r5
+X 9 s-dsaser.ads
+38K16*DSA_Services 8|37k9 9|54l12 54e24
+40V13*Get_Active_Partition_ID=42:34{16|44I9}
+41a7 Name{14|69A12}
+45V13*Get_Local_Partition_ID=46:34{16|44I9}
+49V13*Get_Passive_Partition_ID=51:34{16|44I9}
+50a7 Name{14|69A12}
+X 14 s-parint.ads
+40K16*Partition_Interface 9|35w13 41r14 42r14 46r14 50r14 51r14 14|191e31
+69A12*Unit_Name{string}<integer> 9|41r34 50r34
+125V13*Get_Active_Partition_ID{16|44I9} 9|42r34
+131V13*Get_Local_Partition_ID{16|44I9} 9|46r34
+134V13*Get_Passive_Partition_ID{16|44I9} 9|51r34
+X 16 s-rpc.ads
+42K16*RPC 9|36w13 41r52 45r43 50r52 16|94e15
+44I9*Partition_ID<short_short_integer> 9|41r56 45r47 50r56
+

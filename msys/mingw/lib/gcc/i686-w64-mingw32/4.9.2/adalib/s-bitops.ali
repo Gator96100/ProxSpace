@@ -1,0 +1,117 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.bit_ops%b	s-bitops.adb		8cf1ef30 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U system.bit_ops%s	s-bitops.ads		0765e3a3 NE OL PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-bitops.ads		20140225151544 0765e3a3
+D s-bitops.adb		20140225151544 84dbfe6f
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 6|37r6 37r34 38r6 54r28
+X 2 a-except.ads
+53K13*Exceptions 360e19 6|37w10 37r38
+89U14*Raise_Exception 6|216s7
+X 3 a-unccon.ads
+20v14*Unchecked_Conversion 6|38w10 54r32
+X 4 system.ads
+37K9*System 196e11 5|36w6 38r9 47r16 49r16 51r16 58r15 60r15 69r16 71r16
+. 78r16 80r16 82r16 89r16 91r16 93r16 99r5 6|34w6 34r34 35r6 35r34 40r14
+. 42r26 147r16 149r16 220r5
+64M9*Address 5|47r23 49r23 51r23 58r22 60r22 69r23 71r23 78r23 80r23 82r23
+. 89r23 91r23 93r23 6|54r54 84r16 86r16 88r16 109r15 111r15 147r23 149r23
+. 165r16 167r16 169r16 190r16 192r16 194r16
+X 5 s-bitops.ads
+38K16*Bit_Ops 4|37k9 5|99l12 99e19 6|40b21 220l12 220t19
+46U14*Bit_And 47>7 48>7 49>7 50>7 51>7 6|83b14 102l8 102t15
+47m7 Left{4|64M9} 6|84b7 90r43
+48i7 Llen{natural} 6|85b7 95r10
+49m7 Right{4|64M9} 6|86b7 91r43
+50i7 Rlen{natural} 6|87b7 95r18 99r22
+51m7 Result{4|64M9} 6|88b7 92r43
+57V13*Bit_Eq{boolean} 58>7 59>7 60>7 61>7 6|108b13 140l8 140t14
+58m7 Left{4|64M9} 6|109b7 114r42
+59i7 Llen{natural} 6|110b7 118r10 123r40 124r40
+60m7 Right{4|64M9} 6|111b7 115r42
+61i7 Rlen{natural} 6|112b7 118r18
+68U14*Bit_Not 69>7 70>7 71>7 6|146b14 158l8 158t15
+69m7 Opnd{4|64M9} 6|147b7 151r43
+70i7 Len{natural} 6|148b7 155r22
+71m7 Result{4|64M9} 6|149b7 152r43
+77U14*Bit_Or 78>7 79>7 80>7 81>7 82>7 6|164b14 183l8 183t14
+78m7 Left{4|64M9} 6|165b7 171r43
+79i7 Llen{natural} 6|166b7 176r10
+80m7 Right{4|64M9} 6|167b7 172r43
+81i7 Rlen{natural} 6|168b7 176r18 180r22
+82m7 Result{4|64M9} 6|169b7 173r43
+88U14*Bit_Xor 89>7 90>7 91>7 92>7 93>7 6|189b14 208l8 208t15
+89m7 Left{4|64M9} 6|190b7 196r43
+90i7 Llen{natural} 6|191b7 201r10
+91m7 Right{4|64M9} 6|192b7 197r43
+92i7 Rlen{natural} 6|193b7 201r18 205r22
+93m7 Result{4|64M9} 6|194b7 198r43
+X 6 s-bitops.adb
+42A12 Bits_Array{10|56A9}<integer> 51r24
+51P9 Bits(42A12) 54r63 90r26 91r26 92r26 114r25 115r25 151r26 152r26 171r26
+. 172r26 173r26 196r26 197r26 198r26
+54V13 To_Bits[3|20]{51P9} 90s34 91s34 92s34 114s33 115s33 151s34 152s34 171s34
+. 172s34 173s34 196s34 197s34 198s34
+56N4 LE 63r11 63r32 64r11 64r32 65r11 65r32 66r11 66r32 67r11 67r32 68r11
+. 68r32 69r11 69r32
+62a4 Masks(10|52M9) 133r24
+75U14 Raise_Error 76r22 96s10 177s10 202s10 214b14 218l8 218t19
+90p7 LeftB{51P9} 100r25
+91p7 RightB{51P9} 100r39
+92p7 ResultB{51P9} 100r10
+99i11 J{integer} 100r19 100r32 100r47
+114p7 LeftB{51P9} 127r16 132r20
+115p7 RightB{51P9} 127r37 132r41
+123i13 BLen{natural} 127r28 127r50 132r27 132r49
+124i13 Bitc{natural} 130r19 133r31
+151p7 OpndB{51P9} 156r29
+152p7 ResultB{51P9} 156r10
+155i11 J{integer} 156r19 156r36
+171p7 LeftB{51P9} 181r25
+172p7 RightB{51P9} 181r38
+173p7 ResultB{51P9} 181r10
+180i11 J{integer} 181r19 181r32 181r46
+196p7 LeftB{51P9} 206r25
+197p7 RightB{51P9} 206r39
+198p7 ResultB{51P9} 206r10
+205i11 J{integer} 206r19 206r32 206r47
+X 10 s-unstyp.ads
+40K16*Unsigned_Types 6|35w13 35r41 42r33 10|208e26
+52M9*Packed_Byte 6|62r39
+56A9*Packed_Bytes1(52M9)<integer> 6|42r48
+

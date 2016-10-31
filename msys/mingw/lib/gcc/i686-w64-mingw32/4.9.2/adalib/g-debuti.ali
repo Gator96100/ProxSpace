@@ -1,0 +1,83 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV SPARK_05
+
+U gnat.debug_utilities%b  g-debuti.adb		846f2e9e NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+U gnat.debug_utilities%s  g-debuti.ads		a1f3db1c NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-debuti.ads		20110801150502 0311a7bb
+D g-debuti.adb		20110801150502 f5756d77
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 3 gnat.ads
+34K9*GNAT 37e9 4|39r9 81r5 5|35r14 188r5
+X 4 g-debuti.ads
+39K14*Debug_Utilities 3|34k9 4|81l10 81e25 5|35b19 188l10 188t25
+42b4*Address_64{boolean} 45r62 51r63
+45N4*Address_Image_Length 48r41 5|54r12
+48A12*Image_String{string}<integer> 62r47 5|46r40 47r11
+51N4*Address_Image_C_Length 54r43
+54A12*Image_C_String{string}<integer> 67r49 5|107r42 108r11
+57V13*Image{string} 57>20 5|81b13 101l8 101t13
+57s20 S{string} 5|81b20 82r28 88r16 89r13 95r19
+62V13*Image{48A12} 62>20 5|46b13 73l8 73t13
+62m20 A{6|64M9} 5|46b20 55r24
+67V13*Image_C{54A12} 67>22 5|107b13 119l8 119t15
+67m22 A{6|64M9} 5|107b22 109r42
+72V13*Value{6|64M9} 72>20 5|125b13 186l8 186t13
+72s20 S{string} 5|125b20 128r25 135r10 135r33 141r16 142r15
+X 5 g-debuti.adb
+37a4 H(character) 66r19 113r19
+47a7 S{4|48A12} 53m7 53r10 58m13 66m10 71m7 72r14
+48i7 P{natural} 54m7 56r13 58r16 59m13 59r18 66r13 67m10 67r15
+49m7 N{8|105M9} 55m7 66r31 68m10 68r15
+50i7 U{natural} 57r13 60m13 63m13 63r18
+82a7 W{string} 86m7 91m13 95m10 99m7 100r14
+83i7 P{positive} 90m13 90r18 91r16 94m10 94r15 95r13 98m7 98r12 99r10 100r22
+88i11 J{integer} 89r16 95r22
+108a7 S{4|54A12} 112r29 113m10 117m7 118r14
+109m7 N{8|105M9} 113r31 114m10 114r15
+112i11 P{integer} 113r13
+126m7 Base{8|105M9} 151m13 156m13 177r21 180r29
+127m7 Res{8|105M9} 147r16 156r21 157m13 180m16 180r23 185r26
+128i7 Last{natural} 135r13 135r36 136m10 136r18 141r27
+129e7 C{character} 142m10 146r13 155r16 155r32 161r16 167r16 168r36 169r19
+. 170r36 171r19 172r36
+130m7 N{8|105M9} 168m16 170m16 172m16 177r16 180r36
+141i11 J{integer} 142r18
+X 6 system.ads
+37K9*System 4|37w6 62r24 67r26 72r39 5|32w6 32r35 33r6 33r35 125r39 6|196e11
+64M9*Address 4|62r31 67r33 72r46 5|46r24 107r26 125r46
+X 8 s-stoele.ads
+42K16*Storage_Elements 5|33w13 33r42 8|117e28
+105M9*Integer_Address 5|49r11 109r11 126r14 127r14 130r14
+107V13*To_Address{6|64M9} 5|185s14
+112V13*To_Integer{105M9} 5|55s12 109s30
+

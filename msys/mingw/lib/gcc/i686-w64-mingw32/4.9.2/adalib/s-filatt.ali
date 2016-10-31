@@ -1,0 +1,63 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV SPARK_05
+
+U system.file_attributes%s  s-filatt.ads	bcd153f4 NE OL PK
+W system%s		system.ads		system.ali
+W system.os_constants%s	s-oscons.ads		s-oscons.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-filatt.ads		20140224165820 026ce294
+D s-oscons.ads		20141221155618 ccb65532
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 5 system.ads
+37K9*System 196e11 7|34r6 35r6 37r9 46r11 50r11 54r11 58r25 61r6 71r5
+64M9*Address 7|46r18 50r18 54r18
+X 7 s-filatt.ads
+37K16*File_Attributes 5|37k9 7|58E12 71l12 71e27
+39A9*File_Attributes<11|70A9> 41r43 43r42 47r18 51r18 55r18 60c9 63r8
+41U14*Reset_Attributes 41^32 65b<c,__gnat_reset_attributes>22
+41p32 A(39A9)
+43V13*Error_Attributes{integer} 43^31 66b<c,__gnat_error_attributes>22
+43p31 A(39A9)
+45V13*File_Exists_Attr{integer} 46>7 47^7 67b<c,__gnat_file_exists_attr>22
+46m7 N{5|64M9}
+47p7 A(39A9)
+49V13*Is_Regular_File_Attr{integer} 50>7 51^7 68b<c,__gnat_is_regular_file_attr>22
+50m7 N{5|64M9}
+51p7 A(39A9)
+53V13*Is_Directory_Attr{integer} 54>7 55^7 69b<c,__gnat_is_directory_attr>22
+54m7 N{5|64M9}
+55p7 A(39A9)
+58K12 SOSC=58:32 62r14
+X 8 s-oscons.ads
+44K16*OS_Constants 7|34w13 58r32 8|304e24
+290N4*SIZEOF_struct_file_attributes 7|62r19
+X 11 s-stoele.ads
+42K16*Storage_Elements 7|35w13 61r13 11|117e28
+64M9*Storage_Element
+70A9*Storage_Array(64M9)<54I9> 7|61r30
+

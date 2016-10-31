@@ -1,0 +1,258 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.characters.wide_wide_latin_1%s  a-chzla1.ads  43026d07 NE OL PU PK
+W ada.characters%s	a-charac.ads		a-charac.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chzla1.ads		20090409150020 6e3ca95c
+D system.ads		20121001083726 5fc8ae56
+X 1 ada.ads
+16K9*Ada 19e8 3|37r9 376r5
+X 2 a-charac.ads
+16K13*Characters 1|16k9 2|18e19 3|37r13 376r9
+X 3 a-chzla1.ads
+37K24*Wide_Wide_Latin_1 2|16k13 3|376l20 376e37
+44e4*NUL{wide_wide_character}
+45e4*SOH{wide_wide_character}
+46e4*STX{wide_wide_character}
+47e4*ETX{wide_wide_character}
+48e4*EOT{wide_wide_character}
+49e4*ENQ{wide_wide_character}
+50e4*ACK{wide_wide_character}
+51e4*BEL{wide_wide_character}
+52e4*BS{wide_wide_character}
+53e4*HT{wide_wide_character}
+54e4*LF{wide_wide_character}
+55e4*VT{wide_wide_character}
+56e4*FF{wide_wide_character}
+57e4*CR{wide_wide_character}
+58e4*SO{wide_wide_character}
+59e4*SI{wide_wide_character}
+61e4*DLE{wide_wide_character}
+62e4*DC1{wide_wide_character}
+63e4*DC2{wide_wide_character}
+64e4*DC3{wide_wide_character}
+65e4*DC4{wide_wide_character}
+66e4*NAK{wide_wide_character}
+67e4*SYN{wide_wide_character}
+68e4*ETB{wide_wide_character}
+69e4*CAN{wide_wide_character}
+70e4*EM{wide_wide_character}
+71e4*SUB{wide_wide_character}
+72e4*ESC{wide_wide_character}
+73e4*FS{wide_wide_character} 157r38
+74e4*GS{wide_wide_character} 158r38
+75e4*RS{wide_wide_character} 159r38
+76e4*US{wide_wide_character} 160r38
+82e4*Space{wide_wide_character}
+83e4*Exclamation{wide_wide_character}
+84e4*Quotation{wide_wide_character}
+85e4*Number_Sign{wide_wide_character}
+86e4*Dollar_Sign{wide_wide_character}
+87e4*Percent_Sign{wide_wide_character}
+88e4*Ampersand{wide_wide_character}
+89e4*Apostrophe{wide_wide_character}
+90e4*Left_Parenthesis{wide_wide_character}
+91e4*Right_Parenthesis{wide_wide_character}
+92e4*Asterisk{wide_wide_character}
+93e4*Plus_Sign{wide_wide_character}
+94e4*Comma{wide_wide_character}
+95e4*Hyphen{wide_wide_character} 96r55
+96e4*Minus_Sign=96:55{wide_wide_character}
+97e4*Full_Stop{wide_wide_character}
+98e4*Solidus{wide_wide_character}
+102e4*Colon{wide_wide_character}
+103e4*Semicolon{wide_wide_character}
+104e4*Less_Than_Sign{wide_wide_character}
+105e4*Equals_Sign{wide_wide_character}
+106e4*Greater_Than_Sign{wide_wide_character}
+107e4*Question{wide_wide_character}
+109e4*Commercial_At{wide_wide_character}
+113e4*Left_Square_Bracket{wide_wide_character}
+114e4*Reverse_Solidus{wide_wide_character}
+115e4*Right_Square_Bracket{wide_wide_character}
+116e4*Circumflex{wide_wide_character}
+117e4*Low_Line{wide_wide_character}
+119e4*Grave{wide_wide_character}
+120e4*LC_A{wide_wide_character}
+121e4*LC_B{wide_wide_character}
+122e4*LC_C{wide_wide_character}
+123e4*LC_D{wide_wide_character}
+124e4*LC_E{wide_wide_character}
+125e4*LC_F{wide_wide_character}
+126e4*LC_G{wide_wide_character}
+127e4*LC_H{wide_wide_character}
+128e4*LC_I{wide_wide_character}
+129e4*LC_J{wide_wide_character}
+130e4*LC_K{wide_wide_character}
+131e4*LC_L{wide_wide_character}
+132e4*LC_M{wide_wide_character}
+133e4*LC_N{wide_wide_character}
+134e4*LC_O{wide_wide_character}
+135e4*LC_P{wide_wide_character}
+136e4*LC_Q{wide_wide_character}
+137e4*LC_R{wide_wide_character}
+138e4*LC_S{wide_wide_character}
+139e4*LC_T{wide_wide_character}
+140e4*LC_U{wide_wide_character}
+141e4*LC_V{wide_wide_character}
+142e4*LC_W{wide_wide_character}
+143e4*LC_X{wide_wide_character}
+144e4*LC_Y{wide_wide_character}
+145e4*LC_Z{wide_wide_character}
+146e4*Left_Curly_Bracket{wide_wide_character}
+147e4*Vertical_Line{wide_wide_character}
+148e4*Right_Curly_Bracket{wide_wide_character}
+149e4*Tilde{wide_wide_character}
+150e4*DEL{wide_wide_character}
+157e4*IS4=157:38{wide_wide_character}
+158e4*IS3=158:38{wide_wide_character}
+159e4*IS2=159:38{wide_wide_character}
+160e4*IS1=160:38{wide_wide_character}
+162e4*Reserved_128{wide_wide_character}
+164e4*Reserved_129{wide_wide_character}
+166e4*BPH{wide_wide_character}
+167e4*NBH{wide_wide_character}
+168e4*Reserved_132{wide_wide_character}
+170e4*NEL{wide_wide_character}
+171e4*SSA{wide_wide_character}
+172e4*ESA{wide_wide_character}
+173e4*HTS{wide_wide_character}
+174e4*HTJ{wide_wide_character}
+175e4*VTS{wide_wide_character}
+176e4*PLD{wide_wide_character}
+177e4*PLU{wide_wide_character}
+178e4*RI{wide_wide_character}
+179e4*SS2{wide_wide_character}
+180e4*SS3{wide_wide_character}
+182e4*DCS{wide_wide_character}
+183e4*PU1{wide_wide_character}
+184e4*PU2{wide_wide_character}
+185e4*STS{wide_wide_character}
+186e4*CCH{wide_wide_character}
+187e4*MW{wide_wide_character}
+188e4*SPA{wide_wide_character}
+189e4*EPA{wide_wide_character}
+191e4*SOS{wide_wide_character}
+192e4*Reserved_153{wide_wide_character}
+194e4*SCI{wide_wide_character}
+195e4*CSI{wide_wide_character}
+196e4*ST{wide_wide_character}
+197e4*OSC{wide_wide_character}
+198e4*PM{wide_wide_character}
+199e4*APC{wide_wide_character}
+207e4*No_Break_Space{wide_wide_character} 209r46
+209e4*NBSP=209:46{wide_wide_character}
+210e4*Inverted_Exclamation{wide_wide_character}
+212e4*Cent_Sign{wide_wide_character}
+213e4*Pound_Sign{wide_wide_character}
+214e4*Currency_Sign{wide_wide_character}
+216e4*Yen_Sign{wide_wide_character}
+217e4*Broken_Bar{wide_wide_character}
+218e4*Section_Sign{wide_wide_character}
+220e4*Diaeresis{wide_wide_character}
+221e4*Copyright_Sign{wide_wide_character}
+223e4*Feminine_Ordinal_Indicator{wide_wide_character}
+225e4*Left_Angle_Quotation{wide_wide_character}
+227e4*Not_Sign{wide_wide_character}
+228e4*Soft_Hyphen{wide_wide_character}
+229e4*Registered_Trade_Mark_Sign{wide_wide_character}
+231e4*Macron{wide_wide_character}
+235e4*Degree_Sign{wide_wide_character} 236r46
+236e4*Ring_Above=236:46{wide_wide_character}
+237e4*Plus_Minus_Sign{wide_wide_character}
+239e4*Superscript_Two{wide_wide_character}
+241e4*Superscript_Three{wide_wide_character}
+243e4*Acute{wide_wide_character}
+244e4*Micro_Sign{wide_wide_character}
+245e4*Pilcrow_Sign{wide_wide_character} 248r46
+247e4*Paragraph_Sign=248:46{wide_wide_character}
+249e4*Middle_Dot{wide_wide_character}
+250e4*Cedilla{wide_wide_character}
+251e4*Superscript_One{wide_wide_character}
+253e4*Masculine_Ordinal_Indicator{wide_wide_character}
+255e4*Right_Angle_Quotation{wide_wide_character}
+257e4*Fraction_One_Quarter{wide_wide_character}
+259e4*Fraction_One_Half{wide_wide_character}
+261e4*Fraction_Three_Quarters{wide_wide_character}
+263e4*Inverted_Question{wide_wide_character}
+268e4*UC_A_Grave{wide_wide_character}
+269e4*UC_A_Acute{wide_wide_character}
+270e4*UC_A_Circumflex{wide_wide_character}
+272e4*UC_A_Tilde{wide_wide_character}
+273e4*UC_A_Diaeresis{wide_wide_character}
+275e4*UC_A_Ring{wide_wide_character}
+276e4*UC_AE_Diphthong{wide_wide_character}
+278e4*UC_C_Cedilla{wide_wide_character}
+280e4*UC_E_Grave{wide_wide_character}
+281e4*UC_E_Acute{wide_wide_character}
+282e4*UC_E_Circumflex{wide_wide_character}
+284e4*UC_E_Diaeresis{wide_wide_character}
+286e4*UC_I_Grave{wide_wide_character}
+287e4*UC_I_Acute{wide_wide_character}
+288e4*UC_I_Circumflex{wide_wide_character}
+290e4*UC_I_Diaeresis{wide_wide_character}
+295e4*UC_Icelandic_Eth{wide_wide_character}
+297e4*UC_N_Tilde{wide_wide_character}
+298e4*UC_O_Grave{wide_wide_character}
+299e4*UC_O_Acute{wide_wide_character}
+300e4*UC_O_Circumflex{wide_wide_character}
+302e4*UC_O_Tilde{wide_wide_character}
+303e4*UC_O_Diaeresis{wide_wide_character}
+305e4*Multiplication_Sign{wide_wide_character}
+307e4*UC_O_Oblique_Stroke{wide_wide_character}
+309e4*UC_U_Grave{wide_wide_character}
+310e4*UC_U_Acute{wide_wide_character}
+311e4*UC_U_Circumflex{wide_wide_character}
+313e4*UC_U_Diaeresis{wide_wide_character}
+315e4*UC_Y_Acute{wide_wide_character}
+316e4*UC_Icelandic_Thorn{wide_wide_character}
+318e4*LC_German_Sharp_S{wide_wide_character}
+323e4*LC_A_Grave{wide_wide_character}
+324e4*LC_A_Acute{wide_wide_character}
+325e4*LC_A_Circumflex{wide_wide_character}
+327e4*LC_A_Tilde{wide_wide_character}
+328e4*LC_A_Diaeresis{wide_wide_character}
+330e4*LC_A_Ring{wide_wide_character}
+331e4*LC_AE_Diphthong{wide_wide_character}
+333e4*LC_C_Cedilla{wide_wide_character}
+335e4*LC_E_Grave{wide_wide_character}
+336e4*LC_E_Acute{wide_wide_character}
+337e4*LC_E_Circumflex{wide_wide_character}
+339e4*LC_E_Diaeresis{wide_wide_character}
+341e4*LC_I_Grave{wide_wide_character}
+342e4*LC_I_Acute{wide_wide_character}
+343e4*LC_I_Circumflex{wide_wide_character}
+345e4*LC_I_Diaeresis{wide_wide_character}
+350e4*LC_Icelandic_Eth{wide_wide_character}
+352e4*LC_N_Tilde{wide_wide_character}
+353e4*LC_O_Grave{wide_wide_character}
+354e4*LC_O_Acute{wide_wide_character}
+355e4*LC_O_Circumflex{wide_wide_character}
+357e4*LC_O_Tilde{wide_wide_character}
+358e4*LC_O_Diaeresis{wide_wide_character}
+360e4*Division_Sign{wide_wide_character}
+362e4*LC_O_Oblique_Stroke{wide_wide_character}
+364e4*LC_U_Grave{wide_wide_character}
+365e4*LC_U_Acute{wide_wide_character}
+366e4*LC_U_Circumflex{wide_wide_character}
+368e4*LC_U_Diaeresis{wide_wide_character}
+370e4*LC_Y_Acute{wide_wide_character}
+371e4*LC_Icelandic_Thorn{wide_wide_character}
+373e4*LC_Y_Diaeresis{wide_wide_character}
+

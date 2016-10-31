@@ -1,0 +1,104 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.standard_library%b  s-stalib.adb	a964624f NE OL PK
+W system%s		system.ads		system.ali
+W system.memory%s	s-memory.adb		s-memory.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+
+U system.standard_library%s  s-stalib.ads	0eb2396f BN NE OL PR PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-memory.ads		20140225151140 597d6634
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stalib.adb		20140225151140 f2fe2716
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 9|53r6 75r10
+X 3 a-unccon.ads
+20v14*Unchecked_Conversion 9|53w10 75r14
+X 4 system.ads
+37K9*System 196e11 9|55r9 75r36 115r19 252r5 10|47r6 55r6 62r14 74r7 85r10
+. 105r5
+64M9*Address 9|75r43 115r26 124r22
+66m4*Null_Address{64M9} 9|158r32 167r32 176r32 185r32 194r32 203r32
+X 5 s-memory.ads
+45K16*Memory 107e18 10|55w13
+53V13*Alloc{4|64M9} 103i<c,__gnat_malloc>22
+68U14*Free 104i<c,__gnat_free>22
+76V13*Realloc{4|64M9} 105i<c,__gnat_realloc>22
+X 7 s-soflin.ads
+45K16*Soft_Links 408e22 10|47w13 74r14 85r17
+60P9*No_Param_Proc
+173p4*Abort_Undefer{60P9} 10|74r25
+231p4*Adafinal{60P9} 10|85r28
+X 9 s-stalib.ads
+55K16*Standard_Library 4|37k9 9|252l12 252e28 10|62b21 105l12 105t28
+60A12*Big_String{string}<integer> 61r36 67r38
+67P9*Big_String_Ptr(60A12) 68r8 75r52
+74V13*To_Ptr[3|20]{67P9}
+81P9*Raise_Action 129r20
+84R9*Exception_Data 85r42 98c9 135e14 152r35 161r32 170r32 179r32 188r32
+. 197r31
+85P9*Exception_Data_Ptr(84R9) 119r20
+98R9*Exception_Data
+99b7*Not_Handled_By_Others{boolean} 153m7 162m7 171m7 180m7 189m7 198m7
+106e7*Lang{character} 154m7 163m7 172m7 181m7 190m7 199m7
+112i7*Name_Length{natural} 155m7 164m7 173m7 182m7 191m7 200m7
+115m7*Full_Name{4|64M9} 156m7 165m7 174m7 183m7 192m7 201m7
+119p7*HTable_Ptr{85P9} 157m7 166m7 175m7 184m7 193m7 202m7
+124m7*Foreign_Data{4|64M9} 158m7 167m7 176m7 185m7 194m7 203m7
+129p7*Raise_Hook{81P9} 159m7 168m7 177m7 186m7 195m7 204m7
+142a4*Constraint_Error_Name{string} 155r32 156r32
+143a4*Program_Error_Name{string} 173r32 174r32
+144a4*Storage_Error_Name{string} 182r32 183r32
+145a4*Tasking_Error_Name{string} 191r32 192r32
+146a4*Abort_Signal_Name{string} 200r32 201r32
+148a4*Numeric_Error_Name{string} 164r32 165r32
+152r4*Constraint_Error_Def{98R9} 206m22 206r22
+161r4*Numeric_Error_Def{98R9} 207m22 207r22
+170r4*Program_Error_Def{98R9} 208m22 208r22
+179r4*Storage_Error_Def{98R9} 209m22 209r22
+188r4*Tasking_Error_Def{98R9} 210m22 210r22
+197r4*Abort_Signal_Def{98R9} 211m22 211r22
+213i4*Local_Partition_ID{natural}
+218E9*Exception_Trace_Kind 231e7 235r22
+219n7*RM_Convention{218E9} 235r46
+224n7*Every_Raise{218E9}
+228n7*Unhandled_Raise{218E9}
+235e4*Exception_Trace{218E9} 236r19
+243U14*Abort_Undefer_Direct 244r19 10|72b14 75l8 75t28
+248U14*Adafinal 10|81b14 87l8 87t16
+X 10 s-stalib.adb
+64b4 Runtime_Finalized{boolean} 83r14 84m10
+93U14 Break_Start 94i<c,__gnat_break_start>22 100b14 103l8 103t19
+

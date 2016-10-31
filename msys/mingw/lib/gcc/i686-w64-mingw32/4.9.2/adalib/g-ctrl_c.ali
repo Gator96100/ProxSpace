@@ -1,0 +1,43 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U gnat.ctrl_c%b		g-ctrl_c.adb		6ad8d3ae NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.ctrl_c%s		g-ctrl_c.ads		8223c68a EE NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-ctrl_c.ads		20110801150502 7f09147b
+D g-ctrl_c.adb		20110801150502 15d1c7d5
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|43r9 59r5 3|32r14 55r5
+X 2 g-ctrl_c.ads
+43K14*Ctrl_C 1|34k9 2|58E41 59l10 59e16 3|32b19 55l10 55t16
+45P9*Handler_Type 49r41 3|37r18 47r41
+49U14*Install_Handler 49>31 3|47b14 53l8 53t23
+49p31 Handler{45P9} 3|47b31 51r22
+53U14*Uninstall_Handler 58b<c,__gnat_uninstall_int_handler>22
+X 3 g-ctrl_c.adb
+34P9 C_Handler_Type 35r26 48r37
+37p4 Ada_Handler{2|45P9} 44r7 51m7
+39U14 C_Handler 40r26 42b14 45l8 45t17 52r17
+48U17*Internal 48>27 49b<c,__gnat_install_int_handler>25 52s7
+48p27 Handler{34P9}
+

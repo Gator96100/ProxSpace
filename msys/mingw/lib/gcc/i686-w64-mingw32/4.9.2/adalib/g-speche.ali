@@ -1,0 +1,44 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U gnat.spelling_checker%b  g-speche.adb		1e4a9a92 OL PK
+W gnat%s		gnat.ads		gnat.ali
+W gnat.spelling_checker_generic%s  g-spchge.adb	g-spchge.ali
+
+U gnat.spelling_checker%s  g-speche.ads		c439688c EE NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-speche.ads		20140225151544 3913ba7d
+D g-speche.adb		20140225151544 0ac4c117
+D g-spchge.ads		20140225151544 2d9de1f8
+D g-spchge.adb		20140225151544 7037e350
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|39r9 55r5 3|34r6 36r14 39r6 51r5
+X 2 g-speche.ads
+39K14*Spelling_Checker 1|34k9 2|55l10 55e26 3|36b19 51l10 51t26
+42V13*Is_Bad_Spelling_Of{boolean} 43>7 44>7 3|46b13
+43s7 Found{string} 3|47b7
+44s7 Expect{string} 3|48b7
+X 3 g-speche.adb
+38V13 IBS[4|51]{boolean} 49r12 5|40b13
+X 4 g-spchge.ads
+42K14*Spelling_Checker_Generic 3|34w11 39r11 4|65e34
+51v13*Is_Bad_Spelling_Of 3|39r36
+

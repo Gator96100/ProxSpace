@@ -1,0 +1,174 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IO
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U ada.wide_text_io.decimal_aux%b  a-wtdeau.adb	5e2d3432 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+W ada.wide_text_io.float_aux%s  a-wtflau.adb	a-wtflau.ali
+W ada.wide_text_io.generic_aux%s  a-wtgeau.adb	a-wtgeau.ali
+W system%s		system.ads		system.ali
+W system.img_dec%s	s-imgdec.adb		s-imgdec.ali
+W system.img_lld%s	s-imglld.adb		s-imglld.ali
+W system.val_dec%s	s-valdec.adb		s-valdec.ali
+W system.val_lld%s	s-vallld.adb		s-vallld.ali
+
+U ada.wide_text_io.decimal_aux%s  a-wtdeau.ads	2bb5b7b4 NE OL PK
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-witeio.ads		20140129155348 551dcbf1
+D a-wtdeau.ads		20090409150020 7ea87c45
+D a-wtdeau.adb		20090713083928 79f86a0a
+D a-wtflau.ads		20090409150020 967b2914
+D a-wtgeau.ads		20090409150020 6beb83f2
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-imgdec.ads		20090409150020 ae2d09db
+D s-imglld.ads		20090409150020 f3220969
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-valdec.ads		20090409150020 bc6527bb
+D s-vallld.ads		20090409150020 4587af92
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 9|41r17 93r5 10|32r6 32r40 33r6 33r40 40r14 265r5
+X 8 a-witeio.ads
+52K13*Wide_Text_IO 1|16k9 8|495e21 9|41r21 93r9 10|32r10 32r44 33r10 33r44
+. 40r18 265r9
+54P9*File_Type 9|44r15 49r15 64r15 72r15 10|47r15 75r15 153r15 173r15
+75I12*Field{integer} 9|45r15 50r15 66r15 67r15 68r15 74r15 75r15 76r15 82r15
+. 83r15 89r15 90r15 10|48r15 51r27 76r15 79r27 155r15 156r15 157r15 160r26
+. 175r15 176r15 177r15 180r26 195r15 196r15 199r27 206r27 238r15 239r15 242r27
+300X4*Data_Error 10|119r16 144r16
+301X4*Layout_Error 10|217r16 225r16 253r16 259r16
+X 9 a-wtdeau.ads
+41K34*Decimal_Aux 8|52k13 9|93l22 93e33 10|40b31 265l22 265t33
+43V13*Get_Dec{integer} 44>7 45>7 46>7 10|46b13 68l8 68t15
+44p7 File{8|54P9} 10|47b7 58r22 61r21
+45i7 Width{8|75I12} 10|48b7 57r10 58r28 66r43
+46i7 Scale{integer} 10|49b7 65r52
+48V13*Get_LLD{long_long_integer} 49>7 50>7 51>7 10|74b13 96l8 96t15
+49p7 File{8|54P9} 10|75b7 86r22 89r21
+50i7 Width{8|75I12} 10|76b7 85r10 86r28 94r43
+51i7 Scale{integer} 10|77b7 93r62
+53V13*Gets_Dec{integer} 54>7 55^7 56>7 10|102b13 121l8 121t16
+54s7 From{string} 10|103b7 111r20 112r29 112r47
+55p7 Last(positive) 10|104b7 113r7 118r10
+56i7 Scale{integer} 10|105b7 112r58
+58V13*Gets_LLD{long_long_integer} 59>7 60^7 61>7 10|127b13 146l8 146t16
+59s7 From{string} 10|128b7 136r20 137r39 137r57
+60p7 Last(positive) 10|129b7 138r7 143r10
+61i7 Scale{integer} 10|130b7 137r68
+63U14*Put_Dec 64>7 65>7 66>7 67>7 68>7 69>7 10|152b14 166l8 166t15
+64p7 File{8|54P9} 10|153b7 165r17
+65i7 Item{integer} 10|154b7 164r26
+66i7 Fore{8|75I12} 10|155b7 164r49
+67i7 Aft{8|75I12} 10|156b7 164r55
+68i7 Exp{8|75I12} 10|157b7 164r60
+69i7 Scale{integer} 10|158b7 164r42
+71U14*Put_LLD 72>7 73>7 74>7 75>7 76>7 77>7 10|172b14 186l8 186t15
+72p7 File{8|54P9} 10|173b7 185r17
+73i7 Item{long_long_integer} 10|174b7 184r36
+74i7 Fore{8|75I12} 10|175b7 184r59
+75i7 Aft{8|75I12} 10|176b7 184r65
+76i7 Exp{8|75I12} 10|177b7 184r70
+77i7 Scale{integer} 10|178b7 184r52
+79U14*Puts_Dec 80<7 81>7 82>7 83>7 84>7 10|192b14 229l8 229t16
+80s7 To{string} 10|193b7 206r15 224r16 227m10
+81i7 Item{integer} 10|194b7 222r26
+82i7 Aft{8|75I12} 10|195b7 206r41 222r55
+83i7 Exp{8|75I12} 10|196b7 210r10 211r29 222r60
+84i7 Scale{integer} 10|197b7 222r42
+86U14*Puts_LLD 87<7 88>7 89>7 90>7 91>7 10|235b14 263l8 263t16
+87s7 To{string} 10|236b7 249r15 250r15 258r16 261m10
+88i7 Item{long_long_integer} 10|237b7 256r36
+89i7 Aft{8|75I12} 10|238b7 249r31 250r31 256r65
+90i7 Exp{8|75I12} 10|239b7 248r13 250r37 256r70
+91i7 Scale{integer} 10|240b7 256r52
+X 10 a-wtdeau.adb
+51a7 Buf{string} 58m35 59r23 61m27 65r29 66r27
+52i7 Ptr{integer} 59m28 62m10 65m34 65r34 66r38
+53i7 Stop{integer} 58m40 58r40 61m32 61r32 65r46 66r32
+54i7 Item{integer} 65m7 67r14
+79a7 Buf{string} 86m35 87r23 89m27 93r39 94r27
+80i7 Ptr{integer} 87m28 90m10 93m44 93r44 94r38
+81i7 Stop{integer} 86m40 86r40 89m32 89r32 93r56 94r32
+82i7 Item{long_long_integer} 93m7 95r14
+107i7 Pos{integer} 111m26 112m35 112r35 113r19 118r22
+108i7 Item{integer} 112m7 114r14
+132i7 Pos{integer} 136m26 137m45 137r45 138r19 143r22
+133i7 Item{long_long_integer} 137m7 139r14
+160a7 Buf{string} 164m32 164r32 165r23
+161i7 Ptr{natural} 164m37 164r37 165r33
+180a7 Buf{string} 184m42 184r42 185r23
+181i7 Ptr{natural} 184m47 184r47 185r33
+199a7 Buf{string} 222m32 222r32 227r16
+200i7 Fore{integer} 206m7 211m10 211r18 216r10 222r49
+201i7 Ptr{natural} 222m37 222r37 224r10 227r26
+242a7 Buf{string} 256m42 256r42 261r16
+243i7 Fore{integer} 247m7 252r10 256r59
+244i7 Ptr{natural} 256m47 256r47 258r10 261r26
+X 11 a-wtflau.ads
+40K34*Float_Aux 10|33w23 33r57 11|72e31
+42U14*Load_Real 10|61s10 89s10
+X 12 a-wtgeau.ads
+41K26*Generic_Aux 10|32w23 32r57 12|184e33
+50U14*Check_End_Of_Field 10|66s7 94s7
+78U14*Load_Width 10|58s10 86s10
+152U14*Put_Item 10|165s7 185s7
+169U14*String_Skip 10|59s10 87s10 111s7 136s7
+X 15 system.ads
+37K9*System 10|35r6 35r26 36r6 36r26 37r6 37r26 38r6 38r26 15|196e11
+X 21 s-imgdec.ads
+35K16*Img_Dec 10|35w13 35r33 21|83e19
+50U14*Set_Image_Decimal 10|164s7 222s7
+X 22 s-imglld.ads
+35K16*Img_LLD 10|36w13 36r33 22|67e19
+50U14*Set_Image_Long_Long_Decimal 10|184s7 256s7
+X 33 s-valdec.ads
+36K16*Val_Dec 10|37w13 37r33 33|79e19
+39V13*Scan_Decimal{integer} 10|65s15 112s15
+X 34 s-vallld.ads
+36K16*Val_LLD 10|38w13 38r33 34|81e19
+39V13*Scan_Long_Long_Decimal{long_long_integer} 10|93s15 137s15
+

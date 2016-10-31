@@ -1,0 +1,63 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_RECURSION
+RV SPARK_05
+
+U system.img_biu%b	s-imgbiu.adb		d48b4eeb NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U system.img_biu%s	s-imgbiu.ads		c8ecb4b4 NE OL PU PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgbiu.ads		20090409150020 c622884d
+D s-imgbiu.adb		20090409150020 43af5409
+D s-unstyp.ads		20140225151140 510692af
+X 1 system.ads
+37K9*System 196e11 2|36r6 38r9 58r11 72r5 3|32r6 32r33 34r14 154r5
+X 2 s-imgbiu.ads
+38K16*Img_BIU 1|37k9 2|72l12 72e19 3|34b21 154l12 154t19
+41U14*Set_Image_Based_Integer 42>7 43>7 44>7 45<7 46=7 3|40b14 80l8 80t31
+42i7 V{integer} 3|41b7 52r10 53r46 67r50
+43i7 B{natural} 3|42b7 53r50 67r54
+44i7 W{integer} 3|43b7 53r53 67r57
+45s7 S{string} 3|44b7 53m56 60m10 67m64 73r16 77m10
+46i7 P{natural} 3|45b7 53m59 59m10 59r15 60r13 61r19 67m67
+57U14*Set_Image_Based_Unsigned 58>7 59>7 60>7 61<7 62=7 3|53s10 67s13 86b14
+. 152l8 152t32
+58m7 V{4|45M9} 3|87b7 129r19
+59i7 B{natural} 3|88b7 95r46 118r10 124r53
+60i7 W{integer} 3|89b7 136r22 138r23
+61s7 S{string} 3|90b7 107m13 110m13 120m10 124m7 127m7 132m7 142m13 142r22
+. 148m13
+62i7 P{natural} 3|91b7 93r35 106m13 106r18 107r16 109m13 109r18 110r16 119m10
+. 119r15 120r13 123m7 123r12 124r10 126m7 126r12 127r10 131m7 131r12 132r10
+. 136r10 137r15 138m10 139r15
+X 3 s-imgbiu.adb
+47i7 Start{natural} 61m10 73r19 74m13 74r22 77r13
+93i7 Start{natural} 136r14 138r15 141r20 147r19
+94i7 F{natural} 137m10 141r16 142r25 144m13 144r18
+94i10 T{natural} 139m10 142r16 143m13 143r18 147r32
+95m7 BU{4|45M9} 104r18 105r29 107r33
+96a7 Hex(character) 107r22 110r22
+99U17 Set_Digits 99>29 102b17 105s13 112l11 112t21 129s7
+99m29 T{4|45M9} 102b29 104r13 105r25 107r27 110r27
+147i14 J{integer} 148r16
+X 4 s-unstyp.ads
+40K16*Unsigned_Types 2|36w13 58r18 3|32w13 32r40 4|208e26
+45M9*Unsigned 2|58r33 3|53r36 67r39 87r11 95r24 95r36 97r18 99r33 102r33
+

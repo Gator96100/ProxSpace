@@ -1,0 +1,60 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.io%b		s-io.adb		d7aac20c NE OL PK
+W system%s		system.ads		system.ali
+
+U system.io%s		s-io.ads		c18a5919 BN NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-io.ads		20090409150020 9e42f74f
+D s-io.adb		20090409150020 49e83543
+X 1 system.ads
+37K9*System 196e11 2|37r9 64r5 3|32r14 129r5
+X 2 s-io.ads
+37K16*IO 1|37k9 2|58E9 64l12 64e14 3|32b21 129l12 129t14
+40U14*Put 40>19 3|53b14 67l8 67t11
+40i19 X{integer} 3|53b19 63r22 65r26
+42U14*Put 42>19 3|45s10 69b14 83l8 83t11 88s10
+42e19 C{character} 3|69b19 79r23 81r30
+44U14*Put 44>19 3|85b14 90l8 90t11 98s7
+44s19 S{string} 3|85b19 87r16 88r15
+45U14*Put_Line 45>24 3|96b14 100l8 100t16
+45s24 S{string} 3|96b24 98r12
+47U14*New_Line 47>24 3|42b14 47l8 47t16 99s7
+47i24 Spacing{positive} 3|42b24 44r21
+49E9*File_Type 51r35 52r36 54r33 58c9 58e38 3|34r18 106r36 115r35 124r33
+51V13*Standard_Error{49E9} 61r19 3|115b13 118l8 118t22
+52V13*Standard_Output{49E9} 62r19 3|106b13 109l8 109t23
+54U14*Set_Output 54>26 3|124b14 127l8 127t18
+54e26 File{49E9} 3|124b26 126r22
+58n23 Stdout{49E9} 3|34r31 62r15 78r15 108r14
+58n31 Stderr{49E9} 3|64r15 80r15 117r14
+X 3 s-io.adb
+34e4 Current_Out{2|49E9} 35r19 61r12 77r12 126m7
+44i11 J{integer}
+54U17*Put_Int 54>26 55b<c,put_int>25 63s13
+54i26 X{integer}
+57U17*Put_Int_Err 57>30 58b<c,put_int_stderr>25 65s13
+57i30 X{integer}
+70U17*Put_Char 70>27 71b<c,put_char>25 79s13
+70e27 C{character}
+73U17*Put_Char_Stderr 73>34 74b<c,put_char_stderr>25 81s13
+73e34 C{character}
+87i11 J{integer} 88r18
+

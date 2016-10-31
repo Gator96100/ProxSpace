@@ -1,0 +1,60 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U system.val_int%b	s-valint.adb		f8f38c17 NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+W system.val_uns%s	s-valuns.adb		s-valuns.ali
+W system.val_util%s	s-valuti.adb		s-valuti.ali
+
+U system.val_int%s	s-valint.ads		176d8469 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-unstyp.ads		20140225151140 510692af
+D s-valint.ads		20090409150020 48a52a3f
+D s-valint.adb		20121029095828 5d586f42
+D s-valuns.ads		20090409150020 10a8ed3b
+D s-valuti.ads		20121029095828 aca0b6fe
+X 1 system.ads
+37K9*System 196e11 3|35r9 73r5 4|32r6 32r33 33r6 33r33 34r6 34r33 36r14 100r5
+X 2 s-unstyp.ads
+40K16*Unsigned_Types 208e26 4|32w13 32r40
+45M9*Unsigned 4|47r14 68r17 69r35
+X 3 s-valint.ads
+35K16*Val_Int 1|37k9 3|73l12 73e19 4|36b21 100l12 100t19
+38V13*Scan_Integer{integer} 39>7 40^7 41>7 4|42b13 85l8 85t20 95s12
+39s7 Str{string} 4|43b7 57r18 59r10 61r21 64r34 72r24
+40p7 Ptr(integer) 4|44b7 57r23 59r15 60r10 64r39
+41i7 Max{integer} 4|45b7 57r28 64r44
+67V13*Value_Integer{integer} 67>28 4|91b13 98l8 98t21
+67s28 Str{string} 4|91b28 93r30 95r26 95r41 96r29
+X 4 s-valint.adb
+47m7 Uval{2|45M9} 64m7 68r10 69r28 78r28 83r26
+50b7 Minus{boolean} 57m33 69r13 77r13
+53i7 Start{positive} 57m40 60r21
+92i7 V{integer} 95m7 97r14
+93i7 P{integer} 95m31 95r31 96r34
+X 5 s-valuns.ads
+37K16*Val_Uns 4|33w13 33r40 5|86e19
+40V13*Scan_Raw_Unsigned{2|45M9} 4|64s15
+X 6 s-valuti.ads
+34K16*Val_Util 4|34w13 34r40 6|117e20
+37U14*Bad_Value 4|61s10 72s13
+52U14*Scan_Sign 4|57s7
+99U14*Scan_Trailing_Blanks 4|96s7
+

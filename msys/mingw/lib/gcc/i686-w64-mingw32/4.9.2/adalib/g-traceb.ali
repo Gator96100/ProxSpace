@@ -1,0 +1,66 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.traceback%b	g-traceb.adb		6fcb5f46 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.traceback%s	s-traceb.adb		s-traceb.ali
+
+U gnat.traceback%s	g-traceb.ads		20845b9b EB NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.exceptions.traceback%s  a-exctra.adb	a-exctra.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-exctra.ads		20130102111340 5c8e2c9f
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-traceb.ads		20120314163338 dee80ba3
+D g-traceb.adb		20110801150502 9927cbb8
+D system.ads		20121001083726 5fc8ae56
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traceb.ads		20140225151140 28049f5d
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 6|76r6 84r32
+X 2 a-except.ads
+53K13*Exceptions 360e19 6|76r10 84r36
+X 3 a-exctra.ads
+40K24*Traceback 60e29 6|76w21 84r47
+47A9*Tracebacks_Array(12|46M12)<integer> 6|84r57
+X 5 gnat.ads
+34K9*GNAT 37e9 6|78r9 99r5 7|36r14 50r5
+X 6 g-traceb.ads
+78K14*Traceback 5|34k9 6|99l10 99e19 7|36b19 50l10 50t19
+81M12*Code_Loc{8|64M9}
+84A12*Tracebacks_Array{3|47A9}<integer> 91r42 7|43r23
+91U14*Call_Chain 91<26 91<60 7|42b14 48l8 48t18
+91a26 Traceback{84A12} 7|43b7 47m36 47r36 47r55
+91i60 Len{natural} 7|44b7 47m73
+X 8 system.ads
+37K9*System 6|75w6 81r24 7|34r6 47r7 8|196e11
+64M9*Address 6|81r31
+X 11 s-traceb.ads
+42K16*Traceback 7|34w13 47r14 11|87e21
+48U14*Call_Chain 7|47s24
+80V13*C_Call_Chain{natural} 84i<c,system__traceback__c_call_chain>22
+X 12 s-traent.ads
+46M12*Traceback_Entry{8|64M9}
+

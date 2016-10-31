@@ -1,0 +1,56 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.strings.wide_hash%b  a-stwiha.adb		6b9e898f NE OL PU SU
+W ada.strings%s		a-string.ads		a-string.ali
+W system%s		system.ads		system.ali
+W system.string_hash%s	s-strhas.adb		s-strhas.ali
+
+U ada.strings.wide_hash%s  a-stwiha.ads		70939944 NE OL PU SU
+W ada%s			ada.ads			ada.ali
+W ada.containers%s	a-contai.ads		a-contai.ali
+W ada.strings%s		a-string.ads		a-string.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-contai.ads		20101025135030 61e5e089
+D a-string.ads		20070406091342 90ac6797
+D a-stwiha.ads		20070406091342 81da1e5a
+D a-stwiha.adb		20090623092446 ccd84f41
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-strhas.ads		20090623093900 269cd894
+D s-strhas.adb		20140225151140 2e038444
+X 1 ada.ads
+16K9*Ada 19e8 4|16r6 18r10 21r14 5|32r10 35r8 40r5
+X 2 a-contai.ads
+16K13*Containers 24e19 4|16w10 19r30 5|33r30 35r12
+19M9*Hash_Type 4|19r41 5|33r41 37r36
+X 3 a-string.ads
+16K13*Strings 35e16 4|18r14 21r18 5|32r14 40r9
+X 4 a-stwiha.ads
+18V22*Wide_Hash{2|19M9} 3|16k13 4|19>4 21r26 5|32b22 40l17 40t26
+19s4 Key{wide_string} 5|33b4 39r21
+X 5 a-stwiha.adb
+36V13 Hash_Fun[10|56]{2|19M9} 39s11 11|43b13
+X 7 system.ads
+37K9*System 5|30r6 36r29 7|196e11
+X 10 s-strhas.ads
+41K16*String_Hash 5|30w13 36r36 10|60e23
+56v13*Hash 5|36r48
+

@@ -1,0 +1,56 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV SPARK_05
+
+U ada.command_line.environment%b  a-colien.adb	ba7114e7 NE OL PK
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.command_line.environment%s  a-colien.ads	65dc6e86 NE OL PK
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-comlin.ads		20140225151544 ea62afbc
+D a-colien.ads		20090409150020 8fbec13a
+D a-colien.adb		20090409150020 6a077b8b
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 3|38r9 55r5 4|34r14 72r5
+X 2 a-comlin.ads
+38K13*Command_Line 1|16k9 2|139e21 3|38r13 55r9 4|34r18 72r9
+X 3 a-colien.ads
+38K26*Environment 2|38k13 3|55l22 55e33 4|34b31 72l22 72t33
+40V13*Environment_Count{natural} 4|40b13 46l8 46t25 60s19
+46V13*Environment_Value{string} 46>32 4|52b13 70l8 70t25
+46i32 Number{positive} 4|52b32 60r10 65r46 67r33
+X 4 a-colien.adb
+41V16*Env_Count{natural} 42b<c,__gnat_env_count>25 45s14
+53U17*Fill_Env 53>27 53>47 54b<c,__gnat_fill_env>25 67s10
+53m27 E{6|64M9}
+53i47 Env_Num{integer}
+56V16*Len_Env{integer} 56>25 57b<c,__gnat_len_env>25 65s37
+56i25 Env_Num{integer}
+65a10 Env{string} 67m20 67r20 68r17
+X 6 system.ads
+37K9*System 4|32w6 53r31 6|196e11
+64M9*Address 4|53r38
+

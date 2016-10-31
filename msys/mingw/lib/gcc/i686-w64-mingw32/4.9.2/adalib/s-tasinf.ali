@@ -1,0 +1,70 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.task_info%b	s-tasinf.adb		5052be8c NE OL PK
+W system%s		system.ads		system.ali
+W system.os_interface%s	s-osinte.ads		s-osinte.ali
+
+U system.task_info%s	s-tasinf.ads		6da0547e EB EE OL PR PK
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.win32%s	s-win32.ads		s-win32.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-tasinf.ads		20090409150020 859198ad
+D s-tasinf.adb		20090409150020 3932dddc
+D s-win32.ads		20140120152906 b7f96285
+X 4 i-c.ads
+45M9*unsigned_long
+X 6 system.ads
+37K9*System 196e11 11|44r6 46r9 51r13 81r26 102r5 12|34r6 40r14 65r5
+X 8 s-osinte.ads
+48K16*OS_Interface 361e24 12|34w13
+X 11 s-tasinf.ads
+46K16*Task_Info 6|37k9 11|102l12 102e21 12|40b21 65l12 65t21
+81M12*CPU_Number{13|257M12} 83r23 90r13
+83m4*Any_CPU{81M12} 90r27
+85X4*Invalid_CPU_Number
+89R9*Thread_Attributes 91e14 93r41 95r38
+90m7*CPU{81M12}
+93r4*Default_Thread_Attributes{89R9}
+95P9*Task_Info_Type(89R9) 97r37
+97p4*Unspecified_Task_Info{95P9}
+99V13*Number_Of_Processors{positive} 12|51b13 63l8 63t28
+X 12 s-tasinf.adb
+42i4 N_CPU{natural} 43r19 53r10 58m13 62r14
+55r13 SI{13|259R9} 57m34 57r34 58r32
+X 13 s-win32.ads
+39K16*Win32 11|44w13 51r20 81r33 12|55r26 57r13 13|342e17
+60M9*DWORD<4|45M9>
+257M12*ProcessorId{60M9} 11|51r26 81r39
+259R9*SYSTEM_INFO 12|55r32 13|269e14
+265m7*dwNumberOfProcessors{60M9} 12|58r35
+271U14*GetSystemInfo 12|57s19
+

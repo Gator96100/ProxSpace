@@ -1,0 +1,108 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV SPARK_05
+
+U ada.wide_wide_characters.handling%b  a-zchhan.adb  5d655666 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.wide_wide_characters%s  a-zchara.ads	a-zchara.ali
+W ada.wide_wide_characters.unicode%s  a-zchuni.adb  a-zchuni.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.wide_wide_characters.handling%s  a-zchhan.ads  0910a976 BN NE OL PU PK
+W ada.wide_wide_characters%s  a-zchara.ads	a-zchara.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-zchara.ads		20120410054430 21c8f2b2
+D a-zchhan.ads		20131010123844 28d85bc4
+D a-zchhan.adb		20131010123844 31600096
+D a-zchuni.ads		20130104124956 44dd0d34
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-utf_32.ads		20140225151140 9e89e9cc
+X 1 ada.ads
+16K9*Ada 19e8 4|16r9 132r5 5|32r6 32r44 34r14 59r14 86r14 93r14 109r14 116r14
+. 124r14 131r14 156r14 174r14 187r5
+X 3 a-zchara.ads
+16K13*Wide_Wide_Characters 1|16k9 3|18e29 4|16r13 132r9 5|32r10 32r48 34r18
+. 59r18 86r18 93r18 109r18 116r18 124r18 131r18 156r18 174r18 187r9
+X 4 a-zchhan.ads
+16K34*Handling 3|16k13 4|132l30 132e38 5|34b39 187l30 187t38
+23V13*Is_Control{boolean} 23>25 24r19 5|49b13 52l8 52t18
+23e25 Item{wide_wide_character} 5|49b25 51r28
+28V13*Is_Letter{boolean} 28>24 29r19 5|42s14 85b13
+28e24 Item{wide_wide_character} 5|85b24
+35V13*Is_Lower{boolean} 35>23 36r19 5|99b13 102l8 102t16
+35e23 Item{wide_wide_character} 5|99b23 101r28
+40V13*Is_Upper{boolean} 40>23 41r19 5|146b13 149l8 149t16
+40e23 Item{wide_wide_character} 5|146b23 148r28
+45V13*Is_Digit{boolean} 45>23 46r19 51r14 5|42s39 58b13 76s14
+45e23 Item{wide_wide_character} 5|58b23
+50V13*Is_Decimal_Digit=51:14{boolean}
+50e31 Item{wide_wide_character}
+53V13*Is_Hexadecimal_Digit{boolean} 53>35 5|74b13 79l8 79t28
+53e35 Item{wide_wide_character} 5|74b35 76r24 77r17 78r17
+58V13*Is_Alphanumeric{boolean} 58>30 59r19 5|40b13 43l8 43t23 139s45
+58e30 Item{wide_wide_character} 5|40b30 42r25 42r49
+65V13*Is_Special{boolean} 65>25 66r19 5|137b13 140l8 140t18
+65e25 Item{wide_wide_character} 5|137b25 139r26 139r62
+72V13*Is_Line_Terminator{boolean} 72>33 73r19 5|92b13
+72e33 Item{wide_wide_character} 5|92b33
+79V13*Is_Mark{boolean} 79>22 80r19 5|108b13
+79e22 Item{wide_wide_character} 5|108b22
+85V13*Is_Other_Format{boolean} 85>30 86r19 5|115b13
+85e30 Item{wide_wide_character} 5|115b30
+90V13*Is_Punctuation_Connector{boolean} 91>7 92r19 5|122b13
+91e7 Item{wide_wide_character} 5|123b7
+96V13*Is_Space{boolean} 96>23 97r19 5|130b13
+96e23 Item{wide_wide_character} 5|130b23
+101V13*Is_Graphic{boolean} 101>25 102r19 5|65b13 68l8 68t18 139s14
+101e25 Item{wide_wide_character} 5|65b25 67r34
+106V13*To_Lower{wide_wide_character} 106>23 107r19 5|155b13 163s24
+106e23 Item{wide_wide_character} 5|155b23
+113V13*To_Lower{wide_wide_string} 113>23 5|158b13 167l8 167t16
+113s23 Item{wide_wide_string} 5|158b23 159r34 163r34
+119V13*To_Upper{wide_wide_character} 119>23 120r19 5|173b13 181s24
+119e23 Item{wide_wide_character} 5|173b23
+126V13*To_Upper{wide_wide_string} 126>23 5|176b13 185l8 185t16
+126s23 Item{wide_wide_string} 5|176b23 177r34 181r34
+X 5 a-zchhan.adb
+159a7 Result{wide_wide_string} 162r16 163m10 166r14
+162i11 J{integer} 163r18 163r40
+177a7 Result{wide_wide_string} 180r16 181m10 184r14
+180i11 J{integer} 181r18 181r40
+X 6 a-zchuni.ads
+36K34*Unicode 5|32w31 32r69 59r39 86r39 93r39 109r39 116r39 124r39 131r39
+. 156r39 174r39 6|196e37
+43E9*Category<11|56E9>
+76V13*Get_Category{43E9} 5|51s14 101s14 148s14
+90V13*Is_Letter{boolean} 5|86r47
+102V13*Is_Digit{boolean} 5|59r47
+109V13*Is_Line_Terminator{boolean} 5|93r47
+117V13*Is_Mark{boolean} 5|109r47
+126V13*Is_Other{boolean} 5|116r47
+135V13*Is_Punctuation{boolean} 5|124r47
+143V13*Is_Space{boolean} 5|131r47
+150V13*Is_Non_Graphic{boolean} 5|67s18
+180V13*To_Lower_Case{wide_wide_character} 5|156r47
+188V13*To_Upper_Case{wide_wide_character} 5|174r47
+X 11 s-utf_32.ads
+57n6*Cc{56E9} 5|51r36
+62n6*Ll{56E9} 5|101r36
+66n6*Lu{56E9} 5|148r36
+

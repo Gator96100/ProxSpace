@@ -1,0 +1,39 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U gnat.sse.vector_types%s  g-ssvety.ads		edda3278 NE OL PK
+W gnat.sse%s		g-sse.ads		g-sse.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-sse.ads		20120402094718 0ede30f7
+D g-ssvety.ads		20090728080710 e304028f
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 3|37r9 105r5
+X 2 g-sse.ads
+112K14*SSE 1|34k9 2|139e13 3|37r14 105r10
+121N4*VECTOR_ALIGN 3|78r27 89r28 101r28
+135F9*Float32<float> 3|77r35
+136F9*Float64<long_float> 3|88r36
+137I9*Integer64<long_long_integer> 3|100r36
+X 3 g-ssvety.ads
+37K18*Vector_Types 2|112k14 3|77E9 105l14 105e26
+54A9*m128(2|135F9) 77c9 78r8 79r30 80r30
+55A9*m128d(2|136F9) 88c9 89r8 90r30 91r30
+56A9*m128i(2|137I9) 100c9 101r8 102r30 103r30
+

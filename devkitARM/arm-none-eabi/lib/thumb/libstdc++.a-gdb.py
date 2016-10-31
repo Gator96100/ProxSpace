@@ -1,5 +1,5 @@
 # -*- python -*-
-# Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+# Copyright (C) 2009-2015 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import gdb
 import os
 import os.path
 
-pythondir = '/opt/devkitpro/i686-w64-mingw32/devkitARM/share/gcc-4.7.1/python'
+pythondir = '/opt/devkitpro/i686-w64-mingw32/devkitARM/share/gcc-5.3.0/python'
 libdir = '/opt/devkitpro/i686-w64-mingw32/devkitARM/arm-none-eabi/lib/thumb'
 
 # This file might be loaded when there is no current objfile.  This
@@ -55,6 +55,7 @@ if gdb.current_objfile () is not None:
     if not dir_ in sys.path:
         sys.path.insert(0, dir_)
 
-# Load the pretty-printers.
-from libstdcxx.v6.printers import register_libstdcxx_printers
-register_libstdcxx_printers (gdb.current_objfile ())
+# Call a function as a plain import would not execute body of the included file
+# on repeated reloads of this object file.
+from libstdcxx.v6 import register_libstdcxx_printers
+register_libstdcxx_printers(gdb.current_objfile())

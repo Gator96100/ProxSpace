@@ -1,0 +1,41 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ENUMERATION_MAPS
+RV NO_IMPLICIT_CONDITIONALS
+RV SPARK_05
+
+U system.wid_char%b	s-widcha.adb		8f4aaed6 NE OL PK
+W system%s		system.ads		system.ali
+W system.img_char%s	s-imgcha.adb		s-imgcha.ali
+
+U system.wid_char%s	s-widcha.ads		b72e95c3 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgcha.ads		20101008123408 9c3458e7
+D s-widcha.ads		20090409150020 e8e63b95
+D s-widcha.adb		20090409150020 67ac9543
+X 1 system.ads
+37K9*System 196e11 3|34r9 41r5 4|32r14 56r5
+X 3 s-widcha.ads
+34K16*Wid_Char 1|37k9 3|41l12 41e20 4|32b21 56l12 56t20
+37V13*Width_Character{natural} 37>30 37>34 4|38b13 54l8 54t23
+37e30 Lo{character} 4|38b30 44r16
+37e34 Hi{character} 4|38b34 44r22
+X 4 s-widcha.adb
+39i7 W{natural} 42m7 49m13 49r31 53r14
+44e11 C{character} 46r53
+46a13 S{string} 49r34
+

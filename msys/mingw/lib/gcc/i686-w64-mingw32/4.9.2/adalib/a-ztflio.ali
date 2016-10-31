@@ -1,0 +1,129 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV SPARK_05
+
+U ada.wide_wide_text_io.float_io%b  a-ztflio.adb  2c44624c NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.wide_wide_text_io%s  a-ztexio.adb		a-ztexio.ali
+W ada.wide_wide_text_io.float_aux%s  a-ztflau.adb  a-ztflau.ali
+W system%s		system.ads		system.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+W system.wch_wts%s	s-wchwts.adb		s-wchwts.ali
+
+U ada.wide_wide_text_io.float_io%s  a-ztflio.ads  eed762dc BN NE OL PK GE
+W ada.wide_wide_text_io%s  a-ztexio.adb		a-ztexio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-ztexio.ads		20140129161954 b1a2c6bb
+D a-ztflau.ads		20090409150020 b8205362
+D a-ztflio.ads		20090409150020 5f75a467
+D a-ztflio.adb		20090409150020 63059829
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+D s-wchwts.ads		20090409150020 b3692fb2
+X 1 ada.ads
+16K9*Ada 19e8 10|45r9 84r5 11|32r6 36r14 38r19 41r24 126r5
+X 8 a-ztexio.ads
+52K13*Wide_Wide_Text_IO 1|16k9 8|497e26 10|45r13 84r9 11|32r10 36r18 38r23
+. 41r28 126r9
+54P9*File_Type 10|52r15 61r14 11|38r41 48r15 90r14
+75I12*Field{integer} 10|47r19 48r19 49r19 54r15 58r15 63r14 64r14 65r14 69r14
+. 70r14 71r14 81r14 82r14 11|50r15 61r15 92r14 93r14 94r14 102r14 103r14
+. 104r14 113r14 114r14
+123V13*Current_Input{54P9} 11|64s12
+124V13*Current_Output{54P9} 11|107s12
+300X4*Data_Error 11|56r38 82r38
+X 9 a-ztflau.ads
+40K39*Float_Aux 72e36 11|32w28 41r46
+49U14*Get 11|53s11
+54U14*Gets 11|79s11
+59U14*Put 11|97s11
+66U14*Puts 11|119s11
+X 10 a-ztflio.ads
+43F9 Num 48r28 53r19 57r19 62r14 68r14 75r18 80r14 11|49r19 60r19 69r18 91r14
+. 101r14 112r14
+45k31*Float_IO 8|52k13 10|43z9 84l27 84e35 11|36b36 126l27 126t35
+47i4*Default_Fore{8|75I12} 63r23 69r23 11|92r23 102r23
+48i4*Default_Aft{8|75I12} 64r23 70r23 81r23 11|93r23 103r23 113r23
+49i4*Default_Exp{8|75I12} 65r23 71r23 82r23 11|94r23 104r23 114r23
+51U14*Get 52>7 53<7 54>7 11|47b14 57l8 57t11 64s7
+52p7 File{8|54P9} 11|48b7 53r21
+53*7 Item{43F9} 11|49b7 53m45 53r45
+54i7 Width{8|75I12} 11|50b7 53r52
+56U14*Get 57<7 58>7 11|59b14 65l8 65t11
+57*7 Item{43F9} 11|60b7 64m27
+58i7 Width{8|75I12} 11|61b7 64r33
+60U14*Put 61>7 62>7 63>7 64>7 65>7 11|89b14 98l8 98t11 107s7
+61p7 File{8|54P9} 11|90b7 97r21
+62*7 Item{43F9} 11|91b7 97r45
+63i7 Fore{8|75I12} 11|92b7 97r52
+64i7 Aft{8|75I12} 11|93b7 97r58
+65i7 Exp{8|75I12} 11|94b7 97r63
+67U14*Put 68>7 69>7 70>7 71>7 11|100b14 108l8 108t11
+68*7 Item{43F9} 11|101b7 107r28
+69i7 Fore{8|75I12} 11|102b7 107r34
+70i7 Aft{8|75I12} 11|103b7 107r40
+71i7 Exp{8|75I12} 11|104b7 107r45
+73U14*Get 74>7 75<7 76<7 11|67b14 83l8 83t11
+74s7 From{wide_wide_string} 11|68b7 72r58
+75*7 Item{43F9} 11|69b7 79m37 79r37
+76i7 Last{positive} 11|70b7 79m44
+78U14*Put 79<7 80>7 81>7 82>7 11|110b14 124l8 124t11
+79s7 To{wide_wide_string} 11|111b7 116r19 116r31 122m10
+80*7 Item{43F9} 11|112b7 119r37
+81i7 Aft{8|75I12} 11|113b7 119r44
+82i7 Exp{8|75I12} 11|114b7 119r49
+X 11 a-ztflio.adb
+38P12 TFT{8|54P9} 53r16 97r16
+41K12 Aux=41:46 53r7 79r7 97r7 119r7
+72a7 S{string} 79r17
+116a7 S{string} 119m17 121r16 122r60
+121i11 J{integer} 122r14 122r63
+X 14 system.ads
+37K9*System 11|33r6 33r26 34r6 34r26 14|196e11
+X 30 s-wchcon.ads
+41K16*WCh_Con 11|33w13 33r33 30|220e19
+94I9*WC_Encoding_Method<short_short_integer>
+108i4*WCEM_Upper{94I9} 11|72r64
+X 31 s-wchwts.ads
+39K16*WCh_WtS 11|34w13 34r33 31|63e19
+58V13*Wide_Wide_String_To_String{string} 11|72s30
+

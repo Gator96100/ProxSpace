@@ -1,0 +1,51 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U system.val_lld%b	s-vallld.adb		420e5cd2 NE OL PK
+W system%s		system.ads		system.ali
+W system.exn_llf%s	s-exnllf.adb		s-exnllf.ali
+W system.val_real%s	s-valrea.adb		s-valrea.ali
+
+U system.val_lld%s	s-vallld.ads		1a4f01c4 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-exnllf.ads		20121004090554 81841eef
+D s-vallld.ads		20090409150020 4587af92
+D s-vallld.adb		20090409150020 f9a08451
+D s-valrea.ads		20090409150020 fe297711
+X 1 system.ads
+37K9*System 196e11 3|36r9 81r5 4|32r6 32r27 34r14 70r5
+X 3 s-vallld.ads
+36K16*Val_LLD 1|37k9 3|81l12 81e19 4|34b21 70l12 70t19
+39V13*Scan_Long_Long_Decimal{long_long_integer} 40>7 41^7 42>7 43>7 4|44b13
+. 54l8 54t30
+40s7 Str{string} 4|45b7 52r25
+41p7 Ptr(integer) 4|46b7 52r30
+42i7 Max{integer} 4|47b7 52r35
+43i7 Scale{integer} 4|48b7 53r47
+71V13*Value_Long_Long_Decimal{long_long_integer} 72>7 73>7 4|62b13 68l8 68t31
+72s7 Str{string} 4|63b7 67r45
+73i7 Scale{integer} 4|64b7 67r60
+X 4 s-vallld.adb
+50f7 Val{long_long_float} 52m7 53r33
+X 5 s-valrea.ads
+32K16*Val_Real 4|32w13 32r34 5|70e20
+35V13*Scan_Real{long_long_float} 4|52s14
+64V13*Value_Real{long_long_float} 4|67s33
+

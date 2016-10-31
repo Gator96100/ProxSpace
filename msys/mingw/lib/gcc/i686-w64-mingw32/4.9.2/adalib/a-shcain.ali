@@ -1,0 +1,71 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.strings.hash_case_insensitive%b  a-shcain.adb  e4e8fcd4 NE OL PU SU
+W ada%s			ada.ads			ada.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.string_hash%s	s-strhas.adb		s-strhas.ali
+
+U ada.strings.hash_case_insensitive%s  a-shcain.ads  f9e6d5c1 NE OL PU SU
+W ada%s			ada.ads			ada.ali
+W ada.containers%s	a-contai.ads		a-contai.ali
+W ada.strings%s		a-string.ads		a-string.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chahan.ads		20131010125232 1c00991d
+D a-contai.ads		20101025135030 61e5e089
+D a-string.ads		20070406091342 90ac6797
+D a-shcain.ads		20090409150020 08af52df
+D a-shcain.adb		20090622122458 d6dbef82
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-strhas.ads		20090623093900 269cd894
+D s-strhas.adb		20140225151140 2e038444
+X 1 ada.ads
+16K9*Ada 19e8 6|30r6 32r10 34r14 7|30r6 30r35 33r10 36r8 41r5
+X 2 a-charac.ads
+16K13*Characters 18e19 7|30r10 30r39
+X 3 a-chahan.ads
+36K24*Handling 160e28 7|30w21 30r50
+71V13*To_Lower{string} 7|40s17
+X 4 a-contai.ads
+16K13*Containers 24e19 6|30w10 33r25 7|34r25 36r12
+19M9*Hash_Type 6|33r36 7|34r36 38r26
+X 5 a-string.ads
+16K13*Strings 35e16 6|32r14 34r18 7|33r14 41r9
+X 6 a-shcain.ads
+32V22*Hash_Case_Insensitive{4|19M9} 5|16k13 6|33>4 34r26 7|33b22 41l17 41t38
+33s4 Key{string} 7|34b4 40r27
+X 7 a-shcain.adb
+37V13 Hash[15|56]{4|19M9} 40s11 16|43b13
+X 9 system.ads
+37K9*System 7|31r6 37r25 9|196e11
+X 15 s-strhas.ads
+41K16*String_Hash 7|31w13 37r32 15|60e23
+56v13*Hash 7|37r44
+

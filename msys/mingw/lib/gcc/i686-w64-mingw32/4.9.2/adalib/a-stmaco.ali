@@ -1,0 +1,349 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_LOOPS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.strings.maps.constants%s  a-stmaco.ads	34090881 EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.latin_1%s  a-chlat1.ads	a-chlat1.ali
+W ada.strings.maps%s	a-strmap.adb		a-strmap.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150020 9cb836fb
+D a-stmaco.ads		20090409150020 cef4434b
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 6|36r6 38r9 65r22 916r5
+X 2 a-charac.ads
+16K13*Characters 18e19 6|36r10 65r26
+X 3 a-chlat1.ads
+18K24*Latin_1 296e27 6|36w21 65r37
+25e4*NUL{character} 6|68r9 139r9 143r9 401r9 659r9
+26e4*SOH{character} 6|144r9 402r9 660r9
+27e4*STX{character} 6|145r9 403r9 661r9
+28e4*ETX{character} 6|146r9 404r9 662r9
+29e4*EOT{character} 6|147r9 405r9 663r9
+30e4*ENQ{character} 6|148r9 406r9 664r9
+31e4*ACK{character} 6|149r9 407r9 665r9
+32e4*BEL{character} 6|150r9 408r9 666r9
+33e4*BS{character} 6|151r9 409r9 667r9
+34e4*HT{character} 6|152r9 410r9 668r9
+35e4*LF{character} 6|153r9 411r9 669r9
+36e4*VT{character} 6|154r9 412r9 670r9
+37e4*FF{character} 6|155r9 413r9 671r9
+38e4*CR{character} 6|156r9 414r9 672r9
+39e4*SO{character} 6|157r9 415r9 673r9
+40e4*SI{character} 6|158r9 416r9 674r9
+42e4*DLE{character} 6|159r9 417r9 675r9
+43e4*DC1{character} 6|160r9 418r9 676r9
+44e4*DC2{character} 6|161r9 419r9 677r9
+45e4*DC3{character} 6|162r9 420r9 678r9
+46e4*DC4{character} 6|163r9 421r9 679r9
+47e4*NAK{character} 6|164r9 422r9 680r9
+48e4*SYN{character} 6|165r9 423r9 681r9
+49e4*ETB{character} 6|166r9 424r9 682r9
+50e4*CAN{character} 6|167r9 425r9 683r9
+51e4*EM{character} 6|168r9 426r9 684r9
+52e4*SUB{character} 6|169r9 427r9 685r9
+53e4*ESC{character} 6|170r9 428r9 686r9
+54e4*FS{character} 6|171r9 429r9 687r9
+55e4*GS{character} 6|172r9 430r9 688r9
+56e4*RS{character} 6|173r9 431r9 689r9
+57e4*US{character} 6|68r36 174r9 432r9 690r9
+63e4*Space{character} 6|73r9 129r9 175r9 433r9 691r9
+64e4*Exclamation{character} 6|176r9 434r9 692r9
+65e4*Quotation{character} 6|177r9 435r9 693r9
+66e4*Number_Sign{character} 6|178r9 436r9 694r9
+67e4*Dollar_Sign{character} 6|179r9 437r9 695r9
+68e4*Percent_Sign{character} 6|180r9 438r9 696r9
+69e4*Ampersand{character} 6|181r9 439r9 697r9
+70e4*Apostrophe{character} 6|182r9 440r9 698r9
+71e4*Left_Parenthesis{character} 6|183r9 441r9 699r9
+72e4*Right_Parenthesis{character} 6|184r9 442r9 700r9
+73e4*Asterisk{character} 6|185r9 443r9 701r9
+74e4*Plus_Sign{character} 6|186r9 444r9 702r9
+75e4*Comma{character} 6|187r9 445r9 703r9
+76e4*Hyphen{character} 6|188r9 446r9 704r9
+78e4*Full_Stop{character} 6|189r9 447r9 705r9
+79e4*Solidus{character} 6|129r36 190r9 448r9 706r9
+83e4*Colon{character} 6|130r9 201r9 459r9 717r9
+84e4*Semicolon{character} 6|202r9 460r9 718r9
+85e4*Less_Than_Sign{character} 6|203r9 461r9 719r9
+86e4*Equals_Sign{character} 6|204r9 462r9 720r9
+87e4*Greater_Than_Sign{character} 6|205r9 463r9 721r9
+88e4*Question{character} 6|206r9 464r9 722r9
+89e4*Commercial_At{character} 6|130r36 207r9 465r9 723r9
+93e4*Left_Square_Bracket{character} 6|131r9 234r9 492r9 750r9
+94e4*Reverse_Solidus{character} 6|235r9 493r9 751r9
+95e4*Right_Square_Bracket{character} 6|236r9 494r9 752r9
+96e4*Circumflex{character} 6|237r9 495r9 753r9
+97e4*Low_Line{character} 6|238r9 496r9 754r9
+99e4*Grave{character} 6|131r36 239r9 497r9 755r9
+100e4*LC_A{character} 6|79r9 86r9 99r9 116r9 122r9 208r9 240r9 756r9 883r9
+. 884r9 885r9 886r9 887r9 888r9
+101e4*LC_B{character} 6|209r9 241r9 757r9
+102e4*LC_C{character} 6|210r9 242r9 758r9 890r9
+103e4*LC_D{character} 6|211r9 243r9 759r9
+104e4*LC_E{character} 6|212r9 244r9 760r9 891r9 892r9 893r9 894r9
+105e4*LC_F{character} 6|116r36 213r9 245r9 761r9
+106e4*LC_G{character} 6|214r9 246r9 762r9
+107e4*LC_H{character} 6|215r9 247r9 763r9
+108e4*LC_I{character} 6|216r9 248r9 764r9 895r9 896r9 897r9 898r9
+109e4*LC_J{character} 6|217r9 249r9 765r9
+110e4*LC_K{character} 6|218r9 250r9 766r9
+111e4*LC_L{character} 6|219r9 251r9 767r9
+112e4*LC_M{character} 6|220r9 252r9 768r9
+113e4*LC_N{character} 6|221r9 253r9 769r9 900r9
+114e4*LC_O{character} 6|222r9 254r9 770r9 901r9 902r9 903r9 904r9 905r9 907r9
+115e4*LC_P{character} 6|223r9 255r9 771r9
+116e4*LC_Q{character} 6|224r9 256r9 772r9
+117e4*LC_R{character} 6|225r9 257r9 773r9
+118e4*LC_S{character} 6|226r9 258r9 774r9
+119e4*LC_T{character} 6|227r9 259r9 775r9
+120e4*LC_U{character} 6|228r9 260r9 776r9 908r9 909r9 910r9 911r9
+121e4*LC_V{character} 6|229r9 261r9 777r9
+122e4*LC_W{character} 6|230r9 262r9 778r9
+123e4*LC_X{character} 6|231r9 263r9 779r9
+124e4*LC_Y{character} 6|232r9 264r9 780r9 912r9 914r9
+125e4*LC_Z{character} 6|79r36 86r36 99r36 122r36 233r9 265r9 781r9
+126e4*Left_Curly_Bracket{character} 6|132r9 266r9 524r9 782r9
+127e4*Vertical_Line{character} 6|267r9 525r9 783r9
+128e4*Right_Curly_Bracket{character} 6|268r9 526r9 784r9
+129e4*Tilde{character} 6|73r36 132r36 269r9 527r9 785r9
+130e4*DEL{character} 6|69r9 139r36 270r9 528r9 786r9
+141e4*Reserved_128{character} 6|271r9 529r9 787r9
+142e4*Reserved_129{character} 6|272r9 530r9 788r9
+143e4*BPH{character} 6|273r9 531r9 789r9
+144e4*NBH{character} 6|274r9 532r9 790r9
+145e4*Reserved_132{character} 6|275r9 533r9 791r9
+146e4*NEL{character} 6|276r9 534r9 792r9
+147e4*SSA{character} 6|277r9 535r9 793r9
+148e4*ESA{character} 6|278r9 536r9 794r9
+149e4*HTS{character} 6|279r9 537r9 795r9
+150e4*HTJ{character} 6|280r9 538r9 796r9
+151e4*VTS{character} 6|281r9 539r9 797r9
+152e4*PLD{character} 6|282r9 540r9 798r9
+153e4*PLU{character} 6|283r9 541r9 799r9
+154e4*RI{character} 6|284r9 542r9 800r9
+155e4*SS2{character} 6|285r9 543r9 801r9
+156e4*SS3{character} 6|286r9 544r9 802r9
+158e4*DCS{character} 6|287r9 545r9 803r9
+159e4*PU1{character} 6|288r9 546r9 804r9
+160e4*PU2{character} 6|289r9 547r9 805r9
+161e4*STS{character} 6|290r9 548r9 806r9
+162e4*CCH{character} 6|291r9 549r9 807r9
+163e4*MW{character} 6|292r9 550r9 808r9
+164e4*SPA{character} 6|293r9 551r9 809r9
+165e4*EPA{character} 6|294r9 552r9 810r9
+167e4*SOS{character} 6|295r9 553r9 811r9
+168e4*Reserved_153{character} 6|296r9 554r9 812r9
+169e4*SCI{character} 6|297r9 555r9 813r9
+170e4*CSI{character} 6|298r9 556r9 814r9
+171e4*ST{character} 6|299r9 557r9 815r9
+172e4*OSC{character} 6|300r9 558r9 816r9
+173e4*PM{character} 6|301r9 559r9 817r9
+174e4*APC{character} 6|69r36 302r9 560r9 818r9
+182e4*No_Break_Space{character} 6|74r9 133r9 303r9 561r9 819r9
+184e4*Inverted_Exclamation{character} 6|304r9 562r9 820r9
+185e4*Cent_Sign{character} 6|305r9 563r9 821r9
+186e4*Pound_Sign{character} 6|306r9 564r9 822r9
+187e4*Currency_Sign{character} 6|307r9 565r9 823r9
+188e4*Yen_Sign{character} 6|308r9 566r9 824r9
+189e4*Broken_Bar{character} 6|309r9 567r9 825r9
+190e4*Section_Sign{character} 6|310r9 568r9 826r9
+191e4*Diaeresis{character} 6|311r9 569r9 827r9
+192e4*Copyright_Sign{character} 6|312r9 570r9 828r9
+193e4*Feminine_Ordinal_Indicator{character} 6|313r9 571r9 829r9
+194e4*Left_Angle_Quotation{character} 6|314r9 572r9 830r9
+195e4*Not_Sign{character} 6|315r9 573r9 831r9
+196e4*Soft_Hyphen{character} 6|316r9 574r9 832r9
+197e4*Registered_Trade_Mark_Sign{character} 6|317r9 575r9 833r9
+198e4*Macron{character} 6|318r9 576r9 834r9
+202e4*Degree_Sign{character} 6|319r9 577r9 835r9
+204e4*Plus_Minus_Sign{character} 6|320r9 578r9 836r9
+205e4*Superscript_Two{character} 6|321r9 579r9 837r9
+206e4*Superscript_Three{character} 6|322r9 580r9 838r9
+207e4*Acute{character} 6|323r9 581r9 839r9
+208e4*Micro_Sign{character} 6|324r9 582r9 840r9
+209e4*Pilcrow_Sign{character} 6|325r9 583r9 841r9
+211e4*Middle_Dot{character} 6|326r9 584r9 842r9
+212e4*Cedilla{character} 6|327r9 585r9 843r9
+213e4*Superscript_One{character} 6|328r9 586r9 844r9
+214e4*Masculine_Ordinal_Indicator{character} 6|329r9 587r9 845r9
+215e4*Right_Angle_Quotation{character} 6|330r9 588r9 846r9
+216e4*Fraction_One_Quarter{character} 6|331r9 589r9 847r9
+217e4*Fraction_One_Half{character} 6|332r9 590r9 848r9
+218e4*Fraction_Three_Quarters{character} 6|333r9 591r9 849r9
+219e4*Inverted_Question{character} 6|133r36 334r9 592r9 850r9
+223e4*UC_A_Grave{character} 6|80r9 93r9 123r9 593r9 625r9
+224e4*UC_A_Acute{character} 6|594r9 626r9
+225e4*UC_A_Circumflex{character} 6|595r9 627r9
+226e4*UC_A_Tilde{character} 6|596r9 628r9
+227e4*UC_A_Diaeresis{character} 6|597r9 629r9
+228e4*UC_A_Ring{character} 6|598r9 630r9
+229e4*UC_AE_Diphthong{character} 6|100r9 100r36 599r9 631r9 857r9
+230e4*UC_C_Cedilla{character} 6|600r9 632r9
+231e4*UC_E_Grave{character} 6|601r9 633r9
+232e4*UC_E_Acute{character} 6|602r9 634r9
+233e4*UC_E_Circumflex{character} 6|603r9 635r9
+234e4*UC_E_Diaeresis{character} 6|604r9 636r9
+235e4*UC_I_Grave{character} 6|605r9 637r9
+236e4*UC_I_Acute{character} 6|606r9 638r9
+237e4*UC_I_Circumflex{character} 6|607r9 639r9
+238e4*UC_I_Diaeresis{character} 6|608r9 640r9
+242e4*UC_Icelandic_Eth{character} 6|105r9 105r36 609r9 641r9 867r9
+243e4*UC_N_Tilde{character} 6|610r9 642r9
+244e4*UC_O_Grave{character} 6|611r9 643r9
+245e4*UC_O_Acute{character} 6|612r9 644r9
+246e4*UC_O_Circumflex{character} 6|613r9 645r9
+247e4*UC_O_Tilde{character} 6|614r9 646r9
+248e4*UC_O_Diaeresis{character} 6|80r36 93r36 123r36 615r9 647r9
+249e4*Multiplication_Sign{character} 6|134r9 134r36 358r9 616r9 874r9
+250e4*UC_O_Oblique_Stroke{character} 6|81r9 94r9 124r9 617r9 649r9
+251e4*UC_U_Grave{character} 6|618r9 650r9
+252e4*UC_U_Acute{character} 6|619r9 651r9
+253e4*UC_U_Circumflex{character} 6|620r9 652r9
+254e4*UC_U_Diaeresis{character} 6|621r9 653r9
+255e4*UC_Y_Acute{character} 6|622r9 654r9
+256e4*UC_Icelandic_Thorn{character} 6|94r36 103r9 103r36 623r9 655r9 881r9
+257e4*LC_German_Sharp_S{character} 6|87r9 102r9 102r36 366r9 624r9 882r9
+261e4*LC_A_Grave{character} 6|335r9 367r9
+262e4*LC_A_Acute{character} 6|336r9 368r9
+263e4*LC_A_Circumflex{character} 6|337r9 369r9
+264e4*LC_A_Tilde{character} 6|338r9 370r9
+265e4*LC_A_Diaeresis{character} 6|339r9 371r9
+266e4*LC_A_Ring{character} 6|340r9 372r9
+267e4*LC_AE_Diphthong{character} 6|101r9 101r36 341r9 373r9 889r9
+268e4*LC_C_Cedilla{character} 6|342r9 374r9
+269e4*LC_E_Grave{character} 6|343r9 375r9
+270e4*LC_E_Acute{character} 6|344r9 376r9
+271e4*LC_E_Circumflex{character} 6|345r9 377r9
+272e4*LC_E_Diaeresis{character} 6|346r9 378r9
+273e4*LC_I_Grave{character} 6|347r9 379r9
+274e4*LC_I_Acute{character} 6|348r9 380r9
+275e4*LC_I_Circumflex{character} 6|349r9 381r9
+276e4*LC_I_Diaeresis{character} 6|350r9 382r9
+279e4*LC_Icelandic_Eth{character} 6|106r9 106r36 351r9 383r9 899r9
+280e4*LC_N_Tilde{character} 6|352r9 384r9
+281e4*LC_O_Grave{character} 6|353r9 385r9
+282e4*LC_O_Acute{character} 6|354r9 386r9
+283e4*LC_O_Circumflex{character} 6|355r9 387r9
+284e4*LC_O_Tilde{character} 6|356r9 388r9
+285e4*LC_O_Diaeresis{character} 6|81r36 87r36 124r36 357r9 389r9
+286e4*Division_Sign{character} 6|135r9 135r36 390r9 648r9 906r9
+287e4*LC_O_Oblique_Stroke{character} 6|82r9 88r9 125r9 359r9 391r9
+288e4*LC_U_Grave{character} 6|360r9 392r9
+289e4*LC_U_Acute{character} 6|361r9 393r9
+290e4*LC_U_Circumflex{character} 6|362r9 394r9
+291e4*LC_U_Diaeresis{character} 6|363r9 395r9
+292e4*LC_Y_Acute{character} 6|364r9 396r9
+293e4*LC_Icelandic_Thorn{character} 6|104r9 104r36 365r9 397r9 913r9
+294e4*LC_Y_Diaeresis{character} 6|74r36 82r36 88r36 125r36 398r9 656r9
+X 4 a-string.ads
+16K13*Strings 1|16k9 4|35e16 6|38r13 916r9
+X 5 a-strmap.ads
+38K21*Maps 4|16k13 5|412e21 6|38r21 916r17
+47A9*Character_Set<138A9> 6|43r37 44r37 45r37 46r37 47r37 48r37 49r37 50r37
+. 51r37 52r37 53r37 67r41 72r41 77r41 85r41 91r41 97r41 109r41 113r41 119r41
+. 128r41 138r41
+108A9*Character_Mapping(character) 6|55r37 58r37 61r37 142r30 400r30 658r25
+138A9 Character_Set_Internal(boolean)<character>
+X 6 a-stmaco.ads
+38K26*Constants 5|38k21 6|65E12 916l22 916e31
+43a4*Control_Set{5|47A9} 67c4
+44a4*Graphic_Set{5|47A9} 72c4
+45a4*Letter_Set{5|47A9} 77c4
+46a4*Lower_Set{5|47A9} 85c4
+47a4*Upper_Set{5|47A9} 91c4
+48a4*Basic_Set{5|47A9} 97c4
+49a4*Decimal_Digit_Set{5|47A9} 109c4
+50a4*Hexadecimal_Digit_Set{5|47A9} 113c4
+51a4*Alphanumeric_Set{5|47A9} 119c4
+52a4*Special_Set{5|47A9} 128c4
+53a4*ISO_646_Set{5|47A9} 138c4
+55a4*Lower_Case_Map{5|108A9} 142c4
+58a4*Upper_Case_Map{5|108A9} 400c4
+61a4*Basic_Map{5|108A9} 658c4
+65K12 L=65:37 68r7 68r34 69r7 69r34 73r7 73r34 74r7 74r34 79r7 79r34 80r7
+. 80r34 81r7 81r34 82r7 82r34 86r7 86r34 87r7 87r34 88r7 88r34 93r7 93r34
+. 94r7 94r34 99r7 99r34 100r7 100r34 101r7 101r34 102r7 102r34 103r7 103r34
+. 104r7 104r34 105r7 105r34 106r7 106r34 116r7 116r34 122r7 122r34 123r7
+. 123r34 124r7 124r34 125r7 125r34 129r7 129r34 130r7 130r34 131r7 131r34
+. 132r7 132r34 133r7 133r34 134r7 134r34 135r7 135r34 139r7 139r34 143r7
+. 144r7 145r7 146r7 147r7 148r7 149r7 150r7 151r7 152r7 153r7 154r7 155r7
+. 156r7 157r7 158r7 159r7 160r7 161r7 162r7 163r7 164r7 165r7 166r7 167r7
+. 168r7 169r7 170r7 171r7 172r7 173r7 174r7 175r7 176r7 177r7 178r7 179r7
+. 180r7 181r7 182r7 183r7 184r7 185r7 186r7 187r7 188r7 189r7 190r7 201r7
+. 202r7 203r7 204r7 205r7 206r7 207r7 208r7 209r7 210r7 211r7 212r7 213r7
+. 214r7 215r7 216r7 217r7 218r7 219r7 220r7 221r7 222r7 223r7 224r7 225r7
+. 226r7 227r7 228r7 229r7 230r7 231r7 232r7 233r7 234r7 235r7 236r7 237r7
+. 238r7 239r7 240r7 241r7 242r7 243r7 244r7 245r7 246r7 247r7 248r7 249r7
+. 250r7 251r7 252r7 253r7 254r7 255r7 256r7 257r7 258r7 259r7 260r7 261r7
+. 262r7 263r7 264r7 265r7 266r7 267r7 268r7 269r7 270r7 271r7 272r7 273r7
+. 274r7 275r7 276r7 277r7 278r7 279r7 280r7 281r7 282r7 283r7 284r7 285r7
+. 286r7 287r7 288r7 289r7 290r7 291r7 292r7 293r7 294r7 295r7 296r7 297r7
+. 298r7 299r7 300r7 301r7 302r7 303r7 304r7 305r7 306r7 307r7 308r7 309r7
+. 310r7 311r7 312r7 313r7 314r7 315r7 316r7 317r7 318r7 319r7 320r7 321r7
+. 322r7 323r7 324r7 325r7 326r7 327r7 328r7 329r7 330r7 331r7 332r7 333r7
+. 334r7 335r7 336r7 337r7 338r7 339r7 340r7 341r7 342r7 343r7 344r7 345r7
+. 346r7 347r7 348r7 349r7 350r7 351r7 352r7 353r7 354r7 355r7 356r7 357r7
+. 358r7 359r7 360r7 361r7 362r7 363r7 364r7 365r7 366r7 367r7 368r7 369r7
+. 370r7 371r7 372r7 373r7 374r7 375r7 376r7 377r7 378r7 379r7 380r7 381r7
+. 382r7 383r7 384r7 385r7 386r7 387r7 388r7 389r7 390r7 391r7 392r7 393r7
+. 394r7 395r7 396r7 397r7 398r7 401r7 402r7 403r7 404r7 405r7 406r7 407r7
+. 408r7 409r7 410r7 411r7 412r7 413r7 414r7 415r7 416r7 417r7 418r7 419r7
+. 420r7 421r7 422r7 423r7 424r7 425r7 426r7 427r7 428r7 429r7 430r7 431r7
+. 432r7 433r7 434r7 435r7 436r7 437r7 438r7 439r7 440r7 441r7 442r7 443r7
+. 444r7 445r7 446r7 447r7 448r7 459r7 460r7 461r7 462r7 463r7 464r7 465r7
+. 492r7 493r7 494r7 495r7 496r7 497r7 524r7 525r7 526r7 527r7 528r7 529r7
+. 530r7 531r7 532r7 533r7 534r7 535r7 536r7 537r7 538r7 539r7 540r7 541r7
+. 542r7 543r7 544r7 545r7 546r7 547r7 548r7 549r7 550r7 551r7 552r7 553r7
+. 554r7 555r7 556r7 557r7 558r7 559r7 560r7 561r7 562r7 563r7 564r7 565r7
+. 566r7 567r7 568r7 569r7 570r7 571r7 572r7 573r7 574r7 575r7 576r7 577r7
+. 578r7 579r7 580r7 581r7 582r7 583r7 584r7 585r7 586r7 587r7 588r7 589r7
+. 590r7 591r7 592r7 593r7 594r7 595r7 596r7 597r7 598r7 599r7 600r7 601r7
+. 602r7 603r7 604r7 605r7 606r7 607r7 608r7 609r7 610r7 611r7 612r7 613r7
+. 614r7 615r7 616r7 617r7 618r7 619r7 620r7 621r7 622r7 623r7 624r7 625r7
+. 626r7 627r7 628r7 629r7 630r7 631r7 632r7 633r7 634r7 635r7 636r7 637r7
+. 638r7 639r7 640r7 641r7 642r7 643r7 644r7 645r7 646r7 647r7 648r7 649r7
+. 650r7 651r7 652r7 653r7 654r7 655r7 656r7 659r7 660r7 661r7 662r7 663r7
+. 664r7 665r7 666r7 667r7 668r7 669r7 670r7 671r7 672r7 673r7 674r7 675r7
+. 676r7 677r7 678r7 679r7 680r7 681r7 682r7 683r7 684r7 685r7 686r7 687r7
+. 688r7 689r7 690r7 691r7 692r7 693r7 694r7 695r7 696r7 697r7 698r7 699r7
+. 700r7 701r7 702r7 703r7 704r7 705r7 706r7 717r7 718r7 719r7 720r7 721r7
+. 722r7 723r7 750r7 751r7 752r7 753r7 754r7 755r7 756r7 757r7 758r7 759r7
+. 760r7 761r7 762r7 763r7 764r7 765r7 766r7 767r7 768r7 769r7 770r7 771r7
+. 772r7 773r7 774r7 775r7 776r7 777r7 778r7 779r7 780r7 781r7 782r7 783r7
+. 784r7 785r7 786r7 787r7 788r7 789r7 790r7 791r7 792r7 793r7 794r7 795r7
+. 796r7 797r7 798r7 799r7 800r7 801r7 802r7 803r7 804r7 805r7 806r7 807r7
+. 808r7 809r7 810r7 811r7 812r7 813r7 814r7 815r7 816r7 817r7 818r7 819r7
+. 820r7 821r7 822r7 823r7 824r7 825r7 826r7 827r7 828r7 829r7 830r7 831r7
+. 832r7 833r7 834r7 835r7 836r7 837r7 838r7 839r7 840r7 841r7 842r7 843r7
+. 844r7 845r7 846r7 847r7 848r7 849r7 850r7 857r7 867r7 874r7 881r7 882r7
+. 883r7 884r7 885r7 886r7 887r7 888r7 889r7 890r7 891r7 892r7 893r7 894r7
+. 895r7 896r7 897r7 898r7 899r7 900r7 901r7 902r7 903r7 904r7 905r7 906r7
+. 907r7 908r7 909r7 910r7 911r7 912r7 913r7 914r7
+

@@ -1,0 +1,43 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.exp_uns%b	s-expuns.adb		54e7d48d NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U system.exp_uns%s	s-expuns.ads		33029f53 NE OL PU PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-expuns.ads		20140225150202 3dcca3aa
+D s-expuns.adb		20090409150020 382de588
+D s-unstyp.ads		20140225151140 510692af
+X 1 system.ads
+37K9*System 196e11 2|37r6 39r9 43r15 45r15 47r5 3|32r6 32r33 34r14 73r5
+X 2 s-expuns.ads
+39K16*Exp_Uns 1|37k9 2|47l12 47e19 3|34b21 73l12 73t19
+42V13*Exp_Unsigned{4|45M9} 43>7 44>7 3|40b13 71l8 71t20
+43m7 Left{4|45M9} 3|41b7 46r29
+44i7 Right{natural} 3|42b7 47r28
+X 3 s-expuns.adb
+45m7 Result{4|45M9} 61m16 61r26 70r14
+46m7 Factor{4|45M9} 61r35 66m13 66r23 66r32
+47i7 Exp{natural} 58r10 60r16 64m13 64r20 65r23
+X 4 s-unstyp.ads
+40K16*Unsigned_Types 2|37w13 43r22 45r22 3|32w13 32r40 4|208e26
+45M9*Unsigned 2|43r37 45r37 3|41r15 43r15 45r17 46r17
+

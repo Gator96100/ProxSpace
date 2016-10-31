@@ -1,0 +1,36 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.os_lib%s		g-os_lib.ads		8328c314 NE OL PR
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.os_lib%s	s-os_lib.adb		s-os_lib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-uncdea.ads		20070406091342 f15a5ed1
+D gnat.ads		20110801150502 fd2ad2f1
+D g-os_lib.ads		20090409150020 0db74523
+D system.ads		20121001083726 5fc8ae56
+D s-os_lib.ads		20140225151140 73b554c6
+D s-string.ads		20140225151140 8fe54fb7
+X 3 gnat.ads
+34K9*GNAT 37e9 4|51r9
+X 4 g-os_lib.ads
+51K14*OS_Lib=51:36
+X 5 system.ads
+37K9*System 4|49r6 51r29 5|196e11
+X 6 s-os_lib.ads
+59K16*OS_Lib 4|49w13 51r36 6|1009e18
+

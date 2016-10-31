@@ -1,0 +1,74 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLICIT_ALIASING
+RV SPARK_05
+
+U ada.storage_io%b	a-storio.adb		59b27a32 NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+
+U ada.storage_io%s	a-storio.ads		ab45fffd BN NE OL PR PK GE
+W ada%s			ada.ads			ada.ali
+W ada.io_exceptions%s	a-ioexce.ads		a-ioexce.ali
+W system%s		system.ads		system.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-storio.ads		20070406091342 5dda2485
+D a-storio.adb		20090409150020 fd83d1b1
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 3|16r6 22r9 47r5 4|32r6 34r14 40r10 60r5
+X 2 a-ioexce.ads
+18K13*IO_Exceptions 30e22 3|16w10 45r35
+27X4*Data_Error 3|45r49
+X 3 a-storio.ads
+20+9 Element_Type 27r24 37r53 39r54 4|37r34 46r53 55r54
+22k13*Storage_IO 1|16k9 3|20z9 47l9 47e19 4|34b18 60l9 60t19
+25i4*Buffer_Size{9|62I12} 31r50
+30A12*Buffer_Type{9|70A9}<9|54I9> 37r29 39r34 4|36r34 46r29 55r34
+37U14*Read 37>20 37<42 4|46b14 49l8 49t12
+37a20 Buffer{30A12} 4|46b20 48r55
+37*42 Item{20+9} 4|46b42 48m22 48r22
+39U14*Write 39<21 39>47 4|55b14 58l8 58t13
+39a21 Buffer{30A12} 4|55b21 57m7
+39*47 Item{20+9} 4|55b47 57r32
+45X4*Data_Error
+X 4 a-storio.adb
+36P9 Buffer_Ptr(3|30A12) 40r46
+37P9 Elmt_Ptr(3|20+9) 40r36
+39V13 To_Buffer_Ptr[5|20]{36P9} 48s7 57s17
+X 5 a-unccon.ads
+20v14*Unchecked_Conversion 4|32w10 40r14
+X 6 system.ads
+37K9*System 3|17r6 25r27 26r20 27r44 28r55 31r6 6|196e11
+68N4*Storage_Unit 3|27r51 28r62
+X 9 s-stoele.ads
+42K16*Storage_Elements 3|17w13 25r34 26r27 31r13 9|117e28
+54I9*Storage_Offset<integer>
+62I12*Storage_Count{54I9} 3|25r51 26r44
+64M9*Storage_Element
+70A9*Storage_Array(64M9)<54I9> 3|31r30
+

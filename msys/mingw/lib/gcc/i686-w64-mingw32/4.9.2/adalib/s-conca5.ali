@@ -1,0 +1,57 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.concat_5%b	s-conca5.adb		608e2cd1 NE OL PK
+W system%s		system.ads		system.ali
+W system.concat_4%s	s-conca4.adb		s-conca4.ali
+
+U system.concat_5%s	s-conca5.ads		d896ed78 NE OL PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-conca4.ads		20140225151544 7e642b20
+D s-conca5.ads		20140225151544 875e432e
+D s-conca5.adb		20140225151544 99b444df
+X 1 system.ads
+37K9*System 196e11 3|37r9 52r5 4|34r6 36r14 78r7 86r5
+X 2 s-conca4.ads
+37K16*Concat_4 52e20 4|34w13 78r14
+46U14*Str_Concat_Bounds_4 4|78s23
+X 3 s-conca5.ads
+37K16*Concat_5 1|37k9 3|52l12 52e20 4|36b21 86l12 86t20
+39U14*Str_Concat_5 39<28 39>44 39>48 39>52 39>56 39>60 4|44b14 67l8 67t20
+39s28 R{string} 4|44b28 48r12 50m7 54m7 58m7 62m7 65r12 66m7
+39s44 S1{string} 4|44b44 49r16 50r21
+39s48 S2{string} 4|44b48 53r16 54r21
+39s52 S3{string} 4|44b52 57r16 58r21
+39s56 S4{string} 4|44b56 61r16 62r21
+39s60 S5{string} 4|44b60 66r21
+46U14*Str_Concat_Bounds_5 47<7 47<11 48>7 48>11 48>15 48>19 48>23 4|73b14
+. 84l8 84t27
+47i7 Lo{natural} 4|74b7 78m44 81r31 82m10
+47i11 Hi{natural} 4|74b11 78m48 81m10 81r26
+48s7 S1{string} 4|75b7 80r10 81r16 82r16
+48s11 S2{string} 4|75b11 78r52
+48s15 S3{string} 4|75b15 78r56
+48s19 S4{string} 4|75b19 78r60
+48s23 S5{string} 4|75b23 78r64
+X 4 s-conca5.adb
+45i7 F{natural} 48m7 49r12 50r10 52m7 53r12 54r10 56m7 57r12 58r10 60m7 61r12
+. 62r10 64m7 66r10
+45i10 L{natural} 49m7 50r15 52r12 53m7 54r15 56r12 57m7 58r15 60r12 61m7
+. 62r15 64r12 65m7 66r15
+

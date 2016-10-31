@@ -1,0 +1,48 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.case_util%b	s-casuti.adb		d1060688 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.case_util%s	s-casuti.ads		7bc1c781 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-casuti.ads		20140225151544 240969d7
+D s-casuti.adb		20140225151544 f50f6f5f
+X 1 system.ads
+37K9*System 196e11 2|42r9 66r5 3|34r14 105r5
+X 2 s-casuti.ads
+42K16*Case_Util 1|37k9 2|66l12 66e21 3|34b21 105l12 105t21
+47V13*To_Upper{character} 47>23 3|71s22 84b13 96l8 96t16 101s19
+47e23 A{character} 3|84b23 85r50 88r10 94r17
+51U14*To_Upper 51=24 3|98b14 103l8 103t16
+51s24 A{string} 3|98b24 100r16 101m10 101r29
+54V13*To_Lower{character} 54>23 3|40b13 52l8 52t16 57s19 73s22
+54e23 A{character} 3|40b23 41r50 44r10 50r17
+58U14*To_Lower 58=24 3|54b14 59l8 59t16
+58s24 A{string} 3|54b24 56r16 57m10 57r29
+61U14*To_Mixed 61=24 3|65b14 78l8 78t16
+61s24 A{string} 3|65b24 69r16 71m13 71r32 73m13 73r32 76r19
+X 3 s-casuti.adb
+41i7 A_Val{natural} 45r17 46r17 48r32
+56i11 J{integer} 57r13 57r32
+66b7 Ucase{boolean} 70r13 76m10
+69i11 J{integer} 71r16 71r35 73r16 73r35 76r22
+85i7 A_Val{natural} 89r17 90r17 92r32
+100i11 J{integer} 101r13 101r32
+

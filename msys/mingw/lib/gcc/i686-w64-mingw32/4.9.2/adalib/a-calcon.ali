@@ -1,0 +1,114 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV SPARK_05
+
+U ada.calendar.conversions%b  a-calcon.adb	44bf6b2d NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+
+U ada.calendar.conversions%s  a-calcon.ads	0dbd09a8 NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-calcon.ads		20090409150020 81f174bf
+D a-calcon.adb		20121001094122 916f0e09
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 3|37r9 114r5 4|34r14 148r5
+X 2 a-calend.ads
+36K13*Calendar 1|16k9 2|375e17 3|37r13 114r9 4|34r18 148r9
+38I9*Time<200I9> 3|39r64 53r43 88r17 108r38 4|40r51 57r30 110r17 141r38
+200I9 Time_Rep<long_long_integer>
+253K12 Conversion_Operations 292e29 4|43r14 68r9 83r14 99r7 126r7 143r9
+255V16*To_Ada_Time{38I9} 4|43s36
+258V16*To_Ada_Time{38I9} 4|68s31
+268V16*To_Duration{duration} 4|83s36
+273U17*To_Struct_Timespec 4|99s29
+279U17*To_Struct_Tm 4|126s29
+289V16*To_Unix_Time{long_integer} 4|143s31
+X 3 a-calcon.ads
+37K22*Conversions 2|36k13 3|114l18 114e29 4|34b27 148l18 148t29
+39V13*To_Ada_Time{2|38I9} 39>26 4|40b13 44l8 44t19
+39i26 Unix_Time{7|37I9} 4|40b26 41r52
+46V13*To_Ada_Time{2|38I9} 47>7 48>7 49>7 50>7 51>7 52>7 53>7 4|50b13 70l8
+. 70t19
+47i7 tm_year{7|35I9} 4|51b7 59r45
+48i7 tm_mon{7|35I9} 4|52b7 60r45
+49i7 tm_day{7|35I9} 4|53b7 61r45
+50i7 tm_hour{7|35I9} 4|54b7 62r45
+51i7 tm_min{7|35I9} 4|55b7 63r45
+52i7 tm_sec{7|35I9} 4|56b7 64r45
+53i7 tm_isdst{7|35I9} 4|57b7 65r45
+71V13*To_Duration{duration} 72>7 73>7 4|76b13 84l8 84t19
+72i7 tv_sec{7|37I9} 4|77b7 80r58
+73i7 tv_nsec{7|37I9} 4|78b7 81r58
+80U14*To_Struct_Timespec 81>7 82<7 83<7 4|90b14 103l8 103t26
+81o7 D{duration} 4|91b7 99r49
+82i7 tv_sec{7|37I9} 4|92b7 101m7
+83i7 tv_nsec{7|37I9} 4|93b7 102m7
+87U14*To_Struct_Tm 88>7 89<7 90<7 91<7 92<7 93<7 94<7 4|109b14 135l8 135t20
+88i7 T{2|38I9} 4|110b7 127r10
+89i7 tm_year{7|35I9} 4|111b7 129m7
+90i7 tm_mon{7|35I9} 4|112b7 130m7
+91i7 tm_day{7|35I9} 4|113b7 131m7
+92i7 tm_hour{7|35I9} 4|114b7 132m7
+93i7 tm_min{7|35I9} 4|115b7 133m7
+94i7 tm_sec{7|35I9} 4|116b7 134m7
+108V13*To_Unix_Time{7|37I9} 108>27 4|141b13 146l8 146t20
+108i27 Ada_Time{2|38I9} 4|141b27 143r45
+X 4 a-calcon.adb
+41i7 Val{long_integer} 43r49
+59i7 Year{integer} 69r12
+60i7 Month{integer} 69r18
+61i7 Day{integer} 69r25
+62i7 Hour{integer} 69r30
+63i7 Minute{integer} 69r36
+64i7 Second{integer} 69r44
+65i7 DST{integer} 69r52
+80i7 Secs{long_integer} 83r49
+81i7 Nano_Secs{long_integer} 83r55
+95i7 Secs{long_integer} 99m52 101r24
+96i7 Nano_Secs{long_integer} 99m58 102r24
+118i7 Year{integer} 127m13 129r23
+119i7 Month{integer} 127m19 130r23
+120i7 Day{integer} 127m26 131r23
+121i7 Hour{integer} 127m31 132r23
+122i7 Minute{integer} 127m37 133r23
+123i7 Second{integer} 127m45 134r23
+142i7 Val{long_integer} 145r20
+X 6 interfac.ads
+38K9*Interfaces 3|35r6 39r38 47r18 48r18 49r18 50r18 51r18 52r18 53r18 72r17
+. 73r17 82r21 83r21 89r21 90r21 91r21 92r21 93r21 94r21 108r51 4|32r6 32r24
+. 6|179e15
+X 7 i-c.ads
+18K20*C 3|35w17 39r49 47r29 48r29 49r29 50r29 51r29 52r29 53r29 72r28 73r28
+. 82r32 83r32 89r32 90r32 91r32 92r32 93r32 94r32 108r62 4|32w17 32r35 7|230e17
+35I9*int<integer> 3|47r31 48r31 49r31 50r31 51r31 52r31 53r31 89r34 90r34
+. 91r34 92r34 93r34 94r34 4|51r18 52r18 53r18 54r18 55r18 56r18 57r18 111r21
+. 112r21 113r21 114r21 115r21 116r21 129r18 130r18 131r18 132r18 133r18 134r18
+37I9*long<integer> 3|39r51 72r30 73r30 82r34 83r34 108r64 4|40r38 77r17 78r17
+. 92r21 93r21 101r18 102r18 141r51 145r14
+

@@ -1,0 +1,106 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_UNCHECKED_CONVERSION
+RV SPARK_05
+
+U gnat.crc32%b		g-crc32.adb		c0ebc7f8 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.crc32%s		g-crc32.ads		9dd22255 BN EE NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W gnat%s		gnat.ads		gnat.ali
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.crc32%s	s-crc32.adb		s-crc32.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-crc32.ads		20110801150502 f06a8e9a
+D g-crc32.adb		20110801150502 c96ac664
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-crc32.ads		20140225151544 e3a788c7
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 7|57r6 94r15 99r15 8|32r6 47r48 48r31 49r10 57r15 71r29
+X 3 a-stream.ads
+36K13*Streams 84e16 7|57w10 94r19 99r19 8|47r52 49r14 57r19
+42M9*Stream_Element 7|94r27 8|47r60 49r22
+51A9*Stream_Element_Array(42M9)<44I9> 7|99r27 8|57r27
+X 5 a-unccon.ads
+20v14*Unchecked_Conversion 8|32w10 48r35 71r33
+X 6 gnat.ads
+34K9*GNAT 37e9 7|61r9 111r5 8|34r14 85r5
+X 7 g-crc32.ads
+61K14*CRC32 6|34k9 7|111l10 111e15 8|34b19 85l10 85t15
+63M12*CRC32{11|63M9} 66r34 71r22 77r22 82r22 88r22 93r22 98r22 102r28 8|40r33
+. 47r33 56r22 69r38 78r38
+66U14*Initialize=67:27
+66m26 C{63M12}
+70U14*Update=73:27 8|43s10 52s7 74s7 75s7
+71m7 C{63M12}
+72e7 Value{character}
+76U14*Update 77=7 78>7 8|40b14 45l8 45t14
+77m7 C{63M12} 8|40b22 43m18
+78s7 Value{string} 8|40b40 42r16 43r21
+81U14*Wide_Update 82=7 83>7 8|69b14 76l8 76t19 81s10
+82m7 C{63M12} 8|69b27 74m15 75m15
+83e7 Value{wide_character} 8|69b45 72r34
+87U14*Wide_Update 88=7 89>7 8|78b14 83l8 83t19
+88m7 C{63M12} 8|78b27 81m23
+89s7 Value{wide_string} 8|78b45 80r16 81r26
+92U14*Update 93=7 94>7 8|47b14 53l8 53t14 61s10
+93m7 C{63M12} 8|47b22 52m15
+94m7 Value{3|42M9} 8|47b40 50r42
+97U14*Update 98=7 99>7 8|55b14 63l8 63t14
+98m7 C{63M12} 8|56b7 61m18
+99a7 Value{3|51A9} 8|57b7 60r16 61r21
+102V13*Get_Value=103:27{9|63M9}
+102m24 C{63M12}
+X 8 g-crc32.adb
+42i11 K{integer} 43r28
+48V16 To_Char[5|20]{character} 50s33
+50e7 V{character} 52r18
+60i11 K<integer> 61r28
+70A15 S2{string}<integer> 71r71 72r21
+71V16 To_S2[5|20]{string} 72s27
+72a7 VS{70A15} 74r18 75r18
+80i11 K{integer} 81r33
+X 9 interfac.ads
+38K9*Interfaces 7|58w6 102r42 9|179e15
+63M9*Unsigned_32 7|102r53
+X 10 system.ads
+37K9*System 7|59r6 63r21 67r14 73r14 103r14 10|196e11
+X 11 s-crc32.ads
+61K16*CRC32 7|59w13 63r28 67r21 73r21 103r21 11|83e17
+63M9*CRC32<9|63M9> 7|63r34
+66U14*Initialize 7|67r27
+70U14*Update 7|73r27
+76V13*Get_Value{9|63M9} 7|103r27
+

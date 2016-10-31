@@ -51,8 +51,6 @@ if "x%1" == "x-norxvt" set MSYSCON=sh.exe
 if "x%1" == "x--norxvt" set MSYSCON=sh.exe
 if "x%1" == "x-rxvt" set MSYSCON=rxvt.exe
 if "x%1" == "x--rxvt" set MSYSCON=rxvt.exe
-if "x%1" == "x-mintty" set MSYSCON=mintty.exe
-if "x%1" == "x--mintty" set MSYSCON=mintty.exe
 if NOT "x%MSYSCON%" == "xunknown" shift
 
 if "x%MSYSCON%" == "xunknown" set MSYSCON=sh.exe
@@ -63,7 +61,6 @@ if "%1" == "MSYS" set MSYSTEM=MSYS
 
 if NOT "x%DISPLAY%" == "x" set DISPLAY=
 
-if "x%MSYSCON%" == "xmintty.exe" goto startmintty
 if "x%MSYSCON%" == "xrxvt.exe" goto startrxvt
 if "x%MSYSCON%" == "xsh.exe" goto startsh
 
@@ -77,11 +74,8 @@ echo Cannot find the rxvt.exe or sh.exe binary -- aborting.
 pause
 exit 1
 
-:startmintty
-if NOT EXIST %WD%mintty.exe goto startsh
-start %WD%mintty /bin/bash -l
-exit
-
+rem If you don't want to use rxvt then rename the file rxvt.exe to something
+rem else.  Then sh.exe will be used instead.
 :startrxvt
 if NOT EXIST %WD%rxvt.exe goto startsh
 

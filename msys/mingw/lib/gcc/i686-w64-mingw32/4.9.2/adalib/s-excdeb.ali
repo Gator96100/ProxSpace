@@ -1,0 +1,49 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -O0
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -g
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.exceptions_debug%b  s-excdeb.adb	a2eb6533 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.exceptions_debug%s  s-excdeb.ads	a4cfbfee NE OL PR PK
+W system%s		system.ads		system.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-excdeb.ads		20140225151140 53960987
+D s-excdeb.adb		20140225151544 f17d6cb4
+D s-stalib.ads		20140225151140 a891183f
+X 3 system.ads
+37K9*System 196e11 4|38r6 40r9 45r24 67r35 77r5 5|34r14 69r35 75r5
+64M9*Address 4|67r42 5|69r42
+X 4 s-excdeb.ads
+40K16*Exceptions_Debug 3|37k9 4|77l12 77e28 5|34b21 75l12 75t28
+45K12*SSL=45:31 49r41 55r45 5|40r41 50r45
+49U14*Debug_Raise_Exception 49>37 51r12 5|40b14 44l8 44t29
+49p37 E{6|85P9} 5|40b37 41r32
+55U14*Debug_Unhandled_Exception 55>41 57r12 5|50b14 54l8 54t33
+55p41 E{6|85P9} 5|50b41 51r32
+61U14*Debug_Raise_Assert_Failure 63r12 5|60b14 63l8 63t34
+67U14*Local_Raise 67>27 68r24 5|69b14 73l8 73t19
+67m27 Excep{3|64M9} 5|69b27 70r29
+X 6 s-stalib.ads
+55K16*Standard_Library 4|38w13 45r31 6|252e28
+85P9*Exception_Data_Ptr(84R9) 4|49r45 55r49 5|40r45 50r49
+

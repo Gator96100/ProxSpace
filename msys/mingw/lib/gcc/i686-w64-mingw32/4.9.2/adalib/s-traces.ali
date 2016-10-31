@@ -1,0 +1,65 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.traces%b	s-traces.adb		ee80728a NE OL PK
+W system%s		system.ads		system.ali
+
+U system.traces%s	s-traces.ads		add5c6fc NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-traces.ads		20090409150020 f21d68aa
+D s-traces.adb		20090409150020 1c9d1a20
+X 1 system.ads
+37K9*System 196e11 2|55r9 114r5 3|32r14 54r5
+X 2 s-traces.ads
+55K16*Traces 1|37k9 2|114l12 114e18 3|32b21 54l12 54t18
+58E9*Trace_T 103e19 110r36 112r36 3|40r36 49r36
+64n7*M_Accept_Complete{58E9}
+65n7*M_Select_Else{58E9}
+66n7*M_RDV_Complete{58E9}
+67n7*M_Call_Complete{58E9}
+68n7*M_Delay{58E9}
+72n7*E_Missed{58E9}
+73n7*E_Timeout{58E9}
+74n7*E_Kill{58E9}
+78n7*W_Call{58E9}
+79n7*W_Accept{58E9}
+80n7*W_Select{58E9}
+81n7*W_Completion{58E9}
+82n7*W_Delay{58E9}
+83n7*WU_Delay{58E9}
+85n7*WT_Call{58E9}
+86n7*WT_Select{58E9}
+87n7*WT_Completion{58E9}
+91n7*PO_Call{58E9}
+92n7*POT_Call{58E9}
+93n7*PO_Run{58E9}
+94n7*PO_Lock{58E9}
+95n7*PO_Unlock{58E9}
+96n7*PO_Done{58E9}
+100n7*T_Create{58E9}
+101n7*T_Activate{58E9}
+102n7*T_Abort{58E9}
+103n7*T_Terminate{58E9}
+110U14*Send_Trace_Info 110>31 3|40b14 43l8 43t23
+110e31 Id{58E9} 3|40b31
+112U14*Send_Trace_Info 112>31 112>45 3|49b14 52l8 52t23
+112e31 Id{58E9} 3|49b31
+112o45 Timeout{duration} 3|49b45
+

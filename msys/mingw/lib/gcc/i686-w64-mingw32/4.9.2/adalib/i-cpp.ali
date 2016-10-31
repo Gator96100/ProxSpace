@@ -1,0 +1,53 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U interfaces.cpp%b	i-cpp.adb		142c7060 NE OL PK
+W interfaces%s		interfac.ads		interfac.ali
+
+U interfaces.cpp%s	i-cpp.ads		87932386 EB NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W interfaces%s		interfac.ads		interfac.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cpp.ads		20140129155348 823b9bef
+D i-cpp.adb		20090409150020 9617eb8f
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 5|34r6 40r26 45r14 48r14
+X 2 a-tags.ads
+39K13*Tags 581e13 5|34w10 40r30 45r18 48r18
+43P9*Tag 5|40r35
+48V13*Expanded_Name{string} 5|45r23
+56V13*External_Tag{string} 5|48r23
+X 4 interfac.ads
+38K9*Interfaces 179e15 5|36r9 50r5 6|34r14 35r5
+X 5 i-cpp.ads
+36K20*CPP 4|38k9 5|50l16 50e19 6|34b25 35l16 35t19
+40P12*Vtable_Ptr{2|43P9} 44r32 47r31
+44V13*Expanded_Name=45:23{string}
+44p28 T{40P12}
+47V13*External_Tag=48:23{string}
+47p27 T{40P12}
+

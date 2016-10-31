@@ -1,0 +1,100 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV SPARK_05
+
+U ada.characters.conversions%b  a-chacon.adb	e753e265 NE OL PK
+W ada.characters%s	a-charac.ads		a-charac.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.characters.conversions%s  a-chacon.ads	761d31b0 NE OL PU PK
+W ada.characters%s	a-charac.ads		a-charac.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chacon.ads		20130104124956 5b23f5eb
+D a-chacon.adb		20130104124956 bc70178e
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 3|36r9 86r5 4|32r14 261r5
+X 2 a-charac.ads
+16K13*Characters 1|16k9 2|18e19 3|36r13 86r9 4|32r18 261r9
+X 3 a-chacon.ads
+36K24*Conversions 2|16k13 3|86l20 86e31 4|32b29 261l20 261t31
+39V13*Is_Character{boolean} 39>27 4|38b13 41l8 41t20 107s10
+39e27 Item{wide_character} 4|38b27 40r34
+40V13*Is_String{boolean} 40>27 4|52b13 61l8 61t17
+40s27 Item{wide_string} 4|52b24 54r16 55r33
+41V13*Is_Character{boolean} 41>27 4|43b13 46l8 46t20 119s10
+41e27 Item{wide_wide_character} 4|43b27 45r39
+42V13*Is_String{boolean} 42>27 4|63b13 72l8 72t17
+42s27 Item{wide_wide_string} 4|63b24 65r16 66r38
+44V13*Is_Wide_Character{boolean} 44>32 4|78b13 81l8 81t25
+44e32 Item{wide_wide_character} 4|78b32 80r39
+45V13*Is_Wide_String{boolean} 45>32 4|87b13 96l8 96t22
+45s32 Item{wide_wide_string} 4|87b29 89r16 90r38
+47V13*To_Wide_Character{wide_character} 47>32 4|162b13 167l8 167t25 192s43
+47e32 Item{character} 4|163b7 166r49
+48V13*To_Wide_String{wide_string} 48>32 4|185b13 196l8 196t22
+48s32 Item{string} 4|186b7 188r34 191r16 192r23 192r62
+50V13*To_Wide_Wide_Character{wide_wide_character} 51>7 4|217b13 222l8 222t30
+. 242s43
+51e7 Item{character} 4|218b7 221r54
+53V13*To_Wide_Wide_String{wide_wide_string} 54>7 4|235b13 246l8 246t27
+54s7 Item{string} 4|236b7 238r39 241r16 242r23 242r67
+56V13*To_Wide_Wide_Character{wide_wide_character} 57>7 4|224b13 229l8 229t30
+. 255s43
+57e7 Item{wide_character} 4|225b7 228r59
+59V13*To_Wide_Wide_String{wide_wide_string} 60>7 4|248b13 259l8 259t27
+60s7 Item{wide_string} 4|249b7 251r39 254r16 255r23 255r67
+62V13*To_Character{character} 63>7 64>7 4|102b13 112l8 112t20 138s43
+63e7 Item{wide_character} 4|103b7 107r24 108r52
+64e7 Substitute{character} 4|104b7 110r17
+66V13*To_String{string} 67>7 68>7 4|130b13 142l8 142t17
+67s7 Item{wide_string} 4|131b7 134r29 137r16 138r23 138r57
+68e7 Substitute{character} 4|132b7 138r67
+70V13*To_Character{character} 71>7 72>7 4|114b13 124l8 124t20 152s43
+71e7 Item{wide_wide_character} 4|115b7 119r24 120r57
+72e7 Substitute{character} 4|116b7 122r17
+74V13*To_String{string} 75>7 76>7 4|144b13 156l8 156t17
+75s7 Item{wide_wide_string} 4|145b7 148r29 151r16 152r23 152r57
+76e7 Substitute{character} 4|146b7 152r67
+78V13*To_Wide_Character{wide_character} 79>7 80>7 4|169b13 179l8 179t25 207s12
+79e7 Item{wide_wide_character} 4|170b7 174r35 175r62
+80e7 Substitute{wide_character} 4|171b7 177r17
+82V13*To_Wide_String{wide_string} 83>7 84>7 4|198b13 211l8 211t22
+83s7 Item{wide_wide_string} 4|199b7 202r34 205r16 206r23 207r31
+84e7 Substitute{wide_character} 4|200b7 207r41
+X 4 a-chacon.adb
+54i11 J{integer} 55r39
+65i11 J{integer} 66r44
+89i11 J{integer} 90r44
+134a7 Result{string} 138m10 141r14
+137i11 J{integer} 138r18 138r63
+148a7 Result{string} 152m10 155r14
+151i11 J{integer} 152r18 152r63
+188a7 Result{wide_string} 192m10 195r14
+191i11 J{integer} 192r18 192r68
+202a7 Result{wide_string} 206m10 210r14
+205i11 J{integer} 206r18 207r37
+238a7 Result{wide_wide_string} 242m10 245r14
+241i11 J{integer} 242r18 242r73
+251a7 Result{wide_wide_string} 255m10 258r14
+254i11 J{integer} 255r18 255r73
+

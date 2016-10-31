@@ -1,0 +1,87 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DISPATCH
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.wide_text_io.text_streams%b  a-wttest.adb	e2a2b8bf NE OL PK
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+W system%s		system.ads		system.ali
+W system.file_io%s	s-fileio.adb		s-fileio.ali
+
+U ada.wide_text_io.text_streams%s  a-wttest.ads	b3743563 EE OL PF PK
+W ada%s			ada.ads			ada.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+W system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+W system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-witeio.ads		20140129155348 551dcbf1
+D a-wttest.ads		20070406091342 fcf1b9d2
+D a-wttest.adb		20090409150020 5b9d2e62
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-fileio.ads		20120709130952 45ce2f0f
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 9|16r6 18r9 24r5 10|34r14 46r5
+X 5 a-stream.ads
+36K13*Streams 84e16 9|16w10 20r37
+39H9*Root_Stream_Type 67e64 9|20r45
+X 8 a-witeio.ads
+52K13*Wide_Text_IO 1|16k9 8|495e21 9|18r13 24r9 10|34r18 46r9
+54P9*File_Type 9|22r28 10|40r28
+370K12 FCB=370:31 10|42r39
+X 9 a-wttest.ads
+18K26*Text_Streams 8|52k13 9|24l22 24e34 10|34b31 46l22 46t34
+20P9*Stream_Access(5|39R9) 22r46 10|40r46 43r14
+22V13*Stream{20P9} 22>21 10|40b13 44l8 44t14
+22p21 File{8|54P9} 10|40b21 42r53 43r29
+X 13 system.ads
+37K9*System 10|32r6 42r7 13|196e11
+X 16 s-ficobl.ads
+82P9*AFCB_Ptr(84R9) 10|42r43
+X 17 s-fileio.ads
+39K16*File_IO 10|32w13 42r14 17|255e19
+152U14*Check_File_Open 10|42s22
+

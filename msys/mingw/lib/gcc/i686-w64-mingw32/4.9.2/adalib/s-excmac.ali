@@ -1,0 +1,93 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_LOCAL_ALLOCATORS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.exceptions.machine%s  s-excmac.ads	cd9019cf NE OL PR PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.unchecked_conversion%s
+W system.exceptions%s	s-except.adb		s-except.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-except.ads		20140225151140 381ea6a2
+D s-excmac.ads		20140120151534 f40f7168
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 7|38r6 39r6 168r28 177r6 180r6
+X 2 a-except.ads
+53K13*Exceptions 360e19 7|39w10 168r32
+62R9*Exception_Occurrence 328e14 7|168r43
+X 3 a-unccon.ads
+20v14*Unchecked_Conversion 7|38w10 177r10 180r10
+X 4 system.ads
+37K9*System 196e11 7|41r9 104r33 105r29 110r18 177r32 191r5
+64M9*Address 7|110r25 177r39
+66m4*Null_Address{64M9} 7|186r36
+69N4*Word_Size 7|104r40 105r36
+X 6 s-except.ads
+34K16*Exceptions 4|37k9 6|66e22 7|41r16 191r12
+X 7 s-excmac.ads
+41K27*Machine 6|34k16 7|191l23 191e30
+54E9*Unwind_Reason_Code 63e27 76r26
+55n7*URC_NO_REASON{54E9} 66r7
+56n7*URC_FOREIGN_EXCEPTION_CAUGHT{54E9} 67r7
+57n7*URC_PHASE2_ERROR{54E9} 68r7
+58n7*URC_PHASE1_ERROR{54E9} 69r7
+59n7*URC_NORMAL_STOP{54E9} 70r7
+60n7*URC_END_OF_STACK{54E9} 71r7
+61n7*URC_HANDLER_FOUND{54E9} 72r7
+62n7*URC_INSTALL_CONTEXT{54E9} 73r7
+63n7*URC_CONTINUE_UNWIND{54E9} 74r7
+80I9*Unwind_Action<integer> 81r26 83r32 84r32 85r32 86r32 87r32
+83i4*UA_SEARCH_PHASE{80I9} 90r7
+84i4*UA_CLEANUP_PHASE{80I9} 91r7
+85i4*UA_HANDLER_FRAME{80I9} 92r7
+86i4*UA_FORCE_UNWIND{80I9} 93r7
+87i4*UA_END_OF_STACK{80I9} 94r7
+99M9*Exception_Class 101r36 109r18
+101m4*GNAT_Exception_Class{99M9} 185r36
+104M9*Unwind_Word 105r8 111r18 112r18 118r18 119r18 120r18 121r18
+108R9*Unwind_Exception 122e14 123r26 126r8 149r44 165r16
+109m7*Class{99M9} 185m25
+110m7*Cleanup{4|64M9} 186m25
+111m7*Private1{104M9}
+112m7*Private2{104M9}
+118m7*Private3{104M9}
+119m7*Private4{104M9}
+120m7*Private5{104M9}
+121m7*Private6{104M9}
+149P9*GCC_Exception_Access(108R9) 153r54 177r48 181r9
+153U14*Unwind_DeleteException 153>38 154b<c,_Unwind_DeleteException>22
+153p38 Excp{149P9}
+164R9*GNAT_GCC_Exception 170e14 172r26 174r49 184r12
+165r7*Header{108R9} 185m10
+168r7*Occurrence{2|62R9}
+174P9*GNAT_GCC_Exception_Access(164R9) 181r31 183r35
+176V13*To_GCC_Exception[3|20]{149P9}
+179V13*To_GNAT_GCC_Exception[3|20]{174P9}
+183V13*New_Occurrence{174P9}
+

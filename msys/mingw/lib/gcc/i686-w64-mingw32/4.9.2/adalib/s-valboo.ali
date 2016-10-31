@@ -1,0 +1,42 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.val_bool%b	s-valboo.adb		f89f7823 NE OL PK
+W system%s		system.ads		system.ali
+W system.val_util%s	s-valuti.adb		s-valuti.ali
+
+U system.val_bool%s	s-valboo.ads		a55ac248 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-valboo.ads		20090409150020 fa926c1e
+D s-valboo.adb		20121029095828 aeada2c3
+D s-valuti.ads		20121029095828 aca0b6fe
+X 1 system.ads
+37K9*System 196e11 2|32r9 38r5 3|32r6 32r27 34r14 59r5
+X 2 s-valboo.ads
+32K16*Val_Bool 1|37k9 2|38l12 38e20 3|34b21 59l12 59t20
+35V13*Value_Boolean{boolean} 35>28 3|40b13 57l8 57t21
+35s28 Str{string} 3|40b28 43r19 43r33 55r21
+X 3 s-valboo.adb
+41i7 F{natural} 46m28 48r13 51r16
+42i7 L{natural} 46m31 48r18 51r21
+43a7 S{string} 46m25 46r25 48r10 51r13
+X 4 s-valuti.ads
+34K16*Val_Util 3|32w13 32r34 4|117e20
+37U14*Bad_Value 3|55s10
+41U14*Normalize_String 3|46s7
+

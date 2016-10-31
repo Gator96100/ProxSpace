@@ -1,8 +1,8 @@
 /* <dirent.h> includes <sys/dirent.h>, which is this file.  On a
    system which supports <dirent.h>, this file is overridden by
    dirent.h in the libc/sys/.../sys directory.  On a system which does
-   not support <dirent.h>, we will get this file which uses #error to force
-   an error.  */
+   not support <dirent.h>, we will get this file
+*/
 
 #ifndef _dirent_h_
 #define _dirent_h_
@@ -24,19 +24,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 	struct dirent {
 		ino_t	d_ino;
 		unsigned char  d_type;
 		char	d_name[NAME_MAX+1];
 	};
-	
+
 	typedef struct {
 		long int        position;
 		DIR_ITER*       dirData;
 		struct dirent   fileData;
 	} DIR;
-	
+
 	int closedir(DIR *dirp);
 	DIR *opendir(const char *dirname);
 	struct dirent *readdir(DIR *dirp);
@@ -44,7 +44,7 @@ extern "C" {
 	void rewinddir(DIR *dirp);
 	void seekdir(DIR *dirp, long int loc);
 	long int telldir(DIR *dirp);
-	
+
 #ifdef __cplusplus
 }
 #endif

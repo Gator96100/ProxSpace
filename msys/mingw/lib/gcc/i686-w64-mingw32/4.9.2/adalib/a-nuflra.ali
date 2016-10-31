@@ -1,0 +1,88 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U ada.numerics.float_random%b  a-nuflra.adb	ac5daf3d NE OL PK
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+
+U ada.numerics.float_random%s  a-nuflra.ads	ac27f55b NE OL PK
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W system%s		system.ads		system.ali
+W system.random_numbers%s  s-rannum.adb		s-rannum.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-numeri.ads		20080324174808 bb51c45a
+D a-nuflra.ads		20100622172942 49c50e0b
+D a-nuflra.adb		20100622172942 e598a136
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-rannum.ads		20140124162202 5eb33f0a
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 3|41r9 72r5 4|32r14 102r5
+X 2 a-numeri.ads
+16K13*Numerics 1|16k9 2|32e17 3|41r13 72r9 4|32r18 102r9
+X 3 a-nuflra.ads
+41K22*Float_Random 2|16k13 3|68E9 72l18 72e30 4|32b27 102l18 102t30
+45R9*Generator<9|58R9> 49r27 51r27 52r27 58r27 59r27 68c9 4|50r27 61r27 68r27
+. 75r27 84r27
+47F12*Uniformly_Distributed{float} 49r45 4|50r45
+49V13*Random{47F12}<9|66p13> 49>21 4|50b13 53l8 53t14
+49r21 Gen{45R9} 4|50b21 52r37
+51U14*Reset<9|95p14> 51>21 4|61b14 64l8 64t13
+51r21 Gen{45R9} 4|61b21 63r29
+52U14*Reset<9|101p14> 52>21 52>38 4|68b14 71l8 71t13
+52r21 Gen{45R9} 4|68b21 70r29
+52i38 Initiator{integer} 4|68b38 70r35
+56A9*State<9|63A9> 58r55 59r51 63r34 64r49 70c9 4|41r31 75r51 84r53 93r49
+. 99r14
+58U14*Save 58>21 58<38 4|84b14 87l8 87t12
+58r21 Gen{45R9} 4|84b21 86r28
+58a38 To_State{56A9} 4|84b38 86m34
+59U14*Reset 59>21 59>38 4|75b14 78l8 78t13
+59r21 Gen{45R9} 4|75b21 77r29
+59a38 From_State{56A9} 4|75b38 77r35
+61N4*Max_Image_Width
+63V13*Image{string}<9|124p13> 63>20 4|41b13 44l8 44t13
+63a20 Of_State{56A9} 4|41b20 43r32
+64V13*Value{56A9}<9|128p13> 64>20 4|93b13 100l8 100t13
+64s20 Coded_State{string} 4|93b20 97r17
+X 4 a-nuflra.adb
+34K12 SRN=34:31 35r8 43r21 52r22 63r14 70r14 77r14 86r13 94r11 95r11
+94r7 G{9|58R9} 97r14 98r13
+95a7 S{9|63A9} 98m16 99r21
+X 6 interfac.ads
+63M9*Unsigned_32
+X 7 system.ads
+37K9*System 3|39r6 61r34 68r26 70r22 4|34r24 7|196e11
+X 9 s-rannum.ads
+56K16*Random_Numbers 3|39w13 61r41 68r33 70r29 4|34r31 9|157e26
+58R9*Generator 3|68r48 4|52r26 63r18 70r18 77r18 86r17 94r15
+63A9*State(139M12) 3|70r44 4|43r25 95r15
+66V13*Random{float} 4|52s14
+95U14*Reset 4|63s7
+101U14*Reset 4|70s7
+109U14*Reset 4|77s7
+110U14*Save 4|86s7 98s7
+115U14*Reset 4|97s7
+121N4*Max_Image_Width 3|61r56
+124V13*Image{string} 4|43s14
+139M12 State_Val{6|63M9}
+

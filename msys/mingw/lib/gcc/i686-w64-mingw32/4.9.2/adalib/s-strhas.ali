@@ -1,0 +1,42 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.string_hash%b	s-strhas.adb		089f5cd0 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.string_hash%s	s-strhas.ads		795476c2 BN NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-strhas.ads		20090623093900 269cd894
+D s-strhas.adb		20140225151140 2e038444
+X 1 system.ads
+37K9*System 196e11 2|41r9 60r5 3|34r14 68r5
+X 2 s-strhas.ads
+41K16*String_Hash 1|37k9 2|60l12 60e23 3|34b21 68l12 68t23
+45E12 Char_Type 48r53 3|61r15
+48A12 Key_Type(45E12)<integer> 56r25 3|43r25
+51M12 Hash_Type 56r42 3|43r42 46r10 47r19 48r19 52r19 53r35 56r11
+56v13*Hash 56>19 57r19 3|43b13 66l8 66t12
+56*19 Key{48A12} 3|43b19 60r16 61r30
+X 3 s-strhas.adb
+51V16*Shift_Left{2|51M12} 52>10 53>10 54b33 62s19 62s39
+52*10 Value{2|51M12}
+53i10 Amount{natural}
+56*7 H{2|51M12} 59m7 61m10 62r31 62r51 62r60 65r14
+60i11 J{integer} 61r35
+

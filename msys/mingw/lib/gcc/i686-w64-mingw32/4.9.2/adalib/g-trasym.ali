@@ -1,0 +1,83 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U gnat.traceback.symbolic%b  g-trasym.adb	4b84e13d NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.exceptions.traceback%s  a-exctra.adb	a-exctra.ali
+W gnat.traceback%s	g-traceb.adb		g-traceb.ali
+W system%s		system.ads		system.ali
+W system.address_image%s  s-addima.adb		s-addima.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U gnat.traceback.symbolic%s  g-trasym.ads	ff891eaf EB NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W gnat.traceback%s	g-traceb.adb		g-traceb.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-exctra.ads		20130102111340 5c8e2c9f
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-traceb.ads		20120314163338 dee80ba3
+D g-trasym.ads		20130103100924 d90b540f
+D g-trasym.adb		20120307145340 6fed0497
+D system.ads		20121001083726 5fc8ae56
+D s-addima.ads		20090409150020 a1ec9d3a
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 7|87r6 87r26 8|36r6 36r36
+X 2 a-except.ads
+53K13*Exceptions 360e19 7|87w10 87r30 8|36r10 36r40
+62R9*Exception_Occurrence 328e14 7|97r37 8|72r37
+X 3 a-exctra.ads
+40K24*Traceback 60e29 8|36w21 36r51
+47A9*Tracebacks_Array(16|46M12)<integer>
+50V13*Tracebacks{47A9} 8|74s34
+X 5 gnat.ads
+34K9*GNAT 37e9 7|89r9 100r5 8|39r14 77r5
+X 6 g-traceb.ads
+78K14*Traceback 5|34k9 6|99e19 7|89r14 100r10 8|39r19 77r10
+84A12*Tracebacks_Array{3|47A9}<integer> 7|92r45 8|45r45
+X 7 g-trasym.ads
+89K24*Symbolic 6|78k14 7|100l20 100e28 8|39b29 77l20 77t28
+92V13*Symbolic_Traceback{string} 92>33 8|45b13 70l8 70t26 74s14
+92a33 Traceback{6|84A12} 8|45b33 47r10 52r51 52r62 54r54 58r22 59r45
+97V13*Symbolic_Traceback{string} 97>33 8|72b13 75l8 75t26
+97r33 E{2|62R9} 8|72b33 74r46
+X 8 g-trasym.adb
+52a13 Img{string} 54r36 59r16 62r43 62r58 63r31
+54a13 Result{string} 60m16 62m16 64m16 67r20
+55i13 Last{natural} 60r24 60r36 61m16 61r24 62r24 62r36 63m16 63r24 64r24
+. 67r33
+58i17 J{integer} 59r56
+X 9 system.ads
+37K9*System 8|37r6 52r29 59r23 9|196e11
+64M9*Address
+X 10 s-addima.ads
+39V17*Address_Image{string} 8|37w13 52s36 59s30
+X 16 s-traent.ads
+46M12*Traceback_Entry{9|64M9}
+

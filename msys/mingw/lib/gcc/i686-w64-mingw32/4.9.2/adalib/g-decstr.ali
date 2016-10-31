@@ -1,0 +1,161 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U gnat.decode_string%b	g-decstr.adb		7f2bf31e NE OL PK GE
+W gnat%s		gnat.ads		gnat.ali
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.wch_cnv%s	s-wchcnv.adb		s-wchcnv.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+
+U gnat.decode_string%s	g-decstr.ads		2d5d5350 BN NE OL PU PK GE
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-decstr.ads		20131014124514 cb0aa373
+D g-decstr.adb		20131014124514 c94679f5
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-wchcnv.ads		20140225151140 0fb7baf3
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 gnat.ads
+34K9*GNAT 37e9 2|77r9 176r5 3|40r14 798r5
+X 2 g-decstr.ads
+75i4 Encoding_Method{7|94I9} 3|152r10 271r16 282r46 363r10 453r13 559r10
+. 664r13
+77k14*Decode_String 1|34k9 2|75z4 176l10 176e23 3|40b19 798l10 798t23
+80V13*Decode_Wide_String{wide_string} 80>33 81r19 3|88b13 94l8 94t26
+80s33 S{string} 3|88b33 89r34 92r27
+87U14*Decode_Wide_String 88>7 89<7 90<7 3|92s7 96b14 114l8 114t26
+88s7 S{string} 3|97b7 104r14 106r20 112r33
+89s7 Result{wide_string} 3|98b7 107r23 112m41 112r41
+90i7 Length{natural} 3|99b7 105m7 107r13 111m10 111r20 112r49
+99V13*Decode_Wide_Wide_String{wide_wide_string} 99>38 3|292b13 298l8 298t31
+99s38 S{string} 3|292b38 293r39 296r32
+102U14*Decode_Wide_Wide_String 103>7 104<7 105<7 3|296s7 300b14 318l8 318t31
+103s7 S{string} 3|301b7 308r14 310r20 316r38
+104s7 Result{wide_wide_string} 3|302b7 311r23 316m46 316r46
+105i7 Length{natural} 3|303b7 309m7 311r13 315m10 315r20 316r54
+108V13*Validate_Wide_String{boolean} 108>35 3|762b13 776l8 776t28
+108s35 S{string} 3|762b35 766r14 767r20 768r31
+116V13*Validate_Wide_Wide_String{boolean} 116>40 3|782b13 796l8 796t33
+116s40 S{string} 3|782b40 786r14 787r20 788r36
+120U14*Decode_Wide_Character 121>7 122=7 123<7 124r19 3|68b14 82l8 82t29
+. 112s10 328s7 529s16
+121s7 Input{string} 3|69b7 75r35
+122i7 Ptr{natural} 3|70b7 75m42
+123e7 Result{wide_character} 3|71b7 80m10
+133U14*Decode_Wide_Wide_Character 134>7 135=7 136<7 137r19 3|75s7 120b14
+. 286l8 286t34 316s10 339s7 740s16
+134s7 Input{string} 3|121b7 137r20 139r20 273r31 273r50
+135i7 Ptr{natural} 3|122b7 137r13 138m13 138r20 139r27 273r25 273r57
+136e7 Result{wide_wide_character} 3|123b7 188m16 200m16 213m16 228m16 244m16
+. 275m16 280m16
+140U14*Next_Wide_Character 140>35 140=51 141r19 3|324b14 329l8 329t27 480s22
+. 768s10
+140s35 Input{string} 3|324b35 328r30
+140i51 Ptr{natural} 3|324b51 328m37
+149U14*Prev_Wide_Character 149>35 149=51 3|355b14 545l8 545t27
+149s35 Input{string} 3|355b35 357r16 382r26 386r52 461r22 462r24 463r24 470r27
+. 473r25 474r30 480r43 503r25 521r21 529r39
+149i51 Ptr{natural} 3|355b51 357r10 382r19 385m19 385r26 386r59 461r16 462r31
+. 463r31 465r21 469r27 484r29 485m25 503r19 506m19 506r26 523r16 531r26 532m19
+. 535r29
+167U14*Next_Wide_Wide_Character 167>40 167=56 168r19 3|335b14 340l8 340t32
+. 691s22 788s10
+167s40 Input{string} 3|335b40 339r35
+167i56 Ptr{natural} 3|335b56 339m42
+172U14*Prev_Wide_Wide_Character 172>40 172=56 3|551b14 756l8 756t32
+172s40 Input{string} 3|551b40 553r16 578r26 582r52 672r22 673r24 674r24 681r27
+. 684r25 685r30 691r48 714r25 732r21 740r44
+172i56 Ptr{natural} 3|551b56 553r10 578r19 581m19 581r26 582r59 672r16 673r31
+. 674r31 676r21 680r27 695r29 696m25 714r19 717m19 717r26 734r16 742r26 743m19
+. 746r29
+X 3 g-decstr.adb
+46U14 Bad 47r22 58b14 62l8 62t11 78s10 172s19 197s19 210s19 225s19 241s19
+. 255s16 399s19 445s22 471s22 488s25 498s16 536s19 542s16 595s19 654s28 682s22
+. 699s25 709s16 747s19 753s16
+50U14 Past_End 51r22 108s13 141s13 312s13 346b14 349l8 349t16 358s10 383s19
+. 504s19 524s16 554s10 579s19 715s19 735s16
+73e7 Char{wide_wide_character} 75m47 77r35 80r65
+89a7 Result{wide_string} 92m30 93r14
+90i7 Length{natural} 92m38 93r27
+101i7 Ptr{natural} 104m7 106r13 112m36 112r36
+125e7 C{character} 148m7 183r46 188r66 272r24 282r43
+127V16 In_Char{character} 128r22 135b16 143l11 143t18 148s12 169s49 264r44
+153q10 UTF8 257l14 257e18
+154m13 U{4|63M9} 169m16 171r20 175r43 183m13 187r17 192r20 193r21 204r20
+. 205r21 217r20 218r21 233r20 234r21
+155m13 W{4|63M9} 175m16 175r33 193m16 196r19 200r51 205m16 209r19 213r51
+. 218m16 224r19 228r51 234m16 240r19 244r51
+157U23 Get_UTF_Byte 158r28 167b23 176l17 176t29 194s16 206s16 207s16 221s19
+. 237s19
+220i20 K{integer}
+236i20 K{integer}
+262q10 Non_UTF8 284l14 284e22
+263V22 Char_Sequence_To_UTF[6|83]{6|53I9} 282s21
+293a7 Result{wide_wide_string} 296m35 297r14
+294i7 Length{natural} 296m43 297r27
+305i7 Ptr{natural} 308m7 310r13 316m41 316r41
+325e7 Discard{wide_character} 326r28 328m42
+336e7 Discard{wide_wide_character} 337r28 339m47
+364q10 UTF8 449l14 449e18
+365m13 U{4|63M9} 386m19 396r20 410r17 418r20 426r23
+367U23 Getc 368r28 380b23 388l17 388t21 397s19 408s13
+372U23 Skip_UTF_Byte 373r28 394b23 401l17 401t30 416s16 424s19
+454q10 Brackets 509l14 509e22
+455i13 P{natural} 465m16 469r22 470r22 473r32 474r37 478r27 479m22 480m50
+. 480r50 484r25 492m19 492r24
+456i13 S{natural} 478m22 479r27 485r32
+515q10 Non_UTF_Brackets 543l14 543e30
+516e13 Discard{wide_character} 529m52
+517i13 PtrS{natural} 521m13 523r23 528r24 529m46 529r46 531r19 535r22
+518i13 PtrP{natural} 528m16 532r26
+560q10 UTF8 660l14 660e18
+561m13 U{4|63M9} 582m19 592r20 606r17 614r20 622r23 631r26 641r29
+563U23 Getc 564r28 576b23 584l17 584t21 593s19 604s13
+568U23 Skip_UTF_Byte 569r28 590b23 597l17 597t30 612s16 620s19 629s22 639s25
+665q10 Brackets 720l14 720e22
+666i13 P{natural} 676m16 680r22 681r22 684r32 685r37 689r27 690m22 691m55
+. 691r55 695r25 703m19 703r24
+667i13 S{natural} 689m22 690r27 696r32
+726q10 Non_UTF8_Brackets 754l14 754e31
+727e13 Discard{wide_wide_character} 740m57
+728i13 PtrS{natural} 732m13 734r23 739r24 740m51 740r51 742r19 746r22
+729i13 PtrP{natural} 739m16 743r26
+763i7 Ptr{natural} 766m7 767r13 768m34 768r34
+783i7 Ptr{natural} 786m7 787r13 788m39 788r39
+X 4 interfac.ads
+38K9*Interfaces 3|35w6 35r22 4|179e15
+63M9*Unsigned_32 3|154r17 155r17 169r21 183r18 365r17 386r24 561r17 582r24
+109V13*Shift_Left{63M9} 3|175s21
+X 5 system.ads
+37K9*System 2|72r6 75r22 3|37r6 37r26 38r6 38r26 5|196e11
+X 6 s-wchcnv.ads
+50K16*WCh_Cnv 3|37w13 37r33 6|116e19
+53I9*UTF_32_Code<integer>
+83v13*Char_Sequence_To_UTF_32 3|264r19
+X 7 s-wchcon.ads
+41K16*WCh_Con 2|72w13 75r29 3|38w13 38r33 7|220e19
+94I9*WC_Encoding_Method<short_short_integer> 2|75r37
+134i4*WCEM_UTF8{94I9} 3|152r28 363r28 559r28
+156i4*WCEM_Brackets{94I9} 3|271r34 453r31 664r31
+

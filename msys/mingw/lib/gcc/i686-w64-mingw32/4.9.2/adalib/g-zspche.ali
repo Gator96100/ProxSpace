@@ -1,0 +1,43 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U gnat.wide_wide_spelling_checker%b  g-zspche.adb  59ffccaf OL PK
+W gnat%s		gnat.ads		gnat.ali
+W gnat.spelling_checker_generic%s  g-spchge.adb	g-spchge.ali
+
+U gnat.wide_wide_spelling_checker%s  g-zspche.ads  c4a6b02f EE NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-spchge.ads		20140225151544 2d9de1f8
+D g-spchge.adb		20140225151544 7037e350
+D g-zspche.ads		20120410054430 398c62de
+D g-zspche.adb		20120410054430 4dee4f89
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 4|37r9 53r5 5|32r6 34r14 37r6 49r5
+X 2 g-spchge.ads
+42K14*Spelling_Checker_Generic 65e34 5|32w11 37r11
+51v13*Is_Bad_Spelling_Of 5|37r36
+X 4 g-zspche.ads
+37K14*Wide_Wide_Spelling_Checker 1|34k9 4|53l10 53e36 5|34b19 49l10 49t36
+40V13*Is_Bad_Spelling_Of{boolean} 41>7 42>7 5|44b13
+41s7 Found{wide_wide_string} 5|45b7
+42s7 Expect{wide_wide_string} 5|46b7
+X 5 g-zspche.adb
+36V13 IBS[2|51]{boolean} 3|40b13 5|47r12
+

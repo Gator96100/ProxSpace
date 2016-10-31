@@ -1,0 +1,68 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_EXCEPTIONS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U ada.command_line.remove%b  a-colire.adb	1e719582 NE OL PK
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.command_line.remove%s  a-colire.ads	e45e4aa2 NE OL PR PK
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-comlin.ads		20140225151544 ea62afbc
+D a-colire.ads		20090409150020 0e3ce51e
+D a-colire.adb		20090409150020 104d709c
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 3|41r9 79r5 4|32r14 79r24 124r5
+X 2 a-comlin.ads
+38K13*Command_Line 1|16k9 2|139e21 3|41r13 79r9 4|32r18 79r28 124r9
+41V13*Argument_Count{natural} 4|48s26 49s44 78s29 110s29
+48V13*Argument{string} 4|79s41 112s38
+122i4 Remove_Count{natural} 4|48m10 65r19 69m7 69r23 71r26 93r17 94r22 100m10
+. 100r26 102r27
+126A9 Arg_Nums(positive)<integer> 4|49r29
+127P9 Arg_Nums_Ptr(126A9)
+132p4 Remove_Args{127P9} 4|47r10 49m10 51r19 52r13 72r10 72r29 103r13 103r32
+X 3 a-colire.ads
+41K26*Remove 2|38k13 3|79l22 79e28 4|32b31 124l22 124t28
+44U14*Remove_Argument 44>31 4|61b14 74l8 74t23 80s13 118s16
+44i31 Number{positive} 4|61b31 65r10 71r16
+63U14*Remove_Arguments 63>32 63>49 4|89b14 106l8 106t24
+63i32 From{positive} 4|89b32 93r10 99r16 100r47 102r19 103r55
+63i49 To{natural} 4|89b49 94r17 99r10 100r42 103r50
+69U14*Remove_Argument 69>31 4|76b14 83l8 83t23
+69s31 Argument{string} 4|76b31 79r13
+74U14*Remove_Arguments 74>32 4|108b14 122l8 122t24
+74s32 Argument_Prefix{string} 4|108b32 115r30 116r34 116r60
+X 4 a-colire.adb
+38U14 Initialize 45b14 55l8 55t18 63s7 91s7
+51i14 J{integer} 52r26 52r32
+71i11 J{integer} 72r23 72r42
+78i11 J{integer} 79r51 80r30
+102i14 J{integer} 103r26 103r45
+110i11 J{integer} 112r48 118r33
+112a13 Arg{string} 115r16 116r24
+

@@ -1,0 +1,47 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.task_stack_usage%s  g-tastus.ads		0e008317 NE OL
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.stack_usage%s	s-stausa.adb		s-stausa.ali
+W system.stack_usage.tasking%s  s-stusta.adb	s-stusta.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-tastus.ads		20130104124956 87a908b7
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-stausa.ads		20110804134156 017a0a05
+D s-stusta.ads		20130104124956 74835951
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 3 gnat.ads
+34K9*GNAT 37e9 4|36r9
+X 4 g-tastus.ads
+36K14*Task_Stack_Usage=36:58
+X 6 system.ads
+37K9*System 4|34r6 36r39 6|196e11
+X 8 s-stausa.ads
+37K16*Stack_Usage 4|34r13 36r46 8|339e23
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 9 s-stusta.ads
+40K28*Tasking 4|34w25 36r58 9|75e31
+42U14*Report_All_Tasks 48i<c,__gnat_tasks_stack_usage_report_all_tasks>7
+51U14*Report_Current_Task 57i<c,__gnat_tasks_stack_usage_report_current_task>7
+

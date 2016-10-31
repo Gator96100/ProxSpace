@@ -20,7 +20,8 @@ enum	{
 
 
 typedef struct {
-	int device;
+	unsigned int device;
+	unsigned int refcount;
 	void *fileStruct;
 } __handle;
 
@@ -32,7 +33,7 @@ typedef struct {
 
 typedef struct {
 	const char *name;
-	int	structSize;
+	size_t structSize;
 	int (*open_r)(struct _reent *r, void *fileStruct, const char *path, int flags, int mode);
 	int (*close_r)(struct _reent *r, int fd);
 	ssize_t (*write_r)(struct _reent *r, int fd, const char *ptr, size_t len);
@@ -45,9 +46,9 @@ typedef struct {
 	int (*chdir_r)(struct _reent *r, const char *name);
 	int (*rename_r) (struct _reent *r, const char *oldName, const char *newName);
 	int (*mkdir_r) (struct _reent *r, const char *path, int mode);
-		
-	int dirStateSize;
-	
+
+	size_t dirStateSize;
+
 	DIR_ITER* (*diropen_r)(struct _reent *r, DIR_ITER *dirState, const char *path);
 	int (*dirreset_r)(struct _reent *r, DIR_ITER *dirState);
 	int (*dirnext_r)(struct _reent *r, DIR_ITER *dirState, char *filename, struct stat *filestat);
@@ -60,25 +61,41 @@ typedef struct {
 
 	int (*chmod_r)(struct _reent *r, const char *path, mode_t mode);
 	int (*fchmod_r)(struct _reent *r, int fd, mode_t mode);
+	int (*rmdir_r)(struct _reent *r, const char *name);
 
 } devoptab_t;
-	
+
 extern const devoptab_t *devoptab_list[];
 
-	
 typedef struct {
 	void *(*sbrk_r) (struct _reent *ptr, ptrdiff_t incr);
 	void (*exit) ( int rc );
+	int  (*gettod_r) (struct _reent *ptr, struct timeval *tp, struct timezone *tz);
+	void (*lock_init) (_LOCK_T *lock);
+	void (*lock_acquire) (_LOCK_T *lock);
+	int  (*lock_try_acquire) (_LOCK_T *lock);
+	void (*lock_release) (_LOCK_T *lock);
+	void (*lock_close) (_LOCK_T *lock);
+	void (*lock_init_recursive) (_LOCK_RECURSIVE_T *lock);
+	void (*lock_acquire_recursive) (_LOCK_RECURSIVE_T *lock);
+	int  (*lock_try_acquire_recursive) (_LOCK_RECURSIVE_T *lock);
+	void (*lock_release_recursive) (_LOCK_RECURSIVE_T *lock);
+	void (*lock_close_recursive) (_LOCK_RECURSIVE_T *lock);
+	struct _reent *(*getreent) ();
 } __syscalls_t;
-	
+
 extern __syscalls_t __syscalls;
-	
+
 int AddDevice( const devoptab_t* device);
 int FindDevice(const char* name);
 int RemoveDevice(const char* name);
 void setDefaultDevice( int device );
 const devoptab_t* GetDeviceOpTab (const char *name);
-	
+
+void __release_handle(int fd);
+int  __alloc_handle(size_t size);
+__handle *__get_handle(int fd);
+
 #ifdef __cplusplus
 }
 #endif

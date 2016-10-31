@@ -1,0 +1,26 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U unchecked_conversion%s  unchconv.ads		ca2f9e18 NE OL PU GE
+
+D system.ads		20121001083726 5fc8ae56
+D unchconv.ads		20070406091342 ca2f9e18
+X 2 unchconv.ads
+17+9 Source 20r36
+18+9 Target 20r51
+20v10*Unchecked_Conversion 20>32 21b27 22r14
+20*32 S{17+9}
+

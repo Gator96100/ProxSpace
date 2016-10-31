@@ -1,0 +1,50 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.locales%b		a-locale.adb		ccfbb977 NE OL PK
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+
+U ada.locales%s		a-locale.ads		ceb69d85 NE OL PR RT PK
+W ada%s			ada.ads			ada.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-locale.ads		20101022100018 f14a139d
+D a-locale.adb		20101022100210 627904bc
+D system.ads		20121001083726 5fc8ae56
+X 1 ada.ads
+16K9*Ada 19e8 2|18r9 31r5 3|34r14 65r5
+X 2 a-locale.ads
+18K13*Locales 1|16k9 2|19r25 20r25 31l9 31e16 3|34b18 65l9 65t16
+22A9*Language_Code(character)<integer> 25r32 28r29 3|43r29 49r14
+23A9*Country_Code(character)<integer> 26r32 29r28 3|56r28 62r14
+25a4*Language_Unknown{22A9}
+26a4*Country_Unknown{23A9}
+28V13*Language{22A9} 3|43b13 50l8 50t16
+29V13*Country{23A9} 3|56b13 63l8 63t15
+X 3 a-locale.adb
+36A9 Lower_4(character)<integer> 46r11
+37A9 Upper_4(character)<integer> 59r11
+44U17*C_Get_Language_Code 44>38 45b<c,c_get_language_code>25 48s7
+44m38 P{4|64M9}
+46a7 F{36A9} 48m28 48r28 49r29
+57U17*C_Get_Country_Code 57>37 58b<c,c_get_country_code>25 61s7
+57m37 P{4|64M9}
+59a7 F{37A9} 61m27 61r27 62r28
+X 4 system.ads
+37K9*System 3|32w6 32r18 4|196e11
+64M9*Address 3|44r42 57r41
+

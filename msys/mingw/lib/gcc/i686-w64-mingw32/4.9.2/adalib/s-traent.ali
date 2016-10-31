@@ -1,0 +1,39 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+
+U system.traceback_entries%b  s-traent.adb	8cb17bcd NE OL PK
+W system%s		system.ads		system.ali
+
+U system.traceback_entries%s  s-traent.ads	ead9cec4 BN NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-traent.ads		20140225151140 b5116092
+D s-traent.adb		20140225151140 39a01b5f
+X 1 system.ads
+37K9*System 196e11 2|43r9 46r31 49r48 52r56 57r32 61r5 3|34r14 40r56 49r32
+. 54r5
+64M9*Address 2|46r38 52r63 57r39 3|40r63 49r39
+66m4*Null_Address{64M9} 2|49r55
+X 2 s-traent.ads
+43K16*Traceback_Entries 1|37k9 2|61l12 61e29 3|34b21 54l12 54t29
+46M12*Traceback_Entry{1|64M9} 49r29 52r32 57r55 3|40r32 49r55
+49m4*Null_TB_Entry{46M12}
+52V13*PC_For{1|64M9} 52>21 53r19 3|40b13 43l8 43t14
+52m21 TB_Entry{46M12} 3|40b21 42r14
+57V13*TB_Entry_For{46M12} 57>27 58r19 3|49b13 52l8 52t20
+57m27 PC{1|64M9} 3|49b27 51r14
+

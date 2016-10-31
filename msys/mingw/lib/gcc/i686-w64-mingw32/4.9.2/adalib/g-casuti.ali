@@ -1,0 +1,53 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.case_util%b	g-casuti.adb		d37ed4a2 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.case_util%s	g-casuti.ads		d6115050 EB NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.case_util%s	s-casuti.adb		s-casuti.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-casuti.ads		20110801150502 0f32eb76
+D g-casuti.adb		20110801150502 dc4c3fd4
+D system.ads		20121001083726 5fc8ae56
+D s-casuti.ads		20140225151544 240969d7
+X 1 gnat.ads
+34K9*GNAT 37e9 2|43r9 77r5 3|37r14 38r5
+X 2 g-casuti.ads
+43K14*Case_Util 1|34k9 2|77l10 77e19 3|37b19 38l10 38t19
+53V13*To_Upper=54:31{character}
+53e23 A{character}
+58U14*To_Upper=59:31
+58s24 A{string}
+62V13*To_Lower=63:31{character}
+62e23 A{character}
+67U14*To_Lower=68:31
+67s24 A{string}
+71U14*To_Mixed=72:31
+71s24 A{string}
+X 4 system.ads
+37K9*System 2|41r6 54r14 59r14 63r14 68r14 72r14 4|196e11
+X 5 s-casuti.ads
+42K16*Case_Util 2|41w13 54r21 59r21 63r21 68r21 72r21 5|66e21
+47V13*To_Upper{character} 2|54r31
+51U14*To_Upper 2|59r31
+54V13*To_Lower{character} 2|63r31
+58U14*To_Lower 2|68r31
+61U14*To_Mixed 2|72r31
+

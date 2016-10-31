@@ -1,0 +1,38 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV SPARK_05
+
+U system.exn_llf%b	s-exnllf.adb		0be1b996 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.exn_llf%s	s-exnllf.ads		de4cb0b9 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-exnllf.ads		20121004090554 81841eef
+D s-exnllf.adb		20121004090554 8a65a779
+X 1 system.ads
+37K9*System 196e11 2|34r9 41r5 3|32r14 96r5
+X 2 s-exnllf.ads
+34K16*Exn_LLF 1|37k9 2|41l12 41e19 3|32b21 96l12 96t19
+37V13*Exn_Long_Long_Float{long_long_float} 38>7 39>7 3|38b13 94l8 94t27
+38f7 Left{long_long_float} 3|39b7 43r35
+39i7 Right{integer} 3|40b7 44r27
+X 3 s-exnllf.adb
+42f7 Result{long_long_float} 56m16 56r26 64r17 83m19 83r29 91r26
+43f7 Factor{long_long_float} 56r35 61m13 61r23 61r32 83r38 88m16 88r26 88r35
+44i7 Exp{integer} 53r10 55r16 59m13 59r20 60r23 82r19 86m16 86r23 87r26
+

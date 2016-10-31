@@ -1,0 +1,138 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_ALLOCATORS
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_IMPLICIT_LOOPS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_DEALLOCATION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U ada.environment_variables%b  a-envvar.adb	e5789238 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_deallocation%s
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W interfaces.c.strings%s  i-cstrin.adb		i-cstrin.ali
+W system%s		system.ads		system.ali
+W system.crtl%s		s-crtl.ads		s-crtl.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.environment_variables%s  a-envvar.ads	3ff48a0e NE OL PR PK
+W ada%s			ada.ads			ada.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-envvar.ads		20130423094410 00080416
+D a-envvar.adb		20140224165442 a439ad37
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 2|19r9 69r5 3|34r6 36r14 109r29 228r5
+X 2 a-envvar.ads
+19K13*Environment_Variables 1|16k9 2|20r25 69l9 69e30 3|36b18 228l9 228t30
+22V13*Value{string} 22>20 3|190b13 221l8 221t13 225s37
+22s20 Name{string} 3|190b20 198r47 201r20 201r36
+29V13*Value{string} 29>20 29>35 3|223b13 226l8 226t13
+29s20 Name{string} 3|223b20 225r26 225r44
+29s35 Default{string} 3|223b35 225r55
+34V13*Exists{boolean} 34>21 3|70b13 92l8 92t14 225s18
+34s21 Name{string} 3|70b21 78r47 81r20 81r36
+39U14*Set 39>19 39>34 3|169b14 184l8 184t11
+39s19 Name{string} 3|169b19 170r30 177r20 177r36
+39s34 Value{string} 3|169b34 171r30 180r21 180r38
+52U14*Clear 52>21 3|42b14 53l8 53t13
+52s21 Name{string} 3|42b21 46r30 49r20 49r36
+57U14*Clear 3|59b14 64l8 64t13
+62U14*Iterate 63^7 3|98b14 163l8 163t15
+63p7 Process 3|99b7 151r16
+63s44 Name{string}
+63s50 Value{string}
+X 3 a-envvar.adb
+43U17*Clear_Env_Var 43>32 44b<c,__gnat_unsetenv>25 52s7
+43m32 Name{9|64M9}
+46a7 F_Name{string} 49m7 50m7 50r15 52m22 52r22
+60U17*Clear_Env 61b<c,__gnat_clearenv>25 63s7
+73U17*Get_Env_Value_Ptr 73>36 73>42 73>50 74b<c,__gnat_getenv>25 84s7
+73m36 Name{9|64M9}
+73m42 Length{9|64M9}
+73m50 Ptr{9|64M9}
+76m7 Env_Value_Ptr{9|64M9} 85m52 85r52 87r10
+77i7 Env_Value_Length{integer} 85m26 85r26
+78a7 F_Name{string} 81m7 82m7 82r15 85m10 85r10
+99s44 Name{string}
+99s50 Value{string}
+102A12 C_String_Array(8|47P9)<integer> 103r44
+103P12 C_String_Array_Access(102A12) 105r31 112r29
+105V16*Get_Env{103P12} 106b<c,__gnat_environ>25 112s54
+108P12 String_Access(string) 109r65 129r48
+109U17 Free[5|20] 160s13
+111i7 Env_Length{natural} 124r25 125m10 125r24 129r33 134r32 140r31 159r31
+112p7 Env{103P12} 117r10 124r20 135r55
+129a10 Env_Copy(108P12) 135m13 142r49 143r41 160m19 160r19
+134i14 Iterator{integer} 135r23 135r60
+140i14 Iterator{integer} 142r59 143r51
+142a16 Current_Var{string} 147r29 152r19 152r32 153r19 153r51
+143i16 Value_Index{natural} 147r42 148m19 148r34 152r53 153r32
+159i14 Iterator{integer} 160r29
+170a7 F_Name{string} 177m7 178m7 178r15 183m22 183r22
+171a7 F_Value{string} 180m7 181m7 181r16 183m38 183r38
+173U17*Set_Env_Value 173>32 173>38 174b<c,__gnat_setenv>25 183s7
+173m32 Name{9|64M9}
+173m38 Value{9|64M9}
+193U17*Get_Env_Value_Ptr 193>36 193>42 193>50 194b<c,__gnat_getenv>25 204s7
+193m36 Name{9|64M9}
+193m42 Length{9|64M9}
+193m50 Ptr{9|64M9}
+196m7 Env_Value_Ptr{9|64M9} 205m52 205r52 207r10 215r38
+197i7 Env_Value_Length{integer} 205m26 205r26 211r10 213r43 215r61
+198a7 F_Name{string} 201m7 202m7 202r15 205m10 205r10
+213a13 Result{string} 215m22 215r22 216r20
+X 5 a-uncdea.ads
+20u15*Unchecked_Deallocation 3|34w10 109r33
+X 6 interfac.ads
+38K9*Interfaces 3|33r6 101r11 6|179e15
+X 7 i-c.ads
+18K20*C 3|33r17 101r22 7|230e17
+X 8 i-cstrin.ads
+36K22*Strings 3|33w19 101r24 8|104e25
+47P9*chars_ptr 3|102r57
+52p4*Null_Ptr{47P9} 3|124r39
+72V13*Value{string} 3|135s48
+X 9 system.ads
+37K9*System 3|32r6 43r39 71r11 87r26 173r46 191r11 191r19 207r26 9|196e11
+64M9*Address 3|43r46 73r56 76r34 173r53 193r56 196r34
+66m4*Null_Address{64M9} 3|87r33 207r33
+78V14*"="{boolean} 3|87r24 207r24
+X 10 s-crtl.ads
+38K16*CRTL 3|32w13 191r26 10|233e16
+60M9*size_t 3|215r53
+81U14*strncpy 3|215s13
+

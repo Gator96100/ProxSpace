@@ -1,0 +1,63 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.atomic_counters%b  s-atocou.adb	e5ac57f8 NE OL PK
+W system%s		system.ads		system.ali
+W system.machine_code%s	s-maccod.ads		s-maccod.ali
+
+U system.atomic_counters%s  s-atocou.ads	92b43a9c BN NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-atocou.ads		20131010110730 cd7c94ca
+D s-atocou.adb		20131010110730 276bb8fc
+D s-maccod.ads		20110906094622 0fbb7bce
+X 1 system.ads
+37K9*System 196e11 2|42r9 83r5 3|37r6 39r14 51r7 70r7 95r5
+X 2 s-atocou.ads
+42K16*Atomic_Counters 1|37k9 2|76E9 83l12 83e27 3|39b21 95l12 95t27
+46R9*Atomic_Counter 56r39 60r38 64r28 68r37 78c9 3|47r38 68r39 81r37 90r28
+56U14*Increment 56=25 57r26 3|68b14 75l8 75t17
+56r25 Item{46R9} 3|68b25 72m52 72r52 73r50
+60V13*Decrement{boolean} 60=24 61r26 3|47b13 62l8 62t17
+60r24 Item{46R9} 3|47b24 56m43 56r43 58r50
+64V13*Is_One{boolean} 64>21 65r26 3|90b13 93l8 93t14
+64r21 Item{46R9} 3|90b21 92r14
+68U14*Initialize 68<26 69r26 3|81b14 84l8 84t18
+68r26 Item{46R9} 3|81b26 83m7
+76M9 Unsigned_32 79r23 3|56r13 58r22 72r22 73r22
+79m7*Value{76M9} 3|56r48 58r55 72r57 73r55 83m12 92r19
+X 3 s-atocou.adb
+48b7 Aux{boolean} 57m40 57r40 61r14
+X 4 s-maccod.ads
+36K16*Machine_Code 3|37w13 51r14 70r14 4|130e24
+43I9*Asm_Input_Operand<integer>
+44I9*Asm_Output_Operand<integer>
+54A9*Asm_Output_Operand_List(44I9)<integer>
+75U14*Asm 3|51s27
+76s6 Template{string} 3|52r10
+77a6 Outputs{54A9} 3|55r10
+78i6 Inputs{43I9} 3|58r10
+80b6 Volatile{boolean} 3|59r10
+82U14*Asm 3|70s27
+83s6 Template{string} 3|71r10
+84i6 Outputs{44I9} 3|72r10
+85i6 Inputs{43I9} 3|73r10
+87b6 Volatile{boolean} 3|74r10
+

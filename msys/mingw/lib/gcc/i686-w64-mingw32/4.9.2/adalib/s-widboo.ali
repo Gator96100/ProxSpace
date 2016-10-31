@@ -1,0 +1,33 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.wid_bool%b	s-widboo.adb		3826fae6 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.wid_bool%s	s-widboo.ads		964093d6 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-widboo.ads		20090409150020 c9883d80
+D s-widboo.adb		20090409150020 f1aec766
+X 1 system.ads
+37K9*System 196e11 2|34r9 41r5 3|32r14 51r5
+X 2 s-widboo.ads
+34K16*Wid_Bool 1|37k9 2|41l12 41e20 3|32b21 51l12 51t20
+37V13*Width_Boolean{natural} 37>28 37>32 3|38b13 49l8 49t21
+37b28 Lo{boolean} 3|38b28 40r10 43r13
+37b32 Hi{boolean} 3|38b32 40r15
+

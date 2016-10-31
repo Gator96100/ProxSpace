@@ -1,0 +1,139 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_SECONDARY_STACK
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U interfaces.fortran%b	i-fortra.adb		90af0bc7 NE OL PK
+W interfaces%s		interfac.ads		interfac.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U interfaces.fortran%s	i-fortra.ads		69b57835 EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+Z ada.numerics.aux%s	a-numaux.adb		a-numaux.ali
+W ada.numerics.generic_complex_types%s
+W interfaces%s		interfac.ads		interfac.ali
+W system.exn_llf%s	s-exnllf.adb		s-exnllf.ali
+W system.fat_flt%s	s-fatflt.ads		s-fatflt.ali
+W system.fat_lflt%s	s-fatlfl.ads		s-fatlfl.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-numeri.ads		20080324174808 bb51c45a
+D a-numaux.ads		20140129155348 243fe0b7
+D a-ngcoty.ads		20090409150020 e7845fd0
+D a-ngcoty.adb		20100622171758 c98acde0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-fortra.ads		20130320092500 e79c965c
+D i-fortra.adb		20090409150020 77339d9b
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-exnllf.ads		20121004090554 81841eef
+D s-fatflt.ads		20090409150020 11beb392
+D s-fatgen.ads		20140129155348 9267ca45
+D s-fatlfl.ads		20090409150020 378cba9f
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 9|16r6 36r11 39r11
+X 3 a-numeri.ads
+16K13*Numerics 32e17 9|16r10 36r15 39r15
+X 5 a-ngcoty.ads
+39k22*Generic_Complex_Types 157e39 9|16w19 36r24 39r24
+42R9*Complex 9|41r55[35] 43r62[38]
+48F9*Imaginary<9|23F9> 9|45r56[35]
+51f4*i{48F9[9|35]} 9|46r57[35]
+52f4*j{48F9[9|35]} 9|47r57[35]
+X 8 interfac.ads
+38K9*Interfaces 179e15 9|19r9 123r5 10|32r14 142r5
+45I9*Integer_8<short_short_integer> 9|59r32 60r32 76r32 80r32
+48I9*Integer_16<short_integer> 9|61r32 62r32 77r32 81r32
+51I9*Integer_32<integer> 9|63r32 64r32 78r32 82r32
+54I9*Integer_64<long_long_integer> 9|65r32 66r32 79r32 83r32
+X 9 i-fortra.ads
+19K20*Fortran 8|38k9 9|123l16 123e23 10|32b25 142l16 142t23
+22I9*Fortran_Integer<integer>
+23F9*Real<float> 36r47
+24F9*Double_Precision<long_float> 39r47
+26B9*Logical<boolean> 27r8 28r32
+35K12*Single_Precision_Complex_Types[5|39] 41r24 45r25 46r26 47r26
+38K12*Double_Precision_Complex_Types[5|39] 43r31
+41R9*Complex<5|42R9[35]> 100r32 101r32
+43R9*Double_Complex<5|42R9[38]> 102r32 103r32
+45F12*Imaginary{5|48F9[35]} 46r8 47r8
+46f4*i=46:57{5|48F9[35]}
+47f4*j=47:57{5|48F9[35]}
+49E9*Character_Set<character> 51r59 107r54 108r32 10|40r28 94r50 96r14 106r19
+. 136r33
+51A9*Fortran_Character(49E9)<integer> 105r33 110r58 111r32 115r20 119r16
+. 10|47r28 61r16 101r47 102r11 116r20
+59I9*Integer_Star_1<8|45I9>
+60I9*Integer_Kind_1<8|45I9>
+61I9*Integer_Star_2<8|48I9>
+62I9*Integer_Kind_2<8|48I9>
+63I9*Integer_Star_4<8|51I9>
+64I9*Integer_Kind_4<8|51I9>
+65I9*Integer_Star_8<8|54I9>
+66I9*Integer_Kind_8<8|54I9>
+68B9*Logical_Star_1<boolean> 76r8 84r32
+69B9*Logical_Star_2<boolean> 77r8 85r32
+70B9*Logical_Star_4<boolean> 78r8 86r32
+71B9*Logical_Star_8<boolean> 79r8 87r32
+72B9*Logical_Kind_1<boolean> 80r8 88r32
+73B9*Logical_Kind_2<boolean> 81r8 89r32
+74B9*Logical_Kind_4<boolean> 82r8 90r32
+75B9*Logical_Kind_8<boolean> 83r8 91r32
+93F9*Real_Star_4<float>
+94F9*Real_Kind_4<float>
+95F9*Real_Star_8<long_float>
+96F9*Real_Kind_8<long_float>
+100R9*Complex_Star_8<41R9>
+101R9*Complex_Kind_4<41R9>
+102R9*Complex_Star_16<43R9>
+103R9*Complex_Kind_8<43R9>
+105A9*Character_Kind_n<51A9><integer>
+107V13*To_Fortran{49E9} 107>25 10|94b13 97l8 97t18
+107e25 Item{character} 10|94b25 96r29
+108V13*To_Ada{character} 108>25 10|40b13 43l8 43t14
+108e25 Item{49E9} 10|40b21 42r25
+110V13*To_Fortran{51A9} 110>25 10|101b13 110l8 110t18
+110s25 Item{string} 10|101b25 102r35 106r34 106r48
+111V13*To_Ada{string} 111>25 10|47b13 56l8 56t14
+111a25 Item{51A9} 10|47b21 48r24 52r30 52r44
+113U14*To_Fortran 114>7 115<7 116<7 10|114b14 140l8 140t18
+114s7 Item{string} 10|115b7 120r10 130r19 136r48
+115a7 Target{51A9} 10|116b7 124r13 128r18 133r23 136m16
+116i7 Last{natural} 10|117b7 121m10 128m10 131m13 131r21 133r16 136r24
+118U14*To_Ada 119>7 120<7 121<7 10|60b14 86l8 86t14
+119a7 Item{51A9} 10|61b7 66r10 76r19 82r44
+120s7 Target{string} 10|62b7 70r13 74r18 79r23 82m16
+121i7 Last{natural} 10|63b7 67m10 74m10 77m13 77r21 79r16 82r24
+X 10 i-fortra.adb
+48a7 T{string} 51r16 52m10 55r14
+51i11 J{integer} 52r13 52r36
+76i14 J{integer} 82r50
+102a7 T{9|51A9} 105r16 106m10 109r14
+105i11 J{integer} 106r13 106r40
+130i14 J{integer} 136r54
+

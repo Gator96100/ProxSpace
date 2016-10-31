@@ -1,0 +1,93 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.calendar.delays%b	a-caldel.adb		d6a2decd OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W system%s		system.ads		system.ali
+W system.os_primitives%s  s-osprim.adb		s-osprim.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.traces%s	s-traces.adb		s-traces.ali
+
+U ada.calendar.delays%s	a-caldel.ads		474dd4b1 EE NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-caldel.ads		20140120152338 9f20b83d
+D a-caldel.adb		20110801150502 0ab40d4b
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-osprim.ads		20090409150020 b0d18c29
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+D s-traces.ads		20090409150020 f21d68aa
+X 1 ada.ads
+16K9*Ada 19e8 3|37r9 53r5 4|38r14 130r5
+X 2 a-calend.ads
+36K13*Calendar 1|16k9 2|375e17 3|37r13 53r9 4|38r18 130r9
+38I9*Time<200I9> 3|45r31 50r30 4|83r31 111r30
+200I9 Time_Rep<long_long_integer>
+298K12 Delay_Operations 304e24 4|117r14
+300V16*To_Duration{duration} 4|117s31
+X 3 a-caldel.ads
+37K22*Delays 2|36k13 3|53l18 53e24 4|38b27 130l18 130t24
+39U14*Delay_For 39>25 4|65b14 77l8 77t17
+39o25 D{duration} 4|65b25 68r36 71r42 75r36
+45U14*Delay_Until 45>27 4|83b14 96l8 96t19
+45i27 T{2|38I9} 4|83b27 84r45
+50V13*To_Duration{duration} 50>26 4|84s32 111b13 118l8 118t19
+50i26 T{2|38I9} 4|111b26 117r44
+X 4 a-caldel.adb
+40K12 OSP=40:31 71r45 72r28 91r31 104r7
+41K12 SSL=41:31 43r13 71r7 91r7 126r7 127r7
+58U14 Timed_Delay_NT 58>30 58>47 102b14 105l8 105t22 127r26
+58o30 Time{duration} 102b30 104r24
+58i47 Mode{integer} 102b47 104r30
+84o7 D{duration} 88r37 91r28 94r36
+X 7 system.ads
+37K9*System 4|33r6 34r6 35r6 36r6 40r24 41r24 45r8 67r10 74r10 87r10 93r10
+. 7|196e11
+X 9 s-osprim.ads
+40K16*OS_Primitives 4|33w13 40r31 9|91e25
+43o4*Max_Sensible_Delay{duration} 4|71r49
+72N4*Relative 4|72r32
+73N4*Absolute_Calendar 4|91r35
+79U14*Timed_Delay 4|104s11
+X 10 s-parame.ads
+51K16*Parameters 4|36w13 67r17 74r17 87r17 93r17 10|213e22
+193b4*Runtime_Traces{boolean} 4|67r28 74r28 87r28 93r28
+X 11 s-soflin.ads
+45K16*Soft_Links 4|34w13 41r31 11|408e22
+96P9*Timed_Delay_Call 4|43r17
+277p4*Timed_Delay{96P9} 4|71r11 91r11 126r11 127m11
+X 17 s-traces.ads
+55K16*Traces 4|35w13 45r15 17|114e18
+68n7*M_Delay{58E9} 4|75r27 94r27
+82n7*W_Delay{58E9} 4|68r27
+83n7*WU_Delay{58E9} 4|88r27
+112U14*Send_Trace_Info 4|68s10 75s10 88s10 94s10
+

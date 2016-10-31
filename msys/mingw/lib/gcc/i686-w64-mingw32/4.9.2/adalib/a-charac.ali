@@ -1,0 +1,26 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U ada.characters%s	a-charac.ads		12c24a43 NE OL PU PK
+W ada%s			ada.ads			ada.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D system.ads		20121001083726 5fc8ae56
+X 1 ada.ads
+16K9*Ada 19e8 2|16r9 18r5
+X 2 a-charac.ads
+16K13*Characters 1|16k9 2|18l9 18e19
+

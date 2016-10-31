@@ -1,0 +1,30 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.unchecked_deallocation%s  a-uncdea.ads	cea6d0c9 NE OL PR GE
+W ada%s			ada.ads			ada.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-uncdea.ads		20070406091342 f15a5ed1
+D system.ads		20121001083726 5fc8ae56
+X 1 ada.ads
+16K9*Ada 19e8 2|20r11
+X 2 a-uncdea.ads
+17+9 Object 18r24
+18P9 Name(17+9) 20r50
+20u15*Unchecked_Deallocation 20=39 21r22 23b27
+20*39 X{18P9}
+

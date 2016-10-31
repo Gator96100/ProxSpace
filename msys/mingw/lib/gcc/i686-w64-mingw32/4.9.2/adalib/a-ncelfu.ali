@@ -1,0 +1,72 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.numerics.complex_elementary_functions%b  a-ncelfu.ads  e0ab0f61 EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+Z ada.numerics.aux%s	a-numaux.adb		a-numaux.ali
+W ada.numerics.complex_types%s  a-nucoty.ads	a-nucoty.ali
+W ada.numerics.generic_complex_elementary_functions%s
+Z ada.numerics.generic_complex_types%s
+Z ada.numerics.generic_elementary_functions%s
+W system.exn_llf%s	s-exnllf.adb		s-exnllf.ali
+W system.fat_flt%s	s-fatflt.ads		s-fatflt.ali
+
+U ada.numerics.complex_elementary_functions%s  a-ncelfu.ads  c1b1f21c EB EE NE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.complex_types%s  a-nucoty.ads	a-nucoty.ali
+W ada.numerics.generic_complex_elementary_functions%s
+Z ada.numerics.generic_complex_types%s
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-numeri.ads		20080324174808 bb51c45a
+D a-numaux.ads		20140129155348 243fe0b7
+D a-ncelfu.ads		20070406091342 e0ab0f61
+D a-ncelfu.ads		20070406091342 e0ab0f61
+D a-nucoty.ads		20070406091342 b8c59445
+D a-ngcefu.ads		20070406091342 228ead62
+D a-ngcefu.adb		20140219111206 b9026901
+D a-ngcoty.ads		20090409150020 e7845fd0
+D a-ngelfu.ads		20140123165334 ff061ca9
+D a-ngelfu.adb		20121001094122 859ccdff
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-exnllf.ads		20121004090554 81841eef
+D s-fatflt.ads		20090409150020 11beb392
+D s-fatgen.ads		20140129155348 9267ca45
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 6|16r6 17r6 19r9 20r7 21r46 23r14
+X 3 a-numeri.ads
+16K13*Numerics 1|16k9 3|32e17 6|16r10 17r10 19r13 20r11 21r50 23r18
+X 6 a-ncelfu.ads
+19K22*Complex_Elementary_Functions[8|21] 3|16k13 6|23r27
+X 7 a-nucoty.ads
+18K22*Complex_Types[10|39] 6|16w19 21r59
+X 8 a-ngcefu.ads
+21k22*Generic_Complex_Elementary_Functions 6|17w19 20r20 8|55e54
+

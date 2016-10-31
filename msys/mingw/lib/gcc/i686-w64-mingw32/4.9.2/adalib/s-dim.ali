@@ -1,0 +1,25 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U system.dim%s		s-dim.ads		b3f8d99a NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-dim.ads		20130206100810 ec3077cc
+X 1 system.ads
+37K9*System 196e11 2|65r9 68r5
+X 2 s-dim.ads
+65K16*Dim 1|37k9 2|68l12 68e15
+

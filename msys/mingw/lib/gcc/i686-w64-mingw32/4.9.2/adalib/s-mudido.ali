@@ -1,0 +1,192 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DELAY
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_LOOPS
+RV NO_LOCAL_ALLOCATORS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.multiprocessors.dispatching_domains%b  s-mudido.adb  4827dfa1 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.real_time.delays%s  a-retide.adb		a-retide.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.multiprocessors%s  s-multip.adb	s-multip.ali
+W system.task_primitives%s  s-taspri.ads	s-taspri.ali
+W system.task_primitives.operations%s  s-taprop.adb  s-taprop.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.initialization%s  s-tasini.adb	s-tasini.ali
+
+U system.multiprocessors.dispatching_domains%s  s-mudido.ads  1cacd931 EE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.real_time%s	a-reatim.adb		a-reatim.ali
+W ada.task_identification%s  a-taside.adb	a-taside.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.multiprocessors%s  s-multip.adb	s-multip.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-reatim.ads		20090409150020 63f07669
+D a-retide.ads		20090409150020 081cdaa4
+D a-taside.ads		20140124142722 68549ce6
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-multip.ads		20101011073010 38ac9f73
+D s-mudido.ads		20110831084022 1026b3ff
+D s-mudido.adb		20110901103644 71b98517
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taprop.ads		20111212143340 1dd2e1b6
+D s-taskin.ads		20140131154342 3f821f32
+D s-tasini.ads		20120612110910 cd8187f9
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 1 ada.ads
+16K9*Ada 19e8 14|16r6 18r6 41r11 42r13 47r16 48r18 52r13 53r15 56r11 57r13
+. 60r26 15|38r6 49r6 49r32 75r16 76r18 222r26 250r11 251r13 262r11 263r13
+. 309r13 310r15
+X 3 a-reatim.ads
+39K13*Real_Time 139e18 14|16w10 60r30 15|222r30
+41O9*Time<duration> 14|60r40 15|222r40
+X 5 a-taside.ads
+39K13*Task_Identification 77e28 14|18w10 41r15 42r17 47r20 48r22 52r17 53r19
+. 56r15 57r17 15|49r36 75r20 76r22 250r15 251r17 262r15 263r17 309r17 310r19
+43P9*Task_Id<27|107P9> 14|41r35 47r40 52r37 56r35 15|49r56 75r40 250r35 262r35
+. 309r37
+53V13*Current_Task{43P9} 14|42s37 48s42 53s39 57s37 15|76s42 251s37 263s37
+. 310s39
+X 6 a-unccon.ads
+20v14*Unchecked_Conversion 15|38w10 49r10
+X 10 system.ads
+37K9*System 196e11 14|20r14 22r9 64r35 68r37 69r5 15|35r6 36r6 36r45 40r14
+. 42r23 80r16 118r16 119r16 120r16 121r16 343r16 386r5
+X 13 s-multip.ads
+16K16*Multiprocessors 10|37k9 13|28e27 14|22r16 69r12 15|40r21 386r12
+19I9*CPU_Range<integer> 14|46r16 51r13 57r58 61r26 15|53r16 74r16 223r26
+. 251r58 308r13 338r16 341r29
+21I12*CPU{19I9} 14|34r35 36r64 38r63 15|117r35 124r18 126r45 127r43 273r64
+. 290r63
+23i4*Not_A_Specific_CPU{19I9} 14|46r29 15|74r29 94r20 321r17 365r27 373r20
+25V13*Number_Of_CPUs{21I12} 15|128s35 131s46 132s48 155s20
+X 14 s-mudido.ads
+22K32*Dispatching_Domains 13|16k16 14|64E9 69l28 69e47 15|40b37 386l28 386t47
+28X4*Dispatching_Domain_Error 15|91r16 95r16 153r16 156r16 162r16 168r16
+. 171r16 175r16 179r16 325r16
+30P9*Dispatching_Domain<27|391P9> 32r41 34r47 36r37 38r36 42r58 45r23 64c9
+. 66r41 67r34 15|73r23 89r9 117r47 138r20 263r58 266r14 273r37 290r36
+32p4*System_Dispatching_Domain{30P9} 66c4 15|89r54 102r19 126r18 130r32 160r9
+. 193r7
+34V13*Create{30P9} 34>21 34>28 15|117b13 215l8 215t14
+34i21 First{13|21I12} 15|117b21 124r10 126r58 127r56 152r10 160r36 160r55
+. 166r38 166r57 183r48 193r34 193r53
+34i28 Last{13|21I12} 15|117b28 128r28 131r34 132r36 152r18 155r13 160r45
+. 160r64 166r47 166r66 183r57 193r43 193r62
+36V13*Get_First_CPU{13|21I12} 36>28 15|273b13 284l8 284t21
+36p28 Domain{30P9} 15|273b28 275r19 276r13 283r14
+38V13*Get_Last_CPU{13|21I12} 38>27 15|290b13 301l8 301t20
+38p27 Domain{30P9} 15|290b27 292r27 293r13 300r14
+40V13*Get_Dispatching_Domain{30P9} 41>7 15|261b13 267l8 267t30
+41p7 T{5|43P9} 15|262b7 266r47
+44U14*Assign_Task 45=7 46>7 47>7 15|72b14 111l8 111t19
+45p7 Domain{30P9} 15|73b7 94r59 102r10 109r43
+46i7 CPU{13|19I9} 15|74b7 94r13 94r48 109r52
+47p7 T{5|43P9} 15|75b7 78r52
+50U14*Set_CPU 51>7 52>7 15|231s7 307b14 330l8 330t15
+51i7 CPU{13|19I9} 15|308b7 321r10 322r10 323r36 329r53
+52p7 T{5|43P9} 15|309b7 312r52
+55V13*Get_CPU{13|19I9} 56>7 15|249b13 255l8 255t15
+56p7 T{5|43P9} 15|250b7 254r27
+59U14*Delay_Until_And_Set_CPU 60>7 61>7 15|221b14 232l8 232t31
+60o7 Delay_Until_Time{3|41O9} 15|222b7 230r19
+61i7 CPU{13|19I9} 15|223b7 231r16
+X 15 s-mudido.adb
+42K12 ST=42:30 49r65 52r16 54r16 78r25 109r13 136r11 166r9 178r13 183r25
+. 189r7 198r12 202r30 212r7 242r7 312r25 314r16 337r16 339r16 359r14 360r50
+. 366r13 367r15 374r13 375r15
+48V13 Convert_Ids[6|20]{27|107P9} 78s39 254s14 266s34 312s39
+51U14 Unchecked_Set_Affinity 52>7 53>7 54>7 108s10 329s7 336b14 384l8 384t30
+52p7 Domain{27|391P9} 337b7 350r26 360r19 360r41
+53i7 CPU{13|19I9} 338b7 354r28 373r13 374r42 375r44
+54p7 T{27|107P9} 339b7 341r42 346r19 350r7 354r7 381r26 383r15
+60U14 Freeze_Dispatching_Domains 62r12 238b14 243l8 243t34
+78p7 Target{27|107P9} 88r10 89r29 109r57
+123b7 Valid_System_Domain{boolean} 170r17
+136p7 T{27|107P9} 198m7 200r13 201r13 202r12 204r32 207m10 207r15
+138p7 New_Domain{14|30P9} 183m7 214r14
+275i11 Proc<integer> 276r21 277r20
+292i11 Proc<integer> 293r21 294r20
+312p7 Target{27|107P9} 322r21 323r14 329r31 329r58
+341i7 Source_CPU{13|19I9} 365r13 366r42 367r44
+X 20 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 25 s-taspri.ads
+41K16*Task_Primitives 15|36r13 36r52 25|124e27
+X 26 s-taprop.ads
+39K32*Operations 15|36w29 36r68 26|571e38
+135V13*Self{27|107P9} 15|174s13 189s38 212s40
+187U14*Write_Lock 15|346s7
+241U14*Unlock 15|383s7
+405V13*Environment_Task{27|107P9} 15|174s21
+434U14*Lock_RTS 15|191s7
+437U14*Unlock_RTS 15|210s7
+566U14*Set_Task_Affinity 15|204s13 381s7
+X 27 s-taskin.ads
+47K16*Tasking 14|20w21 64r42 68r44 15|35r13 42r30 80r23 118r23 119r23 120r23
+. 121r23 343r23 27|1216e19
+107P9*Task_Id(105R9) 15|49r68 54r19 78r28 121r31 136r14 312r28 339r19
+382A9*Dispatching_Domain(boolean)<13|19I9> 15|118r31 183r28
+391P9*Dispatching_Domain_Access(382A9) 14|64r50 15|52r19 80r31 109r16 119r31
+. 314r19 337r19 343r31
+393p4*System_Domain{391P9} 14|68r52 15|202r33 360r53
+398b4*Dispatching_Domains_Frozen{boolean} 15|178r16 242m10 359r17
+402A9*Array_Allocated_Tasks(natural)<13|19I9> 15|120r31
+409P9*Array_Allocated_Tasks_Access(402A9)
+411p4*Dispatching_Domain_Tasks{409P9} 15|166r12 366r16 367r18 374r16 375r18
+524i7*Base_CPU{13|19I9} 15|254r37 341r51 354m16
+607p7*All_Tasks_Link{107P9} 15|207r24
+699p7*Domain{391P9} 15|88r24 89r43 201r22 202r21 266r57 322r35 323r28 329r45
+. 350m16
+742p4*All_Tasks_List{107P9} 15|198r15
+960r7*Common{505R9} 15|88r17 89r36 201r15 202r14 207r17 254r30 266r50 322r28
+. 323r21 329r38 341r44 350m9 354m9
+X 28 s-tasini.ads
+35K24*Initialization 15|35w21 189r10 212r10 28|190e34
+107U14*Defer_Abort 15|189s25
+110U14*Undefer_Abort 15|212s25
+

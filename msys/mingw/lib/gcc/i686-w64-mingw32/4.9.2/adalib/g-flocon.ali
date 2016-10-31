@@ -1,0 +1,33 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.float_control%s	g-flocon.ads		fe9eadfa NE OL PU
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.float_control%s  s-flocon.adb		s-flocon.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-flocon.ads		20110804085550 e3483c37
+D system.ads		20121001083726 5fc8ae56
+D s-flocon.ads		20110804091348 e0fc433c
+X 1 gnat.ads
+34K9*GNAT 37e9 2|38r9
+X 2 g-flocon.ads
+38K14*Float_Control=38:43
+X 3 system.ads
+37K9*System 2|36r6 38r36 3|196e11
+X 4 s-flocon.ads
+34K16*Float_Control 2|36w13 38r43 4|59e25
+

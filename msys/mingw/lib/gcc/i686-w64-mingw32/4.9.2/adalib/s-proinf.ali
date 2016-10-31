@@ -1,0 +1,32 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U system.program_info%b	s-proinf.adb		850aa1f9 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.program_info%s	s-proinf.ads		48819568 NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-proinf.ads		20090409150020 17493b3e
+D s-proinf.adb		20090409150020 92439ac7
+X 1 system.ads
+37K9*System 196e11 2|35r9 43r5 3|32r14 41r5
+X 2 s-proinf.ads
+35K16*Program_Info 1|37k9 2|43l12 43e24 3|32b21 41l12 41t24
+38V13*Default_Task_Stack{integer} 3|36b13 39l8 39t26
+X 3 s-proinf.adb
+34N4 Default_Stack_Size 38r14
+

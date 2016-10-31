@@ -1,0 +1,56 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_IMPLICIT_LOOPS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_DEALLOCATION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.strings%b	s-string.adb		1a817b8e NE OL PK
+W system%s		system.ads		system.ali
+
+U system.strings%s	s-string.ads		2177bf30 NE OL PR PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_deallocation%s
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-uncdea.ads		20070406091342 f15a5ed1
+D system.ads		20121001083726 5fc8ae56
+D s-string.ads		20140225151140 8fe54fb7
+D s-string.adb		20140225151140 95643439
+X 1 ada.ads
+16K9*Ada 19e8 4|40r6 49r26 5|43r35
+X 2 a-uncdea.ads
+17+9 Object 4|50r7 5|44r10
+18P9 Name(17+9) 4|50r25 5|44r33
+20u15*Unchecked_Deallocation 4|40w10 49r30 5|43r39
+X 3 system.ads
+37K9*System 196e11 4|42r9 63r5 5|34r14 61r5
+X 4 s-string.ads
+42K16*Strings 3|37k9 4|63l12 63e19 5|34b21 61l12 61t19
+45P9*String_Access(string) 50r33 54r53 5|41r11
+49U14*Free[2|20] 5|52s13
+54A9*String_List(45P9)<integer> 55r42 5|44r20
+55P9*String_List_Access(54A9) 58r33 5|40r33 44r41
+58U14*Free 58=20 5|40b14 59l8 59t12
+58p20 Arg{55P9} 5|40b20 49r10 50r19 51r18 58m19
+X 5 s-string.adb
+41p7 X{4|45P9} 51m13 52m19 52r19
+43U17 Free_Array[2|20] 58s7
+50i14 J{integer} 51r23
+

@@ -5,4 +5,4 @@
 #   http://www.mingw.org/msys.shtml
 # File: cmd
 
-"$COMSPEC" "$@"
+`echo $COMSPEC | sed -e 's#\\\\#/#g'` "$@"

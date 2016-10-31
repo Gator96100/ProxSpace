@@ -1,0 +1,33 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.task_lock%s	g-tasloc.ads		00e9dcb1 NE OL PR
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.task_lock%s	s-tasloc.adb		s-tasloc.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-tasloc.ads		20110801150502 9c49392e
+D system.ads		20121001083726 5fc8ae56
+D s-tasloc.ads		20130206104934 618a376e
+X 1 gnat.ads
+34K9*GNAT 37e9 2|46r9
+X 2 g-tasloc.ads
+46K14*Task_Lock=46:39
+X 3 system.ads
+37K9*System 2|44r6 46r32 3|196e11
+X 4 s-tasloc.ads
+46K16*Task_Lock 2|44w13 46r39 4|98e21
+

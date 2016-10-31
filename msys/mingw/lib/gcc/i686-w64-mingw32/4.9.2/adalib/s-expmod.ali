@@ -1,0 +1,41 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.exp_mod%b	s-expmod.adb		9d06152f NE OL PK
+W system%s		system.ads		system.ali
+
+U system.exp_mod%s	s-expmod.ads		78e4d46a NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-expmod.ads		20140225150202 272c7a3c
+D s-expmod.adb		20090409150020 ba2a6f13
+X 1 system.ads
+37K9*System 196e11 2|36r9 45r5 3|32r14 87r5
+X 2 s-expmod.ads
+36K16*Exp_Mod 1|37k9 2|45l12 45e19 3|32b21 87l12 87t19
+39V13*Exp_Modular{integer} 40>7 41>7 42>7 3|38b13 85l8 85t19
+40i7 Left{integer} 3|39b7 45r27
+41i7 Modulus{integer} 3|40b7 57r37
+42i7 Right{natural} 3|41b7 46r27
+X 3 s-expmod.adb
+44i7 Result{integer} 74m16 74r32 83r14
+45i7 Factor{integer} 74r40 79m13 79r29 79r37
+46i7 Exp{natural} 71r10 73r16 77m13 77r20 78r23
+48V16 Mult{integer} 48>22 48>25 49r22 53b16 58l11 58t15 74s26 79s23
+48i22 X{integer} 53b22 56r32
+48i25 Y{integer} 53b25 56r56
+

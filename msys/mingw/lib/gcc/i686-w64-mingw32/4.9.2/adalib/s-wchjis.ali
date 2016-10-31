@@ -1,0 +1,60 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.wch_jis%b	s-wchjis.adb		ece6fdb6 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.wch_jis%s	s-wchjis.ads		cb722f56 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-wchjis.ads		20140225151140 94ba8100
+D s-wchjis.adb		20140225151140 785c7cb6
+X 1 system.ads
+37K9*System 196e11 2|37r9 78r5 3|34r14 189r5
+X 2 s-wchjis.ads
+37K16*WCh_JIS 1|37k9 2|78l12 78e19 3|34b21 189l12 189t19
+40V13*EUC_To_JIS{wide_character} 40>25 40>31 3|44b13 64l8 64t18
+40e25 EUC1{character} 3|44b25 45r48
+40e31 EUC2{character} 3|44b31 46r48
+45U14*JIS_To_EUC 46>7 47<7 48<7 3|70b14 105l8 105t18
+46e7 J{wide_character} 3|71b7 75r54 76r54
+47e7 EUC1{character} 3|72b7 90m10 102m10
+48e7 EUC2{character} 3|73b7 91m10 103m10
+58U14*JIS_To_Shift_JIS 59>7 60<7 61<7 3|111b14 143l8 143t24
+59e7 J{wide_character} 3|112b7 124r50 125r50
+60e7 SJ1{character} 3|113b7 132m10 140m10
+61e7 SJ2{character} 3|114b7 133m10 141m10
+73V13*Shift_JIS_To_JIS{wide_character} 73>31 73>36 3|149b13 187l8 187t24
+73e31 SJ1{character} 3|149b31 160r31
+73e36 SJ2{character} 3|149b36 161r31
+X 3 s-wchjis.adb
+36M9 Byte 38r32 45r25 46r25 116r14 117r14 124r15 125r15 150r15 151r15 152r15
+. 153r15
+38m4 EUC_Hankaku_Kana{36M9} 53r18 90r33
+45m7 EUC1B{36M9} 53r10 57r13 61r31
+46m7 EUC2B{36M9} 49r10 54r37 61r60
+75i7 JIS1{natural} 81r10 96r13 102r33
+76i7 JIS2{natural} 86r13 91r33 96r35 103r33
+116m7 JIS1{36M9} 124m7 127r10 128m10 128r18 131r11 132r33 140r33
+117m7 JIS2{36M9} 125m7 133r32 136r13 137m13 137r21 141r32
+150m7 SJIS1{36M9} 160m7 163r10 164m10 164r19 168r19 176r19
+151m7 SJIS2{36M9} 161m7 167r10 169r18 172r13 173m13 173r22 177r18
+152m7 JIS1{36M9} 168m10 176m10 180r10 185r52
+153m7 JIS2{36M9} 169m10 177m10 181r17 185r69
+

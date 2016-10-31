@@ -1,0 +1,26 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U unchecked_deallocation%s  unchdeal.ads	214516a4 NE OL GE
+
+D system.ads		20121001083726 5fc8ae56
+D unchdeal.ads		20070406091342 214516a4
+X 2 unchdeal.ads
+17+9 Object 18r24
+18P9 Name(17+9) 20r46
+20u11*Unchecked_Deallocation 20=35 21b27
+20*35 X{18P9}
+

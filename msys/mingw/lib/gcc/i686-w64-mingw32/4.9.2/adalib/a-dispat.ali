@@ -1,0 +1,35 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+
+U ada.dispatching%s	a-dispat.ads		6dd57ee3 EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-dispat.ads		20070406091342 5229f0fb
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 2|16r9 20r5
+X 2 a-dispat.ads
+16K13*Dispatching 1|16k9 2|17r17 20l9 20e20
+19X4*Dispatching_Policy_Error
+

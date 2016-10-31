@@ -1,0 +1,48 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.task_lock%b	s-tasloc.adb		0881bbf8 NE OL PK
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+
+U system.task_lock%s	s-tasloc.ads		3e429938 BN NE OL PR PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-tasloc.ads		20130206104934 618a376e
+D s-tasloc.adb		20120410054430 c37db7c4
+D s-traent.ads		20140225151140 b5116092
+X 4 system.ads
+37K9*System 196e11 11|46r9 98r5 12|32r6 34r14 42r7 51r7 54r5
+X 6 s-soflin.ads
+45K16*Soft_Links 408e22 12|32w13 42r14 51r14
+60P9*No_Param_Proc
+187p4*Lock_Task{60P9} 12|42r25
+197p4*Unlock_Task{60P9} 12|51r25
+X 11 s-tasloc.ads
+46K16*Task_Lock 4|37k9 11|98l12 98e21 12|34b21 54l12 54t21
+49U14*Lock 50r19 12|40b14 43l8 43t12
+54U14*Unlock 55r19 12|49b14 52l8 52t14
+

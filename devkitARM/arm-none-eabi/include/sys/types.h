@@ -89,10 +89,22 @@ typedef	quad_t *	qaddr_t;
 
 #ifndef _BSDTYPES_DEFINED
 /* also defined in mingw/gmon.h and in w32api/winsock[2].h */
+#ifndef __u_char_defined
 typedef	unsigned char	u_char;
+#define __u_char_defined
+#endif
+#ifndef __u_short_defined
 typedef	unsigned short	u_short;
+#define __u_short_defined
+#endif
+#ifndef __u_int_defined
 typedef	unsigned int	u_int;
+#define __u_int_defined
+#endif
+#ifndef __u_long_defined
 typedef	unsigned long	u_long;
+#define __u_long_defined
+#endif
 #define _BSDTYPES_DEFINED
 #endif
 
@@ -109,22 +121,31 @@ typedef _CLOCK_T_ clock_t;
 #ifndef __time_t_defined
 typedef _TIME_T_ time_t;
 #define __time_t_defined
+#endif
 
+#ifndef __timespec_defined
+#define __timespec_defined
 /* Time Value Specification Structures, P1003.1b-1993, p. 261 */
 
 struct timespec {
   time_t  tv_sec;   /* Seconds */
   long    tv_nsec;  /* Nanoseconds */
 };
+#endif
 
 struct itimerspec {
   struct timespec  it_interval;  /* Timer period */
   struct timespec  it_value;     /* Timer expiration */
 };
-#endif
 
+#ifndef __daddr_t_defined
 typedef	long	daddr_t;
+#define __daddr_t_defined
+#endif
+#ifndef __caddr_t_defined
 typedef	char *	caddr_t;
+#define __caddr_t_defined
+#endif
 
 #ifndef __CYGWIN__
 #if defined(__MS_types__) || defined(__rtems__) || \
@@ -207,7 +228,7 @@ typedef unsigned short nlink_t;
    includes the W32api winsock[2].h header must know what it is doing;
    it must not call the cygwin32 select function.
 */
-# if !(defined (_POSIX_SOURCE) || defined (_WINSOCK_H) || defined (__USE_W32_SOCKETS)) 
+# if !(defined (_POSIX_SOURCE) || defined (_WINSOCK_H) || defined (_WINSOCKAPI_) || defined (__USE_W32_SOCKETS)) 
 #  define _SYS_TYPES_FD_SET
 #  define	NBBY	8		/* number of bits in a byte */
 /*
@@ -244,7 +265,7 @@ typedef	struct _types_fd_set {
        *__tmp++ = 0; \
 }))
 
-# endif	/* !(defined (_POSIX_SOURCE) || defined (_WINSOCK_H) || defined (__USE_W32_SOCKETS)) */
+# endif	/* !(defined (_POSIX_SOURCE) || defined (_WINSOCK_H) || defined (_WINSOCKAPI_) || defined (__USE_W32_SOCKETS)) */
 
 #undef __MS_types__
 #undef _ST_INT32
@@ -304,6 +325,10 @@ typedef __uint32_t pthread_t;            /* identify a thread */
 #define PTHREAD_CREATE_DETACHED 0
 #define PTHREAD_CREATE_JOINABLE  1
 
+#if defined(__rtems__)
+  #include <sys/cpuset.h>
+#endif
+
 #if defined(__XMK__)
 typedef struct pthread_attr_s {
   int contentionscope;
@@ -333,7 +358,11 @@ typedef struct {
   int  cputime_clock_allowed;  /* see time.h */
 #endif
   int  detachstate;
-
+#if defined(__rtems__)
+  size_t affinitysetsize;
+  cpu_set_t *affinityset;
+  cpu_set_t affinitysetpreallocated;
+#endif
 } pthread_attr_t;
 
 #endif /* !defined(__XMK__) */

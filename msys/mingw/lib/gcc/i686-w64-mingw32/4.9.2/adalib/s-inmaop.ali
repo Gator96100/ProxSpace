@@ -1,0 +1,93 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.interrupt_management.operations%b  s-inmaop.adb  0110e3c6 NE OL PK
+W system.interrupt_management%s  s-intman.adb	s-intman.ali
+
+U system.interrupt_management.operations%s  s-inmaop.ads  19b909c9 BN NE OL PK
+W system.interrupt_management%s  s-intman.adb	s-intman.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-intman.ads		20090409150020 47ba1e06
+D s-inmaop.ads		20090409150020 5e0317cf
+D s-inmaop.adb		20090409150020 5f13f409
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-win32.ads		20140120152906 b7f96285
+X 4 i-c.ads
+35I9*int<integer>
+45M9*unsigned_long
+X 6 system.ads
+37K9*System 196e11 9|32r9 125r5 10|34r14 201r5
+X 8 s-intman.ads
+50K16*Interrupt_Management 6|37k9 8|111e32 9|32r16 125r12 10|34r21 201r12
+53M9*Interrupt_Mask<11|93M9> 9|42r48 46r22 47r22 52r48 56r43 69r49 73r50
+. 78r26 84r26 90r26 95r43 95r63 116r31 121r29 10|66r48 72r22 73r22 82r48
+. 92r21 121r49 130r50 140r26 152r26 164r26 176r15 177r11
+55I9*Interrupt_ID<4|35I9> 9|34r50 38r52 56r66 61r50 65r49 79r19 85r19 91r19
+. 99r50 10|45r19 56r19 93r14 103r50 112r49 141r19 153r19 165r19 187r50
+X 9 s-inmaop.ads
+32K37*Operations 8|50k16 9|125l33 125e43 10|34b42 201l33 201t43
+34U14*Thread_Block_Interrupt 34>38 35r19 10|44b14 49l8 49t30
+34i38 Interrupt{8|55I9} 10|45b7
+38U14*Thread_Unblock_Interrupt 38>40 39r19 10|55b14 60l8 60t32
+38i40 Interrupt{8|55I9} 10|56b7
+42U14*Set_Interrupt_Mask 42^34 10|66b14 69l8 69t26
+42p34 Mask(8|53M9) 10|66b34
+45U14*Set_Interrupt_Mask 46^7 47^7 10|71b14 76l8 76t26
+46p7 Mask(8|53M9) 10|72b7
+47p7 OMask(8|53M9) 10|73b7
+52U14*Get_Interrupt_Mask 52^34 53r19 10|82b14 85l8 85t26
+52p34 Mask(8|53M9) 10|82b34
+56V13*Interrupt_Wait{8|55I9} 56^29 57r19 10|91b13 97l8 97t22
+56p29 Mask(8|53M9) 10|92b7
+61U14*Install_Default_Action 61>38 62r19 10|103b14 106l8 106t30
+61i38 Interrupt{8|55I9} 10|103b38
+65U14*Install_Ignore_Action 65>37 66r19 10|112b14 115l8 115t29
+65i37 Interrupt{8|55I9} 10|112b37
+69U14*Fill_Interrupt_Mask 69^35 70r19 10|121b14 124l8 124t27
+69p35 Mask(8|53M9) 10|121b35
+73U14*Empty_Interrupt_Mask 73^36 74r19 10|130b14 133l8 133t28
+73p36 Mask(8|53M9) 10|130b36
+77U14*Add_To_Interrupt_Mask 78^7 79>7 80r19 10|139b14 145l8 145t29
+78p7 Mask(8|53M9) 10|140b7
+79i7 Interrupt{8|55I9} 10|141b7
+83U14*Delete_From_Interrupt_Mask 84^7 85>7 86r19 10|151b14 157l8 157t34
+84p7 Mask(8|53M9) 10|152b7
+85i7 Interrupt{8|55I9} 10|153b7
+89V13*Is_Member{boolean} 90^7 91>7 92r19 10|163b13 169l8 169t17
+90p7 Mask(8|53M9) 10|164b7
+91i7 Interrupt{8|55I9} 10|165b7
+95U14*Copy_Interrupt_Mask 95<35 95>59 96r19 10|175b14 181l8 181t27
+95m35 X{8|53M9} 10|176b7 180m7
+95m59 Y{8|53M9} 10|177b7 180r12
+99U14*Interrupt_Self_Process 99>38 100r19 10|187b14 190l8 190t30
+99i38 Interrupt{8|55I9} 10|187b38
+103U14*Setup_Interrupt_Mask 10|196b14 199l8 199t28
+116m4*Environment_Mask{8|53M9}
+121m4*All_Tasks_Mask{8|53M9}
+X 11 s-osinte.ads
+93M9*sigset_t<4|45M9>
+

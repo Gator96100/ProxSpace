@@ -1,0 +1,222 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U ada.direct_io%b	a-direio.adb		1dd52660 NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c_streams%s  i-cstrea.adb		i-cstrea.ali
+W system%s		system.ads		system.ali
+W system.crtl%s		s-crtl.ads		s-crtl.ali
+W system.direct_io%s	s-direio.adb		s-direio.ali
+W system.file_control_block%s  s-ficobl.ads	s-ficobl.ali
+W system.file_io%s	s-fileio.adb		s-fileio.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+U ada.direct_io%s	a-direio.ads		04be0af8 BN NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.io_exceptions%s	a-ioexce.ads		a-ioexce.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c_streams%s  i-cstrea.adb		i-cstrea.ali
+W system%s		system.ads		system.ali
+W system.direct_io%s	s-direio.adb		s-direio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-direio.ads		20090410151216 5842da07
+D a-direio.adb		20121001094122 ddb08ceb
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-direio.ads		20090409150020 068812e8
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-fileio.ads		20120709130952 45ce2f0f
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 2|36r6 43r9 191r5 3|44r6 48r14 64r27 65r27 283r5
+X 2 a-direio.ads
+41+9 Element_Type 46r7 50r7 103r18 108r18 112r14 117r14 169r20 3|177r18 190r14
+. 194r19 208r49 216r14 220r19 270r14 278r46
+43k13*Direct_IO 1|16k9 2|41z9 148E20 191l9 191e18 3|48b18 283l9 283t18
+53P9*File_Type<14|81P9> 75r21 81r21 86r36 87r36 88r36 89r36 91r26 92r26 93r26
+. 95r29 102r14 107r14 111r14 116r14 119r32 121r27 122r27 124r33 157r27 162r27
+. 165c9 3|73r35 83r21 97r36 106r33 115r26 124r27 133r29 142r26 151r26 161r21
+. 176r14 208r27 236r35 241r35 250r32 259r26 269r14 278r28
+55E9*File_Mode 55e53 61r8 76r14 82r14 88r54 91r44 162r38 3|64r53 65r68 84r14
+. 142r44 162r14 236r53
+55n23*In_File{55E9} 62r7
+55n32*Inout_File{55E9} 63r7 76r27 3|84r27
+55n44*Out_File{55E9} 64r7
+66I9*Count<integer> 68r30 68r47 122r45 3|259r44 261r14
+68I12*Positive_Count{66I9} 104r14 113r14 119r48 121r45 3|124r45 126r14 178r14
+. 250r48 271r14
+74U14*Create 75=7 76>7 77>7 78>7 3|82b14 91l8 91t14
+75p7 File{53P9} 3|83b7 89m23 89r23 90r7
+76e7 Mode{55E9} 3|84b7 89r38
+77s7 Name{string} 3|85b7 89r45
+78s7 Form{string} 3|86b7 89r51
+80U14*Open 81=7 82>7 83>7 84>7 3|160b14 169l8 169t12
+81p7 File{53P9} 3|161b7 167m21 167r21 168r7
+82e7 Mode{55E9} 3|162b7 167r36
+83s7 Name{string} 3|163b7 167r43
+84s7 Form{string} 3|164b7 167r49
+86U14*Close 86=22 147r20 175r19 3|73b14 76l8 76t13
+86p22 File{53P9} 3|73b21 75r22
+87U14*Delete 87=22 151r20 177r19 3|97b14 100l8 100t14
+87p22 File{53P9} 3|97b22 99r23
+88U14*Reset 88=22 88>47 3|236b14 239l8 239t13
+88p22 File{53P9} 3|236b21 238m22 238r22
+88e47 Mode{55E9} 3|236b46 238r37
+89U14*Reset<14|112p14> 89=22 3|241b14 244l8 244t13
+89p22 File{53P9} 3|241b21 243m22 243r22
+91V13*Mode{55E9} 91>19 182r19 3|142b13 145l8 145t12
+91p19 File{53P9} 3|142b19 144r36
+92V13*Name{string} 92>19 183r19 3|151b13 154l8 154t12
+92p19 File{53P9} 3|151b19 153r28
+93V13*Form{string} 93>19 179r19 3|115b13 118l8 118t12
+93p19 File{53P9} 3|115b19 117r28
+95V13*Is_Open{boolean} 95>22 181r19 3|133b13 136l8 136t15
+95p22 File{53P9} 3|133b22 135r31
+101U14*Read 102>7 103<7 104>7 3|175b14 206l8 206t12
+102p7 File{53P9} 3|176b7 197r27 204r24
+103*7 Item{41+9} 3|177b7 198m13 204m31 204r31
+104i7 From{68I12} 3|178b7 197r63 204r61
+106U14*Read 107>7 108<7 3|208b14 230l8 230t12
+107p7 File{53P9} 3|208b20 223r27 228r24
+108*7 Item{41+9} 3|208b38 224m13 228m31 228r31
+110U14*Write 111>7 112>7 113>7 3|268b14 276l8 276t13
+111p7 File{53P9} 3|269b7 274r26 275r22
+112*7 Item{41+9} 3|270b7 275r29 275r43
+113i7 To{68I12} 3|271b7 274r42
+115U14*Write 116>7 117>7 3|278b14 281l8 281t13
+116p7 File{53P9} 3|278b21 280r22
+117*7 Item{41+9} 3|278b39 280r29 280r43
+119U14*Set_Index 119>25 119>43 3|250b14 253l8 253t17
+119p25 File{53P9} 3|250b25 252r26
+119i43 To{68I12} 3|250b43 252r42
+121V13*Index{68I12} 121>20 3|124b13 127l8 127t13
+121p20 File{53P9} 3|124b20 126r45
+122V13*Size{66I9} 122>20 3|259b13 262l8 262t12
+122p20 File{53P9} 3|259b19 261r35
+124V13*End_Of_File{boolean}<14|90p13> 124>26 178r19 3|106b13 109l8 109t19
+124p26 File{53P9} 3|106b26 108r35
+130X4*Status_Error
+131X4*Mode_Error
+132X4*Name_Error
+133X4*Use_Error
+134X4*Device_Error
+135X4*End_Error
+136X4*Data_Error
+167m4 Bytes{11|44M12} 3|51r52 90r21 168r21 197r47 204r45 223r47 228r45
+X 3 a-direio.adb
+50a4 Zeroes{25|70A9} 275r59 280r59
+54K12 FCB=54:31 60r23 64r64 65r53
+55K12 FIO=55:31 75r7 99r7 117r14 135r14 144r22 153r14
+56K12 DIO=56:31 61r23 62r23 89r7 108r14 126r30 167r7 197r13 204r10 223r13
+. 228r10 238r7 243r7 252r7 261r21 274r7 275r7 280r7
+58N4 SU 275r55 280r55
+60P12 AP{16|82P9} 75r18 99r19 117r24 135r27 144r32 153r24
+61P12 FP{14|81P9} 89r19 108r31 126r41 167r17 197r23 204r20 223r23 228r20
+. 238r18 243r18 252r22 261r31 274r22 275r18 280r18
+62I12 DPCount{14|51I12} 197r54 204r52 252r33 274r33
+64V13 To_FCB[9|20]{16|63E9} 89s30 167s28 238s29
+65V13 To_DIO[9|20]{2|55E9} 144s14
+194*13 Buf{2|41+9} 197m34 197r34 198r21
+220*13 Buf{2|41+9} 223m34 223r34 224r21
+X 6 a-ioexce.ads
+18K13*IO_Exceptions 2|36w10 130r37 131r37 132r37 133r37 134r37 135r37 136r37
+. 6|30e22
+21X4*Status_Error 2|130r51
+22X4*Mode_Error 2|131r51
+23X4*Name_Error 2|132r51
+24X4*Use_Error 2|133r51
+25X4*Device_Error 2|134r51
+26X4*End_Error 2|135r51
+27X4*Data_Error 2|136r51
+X 9 a-unccon.ads
+20v14*Unchecked_Conversion 3|44w10 64r31 65r31
+X 10 interfac.ads
+38K9*Interfaces 2|38r6 167r21 168r14 3|37r6 37r32 10|179e15
+X 11 i-cstrea.ads
+37K20*C_Streams 2|38w17 167r32 168r25 3|37w17 37r43 11|285e25
+43I12*long{13|55I9}
+44M12*size_t{13|60M9} 2|167r42 168r35
+X 12 system.ads
+37K9*System 2|37r6 66r29 165r26 3|38w6 38r32 39r6 40r6 41r6 42r6 43r6 46r10
+. 50r22 51r12 54r24 55r24 56r24 58r21 67r13 12|196e11
+68N4*Storage_Unit 3|58r28
+X 13 s-crtl.ads
+38K16*CRTL 3|39w13 67r20 13|233e16
+55I9*long<integer>
+60M9*size_t 3|67r25
+X 14 s-direio.ads
+41K16*Direct_IO 2|37w13 66r36 165r33 3|42w13 46r17 56r31 14|142e21
+48I12*Count{11|43I12} 2|66r46 3|46r27
+51I12*Positive_Count{48I12} 3|62r27
+57m7*Bytes{11|44M12} 3|90m12 168m12
+81P9*File_Type(53R9) 2|165r43 3|61r27
+84U14*Create 3|89s11
+90V13*End_Of_File{boolean} 3|108s18
+92V13*Index{51I12} 3|126s34
+94U14*Open 3|167s11
+100U14*Read 3|197s17 204s14
+106U14*Read 3|223s17 228s14
+111U14*Reset 3|238s11
+112U14*Reset 3|243s11
+114U14*Set_Index 3|252s11 274s11
+116V13*Size{48I12} 3|261s25
+118U14*Write 3|275s11 280s11
+X 16 s-ficobl.ads
+42K16*File_Control_Block 3|40w13 54r31 16|162e30
+63E9*File_Mode 3|64r68 65r57 16|63e66
+82P9*AFCB_Ptr(84R9) 3|60r27
+X 17 s-fileio.ads
+39K16*File_IO 3|41w13 55r31 17|255e19
+102U14*Close 3|75s11
+112U14*Delete 3|99s11
+121V13*Mode{16|63E9} 3|144s26
+124V13*Name{string} 3|153s18
+128V13*Form{string} 3|117s18
+132V13*Is_Open{boolean} 3|135s18
+X 25 s-stoele.ads
+42K16*Storage_Elements 3|43w13 50r29 51r19 25|117e28
+54I9*Storage_Offset<integer> 3|51r36
+64M9*Storage_Element
+70A9*Storage_Array(64M9)<54I9> 3|50r46
+

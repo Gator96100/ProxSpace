@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Network
+Description: Qt Network module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5Networkd 
+Libs.private: -lws2_32 -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:\Users\qt\work\qt\qtbase\lib C:\Users\qt\work\qt\qtbase\lib\libQt5Cored.a .obj\debug\Qt5Networkd_resource_res.o -lz -ldnsapi -liphlpapi -ladvapi32 -lcrypt32  
+Cflags: -I${includedir}/QtNetwork -I${includedir}
+Requires: Qt5Core
+

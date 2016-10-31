@@ -1,0 +1,54 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV SPARK_05
+
+U system.img_lld%b	s-imglld.adb		276453b7 NE OL PK
+W system%s		system.ads		system.ali
+W system.img_dec%s	s-imgdec.adb		s-imgdec.ali
+W system.img_lli%s	s-imglli.adb		s-imglli.ali
+
+U system.img_lld%s	s-imglld.ads		aceaa73f NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgdec.ads		20090409150020 ae2d09db
+D s-imglld.ads		20090409150020 f3220969
+D s-imglld.adb		20090409150020 7a6b5305
+D s-imglli.ads		20090409150020 114f55d1
+X 1 system.ads
+37K9*System 196e11 3|35r9 67r5 4|32r6 32r26 34r14 82r5
+X 2 s-imgdec.ads
+35K16*Img_Dec 83e19 4|32w13 32r33
+67U14*Set_Decimal_Digits 4|79s7
+X 3 s-imglld.ads
+35K16*Img_LLD 1|37k9 3|67l12 67e19 4|34b21 82l12 82t19
+38U14*Image_Long_Long_Decimal 39>7 40=7 41<7 42>7 4|40b14 60l8 60t31
+39i7 V{long_long_integer} 4|41b7 51r10 59r10
+40s7 S{string} 4|42b7 46r22 52m10 59m13
+41i7 P{natural} 4|43b7 53m10 55m10 59m16
+42i7 Scale{integer} 4|44b7 59r19 59r45
+50U14*Set_Image_Long_Long_Decimal 51>7 52=7 53=7 54>7 55>7 56>7 57>7 4|58s7
+. 66b14 80l8 80t35
+51i7 V{long_long_integer} 4|67b7 75r49
+52s7 S{string} 4|68b7 79m46
+53i7 P{natural} 4|69b7 79m49
+54i7 Scale{integer} 4|70b7 79r52
+55i7 Fore{natural} 4|71b7 79r59
+56i7 Aft{natural} 4|72b7 79r65
+57i7 Exp{natural} 4|73b7 79r70
+X 4 s-imglld.adb
+75a7 Digs{string} 79m27 79r27 79r33
+

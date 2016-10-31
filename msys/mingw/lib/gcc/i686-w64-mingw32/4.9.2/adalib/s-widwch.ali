@@ -1,0 +1,49 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ENUMERATION_MAPS
+RV NO_IMPLICIT_CONDITIONALS
+RV SPARK_05
+
+U system.wid_wchar%b	s-widwch.adb		6f10a44d NE OL PK
+W system%s		system.ads		system.ali
+W system.img_char%s	s-imgcha.adb		s-imgcha.ali
+
+U system.wid_wchar%s	s-widwch.ads		19ff7611 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgcha.ads		20101008123408 9c3458e7
+D s-widwch.ads		20090409150020 4637d847
+D s-widwch.adb		20090409150020 29277c0a
+X 1 system.ads
+37K9*System 196e11 3|34r9 46r5 4|32r14 104r5
+X 3 s-widwch.ads
+34K16*Wid_WChar 1|37k9 3|46l12 46e21 4|32b21 104l12 104t21
+37V13*Width_Wide_Character{natural} 38>7 38>11 4|38b13 67l8 67t28
+38e7 Lo{wide_character} 4|39b7 46r16
+38e11 Hi{wide_character} 4|39b11 46r22
+42V13*Width_Wide_Wide_Character{natural} 43>7 43>11 4|73b13 102l8 102t33
+43e7 Lo{wide_wide_character} 4|74b7 81r16
+43e11 Hi{wide_wide_character} 4|74b11 81r22
+X 4 s-widwch.adb
+41i7 W{natural} 45m7 61m16 61r34 66r14
+42i7 P{natural} 47m10 52r13 59r71
+46e11 C{wide_character} 47r35
+59a16 S{string} 61r37
+76i7 W{natural} 80m7 88m13 96m16 96r34 101r14
+77i7 P{natural} 82m10 87r13 94r71
+81e11 C{wide_wide_character} 82r40
+94a16 S{string} 96r37
+

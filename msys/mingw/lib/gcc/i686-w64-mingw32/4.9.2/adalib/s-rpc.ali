@@ -1,0 +1,97 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.rpc%b		s-rpc.adb		c7994f7f NE OL PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W system%s		system.ads		system.ali
+
+U system.rpc%s		s-rpc.ads		9df0c2c4 EE OL PF PK
+W ada%s			ada.ads			ada.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-rpc.ads		20130104124956 d8a02bd2
+D s-rpc.adb		20090409150020 1f3964ad
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 9|40r6 52r22 53r8 57r20 58r20 62r16 91r22 92r8 10|54r20 55r20
+. 67r16
+X 3 a-stream.ads
+36K13*Streams 84e16 9|40w10 52r26 53r12 57r24 58r24 62r20 91r26 92r12 10|54r24
+. 55r24 67r20
+39H9*Root_Stream_Type 67e64 9|53r20 92r20
+42M9*Stream_Element
+44I9*Stream_Element_Offset<integer> 9|58r32 10|55r32
+48I12*Stream_Element_Count{44I9} 9|52r34 91r34
+51A9*Stream_Element_Array(42M9)<44I9> 9|57r32 62r28 10|54r32 67r28
+X 6 system.ads
+37K9*System 196e11 9|42r9 94r5 10|40r14 111r5
+X 9 s-rpc.ads
+42K16*RPC 6|37k9 9|90E9 94l12 94e15 10|40b21 111l12 111t15
+44I9*Partition_ID<short_short_integer> 67r20 74r20 85r19 10|78r19 91r19 103r19
+49X4*Communication_Error
+51R9*Params_Stream_Type<3|39R9> 52d7 55P25 56r23 60P25 61r23 66p14 68r27
+. 69r27 73p14 75r27 81r29 82r29 90c9 92e53 10|53r23 66r23 79r26 80r26 92r26
+52i7*Initial_Size{3|48I12} 91r7
+55U25*Read<3|54p14> 56=7 57<7 58<7 10|52b14 59l8 59t12
+56r7 Stream{51R9} 10|53b7
+57a7 Item{3|51A9} 10|54b7
+58i7 Last{3|44I9} 10|55b7
+60U25*Write<3|60p14> 61=7 62>7 10|65b14 71l8 71t13
+61r7 Stream{51R9} 10|66b7
+62a7 Item{3|51A9} 10|67b7
+66U14*Do_RPC 67>7 68^7 69^7 10|77b14 84l8 84t14
+67i7 Partition{44I9} 10|78b7
+68p7 Params(51R9) 10|79b7
+69p7 Result(51R9) 10|80b7
+73U14*Do_APC 74>7 75^7 10|90b14 96l8 96t14
+74i7 Partition{44I9} 10|91b7
+75p7 Params(51R9) 10|92b7
+79P9*RPC_Receiver 81^9 82^9 86r19 10|104r19
+81p9 Params(51R9)
+82p9 Result(51R9)
+84U14*Establish_RPC_Receiver 85>7 86>7 10|102b14 109l8 109t30
+85i7 Partition{44I9} 10|103b7 106r28
+86p7 Receiver{79P9} 10|104b7 106r39
+X 10 s-rpc.adb
+42a4 CRLF{string} 45r12 46r12
+44a4 Msg{string} 58r32 70r32 83r32 95r32
+

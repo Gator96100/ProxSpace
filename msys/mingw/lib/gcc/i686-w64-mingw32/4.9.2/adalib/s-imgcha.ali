@@ -1,0 +1,46 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.img_char%b	s-imgcha.adb		2b93a046 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.img_char%s	s-imgcha.ads		c3fcf6b1 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgcha.ads		20101008123408 9c3458e7
+D s-imgcha.adb		20140129155348 b7a7f8a1
+X 1 system.ads
+37K9*System 196e11 2|34r9 55r5 3|32r14 180r5
+X 2 s-imgcha.ads
+34K16*Img_Char 1|37k9 2|55l12 55e20 3|32b21 180l12 180t20
+37U14*Image_Character 38>7 39=7 40<7 3|38b14 159l8 159t23 176s10
+38e7 V{character} 3|39b7 125r10 126r28 129r13 130r28 141r56 155r19
+39s7 S{string} 3|40b7 43r22 126m10 127r19 130m10 132r13 133r22 143m16 144m16
+. 145m16 146m16 154m10 155m10 156m10
+40i7 P{natural} 3|41b7 127m10 133m13 147m16 157m10
+45U14*Image_Character_05 46>7 47=7 48<7 3|165b14 178l8 178t26
+46e7 V{character} 3|166b7 172r10 176r27
+47s7 S{string} 3|167b7 170r22 174m10 176m30
+48i7 P{natural} 3|168b7 173m10 174r18 176m33
+X 3 s-imgcha.adb
+45A15 Cname{string}<integer> 50r41 87r41
+47E15 C0_Range{character} 50r28 125r15
+50a7 C0(45A15) 126r24
+84E15 C1_Range{character} 87r28 129r18
+87a7 C1(45A15) 130r24
+141i16 VP{natural} 144r46 145r47 146r46
+

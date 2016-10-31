@@ -1,0 +1,77 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.calendar.arithmetic%b  a-calari.adb	f7e04eca NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+
+U ada.calendar.arithmetic%s  a-calari.ads	a87a983d NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-calari.ads		20090220152038 7017f4b1
+D a-calari.adb		20090409150020 87f7ba7b
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 3|22r9 65r5 4|32r14 100r5
+X 2 a-calend.ads
+36K13*Calendar 1|16k9 2|375e17 3|22r13 65r9 4|32r18 100r9
+38I9*Time<200I9> 3|39r22 40r22 52r25 52r62 53r44 53r62 57r25 57r62 61r25
+. 61r44 4|45r25 45r57 51r44 51r57 61r25 61r57 67r32 85r22 86r22
+44I12*Year_Number{integer} 3|29r19 29r38 31r19 31r38
+200I9 Time_Rep<long_long_integer>
+228K12 Arithmetic_Operations 247e29 4|48r14 54r14 64r14 75r7 94r7
+230V16*Add{38I9} 4|48s36 54s36
+233U17*Difference 4|75s29 94s29
+244V16*Subtract{38I9} 4|64s36
+X 3 a-calari.ads
+22K22*Arithmetic 2|36k13 3|65l18 65e28 4|32b27 100l18 100t28
+28I9*Day_Count<integer> 41r26 52r44 53r25 57r44 61r62 4|45r39 51r25 61r39
+. 67r45 77r14 87r26 96r15
+33I12*Leap_Seconds_Count{integer} 43r26 4|89r26 97r23
+38U14*Difference 39>7 40>7 41<7 42<7 43<7 4|84b14 98l8 98t18
+39i7 Left{2|38I9} 4|85b7 95r10
+40i7 Right{2|38I9} 4|86b7 95r16
+41i7 Days{28I9} 4|87b7 96m7
+42o7 Seconds{duration} 4|88b7 95m32
+43i7 Leap_Seconds{33I12} 4|89b7 97m7
+52V14*"+"{2|38I9} 52>18 52>36 4|45b14 49l9 49t11
+52i18 Left{2|38I9} 4|45b18 48r41
+52i36 Right{28I9} 4|45b31 46r50
+53V14*"+"{2|38I9} 53>18 53>36 4|51b14 55l9 55t11
+53i18 Left{28I9} 4|51b18 52r50
+53i36 Right{2|38I9} 4|51b36 54r41
+57V14*"-"{2|38I9} 57>18 57>36 4|61b14 65l9 65t11
+57i18 Left{2|38I9} 4|61b18 64r46
+57i36 Right{28I9} 4|61b31 62r50
+61V14*"-"{28I9} 61>18 61>36 4|67b14 78l9 78t11
+61i18 Left{2|38I9} 4|67b18 76r10
+61i36 Right{2|38I9} 4|67b24 76r16
+X 4 a-calari.adb
+46i7 R{long_integer} 48r47
+52i7 L{long_integer} 54r48
+62i7 R{long_integer} 64r52
+68i7 Days{long_integer} 76m23 77r25
+69o7 Seconds{duration} 71r29 73r28 76m29
+70i7 Leap_Seconds{integer} 72r29 73r37 76m38
+91i7 Op_Days{long_integer} 95m23 96r26
+92i7 Op_Leaps{integer} 95m41 97r43
+

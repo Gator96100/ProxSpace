@@ -1,0 +1,277 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_ENUMERATION_MAPS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IO
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_IMPLICIT_LOOPS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U gnat.cgi%b		g-cgi.adb		1c59cc31 OL PK
+W ada%s			ada.ads			ada.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.fixed%s	a-strfix.adb		a-strfix.ali
+W ada.strings.maps%s	a-strmap.adb		a-strmap.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.unchecked_conversion%s
+W gnat%s		gnat.ads		gnat.ali
+Z gnat.heap_sort_g%s
+W gnat.os_lib%s		g-os_lib.ads		g-os_lib.ali
+W gnat.table%s
+W system%s		system.ads		system.ali
+W system.img_enum_new%s	s-imenne.adb		s-imenne.ali
+Z system.memory%s	s-memory.adb		s-memory.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.val_int%s	s-valint.adb		s-valint.ali
+
+U gnat.cgi%s		g-cgi.ads		770cc58e BN EE OL PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chahan.ads		20131010125232 1c00991d
+D a-chlat1.ads		20140225151544 66457d31
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-string.ads		20070406091342 90ac6797
+D a-strfix.ads		20101008130256 d07c346e
+D a-strmap.ads		20090409150020 9cb836fb
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20140129155348 386df5d4
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D gnat.ads		20110801150502 fd2ad2f1
+D g-cgi.ads		20110801150502 8a26177f
+D g-cgi.adb		20110801150502 e5af0477
+D g-hesorg.ads		20110801150502 106922da
+D g-hesorg.adb		20110801150502 33b32c5b
+D g-os_lib.ads		20090409150020 0db74523
+D g-table.ads		20130910150540 16cef446
+D g-table.adb		20130910150540 5bacc76e
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-imenne.ads		20140225151140 614c06c0
+D s-memory.ads		20140225151140 597d6634
+D s-os_lib.ads		20140225151140 73b554c6
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-string.ads		20140225151140 8fe54fb7
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-valint.ads		20090409150020 48a52a3f
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 18|32r6 33r6 34r6 35r6 42r8
+X 2 a-charac.ads
+16K13*Characters 18e19 18|34r10 114r21 115r21 172r26
+X 3 a-chahan.ads
+36K24*Handling 160e28 18|34w21 114r32 115r32 172r37
+54V13*Is_Hexadecimal_Digit{boolean} 18|114s41 115s41
+72V13*To_Upper{string} 18|172s46
+X 9 a-string.ads
+16K13*Strings 35e16 18|33r10 35r10 230r24 230r51 242r41 261r20
+X 10 a-strfix.ads
+18K21*Fixed 251e22 18|33w18 230r32 242r49 261r28
+36V13*Index{natural} 18|242s55 261s34
+98V13*Count{natural} 18|230s38
+X 11 a-strmap.ads
+38K21*Maps 412e21 18|35w18 230r59
+47A9*Character_Set<138A9>
+99V13*To_Set{47A9} 18|230s64
+138A9 Character_Set_Internal(boolean)<character>
+X 13 a-textio.ads
+49K13*Text_IO 471e16 18|32w10 214r13 410r10 411r10
+166U14*New_Line 18|411s18
+240U14*Get 18|214s21
+263U14*Put_Line 18|410s18
+X 16 gnat.ads
+34K9*GNAT 37e9 17|104r9 255r5 18|37r6 38r6 40r14 494r5
+X 17 g-cgi.ads
+104K14*CGI 16|34k9 17|248E13 255l10 255e13 18|40b19 173r43 207r58 494l10
+. 494t13
+106X4*Data_Error 18|97r16 246r22
+115X4*Parameter_Not_Found 18|306r16 359r16 469r16 486r16
+118a4*Default_Header{string} 174r27 18|404r27
+123E9*Method_Type 123e35 186r27 18|50r21 384r27
+123n25*Get{123E9} 18|194r28
+123n30*Post{123E9} 18|211r28
+129E9*Metavariable_Name 164e23 190r18 196r41 18|332r18 351r35 369r41
+130n7*Auth_Type{129E9}
+131n7*Content_Length{129E9} 18|207r62
+132n7*Content_Type{129E9}
+133n7*Document_Root{129E9}
+134n7*Gateway_Interface{129E9}
+135n7*HTTP_Accept{129E9}
+136n7*HTTP_Accept_Encoding{129E9}
+137n7*HTTP_Accept_Language{129E9}
+138n7*HTTP_Connection{129E9}
+139n7*HTTP_Cookie{129E9}
+140n7*HTTP_Extension{129E9}
+141n7*HTTP_From{129E9}
+142n7*HTTP_Host{129E9}
+143n7*HTTP_Referer{129E9}
+144n7*HTTP_User_Agent{129E9}
+145n7*Path{129E9}
+146n7*Path_Info{129E9}
+147n7*Path_Translated{129E9}
+148n7*Query_String{129E9} 18|192r50
+149n7*Remote_Addr{129E9}
+150n7*Remote_Host{129E9}
+151n7*Remote_Port{129E9}
+152n7*Remote_Ident{129E9}
+153n7*Remote_User{129E9}
+154n7*Request_Method{129E9} 18|173r47
+155n7*Request_URI{129E9}
+156n7*Script_Filename{129E9}
+157n7*Script_Name{129E9} 18|447r25
+158n7*Server_Addr{129E9}
+159n7*Server_Admin{129E9}
+160n7*Server_Name{129E9} 18|445r25
+161n7*Server_Port{129E9} 18|446r44
+162n7*Server_Protocol{129E9}
+163n7*Server_Signature{129E9}
+164n7*Server_Software{129E9}
+173U14*Put_Header 174>7 175>7 18|403b14 414l8 414t18
+174s7 Header{string} 18|404b7 410r28
+175b7 Force{boolean} 18|405b7 408r38
+181V13*Ok{boolean} 18|394b13 397l8 397t10
+186V13*Method{123E9} 18|384b13 388l8 388t14
+189V13*Metavariable{string} 190>7 191>7 18|173s29 192s36 207s44 331b13 363l8
+. 363t20 373s10 445s11 446s30 447s11
+190e7 Name{129E9} 18|332b7 351r60
+191b7 Required{boolean} 18|333b7 358r31
+196V13*Metavariable_Exists{boolean} 196>34 18|369b13 378l8 378t27
+196e34 Name{129E9} 18|369b34 373r24
+200V13*URL{string} 18|420b13 448l8 448t11
+204V13*Argument_Count{natural} 18|84b13 88l8 88t22
+213V13*Value{string} 214>7 215>7 18|454b13 473l8 473t13
+214s7 Key{string} 18|455b7 463r49
+215b7 Required{boolean} 18|456b7 468r10
+220V13*Value{string} 220>20 18|479b13 488l8 488t13
+220i20 Position{positive} 18|479b20 483r10 484r40
+225V13*Key_Exists{boolean} 225>25 18|314b13 325l8 325t18
+225s25 Key{string} 18|314b25 319r49
+228V13*Key{string} 228>18 18|299b13 308l8 308t11
+228i18 Position{positive} 18|299b18 303r10 304r40
+235U8 Action 236>11 237>11 238>11 239=11 18|155s10
+236s11 Key{string}
+237s11 Value{string}
+238i11 Position{positive}
+239b11 Quit{boolean}
+240u14*For_Every_Parameter 18|145b14 163l8 163t27
+248V13 Decode{string} 248>21 18|105b13 139l8 139t14 250s41 251s41
+248s21 S{string} 18|105b21 106r24 107r28 111r18 112r22 113r22 114r63 115r63
+. 121r39 126r16 131r27
+X 18 g-cgi.adb
+44b4 Valid_Environment{boolean} 96r14 283m10 292m10 396r14
+50e4 Current_Method{17|123E9} 194m10 211m10 387r14
+53b4 Header_Sent{boolean} 408r10 412m10
+58P9 String_Access(string) 61r15 62r15
+60R9 Key_Value 63e14 65r42 250r18
+61p7*Key{58P9} 155r44 304r50 319r39 463r39
+62p7*Value{58P9} 156r44 464r46 484r50
+65K12 Key_Value_Table[22|56] 87r14 151r21 155r18 156r18 249r16 258r10 303r22
+. 304r17 318r21 319r13 462r21 463r13 464r20 483r22 484r17
+71U14 Check_Environment 72r19 86s7 94b14 99l8 99t25 149s7 301s7 316s7 356s7
+. 371s7 386s7 409s10 442s7 460s7 481s7
+75U14 Initialize 169b14 293l8 293t18 492s4
+106a7 Result{string} 108r28 120m13 127m13 131m13 138r14 138r22
+107i7 K{positive} 111r13 112r13 113r25 114r66 115r66 121r42 121r51 122m13
+. 122r18 126r19 128m13 128r18 131r30 132m13 132r18
+108i7 J{positive} 120r21 127r21 131r21 135m10 135r15 138r38
+146b7 Quit{boolean} 153m10 158m18 158r18 160r20
+151i11 K{integer} 155r41 156r41 157r18
+171a7 Request_Method{string} 276r10 279r13
+175U17 Initialize_GET 191b17 199l11 199t25 277s10
+179U17 Initialize_POST 205b17 217l11 217t26 280s10
+184U17 Set_Parameter_Table 184>38 197s13 215s13 223b17 271l11 271t30
+184s38 Data{string} 223b38 230r45 234r30 261r41 261r56 263r31 270r32 270r47
+192a10 Data{string} 196r13 197r34
+206i10 Content_Length{natural} 208r30 213r13
+208a10 Data{string} 214m26 215r34
+225U20 Add_Parameter 225>35 225>49 241b20 253l14 253t27 263s13 270s10
+225i35 K{positive} 241b35 249r39
+225s49 P{string} 241b49 242r62 250r49 250r52 251r49 251r65
+229i10 Count{positive} 258r36 260r24 270r25
+234i10 Index{positive} 261r47 263r37 265m13 270r38
+235i10 Amp{natural} 261m13 263r46 265r22
+242i13 Equal{natural} 245r16 250r63 251r52
+260i14 K{integer} 263r28
+318i11 K{integer} 319r36
+335V16 Get_Environment{string} 335>33 342b16 348l11 348t26 351s18
+335s33 Variable_Name{string} 342b33 343r58
+343p10 Value{34|70P12} 344r38 346m23 346r23
+344a10 Result{string} 347r17
+350a7 Result{string} 358r10 361r17
+422V16 Exists_And_Not_80{string} 422>35 430b16 437l11 437t28 446s11
+422s35 Server_Port{string} 430b35 432r13 435r26
+462i11 K{integer} 463r36 464r43
+X 21 g-os_lib.ads
+51K14*OS_Lib=51:36 18|37w11 343r19 343r43 346r10
+X 22 g-table.ads
+56k14*Table 18|38w11 65r35 22|225e15
+104A9*Table_Type(18|60R9)<integer>
+106A12*Big_Table_Type{104A9[18|65]}<integer>
+115P9*Table_Ptr(106A12[18|65])
+120p4*Table{115P9[18|65]} 18|155r33[65] 155r34[65] 156r33[65] 156r34[65]
+. 249r32[65] 304r33[65] 319r29[65] 463r29[65] 464r36[65] 484r33[65]
+140V13*Last{integer} 18|87s30[65] 151s37[65] 303s38[65] 318s37[65] 462s37[65]
+. 483s38[65]
+160U14*Set_Last 18|258s26[65]
+X 26 system.ads
+64M9*Address
+X 33 s-memory.ads
+53V13*Alloc{26|64M9} 103i<c,__gnat_malloc>22
+68U14*Free 104i<c,__gnat_free>22
+76V13*Realloc{26|64M9} 105i<c,__gnat_realloc>22
+X 34 s-os_lib.ads
+70P12*String_Access{44|45P9} 18|343r26
+75U14*Free=75:62 18|346s17
+914V13*Getenv{70P12} 18|343s50
+X 44 s-string.ads
+45P9*String_Access(string)
+

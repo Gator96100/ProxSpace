@@ -1,0 +1,47 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+
+U system.long_long_float_expon%s  s-llflex.ads	4244b7bb NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.long_long_elementary_functions%s  a-nllefu.ads  a-nllefu.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-numeri.ads		20080324174808 bb51c45a
+D a-ngelfu.ads		20140123165334 ff061ca9
+D a-nllefu.ads		20070406091342 a34f74c3
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-llflex.ads		20120130115052 bec36d2e
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 8|35r6 40r14
+X 2 a-numeri.ads
+16K13*Numerics 32e17 8|35r10 40r18
+X 3 a-ngelfu.ads
+57V14*"**"{long_long_float} 8|40r59[4|18]
+X 4 a-nllefu.ads
+18K22*Long_Long_Elementary_Functions[3|39] 8|35w19 40r27
+X 6 system.ads
+37K9*System 196e11 8|37r9 42r5
+X 8 s-llflex.ads
+37K16*Long_Long_Float_Expon 6|37k9 8|42l12 42e33
+39V13*Expon_LLF=40:58{long_long_float}
+39f24 Left{long_long_float}
+39f30 Right{long_long_float}
+

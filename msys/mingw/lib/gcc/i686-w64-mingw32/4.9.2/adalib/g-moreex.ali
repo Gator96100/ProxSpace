@@ -1,0 +1,76 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U gnat.most_recent_exception%b  g-moreex.adb	51bfabfc NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.exceptions.is_null_occurrence%s  a-einuoc.adb  a-einuoc.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+
+U gnat.most_recent_exception%s  g-moreex.ads	10a9ad90 EE NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W gnat%s		gnat.ads		gnat.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-einuoc.ads		20090619122338 c8ce44ba
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-moreex.ads		20110801150502 15e93e62
+D g-moreex.adb		20110801150502 26eeea76
+D system.ads		20121001083726 5fc8ae56
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 6|37r6 45r13 51r13 7|32r6 41r31 42r22 45r16 48r23 50r13 52r26
+. 54r13 66r13 68r11
+X 2 a-except.ads
+53K13*Exceptions 360e19 6|37w10 45r17 51r17 7|32r10 41r35 42r26 45r20 48r27
+. 50r17 52r30 54r17 66r17 68r15
+62R9*Exception_Occurrence 328e14 6|45r28 7|41r46 48r38
+65P9*Exception_Occurrence_Access(62R9) 6|51r28 7|42r37 45r31 66r28 70r22
+67r4*Null_Occurrence{62R9} 7|52r41
+122U14*Save_Occurrence 7|50s28 54s28
+123r7 Target{62R9} 7|51r16 55r16
+124r7 Source{62R9} 7|52r16 56r16
+X 3 a-einuoc.ads
+37V25*Is_Null_Occurrence{boolean} 7|32w21 77s13
+X 5 gnat.ads
+34K9*GNAT 37e9 6|38r9 74r5 7|35r14 43r15 85r5
+X 6 g-moreex.ads
+38K14*Most_Recent_Exception 5|34k9 6|74l10 74e31 7|35b19 43r20 85l10 85t31
+44V13*Occurrence{2|62R9} 7|41b13 59l8 59t18
+50V13*Occurrence_Access{2|65P9} 7|43s42 65b13 83l8 83t25
+X 7 g-moreex.adb
+42p7 EOA{2|65P9} 49r13 56r26
+48r14 Result{2|62R9} 51m26 55m26
+70p7 EOA{2|65P9} 74r10 77r33 81r17
+X 8 system.ads
+37K9*System 7|33r6 71r15 8|196e11
+X 10 s-soflin.ads
+45K16*Soft_Links 7|33w13 71r22 10|408e22
+85P9*Get_EOA_Call(2|65P9)
+248p4*Get_Current_Excep{85P9} 7|71r33
+

@@ -1,0 +1,55 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U gnat.spelling_checker_generic%b  g-spchge.adb	5daa02a8 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.spelling_checker_generic%s  g-spchge.ads	d0b73309 BN NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-spchge.ads		20140225151544 2d9de1f8
+D g-spchge.adb		20140225151544 7037e350
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|42r9 65r5 3|34r14 161r5
+X 2 g-spchge.ads
+42K14*Spelling_Checker_Generic 1|34k9 2|65l10 65e34 3|34b19 161l10 161t34
+46E12 Char_Type 49r56 3|52r27 52r40 53r27 53r40 54r27 54r40
+49A12 String_Type(46E12)<integer> 52r16 53r16 3|41r16 42r16
+51v13*Is_Bad_Spelling_Of 52>7 53>7 3|40b13 159l8 159t26
+52*7 Found{49A12} 3|41b7 44r32 45r32 46r32 70r13 71r19 86r35 93r27 97r44
+. 98r55 102r40 103r49 104r55 118r21 119r36 130r16 131r23 144r16 145r23
+53*7 Expect{49A12} 3|42b7 48r32 49r32 50r32 70r27 71r49 86r16 92r19 97r22
+. 98r27 102r22 103r27 104r27 117r13 119r21 130r34 131r46 144r34 145r50
+X 3 g-spchge.adb
+44i7 FN{natural} 60r10 77r13 84r13 85r24 128r13 129r24 142r13
+45i7 FF{natural} 70r20 71r26 86r42 93r34 97r51 98r62 102r47 103r56 104r62
+. 130r23 131r30 144r23 145r30
+46i7 FL{natural} 98r76 104r76 118r28 119r43 131r40 145r44
+48i7 EN{natural} 61r18 63r13 77r29 84r18 128r18 142r18 143r24
+49i7 EF{natural} 70r35 71r57 86r24 92r27 97r30 98r35 102r30 103r35 104r35
+. 130r42 131r54 144r42 145r58
+50i7 EL{natural} 98r49 104r49 117r21 119r29 131r68 145r68
+52*7 Letter_o{2|46E12} 71r64
+53*7 Digit_0{2|46E12} 71r33 92r38 93r45 117r28 118r35
+54*7 Digit_9{2|46E12} 92r49 93r56 117r39 118r46
+85i14 J{integer} 86r29 86r47 92r32 93r39 97r35 97r56 98r40 98r67 102r35 102r52
+. 103r40 103r61 104r40 104r67
+129i14 J{integer} 130r28 130r47 131r35 131r59
+143i14 J{integer} 144r28 144r47 145r35 145r63
+

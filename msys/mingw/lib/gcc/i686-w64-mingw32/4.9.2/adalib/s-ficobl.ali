@@ -1,0 +1,113 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DISPATCH
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.file_control_block%s  s-ficobl.ads	15d1cf29 EE OL PF PR PK
+W ada%s			ada.ads			ada.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c_streams%s  i-cstrea.adb		i-cstrea.ali
+W system%s		system.ads		system.ali
+W system.crtl%s		s-crtl.ads		s-crtl.ali
+W system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+W system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 12|38r6 84r30
+X 4 a-stream.ads
+36K13*Streams 84e16 12|38w10 84r34
+39H9*Root_Stream_Type 67e64 12|84r42
+54x14*Read
+60x14*Write
+X 7 interfac.ads
+38K9*Interfaces 179e15 12|39r6 86r16
+X 8 i-cstrea.ads
+37K20*C_Streams 285e25 12|39w17 86r27
+41M12*FILEs{10|50M12} 12|86r37
+X 9 system.ads
+37K9*System 196e11 12|40r6 42r9 94r18 162r5
+64M9*Address
+X 10 s-crtl.ads
+38K16*CRTL 233e16 12|40w13 94r25
+50M12*FILEs{9|64M9}
+65E9*Filename_Encoding 65e62 12|94r30
+X 12 s-ficobl.ads
+42K16*File_Control_Block 9|37k9 12|162l12 162e30
+60P9*Pstring(string) 89r14 97r14
+63E9*File_Mode 63e66 64r30 102r14
+63n23*In_File{63E9} 64r46
+63n32*Inout_File{63E9} 64r57
+63n44*Out_File{63E9}
+63n54*Append_File{63E9}
+64E12*Read_File_Mode{63E9}
+69E9*Shared_Status_Type 69e46 122r23
+69n32*Yes{69E9}
+69n37*No{69E9}
+69n41*None{69E9}
+81R9*AFCB 82r32 84c9 144r44 150r49 156r48
+82P9*AFCB_Ptr(84R9) 129r14 130r14 144r57
+84H9*AFCB<4|39R9> 4|54p14 60p14 12|134e14 144p13 150p14 156p14
+86m7*Stream{8|41M12}
+89p7*Name{60P9}
+94e7*Encoding{10|65E9}
+97p7*Form{60P9}
+102e7*Mode{63E9}
+106b7*Is_Regular_File{boolean}
+109b7*Is_Temporary_File{boolean}
+116b7*Is_System_File{boolean}
+119b7*Is_Text_File{boolean}
+122e7*Shared_Status{69E9}
+125e7*Access_Method{character}
+129p7*Next{82P9}
+130p7*Prev{82P9}
+144y13*AFCB_Allocate{82P9} 144>28
+144r28 Control_Block{84R9}
+150x14*AFCB_Close 150^26
+150p26 File(84R9)
+156x14*AFCB_Free 156^25
+156p25 File(84R9)
+

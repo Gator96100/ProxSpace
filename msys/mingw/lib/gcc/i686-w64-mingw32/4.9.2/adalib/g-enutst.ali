@@ -1,0 +1,67 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U gnat.encode_utf8_string%b  g-enutst.ads	d005f14c NE OL PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.encode_string%s
+Z interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.wch_cnv%s	s-wchcnv.adb		s-wchcnv.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+
+U gnat.encode_utf8_string%s  g-enutst.ads	b4e54914 EB NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W gnat.encode_string%s
+W system%s		system.ads		system.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-encstr.ads		20120410054430 82b7487b
+D g-encstr.adb		20130104124956 8dbd5b3e
+D g-enutst.ads		20110801150502 d005f14c
+D g-enutst.ads		20110801150502 d005f14c
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+D s-wchcnv.ads		20140225151140 0fb7baf3
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 4 gnat.ads
+34K9*GNAT 37e9 8|38r6 42r9 43r7
+X 5 g-encstr.ads
+60k14*Encode_String 109e23 8|38w11 43r12
+X 8 g-enutst.ads
+42K14*Encode_UTF8_String[5|60] 4|34k9
+X 10 system.ads
+37K9*System 8|40r6 43r27 10|196e11
+X 18 s-wchcon.ads
+41K16*WCh_Con 8|40w13 43r34 18|220e19
+94I9*WC_Encoding_Method<short_short_integer>
+134i4*WCEM_UTF8{94I9} 8|43r42
+

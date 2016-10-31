@@ -1,0 +1,39 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.secondary_stack_info%s  g-sestin.ads	ecedc642 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-sestin.ads		20110801150502 976591de
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 3 gnat.ads
+34K9*GNAT 37e9 4|37r9 48r5
+X 4 g-sestin.ads
+37K14*Secondary_Stack_Info 3|34k9 4|48l10 48e30
+39V13*SS_Get_Max=40:37{long_long_integer}
+X 5 system.ads
+37K9*System 4|35r6 40r14 5|196e11
+X 6 s-secsta.ads
+36K16*Secondary_Stack 4|35w13 40r21 6|119e27
+88V13*SS_Get_Max{long_long_integer} 4|40r37
+

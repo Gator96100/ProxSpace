@@ -1,0 +1,84 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_HEAP_ALLOCATIONS
+RV NO_IMPLICIT_LOOPS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U gnat.md5%b		g-md5.ads		bb55398e NE OL PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.secure_hashes%s	g-sechas.adb		g-sechas.ali
+W gnat.secure_hashes.md5%s  g-sehamd.adb	g-sehamd.ali
+W system%s		system.ads		system.ali
+
+U gnat.md5%s		g-md5.ads		6c9750ad EB EE OL PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.secure_hashes%s	g-sechas.adb		g-sechas.ali
+W gnat.secure_hashes.md5%s  g-sehamd.adb	g-sehamd.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-bytswa.ads		20120712103718 a4d21639
+D g-md5.ads		20130104124956 bb55398e
+D g-md5.ads		20130104124956 bb55398e
+D g-sechas.ads		20121029104140 0a03db86
+D g-sechas.adb		20121029104140 826faa17
+D g-sehamd.ads		20091130155116 75201584
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 6 gnat.ads
+34K9*GNAT 37e9 9|39r6 42r9 42r25 43r22 47r22 48r22 49r22
+X 9 g-md5.ads
+42K14*MD5[10|126] 6|34k9
+X 10 g-sechas.ads
+45K14*Secure_Hashes 9|39r11 42r30 43r27 47r27 48r27 49r27 10|209e23
+73M12 Word
+84A12 State(73M12[114])<integer>
+100i7 Block_Words{natural} 9|43r4
+103i7 State_Words{natural} 9|44r4
+106i7 Hash_Words{natural} 9|45r4
+110e7 Hash_Bit_Order{14|88E9} 9|46r4
+114K20 Hash_State 9|47r4
+117a7 Initial_State{84A12[114]} 9|48r4
+120U22 Transform 9|49r4
+126k12*H 9|42r44 10|207e9
+X 12 g-sehamd.ads
+43K28*MD5 9|39w25 43r41 47r41 48r41 49r41 12|74e27
+45K12*Hash_State[10|82] 9|47r45
+52N4*Block_Words 9|43r45
+55U14*Transform 9|49r45
+60a4*Initial_State{10|84A12[45]} 9|48r45
+X 13 interfac.ads
+63M9*Unsigned_32
+X 14 system.ads
+37K9*System 9|40w6 46r22 14|196e11
+88n41*Low_Order_First{88E9} 9|46r29
+

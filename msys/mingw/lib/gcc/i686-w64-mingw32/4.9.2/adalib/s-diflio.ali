@@ -1,0 +1,126 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.dim.float_io%b	s-diflio.adb		b6880a59 NE OL PK GE
+Z ada%s			ada.ads			ada.ali
+Z ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.float_aux%s  a-tiflau.adb		a-tiflau.ali
+W ada.text_io.float_io%s
+W system.dim%s		s-dim.ads		s-dim.ali
+
+U system.dim.float_io%s	s-diflio.ads		ce82afe5 BN NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.text_io.float_io%s
+W system.dim%s		s-dim.ads		s-dim.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-textio.ads		20140129155348 386df5d4
+D a-tiflau.ads		20090409150020 c0393f21
+D a-tiflio.ads		20090409150020 56fbda09
+D a-tiflio.adb		20090409150020 fd9b1cfc
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-dim.ads		20130206100810 ec3077cc
+D s-diflio.ads		20140224154940 1adf2dfd
+D s-diflio.adb		20120614105622 ac5727a4
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 17|128r6 128r23 18|34r36 50r7 62r7 90r7 98r7
+X 7 a-textio.ads
+49K13*Text_IO 471e16 17|128w10 128r27 18|34r40 50r11 62r11 90r11 98r11
+52P9*File_Type 17|140r16 162r16 18|41r16 85r16
+73I12*Field{integer} 17|135r19 136r19 137r19 142r16 143r16 144r16 149r16
+. 150r16 151r16 157r16 158r16 18|43r16 44r16 45r16 55r16 56r16 57r16 68r16
+. 69r16
+241U14*Put 18|50s19 90s19
+242U14*Put 18|62s19 98s19
+X 9 a-tiflio.ads
+45k21*Float_IO 88e25 18|34r48
+60U14 Put 18|49s24[34]
+67U14 Put 18|61s24[34]
+78U14 Put 18|73s24[34]
+X 14 system.ads
+37K9*System 196e11 17|133r9 178r5 18|32r14 109r5
+X 16 s-dim.ads
+65K16*Dim 14|37k9 16|68e15 17|133r16 178r12 18|32r21 109r12
+X 17 s-diflio.ads
+131F9 Num_Dim_Float 136r28 141r16 148r16 156r16 163r16 167r16 172r16 18|34r58
+. 42r16 54r16 67r16 86r16 94r16 103r16
+133k20*Float_IO 16|65k16 17|131z9 178l16 178e24 18|32b25 109l16 109t24
+135i4*Default_Fore{7|73I12} 142r26 149r26 18|43r26 55r26
+136i4*Default_Aft{7|73I12} 143r26 150r26 157r26 18|44r26 56r26 68r26
+137i4*Default_Exp{7|73I12} 144r26 151r26 158r26 18|45r26 57r26 69r26
+139U14*Put 140>7 141>7 142>7 143>7 144>7 145>7 18|40b14 51l8 51t11
+140p7 File{7|52P9} 18|41b7 49r29 50r24
+141*7 Item{131F9} 18|42b7 49r35
+142i7 Fore{7|73I12} 18|43b7 49r41
+143i7 Aft{7|73I12} 18|44b7 49r47
+144i7 Exp{7|73I12} 18|45b7 49r52
+145s7 Symbol{string} 18|46b7 50r30
+147U14*Put 148>7 149>7 150>7 151>7 152>7 18|53b14 63l8 63t11
+148*7 Item{131F9} 18|54b7 61r29
+149i7 Fore{7|73I12} 18|55b7 61r35
+150i7 Aft{7|73I12} 18|56b7 61r41
+151i7 Exp{7|73I12} 18|57b7 61r46
+152s7 Symbol{string} 18|58b7 62r24
+154U14*Put 155<7 156>7 157>7 158>7 159>7 18|65b14 75l8 75t11
+155s7 To{string} 18|66b7 73m29 74m7 74r13
+156*7 Item{131F9} 18|67b7 73r33
+157i7 Aft{7|73I12} 18|68b7 73r39
+158i7 Exp{7|73I12} 18|69b7 73r44
+159s7 Symbol{string} 18|70b7 74r18
+161U14*Put_Dim_Of 162>7 163>7 164>7 18|84b14 91l8 91t18
+162p7 File{7|52P9} 18|85b7 90r24
+163*7 Item{131F9} 18|86b7
+164s7 Symbol{string} 18|87b7 90r30
+166U14*Put_Dim_Of 167>7 168>7 18|93b14 99l8 99t18
+167*7 Item{131F9} 18|94b7
+168s7 Symbol{string} 18|95b7 98r24
+170U14*Put_Dim_Of 171<7 172>7 173>7 18|101b14 108l8 108t18
+171s7 To{string} 18|102b7 107m7
+172*7 Item{131F9} 18|103b7
+173s7 Symbol{string} 18|104b7 107r13
+X 18 s-diflio.adb
+34K12 Num_Dim_Float_IO[9|45] 49r7 61r7 73r7
+

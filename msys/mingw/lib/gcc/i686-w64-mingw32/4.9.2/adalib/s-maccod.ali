@@ -1,0 +1,84 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.machine_code%s	s-maccod.ads		5073d598 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-maccod.ads		20110906094622 0fbb7bce
+X 1 system.ads
+37K9*System 196e11 2|36r9 130r5
+X 2 s-maccod.ads
+36K16*Machine_Code 1|37k9 2|121E9 130l12 130e24
+43I9*Asm_Input_Operand<integer> 48r34 52r34 78r17 85r17 106r17 113r17 121c9
+. 127r34
+44I9*Asm_Output_Operand<integer> 49r34 55r34 70r17 84r17 98r17 112r17 122c9
+. 128r34
+48i4*No_Input_Operands{43I9} 78r38 85r39 106r38 113r39 127c4
+49i4*No_Output_Operands{44I9} 70r39 84r39 98r39 112r39 128c4
+51A9*Asm_Input_Operand_List(43I9)<integer> 64r17 71r17 92r17 99r17
+54A9*Asm_Output_Operand_List(44I9)<integer> 63r17 77r17 91r17 105r17
+57I9*Asm_Insn<integer> 94r42 101r42 108r42 115r42 123c9
+61U14*Asm 62>6 63>6 64>6 65>6 66>6 117b30
+62s6 Template{string}
+63a6 Outputs{54A9}
+64a6 Inputs{51A9}
+65s6 Clobber{string}
+66b6 Volatile{boolean}
+68U14*Asm 69>6 70>6 71>6 72>6 73>6 117b30
+69s6 Template{string}
+70i6 Outputs{44I9}
+71a6 Inputs{51A9}
+72s6 Clobber{string}
+73b6 Volatile{boolean}
+75U14*Asm 76>6 77>6 78>6 79>6 80>6 117b30
+76s6 Template{string}
+77a6 Outputs{54A9}
+78i6 Inputs{43I9}
+79s6 Clobber{string}
+80b6 Volatile{boolean}
+82U14*Asm 83>6 84>6 85>6 86>6 87>6 117b30
+83s6 Template{string}
+84i6 Outputs{44I9}
+85i6 Inputs{43I9}
+86s6 Clobber{string}
+87b6 Volatile{boolean}
+89V13*Asm{57I9} 90>6 91>6 92>6 93>6 94>6 117b30
+90s6 Template{string}
+91a6 Outputs{54A9}
+92a6 Inputs{51A9}
+93s6 Clobber{string}
+94b6 Volatile{boolean}
+96V13*Asm{57I9} 97>6 98>6 99>6 100>6 101>6 117b30
+97s6 Template{string}
+98i6 Outputs{44I9}
+99a6 Inputs{51A9}
+100s6 Clobber{string}
+101b6 Volatile{boolean}
+103V13*Asm{57I9} 104>6 105>6 106>6 107>6 108>6 117b30
+104s6 Template{string}
+105a6 Outputs{54A9}
+106i6 Inputs{43I9}
+107s6 Clobber{string}
+108b6 Volatile{boolean}
+110V13*Asm{57I9} 111>6 112>6 113>6 114>6 115>6 117b30
+111s6 Template{string}
+112i6 Outputs{44I9}
+113i6 Inputs{43I9}
+114s6 Clobber{string}
+115b6 Volatile{boolean}
+

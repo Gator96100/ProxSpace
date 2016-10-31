@@ -1,0 +1,77 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DISPATCHING_CALLS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.finalization%b	a-finali.adb		8cbe6205 NE OL PK
+W ada%s			ada.ads			ada.ali
+
+U ada.finalization%s	a-finali.ads		22e22193 EE OL PR PU RT PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.finalization_root%s  s-finroo.adb	s-finroo.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-finali.adb		20110803143626 de52be1e
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 3|40r9 73r5 4|32r14 76r5
+X 3 a-finali.ads
+40K13*Finalization 1|16k9 3|62E12 73l9 73e21 4|32b18 76l9 76t21
+48H9*Controlled<10|40R9> 49r41 51P14 51r42 52P14 52r42 53P14 53r42 64c9 64e72
+. 4|38r38 48r40 64r42
+51U14*Initialize<10|44p14> 51=26 4|64b14 68l8 68t18
+51r26 Object{48R9} 4|64b26 65r29
+52U14*Adjust<10|42p14> 52=26 4|38b14 42l8 42t14
+52r26 Object{48R9} 4|38b22 39r29
+53U14*Finalize<10|43p14> 53=26 4|48b14 52l8 52t16
+53r26 Object{48R9} 4|48b24 49r29
+55H9*Limited_Controlled<10|40R9> 56r41 58P14 58r42 59P14 59r42 70c9 71e55
+. 4|54r40 70r42 10|42p14
+58U14*Initialize<10|44p14> 58=26 4|70b14 74l8 74t18
+58r26 Object{55R9} 4|70b26 71r29
+59U14*Finalize<10|43p14> 59=26 4|54b14 58l8 58t16
+59r26 Object{55R9} 4|54b24 55r29
+62K12 SFR=62:31 64r36 71r19
+X 8 system.ads
+37K9*System 3|37r6 62r24 8|196e11
+X 10 s-finroo.ads
+34K16*Finalization_Root 3|37w13 62r31 10|46e29
+40H9*Root_Controlled 3|64r40 71r23 10|40e55
+

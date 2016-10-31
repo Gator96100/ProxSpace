@@ -1,0 +1,82 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U gnat.byte_swapping%b	g-bytswa.adb		45efda4c NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.byte_swapping%s  s-bytswa.ads		s-bytswa.ali
+
+U gnat.byte_swapping%s	g-bytswa.ads		06306a9e BN NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-bytswa.ads		20120712103718 a4d21639
+D g-bytswa.adb		20120712103718 614a3733
+D system.ads		20121001083726 5fc8ae56
+D s-bytswa.ads		20120712104318 799c7440
+X 1 ada.ads
+16K9*Ada 19e8 5|35r6 35r36
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 5|35w10 46r30 47r31 59r30 60r31 72r30 73r31
+X 3 gnat.ads
+34K9*GNAT 37e9 4|162r9 206r5 5|39r14 113r5
+X 4 g-bytswa.ads
+162K14*Byte_Swapping 3|34k9 4|206l10 206e23 5|39b19 113l10 113t23
+178+12 Item 179r31 179r44 5|45r31 45r44 46r52 47r58 48r34
+179v13*Swapped2 179>23 204r40 5|45b13 52l8 52t16
+179*23 Input{178+12} 5|45b23 51r41
+183+12 Item 184r31 184r44 5|58r31 58r44 59r52 60r58 61r34
+184v13*Swapped4 184>23 204r50 5|58b13 65l8 65t16
+184*23 Input{183+12} 5|58b23 64r41
+188+12 Item 189r31 189r44 5|71r31 71r44 72r52 73r58 74r34
+189v13*Swapped8 189>23 204r60 5|71b13 78l8 78t16
+189*23 Input{188+12} 5|71b23 77r41
+192U14*Swap2 192>21 204r19 5|84b14 89l8 89t13
+192m21 Location{6|64M9} 5|84b21 86r25
+196U14*Swap4 196>21 204r26 5|95b14 100l8 100t13
+196m21 Location{6|64M9} 5|95b21 97r25
+200U14*Swap8 200>21 204r33 5|106b14 111l8 111t13
+200m21 Location{6|64M9} 5|106b21 108r25
+X 5 g-bytswa.adb
+46V16 As_U16[2|20]{7|40M9} 51s33
+47V16 As_Item[2|20]{4|178+12} 51s14
+59V16 As_U32[2|20]{7|41M9} 64s33
+60V16 As_Item[2|20]{4|183+12} 64s14
+72V16 As_U64[2|20]{7|42M9} 77s33
+73V16 As_Item[2|20]{4|188+12} 77s14
+85m7 X{7|40M9} 86m11 86r11 88m7 88r22
+96m7 X{7|41M9} 97m11 97r11 99m7 99r22
+107m7 X{7|42M9} 108m11 108r11 110m7 110r22
+X 6 system.ads
+37K9*System 4|160w6 192r32 196r32 200r32 5|37r6 37r32 84r32 95r32 106r32
+. 6|196e11
+64M9*Address 4|192r39 196r39 200r39 5|84r39 95r39 106r39
+X 7 s-bytswa.ads
+36K16*Byte_Swapping 5|37w13 37r39 7|53e25
+40M9*U16 5|46r58 47r53 85r11
+41M9*U32 5|59r58 60r53 96r11
+42M9*U64 5|72r58 73r53 107r11
+44V13*Bswap_16{40M9} 5|51s23 88s12
+47V13*Bswap_32{41M9} 5|64s23 99s12
+50V13*Bswap_64{42M9} 5|77s23 110s12
+

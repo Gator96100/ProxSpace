@@ -1,0 +1,43 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV SPARK_05
+
+U system.wid_llu%b	s-widllu.adb		32cc77ed NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U system.wid_llu%s	s-widllu.ads		f2a609cb NE OL PU PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-unstyp.ads		20140225151140 510692af
+D s-widllu.ads		20090409150020 fc683532
+D s-widllu.adb		20090409150020 9fa2d070
+X 1 system.ads
+37K9*System 196e11 3|36r6 38r9 42r16 47r5 4|32r6 32r33 34r14 73r5
+X 2 s-unstyp.ads
+40K16*Unsigned_Types 208e26 3|36w13 42r23 4|32w13 32r40
+47M9*Long_Long_Unsigned 3|42r38 4|41r16 45r11 59r15
+X 3 s-widllu.ads
+38K16*Wid_LLU 1|37k9 3|47l12 47e19 4|34b21 73l12 73t19
+41V13*Width_Long_Long_Unsigned{natural} 42>7 42>11 4|40b13 71l8 71t32
+42m7 Lo{2|47M9} 4|41b7 48r10 59r39
+42m11 Hi{2|47M9} 4|41b11 48r15 59r43
+X 4 s-widllu.adb
+44i7 W{natural} 54m10 65m13 65r18 68r17
+45m7 T{2|47M9} 59m10 63r16 64m13 64r18
+

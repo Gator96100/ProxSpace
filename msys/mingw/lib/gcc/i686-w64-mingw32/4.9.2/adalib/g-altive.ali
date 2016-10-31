@@ -1,0 +1,132 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV SPARK_05
+
+U gnat.altivec%s	g-altive.ads		7cea4d5d NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-altive.ads		20110804115738 de0831fa
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|169r9 427r5
+X 2 g-altive.ads
+169K14*Altivec 1|34k9 2|422E4 427l10 427e17
+176N4*VECTOR_BIT
+187N4*VECTOR_ALIGNMENT
+213N4*CHAR_BIT 214r37 215r36 216r35 219r31 222r29
+214N4*SCHAR_MIN 221r30
+215N4*SCHAR_MAX 221r43
+216N4*UCHAR_MAX 218r30
+218M9*unsigned_char 219r8 224r25 334r42 353r53 377r39
+221I9*signed_char<short_short_integer> 222r8 333r42 352r53 374r37
+224M12*bool_char{218M9} 230r31 230r44 231r31
+230m4*bool_char_True{224M12}
+231m4*bool_char_False{224M12}
+237N4*SHORT_BIT 238r37 239r36 240r35 243r32 248r30
+238N4*SSHORT_MIN 247r31
+239N4*SSHORT_MAX 247r45
+240N4*USHORT_MAX 242r31
+242M9*unsigned_short 243r8 245r34 252r26 305r21 338r42 357r53 383r40
+245M12*unsigned_short_int{242M9}
+247I9*signed_short<short_integer> 248r8 250r32 337r42 356r53 380r38
+250I12*signed_short_int{247I9}
+252M12*bool_short{242M9} 255r32 255r46 256r32 258r30
+255m4*bool_short_True{252M12}
+256m4*bool_short_False{252M12}
+258M12*bool_short_int{252M12}
+264N4*INT_BIT 265r37 266r36 267r35 270r30 273r28
+265N4*SINT_MIN 272r29
+266N4*SINT_MAX 272r41
+267N4*UINT_MAX 269r29
+269M9*unsigned_int 270r8 275r24 342r42 361r53 389r38
+272I9*signed_int<integer> 273r8 311r21 341r42 360r53 386r36
+275M12*bool_int{269M9} 278r30 278r42 279r30
+278m4*bool_int_True{275M12}
+279m4*bool_int_False{275M12}
+285N4*FLOAT_BIT 291r25
+286N4*FLOAT_DIGIT 290r27
+287N4*FLOAT_MIN 290r45
+288N4*FLOAT_MAX 290r58
+290F9*C_float<short_float> 291r8
+305M12*pixel{242M9}
+311I12*c_int{272I9} 312r23 340r42 359r53
+312I12*c_short{311I12} 336r42 355r53
+314N4*LONG_BIT 318r35 319r35 320r34
+318N4*SLONG_MIN 322r32
+319N4*SLONG_MAX 322r45
+320N4*ULONG_MAX 323r30
+322I9*signed_long<integer> 325r22 345r42 364r53 392r37
+323M9*unsigned_long 346r42 365r53 395r39
+325I12*c_long{322I9} 344r42 363r53
+327M12*c_ptr{3|64M9}
+333P9*signed_char_ptr(221I9)
+334P9*unsigned_char_ptr(218M9)
+336P9*short_ptr(312I12)
+337P9*signed_short_ptr(247I9)
+338P9*unsigned_short_ptr(242M9)
+340P9*int_ptr(311I12)
+341P9*signed_int_ptr(272I9)
+342P9*unsigned_int_ptr(269M9)
+344P9*long_ptr(325I12)
+345P9*signed_long_ptr(322I9)
+346P9*unsigned_long_ptr(323M9)
+348P9*float_ptr(float)
+352P9*const_signed_char_ptr(221I9)
+353P9*const_unsigned_char_ptr(218M9)
+355P9*const_short_ptr(312I12)
+356P9*const_signed_short_ptr(247I9)
+357P9*const_unsigned_short_ptr(242M9)
+359P9*const_int_ptr(311I12)
+360P9*const_signed_int_ptr(272I9)
+361P9*const_unsigned_int_ptr(269M9)
+363P9*const_long_ptr(325I12)
+364P9*const_signed_long_ptr(322I9)
+365P9*const_unsigned_long_ptr(323M9)
+367P9*const_float_ptr(float)
+371F9*volatile_float<float> 372r21 414r46
+374I9*volatile_signed_char<221I9> 375r21 398r54 399r54
+377M9*volatile_unsigned_char<218M9> 378r21 400r54
+380I9*volatile_signed_short<247I9> 381r21 402r54 403r54
+383M9*volatile_unsigned_short<242M9> 384r21 404r54
+386I9*volatile_signed_int<272I9> 387r21 406r54 407r54
+389M9*volatile_unsigned_int<269M9> 390r21 408r54
+392I9*volatile_signed_long<322I9> 393r21 410r54 411r54
+395M9*volatile_unsigned_long<323M9> 396r21 412r54
+398P9*constv_char_ptr(374I9)
+399P9*constv_signed_char_ptr(374I9)
+400P9*constv_unsigned_char_ptr(377M9)
+402P9*constv_short_ptr(380I9)
+403P9*constv_signed_short_ptr(380I9)
+404P9*constv_unsigned_short_ptr(383M9)
+406P9*constv_int_ptr(386I9)
+407P9*constv_signed_int_ptr(386I9)
+408P9*constv_unsigned_int_ptr(389M9)
+410P9*constv_long_ptr(392I9)
+411P9*constv_signed_long_ptr(392I9)
+412P9*constv_unsigned_long_ptr(395M9)
+414P9*constv_float_ptr(371F9)
+422N4 CR6_EQ
+423N4 CR6_EQ_REV
+424N4 CR6_LT
+425N4 CR6_LT_REV
+X 3 system.ads
+37K9*System 2|167w6 327r21 3|196e11
+64M9*Address 2|327r28
+

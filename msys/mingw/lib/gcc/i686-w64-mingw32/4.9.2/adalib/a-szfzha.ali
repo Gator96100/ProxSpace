@@ -1,0 +1,66 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+
+U ada.strings.wide_wide_fixed.wide_wide_hash%s  a-szfzha.ads  44e6f946 NE OL PU
+W ada%s			ada.ads			ada.ali
+W ada.containers%s	a-contai.ads		a-contai.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.wide_wide_fixed%s  a-stzfix.adb	a-stzfix.ali
+W ada.strings.wide_wide_hash%s  a-stzhas.ads	a-stzhas.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-contai.ads		20101025135030 61e5e089
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-string.ads		20070406091342 90ac6797
+D a-stzfix.ads		20101008130256 cd5f8a42
+D a-szfzha.ads		20090623094938 5ac2ad21
+D a-stzhas.ads		20090623094938 b29e3eac
+D a-stzmap.ads		20090409150020 e0c31b30
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-stratt.ads		20131014135146 aedef97e
+D s-strhas.ads		20090623093900 269cd894
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 8|17r6 18r6 20r10 22r10 24r14
+X 2 a-contai.ads
+16K13*Containers 24e19 8|17w10 21r34
+19M9*Hash_Type 8|21r45
+X 6 a-string.ads
+16K13*Strings 1|16k9 6|35e16 8|18r10 20r14 22r14 24r18
+X 7 a-stzfix.ads
+18K21*Wide_Wide_Fixed 6|16k13 7|264e32 8|20r22 24r26
+X 8 a-szfzha.ads
+20V38*Wide_Wide_Hash=22:22{2|19M9} 24r42
+21a3 Key{wide_wide_string}
+X 9 a-stzhas.ads
+21V22*Wide_Wide_Hash[27|56]{2|19M9} 8|18w18 22r22
+

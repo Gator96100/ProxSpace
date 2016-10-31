@@ -1,0 +1,104 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SIMPLE_BARRIERS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
+RV NO_EXCEPTIONS
+RV NO_PROTECTED_TYPES
+RV NO_STANDARD_STORAGE_POOLS
+RV STATIC_PRIORITIES
+RV SPARK_05
+RV MAX_PROTECTED_ENTRIES=1
+
+U gnat.semaphores%b	g-semaph.adb		2d4c7e6e NE OL PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+W system.tasking.protected_objects.entries%s  s-tpoben.adb  s-tpoben.ali
+W system.tasking.protected_objects.operations%s  s-tpobop.adb  s-tpobop.ali
+
+U gnat.semaphores%s	g-semaph.ads		3b74faed EE NE OL PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+W system.tasking.protected_objects.entries%s  s-tpoben.adb  s-tpoben.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-semaph.ads		20110801150502 9996864a
+D g-semaph.adb		20110801150502 b4daf824
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-multip.ads		20101011073010 38ac9f73
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taskin.ads		20140131154342 3f821f32
+D s-taprob.ads		20110927094500 502249e3
+D s-tpoben.ads		20121029113218 b641f948
+D s-tpobop.ads		20090409150020 5f548bb3
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 7 gnat.ads
+34K9*GNAT 37e9 8|38r9 97r5 9|32r14 84r5
+X 8 g-semaph.ads
+38K14*Semaphores 7|34k9 8|97l10 97e20 9|32b19 84l10 84t20
+40i4*Default_Ceiling{13|98I12}
+47W19*Counting_Semaphore 48d8 52d7 67E7 68l8 68e26 9|38b19 57l8 57t26
+48i8 Initial_Value{natural} 67r26
+52i7 Ceiling{13|98I12} 56r24
+58Y13 Seize 9|44b13 47l11 47t16
+63U17 Release 9|53b17 56l11 56t18
+67i7 Count{natural} 9|44r24 46r10 46r19 55r10 55r19
+74W19*Binary_Semaphore 75d7 80d7 94E7 95l8 95e24 9|63b19 82l8 82t24
+75b7 Initially_Available{boolean} 94r30
+80i7 Ceiling{13|98I12} 84r24
+86Y13 Seize 9|69b13 72l11 72t16
+90U17 Release 9|78b17 81l11 81t18
+94b7 Available{boolean} 9|69r24 71r10 80r10
+X 13 system.ads
+37K9*System 8|36w6 40r31 40r50 52r17 80r17 13|196e11
+97I12*Any_Priority{integer}
+98I12*Priority{97I12} 8|40r38 52r24 80r24
+101i4*Default_Priority{98I12} 8|40r57
+X 24 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+

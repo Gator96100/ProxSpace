@@ -1,0 +1,89 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U ada.strings.unbounded.equal_case_insensitive%b  a-suecin.adb  eea87217 NE OL PR SU
+W ada%s			ada.ads			ada.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.equal_case_insensitive%s  a-secain.adb  a-secain.ali
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.strings.unbounded.aux%s  a-stunau.adb	a-stunau.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+
+U ada.strings.unbounded.equal_case_insensitive%s  a-suecin.ads  b0c10684 NE OL PR SU
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-string.ads		20070406091342 90ac6797
+D a-secain.ads		20090409150020 37402117
+D a-strmap.ads		20090409150020 9cb836fb
+D a-strunb.ads		20120426100352 3f91d4c5
+D a-stunau.ads		20110805141436 63b8e84c
+D a-suecin.ads		20111104105542 8f50d241
+D a-suecin.adb		20111104105542 3500690d
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-atocou.ads		20131010110730 cd7c94ca
+D s-atocou.adb		20131010110730 276bb8fc
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-maccod.ads		20110906094622 0fbb7bce
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-stratt.ads		20131014135146 aedef97e
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 12|34r10 38r22 13|30r6 31r6 33r10 44r11 47r5
+X 7 a-string.ads
+16K13*Strings 35e16 12|34r14 38r26 13|30r10 31r10 33r14 44r15 47r9
+X 8 a-secain.ads
+30V22*Equal_Case_Insensitive{boolean} 13|31w18 44s23
+31s4 Left{string} 13|45r7
+31s10 Right{string} 13|46r7
+X 10 a-strunb.ads
+76K21*Unbounded 489e26 12|34r22 35r18 38r34 13|30r18 33r22 34r18 47r17
+79R9*Unbounded_String<5|48R9> 473e14 12|35r28 13|34r28
+X 11 a-stunau.ads
+37K31*Aux 77e30 13|30w28 37r13 41r4 42r4
+40A12*Big_String{string}<integer>
+47P9*Big_String_Access(40A12) 13|37r17
+54U14*Get_String 13|41s8 42s8
+X 12 a-suecin.ads
+34V32*Equal_Case_Insensitive{boolean} 10|76k21 12|35>4 35>10 38r44 13|33b32
+. 47l27 47t49
+35r4 Left{10|79R9} 13|34b4 41r20
+35r10 Right{10|79R9} 13|34b10 42r20
+X 13 a-suecin.adb
+37p4 SL{11|47P9} 41m26 41r26 45r16
+37p8 SR{11|47P9} 42m27 42r27 46r16
+38i4 LL{natural} 41m30 45r25
+38i8 LR{natural} 42m31 46r25
+

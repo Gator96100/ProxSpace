@@ -1,0 +1,56 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.strings.less_case_insensitive%b  a-slcain.adb  571a0193 NE OL PU SU
+W ada%s			ada.ads			ada.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+W ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+W ada.strings%s		a-string.ads		a-string.ali
+
+U ada.strings.less_case_insensitive%s  a-slcain.ads  9c017ef5 NE OL PU SU
+W ada.strings%s		a-string.ads		a-string.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chahan.ads		20131010125232 1c00991d
+D a-string.ads		20070406091342 90ac6797
+D a-slcain.ads		20090409150020 0cad1962
+D a-slcain.adb		20090409150020 47b781ec
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 5|30r10 32r14 6|30r6 30r35 32r10 72r5
+X 2 a-charac.ads
+16K13*Characters 18e19 6|30r10 30r39
+X 3 a-chahan.ads
+36K24*Handling 160e28 6|30w21 30r50
+67V13*To_Lower{character} 6|50s13 51s13
+X 4 a-string.ads
+16K13*Strings 35e16 5|30r14 32r18 6|32r14 72r9
+X 5 a-slcain.ads
+30V22*Less_Case_Insensitive{boolean} 4|16k13 5|31>4 31>10 32r26 6|32b22 72l17
+. 72t38
+31s4 Left{string} 6|33b4 35r20 41r12 50r23 61r15
+31s10 Right{string} 6|33b10 36r20 42r20 45r12 51r23 62r22 65r15
+X 6 a-slcain.adb
+35i4 LI{integer} 41r7 50r29 61r10 69m7 69r13
+36i4 RI{integer} 42r14 45r7 51r30 62r17 65r10 70m7 70r13
+38e4 LC{character} 50m7 53r10 57r10
+38e8 RC{character} 51m7 53r15 57r15
+49l4 loop 71e12
+

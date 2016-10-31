@@ -4,18 +4,20 @@ endif
 
 include $(DEVKITARM)/base_rules
 
-LIBNDS	:=	$(DEVKITPRO)/libnds
+PORTLIBS	:=	$(PORTLIBS_PATH)/nds $(PORTLIBS_PATH)/armv5te
+
+LIBNDS		:=	$(DEVKITPRO)/libnds
 
 ifeq ($(strip $(GAME_TITLE)),)
 GAME_TITLE	:=	$(notdir $(OUTPUT))
 endif
 
 ifeq ($(strip $(GAME_SUBTITLE1)),)
-GAME_SUBTITLE1	:=	www.devkitpro.org
+GAME_SUBTITLE1	:=	built with devkitARM
 endif
 
 ifeq ($(strip $(GAME_SUBTITLE2)),)
-GAME_SUBTITLE2	:=	www.drunkencoders.com
+GAME_SUBTITLE2	:=	http://devkitpro.org
 endif
 
 ifeq ($(strip $(GAME_ICON)),)
@@ -40,7 +42,7 @@ endif
 %.arm9: %.elf
 	@$(OBJCOPY) -O binary $< $@
 	@echo built ... $(notdir $@)
- 
+
 #---------------------------------------------------------------------------------
 %.arm7: %.elf
 	@$(OBJCOPY) -O binary $< $@

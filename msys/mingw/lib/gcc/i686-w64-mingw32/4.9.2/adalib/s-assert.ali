@@ -1,0 +1,57 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -g
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+
+U system.assertions%b	s-assert.adb		a7230bda NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W system%s		system.ads		system.ali
+W system.exceptions_debug%s  s-excdeb.adb	s-excdeb.ali
+
+U system.assertions%s	s-assert.ads		924582c2 EE OL PK
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-assert.ads		20140225151544 cd8d2c94
+D s-assert.adb		20140225151544 c1526fca
+D s-exctab.ads		20140225151140 54135002
+D s-excdeb.ads		20140225151140 53960987
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 6|34r6 46r7
+X 2 a-except.ads
+53K13*Exceptions 360e19 6|34w10 46r11
+89U14*Raise_Exception 6|46s22
+X 4 system.ads
+37K9*System 196e11 5|41r9 50r5 6|35r6 37r14 45r7 49r5
+X 5 s-assert.ads
+41K16*Assertions 4|37k9 5|50l12 50e22 6|37b21 49l12 49t22
+43X4*Assert_Failure 6|46r39
+46U14*Raise_Assert_Failure 46>36 47r22 6|43b14 47l8 47t28
+46s36 Msg{string} 6|43b36 46r64
+X 8 s-excdeb.ads
+40K16*Exceptions_Debug 6|35w13 45r14 8|77e28
+61U14*Debug_Raise_Assert_Failure 6|45s31
+

@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 WinExtras
+Description: Qt WinExtras module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5WinExtrasd 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:/Qt/5.6/mingw49_32\lib C:/Qt/5.6/mingw49_32\lib\libQt5Guid.a C:/Qt/5.6/mingw49_32\lib\libQt5Cored.a .obj\debug\Qt5WinExtrasd_resource_res.o -lole32 -lshlwapi -lshell32 -lgdi32  
+Cflags: -I${includedir}/QtWinExtras -I${includedir}
+Requires: Qt5Core Qt5Gui
+

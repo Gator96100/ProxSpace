@@ -1,0 +1,178 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FINALIZATION
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.tasking.task_attributes%b  s-tataat.adb  b413adc2 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.task_primitives%s  s-taspri.ads	s-taspri.ali
+W system.task_primitives.operations%s  s-taprop.adb  s-taprop.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.initialization%s  s-tasini.adb	s-tasini.ali
+
+U system.tasking.task_attributes%s  s-tataat.ads  d35f58bd EE OL PF PK
+W ada%s			ada.ads			ada.ali
+W ada.finalization%s	a-finali.adb		a-finali.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+W system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-multip.ads		20101011073010 38ac9f73
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taprop.ads		20111212143340 1dd2e1b6
+D s-taskin.ads		20140131154342 3f821f32
+D s-tasini.ads		20120612110910 cd8187f9
+D s-tataat.ads		20110801150502 93f2d190
+D s-tataat.adb		20140120154704 0e59951b
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 1 ada.ads
+16K9*Ada 19e8 31|35r6 49r35 72r25 32|33r6 43r38
+X 3 a-finali.ads
+40K13*Finalization 73e21 31|35w10 72r29
+55H9*Limited_Controlled<14|40R9> 71e55 31|72r42
+58U14*Initialize<14|44p14>
+X 6 a-unccon.ads
+20v14*Unchecked_Conversion 31|49r39 32|33w10 43r42
+X 10 system.ads
+37K9*System 196e11 31|37r6 39r9 74r31 127r5 32|35r6 36r6 38r14 99r17 203r18
+. 218r5
+64M9*Address
+X 14 s-finroo.ads
+42U14*Adjust
+X 21 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 23 s-stoele.ads
+42K16*Storage_Elements 117e28 31|37w13 74r38 32|203r25
+105M9*Integer_Address 31|74r55
+107V13*To_Address{10|64M9} 32|203s42
+X 27 s-taspri.ads
+41K16*Task_Primitives 124e27 32|35r13 40r8
+X 28 s-taprop.ads
+39K32*Operations 571e38 32|35w29 40r24
+187U14*Write_Lock 32|104s16
+241U14*Unlock 32|127s16
+434U14*Lock_RTS 32|62s7 193s7
+437U14*Unlock_RTS 32|133s7 209s7
+X 29 s-taskin.ads
+47K16*Tasking 10|37k9 29|1216e19 31|39r16 127r12 32|36r13 38r21 41r8 99r24
+. 218r12
+107P9*Task_Id(105R9) 31|114r41 120r39 32|53r33 99r32 157r39 184r41 186r26
+114V13*Self{107P9} 32|53s44 186s37
+607p7*All_Tasks_Link{107P9} 32|128r30
+742p4*All_Tasks_List{107P9} 32|99r43
+923P9*Access_Address(10|64M9) 31|50r7 32|44r20
+939I9*Direct_Index<short_short_integer> 31|76r15
+946M9*Direct_Attribute_Element 32|202r15
+949A9*Direct_Attribute_Array(946M9)<939I9>
+952M9*Direct_Index_Vector 31|107r13
+960r7*Common{505R9} 32|128r23
+1140a7*Direct_Attributes{949A9} 32|201m15
+1146p7*Indirect_Attributes{923P9} 32|106r39 116m24 159r44 169m9
+X 30 s-tasini.ads
+35K24*Initialization 190e34 32|36w21 41r16
+115U14*Defer_Abort_Nestable 32|61s7 192s7
+118U14*Undefer_Abort_Nestable 32|141s7 210s7
+X 31 s-tataat.ads
+39K24*Task_Attributes 29|47k16 31|127l20 127e35 32|38b29 218l20 218t35
+41I9*Attribute<integer> 98r23
+45R9*Node 46r35 86c9 90e14 96r28
+46P9*Access_Node(45R9) 50r23 65r53 89r18 32|44r7 52r24 100r17 158r11 159r11
+49V13*To_Access_Node[6|20]{46P9} 32|106s21 159s26
+54R9*Dummy_Wrapper 55r44 95c9 100e14 102r8
+55P9*Access_Dummy_Wrapper(54R9) 56r31 60r8 87r18
+65P9*Deallocator 65=42 73r23
+65p42 P{46P9}
+68R9*Instance 70r39 72c9 84r35 32|51r35
+70P9*Access_Instance(68R9) 80r14 88r18 110r21 32|67r14 68r14 185r17
+72R9*Instance<3|55R9> 3|58P14 14|42p14 31|82e14 84P14
+73p7*Deallocate{65P9} 32|138r12 166r34
+74m7*Initial_Value{23|105M9} 32|203r56
+76i7*Index{29|939I9} 32|84r12 88r50 200r15 201r36
+80p7*Next{70P9} 32|72r28 78r33 80m15 80r25 206r17
+84U14*Finalize<3|59p14> 84=24 32|51b14 148l8 148t16
+84r24 X{72R9} 32|51b24 71m40 71r40 84r10 88r48 108m41 108r41 138r10
+86R9*Node
+87p7*Wrapper{55P9}
+88p7*Instance{70P9} 32|108r29 166r25
+89p7*Next{46P9} 32|111r26 116r68 118m24 118r34 123m21 137r37 166r17
+96r7*Dummy_Node{86R9}
+98i7*Value{41I9}
+107m4*In_Use{29|952M9} 32|88m10 88r20
+110p4*All_Attributes{70P9} 32|68r33 78m13 197r12
+114U14*Initialize_Attributes 114>37 32|184b14 216l8 216t29
+114p37 T{29|107P9} 32|184b37 201r13
+120U14*Finalize_Attributes 120>35 32|157b14 176l8 176t27
+120p35 T{29|107P9} 32|157b35 159r42 169r7
+X 32 s-tataat.adb
+43V13 To_Access_Address[6|20]{29|923P9} 116s47
+52p7 Q{31|46P9} 106m16 107r22 108r27 110r24 111m19 111r24 114r19 116r66 118r32
+. 123r19 124r34 136m10 138m28 138r28
+52p10 To_Be_Freed{31|46P9} 123r29 124m19 135r13 136r15 137m10 137r25
+53p7 Self_Id{29|107P9} 61r29 141r31
+67p10 P{31|70P9} 72m13 77r13 80r13
+68p10 Q{31|70P9} 71r16 71r35 72r18 72m21 72r26 75r25 78r31 80r23
+99p13 C{29|107P9} 103r19 104r28 106r37 116r22 127r24 128m16 128r21
+100p13 P{31|46P9} 110m19 115r22 118r22
+158p7 P{31|46P9} 165m10 166r23 166m50 166r50
+159p7 Q{31|46P9} 164r13 165r15 166m10 166r15
+185p7 P{31|70P9} 197m7 199r13 200r13 201r34 203r54 206m10 206r15
+186p7 Self_Id{29|107P9} 192r29 210r31
+

@@ -1,0 +1,207 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_ALLOCATORS
+RV NO_DISPATCH
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.partition_interface%b  s-parint.adb	44a421c2 OL PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U system.partition_interface%s  s-parint.ads	28ab3600 BN EB EE OL PF PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+W system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+W system.rpc%s		s-rpc.adb		s-rpc.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.stream_attributes%s  s-stratt.adb	s-stratt.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-parint.ads		20110829141750 249c047e
+D s-parint.adb		20090409150020 603825bc
+D s-pooglo.ads		20110804083314 542f33d0
+D s-rpc.ads		20130104124956 d8a02bd2
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stratt.ads		20131014135146 aedef97e
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 13|35r6 36r6 102r34 150r11 14|213r11 216r32
+X 2 a-except.ads
+53K13*Exceptions 360e19 13|35w10 150r15 14|213r15 216r36
+62R9*Exception_Occurrence 328e14 13|150r26 14|213r26
+93V13*Exception_Message{string} 14|216s47
+X 4 a-stream.ads
+36K13*Streams 84e16 13|36w10 102r38
+39H9*Root_Stream_Type 67e64 13|102r46
+X 7 interfac.ads
+38K9*Interfaces 179e15 13|37w6 76r22 77r22 142r32 167r27 183r48 14|141r27
+. 158r18 172r32 249r48
+66M9*Unsigned_64 13|76r33 77r33 142r43 167r38 183r59 14|141r38 158r29 172r43
+. 249r59
+X 8 system.ads
+37K9*System 196e11 13|38r6 40r9 61r14 88r26 159r23 191r5 14|33r14 47r23 79r32
+. 109r43 111r14 119r32 229r47 266r48 277r23 320r5
+64M9*Address 13|61r21 88r33 159r30 14|47r30 277r30
+66m4*Null_Address{64M9} 14|266r55
+X 13 s-parint.ads
+40K16*Partition_Interface 8|37k9 13|191l12 191e31 14|33b21 320l12 320t31
+43E9*DSA_Implementation_Name 43e69 44r34
+43n37*No_DSA{43E9} 44r61
+43n45*GARLIC_DSA{43E9}
+43n57*PolyORB_DSA{43E9}
+44e4*DSA_Implementation{43E9}
+47N4*PCS_Version
+57I9*Subprogram_Id<integer> 89r26 166r24 14|140r24
+58N4*First_RCI_Subprogram_Id 14|151r19 152r19
+60R9*RCI_Subp_Info 63e14 65r44 67r14
+61m7*Addr{8|64M9} 14|158r74
+65P9*RCI_Subp_Info_Access(60R9)
+66A9*RCI_Subp_Info_Array(60R9)<integer> 14|150r44
+69A12*Unit_Name{string}<integer> 113r17 125r45 128r40 135r14 138r41 142r14
+. 156r23 165r24 173r17 14|66r17 79r14 100r40 119r14 129r41 139r24 172r14
+. 261r17 274r23
+72P9*Main_Subprogram_Type 188r26 14|298r14
+74R9*RACW_Stub_Type 79e14 81r41 119p13 120r32 121r32 14|311r32 312r32
+75i7*Origin{16|44I9}
+76m7*Receiver{7|66M9}
+77m7*Addr{7|66M9}
+78b7*Asynchronous{boolean}
+81P9*RACW_Stub_Type_Access(74R9) 146r24 14|183r24
+86R9*RAS_Proxy_Type 90e14 92r41
+87b7*All_Calls_Remote{boolean}
+88m7*Receiver{8|64M9}
+89i7*Subp_Id{57I9}
+92P9*RAS_Proxy_Type_Access(86R9) 93r31
+102P9*RST_Access(4|39R9) 104r16 107r16
+103R9*Request_Access 110e14 154r47
+104p7*Params{102P9}
+107p7*Result{102P9}
+112U14*Check 113>7 114>7 115>7 14|65b14 72l8 72t13
+113a7 Name{69A12} 14|66b7
+114s7 Version{string} 14|67b7
+115b7 RCI{boolean} 14|68b7
+119V13*Same_Partition{boolean} 120^8 121^8 14|310b13 318l8 318t22
+120p8 Left(74R9) 14|311b8 314r28
+121p8 Right(74R9) 14|312b8 315r28
+125V13*Get_Active_Partition_ID{16|44I9} 125>38 14|78b13 94l8 94t31
+125a38 Name{69A12} 14|79b7 82r30
+128V13*Get_Active_Version{string} 128>33 14|100b13 103l8 103t26
+128a33 Name{69A12} 14|100b33
+131V13*Get_Local_Partition_ID{16|44I9} 14|87s20 109b13 112l8 112t30 122s14
+. 236s23
+134V13*Get_Passive_Partition_ID{16|44I9} 135>7 14|118b13 123l8 123t32
+135a7 Name{69A12} 14|119b7
+138V13*Get_Passive_Version{string} 138>34 14|129b13 132l8 132t27
+138a34 Name{69A12} 14|129b34
+141V13*Get_RCI_Package_Receiver{7|66M9} 142>7 14|171b13 176l8 176t32
+142a7 Name{69A12} 14|172b7
+145U14*Get_Unique_Remote_Pointer 146=7 14|182b14 187l8 187t33
+146p7 Handler{81P9} 14|183b7
+149U14*Raise_Program_Error_Unknown_Tag 150>7 151r22 14|212b14 217l8 217t39
+150r7 E{2|62R9} 14|213b7 216r66
+154P9*RPC_Receiver 154>43 157r23 14|275r23
+154r43 R{103R9}
+155U14*Register_Receiving_Stub 156>7 157>7 158>7 159>7 160>7 14|265s7 273b14
+. 291l8 291t31
+156a7 Name{69A12} 14|274b7 281r46
+157p7 Receiver{154P9} 14|275b7
+158s7 Version{string} 14|276b7
+159m7 Subp_Info{8|64M9} 14|277b7 282r27
+160i7 Subp_Info_Len{integer} 14|278b7 282r38
+164U14*Get_RAS_Info 165>7 166>7 167<7 14|138b14 165l8 165t20
+165a7 Name{69A12} 14|139b7 143r41
+166i7 Subp_Id{57I9} 14|140b7 158r64
+167m7 Proxy_Address{7|66M9} 14|141b7 157m16 164m7
+172U14*Register_Passive_Package 173>7 174>7 14|260b14 267l8 267t32
+173a7 Name{69A12} 14|261b7 266r27
+174s7 Version{string} 14|262b7 266r39
+178s7 RCI_Name{string} 14|231r33
+179s7 Version{string} 181r28
+180k12*RCI_Locator 178z7 179z7 185l8 185e19 14|223b17 254l8 254t19
+183V16*Get_RCI_Package_Receiver{7|66M9} 14|249b16 252l11 252t35
+184V16*Get_Active_Partition_ID{16|44I9} 14|229b16 243l11 243t34
+188U14*Run 188>19 14|297b14 304l8 304t11
+188p19 Main{72P9} 14|298b7 301r10 302r10
+X 14 s-parint.adb
+37N4 M 93r14 111r47 242r17
+39P9 String_Access(string) 46r23
+43R9 Pkg_Node 44r28 45c9 50e14 281r17
+44P9 Pkg_List(43R9) 49r23 52r15 53r15 81r11 144r11 230r14 280r20
+46p7*Name{39P9} 86r15 148r15 235r18
+47m7*Subp_Info{8|64M9} 154r46
+48i7*Subp_Info_Len{integer} 152r47
+49p7*Next{44P9} 90r17 162r17 239r20 283m27 288m19
+52p4 Pkg_Head{44P9} 81r23 146r12 230r26 286m10
+53p4 Pkg_Tail{44P9} 285r10 288r10 290m7
+55V13 getpid{integer} 56b<c,getpid>22 58s30
+58i4 PID{integer} 111r39
+60V13 Lower{string} 60>20 82s23 143s34 193b13 206l8 206t13 231s26 281s39
+60s20 S{string} 193b20 194r21
+62a4 Passive_Prefix{string} 266r10
+81p7 P{44P9} 85r13 86r13 90m10 90r15
+82a7 N{string} 86r26
+143a7 LName{string} 148r26
+144p7 N{44P9} 146m7 147r13 148r13 152r45 154r44 162m10 162r15
+150A24 Subprogram_Array{13|66A9}<integer> 153r30
+153a16 Subprograms{150A24} 154m20 154r20 155m36 155r36 158r42
+194a7 T{string} 197r16 198r13 199m13 199r52 205r14
+197i11 J{integer} 198r16 199r16 199r55
+230p10 P{44P9} 234r16 235r16 239m13 239r18
+231a10 N{string} 235r29
+280p7 N{44P9} 286r22 288r27 290r19
+X 16 s-rpc.ads
+42K16*RPC 13|38w13 75r22 125r63 131r43 135r32 184r47 14|79r39 109r50 111r21
+. 119r39 229r54 16|94e15
+44I9*Partition_ID<short_short_integer> 13|75r26 125r67 131r47 135r36 184r51
+. 14|79r43 109r54 111r25 119r43 229r58
+

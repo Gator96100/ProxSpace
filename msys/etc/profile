@@ -5,15 +5,8 @@
 #         File:	profile
 #  Description:	Shell environment initialization script
 # Last Revised:	2002.05.04
-#
-# Tweaked specifically for the Proxmark III project.
-#
-#       homepage: http://proxmark.org/
-#          forum: http://www.proxmark.org/forum/index.php
-# irc (freenode): proxmark3
-#
 
-export DEVKITARM="/devkitARM"
+export DEVKITARM=/devkitARM
 export QTDIR=/qt
 
 if [ -z "$MSYSTEM" ]; then
@@ -26,9 +19,9 @@ fi
 # I filter the PATH value setting in order to get ready for self hosting the
 # MSYS runtime and wanting different paths searched first for files.
 if [ $MSYSTEM == MINGW32 ]; then
-  export PATH=".:/usr/local/bin:/mingw/bin:/bin:/devkitARM/bin:/qt/bin:/qt/lib:/opt/svn-win32-1.7.4/bin:$PATH"
+  export PATH=".:/usr/local/bin:/mingw/bin:/bin:$DEVKITARM/bin:$QTDIR/bin:$PATH"
 else
-  export PATH=".:/usr/local/bin:/mingw/bin:/bin:/devkitARM/bin:/qt/bin:/qt/lib:/opt/svn-win32-1.7.4/bin:$PATH"
+  export PATH=".:/usr/local/bin:/bin:/mingw/bin:$DEVKITARM/bin:$QTDIR/bin:$PATH"
 fi
 
 if [ -z "$USERNAME" ]; then
@@ -61,5 +54,8 @@ done
 
 export MAKE_MODE=unix
 export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\w\033[0m\]$ '
+
 alias clear=clsb
+alias ls='ls --color=auto'
 cd "$HOME"
+

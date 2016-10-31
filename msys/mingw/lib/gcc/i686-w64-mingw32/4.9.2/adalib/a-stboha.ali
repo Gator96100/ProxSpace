@@ -1,0 +1,66 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.strings.bounded.hash%b  a-stboha.adb	cd1a1295 NE OL SU GE
+W ada.strings.bounded%s	a-strbou.adb		a-strbou.ali
+W system%s		system.ads		system.ali
+W system.string_hash%s	s-strhas.adb		s-strhas.ali
+
+U ada.strings.bounded.hash%s  a-stboha.ads	d98cbe15 BN NE OL PR GE
+W ada%s			ada.ads			ada.ali
+W ada.containers%s	a-contai.ads		a-contai.ali
+W ada.strings.bounded%s	a-strbou.adb		a-strbou.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-contai.ads		20101025135030 61e5e089
+D a-string.ads		20070406091342 90ac6797
+D a-strbou.ads		20101008130256 9806fe84
+D a-stboha.ads		20070406091342 206fa018
+D a-stboha.adb		20090622122458 cbe96a19
+D a-strmap.ads		20090409150020 9cb836fb
+D a-strsup.ads		20120309145048 a27dcb33
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-strhas.ads		20090623093900 269cd894
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 7|16r6 20r10 22r10 25r22 8|32r10 35r8 40r5
+X 4 a-contai.ads
+16K13*Containers 24e19 7|16w10 23r12 8|33r10 35r12
+19M9*Hash_Type 7|23r23 8|33r21 37r26
+X 5 a-string.ads
+16K13*Strings 35e16 7|20r14 22r14 25r26 8|32r14 40r9
+X 6 a-strbou.ads
+39K21*Bounded 914e24 7|20r22 22r22 25r34 8|32r22 40r17
+46k12*Generic_Bounded_Length 912e30 7|20r30
+50R12 Bounded_String<10|47R9> 7|22r50[19] 8|32r50[7|19]
+67V16 To_String{string} 8|39s29[7|19]
+X 7 a-stboha.ads
+19K17 Bounded[6|46] 22r42 8|32r42 39r21
+22v30*Hash 6|39k21 7|22>36 25r42 8|32b30 40l25 40t29
+22r36 Key{6|50R12[19]} 8|32b36 39r40
+X 8 a-stboha.adb
+36V13 Hash_Fun[15|56]{4|19M9} 39s11
+X 12 system.ads
+37K9*System 8|30r6 36r29 12|196e11
+X 15 s-strhas.ads
+41K16*String_Hash 8|30w13 36r36 15|60e23
+56v13*Hash 8|36r48
+

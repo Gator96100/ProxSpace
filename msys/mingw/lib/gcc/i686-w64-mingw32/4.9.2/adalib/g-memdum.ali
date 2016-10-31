@@ -1,0 +1,81 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV SPARK_05
+
+U gnat.memory_dump%b	g-memdum.adb		651c554c NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W gnat%s		gnat.ads		gnat.ali
+W gnat.debug_utilities%s  g-debuti.adb		g-debuti.ali
+W gnat.io%s		g-io.adb		g-io.ali
+W system%s		system.ads		system.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+U gnat.memory_dump%s	g-memdum.ads		bc105c66 NE OL PR PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-debuti.ads		20110801150502 0311a7bb
+D g-io.ads		20110801150502 9f0d3ab2
+D g-memdum.ads		20110801150502 1ef220c1
+D g-memdum.adb		20110801150502 6c1283d0
+D system.ads		20121001083726 5fc8ae56
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 7|38r6 71r35
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 7|38w10 71r39
+X 3 gnat.ads
+34K9*GNAT 37e9 6|38r9 54r5 7|35r6 35r32 36r6 36r32 40r14 108r13 117r10 123r5
+X 4 g-debuti.ads
+39K14*Debug_Utilities 81e25 7|36w11 36r37
+45N4*Address_Image_Length 7|59r25
+48A12*Image_String{string}<integer>
+62V13*Image{48A12} 7|80s39
+X 5 g-io.ads
+41K14*IO 91e12 7|35w11 35r37 108r18 117r15
+72U14*Put_Line 7|108s21 117s18
+X 6 g-memdum.ads
+38K14*Memory_Dump 3|34k9 6|54l10 54e21 7|40b19 123l10 123t21
+41U14*Dump 41>20 41>43 7|46b14 121l8 121t12
+41m20 Addr{8|64M9} 7|46b20 50r24
+41i43 Count{natural} 7|46b43 47r24
+X 7 g-memdum.adb
+47i7 Ctr{natural} 74r13 92m10 92r17
+50m7 Adr{8|64M9} 80r46 90r28 91m10 91r17
+53i7 N{natural} 78r13 94r30 95r30 101r39 102m10 102r15 106r13 109m13 115r10
+. 116r39 117r62
+56e7 C{character} 90m10 94r60 95r60 97r13 97r29 98m13 101r45
+59N7 AIL 62r38 82r31 83r26 84r26 94r20 95r20 101r20 116r20 117r43
+62i7 Line_Len{natural} 65r31
+65a7 Line_Buf{string} 82m16 83m16 83r37 84m16 94m10 95m10 101m10 107m13 107r23
+. 108r31 116m10 117r28
+67a7 Hex(character) 94r40 95r40
+69P12 Char_Ptr(character) 71r70
+71V16 To_Char_Ptr[2|20]{69P12} 90s15
+80a16 S{4|48A12} 82r39 82r47
+X 8 system.ads
+37K9*System 6|36w6 41r27 7|32w6 32r35 33r6 33r35 46r27 8|196e11
+64M9*Address 6|41r34 7|46r34 50r13 71r61
+X 9 s-stoele.ads
+42K16*Storage_Elements 7|33w13 33r42 9|117e28
+76V14*"+"{8|64M9} 7|91s21
+

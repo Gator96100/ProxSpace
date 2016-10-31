@@ -1,0 +1,71 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_CALENDAR
+RV NO_DELAY
+RV NO_FIXED_POINT
+RV NO_UNCHECKED_CONVERSION
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.random_seed%b	s-ransee.adb		7d397bc7 OL PK
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+
+U system.random_seed%s	s-ransee.ads		37c064dc EE NE OL PK
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-ransee.ads		20120130115052 01a57b33
+D s-ransee.adb		20120130115052 5d1ae37e
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 8|34r6 34r24 35r6 44r10
+X 2 a-calend.ads
+36K13*Calendar 375e17 8|34w10 34r28
+38I9*Time<200I9> 8|39r19
+44I12*Year_Number{integer}
+45I12*Month_Number{integer}
+46I12*Day_Number{integer}
+50O12*Day_Duration{duration}
+52V13*Clock{38I9} 8|52s22
+74V13*Time_Of{38I9} 8|40s12
+75i7 Year{44I12} 8|40r21
+76i7 Month{45I12} 8|40r35
+77i7 Day{46I12} 8|40r47
+78o7 Seconds{50O12} 8|40r57
+97V14*"-"{duration} 8|52s28
+200I9 Time_Rep<long_long_integer>
+X 3 a-unccon.ads
+20v14*Unchecked_Conversion 8|35w10 44r14
+X 4 interfac.ads
+38K9*Interfaces 179e15 7|42w6 46r29 8|44r46 50r29
+66M9*Unsigned_64 7|46r40 8|44r57 50r40
+X 5 system.ads
+37K9*System 196e11 7|44r9 49r5 8|37r14 55r5
+X 7 s-ransee.ads
+44K16*Random_Seed 5|37k9 7|49l12 49e23 8|37b21 55l12 55t23
+46V13*Get_Seed{4|66M9} 8|50b13 53l8 53t16
+X 8 s-ransee.adb
+39i4 Y2K{2|38I9} 52r30
+43V13 To_U64[3|20]{4|66M9} 52s14
+

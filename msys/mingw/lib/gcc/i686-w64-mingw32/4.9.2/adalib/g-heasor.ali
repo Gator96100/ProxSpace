@@ -1,0 +1,50 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV SPARK_05
+
+U gnat.heap_sort%b	g-heasor.adb		85f00a19 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.heap_sort%s	g-heasor.ads		b4c9f3ab NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-heasor.ads		20110801150502 49e3215a
+D g-heasor.adb		20110801150502 cc132b43
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|49r9 72r5 3|32r14 130r5
+X 2 g-heasor.ads
+49K14*Heap_Sort 1|34k9 2|72l10 72e19 3|32b19 130l10 130t19
+55P9*Xchg_Procedure 55>45 55>50 66r40 3|47r40
+55i45 Op1{natural}
+55i50 Op2{natural}
+59P9*Lt_Function(boolean) 59>41 59>46 66r61 3|47r61
+59i41 Op1{natural}
+59i46 Op2{natural}
+66U14*Sort 66>20 66>33 66>56 3|47b14 128l8 128t12
+66i20 N{natural} 3|47b20 48r24 115r29
+66p33 Xchg{55P9} 3|47b33 91r13 101r16 124r10
+66p56 Lt{59P9} 3|47b56 84r19 100r16
+X 3 g-heasor.adb
+48i7 Max{natural} 83r22 87r25 123r13 124r19 125m10 125r17
+53U17 Sift 53>23 62b17 107l11 107t15 116s10 126s10
+53i23 S{positive} 62b23 63r31 97r21
+63i10 C{positive} 81r20 81r24 91r24 92m13 97r16 98r23 100r28 101r30 102m16
+64i10 Son{positive} 81m13 83r16 84r23 84r28 85m19 85r26 87r19 91r19 92r18
+65i10 Father{positive} 98m13 100r20 101r22 102r21
+115i11 J{integer} 116r16
+

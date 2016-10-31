@@ -1,0 +1,257 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DELAY
+RV NO_DISPATCH
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_RELATIVE_DELAY
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U gnat.expect.tty%b	g-exptty.adb		6aff88cc OL PK
+W ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.expect%s		g-expect.adb		g-expect.ali
+W gnat.os_lib%s		g-os_lib.ads		g-os_lib.ali
+W system%s		system.ads		system.ali
+
+U gnat.expect.tty%s	g-exptty.ads		8dbf1685 EE OL PF PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.expect%s		g-expect.adb		g-expect.ali
+W gnat.tty%s		g-tty.adb		g-tty.ali
+W system%s		system.ads		system.ali
+W system.os_constants%s	s-oscons.ads		s-oscons.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.stream_attributes%s  s-stratt.adb	s-stratt.ali
+L ""
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-caldel.ads		20140120152338 9f20b83d
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D gnat.ads		20110801150502 fd2ad2f1
+D g-expect.ads		20110801150502 8c6f1a8c
+D g-exptty.ads		20111123135124 740d2096
+D g-exptty.adb		20111123105422 4c8d432f
+D g-os_lib.ads		20090409150020 0db74523
+D g-regpat.ads		20110801150502 b85d88ef
+D g-tty.ads		20111123105422 e6a3d7fb
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-oscons.ads		20141221155618 ccb65532
+D s-os_lib.ads		20140225151140 73b554c6
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-regpat.ads		20120410054430 825a9b7f
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stratt.ads		20131014135146 aedef97e
+D s-string.ads		20140225151140 8fe54fb7
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 10 gnat.ads
+34K9*GNAT 37e9 12|32r6 37r9 51r21 131r5 13|32r6 32r23 36r14 101r10 121r7
+. 152r21 155r31 201r10 206r10 309r5
+X 11 g-expect.ads
+126K14*Expect 10|34k9 11|647e16 12|37r14 131r10 13|36r19 201r15 206r15 309r10
+128I9*Process_Id<integer> 13|266r17 290r25
+151R9*Process_Descriptor 631e14 12|45r39 126r39 13|202r13 207r13
+201U14*Send_Signal
+211V13*Get_Input_Fd{24|171I9}
+215V13*Get_Output_Fd{24|171I9}
+219V13*Get_Error_Fd{24|171I9}
+223V13*Get_Pid{128I9}
+260U14*Add_Filter
+271U14*Remove_Filter
+285U14*Lock_Filters
+290U14*Unlock_Filters
+298U14*Send 13|201s22 206s22
+328U14*Expect
+359U14*Expect
+370U14*Expect
+390U14*Expect
+414U14*Expect
+425U14*Expect
+434U14*Expect
+449U14*Expect
+527U14*Flush
+539V13*Expect_Out{string}
+550V13*Expect_Out_Match{string}
+565X4*Invalid_Process 13|247r16
+584R9 Pipe_Type 586e14 12|108r27 109r27 110r27 114r22 115r22 116r22 120r22
+. 121r22 122r22 13|236r27 237r27 238r27 257r22 258r22 259r22 279r22 280r22
+. 281r22
+617i7*Pid{128I9} 13|270m11 295m70
+618i7*Input_Fd{24|171I9} 13|69r24 70r31 155m18 156r42 295m27
+619i7*Output_Fd{24|171I9} 13|73r47 79r24 80r31 156m18 295m41
+620i7*Error_Fd{24|171I9} 13|73r24 74r32 76r31 295m56
+625p7*Buffer{24|70P12} 13|101m39 121m36 163m21
+626i7*Buffer_Size{natural} 13|102m21 120m18 160m18
+X 12 g-exptty.ads
+37K21*TTY 11|126k14 12|93E25 131l17 131e20 13|36b26 309l17 309t20
+45R9*TTY_Process_Descriptor<11|151R9> 11|201p14 211p13 215p13 219p13 223p13
+. 260p14 271p14 285p14 290p14 328p14 359p14 370p14 390p14 414p14 425p14 434p14
+. 449p14 527p14 539p13 550p13 12|50r25 60p14 61r27 69P25 70r29 77p14 78r27
+. 84r27 93P25 94r27 97P25 98r27 100P25 100r56 105P14 106r27 112P14 113r22
+. 118P14 119r22 126c9 129e14 13|46r27 106r52 117r27 129r27 151r25 172r29
+. 217r27 234r27 256r22 278r22 303r27
+49U14*Pseudo_Descriptor 50<7 51>7 52>7 13|150b14 165l8 165t25
+50c7 Descriptor<45R9> 13|151b7 155m7 156m7 156r31 160m7 163m10
+51r7 TTY{16|43R9} 13|152b7 155r56
+52i7 Buffer_Size{natural} 13|153b7 160r33 162r10 163r58
+60U14*Close_Pseudo_Descriptor 61=7 13|116b14 122l8 122t31
+61r7 Descriptor{45R9} 13|117b7 120m7 121m25 121r25
+66U14*Interrupt 66>25 13|139b14 144l8 144t17
+66i25 Pid{integer} 13|139b25 143r17
+69U25*Send<11|298p14> 70=7 71>7 72>7 73>7 13|171b25 210l8 210t12
+70r7 Descriptor{45R9} 13|172b7 195r17 202m33 202r33 207m33 207r33
+71s7 Str{string} 13|173b7 189r17 203r22 208r13
+72b7 Add_LF{boolean} 13|174b7 191r10 203r27 208r18
+73b7 Empty_Buffer{boolean} 13|175b7 203r35 208r26
+77U14*Set_Use_Pipes 78=7 79>7 13|302b14 307l8 307t21
+78r7 Descriptor{45R9} 13|303b7 306m7
+79b7 Use_Pipes{boolean} 13|304b7 306r31
+83U14*Set_Size 84=7 85>7 86>7 13|216b14 227l8 227t16
+84c7 Descriptor<45R9> 13|217b7 224r10 225r20
+85i7 Rows{natural} 13|218b7 225r40
+86i7 Columns{natural} 13|219b7 225r46
+93U25 Close<11|195p14> 94=7 95<7 13|45b25 104l8 104t13 109s7
+94r7 Descriptor{45R9} 13|46b7 65r10 69r13 70r20 73r13 73r36 74r21 76r20 79r13
+. 80r20 88m21 91r29 92r29 95r24 98m24 98r24 99m10 101m28 101r28 102m10
+95i7 Status{integer} 13|47b7 66m10 92m10
+97U25 Close<11|189p14> 98=7 13|106b25 110l8 110t13
+98r7 Descriptor{45R9} 13|106b32 109m14
+100U25 Interrupt<11|207p14> 100=36 13|88s10 128b25 137l8 137t17
+100r36 Descriptor{45R9} 13|129b7 134r10 135r20
+105U14 Set_Up_Communications<11|589p14> 106=7 107>7 108^7 109^7 110^7 13|233b25
+. 249l8 249t29
+106r7 Pid{45R9} 13|234b7 246m20 246r20
+107b7 Err_To_Out{boolean} 13|235b7 240r28
+108p7 Pipe1(11|584R9) 13|236b7 240r40
+109p7 Pipe2(11|584R9) 13|237b7 240r47
+110p7 Pipe3(11|584R9) 13|238b7 240r54
+112U14 Set_Up_Parent_Communications<11|598p14> 113=7 114=7 115=7 116=7 13|277b25
+. 296l8 296t36
+113r7 Pid{45R9} 13|278b7 295r10 295m23 295r23 295m37 295r37 295m52 295r52
+. 295m66 295r66
+114r7 Pipe1{11|584R9} 13|279b7 283r28
+115r7 Pipe2{11|584R9} 13|280b7 283r35
+116r7 Pipe3{11|584R9} 13|281b7 283r42
+118U14 Set_Up_Child_Communications<11|605p14> 119=7 120=7 121=7 122=7 123>7
+. 124>7 13|255b25 271l8 271t35
+119r7 Pid{45R9} 13|256b7 270m7 270r28 270r60
+120r7 Pipe1{11|584R9} 13|257b7 263r28
+121r7 Pipe2{11|584R9} 13|258b7 263r35
+122r7 Pipe3{11|584R9} 13|259b7 263r42
+123s7 Cmd{string} 13|260b7 263r49
+124m7 Args{19|64M9} 13|261b7 270r41
+127m7 Process{19|64M9} 13|65r21 91r40 92r40 95r35 98m35 99m21 134r21 135r31
+. 195r28 224r21 225r31 246m24 270r32 295r14
+128b7 Use_Pipes{boolean} 13|270r64 306m18
+X 13 g-exptty.adb
+38b4 On_Windows{boolean} 94r17
+49U17*Terminate_Process 49>36 50b<c,__gnat_terminate_process>25 91s10
+49m36 Process{19|64M9}
+52V16*Waitpid{integer} 52>25 53b<c,__gnat_waitpid>25 92s20
+52m25 Process{19|64M9}
+56U17*Free_Process 56>31 57b<c,__gnat_free_process>25 98s10
+56m31 Process{19|64M9}
+59U17*Close_TTY 59>28 60b<c,__gnat_close_tty>25 95s13
+59m28 Process{19|64M9}
+107i7 Status{integer} 109m26
+131U17*Internal 131>27 132b<c,__gnat_interrupt_process>25 135s10
+131m27 Process{19|64M9}
+140U17*Internal 140>27 141b<c,__gnat_interrupt_pid>25 143s7
+140i27 Pid{integer}
+177a7 Header{string} 195m37 195r37 203r13
+178i7 Length{natural} 189m7 192m10 192r20 195r45
+179i7 Ret{natural} 195m53 197r10
+181U17*Internal 182>10 183=10 184>10 185<10 186b<c,__gnat_send_header>25
+. 195s7
+182m10 Process{19|64M9}
+183s10 S{string}
+184i10 Length{natural}
+185i10 Ret{natural}
+221U17*Internal 221>27 221>53 221>56 222b<c,__gnat_setup_winsize>25 225s10
+221m27 Process{19|64M9}
+221i53 R{integer}
+221i56 C{integer}
+242V16*Internal{integer} 242>26 243b<c,__gnat_setup_communication>25 246s10
+242m26 Process{19|64M9}
+264V16*Internal{11|128I9} 265>10 265>36 265>59 267b<c,__gnat_setup_child_communication>25
+. 270s18
+265m10 Process{19|64M9}
+265m36 Argv{19|64M9}
+265i59 Use_Pipes{integer}
+285U17*Internal 286>10 287<10 288<10 289<10 290<10 291b<c,__gnat_setup_parent_communication>25
+. 294s7
+286m10 Process{19|64M9}
+287i10 Inputfp{24|171I9}
+288i10 Outputfp{24|171I9}
+289i10 Errorfp{24|171I9}
+290i10 Pid{11|128I9}
+X 14 g-os_lib.ads
+51K14*OS_Lib=51:36 13|32w11 32r28 101r15 121r12
+X 16 g-tty.ads
+41K14*TTY 12|32w11 51r26 13|152r26 155r36 16|73e13
+43R9*TTY_Handle 12|51r30 13|152r30 16|71e14
+63V13*TTY_Descriptor{24|171I9} 13|155s40
+X 19 system.ads
+37K9*System 12|34w6 35r6 39r27 124r15 127r19 13|34w6 34r18 49r46 52r35 56r41
+. 59r38 65r31 99r32 131r37 134r32 182r20 221r37 224r32 242r36 261r15 265r20
+. 265r43 286r21 19|196e11
+64M9*Address 12|124r22 127r26 13|49r53 52r42 56r48 59r45 131r44 182r27 221r44
+. 242r43 261r22 265r27 265r50 286r28
+66m4*Null_Address{64M9} 13|65r38 99r39 134r39 224r39
+78V14*"="{boolean} 13|65r29 134r29 224r29
+X 23 s-oscons.ads
+44K16*OS_Constants 12|35w13 39r34 23|304e24
+165a4*PTY_Library{string} 12|39r47
+X 24 s-os_lib.ads
+70P12*String_Access{36|45P9}
+75U14*Free=75:62 13|101s22 121s19
+171I9*File_Descriptor<integer> 13|287r25 288r25 289r25
+179i4*Invalid_FD{171I9} 13|69r36 74r44 79r37
+284U14*Close 13|70s13 76s13 80s13
+975e4*Directory_Separator{character} 13|38r37
+X 36 s-string.ads
+45P9*String_Access(string)
+

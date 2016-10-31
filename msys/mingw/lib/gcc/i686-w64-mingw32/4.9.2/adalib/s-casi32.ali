@@ -1,0 +1,67 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV SPARK_05
+
+U system.compare_array_signed_32%b  s-casi32.adb  f300babb NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.address_operations%s  s-addope.adb	s-addope.ali
+
+U system.compare_array_signed_32%s  s-casi32.ads  2620662b NE OL PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-addope.ads		20140225151544 130cbe33
+D s-addope.adb		20140225151544 b595c660
+D s-casi32.ads		20090409150020 79e8c87d
+D s-casi32.adb		20090409150020 600f43f3
+X 1 ada.ads
+16K9*Ada 19e8 7|34r6 49r22 50r22
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 7|34w10 49r26 50r26
+X 3 system.ads
+37K9*System 196e11 6|35r9 42r19 43r19 53r5 7|32r6 32r37 36r14 57r19 58r19
+. 116r5
+64M9*Address 6|42r26 43r26 7|49r48 50r48 57r26 58r26 65r11 66r11
+78V14*"="{boolean} 7|72r38
+X 4 s-addope.ads
+45K16*Address_Operations 87e30 7|32w13 32r44
+65V13*AddA{3|64M9} 7|83s18 84s18 100s18 101s18
+69V13*ModA{3|64M9} 7|72s10
+77V13*OrA{3|64M9} 7|72s16
+X 6 s-casi32.ads
+35K16*Compare_Array_Signed_32 3|37k9 6|53l12 53e35 7|36b21 116l12 116t35
+41V13*Compare_Array_S32{integer} 42>7 43>7 44>7 45>7 7|56b13 114l8 114t25
+42m7 Left{3|64M9} 7|57b7 65r22 72r21
+43m7 Right{3|64M9} 7|58b7 66r22 72r27
+44i7 Left_Len{natural} 7|59b7 62r38 107r10 109r13
+45i7 Right_Len{natural} 7|60b7 62r48 107r21 109r24
+X 7 s-casi32.adb
+38I9 Word<integer> 39r8 42r22 46r22
+42I9 Uword<38I9> 43r8 47r22
+46P9 WP(38I9) 49r57
+47P9 UP(42I9) 50r57
+49V13 W[2|20]{46P9} 74s16 74s29 75s19 75s31
+50V13 U[2|20]{47P9} 91s16 91s29 92s19 92s31
+62i7 Clen{natural} 73r16 82m13 82r21 90r16 99m13 99r21
+65m7 L{3|64M9} 74r19 75r22 83m13 83r24 91r19 92r22 100m13 100r24
+66m7 R{3|64M9} 74r32 75r34 84m13 84r24 91r32 92r34 101m13 101r24
+

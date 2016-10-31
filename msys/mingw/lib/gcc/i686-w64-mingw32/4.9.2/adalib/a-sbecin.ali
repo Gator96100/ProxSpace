@@ -1,0 +1,59 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.strings.bounded.equal_case_insensitive%b  a-sbecin.adb  14d516fe NE OL SU GE
+W ada%s			ada.ads			ada.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.bounded%s	a-strbou.adb		a-strbou.ali
+W ada.strings.equal_case_insensitive%s  a-secain.adb  a-secain.ali
+
+U ada.strings.bounded.equal_case_insensitive%s  a-sbecin.ads  ff1105be BN NE OL PR GE
+W ada.strings.bounded%s	a-strbou.adb		a-strbou.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-string.ads		20070406091342 90ac6797
+D a-strbou.ads		20101008130256 9806fe84
+D a-sbecin.ads		20111104105542 6717fb3a
+D a-sbecin.adb		20111104105542 4482ccd3
+D a-secain.ads		20090409150020 37402117
+D a-strmap.ads		20090409150020 9cb836fb
+D a-strsup.ads		20120309145048 a27dcb33
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 6|36r10 38r10 42r22 7|30r6 32r10 37r11 40r5
+X 4 a-string.ads
+16K13*Strings 35e16 6|36r14 38r14 42r26 7|30r10 32r14 37r15 40r9
+X 5 a-strbou.ads
+39K21*Bounded 914e24 6|36r22 38r22 42r34 7|32r22 40r17
+46k12*Generic_Bounded_Length 912e30 6|36r30
+50R12 Bounded_String<10|47R9> 6|39r26[35] 7|33r26[6|35]
+67V16 To_String{string} 7|38s24[6|35] 39s24[6|35]
+X 6 a-sbecin.ads
+35K17 Bounded[5|46] 39r18 7|33r18 38r16 39r16
+38v30*Equal_Case_Insensitive 5|39k21 6|39>4 39>10 42r42 7|32b30 40l25 40t47
+39r4 Left{5|50R12[35]} 7|33b4 38r35
+39r10 Right{5|50R12[35]} 7|33b10 39r35
+X 8 a-secain.ads
+30V22*Equal_Case_Insensitive{boolean} 7|30w18 37s23
+31s4 Left{string} 7|38r7
+31s10 Right{string} 7|39r7
+

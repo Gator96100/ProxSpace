@@ -1,0 +1,130 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV SPARK_05
+
+U ada.wide_text_io.float_io%b  a-wtflio.adb	458d6bea NE OL PK GE
+W ada%s			ada.ads			ada.ali
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+W ada.wide_text_io.float_aux%s  a-wtflau.adb	a-wtflau.ali
+W system%s		system.ads		system.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+W system.wch_wts%s	s-wchwts.adb		s-wchwts.ali
+
+U ada.wide_text_io.float_io%s  a-wtflio.ads	3727ad0c BN NE OL PK GE
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-witeio.ads		20140129155348 551dcbf1
+D a-wtflau.ads		20090409150020 967b2914
+D a-wtflio.ads		20090409150020 623a66fd
+D a-wtflio.adb		20090409150020 19d82963
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+D s-wchwts.ads		20090409150020 b3692fb2
+X 1 ada.ads
+16K9*Ada 19e8 10|45r9 84r5 11|32r6 37r14 39r19 42r24 127r5
+X 8 a-witeio.ads
+52K13*Wide_Text_IO 1|16k9 8|495e21 10|45r13 84r9 11|32r10 37r18 39r23 42r28
+. 127r9
+54P9*File_Type 10|52r15 61r14 11|39r36 49r15 91r14
+75I12*Field{integer} 10|47r19 48r19 49r19 54r15 58r15 63r14 64r14 65r14 69r14
+. 70r14 71r14 81r14 82r14 11|51r15 62r15 93r14 94r14 95r14 103r14 104r14
+. 105r14 114r14 115r14
+123V13*Current_Input{54P9} 11|65s12
+124V13*Current_Output{54P9} 11|108s12
+300X4*Data_Error 11|57r38 83r38
+X 9 a-wtflau.ads
+40K34*Float_Aux 72e31 11|32w23 42r41
+49U14*Get 11|54s11
+54U14*Gets 11|80s11
+59U14*Put 11|98s11
+66U14*Puts 11|120s11
+X 10 a-wtflio.ads
+43F9 Num 48r28 53r19 57r19 62r14 68r14 75r18 80r14 11|50r19 61r19 70r18 92r14
+. 102r14 113r14
+45k26*Float_IO 8|52k13 10|43z9 84l22 84e30 11|37b31 127l22 127t30
+47i4*Default_Fore{8|75I12} 63r23 69r23 11|93r23 103r23
+48i4*Default_Aft{8|75I12} 64r23 70r23 81r23 11|94r23 104r23 114r23
+49i4*Default_Exp{8|75I12} 65r23 71r23 82r23 11|95r23 105r23 115r23
+51U14*Get 52>7 53<7 54>7 11|48b14 58l8 58t11 65s7
+52p7 File{8|54P9} 11|49b7 54r21
+53*7 Item{43F9} 11|50b7 54m45 54r45
+54i7 Width{8|75I12} 11|51b7 54r52
+56U14*Get 57<7 58>7 11|60b14 66l8 66t11
+57*7 Item{43F9} 11|61b7 65m27
+58i7 Width{8|75I12} 11|62b7 65r33
+60U14*Put 61>7 62>7 63>7 64>7 65>7 11|90b14 99l8 99t11 108s7
+61p7 File{8|54P9} 11|91b7 98r21
+62*7 Item{43F9} 11|92b7 98r45
+63i7 Fore{8|75I12} 11|93b7 98r52
+64i7 Aft{8|75I12} 11|94b7 98r58
+65i7 Exp{8|75I12} 11|95b7 98r63
+67U14*Put 68>7 69>7 70>7 71>7 11|101b14 109l8 109t11
+68*7 Item{43F9} 11|102b7 108r28
+69i7 Fore{8|75I12} 11|103b7 108r34
+70i7 Aft{8|75I12} 11|104b7 108r40
+71i7 Exp{8|75I12} 11|105b7 108r45
+73U14*Get 74>7 75<7 76<7 11|68b14 84l8 84t11
+74s7 From{wide_string} 11|69b7 73r53
+75*7 Item{43F9} 11|70b7 80m37 80r37
+76i7 Last{positive} 11|71b7 80m44
+78U14*Put 79<7 80>7 81>7 82>7 11|111b14 125l8 125t11
+79s7 To{wide_string} 11|112b7 117r19 117r31 123m10
+80*7 Item{43F9} 11|113b7 120r37
+81i7 Aft{8|75I12} 11|114b7 120r44
+82i7 Exp{8|75I12} 11|115b7 120r49
+X 11 a-wtflio.adb
+39P12 TFT{8|54P9} 54r16 98r16
+42K12 Aux=42:41 54r7 80r7 98r7 120r7
+73a7 S{string} 80r17
+117a7 S{string} 120m17 122r16 123r55
+122i11 J{integer} 123r14 123r58
+X 14 system.ads
+37K9*System 11|34r6 34r26 35r6 35r26 14|196e11
+X 30 s-wchcon.ads
+41K16*WCh_Con 11|34w13 34r33 30|220e19
+94I9*WC_Encoding_Method<short_short_integer>
+108i4*WCEM_Upper{94I9} 11|73r59
+X 31 s-wchwts.ads
+39K16*WCh_WtS 11|35w13 35r33 31|63e19
+42V13*Wide_String_To_String{string} 11|73s30
+

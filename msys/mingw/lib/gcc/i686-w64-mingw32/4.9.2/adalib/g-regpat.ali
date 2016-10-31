@@ -1,0 +1,37 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.regpat%s		g-regpat.ads		c72dc161 NE OL PR
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.regpat%s	s-regpat.adb		s-regpat.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-regpat.ads		20110801150502 b85d88ef
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-regpat.ads		20120410054430 825a9b7f
+D s-stalib.ads		20140225151140 a891183f
+X 3 gnat.ads
+34K9*GNAT 37e9 4|72r9
+X 4 g-regpat.ads
+72K14*Regpat=72:36
+X 5 system.ads
+37K9*System 4|70r6 72r29 5|196e11
+X 7 s-regpat.ads
+45K16*Regpat 4|70w13 72r36 7|644e18
+

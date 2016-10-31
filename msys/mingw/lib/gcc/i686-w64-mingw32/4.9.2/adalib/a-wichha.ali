@@ -1,0 +1,109 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV SPARK_05
+
+U ada.wide_characters.handling%b  a-wichha.adb	88fa0f3e NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.wide_characters%s	a-widcha.ads		a-widcha.ali
+W ada.wide_characters.unicode%s  a-wichun.adb	a-wichun.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.wide_characters.handling%s  a-wichha.ads	65805d01 BN NE OL PU PK
+W ada.wide_characters%s	a-widcha.ads		a-widcha.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-widcha.ads		20091030133032 a2b85d3d
+D a-wichha.ads		20131014124514 c738003c
+D a-wichha.adb		20140127163508 09171b4c
+D a-wichun.ads		20130104124956 46d5144e
+D system.ads		20121001083726 5fc8ae56
+D s-secsta.ads		20140225151140 86a2856d
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-utf_32.ads		20140225151140 9e89e9cc
+X 1 ada.ads
+16K9*Ada 19e8 4|16r9 127r5 5|32r6 32r39 34r14 68r14 95r14 102r14 118r14 125r14
+. 132r14 139r14 164r14 182r14 195r5
+X 3 a-widcha.ads
+19K13*Wide_Characters 1|16k9 3|21e24 4|16r13 127r9 5|32r10 32r43 34r18 68r18
+. 95r18 102r18 118r18 125r18 132r18 139r18 164r18 182r18 195r9
+X 4 a-wichha.ads
+16K29*Handling 3|19k13 4|127l25 127e33 5|34b34 195l25 195t33
+19V13*Character_Set_Version{string} 20r19 5|40b13 43l8 43t29
+25V13*Is_Control{boolean} 25>25 26r19 5|58b13 61l8 61t18
+25e25 Item{wide_character} 5|58b25 60r28
+30V13*Is_Letter{boolean} 30>24 31r19 5|51s14 94b13
+30e24 Item{wide_character} 5|94b24
+36V13*Is_Lower{boolean} 36>23 37r19 5|108b13 111l8 111t16
+36e23 Item{wide_character} 5|108b23 110r28
+41V13*Is_Upper{boolean} 41>23 42r19 5|154b13 157l8 157t16
+41e23 Item{wide_character} 5|154b23 156r28
+46V13*Is_Digit{boolean} 46>23 47r19 52r14 5|51s39 67b13 85s14
+46e23 Item{wide_character} 5|67b23
+51V13*Is_Decimal_Digit=52:14{boolean}
+51e31 Item{wide_character}
+54V13*Is_Hexadecimal_Digit{boolean} 54>35 5|83b13 88l8 88t28
+54e35 Item{wide_character} 5|83b35 85r24 86r17 87r17
+59V13*Is_Alphanumeric{boolean} 59>30 60r19 5|49b13 52l8 52t23 147s45
+59e30 Item{wide_character} 5|49b30 51r25 51r49
+65V13*Is_Special{boolean} 65>25 66r19 5|145b13 148l8 148t18
+65e25 Item{wide_character} 5|145b25 147r26 147r62
+72V13*Is_Line_Terminator{boolean} 72>33 73r19 5|101b13
+72e33 Item{wide_character} 5|101b33
+78V13*Is_Mark{boolean} 78>22 79r19 5|117b13
+78e22 Item{wide_character} 5|117b22
+83V13*Is_Other_Format{boolean} 83>30 84r19 5|124b13
+83e30 Item{wide_character} 5|124b30
+88V13*Is_Punctuation_Connector{boolean} 88>39 89r19 5|131b13
+88e39 Item{wide_character} 5|131b39
+93V13*Is_Space{boolean} 93>23 94r19 5|138b13
+93e23 Item{wide_character} 5|138b23
+98V13*Is_Graphic{boolean} 98>25 99r19 5|74b13 77l8 77t18 147s14
+98e25 Item{wide_character} 5|74b25 76r34
+103V13*To_Lower{wide_character} 103>23 104r19 5|163b13 171s24
+103e23 Item{wide_character} 5|163b23
+109V13*To_Lower{wide_string} 109>23 5|166b13 175l8 175t16
+109s23 Item{wide_string} 5|166b23 167r29 171r34
+115V13*To_Upper{wide_character} 115>23 116r19 5|181b13 189s24
+115e23 Item{wide_character} 5|181b23
+121V13*To_Upper{wide_string} 121>23 5|184b13 193l8 193t16
+121s23 Item{wide_string} 5|184b23 185r29 189r34
+X 5 a-wichha.adb
+167a7 Result{wide_string} 170r16 171m10 174r14
+170i11 J{integer} 171r18 171r40
+185a7 Result{wide_string} 188r16 189m10 192r14
+188i11 J{integer} 189r18 189r40
+X 6 a-wichun.ads
+39K29*Unicode 5|32w26 32r59 68r34 95r34 102r34 118r34 125r34 132r34 139r34
+. 164r34 182r34 6|197e32
+46E9*Category<11|56E9>
+79V13*Get_Category{46E9} 5|60s14 110s14 156s14
+93V13*Is_Letter{boolean} 5|95r42
+105V13*Is_Digit{boolean} 5|68r42
+112V13*Is_Line_Terminator{boolean} 5|102r42
+120V13*Is_Mark{boolean} 5|118r42
+129V13*Is_Other{boolean} 5|125r42
+138V13*Is_Punctuation{boolean} 5|132r42
+146V13*Is_Space{boolean} 5|139r42
+153V13*Is_Non_Graphic{boolean} 5|76s18
+183V13*To_Lower_Case{wide_character} 5|164r42
+190V13*To_Upper_Case{wide_character} 5|182r42
+X 11 s-utf_32.ads
+57n6*Cc{56E9} 5|60r36
+62n6*Ll{56E9} 5|110r36
+66n6*Lu{56E9} 5|156r36
+

@@ -1,0 +1,29 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV SPARK_05
+
+U system.powten_table%s	s-powtab.ads		0fb8c821 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-powtab.ads		20090409150020 50706677
+X 1 system.ads
+37K9*System 196e11 2|34r9 70r5
+X 2 s-powtab.ads
+34K16*Powten_Table 1|37k9 2|70l12 70e24
+37N4*Maxpow 45r34
+45a4*Powten(long_long_float)
+

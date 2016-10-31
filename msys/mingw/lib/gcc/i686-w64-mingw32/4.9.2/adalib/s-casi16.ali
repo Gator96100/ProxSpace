@@ -1,0 +1,72 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV SPARK_05
+
+U system.compare_array_signed_16%b  s-casi16.adb  3e0d6283 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.address_operations%s  s-addope.adb	s-addope.ali
+
+U system.compare_array_signed_16%s  s-casi16.ads  c2adcf5c NE OL PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-addope.ads		20140225151544 130cbe33
+D s-addope.adb		20140225151544 b595c660
+D s-casi16.ads		20090409150020 9d65610a
+D s-casi16.adb		20090409150020 498f32bc
+X 1 ada.ads
+16K9*Ada 19e8 7|34r6 53r22 54r22 55r22
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 7|34w10 53r26 54r26 55r26
+X 3 system.ads
+37K9*System 196e11 6|35r9 42r19 43r19 53r5 7|32r6 32r37 36r14 62r19 63r19
+. 133r5
+64M9*Address 6|42r26 43r26 7|53r48 54r48 55r48 62r26 63r26 70r11 71r11
+78V14*"="{boolean} 7|77r38 89r38
+X 4 s-addope.ads
+45K16*Address_Operations 87e30 7|32w13 32r44
+65V13*AddA{3|64M9} 7|82s18 83s18 100s18 101s18 117s18 118s18
+69V13*ModA{3|64M9} 7|77s10 89s10
+77V13*OrA{3|64M9} 7|77s16 89s16
+X 6 s-casi16.ads
+35K16*Compare_Array_Signed_16 3|37k9 6|53l12 53e35 7|36b21 133l12 133t35
+41V13*Compare_Array_S16{integer} 42>7 43>7 44>7 45>7 7|61b13 131l8 131t25
+42m7 Left{3|64M9} 7|62b7 70r22 77r21 89r21
+43m7 Right{3|64M9} 7|63b7 71r22 77r27 89r27
+44i7 Left_Len{natural} 7|64b7 67r38 124r10 126r13
+45i7 Right_Len{natural} 7|65b7 67r48 124r21 126r24
+X 7 s-casi16.adb
+38M9 Word 49r22
+41I9 Half<short_integer> 42r8 45r22 50r22
+45I9 Uhalf<41I9> 46r8 51r22
+49P9 WP(38M9) 53r57
+50P9 HP(41I9) 54r57
+51P9 UP(45I9) 55r57
+53V13 W[2|20]{49P9} 79s21 79s33
+54V13 H[2|20]{50P9} 91s16 91s29 92s19 92s31
+55V13 U[2|20]{51P9} 108s16 108s29 109s19 109s31
+67i7 Clen{natural} 78r16 81m13 81r21 90r16 99m13 99r21 107r16 116m13 116r21
+70m7 L{3|64M9} 79r24 82m13 82r24 91r19 92r22 100m13 100r24 108r19 109r22
+. 117m13 117r24
+71m7 R{3|64M9} 79r36 83m13 83r24 91r32 92r34 101m13 101r24 108r32 109r34
+. 118m13 118r24
+

@@ -1,0 +1,34 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U system.byte_swapping%s  s-bytswa.ads		2654da16 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-bytswa.ads		20120712104318 799c7440
+X 1 system.ads
+37K9*System 196e11 2|36r9 53r5
+X 2 s-bytswa.ads
+36K16*Byte_Swapping 1|37k9 2|53l12 53e25
+40M9*U16 44r27 44r39
+41M9*U32 47r27 47r39
+42M9*U64 50r27 50r39
+44V13*Bswap_16{40M9} 44>23 45b30
+44m23 X{40M9}
+47V13*Bswap_32{41M9} 47>23 48b30
+47m23 X{41M9}
+50V13*Bswap_64{42M9} 50>23 51b30
+50m23 X{42M9}
+

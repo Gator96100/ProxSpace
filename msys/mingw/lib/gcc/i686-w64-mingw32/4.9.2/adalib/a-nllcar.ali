@@ -1,0 +1,179 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IMPLICIT_LOOPS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.numerics.long_long_complex_arrays%b  a-nllcar.ads  3b23743c EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.generic_complex_arrays%s
+Z ada.numerics.generic_complex_types%s
+Z ada.numerics.generic_real_arrays%s
+W ada.numerics.long_long_complex_types%s  a-nllcty.ads  a-nllcty.ali
+W ada.numerics.long_long_real_arrays%s  a-nllrar.ads  a-nllrar.ali
+Z system%s		system.ads		system.ali
+W system.exn_llf%s	s-exnllf.adb		s-exnllf.ali
+W system.fat_llf%s	s-fatllf.ads		s-fatllf.ali
+Z system.generic_array_operations%s  s-gearop.adb  s-gearop.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.numerics.long_long_complex_arrays%s  a-nllcar.ads  4c4f2be3 EB EE NE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.generic_complex_arrays%s
+Z ada.numerics.generic_complex_types%s
+Z ada.numerics.generic_real_arrays%s
+W ada.numerics.long_long_complex_types%s  a-nllcty.ads  a-nllcty.ali
+W ada.numerics.long_long_real_arrays%s  a-nllrar.ads  a-nllrar.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-numeri.ads		20080324174808 bb51c45a
+D a-ngcoar.ads		20111013105608 2168fecb
+D a-ngcoar.adb		20121001094122 eaeac13e
+D a-ngcoty.ads		20090409150020 e7845fd0
+D a-ngrear.ads		20120307145340 86992c51
+D a-nllcar.ads		20070406092324 3b23743c
+D a-nllcar.ads		20070406092324 3b23743c
+D a-nllcty.ads		20070406091342 dc2913b4
+D a-nllrar.ads		20080324105732 317c76fa
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-exnllf.ads		20121004090554 81841eef
+D s-fatgen.ads		20140129155348 9267ca45
+D s-fatllf.ads		20090409150020 4d5c1475
+D s-gearop.ads		20111013105608 82346945
+D s-gearop.adb		20121001092146 6679477d
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 9|16r6 17r6 18r6 20r9 21r8
+X 3 a-numeri.ads
+16K13*Numerics 1|16k9 3|32e17 9|16r10 17r10 18r10 20r13 21r12
+X 4 a-ngcoar.ads
+23k22*Generic_Complex_Arrays 281e40 9|16w19 21r21
+28A9*Complex_Vector(6|42R9[10|18])<integer>
+29A9*Complex_Matrix(6|42R9[10|18])<integer><integer>
+X 5 a-ngcoar.adb
+49U14 Back_Substitute[18|46] 18|401i22 415i22 19|99b14[9|20]
+54U14 Forward_Eliminate[18|76] 18|402i22 416i22[9|20] 19|175b14[9|20]
+61U14 Transpose[18|446] 19|810b14[9|20]
+68V13 Length[18|88]{natural} 19|64b13[9|20]
+74V13 Sqrt[18|428]{long_long_float} 18|300i21[9|20] 19|593b13[9|20]
+85V16*"*"[18|211]{4|28A9[9|20]} 19|543b13[9|20]
+93V16*"*"[18|211]{4|28A9[9|20]} 19|543b13[9|20]
+101V16*"*"[18|247]{4|28A9[9|20]} 19|577b13[9|20]
+109V16*"*"[18|247]{4|28A9[9|20]} 19|577b13[9|20]
+117V16*"*"[18|287]{6|42R9[10|18]} 19|354b13[9|20]
+125V16*"*"[18|287]{6|42R9[10|18]} 19|354b13[9|20]
+133V16*"*"[18|287]{6|42R9[10|18]} 19|354b13[9|20]
+141V16*"*"[18|318]{4|29A9[9|20]} 19|778b13[9|20]
+149V16*"*"[18|318]{4|29A9[9|20]} 19|778b13[9|20]
+157V16*"*"[18|318]{4|29A9[9|20]} 19|778b13[9|20]
+165V16*"*"[18|230]{4|29A9[9|20]} 19|525b13[9|20]
+173V16*"*"[18|230]{4|29A9[9|20]} 19|525b13[9|20]
+181V16*"*"[18|266]{4|29A9[9|20]} 19|559b13[9|20]
+189V16*"*"[18|266]{4|29A9[9|20]} 19|559b13[9|20]
+197V16*"*"[18|341]{4|28A9[9|20]} 19|747b13[9|20]
+206V16*"*"[18|341]{4|28A9[9|20]} 19|747b13[9|20]
+215V16*"*"[18|341]{4|28A9[9|20]} 19|747b13[9|20]
+224V16*"*"[18|364]{4|28A9[9|20]} 19|899b13[9|20]
+233V16*"*"[18|364]{4|28A9[9|20]} 19|899b13[9|20]
+242V16*"*"[18|364]{4|28A9[9|20]} 19|899b13[9|20]
+251V16*"*"[18|389]{4|29A9[9|20]} 19|644b13[9|20]
+260V16*"*"[18|389]{4|29A9[9|20]} 19|644b13[9|20]
+269V16*"*"[18|389]{4|29A9[9|20]} 19|644b13[9|20]
+282V16*"+"[18|101]{4|28A9[9|20]} 19|407b13[9|20]
+289V16*"+"[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+298V16*"+"[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+307V16*"+"[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+316V16*"+"[18|114]{4|29A9[9|20]} 19|392b13[9|20]
+323V16*"+"[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+332V16*"+"[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+341V16*"+"[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+354V16*"-"[18|101]{4|28A9[9|20]} 19|407b13[9|20]
+361V16*"-"[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+370V16*"-"[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+379V16*"-"[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+388V16*"-"[18|114]{4|29A9[9|20]} 19|392b13[9|20]
+395V16*"-"[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+404V16*"-"[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+413V16*"-"[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+426V16*"/"[18|211]{4|28A9[9|20]} 19|543b13[9|20]
+434V16*"/"[18|211]{4|28A9[9|20]} 19|543b13[9|20]
+442V16*"/"[18|230]{4|29A9[9|20]} 19|525b13[9|20]
+450V16*"/"[18|230]{4|29A9[9|20]} 19|525b13[9|20]
+462V16*"abs"[18|301]{long_long_float} 19|377b13[9|20]
+471V16*Argument[18|101]{7|43A9[11|18]} 19|407b13[9|20]
+478V16*Argument[18|211]{7|43A9[11|18]} 19|543b13[9|20]
+486V16*Argument[18|114]{7|44A9[11|18]} 19|392b13[9|20]
+493V16*Argument[18|230]{7|44A9[11|18]} 19|525b13[9|20]
+505V16*Compose_From_Cartesian[18|101]{4|28A9[9|20]} 19|407b13[9|20]
+512V16*Compose_From_Cartesian[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+522V16*Compose_From_Cartesian[18|114]{4|29A9[9|20]} 19|392b13[9|20]
+529V16*Compose_From_Cartesian[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+543V16*Compose_From_Polar[18|130]{4|28A9[9|20]} 19|483b13[9|20]
+553V16*Compose_From_Polar[18|150]{4|28A9[9|20]} 19|504b13[9|20]
+564V16*Compose_From_Polar[18|172]{4|29A9[9|20]} 19|420b13[9|20]
+574V16*Compose_From_Polar[18|193]{4|29A9[9|20]} 19|451b13[9|20]
+589V16*Conjugate[18|101]{4|28A9[9|20]} 19|407b13[9|20]
+596V16*Conjugate[18|114]{4|29A9[9|20]} 19|392b13[9|20]
+607V16*Im[18|101]{7|43A9[11|18]} 19|407b13[9|20]
+614V16*Im[18|114]{7|44A9[11|18]} 19|392b13[9|20]
+625V16*Modulus[18|101]{7|43A9[11|18]} 19|407b13[9|20]
+632V16*Modulus[18|114]{7|44A9[11|18]} 19|392b13[9|20]
+643V16*Re[18|101]{7|43A9[11|18]} 19|407b13[9|20]
+650V16*Re[18|114]{7|44A9[11|18]} 19|392b13[9|20]
+661U17*Set_Im[18|458] 19|846b14[9|20]
+668U17*Set_Im[18|470] 19|824b14[9|20]
+679U17*Set_Re[18|458] 19|846b14[9|20]
+686U17*Set_Re[18|470] 19|824b14[9|20]
+697V16*Solve[18|406]{4|28A9[9|20]} 19|678b13[9|20]
+700V16*Solve[18|420]{4|29A9[9|20]} 19|712b13[9|20]
+707V16*Unit_Matrix[18|481]{4|29A9[9|20]} 19|862b13[9|20]
+713V16*Unit_Vector[18|495]{4|28A9[9|20]} 19|883b13[9|20]
+X 6 a-ngcoty.ads
+42R9*Complex
+67V14 "abs"=67:64 18|70i22[4|21] 299i22[4|21]
+84V14 "+"{42R9[4|21]} 18|284i22[4|21] 338i22[4|21] 361i22[4|21] 386i22[4|21]
+85V14 "-"{42R9[4|21]} 18|42i22[4|21] 71i22[4|21]
+86V14 "*"{42R9[4|21]} 18|43i22[4|21] 72i22[4|21] 281i22[4|21] 315i22[4|21]
+. 335i22[4|21] 358i22[4|21] 383i22[4|21]
+87V14 "/"{42R9[4|21]} 18|44i22[4|21] 73i22[4|21]
+112V14 "*"{42R9[4|21]} 18|281i22[4|21] 315i22[4|21] 335i22[4|21] 358i22[4|21]
+. 383i22[4|21]
+113V14 "*"{42R9[4|21]} 18|281i22[4|21] 315i22[4|21] 335i22[4|21] 358i22[4|21]
+. 383i22[4|21]
+X 7 a-ngrear.ads
+43A9*Real_Vector(long_long_float)<integer>
+44A9*Real_Matrix(long_long_float)<integer><integer>
+X 9 a-nllcar.ads
+20K22*Long_Long_Complex_Arrays[4|23] 3|16k13 9|24r14
+X 10 a-nllcty.ads
+18K22*Long_Long_Complex_Types[6|39] 9|18w19 22r45
+X 11 a-nllrar.ads
+18K22*Long_Long_Real_Arrays[7|38] 9|17w19 21r45
+

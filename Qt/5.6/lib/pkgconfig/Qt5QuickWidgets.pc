@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 QuickWidgets
+Description: Qt QuickWidgets module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5QuickWidgetsd 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:\Users\qt\work\qt\qtdeclarative\lib C:\Users\qt\work\qt\qtdeclarative\lib\libQt5Quickd.a C:\Users\qt\work\qt\qtdeclarative\lib\libQt5Qmld.a -LC:/Qt/5.6/mingw49_32\lib C:/Qt/5.6/mingw49_32\lib\libQt5Widgetsd.a C:/Qt/5.6/mingw49_32\lib\libQt5Guid.a C:/Qt/5.6/mingw49_32\lib\libQt5Networkd.a C:/Qt/5.6/mingw49_32\lib\libQt5Cored.a .obj\debug\Qt5QuickWidgetsd_resource_res.o   
+Cflags: -I${includedir}/QtQuickWidgets -I${includedir}
+Requires: Qt5Core Qt5Gui Qt5Qml Qt5Quick Qt5Widgets
+

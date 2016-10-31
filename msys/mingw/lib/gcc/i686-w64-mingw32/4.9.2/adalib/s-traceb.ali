@@ -1,0 +1,57 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fno-optimize-sibling-calls
+A -g
+A -gnatp
+A -gnatg
+A -g
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.traceback%b	s-traceb.adb		ff5c7695 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.traceback%s	s-traceb.ads		77cc310b NE OL PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-traceb.ads		20140225151140 28049f5d
+D s-traceb.adb		20140225151140 d758e9c8
+X 1 system.ads
+37K9*System 196e11 2|42r9 49r21 52r21 52r39 53r21 53r39 81r19 87r5 3|39r14
+. 46r19 62r21 64r21 65r21 71r21 74r21 74r39 75r21 75r39 93r5
+64M9*Address 2|49r28 52r28 53r28 81r26 3|46r26 62r28 64r28 65r28 71r28 74r28
+. 75r28
+66m4*Null_Address{64M9} 2|52r46 53r46 3|74r46 75r46
+X 2 s-traceb.ads
+42K16*Traceback 1|37k9 2|87l12 87e21 3|39b21 93l12 93t21
+48U14*Call_Chain 49>7 50>7 51<7 52>7 53>7 54>7 3|53s7 70b14 91l8 91t18
+49m7 Traceback{1|64M9} 3|71b7 86r40
+50i7 Max_Len{natural} 3|72b7 87r40
+51i7 Len{natural} 3|73b7 86m7
+52m7 Exclude_Min{1|64M9} 3|74b7 88r40
+53m7 Exclude_Max{1|64M9} 3|75b7 89r40
+54i7 Skip_Frames{natural} 3|76b7 90r40
+80V13*C_Call_Chain{natural} 81>7 82>7 84i<c,system__traceback__c_call_chain>22
+. 3|45b13 55l8 55t20
+81m7 Traceback{1|64M9} 3|46b7 53r19
+82i7 Max_Len{natural} 3|47b7 53r30
+X 3 s-traceb.adb
+50i7 Val{natural} 53m39 54r14
+61V13 Backtrace{integer} 62>7 63>7 64>7 65>7 66>7 68b<c,__gnat_backtrace>22
+. 86s14
+62m7 Traceback{1|64M9} 86r25
+63i7 Len{integer} 87r25
+64m7 Exclude_Min{1|64M9} 88r25
+65m7 Exclude_Max{1|64M9} 89r25
+66i7 Skip_Frames{integer} 90r25
+

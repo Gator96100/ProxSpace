@@ -1,0 +1,52 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV SPARK_05
+
+U ada.decimal%b		a-decima.adb		b7a8645e NE OL PK
+W ada%s			ada.ads			ada.ali
+
+U ada.decimal%s		a-decima.ads		168420b6 BN NE OL PU PK
+W ada%s			ada.ads			ada.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-decima.ads		20090409150020 2978aeae
+D a-decima.adb		20090409150020 9ed0caf0
+D system.ads		20121001083726 5fc8ae56
+X 1 ada.ads
+16K9*Ada 19e8 2|36r9 67r5 3|32r14 60r5
+X 2 a-decima.ads
+36K13*Decimal 1|16k9 2|67l9 67e16 3|32b18 60l9 60t16
+44N4*Max_Scale
+45N4*Min_Scale
+47N4*Min_Delta
+48N4*Max_Delta
+50N4*Max_Decimal_Digits
+53D12 Dividend_Type 59r19 3|39r19 49r22
+54D12 Divisor_Type 60r19 3|40r19 50r22
+55D12 Quotient_Type 61r23 3|41r23 51r26
+56D12 Remainder_Type 62r23 3|42r23 52r26
+58u14*Divide 59>7 60>7 61<7 62<7 65r19 3|38b14 58l8 58t14
+59*7 Dividend{53D12} 3|39b7 57r15
+60*7 Divisor{54D12} 3|40b7 57r25
+61*7 Quotient{55D12} 3|41b7 57m34
+62*7 Remainder{56D12} 3|42b7 57m44
+X 3 a-decima.adb
+48U17*Divide 49>10 50>10 51<10 52<10 54b33 57s7
+49*10 Dividend{2|53D12}
+50*10 Divisor{2|54D12}
+51*10 Quotient{2|55D12}
+52*10 Remainder{2|56D12}
+

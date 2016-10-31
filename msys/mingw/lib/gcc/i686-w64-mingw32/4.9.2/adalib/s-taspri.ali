@@ -1,0 +1,72 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.task_primitives%s  s-taspri.ads	1da6a0d9 NE OL PR PK
+W system%s		system.ads		system.ali
+W system.os_interface%s	s-osinte.ads		s-osinte.ali
+W system.win32%s	s-win32.ads		s-win32.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-taspri.ads		20110927094500 196697f7
+D s-win32.ads		20140120152906 b7f96285
+X 4 i-c.ads
+45M9*unsigned_long
+56I9*ptrdiff_t<integer>
+X 6 system.ads
+37K9*System 196e11 11|38r6 39r6 41r9 64r28 79r32 84r35 86r25 98r19 124r5
+64M9*Address 11|64r35
+X 8 s-osinte.ads
+48K16*OS_Interface 361e24 11|38w13 79r39 86r32 98r26
+133R9*CRITICAL_SECTION 359e14 11|79r52 86r45 98r39
+X 11 s-taspri.ads
+41K16*Task_Primitives 6|37k9 11|78E9 124l12 124e27
+44R9*Lock 78c9 82e14
+47R9*RTS_Lock<8|133R9> 86c9 120r19
+52R9*Suspension_Object 88c9 103e14
+55P9*Task_Body_Access
+59R9*Private_Data 105c9 122e14
+64M12*Task_Address{6|64M9}
+70N4*Task_Address_Size
+73N4*Alternate_Stack_Size
+79r7*Mutex{8|133R9}
+80i7*Priority{integer}
+81i7*Owner_Priority{integer}
+84I9 Condition_Variable<12|55I9> 117r20
+89b7*State{boolean}
+95b7*Waiting{boolean}
+98r7*L{8|133R9}
+101i7*CV{12|55I9}
+106i7*Thread{12|55I9}
+114m7*Thread_Id{12|60M9}
+117i7*CV{84I9}
+120r7*L{47R9}
+X 12 s-win32.ads
+39K16*Win32 11|39w13 84r42 101r20 106r24 114r27 12|342e17
+55I9*HANDLE<4|56I9> 11|84r48 101r26 106r30
+60M9*DWORD<4|45M9> 11|114r33
+

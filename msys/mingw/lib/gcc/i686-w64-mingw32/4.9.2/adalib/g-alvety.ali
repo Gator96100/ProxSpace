@@ -1,0 +1,285 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U gnat.altivec.vector_types%s  g-alvety.ads	e93d13e3 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W gnat.altivec%s	g-altive.ads		g-altive.ali
+W gnat.altivec.low_level_vectors%s  g-alleve.adb  g-alleve.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-altive.ads		20110804115738 de0831fa
+D g-alleve.ads		20090409150020 8a2942e2
+D g-alvety.ads		20090409150020 bd1c60fb
+D g-alvevi.ads		20090409150020 35930503
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 4|35r6 37r9 39r8 150r5
+X 2 g-altive.ads
+169K14*Altivec 1|34k9 2|427e17 4|35r11 37r14 39r13 150r10
+272I9*signed_int<integer>
+311I12*c_int{272I9}
+X 3 g-alleve.ads
+39K22*Low_Level_Vectors 525e35 4|35w19 39r21 55r36 56r34 57r32 59r37 60r35
+. 61r33 63r35 64r33 65r31 67r28 68r28
+45R9*LL_VUC<5|58R9> 4|55r54
+46R9*LL_VSC<5|65R9> 4|56r52
+47R9*LL_VBC<5|72R9> 4|57r50
+49R9*LL_VUS<5|85R9> 4|59r55
+50R9*LL_VSS<5|92R9> 4|60r53
+51R9*LL_VBS<5|99R9> 4|61r51
+53R9*LL_VUI<5|112R9> 4|63r53
+54R9*LL_VSI<5|119R9> 4|64r51
+55R9*LL_VBI<5|126R9> 4|65r49
+57R9*LL_VF<5|139R9> 4|67r46
+58R9*LL_VP<5|152R9> 4|68r46
+64V13*abs_v16qi{46R9} 359i<c,__builtin_altivec_abs_v16qi>31
+65V13*abs_v8hi{50R9} 360i<c,__builtin_altivec_abs_v8hi>31
+66V13*abs_v4si{54R9} 361i<c,__builtin_altivec_abs_v4si>31
+67V13*abs_v4sf{57R9} 362i<c,__builtin_altivec_abs_v4sf>31
+69V13*abss_v16qi{46R9} 363i<c,__builtin_altivec_abss_v16qi>31
+70V13*abss_v8hi{50R9} 364i<c,__builtin_altivec_abss_v8hi>31
+71V13*abss_v4si{54R9} 365i<c,__builtin_altivec_abss_v4si>31
+73V13*vaddubm{46R9} 371i<c,__builtin_altivec_vaddubm>31
+74V13*vadduhm{50R9} 373i<c,__builtin_altivec_vadduhm>31
+75V13*vadduwm{54R9} 375i<c,__builtin_altivec_vadduwm>31
+76V13*vaddfp{57R9} 367i<c,__builtin_altivec_vaddfp>31
+78V13*vaddcuw{54R9} 366i<c,__builtin_altivec_vaddcuw>31
+80V13*vaddubs{46R9} 372i<c,__builtin_altivec_vaddubs>31
+81V13*vaddsbs{46R9} 368i<c,__builtin_altivec_vaddsbs>31
+82V13*vadduhs{50R9} 374i<c,__builtin_altivec_vadduhs>31
+83V13*vaddshs{50R9} 369i<c,__builtin_altivec_vaddshs>31
+84V13*vadduws{54R9} 376i<c,__builtin_altivec_vadduws>31
+85V13*vaddsws{54R9} 370i<c,__builtin_altivec_vaddsws>31
+87V13*vand{54R9} 377i<c,__builtin_altivec_vand>31
+88V13*vandc{54R9} 378i<c,__builtin_altivec_vandc>31
+90V13*vavgub{46R9} 382i<c,__builtin_altivec_vavgub>31
+91V13*vavgsb{46R9} 379i<c,__builtin_altivec_vavgsb>31
+92V13*vavguh{50R9} 383i<c,__builtin_altivec_vavguh>31
+93V13*vavgsh{50R9} 380i<c,__builtin_altivec_vavgsh>31
+94V13*vavguw{54R9} 384i<c,__builtin_altivec_vavguw>31
+95V13*vavgsw{54R9} 381i<c,__builtin_altivec_vavgsw>31
+97V13*vcmpbfp{54R9} 387i<c,__builtin_altivec_vcmpbfp>31
+99V13*vcmpequb{46R9} 389i<c,__builtin_altivec_vcmpequb>31
+100V13*vcmpequh{50R9} 390i<c,__builtin_altivec_vcmpequh>31
+101V13*vcmpequw{54R9} 391i<c,__builtin_altivec_vcmpequw>31
+102V13*vcmpeqfp{54R9} 388i<c,__builtin_altivec_vcmpeqfp>31
+104V13*vcmpgefp{54R9} 392i<c,__builtin_altivec_vcmpgefp>31
+106V13*vcmpgtub{46R9} 397i<c,__builtin_altivec_vcmpgtub>31
+107V13*vcmpgtsb{46R9} 394i<c,__builtin_altivec_vcmpgtsb>31
+108V13*vcmpgtuh{50R9} 398i<c,__builtin_altivec_vcmpgtuh>31
+109V13*vcmpgtsh{50R9} 395i<c,__builtin_altivec_vcmpgtsh>31
+110V13*vcmpgtuw{54R9} 399i<c,__builtin_altivec_vcmpgtuw>31
+111V13*vcmpgtsw{54R9} 396i<c,__builtin_altivec_vcmpgtsw>31
+112V13*vcmpgtfp{54R9} 393i<c,__builtin_altivec_vcmpgtfp>31
+114V13*vcfux{57R9} 386i<c,__builtin_altivec_vcfux>31
+115V13*vcfsx{57R9} 385i<c,__builtin_altivec_vcfsx>31
+117V13*vctsxs{54R9} 400i<c,__builtin_altivec_vctsxs>31
+118V13*vctuxs{54R9} 401i<c,__builtin_altivec_vctuxs>31
+120U14*dss 339i<c,__builtin_altivec_dss>31
+121U14*dssall 340i<c,__builtin_altivec_dssall>31
+123U14*dst 341i<c,__builtin_altivec_dst>31
+124U14*dstst 342i<c,__builtin_altivec_dstst>31
+125U14*dststt 343i<c,__builtin_altivec_dststt>31
+126U14*dstt 344i<c,__builtin_altivec_dstt>31
+128V13*vexptefp{57R9} 402i<c,__builtin_altivec_vexptefp>31
+130V13*vrfim{57R9} 457i<c,__builtin_altivec_vrfim>31
+132V13*lvx{54R9} 355i<c,__builtin_altivec_lvx>31
+133V13*lvebx{46R9} 352i<c,__builtin_altivec_lvebx>31
+134V13*lvehx{50R9} 353i<c,__builtin_altivec_lvehx>31
+135V13*lvewx{54R9} 354i<c,__builtin_altivec_lvewx>31
+136V13*lvxl{54R9} 356i<c,__builtin_altivec_lvxl>31
+138V13*vlogefp{57R9} 403i<c,__builtin_altivec_vlogefp>31
+140V13*lvsl{46R9} 357i<c,__builtin_altivec_lvsl>31
+141V13*lvsr{46R9} 358i<c,__builtin_altivec_lvsr>31
+143V13*vmaddfp{57R9} 404i<c,__builtin_altivec_vmaddfp>31
+145V13*vmhaddshs{50R9} 412i<c,__builtin_altivec_vmhaddshs>31
+147V13*vmaxub{46R9} 409i<c,__builtin_altivec_vmaxub>31
+148V13*vmaxsb{46R9} 406i<c,__builtin_altivec_vmaxsb>31
+149V13*vmaxuh{50R9} 410i<c,__builtin_altivec_vmaxuh>31
+150V13*vmaxsh{50R9} 407i<c,__builtin_altivec_vmaxsh>31
+151V13*vmaxuw{54R9} 411i<c,__builtin_altivec_vmaxuw>31
+152V13*vmaxsw{54R9} 408i<c,__builtin_altivec_vmaxsw>31
+153V13*vmaxfp{57R9} 405i<c,__builtin_altivec_vmaxfp>31
+155V13*vmrghb{46R9} 422i<c,__builtin_altivec_vmrghb>31
+156V13*vmrghh{50R9} 423i<c,__builtin_altivec_vmrghh>31
+157V13*vmrghw{54R9} 424i<c,__builtin_altivec_vmrghw>31
+158V13*vmrglb{46R9} 425i<c,__builtin_altivec_vmrglb>31
+159V13*vmrglh{50R9} 426i<c,__builtin_altivec_vmrglh>31
+160V13*vmrglw{54R9} 427i<c,__builtin_altivec_vmrglw>31
+162V13*mfvscr{50R9} 346i<c,__builtin_altivec_mfvscr>31
+164V13*vminfp{57R9} 414i<c,__builtin_altivec_vminfp>31
+165V13*vminsb{46R9} 415i<c,__builtin_altivec_vminsb>31
+166V13*vminsh{50R9} 416i<c,__builtin_altivec_vminsh>31
+167V13*vminsw{54R9} 417i<c,__builtin_altivec_vminsw>31
+168V13*vminub{46R9} 418i<c,__builtin_altivec_vminub>31
+169V13*vminuh{50R9} 419i<c,__builtin_altivec_vminuh>31
+170V13*vminuw{54R9} 420i<c,__builtin_altivec_vminuw>31
+172V13*vmladduhm{50R9} 421i<c,__builtin_altivec_vmladduhm>31
+174V13*vmhraddshs{50R9} 413i<c,__builtin_altivec_vmhraddshs>31
+176V13*vmsumubm{54R9} 431i<c,__builtin_altivec_vmsumubm>31
+177V13*vmsummbm{54R9} 428i<c,__builtin_altivec_vmsummbm>31
+178V13*vmsumuhm{54R9} 432i<c,__builtin_altivec_vmsumuhm>31
+179V13*vmsumshm{54R9} 429i<c,__builtin_altivec_vmsumshm>31
+180V13*vmsumuhs{54R9} 433i<c,__builtin_altivec_vmsumuhs>31
+181V13*vmsumshs{54R9} 430i<c,__builtin_altivec_vmsumshs>31
+183U14*mtvscr 345i<c,__builtin_altivec_mtvscr>31
+185V13*vmuleub{50R9} 436i<c,__builtin_altivec_vmuleub>31
+186V13*vmuleuh{54R9} 437i<c,__builtin_altivec_vmuleuh>31
+187V13*vmulesb{50R9} 434i<c,__builtin_altivec_vmulesb>31
+188V13*vmulesh{54R9} 435i<c,__builtin_altivec_vmulesh>31
+190V13*vmulosb{50R9} 438i<c,__builtin_altivec_vmulosb>31
+191V13*vmulosh{54R9} 439i<c,__builtin_altivec_vmulosh>31
+192V13*vmuloub{50R9} 440i<c,__builtin_altivec_vmuloub>31
+193V13*vmulouh{54R9} 441i<c,__builtin_altivec_vmulouh>31
+195V13*vnmsubfp{57R9} 442i<c,__builtin_altivec_vnmsubfp>31
+197V13*vxor{54R9} 444i<c,__builtin_altivec_vxor>31
+198V13*vnor{54R9} 443i<c,__builtin_altivec_vnor>31
+199V13*vor{54R9} 445i<c,__builtin_altivec_vor>31
+201V13*vpkuhum{46R9} 452i<c,__builtin_altivec_vpkuhum>31
+202V13*vpkuwum{50R9} 454i<c,__builtin_altivec_vpkuwum>31
+203V13*vpkpx{50R9} 447i<c,__builtin_altivec_vpkpx>31
+204V13*vpkuhus{46R9} 453i<c,__builtin_altivec_vpkuhus>31
+205V13*vpkuwus{50R9} 455i<c,__builtin_altivec_vpkuwus>31
+206V13*vpkshss{46R9} 448i<c,__builtin_altivec_vpkshss>31
+207V13*vpkswss{50R9} 450i<c,__builtin_altivec_vpkswss>31
+208V13*vpkshus{46R9} 449i<c,__builtin_altivec_vpkshus>31
+209V13*vpkswus{50R9} 451i<c,__builtin_altivec_vpkswus>31
+211V13*vperm_4si{54R9} 446i<c,__builtin_altivec_vperm_4si>31
+213V13*vrefp{57R9} 456i<c,__builtin_altivec_vrefp>31
+215V13*vrlb{46R9} 461i<c,__builtin_altivec_vrlb>31
+216V13*vrlh{50R9} 462i<c,__builtin_altivec_vrlh>31
+217V13*vrlw{54R9} 463i<c,__builtin_altivec_vrlw>31
+219V13*vrfin{57R9} 458i<c,__builtin_altivec_vrfin>31
+220V13*vrfip{57R9} 459i<c,__builtin_altivec_vrfip>31
+221V13*vrfiz{57R9} 460i<c,__builtin_altivec_vrfiz>31
+223V13*vrsqrtefp{57R9} 464i<c,__builtin_altivec_vrsqrtefp>31
+225V13*vsel_4si{54R9} 465i<c,__builtin_altivec_vsel_4si>31
+227V13*vslb{46R9} 471i<c,__builtin_altivec_vslb>31
+228V13*vslh{50R9} 472i<c,__builtin_altivec_vslh>31
+229V13*vslw{54R9} 474i<c,__builtin_altivec_vslw>31
+231V13*vsldoi_4si{54R9} 466i<c,__builtin_altivec_vsldoi_4si>31
+232V13*vsldoi_8hi{50R9} 467i<c,__builtin_altivec_vsldoi_8hi>31
+233V13*vsldoi_16qi{46R9} 468i<c,__builtin_altivec_vsldoi_16qi>31
+234V13*vsldoi_4sf{57R9} 469i<c,__builtin_altivec_vsldoi_4sf>31
+236V13*vsl{54R9} 470i<c,__builtin_altivec_vsl>31
+237V13*vslo{54R9} 473i<c,__builtin_altivec_vslo>31
+239V13*vspltb{46R9} 475i<c,__builtin_altivec_vspltb>31
+240V13*vsplth{50R9} 476i<c,__builtin_altivec_vsplth>31
+241V13*vspltw{54R9} 480i<c,__builtin_altivec_vspltw>31
+243V13*vspltisb{46R9} 477i<c,__builtin_altivec_vspltisb>31
+244V13*vspltish{50R9} 478i<c,__builtin_altivec_vspltish>31
+245V13*vspltisw{54R9} 479i<c,__builtin_altivec_vspltisw>31
+247V13*vsrb{46R9} 485i<c,__builtin_altivec_vsrb>31
+248V13*vsrh{50R9} 486i<c,__builtin_altivec_vsrh>31
+249V13*vsrw{54R9} 488i<c,__builtin_altivec_vsrw>31
+251V13*vsrab{46R9} 482i<c,__builtin_altivec_vsrab>31
+252V13*vsrah{50R9} 483i<c,__builtin_altivec_vsrah>31
+253V13*vsraw{54R9} 484i<c,__builtin_altivec_vsraw>31
+255V13*vsr{54R9} 481i<c,__builtin_altivec_vsr>31
+256V13*vsro{54R9} 487i<c,__builtin_altivec_vsro>31
+258U14*stvx 350i<c,__builtin_altivec_stvx>31
+259U14*stvebx 347i<c,__builtin_altivec_stvebx>31
+260U14*stvehx 348i<c,__builtin_altivec_stvehx>31
+261U14*stvewx 349i<c,__builtin_altivec_stvewx>31
+262U14*stvxl 351i<c,__builtin_altivec_stvxl>31
+264V13*vsububm{46R9} 494i<c,__builtin_altivec_vsububm>31
+265V13*vsubuhm{50R9} 496i<c,__builtin_altivec_vsubuhm>31
+266V13*vsubuwm{54R9} 498i<c,__builtin_altivec_vsubuwm>31
+267V13*vsubfp{57R9} 490i<c,__builtin_altivec_vsubfp>31
+269V13*vsubcuw{54R9} 489i<c,__builtin_altivec_vsubcuw>31
+271V13*vsububs{46R9} 495i<c,__builtin_altivec_vsububs>31
+272V13*vsubsbs{46R9} 491i<c,__builtin_altivec_vsubsbs>31
+273V13*vsubuhs{50R9} 497i<c,__builtin_altivec_vsubuhs>31
+274V13*vsubshs{50R9} 492i<c,__builtin_altivec_vsubshs>31
+275V13*vsubuws{54R9} 499i<c,__builtin_altivec_vsubuws>31
+276V13*vsubsws{54R9} 493i<c,__builtin_altivec_vsubsws>31
+278V13*vsum4ubs{54R9} 503i<c,__builtin_altivec_vsum4ubs>31
+279V13*vsum4sbs{54R9} 501i<c,__builtin_altivec_vsum4sbs>31
+280V13*vsum4shs{54R9} 502i<c,__builtin_altivec_vsum4shs>31
+282V13*vsum2sws{54R9} 500i<c,__builtin_altivec_vsum2sws>31
+283V13*vsumsws{54R9} 504i<c,__builtin_altivec_vsumsws>31
+285V13*vupkhsb{50R9} 506i<c,__builtin_altivec_vupkhsb>31
+286V13*vupkhsh{54R9} 507i<c,__builtin_altivec_vupkhsh>31
+287V13*vupkhpx{54R9} 505i<c,__builtin_altivec_vupkhpx>31
+289V13*vupklsb{50R9} 509i<c,__builtin_altivec_vupklsb>31
+290V13*vupklsh{54R9} 510i<c,__builtin_altivec_vupklsh>31
+291V13*vupklpx{54R9} 508i<c,__builtin_altivec_vupklpx>31
+293V13*vcmpequb_p{2|311I12} 521i<c,__builtin_altivec_vcmpequb_p>31
+294V13*vcmpequh_p{2|311I12} 520i<c,__builtin_altivec_vcmpequh_p>31
+295V13*vcmpequw_p{2|311I12} 515i<c,__builtin_altivec_vcmpequw_p>31
+296V13*vcmpeqfp_p{2|311I12} 512i<c,__builtin_altivec_vcmpeqfp_p>31
+298V13*vcmpgtub_p{2|311I12} 523i<c,__builtin_altivec_vcmpgtub_p>31
+299V13*vcmpgtuh_p{2|311I12} 518i<c,__builtin_altivec_vcmpgtuh_p>31
+300V13*vcmpgtuw_p{2|311I12} 517i<c,__builtin_altivec_vcmpgtuw_p>31
+301V13*vcmpgtsb_p{2|311I12} 522i<c,__builtin_altivec_vcmpgtsb_p>31
+302V13*vcmpgtsh_p{2|311I12} 519i<c,__builtin_altivec_vcmpgtsh_p>31
+303V13*vcmpgtsw_p{2|311I12} 516i<c,__builtin_altivec_vcmpgtsw_p>31
+304V13*vcmpgtfp_p{2|311I12} 514i<c,__builtin_altivec_vcmpgtfp_p>31
+306V13*vcmpgefp_p{2|311I12} 513i<c,__builtin_altivec_vcmpgefp_p>31
+307V13*vcmpbfp_p{2|311I12} 511i<c,__builtin_altivec_vcmpbfp_p>31
+X 4 g-alvety.ads
+37K22*Vector_Types 2|169k14 4|150l18 150e30
+55R12*vector_unsigned_char{3|45R9} 93r48 117r59 135r19
+56R12*vector_signed_char{3|46R9} 85r27 94r46 116r59 136r19
+57R12*vector_bool_char{3|47R9} 95r44 115r59 137r19
+59R12*vector_unsigned_short{3|49R9} 82r41 97r49 122r15 139r19
+60R12*vector_signed_short{3|50R9} 83r39 86r28 98r47 120r60 140r19
+61R12*vector_bool_short{3|51R9} 99r45 119r60 141r19
+63R12*vector_unsigned_int{3|53R9} 101r47 126r58 143r19
+64R12*vector_signed_int{3|54R9} 87r26 102r45 125r58 144r19
+65R12*vector_bool_int{3|55R9} 103r43 124r58 145r19
+67R12*vector_float{3|57R9} 105r40 128r51 148r18
+68R12*vector_pixel{3|58R9} 106r40 129r51 147r18
+82R12*vector_unsigned_short_int{59R12}
+83R12*vector_signed_short_int{60R12}
+85R12*vector_char{56R12}
+86R12*vector_short{60R12}
+87R12*vector_int{64R12}
+93P9*vector_unsigned_char_ptr(55R12)
+94P9*vector_signed_char_ptr(56R12)
+95P9*vector_bool_char_ptr(57R12)
+97P9*vector_unsigned_short_ptr(59R12)
+98P9*vector_signed_short_ptr(60R12)
+99P9*vector_bool_short_ptr(61R12)
+101P9*vector_unsigned_int_ptr(63R12)
+102P9*vector_signed_int_ptr(64R12)
+103P9*vector_bool_int_ptr(65R12)
+105P9*vector_float_ptr(67R12)
+106P9*vector_pixel_ptr(68R12)
+115P9*const_vector_bool_char_ptr(57R12)
+116P9*const_vector_signed_char_ptr(56R12)
+117P9*const_vector_unsigned_char_ptr(55R12)
+119P9*const_vector_bool_short_ptr(61R12)
+120P9*const_vector_signed_short_ptr(60R12)
+121P9*const_vector_unsigned_short_ptr(59R12)
+124P9*const_vector_bool_int_ptr(65R12)
+125P9*const_vector_signed_int_ptr(64R12)
+126P9*const_vector_unsigned_int_ptr(63R12)
+128P9*const_vector_float_ptr(67R12)
+129P9*const_vector_pixel_ptr(68R12)
+135R12*VUC{55R12}
+136R12*VSC{56R12}
+137R12*VBC{57R12}
+139R12*VUS{59R12}
+140R12*VSS{60R12}
+141R12*VBS{61R12}
+143R12*VUI{63R12}
+144R12*VSI{64R12}
+145R12*VBI{65R12}
+147R12*VP{68R12}
+148R12*VF{67R12}
+

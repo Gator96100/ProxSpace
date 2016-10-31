@@ -1,7 +1,7 @@
 This is libquadmath.info, produced by makeinfo version 4.12 from
-/space/rguenther/gcc-4.7.1/gcc-4.7.1/libquadmath/libquadmath.texi.
+/space/rguenther/gcc-5.3.0/gcc-5.3.0/libquadmath/libquadmath.texi.
 
-Copyright (C) 2010 Free Software Foundation, Inc.
+Copyright (C) 2010-2015 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -24,7 +24,7 @@ END-INFO-DIR-ENTRY
    Published by the Free Software Foundation 51 Franklin Street, Fifth
 Floor Boston, MA 02110-1301 USA
 
-   Copyright (C) 2010 Free Software Foundation, Inc.
+   Copyright (C) 2010-2015 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -106,9 +106,9 @@ defined.
 
 `M_PIq': pi
 
-`M_PI_2q': two pi
+`M_PI_2q': pi divided by two
 
-`M_PI_4q': four pi
+`M_PI_4q': pi divided by four
 
 `M_1_PIq': one over pi
 
@@ -236,7 +236,7 @@ The following mathematical functions are available:
 
 `signbitq': return sign bit
 
-`sincosq': calculate sine and cosine simulataneously
+`sincosq': calculate sine and cosine simultaneously
 
 `sinhq': hyperbolic sine function
 
@@ -912,13 +912,13 @@ reported via `http://gcc.gnu.org/bugs.html'.
 
 
 Tag Table:
-Node: Top1674
-Node: Typedef and constants2408
-Node: Math Library Routines3826
-Node: I/O Library Routines7631
-Node: strtoflt1287956
-Node: quadmath_snprintf8714
-Node: GNU Free Documentation License10922
-Node: Reporting Bugs36088
+Node: Top1684
+Node: Typedef and constants2418
+Node: Math Library Routines3858
+Node: I/O Library Routines7662
+Node: strtoflt1287987
+Node: quadmath_snprintf8745
+Node: GNU Free Documentation License10953
+Node: Reporting Bugs36119
 
 End Tag Table

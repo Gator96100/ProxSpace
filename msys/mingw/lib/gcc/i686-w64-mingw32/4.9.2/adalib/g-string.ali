@@ -1,0 +1,35 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U gnat.strings%s	g-string.ads		b4645806 NE OL PR
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.strings%s	s-string.adb		s-string.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-uncdea.ads		20070406091342 f15a5ed1
+D gnat.ads		20110801150502 fd2ad2f1
+D g-string.ads		20090409150020 c6abc540
+D system.ads		20121001083726 5fc8ae56
+D s-string.ads		20140225151140 8fe54fb7
+X 3 gnat.ads
+34K9*GNAT 37e9 4|38r9
+X 4 g-string.ads
+38K14*Strings=38:37
+X 5 system.ads
+37K9*System 4|36r6 38r30 5|196e11
+X 6 s-string.ads
+42K16*Strings 4|36w13 38r37 6|63e19
+

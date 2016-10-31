@@ -1,0 +1,91 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV SPARK_05
+
+U system.val_enum%b	s-valenu.adb		4b37b589 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.val_util%s	s-valuti.adb		s-valuti.ali
+
+U system.val_enum%s	s-valenu.ads		e4d2ecc3 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-valenu.ads		20090409150020 bb1a4295
+D s-valenu.adb		20121029095828 a566cee4
+D s-valuti.ads		20121029095828 aca0b6fe
+X 1 ada.ads
+16K9*Ada 19e8 5|32r6 58r13 97r13 136r13
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 5|32w10 58r17 97r17 136r17
+X 3 system.ads
+37K9*System 196e11 4|36r9 41r17 64r17 73r17 80r5 5|34r6 34r27 36r14 44r17
+. 58r39 83r17 97r39 122r17 136r39 155r5
+64M9*Address 4|41r24 64r24 73r24 5|44r24 58r46 83r24 97r46 122r24 136r46
+X 4 s-valenu.ads
+36K16*Val_Enum 3|37k9 4|80l12 80e20 5|36b21 155l12 155t20
+39V13*Value_Enumeration_8{natural} 40>7 41>7 42>7 43>7 5|42b13 75l8 75t27
+40s7 Names{string} 5|43b7 66r13
+41m7 Indexes{3|64M9} 5|44b7 60r66
+42i7 Num{natural} 5|45b7 65r21
+43s7 Str{string} 5|46b7 51r19 51r33 74r18
+62V13*Value_Enumeration_16{natural} 63>7 64>7 65>7 66>7 5|81b13 114l8 114t28
+63s7 Names{string} 5|82b7 105r13
+64m7 Indexes{3|64M9} 5|83b7 99r66
+65i7 Num{natural} 5|84b7 104r21
+66s7 Str{string} 5|85b7 90r19 90r33 113r18
+71V13*Value_Enumeration_32{natural} 72>7 73>7 74>7 75>7 5|120b13 153l8 153t28
+72s7 Names{string} 5|121b7 144r13
+73m7 Indexes{3|64M9} 5|122b7 138r66
+74i7 Num{natural} 5|123b7 143r21
+75s7 Str{string} 5|124b7 129r19 129r33 152r18
+X 5 s-valenu.adb
+49i7 F{natural} 63m28 68r50
+50i7 L{natural} 63m31 68r55
+51a7 S{string} 63m25 63r25 68r47
+53I12 Natural_8<short_short_integer> 54r46
+54A12 Index_Table(53I12)<integer> 55r38
+55P12 Index_Table_Ptr(54A12) 58r55 60r27
+57V16 To_Index_Table_Ptr[2|20]{55P12} 60s46
+60p7 IndexesT{55P12} 67r22 68r22
+65i11 J{integer} 67r32 68r32 70r20
+88i7 F{natural} 102m28 107r50
+89i7 L{natural} 102m31 107r55
+90a7 S{string} 102m25 102r25 107r47
+92I12 Natural_16<short_integer> 93r46
+93A12 Index_Table(92I12)<integer> 94r38
+94P12 Index_Table_Ptr(93A12) 97r55 99r27
+96V16 To_Index_Table_Ptr[2|20]{94P12} 99s46
+99p7 IndexesT{94P12} 106r22 107r22
+104i11 J{integer} 106r32 107r32 109r20
+127i7 F{natural} 141m28 146r50
+128i7 L{natural} 141m31 146r55
+129a7 S{string} 141m25 141r25 146r47
+131I12 Natural_32<integer> 132r46
+132A12 Index_Table(131I12)<integer> 133r38
+133P12 Index_Table_Ptr(132A12) 136r55 138r27
+135V16 To_Index_Table_Ptr[2|20]{133P12} 138s46
+138p7 IndexesT{133P12} 145r22 146r22
+143i11 J{integer} 145r32 146r32 148r20
+X 6 s-valuti.ads
+34K16*Val_Util 5|34w13 34r34 6|117e20
+37U14*Bad_Value 5|74s7 113s7 152s7
+41U14*Normalize_String 5|63s7 102s7 141s7
+

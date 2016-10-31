@@ -1,0 +1,36 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+
+U system.exn_lli%b	s-exnlli.adb		dd13bf65 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.exn_lli%s	s-exnlli.ads		de5fd5f9 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-exnlli.ads		20090409150020 81977baf
+D s-exnlli.adb		20090409150020 5c84c4ca
+X 1 system.ads
+37K9*System 196e11 2|34r9 42r5 3|32r14 74r5
+X 2 s-exnlli.ads
+34K16*Exn_LLI 1|37k9 2|42l12 42e19 3|32b21 74l12 74t19
+37V13*Exn_Long_Long_Integer{long_long_integer} 38>7 39>7 3|38b13 72l8 72t29
+38i7 Left{long_long_integer} 3|39b7 47r37
+39i7 Right{natural} 3|40b7 48r27
+X 3 s-exnlli.adb
+46i7 Result{long_long_integer} 62m16 62r26 71r14
+47i7 Factor{long_long_integer} 62r35 67m13 67r23 67r32
+48i7 Exp{natural} 59r10 61r16 65m13 65r20 66r23
+

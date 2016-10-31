@@ -1,4 +1,8 @@
 /* Script for -z combreloc: combine and sort reloc sections */
+/* Copyright (C) 2014 Free Software Foundation, Inc.
+   Copying and distribution of this script, with or without modification,
+   are permitted in any medium without royalty provided the copyright
+   notice and this notice are preserved.  */
 OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm",
 	      "elf32-littlearm")
 OUTPUT_ARCH(arm)
@@ -23,7 +27,7 @@ SECTIONS
       *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
       *(.rel.fini)
       *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
-      *(.rel.data.rel.ro* .rel.gnu.linkonce.d.rel.ro.*)
+      *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
       *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
       *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
       *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
@@ -34,8 +38,6 @@ SECTIONS
       PROVIDE_HIDDEN (__rel_iplt_start = .);
       *(.rel.iplt)
       PROVIDE_HIDDEN (__rel_iplt_end = .);
-      PROVIDE_HIDDEN (__rela_iplt_start = .);
-      PROVIDE_HIDDEN (__rela_iplt_end = .);
     }
   .rela.dyn       :
     {
@@ -50,8 +52,6 @@ SECTIONS
       *(.rela.dtors)
       *(.rela.got)
       *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
-      PROVIDE_HIDDEN (__rel_iplt_start = .);
-      PROVIDE_HIDDEN (__rel_iplt_end = .);
       PROVIDE_HIDDEN (__rela_iplt_start = .);
       *(.rela.iplt)
       PROVIDE_HIDDEN (__rela_iplt_end = .);
@@ -66,13 +66,13 @@ SECTIONS
     }
   .init           :
   {
-    KEEP (*(.init))
-  } =0
+    KEEP (*(SORT_NONE(.init)))
+  }
   .plt            : { *(.plt) }
   .iplt           : { *(.iplt) }
   .text           :
   {
-    *(.text.unlikely .text.*_unlikely)
+    *(.text.unlikely .text.*_unlikely .text.unlikely.*)
     *(.text.exit .text.exit.*)
     *(.text.startup .text.startup.*)
     *(.text.hot .text.hot.*)
@@ -80,11 +80,11 @@ SECTIONS
     /* .gnu.warning sections are handled specially by elf32.em.  */
     *(.gnu.warning)
     *(.glue_7t) *(.glue_7) *(.vfp11_veneer) *(.v4_bx)
-  } =0
+  }
   .fini           :
   {
-    KEEP (*(.fini))
-  } =0
+    KEEP (*(SORT_NONE(.fini)))
+  }
   PROVIDE (__etext = .);
   PROVIDE (_etext = .);
   PROVIDE (etext = .);
@@ -121,14 +121,14 @@ SECTIONS
   {
     PROVIDE_HIDDEN (__init_array_start = .);
     KEEP (*(SORT(.init_array.*)))
-    KEEP (*(.init_array))
+    KEEP (*(.init_array ))
     PROVIDE_HIDDEN (__init_array_end = .);
   }
   .fini_array     :
   {
     PROVIDE_HIDDEN (__fini_array_start = .);
     KEEP (*(SORT(.fini_array.*)))
-    KEEP (*(.fini_array))
+    KEEP (*(.fini_array ))
     PROVIDE_HIDDEN (__fini_array_end = .);
   }
   .ctors          :
@@ -161,7 +161,7 @@ SECTIONS
     KEEP (*(.dtors))
   }
   .jcr            : { KEEP (*(.jcr)) }
-  .data.rel.ro : { *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*) *(.data.rel.ro* .gnu.linkonce.d.rel.ro.*) }
+  .data.rel.ro : { *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*) *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*) }
   .dynamic        : { *(.dynamic) }
   .got            : { *(.got.plt) *(.igot.plt) *(.got) *(.igot) }
   .data           :
@@ -172,6 +172,7 @@ SECTIONS
   }
   .data1          : { *(.data1) }
   _edata = .; PROVIDE (edata = .);
+  . = .;
   __bss_start = .;
   __bss_start__ = .;
   .bss            :
@@ -188,6 +189,7 @@ SECTIONS
   }
   _bss_end__ = . ; __bss_end__ = . ;
   . = ALIGN(32 / 8);
+  . = SEGMENT_START("ldata-segment", .);
   . = ALIGN(32 / 8);
   __end__ = . ;
   _end = .; PROVIDE (end = .);
@@ -214,7 +216,7 @@ SECTIONS
   /* DWARF 2 */
   .debug_info     0 : { *(.debug_info .gnu.linkonce.wi.*) }
   .debug_abbrev   0 : { *(.debug_abbrev) }
-  .debug_line     0 : { *(.debug_line) }
+  .debug_line     0 : { *(.debug_line .debug_line.* .debug_line_end ) }
   .debug_frame    0 : { *(.debug_frame) }
   .debug_str      0 : { *(.debug_str) }
   .debug_loc      0 : { *(.debug_loc) }
@@ -227,6 +229,8 @@ SECTIONS
   /* DWARF 3 */
   .debug_pubtypes 0 : { *(.debug_pubtypes) }
   .debug_ranges   0 : { *(.debug_ranges) }
+  /* DWARF Extension.  */
+  .debug_macro    0 : { *(.debug_macro) }
     .stack         0x80000 :
   {
     _stack = .;

@@ -1,0 +1,83 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U system.val_uns%b	s-valuns.adb		4266b2a8 NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+W system.val_util%s	s-valuti.adb		s-valuti.ali
+
+U system.val_uns%s	s-valuns.ads		1e66d1c2 NE OL PU PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-unstyp.ads		20140225151140 510692af
+D s-valuns.ads		20090409150020 10a8ed3b
+D s-valuns.adb		20121029095828 af687bc2
+D s-valuti.ads		20121029095828 aca0b6fe
+X 1 system.ads
+37K9*System 196e11 3|35r6 37r9 43r29 73r29 80r28 86r5 4|32r6 32r33 33r6 33r33
+. 35r14 299r5
+X 2 s-unstyp.ads
+40K16*Unsigned_Types 208e26 3|35w13 43r36 73r36 80r35 4|32w13 32r40
+45M9*Unsigned 3|43r51 73r51 80r50 4|44r29 49r14 61r14 64r15 76r30 79r31 143r29
+. 143r42 146r30 146r42 239r30 239r42 270r29 290r50 291r11
+X 3 s-valuns.ads
+37K16*Val_Uns 1|37k9 3|86l12 86e19 4|35b21 299l12 299t19
+40V13*Scan_Raw_Unsigned{2|45M9} 41>7 42^7 43>7 4|41b13 261l8 261t25 283s14
+41s7 Str{string} 4|42b7 69r30 87r37 92r19 93r36 124r28 124r50 125r23 155r19
+. 156r43 158r22 160r36 162r22 164r36 208r30 213r19 219r22 220r36 230r31 257r21
+42p7 Ptr(integer) 4|43b7 68r12 93r44 120r7 207r19 214r19 220r44 230r36
+43i7 Max{integer} 4|44b7 85r27 93r49 124r14 206r23 220r49 230r41
+70V13*Scan_Unsigned{2|45M9} 71>7 72^7 73>7 4|267b13 284l8 284t21 294s12
+71s7 Str{string} 4|268b7 276r23 278r10 280r21 283r33
+72p7 Ptr(integer) 4|269b7 276r28 278r15 279r10 283r38
+73i7 Max{integer} 4|270b7 276r33 283r43
+79V13*Value_Unsigned{2|45M9} 80>7 4|290b13 297l8 297t22
+80s7 Str{string} 4|290b29 292r30 294r27 294r42 295r29
+X 4 s-valuns.adb
+46i7 P{integer} 68m7 69r35 70m7 70r12 85r23 87r42 92r24 93m41 93r41 115m16
+. 115r21 120r18 124r10 124r33 124r55 125r28 126m10 126r15 155r24 156r48 158r27
+. 160r41 162r27 164r41 204m16 204r21 206r19 207r30 213r24 214r30 219r27 220m41
+. 220r41
+49m7 Uval{2|45M9} 69m7 101r19 102m19 102r32 104r22 108m19 108r32 110r22 127r18
+. 128m10 172m19 185r22 186m19 186r34 188r22 192m19 192r34 194r22 232r30 244r19
+. 249m16 249r24 259r17
+52i7 Expon{integer} 230m7 232r10 243r27
+55b7 Overflow{boolean} 105m19 111m22 136m13 181m19 189m19 195m22 245m19 256r10
+58e7 Base_Char{character} 125m10 213r29
+61m7 Base{2|45M9} 127m10 135r13 137m13 143r58 143r70 146r58 172r27 180r28
+. 186r27 192r27 239r58 249r31
+64m7 Digit{2|45M9} 87m13 91r16 102r39 108r39 156m19 159m19 163m19 180r19
+. 186r41 192r41
+76N10 Umax 101r27
+79N10 Umax10 104r29 110r29
+143m13 Umax{2|45M9} 185r30
+146m13 UmaxB{2|45M9} 188r29 194r29
+239m13 UmaxB{2|45M9} 244r26
+243i17 J{integer}
+272i7 Start{positive} 276m38 279r21
+291m7 V{2|45M9} 294m7 296r14
+292i7 P{integer} 294m32 294r32 295r34
+X 5 s-valuti.ads
+34K16*Val_Util 4|33w13 33r40 5|117e20
+37U14*Bad_Value 4|208s19 257s10 280s10
+75U14*Scan_Plus_Sign 4|276s7
+83V13*Scan_Exponent{integer} 4|230s16
+99U14*Scan_Trailing_Blanks 4|295s7
+103U14*Scan_Underscore 4|93s19 220s19
+

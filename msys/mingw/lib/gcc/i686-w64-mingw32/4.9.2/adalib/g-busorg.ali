@@ -1,0 +1,42 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.bubble_sort_g%b	g-busorg.adb		7ccea63c NE OL PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.bubble_sort_g%s	g-busorg.ads		0e9523e3 BN NE OL PU PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-busorg.ads		20110801150502 f3bff112
+D g-busorg.adb		20110801150502 8f71572e
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|62r9 72r5 3|32r14 58r5
+X 2 g-busorg.ads
+51U19 Move 51>25 51>41 3|47s16 48s16 49s16
+51i25 From{natural}
+51i41 To{natural}
+57V18 Lt{boolean} 57>22 57>27 3|46s16
+57i22 Op1{natural}
+57i27 Op2{natural}
+62k14*Bubble_Sort_G 1|34k9 2|51z19 57z18 72l10 72e23 3|32b19 58l10 58t23
+65U14*Sort 65>20 3|38b14 56l8 56t12
+65i20 N{natural} 3|38b20 45r24
+X 3 g-busorg.adb
+39b7 Switched{boolean} 43m10 50m16 54r24
+45i14 J{integer} 46r20 46r27 47r22 48r22 48r29 49r25
+

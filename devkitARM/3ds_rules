@@ -1,0 +1,41 @@
+ifeq ($(strip $(DEVKITPRO)),)
+$(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>devkitPro)
+endif
+
+include $(DEVKITARM)/base_rules
+
+PORTLIBS	:=	$(PORTLIBS_PATH)/armv6k $(PORTLIBS_PATH)/3ds
+
+CTRULIB	?=	$(DEVKITPRO)/libctru
+
+ifeq ($(strip $(APP_TITLE)),)
+APP_TITLE	:=	$(notdir $(OUTPUT))
+endif
+
+ifeq ($(strip $(APP_DESCRIPTION)),)
+APP_DESCRIPTION	:=	Built with devkitARM & libctru
+endif
+
+ifeq ($(strip $(APP_AUTHOR)),)
+APP_AUTHOR	:=	Unspecified Author
+endif
+
+ifeq ($(strip $(APP_ICON)),)
+APP_ICON	:=	$(CTRULIB)/default_icon.png
+endif
+
+#---------------------------------------------------------------------------------
+%.smdh: $(APP_ICON) $(MAKEFILE_LIST)
+	@smdhtool --create "$(APP_TITLE)" "$(APP_DESCRIPTION)" "$(APP_AUTHOR)" $(APP_ICON) $@
+	@echo built ... $(notdir $@)
+
+#---------------------------------------------------------------------------------
+%.3dsx: %.elf
+	@3dsxtool $< $@ $(_3DSXFLAGS)
+	@echo built ... $(notdir $@)
+
+#---------------------------------------------------------------------------------
+%.elf:
+	@echo linking $(notdir $@)
+	@$(LD) $(LDFLAGS) $(OFILES) $(LIBPATHS) $(LIBS) -o $@
+	@$(NM) -CSn $@ > $(notdir $*.lst)

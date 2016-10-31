@@ -1,0 +1,43 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.concat_2%b	s-conca2.adb		fd83e873 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.concat_2%s	s-conca2.ads		5d687986 NE OL PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-conca2.ads		20140225151544 02a0d7d0
+D s-conca2.adb		20140225151544 ff233fa3
+X 1 system.ads
+37K9*System 196e11 2|37r9 52r5 3|34r14 73r5
+X 2 s-conca2.ads
+37K16*Concat_2 1|37k9 2|52l12 52e20 3|34b21 73l12 73t20
+39U14*Str_Concat_2 39<28 39>44 39>48 3|42b14 53l8 53t20
+39s28 R{string} 3|42b28 46r12 48m7 51r12 52m7
+39s44 S1{string} 3|42b44 47r16 48r21
+39s48 S2{string} 3|42b48 52r21
+46U14*Str_Concat_Bounds_2 47<7 47<11 48>7 48>11 3|59b14 71l8 71t27
+47i7 Lo{natural} 3|60b7 65m10 68m10
+47i11 Hi{natural} 3|60b11 66m10 69m10
+48s7 S1{string} 3|61b7 64r10 68r16 69r16
+48s11 S2{string} 3|61b11 65r16 66r16 69r26
+X 3 s-conca2.adb
+43i7 F{natural} 46m7 47r12 48r10 50m7 52r10
+43i10 L{natural} 47m7 48r15 50r12 51m7 52r15
+

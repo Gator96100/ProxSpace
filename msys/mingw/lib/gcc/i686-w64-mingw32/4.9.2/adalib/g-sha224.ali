@@ -1,0 +1,88 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_LOOPS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U gnat.sha224%b		g-sha224.ads		3f5bcc43 NE OL PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.secure_hashes%s	g-sechas.adb		g-sechas.ali
+W gnat.secure_hashes.sha2_32%s  g-shsh32.adb	g-shsh32.ali
+W gnat.secure_hashes.sha2_common%s  g-shshco.adb  g-shshco.ali
+W system%s		system.ads		system.ali
+
+U gnat.sha224%s		g-sha224.ads		ebe17881 EB EE OL PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W gnat%s		gnat.ads		gnat.ali
+W gnat.secure_hashes%s	g-sechas.adb		g-sechas.ali
+W gnat.secure_hashes.sha2_32%s  g-shsh32.adb	g-shsh32.ali
+W gnat.secure_hashes.sha2_common%s  g-shshco.adb  g-shshco.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-bytswa.ads		20120712103718 a4d21639
+D g-sechas.ads		20121029104140 0a03db86
+D g-sechas.adb		20121029104140 826faa17
+D g-shsh32.ads		20101220072658 671c9849
+D g-shshco.ads		20091130155116 1144502c
+D g-sha224.ads		20110803101040 3f5bcc43
+D g-sha224.ads		20110803101040 3f5bcc43
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 6 gnat.ads
+34K9*GNAT 37e9 13|39r6 40r6 43r9 43r28 44r22 48r22 49r22 50r22
+X 8 g-sechas.ads
+45K14*Secure_Hashes 209e23 13|39r11 40r11 43r33 44r27 48r27 49r27 50r27
+73M12 Word
+84A12*State(14|63M9)<integer>
+100i7 Block_Words{natural} 13|44r4
+103i7 State_Words{natural} 13|45r4
+106i7 Hash_Words{natural} 13|46r4
+110e7 Hash_Bit_Order{15|88E9} 13|47r4
+114K20 Hash_State 13|48r4
+117a7 Initial_State{84A12[114]} 13|49r4
+120U22 Transform 13|50r4
+126k12*H 207e9 13|43r47
+X 10 g-shsh32.ads
+42K28*SHA2_32 108e31 13|40w25 48r41 49r41 50r41
+46K12*Hash_State[8|82] 13|48r49
+79U14*Transform[11|62] 13|50r49
+88a4*SHA224_Init_State{8|84A12[46]} 13|49r49
+X 11 g-shshco.ads
+42K28*SHA2_Common 66e35 13|39w25 44r41
+44N4*Block_Words 13|44r53
+X 13 g-sha224.ads
+43K14*SHA224[8|126] 6|34k9
+X 14 interfac.ads
+63M9*Unsigned_32
+X 15 system.ads
+37K9*System 13|41w6 47r22 15|196e11
+88n23*High_Order_First{88E9} 13|47r29
+

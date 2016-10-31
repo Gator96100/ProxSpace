@@ -1,0 +1,5 @@
+
+QMAKE_PRO_INPUT = qmltest.pro
+QMAKE_PRL_TARGET = libQt5QuickTestd.a
+QMAKE_PRL_CONFIG = lex yacc debug depend_includepath testcase_targets import_plugins import_qpa_plugin incremental_off qt_build_extra file_copies qt warn_on link_prl debug_and_release precompile_header shared rtti no_plugin_manifest directwrite qpa win32 mingw gcc copy_dir_files precompile_header pcre compile_examples sse2 sse3 ssse3 sse4_1 sse4_2 avx avx2 largefile prefix_build force_independent create_prl link_prl prepare_docs qt_docs_targets no_private_qt_headers_warning QTDIR_build qt_example_installs exceptions_off testcase_exceptions qt_example_installs warning_clean python_available debug DebugBuild Debug build_pass c++11 relative_qt_rpath git_build qmake_cache target_qt c++11 strict_c++ c++14 qt_install_headers need_fwd_pri qt_install_module debug_and_release build_all create_cmake skip_target_version_ext compiler_supports_fpmath create_pc debug DebugBuild Debug build_pass have_target dll no_plist exclusive_builds debug_info no_autoqmake thread console testlib_defines uic opengl moc resources opengl moc resources
+QMAKE_PRL_VERSION = 5.6.1

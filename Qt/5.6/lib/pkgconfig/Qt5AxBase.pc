@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 AxBase
+Description: Qt AxBase module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5AxBased 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:/Qt/5.6/mingw49_32\lib C:/Qt/5.6/mingw49_32\lib\libQt5Widgetsd.a C:/Qt/5.6/mingw49_32\lib\libQt5Guid.a C:/Qt/5.6/mingw49_32\lib\libQt5Cored.a -lole32 -loleaut32 -luser32 -lgdi32 -ladvapi32 -luuid  
+Cflags: -I${includedir}/ActiveQt -I${includedir}
+Requires: Qt5Core Qt5Gui Qt5Widgets
+

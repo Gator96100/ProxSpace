@@ -1,0 +1,35 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.pure_exceptions%s  s-purexc.ads	861aa916 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-purexc.ads		20140225151140 d9d20740
+X 1 system.ads
+37K9*System 196e11 2|38r9 77r5
+X 2 s-purexc.ads
+38K16*Pure_Exceptions 1|37k9 2|71E26 77l12 77e27
+41R9*Exception_Type 59r18 60r18 61r18 62r18 65r35
+59r4*CE{41R9} 71m22 71r22
+60r4*PE{41R9} 72m22 72r22
+61r4*SE{41R9} 73m22 73r22
+62r4*TE{41R9} 74m22 74r22
+65U14*Raise_Exception 65>31 65>51 66b<ada,__gnat_raise_exception>24 67r22
+65r31 E{41R9}
+65s51 Message{string}
+

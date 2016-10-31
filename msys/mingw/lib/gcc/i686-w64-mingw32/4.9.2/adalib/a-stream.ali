@@ -1,0 +1,81 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DISPATCH
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.streams%b		a-stream.adb		1b5643e2 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.io_exceptions%s	a-ioexce.ads		a-ioexce.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+
+U ada.streams%s		a-stream.ads		2564c958 EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-stream.adb		20140122165324 e56e1bc6
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 4|36r9 84r5 5|36r6 38r14 54r16 70r5
+X 3 a-ioexce.ads
+18K13*IO_Exceptions 30e22 5|36w10 54r20
+26X4*End_Error 5|54r34
+X 4 a-stream.ads
+36K13*Streams 1|16k9 4|67E9 84l9 84e16 5|38b18 70l9 70t16
+39H9*Root_Stream_Type 40r41 54p14 55r23 60p14 61r23 67c9 67e64 74r18 78r18
+. 5|45r18 63r18
+42M9*Stream_Element 52r57
+44I9*Stream_Element_Offset<integer> 49r7 49r40 52r14 57r20 5|48r14
+48I12*Stream_Element_Count{44I9}
+51A9*Stream_Element_Array(42M9)<44I9> 56r20 62r16 75r15 79r11 81r8 82r8 5|46r15
+. 64r11
+54x14*Read 55=7 56<7 57<7 5|51R7
+55r7 Stream{39R9}
+56a7 Item{51A9}
+57i7 Last{44I9}
+60x14*Write 61=7 62>7 5|67R7
+61r7 Stream{39R9}
+62a7 Item{51A9}
+73U14 Read_SEA 74^7 75<7 81r38 5|44b14 56l8 56t16
+74p7 S(39R9) 5|45b7 51r13
+75a7 V{51A9} 5|46b7 51m20 53r18
+77U14 Write_SEA 78^7 79>7 82r39 5|62b14 68l8 68t17
+78p7 S(39R9) 5|63b7 67r14
+79a7 V{51A9} 5|64b7 67r21
+X 5 a-stream.adb
+48i7 Last{4|44I9} 51m23 53r10
+

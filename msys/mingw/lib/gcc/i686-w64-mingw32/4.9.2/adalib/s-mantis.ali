@@ -1,0 +1,36 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+
+U system.mantissa%b	s-mantis.adb		0be56155 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.mantissa%s	s-mantis.ads		7526cd03 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-mantis.ads		20090409150020 2aee6355
+D s-mantis.adb		20090409150020 210b0200
+X 1 system.ads
+37K9*System 196e11 2|35r9 42r5 3|32r14 53r5
+X 2 s-mantis.ads
+35K16*Mantissa 1|37k9 2|42l12 42e20 3|32b21 53l12 53t20
+38V13*Mantissa_Value{natural} 38>29 38>36 3|38b13 51l8 51t22
+38i29 First{integer} 3|38b29 41r41
+38i36 Last{integer} 3|38b36 41r56
+X 3 s-mantis.adb
+39i7 Result{natural} 47m10 47r20 50r14
+41i7 Val{integer} 45r13 46m10 46r17
+

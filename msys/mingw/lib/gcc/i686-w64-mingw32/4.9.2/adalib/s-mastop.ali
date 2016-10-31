@@ -1,0 +1,55 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.machine_state_operations%b  s-mastop.adb  b5505412 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.machine_state_operations%s  s-mastop.ads  46b7ea7c NE OL PK
+W system%s		system.ads		system.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-mastop.ads		20140225151140 34bc0e2e
+D s-mastop.adb		20140225151140 81ec5a3c
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 3 system.ads
+37K9*System 196e11 4|38r6 40r9 42r24 48r30 55r41 107r5 5|38r14 85r13 108r5
+64M9*Address 4|42r31 48r37
+66m4*Null_Address{64M9} 5|50r29 68r27 77r14
+X 4 s-mastop.ads
+40K16*Machine_State_Operations 3|37k9 4|107l12 107e36 5|38b21 108l12 108t36
+42M12*Code_Loc{3|64M9} 73r53 87r31 87r48 5|57r31 57r48 75r53
+48M9*Machine_State<3|64M9> 61r43 64r45 73r31 81r29 103r37
+55V13*Machine_State_Length{6|54I9} 5|84b13 88l8 88t28
+61V13*Allocate_Machine_State{48M9} 5|48b13 51l8 51t30
+64U14*Free_Machine_State 64=34 5|66b14 69l8 69t26
+64m34 M{48M9} 5|66b34 68m7
+73V13*Get_Code_Loc{42M12} 73>27 5|75b13 78l8 78t20
+73m27 M{48M9} 5|75b27
+81U14*Pop_Frame 81>25 5|94b14 97l8 97t17
+81m25 M{48M9} 5|94b25
+87V13*Fetch_Code{42M12} 87>25 5|57b13 60l8 60t18
+87m25 Loc{42M12} 5|57b25 59r14
+103U14*Set_Machine_State 103>33 5|103b14 106l8 106t25
+103m33 M{48M9} 5|103b33
+X 6 s-stoele.ads
+42K16*Storage_Elements 4|38w13 55r48 5|85r20 6|117e28
+54I9*Storage_Offset<integer> 4|55r65 5|85r37
+

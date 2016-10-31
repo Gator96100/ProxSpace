@@ -1,0 +1,83 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV SPARK_05
+
+U system.compare_array_signed_8%b  s-carsi8.adb	0a22a7a9 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.address_operations%s  s-addope.adb	s-addope.ali
+
+U system.compare_array_signed_8%s  s-carsi8.ads	a095283b NE OL PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-addope.ads		20140225151544 130cbe33
+D s-addope.adb		20140225151544 b595c660
+D s-carsi8.ads		20090409150020 ff5d866d
+D s-carsi8.adb		20090409150020 1f9810f1
+X 1 ada.ads
+16K9*Ada 19e8 7|34r6 56r6 59r6
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 7|34w10 56r10 59r10
+X 3 system.ads
+37K9*System 196e11 6|35r9 42r19 43r19 54r19 55r19 62r5 7|32r6 32r37 36r14
+. 56r32 59r32 66r19 67r19 113r19 114r19 143r5
+64M9*Address 6|42r26 43r26 54r26 55r26 7|56r39 59r39 66r26 67r26 94r39 95r39
+. 101r33 102r33 113r26 114r26
+78V14*"="{boolean} 7|76r38
+X 4 s-addope.ads
+45K16*Address_Operations 87e30 7|32w13 32r44
+65V13*AddA{3|64M9} 7|94s26 95s26 101s20 102s20
+69V13*ModA{3|64M9} 7|76s10
+77V13*OrA{3|64M9} 7|76s16
+X 6 s-carsi8.ads
+35K16*Compare_Array_Signed_8 3|37k9 6|62l12 62e34 7|36b21 143l12 143t34
+41V13*Compare_Array_S8{integer} 42>7 43>7 44>7 45>7 7|65b13 106l8 106t24
+42m7 Left{3|64M9} 7|66b7 76r21 77r45 84r52 94r32 101r26
+43m7 Right{3|64M9} 7|67b7 76r27 77r51 86r52 95r32 102r26
+44i7 Left_Len{natural} 7|68b7 71r54 77r58 103r20
+45i7 Right_Len{natural} 7|69b7 71r64 77r68 104r20
+53V13*Compare_Array_S8_Unaligned{integer} 54>7 55>7 56>7 57>7 7|77s17 93s23
+. 100s17 112b13 141l8 141t34
+54m7 Left{3|64M9} 7|113b7 120r56
+55m7 Right{3|64M9} 7|114b7 121r56
+56i7 Left_Len{natural} 7|115b7 118r54 134r10 136r13
+57i7 Right_Len{natural} 7|116b7 118r64 134r21 136r24
+X 7 s-carsi8.adb
+38M9 Word 41r41
+41A9 Big_Words(38M9)<integer> 42r33
+42P9 Big_Words_Ptr(41A9) 43r8 56r48 83r45 85r45
+46I9 Byte<short_short_integer> 47r8 50r41
+50A9 Big_Bytes(46I9)<integer> 51r33
+51P9 Big_Bytes_Ptr(50A9) 52r8 59r48 120r25 121r25
+55V13 To_Big_Words[2|20]{42P9} 84s38 86s38
+58V13 To_Big_Bytes[2|20]{51P9} 120s42 121s42
+71i7 Compare_Len{natural} 76r51 87r56
+83p10 LeftP{42P9} 92r16
+85p10 RightP{42P9} 92r29
+87i10 Words_To_Compare{natural} 88r56 91r24
+88i10 Bytes_Compared_As_Words{natural} 101r42 102r42 103r32 104r32
+91i14 J{integer} 92r23 92r37 94r52 95r52
+118i7 Compare_Len{natural} 124r21
+120p7 LeftP{51P9} 125r13 126r16
+121p7 RightP{51P9} 125r26 126r28
+124i11 J{integer} 125r20 125r34 126r23 126r36
+

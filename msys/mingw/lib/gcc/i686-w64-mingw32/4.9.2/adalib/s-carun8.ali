@@ -1,0 +1,84 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.compare_array_unsigned_8%b  s-carun8.adb  5b9edcc4 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.address_operations%s  s-addope.adb	s-addope.ali
+
+U system.compare_array_unsigned_8%s  s-carun8.ads  f6cbdfdb NE OL PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-addope.ads		20140225151544 130cbe33
+D s-addope.adb		20140225151544 b595c660
+D s-carun8.ads		20140225151544 a903718d
+D s-carun8.adb		20140225151544 187a9c7c
+X 1 ada.ads
+16K9*Ada 19e8 7|36r6 57r6 60r6
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 7|36w10 57r10 60r10
+X 3 system.ads
+37K9*System 196e11 6|37r9 44r19 45r19 56r19 57r19 64r5 7|34r6 34r37 38r14
+. 57r32 60r32 67r19 68r19 114r19 115r19 144r5
+64M9*Address 6|44r26 45r26 56r26 57r26 7|57r39 60r39 67r26 68r26 95r39 96r39
+. 102r33 103r33 114r26 115r26
+78V14*"="{boolean} 7|77r39
+X 4 s-addope.ads
+45K16*Address_Operations 87e30 7|34w13 34r44
+65V13*AddA{3|64M9} 7|95s26 96s26 102s20 103s20
+69V13*ModA{3|64M9} 7|77s11
+77V13*OrA{3|64M9} 7|77s17
+X 6 s-carun8.ads
+37K16*Compare_Array_Unsigned_8 3|37k9 6|64l12 64e36 7|38b21 144l12 144t36
+43V13*Compare_Array_U8{integer} 44>7 45>7 46>7 47>7 7|66b13 107l8 107t24
+44m7 Left{3|64M9} 7|67b7 77r22 78r45 85r52 95r32 102r26
+45m7 Right{3|64M9} 7|68b7 77r28 78r51 87r52 96r32 103r26
+46i7 Left_Len{natural} 7|69b7 72r54 78r58 104r20
+47i7 Right_Len{natural} 7|70b7 72r64 78r68 105r20
+55V13*Compare_Array_U8_Unaligned{integer} 56>7 57>7 58>7 59>7 7|78s17 94s23
+. 101s17 113b13 142l8 142t34
+56m7 Left{3|64M9} 7|114b7 121r56
+57m7 Right{3|64M9} 7|115b7 122r56
+58i7 Left_Len{natural} 7|116b7 119r54 135r10 137r13
+59i7 Right_Len{natural} 7|117b7 119r64 135r21 137r24
+X 7 s-carun8.adb
+40M9 Word 43r41
+43A9 Big_Words(40M9)<integer> 44r33
+44P9 Big_Words_Ptr(43A9) 45r8 57r48 84r45 86r45
+48M9 Byte 51r41
+51A9 Big_Bytes(48M9)<integer> 52r33
+52P9 Big_Bytes_Ptr(51A9) 53r8 60r48 121r25 122r25
+56V13 To_Big_Words[2|20]{44P9} 85s38 87s38
+59V13 To_Big_Bytes[2|20]{52P9} 121s42 122s42
+72i7 Compare_Len{natural} 77r53 88r56
+84p10 LeftP{44P9} 93r16
+86p10 RightP{44P9} 93r29
+88i10 Words_To_Compare{natural} 89r56 92r24
+89i10 Bytes_Compared_As_Words{natural} 102r42 103r42 104r32 105r32
+92i14 J{integer} 93r23 93r37 95r52 96r52
+119i7 Compare_Len{natural} 125r21
+121p7 LeftP{52P9} 126r13 127r16
+122p7 RightP{52P9} 126r26 127r28
+125i11 J{integer} 126r20 126r34 127r23 127r36
+

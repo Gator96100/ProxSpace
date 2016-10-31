@@ -1,0 +1,46 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_PROTECTED_TYPES
+RV STATIC_PRIORITIES
+RV SPARK_05
+RV MAX_PROTECTED_ENTRIES=2
+
+U gnat.bounded_mailboxes%s  g-boumai.ads	e32b6785 NE OL PR PK GE
+W gnat%s		gnat.ads		gnat.ali
+W gnat.bounded_buffers%s
+W system%s		system.ads		system.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-boubuf.ads		20110801150502 4c4d866b
+D g-boumai.ads		20110801150502 0d849d49
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 3|44r6 51r9 55r11 96r5
+X 2 g-boubuf.ads
+46k14*Bounded_Buffers 101e25 3|44w11 55r16
+53i4 Default_Ceiling{4|98I12} 3|93r63[54]
+56W19 Bounded_Buffer 3|57r37[54]
+X 3 g-boumai.ads
+47+9 Message 48r41
+48P9 Message_Reference(47+9) 55r33
+51k14*Bounded_Mailboxes 1|34k9 3|47z9 48z9 96l10 96e27
+54K12*Message_Refs[2|46] 57r24 93r50
+57W9*Mailbox<2|56W19[54]>
+93i4*Default_Ceiling{4|98I12}
+X 4 system.ads
+37K9*System 3|43w6 93r31 4|196e11
+97I12*Any_Priority{integer}
+98I12*Priority{97I12} 3|93r38
+

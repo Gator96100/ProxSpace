@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 MultimediaWidgets
+Description: Qt MultimediaWidgets module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5MultimediaWidgetsd 
+Libs.private: -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:\Users\qt\work\qt\qtmultimedia\lib C:\Users\qt\work\qt\qtmultimedia\lib\libQt5Multimediad.a -LC:/Qt/5.6/mingw49_32\lib C:/Qt/5.6/mingw49_32\lib\libQt5Widgetsd.a C:/Qt/5.6/mingw49_32\lib\libQt5Guid.a C:/Qt/5.6/mingw49_32\lib\libQt5Networkd.a C:/Qt/5.6/mingw49_32\lib\libQt5Cored.a .obj\debug\Qt5MultimediaWidgetsd_resource_res.o C:/Qt/5.6/mingw49_32\lib\libQt5OpenGLd.a C:/Qt/5.6/mingw49_32\lib\libQt5Widgetsd.a C:/Qt/5.6/mingw49_32\lib\libQt5Guid.a C:/Qt/5.6/mingw49_32\lib\libQt5Cored.a  
+Cflags: -I${includedir}/QtMultimediaWidgets -I${includedir}
+Requires: Qt5Core Qt5Gui Qt5Multimedia Qt5Widgets
+

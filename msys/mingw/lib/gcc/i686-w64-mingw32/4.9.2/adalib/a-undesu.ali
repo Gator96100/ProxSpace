@@ -1,0 +1,67 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.unchecked_deallocate_subpool%b  a-undesu.adb  e3d1c75f NE OL PU SU
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+W system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+W system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+W system.storage_pools.subpools.finalization%s  s-spsufi.adb  s-spsufi.ali
+
+U ada.unchecked_deallocate_subpool%s  a-undesu.ads  46252ac3 NE OL SU
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+W system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+W system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-undesu.ads		20110829122150 8632051e
+D a-undesu.adb		20110829122150 f3810922
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-spsufi.ads		20140225151140 69896aa6
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 7|18r11 8|38r11 43r5
+X 7 a-undesu.ads
+18U15*Unchecked_Deallocate_Subpool 1|16k9 7|19=4 8|38b15 43l9 43t37
+19p4 Subpool{20|54P9} 8|39b4 42m29
+X 9 system.ads
+37K9*System 7|16r6 19r21 8|32r6 33r6 35r5 36r5 39r21 9|196e11
+X 19 s-stopoo.ads
+39K16*Storage_Pools 7|16r13 19r28 8|32r13 33r13 35r12 36r12 39r28 19|100e25
+X 20 s-stposu.ads
+40K30*Subpools 7|16w27 19r42 8|32w27 33r27 35r26 36r26 39r42 20|358e34
+54P9*Subpool_Handle(50R9) 7|19r51 8|39r51
+X 21 s-spsufi.ads
+34K39*Finalization 8|33w36 36r35 21|48e47
+41U14*Finalize_And_Deallocate 8|42s4
+

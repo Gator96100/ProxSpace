@@ -1,0 +1,43 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.exceptions%b	s-except.adb		9e373b74 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.exceptions%s	s-except.ads		67d608f4 EE OL PR PK
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-except.ads		20140225151140 381ea6a2
+D s-except.adb		20130104124956 a6299dd6
+D s-stalib.ads		20140225151140 a891183f
+X 3 system.ads
+37K9*System 196e11 5|34r9 59r41 66r5 6|43r14 45r5
+142b4 ZCX_By_Default{boolean} 5|59r48
+X 5 s-except.ads
+34K16*Exceptions 3|37k9 5|44E9 66l12 66e22 6|43b21 45l12 45t22
+39b4*ZCX_By_Default{boolean} 59c4
+44I9 Require_Body 6|44c9
+61X4 Foreign_Exception 62r25
+

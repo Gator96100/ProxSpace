@@ -1,0 +1,5 @@
+#!/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/bin/python2.7.exe
+
+import pydoc
+if __name__ == '__main__':
+    pydoc.cli()

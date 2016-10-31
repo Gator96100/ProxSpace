@@ -1,0 +1,51 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.stack_checking%b  s-stache.adb		41837d1e NE OL PK
+W system%s		system.ads		system.ali
+
+U system.stack_checking%s  s-stache.ads		d177c5be EB NE OL PR PK
+W system%s		system.ads		system.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-stache.ads		20140225151140 a37c21ec
+D s-stache.adb		20140225151140 e2ff5cf2
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 3 system.ads
+37K9*System 196e11 4|40r6 42r9 51r15 51r33 52r15 52r33 53r15 73r16 74r16
+. 82r5 5|37r14 38r5
+64M9*Address 4|51r22 52r22
+66m4*Null_Address{64M9} 4|51r40 52r40 73r23 74r23
+X 4 s-stache.ads
+42K16*Stack_Checking 3|37k9 4|72E4 82l12 82e26 5|37b21 38l12 38t26
+50R9*Stack_Info 54e14 60r36 72r31
+51m7*Limit{3|64M9} 73m7
+52m7*Base{3|64M9} 74m7
+53i7*Size{6|54I9} 75m7
+60P9*Stack_Access(50R9) 78r26
+68b4*Multi_Processor{boolean}
+72r4 Null_Stack_Info{50R9} 78m42 78r42
+78p4 Null_Stack{60P9}
+X 6 s-stoele.ads
+42K16*Storage_Elements 4|40w13 53r22 6|117e28
+54I9*Storage_Offset<integer> 4|53r39
+

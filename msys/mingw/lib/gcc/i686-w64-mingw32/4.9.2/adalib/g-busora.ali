@@ -1,0 +1,45 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV SPARK_05
+
+U gnat.bubble_sort_a%b	g-busora.adb		a657c6fc NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.bubble_sort_a%s	g-busora.ads		d5290041 NE OL PR PK
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-busora.ads		20110801150502 2803d2b0
+D g-busora.adb		20110801150502 8e54144c
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|39r9 63r5 3|32r14 58r5
+X 2 g-busora.ads
+39K14*Bubble_Sort_A 1|34k9 2|63l10 63e23 3|32b19 58l10 58t23
+46P9*Move_Procedure 46>45 46>61 56r40 3|38r40
+46i45 From{natural}
+46i61 To{natural}
+51P9*Lt_Function(boolean) 51>41 51>46 56r61 3|38r61
+51i41 Op1{natural}
+51i46 Op2{natural}
+56U14*Sort 56>20 56>33 56>56 3|38b14 56l8 56t12
+56i20 N{natural} 3|38b20 45r24
+56p33 Move{46P9} 3|38b33 47r16 48r16 49r16
+56p56 Lt{51P9} 3|38b56 46r16
+X 3 g-busora.adb
+39b7 Switched{boolean} 43m10 50m16 54r24
+45i14 J{integer} 46r20 46r27 47r22 48r22 48r29 49r25
+

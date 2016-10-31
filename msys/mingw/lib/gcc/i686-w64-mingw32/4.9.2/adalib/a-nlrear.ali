@@ -1,0 +1,122 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_IMPLICIT_LOOPS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.numerics.long_real_arrays%b  a-nlrear.ads	c63596b4 EE OL PU PK
+W ada%s			ada.ads			ada.ali
+Z ada.containers%s	a-contai.ads		a-contai.ali
+Z ada.containers.generic_anonymous_array_sort%s
+Z ada.containers.generic_sort%s
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.generic_real_arrays%s
+Z system%s		system.ads		system.ali
+W system.exn_llf%s	s-exnllf.adb		s-exnllf.ali
+W system.fat_lflt%s	s-fatlfl.ads		s-fatlfl.ali
+Z system.generic_array_operations%s  s-gearop.adb  s-gearop.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.numerics.long_real_arrays%s  a-nlrear.ads	fbfd7ebf EB EE NE OL PU PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.generic_real_arrays%s
+
+D ada.ads		20070406091342 3ffc8e18
+D a-contai.ads		20101025135030 61e5e089
+D a-cgaaso.ads		20101021101406 0179e0e0
+D a-cgaaso.adb		20111104134502 a55922a1
+D a-cogeso.ads		20111104134502 fb85939d
+D a-cogeso.adb		20111104134502 6cb00bfe
+D a-except.ads		20140129161954 f86a4103
+D a-numeri.ads		20080324174808 bb51c45a
+D a-ngrear.ads		20120307145340 86992c51
+D a-ngrear.adb		20120307144552 05e4fe6d
+D a-nlrear.ads		20080324105732 c63596b4
+D a-nlrear.ads		20080324105732 c63596b4
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-exnllf.ads		20121004090554 81841eef
+D s-fatgen.ads		20140129155348 9267ca45
+D s-fatlfl.ads		20090409150020 378cba9f
+D s-gearop.ads		20111013105608 82346945
+D s-gearop.adb		20121001092146 6679477d
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 12|16r6 18r9 19r8
+X 3 a-cgaaso.ads
+39u26*Generic_Anonymous_Array_Sort 2|16k13
+X 4 a-cgaaso.adb
+40U14 Sort[5|39] 6|34b26[10|729[12|18]]
+X 5 a-cogeso.ads
+39u26*Generic_Sort 2|16k13
+X 8 a-numeri.ads
+16K13*Numerics 1|16k9 8|32e17 12|16r10 18r13 19r12
+X 9 a-ngrear.ads
+38k22*Generic_Real_Arrays 142e37 12|16w19 19r21
+43A9*Real_Vector(long_float)<integer>
+44A9*Real_Matrix(long_float)<integer><integer>
+X 10 a-ngrear.adb
+50U14 Back_Substitute[19|46] 19|401i22 415i22[12|18] 20|99b14[12|18]
+55V13 Diagonal[19|56]{9|43A9[12|18]} 20|50b13[12|18]
+60U14 Forward_Eliminate[19|76] 19|402i22 416i22[12|18] 20|175b14[12|18]
+67U14 Swap_Column[19|437] 20|796b14[12|18]
+71U14 Transpose[19|446] 20|810b14[12|18]
+91V13 Length[19|88]{natural} 20|64b13[12|18]
+106V13 Sqrt[19|428]{long_float} 19|300i21[12|18] 20|593b13[12|18]
+139V16*"+"[19|101]{9|43A9[12|18]} 20|407b13[12|18]
+147V16*"+"[19|114]{9|44A9[12|18]} 20|392b13[12|18]
+155V16*"+"[19|130]{9|43A9[12|18]} 20|483b13[12|18]
+165V16*"+"[19|172]{9|44A9[12|18]} 20|420b13[12|18]
+175V16*"-"[19|101]{9|43A9[12|18]} 20|407b13[12|18]
+183V16*"-"[19|114]{9|44A9[12|18]} 20|392b13[12|18]
+191V16*"-"[19|130]{9|43A9[12|18]} 20|483b13[12|18]
+201V16*"-"[19|172]{9|44A9[12|18]} 20|420b13[12|18]
+211V16*"*"[19|247]{9|43A9[12|18]} 20|577b13[12|18]
+220V16*"*"[19|266]{9|44A9[12|18]} 20|559b13[12|18]
+229V16*"*"[19|211]{9|43A9[12|18]} 20|543b13[12|18]
+238V16*"*"[19|230]{9|44A9[12|18]} 20|525b13[12|18]
+247V16*"*"[19|318]{9|44A9[12|18]} 20|778b13[12|18]
+256V16*"*"[19|287]{long_float} 20|354b13[12|18]
+265V16*"*"[19|341]{9|43A9[12|18]} 20|747b13[12|18]
+275V16*"*"[19|364]{9|43A9[12|18]} 20|899b13[12|18]
+285V16*"*"[19|389]{9|44A9[12|18]} 20|644b13[12|18]
+295V16*"/"[19|211]{9|43A9[12|18]} 20|543b13[12|18]
+304V16*"/"[19|230]{9|44A9[12|18]} 20|525b13[12|18]
+313V16*"abs"[19|301]{long_float} 20|377b13[12|18]
+324V16*"abs"[19|101]{9|43A9[12|18]} 20|407b13[12|18]
+332V16*"abs"[19|114]{9|44A9[12|18]} 20|392b13[12|18]
+340V16*Solve[19|406]{9|43A9[12|18]} 20|678b13[12|18]
+343V16*Solve[19|420]{9|44A9[12|18]} 20|712b13[12|18]
+345V16*Unit_Matrix[19|481]{9|44A9[12|18]} 20|862b13[12|18]
+352V16*Unit_Vector[19|495]{9|43A9[12|18]} 20|883b13[12|18]
+721U17 Swap 3|37i19[12|18]
+725V16 Less{boolean} 3|36i18[12|18]
+729U17 Sort[3|39] 4|37b26[12|18]
+X 12 a-nlrear.ads
+18K22*Long_Real_Arrays[9|38] 8|16k13 12|21r14
+

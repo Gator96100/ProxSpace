@@ -1,0 +1,34 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+
+U io_exceptions%s	ioexcept.ads		c3b07839 NE OL PU
+W ada%s			ada.ads			ada.ali
+W ada.io_exceptions%s	a-ioexce.ads		a-ioexce.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-unccon.ads		20070406091342 f9eb8f06
+D ioexcept.ads		20080801103346 2710675d
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 4|22r6 24r31
+X 2 a-ioexce.ads
+18K13*IO_Exceptions 30e22 4|22w10 24r35
+X 4 ioexcept.ads
+24K9*IO_Exceptions=24:35
+

@@ -1,0 +1,120 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U ada.interrupts%b	a-interr.adb		6c4a01f5 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+
+U ada.interrupts%s	a-interr.ads		207c07f5 BN NE OL PK
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+W system.interrupts%s	s-interr.adb		s-interr.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-interr.ads		20090409150020 391cab36
+D a-interr.adb		20110801150502 acbd25c5
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-interr.ads		20140124142304 269c22db
+D s-multip.ads		20101011073010 38ac9f73
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taskin.ads		20140131154342 3f821f32
+D s-taprob.ads		20110927094500 502249e3
+D s-tpoben.ads		20121029113218 b641f948
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 1 ada.ads
+16K9*Ada 19e8 4|38r9 71r5 5|33r6 35r14 39r30 42r27 123r5
+X 4 a-interr.ads
+38K13*Interrupts 1|16k9 4|42E4 71l9 71e19 5|35b18 123l9 123t19
+40I9*Interrupt_ID<17|64I9> 44r38 46r38 49r19 53r21 58r21 60r42 62r36 5|51r21
+. 63r19 73r42 85r21 100r38 109r38 118r36
+42P9*Parameterless_Handler 49r40 52r21 56r25 57r21 5|40r7 43r33 50r21 63r40
+. 83r25 84r21
+44V13*Is_Reserved{boolean} 44>26 65r19 5|109b13 112l8 112t19
+44i26 Interrupt{40I9} 5|109b26 111r47
+46V13*Is_Attached{boolean} 46>26 66r19 5|100b13 103l8 103t19
+46i26 Interrupt{40I9} 5|100b26 102r55
+48V13*Current_Handler{42P9} 49>7 67r19 5|62b13 67l8 67t23
+49i7 Interrupt{40I9} 5|63b7 66r59
+51U14*Attach_Handler 52>7 53>7 68r19 5|49b14 56l8 56t22
+52p7 New_Handler{42P9} 5|50b7 55r21
+53i7 Interrupt{40I9} 5|51b7 55r52
+55U14*Exchange_Handler 56<7 57>7 58>7 70r19 5|82b14 94l8 94t24
+56p7 Old_Handler{42P9} 5|83b7 93m7
+57p7 New_Handler{42P9} 5|84b7 91r24
+58i7 Interrupt{40I9} 5|85b7 92r27
+60U14*Detach_Handler 60>30 69r19 5|73b14 76l8 76t22
+60i30 Interrupt{40I9} 5|73b30 75r43
+62V13*Reference{12|64M9} 62>24 5|118b13 121l8 121t17
+62i24 Interrupt{40I9} 5|118b24 120r45
+X 5 a-interr.adb
+37K12 SI=37:30 40r30 43r7 54r7 55r35 66r22 66r42 75r7 75r26 87r11 90r7 92r10
+. 102r14 102r38 111r14 111r30 120r14 120r28
+39V13 To_System[8|20]{17|73P9} 55s10 91s13
+42V13 To_Ada[8|20]{4|42P9} 66s14 93s22
+87p7 H{17|73P9} 91m10 91r10 93r30
+X 8 a-unccon.ads
+20v14*Unchecked_Conversion 5|33w10 39r34 42r31
+X 12 system.ads
+37K9*System 4|36r6 40r29 62r57 5|37r23 118r57 12|196e11
+64M9*Address 4|62r64 5|118r64
+X 17 s-interr.ads
+50K16*Interrupts 4|36w13 40r36 5|37r30 17|278e22
+64I9*Ada_Interrupt_ID<short_short_integer> 4|40r47
+67I9*Interrupt_ID<short_short_integer> 5|55r38 66r45 75r29 92r13 102r41 111r33
+. 120r31
+73P9*Parameterless_Handler 5|40r33 43r10 87r14
+82V13*Is_Reserved{boolean} 5|111s17
+86V13*Is_Handler_Attached{boolean} 5|102s17
+88V13*Current_Handler{73P9} 5|66s25
+96U14*Attach_Handler 5|54s10
+101U14*Exchange_Handler 5|90s10
+107U14*Detach_Handler 5|75s10
+111V13*Reference{12|64M9} 5|120s17
+X 24 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+

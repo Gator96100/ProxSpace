@@ -1,0 +1,67 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.vectors.boolean_operations%b  s-veboop.adb  9fa5cd3a NE OL PK
+W system.vectors%s	s-vector.ads		s-vector.ali
+
+U system.vectors.boolean_operations%s  s-veboop.ads  b42bd080 BN NE OL PU PK
+W system.vectors%s	s-vector.ads		s-vector.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-vector.ads		20090409150020 7dc5afb0
+D s-veboop.ads		20090409150020 c9ee7f30
+D s-veboop.adb		20090409150020 564bb20a
+X 1 system.ads
+37K9*System 196e11 3|34r9 66r5 4|32r14 125r5
+68N4*Storage_Unit 4|34r21 67r33
+75V14*"<="{boolean} 4|67r46
+78V14*"="{boolean} 4|65r43 66r42
+X 2 s-vector.ads
+41K16*Vectors 1|37k9 2|49e19 3|34r16 42r27 42r50 58r33 58r56 59r32 59r55
+. 60r33 60r56 66r12 4|32r21 78r27 78r50 92r33 92r56 106r32 106r55 120r33
+. 120r56 125r12
+44M9*Vector 3|42r35 42r58 58r41 58r64 59r40 59r63 60r41 60r64 4|50r24 67r19
+. 78r35 78r58 92r41 92r64 106r40 106r63 120r41 120r64
+X 3 s-veboop.ads
+34K24*Boolean_Operations 2|41k16 3|66l20 66e38 4|32b29 125l20 125t38
+42V14*"not"{2|44M9} 42>20 4|78b14 81l9 81t13 94s14 108s14 122s14
+42m20 Item{2|44M9} 4|78b20 80r14
+54V13*Nand{boolean} 54>19 54>25 4|87b13 90l8 90t12
+54b19 Left{boolean} 4|87b19 89r19
+54b25 Right{boolean} 4|87b25 89r28
+55V13*Nor{boolean} 55>19 55>25 4|101b13 104l8 104t11
+55b19 Left{boolean} 4|101b18 103r19
+55b25 Right{boolean} 4|101b24 103r27
+56V13*Nxor{boolean} 56>19 56>25 4|115b13 118l8 118t12
+56b19 Left{boolean} 4|115b19 117r19
+56b25 Right{boolean} 4|115b25 117r28
+58V13*Nand{2|44M9} 58>19 58>25 4|92b13 95l8 95t12
+58m19 Left{2|44M9} 4|92b19 94r19
+58m25 Right{2|44M9} 4|92b25 94r28
+59V13*Nor{2|44M9} 59>18 59>24 4|106b13 109l8 109t11
+59m18 Left{2|44M9} 4|106b18 108r19
+59m24 Right{2|44M9} 4|106b24 108r27
+60V13*Nxor{2|44M9} 60>19 60>25 4|120b13 123l8 123t12
+60m19 Left{2|44M9} 4|120b19 122r19
+60m25 Right{2|44M9} 4|120b25 122r28
+X 4 s-veboop.adb
+34N4 SU 44r39 51r66 52r67 53r67 54r67 55r67 56r67 57r67
+42A9 Boolean_Array(boolean)<integer> 44r7
+50m4 True_Val{2|44M9} 80r23
+

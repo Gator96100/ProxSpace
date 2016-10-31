@@ -1,0 +1,138 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_IO
+RV NO_LOCAL_ALLOCATORS
+RV NO_NESTED_FINALIZATION
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U ada.strings.wide_unbounded.wide_text_io%b  a-swuwti.adb  60a4af29 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.strings.wide_unbounded%s  a-stwiun.adb	a-stwiun.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+
+U ada.strings.wide_unbounded.wide_text_io%s  a-swuwti.ads  e7116e38 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.strings.wide_unbounded%s  a-stwiun.adb	a-stwiun.ali
+W ada.wide_text_io%s	a-witeio.adb		a-witeio.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-ioexce.ads		20140225151544 e4a01f64
+D a-stream.ads		20140122164720 1a984740
+D a-string.ads		20070406091342 90ac6797
+D a-stwima.ads		20111222115200 09a6f5ac
+D a-stwiun.ads		20120426100352 64ae971d
+D a-swuwti.ads		20090409150020 d6a232d4
+D a-swuwti.adb		20100623125138 e31b560c
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-witeio.ads		20140129155348 551dcbf1
+D interfac.ads		20140225151838 69adb1b9
+D i-cstrea.ads		20130412125802 8128536b
+D system.ads		20121001083726 5fc8ae56
+D s-atocou.ads		20131010110730 cd7c94ca
+D s-atocou.adb		20131010110730 276bb8fc
+D s-crtl.ads		20140225151544 840e6817
+D s-exctab.ads		20140225151140 54135002
+D s-ficobl.ads		20120709130952 55a71d43
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-maccod.ads		20110906094622 0fbb7bce
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-stratt.ads		20131014135146 aedef97e
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-wchcon.ads		20140225151140 1b7d22d2
+X 1 ada.ads
+16K9*Ada 19e8 9|37r6 39r9 44r14 50r14 58r14 63r14 69r5 10|32r6 32r28 34r14
+. 58r14 82r14 134r5
+X 6 a-string.ads
+16K13*Strings 1|16k9 6|35e16 9|39r13 69r9 10|34r18 134r9
+X 8 a-stwiun.ads
+48K21*Wide_Unbounded 6|16k13 8|494e31 9|39r21 69r17 10|34r26 134r17
+51R9*Unbounded_Wide_String<3|48R9> 451e14 9|42r13 44r49 51r18 52r35 56r11
+. 59r14 61r14 64r14 10|40r29 43r16 58r49 62r16 76r35 83r18 102r23 109r41
+. 120r28 127r46
+75U14*Set_Unbounded_Wide_String 10|47s7 66s7 90s7
+84U14*Append 10|51s10 70s10 94s10
+411R9 Shared_Wide_String
+415i7*Last{natural} 10|106r29 113r35 124r34 131r40
+416a7*Data{wide_string} 10|106r15 113r21 124r20 131r26
+421P9 Shared_Wide_String_Access(411R9) 10|103r21 110r21 121r21 128r21
+450p7*Reference{421P9} 10|103r52 110r52 121r52 128r52
+X 9 a-swuwti.ads
+39K36*Wide_Text_IO 8|48k21 9|69l32 69e44 10|34b41 134l32 134t44
+41V13*Get_Line{8|51R9} 10|40b13 55l8 55t16
+43V13*Get_Line{8|51R9} 44>7 10|57b13 74l8 74t16
+44p7 File{13|54P9} 10|58b7 65r17 69r20
+49U14*Get_Line 50>7 51<7 10|78s7 81b14 96l8 96t16
+50p7 File{13|54P9} 10|82b7 89r17 93r20
+51r7 Item{8|51R9} 10|83b7 90m34 94m18
+52U14*Get_Line 52<24 10|76b14 79l8 79t16
+52r24 Item{8|51R9} 10|76b24 78m32
+55U14*Put 56>7 10|102b14 107l8 107t11
+56r7 U{8|51R9} 10|102b19 103r50
+57U14*Put 58>7 59>7 10|109b14 114l8 114t11
+58p7 File{13|54P9} 10|109b19 113r12
+59r7 U{8|51R9} 10|109b37 110r50
+60U14*Put_Line 61>7 10|120b14 125l8 125t16
+61r7 U{8|51R9} 10|120b24 121r50
+62U14*Put_Line 63>7 64>7 10|127b14 132l8 132t16
+63p7 File{13|54P9} 10|127b24 131r17
+64r7 U{8|51R9} 10|127b42 128r50
+X 10 a-swuwti.adb
+41a7 Buffer{wide_string} 46m17 47r42 49r20 50m20 51r26
+42i7 Last{natural} 46m25 47r55 49r13 50m28 51r39
+43r7 Result{8|51R9} 47m34 51m18 51r18 54r14
+60a7 Buffer{wide_string} 65m23 66r42 68r20 69m26 70r26
+61i7 Last{natural} 65m31 66r55 68r13 69m34 70r39
+62r7 Result{8|51R9} 66m34 70m18 70r18 73r14
+85a7 Buffer{wide_string} 89m23 90r40 92r20 93m26 94r24
+86i7 Last{natural} 89m31 90r53 92r13 93m34 94r37
+103p7 UR{8|421P9} 106r12 106r26
+110p7 UR{8|421P9} 113r18 113r32
+121p7 UR{8|421P9} 124r17 124r31
+128p7 UR{8|421P9} 131r23 131r37
+X 13 a-witeio.ads
+52K13*Wide_Text_IO 9|37w10 44r18 50r18 58r18 63r18 10|32w10 32r32 58r18 82r18
+. 13|495e21
+54P9*File_Type 9|44r31 50r31 58r31 63r31 10|58r31 82r31 109r26 127r31
+123V13*Current_Input{54P9} 10|78s17
+243U14*Put 10|113s7
+244U14*Put 10|106s7
+246U14*Get_Line 10|65s7 69s10 89s7 93s10
+251U14*Get_Line 10|46s7 50s10
+261U14*Put_Line 10|131s7
+265U14*Put_Line 10|124s7
+

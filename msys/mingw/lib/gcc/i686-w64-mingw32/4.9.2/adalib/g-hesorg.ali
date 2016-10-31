@@ -1,0 +1,47 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.heap_sort_g%b	g-hesorg.adb		23da0e81 NE OL PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.heap_sort_g%s	g-hesorg.ads		ed43f02b BN NE OL PU PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-hesorg.ads		20110801150502 106922da
+D g-hesorg.adb		20110801150502 33b32c5b
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 2|78r9 88r5 3|32r14 142r5
+X 2 g-hesorg.ads
+55U19 Move 55>25 55>41 3|96s13 106s16 115s10 125s10 134s10 135s10
+55i25 From{natural}
+55i41 To{natural}
+61V18 Lt{boolean} 61>22 61>27 3|89s19 105s16
+61i22 Op1{natural}
+61i27 Op2{natural}
+78k14*Heap_Sort_G 1|34k9 2|55z19 61z18 88l10 88e21 3|32b19 142l10 142t21
+81U14*Sort 81>20 3|47b14 140l8 140t12
+81i20 N{natural} 3|47b20 49r24 124r29
+X 3 g-hesorg.adb
+49i7 Max{natural} 88r22 92r25 133r13 134r16 135r19 136m10 136r17
+52U17 Sift 52>23 64b17 116l11 116t15 126s10 137s10
+52i23 S{positive} 64b23 65r31 102r21
+65i10 C{positive} 86r24 96r24 97m13 102r16 103r23 106r30 107m16 115r19
+66i10 Son{positive} 86m13 88r16 89r23 89r28 90m19 90r26 92r19 96r19 97r18
+67i10 Father{positive} 103m13 105r20 106r22 107r21
+124i11 J{integer} 125r16 126r16
+

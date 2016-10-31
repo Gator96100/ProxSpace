@@ -1,0 +1,111 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.traces.tasking%b  s-tratas.adb		bd6fc52e NE OL PK
+W system.traces%s	s-traces.adb		s-traces.ali
+
+U system.traces.tasking%s  s-tratas.ads		33a47127 NE OL PR PK
+W system%s		system.ads		system.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.traces%s	s-traces.adb		s-traces.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-multip.ads		20101011073010 38ac9f73
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taskin.ads		20140131154342 3f821f32
+D s-traent.ads		20140225151140 b5116092
+D s-traces.ads		20090409150020 f21d68aa
+D s-tratas.ads		20090409150020 fe3b06bf
+D s-tratas.adb		20090409150020 4354c391
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 7 system.ads
+37K9*System 196e11 24|39r6 41r9 44r23 95r5 25|32r14 119r5
+X 15 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 21 s-taskin.ads
+47K16*Tasking 1216e19 24|39w13 44r30
+107P9*Task_Id(105R9) 24|52r23 56r25 61r25 62r25 67r23 68r23 76r25 87r23 92r23
+. 25|40r61 47r25 56r25 57r25 66r23 67r23 83r25 102r22 111r22
+229I9*Entry_Index<integer> 24|57r25 63r25 72r25 77r25 82r25 25|48r25 58r25
+. 75r25 84r25 93r25
+X 23 s-traces.ads
+55K16*Traces 7|37k9 23|114e18 24|41r16 95r12 25|32r21 119r12
+58E9*Trace_T 103e19 24|51r20 55r22 60r22 66r20 71r22 75r22 81r22 86r20 91r20
+. 25|40r36 46r22 55r22 65r20 74r22 82r22 92r22 101r19 110r19
+X 24 s-tratas.ads
+41K23*Tasking 23|55k16 24|95l19 95e26 25|32b28 119l19 119t26
+44K12*ST=44:30 52r20 56r22 57r22 61r22 62r22 63r22 67r20 68r20 72r22 76r22
+. 77r22 82r22 87r20 92r20 25|40r58 47r22 48r22 56r22 57r22 58r22 66r20 67r20
+. 75r22 83r22 84r22 93r22 102r19 111r19
+50U14*Send_Trace_Info 51>7 52>7 25|40b14 43l8 43t23
+51e7 Id{23|58E9} 25|40b31
+52p7 Task_Name2{21|107P9} 25|40b45
+54U14*Send_Trace_Info 55>7 56>7 57>7 25|45b14 52l8 52t23
+55e7 Id{23|58E9} 25|46b7
+56p7 Task_Name2{21|107P9} 25|47b7
+57i7 Entry_Number{21|229I9} 25|48b7
+59U14*Send_Trace_Info 60>7 61>7 62>7 63>7 25|54b14 62l8 62t23
+60e7 Id{23|58E9} 25|55b7
+61p7 Task_Name{21|107P9} 25|56b7
+62p7 Task_Name2{21|107P9} 25|57b7
+63i7 Entry_Number{21|229I9} 25|58b7
+65U14*Send_Trace_Info 66>7 67>7 68>7 25|64b14 71l8 71t23
+66e7 Id{23|58E9} 25|65b7
+67p7 Task_Name{21|107P9} 25|66b7
+68p7 Task_Name2{21|107P9} 25|67b7
+70U14*Send_Trace_Info 71>7 72>7 25|73b14 79l8 79t23
+71e7 Id{23|58E9} 25|74b7
+72i7 Entry_Number{21|229I9} 25|75b7
+74U14*Send_Trace_Info 75>7 76>7 77>7 78>7 25|81b14 89l8 89t23
+75e7 Id{23|58E9} 25|82b7
+76p7 Acceptor{21|107P9} 25|83b7
+77i7 Entry_Number{21|229I9} 25|84b7
+78o7 Timeout{duration} 25|85b7
+80U14*Send_Trace_Info 81>7 82>7 83>7 25|91b14 98l8 98t23
+81e7 Id{23|58E9} 25|92b7
+82i7 Entry_Number{21|229I9} 25|93b7
+83o7 Timeout{duration} 25|94b7
+85U14*Send_Trace_Info 86>7 87>7 88>7 25|100b14 107l8 107t23
+86e7 Id{23|58E9} 25|101b7
+87p7 Task_Name{21|107P9} 25|102b7
+88i7 Number{integer} 25|103b7
+90U14*Send_Trace_Info 91>7 92>7 93>7 94>7 25|109b14 117l8 117t23
+91e7 Id{23|58E9} 25|110b7
+92p7 Task_Name{21|107P9} 25|111b7
+93i7 Number{integer} 25|112b7
+94o7 Timeout{duration} 25|113b7
+

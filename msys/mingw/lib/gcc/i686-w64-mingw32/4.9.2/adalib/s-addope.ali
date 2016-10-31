@@ -1,0 +1,69 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.address_operations%b  s-addope.adb	5f72f755 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+
+U system.address_operations%s  s-addope.ads	4cc41065 BN NE OL PU PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-addope.ads		20140225151544 130cbe33
+D s-addope.adb		20140225151544 b595c660
+X 1 ada.ads
+16K9*Ada 19e8 5|34r6 41r22 42r22
+X 2 a-unccon.ads
+20v14*Unchecked_Conversion 5|34w10 41r26 42r26
+X 3 system.ads
+37K9*System 196e11 4|45r9 87r5 5|36r14 110r5
+64M9*Address 4|65r33 65r49 66r33 66r49 67r33 67r49 68r33 68r49 69r33 69r49
+. 76r33 76r49 77r33 77r49 5|38r24 41r48 42r52 51r33 51r49 60r33 60r49 69r33
+. 69r49 78r33 78r49 87r33 87r49 96r32 96r48 105r33 105r49
+X 4 s-addope.ads
+45K16*Address_Operations 3|37k9 4|87l12 87e30 5|36b21 110l12 110t30
+65V13*AddA{3|64M9} 65>19 65>25 79r26 5|51b13 54l8 54t12
+65m19 Left{3|64M9} 5|51b19 53r20
+65m25 Right{3|64M9} 5|51b25 53r31
+66V13*SubA{3|64M9} 66>19 66>25 80r26 5|105b13 108l8 108t12
+66m19 Left{3|64M9} 5|105b19 107r20
+66m25 Right{3|64M9} 5|105b25 107r31
+67V13*MulA{3|64M9} 67>19 67>25 81r26 5|87b13 90l8 90t12
+67m19 Left{3|64M9} 5|87b19 89r20
+67m25 Right{3|64M9} 5|87b25 89r31
+68V13*DivA{3|64M9} 68>19 68>25 82r26 5|69b13 72l8 72t12
+68m19 Left{3|64M9} 5|69b19 71r20
+68m25 Right{3|64M9} 5|69b25 71r31
+69V13*ModA{3|64M9} 69>19 69>25 83r26 5|78b13 81l8 81t12
+69m19 Left{3|64M9} 5|78b19 80r20
+69m25 Right{3|64M9} 5|78b25 80r33
+76V13*AndA{3|64M9} 76>19 76>25 84r26 5|60b13 63l8 63t12
+76m19 Left{3|64M9} 5|60b19 62r20
+76m25 Right{3|64M9} 5|60b25 62r33
+77V13*OrA{3|64M9} 77>19 77>25 85r26 5|96b13 99l8 99t11
+77m19 Left{3|64M9} 5|96b18 98r20
+77m25 Right{3|64M9} 5|96b24 98r32
+X 5 s-addope.adb
+38M9 IA 41r57 42r48
+41V13 I[2|20]{38M9} 53s17 53s28 62s17 62s30 71s17 71s28 80s17 80s30 89s17
+. 89s28 98s17 98s29 107s17 107s28
+42V13 A[2|20]{3|64M9} 53s14 62s14 71s14 80s14 89s14 98s14 107s14
+

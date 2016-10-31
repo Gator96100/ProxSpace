@@ -1,0 +1,95 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U gnat.tty%b		g-tty.adb		db5640fa NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W interfaces.c.strings%s  i-cstrin.adb		i-cstrin.ali
+
+U gnat.tty%s		g-tty.ads		49f6ee7f EE NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W gnat.os_lib%s		g-os_lib.ads		g-os_lib.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D gnat.ads		20110801150502 fd2ad2f1
+D g-os_lib.ads		20090409150020 0db74523
+D g-tty.ads		20111123105422 e6a3d7fb
+D g-tty.adb		20111123105422 09e89ade
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-os_lib.ads		20140225151140 73b554c6
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-string.ads		20140225151140 8fe54fb7
+X 4 gnat.ads
+34K9*GNAT 37e9 6|39r6 41r9 64r35 73r5 7|34r14 101r35 104r42 134r5
+X 5 g-os_lib.ads
+51K14*OS_Lib=51:36 6|39w11 64r40 7|101r40 104r47
+X 6 g-tty.ads
+41K14*TTY 4|34k9 6|69E9 73l10 73e13 7|34b19 134l10 134t13
+43R9*TTY_Handle 50r41 53r34 56r41 59r32 64r16 69c9 71e14 7|38r34 46r41 62r34
+. 75r41 88r34 101r16 115r32
+46V13*TTY_Supported{boolean} 7|51s14 64s14 127b13 132l8 132t21
+50U14*Allocate_TTY 50<28 7|46b14 56l8 56t20
+50r28 Handle{43R9} 7|46b28 55m7
+53U14*Reset_TTY 53>25 7|88b14 94l8 94t17
+53r25 Handle{43R9} 7|88b25 92r18 93r17
+56U14*Close_TTY 56=25 7|75b14 82l8 82t17
+56r25 Handle{43R9} 7|75b25 79r18 80r17 81m7
+59V13*TTY_Name{string} 59>23 7|115b13 121l8 121t16
+59r23 Handle{43R9} 7|115b23 119r18 120r31
+63V13*TTY_Descriptor{13|171I9} 64>7 7|100b13 109l8 109t22
+64r7 Handle{43R9} 7|101b7 107r18 108r24
+70m7*Handle{11|64M9} 7|55m14 66r20 80r24 81m14 93r24 108r31 120r38
+X 7 g-tty.adb
+38U14 Check_TTY 38>25 62b14 69l8 69t17 79s7 92s7 107s7 119s7
+38r25 Handle{6|43R9} 62b25 66r13
+47V16*Internal{11|64M9} 48b<c,__gnat_new_tty>25 55s24
+76U17*Internal 76>27 77b<c,__gnat_close_tty>25 80s7
+76m27 Handle{11|64M9}
+89U17*Internal 89>27 90b<c,__gnat_reset_tty>25 93s7
+89m27 Handle{11|64M9}
+103V16*Internal{13|171I9} 104>10 105b<c,__gnat_tty_fd>25 108s14
+104m10 Handle{11|64M9}
+116V16*Internal{10|47P9} 116>26 117b<c,__gnat_tty_name>25 120s21
+116m26 Handle{11|64M9}
+128V16*Internal{integer} 129b<c,__gnat_tty_supported>25 131s14
+X 8 interfac.ads
+38K9*Interfaces 7|32r6 32r32 8|179e15
+X 9 i-c.ads
+18K20*C 7|32r17 32r43 9|230e17
+X 10 i-cstrin.ads
+36K22*Strings 7|32w19 32r45 10|104e25
+47P9*chars_ptr 7|116r58
+72V13*Value{string} 7|120s14
+X 11 system.ads
+37K9*System 6|37w6 70r16 70r34 7|36r8 47r32 66r29 76r36 81r24 89r36 104r19
+. 116r35 11|196e11
+64M9*Address 6|70r23 7|47r39 76r43 89r43 104r26 116r42
+66m4*Null_Address{64M9} 6|70r41 7|66r36 81r31
+78V14*"="{boolean} 7|66r27
+X 13 s-os_lib.ads
+171I9*File_Descriptor<integer> 6|64r47 7|101r47 104r54
+

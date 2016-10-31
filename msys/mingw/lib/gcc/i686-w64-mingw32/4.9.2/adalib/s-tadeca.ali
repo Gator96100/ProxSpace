@@ -1,0 +1,122 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_CALENDAR
+RV NO_DELAY
+RV NO_FIXED_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.tasking.async_delays.enqueue_calendar%b  s-tadeca.adb  8faa9d3c NE OL SU
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W system%s		system.ads		system.ali
+W system.os_constants%s	s-oscons.ads		s-oscons.ali
+W system.os_primitives%s  s-osprim.adb		s-osprim.ali
+W system.task_primitives%s  s-taspri.ads	s-taspri.ali
+W system.task_primitives.operations%s  s-taprop.adb  s-taprop.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.async_delays%s  s-taasde.adb	s-taasde.ali
+W system.tasking.initialization%s  s-tasini.adb	s-tasini.ali
+
+U system.tasking.async_delays.enqueue_calendar%s  s-tadeca.ads  4287ad09 NE OL SU
+W ada%s			ada.ads			ada.ali
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W system.tasking.async_delays%s  s-taasde.adb	s-taasde.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-caldel.ads		20140120152338 9f20b83d
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D i-c.ads		20110801143640 5421119b
+D i-cstrin.ads		20130104124956 341d0ddf
+D system.ads		20121001083726 5fc8ae56
+D s-atacco.ads		20120515093410 4c36d12f
+D s-exctab.ads		20140225151140 54135002
+D s-multip.ads		20101011073010 38ac9f73
+D s-oscons.ads		20141221155618 ccb65532
+D s-osinte.ads		20130104124956 ecf1fbfd
+D s-osprim.ads		20090409150020 b0d18c29
+D s-parame.ads		20140225151140 ab8cb46a
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stausa.ads		20110804134156 017a0a05
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-tasinf.ads		20090409150020 859198ad
+D s-taspri.ads		20110927094500 196697f7
+D s-taprop.ads		20111212143340 1dd2e1b6
+D s-taskin.ads		20140131154342 3f821f32
+D s-taasde.ads		20140120152544 b391bcfb
+D s-tadeca.ads		20140120152544 297b7d7e
+D s-tadeca.adb		20140120153200 95c5e72b
+D s-tasini.ads		20120612110910 cd8187f9
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+D s-win32.ads		20140120152906 b7f96285
+X 1 ada.ads
+16K9*Ada 19e8 28|37r6 39r8 29|32r6 40r8 43r13 48r23 51r12
+X 2 a-calend.ads
+36K13*Calendar 375e17 28|37w10 39r12 29|32r10 40r12 43r17 48r27 51r16
+38I9*Time<200I9> 28|39r21 29|40r21 43r26
+52V13*Clock{38I9} 29|51s25
+104V14*"<="{boolean} 29|51s9
+200I9 Time_Rep<long_long_integer>
+X 3 a-caldel.ads
+37K22*Delays 53e24 29|32w19 48r36
+50V13*To_Duration{duration} 29|48s43
+X 9 system.ads
+37K9*System 196e11 28|38r10 29|34r6 35r6 36r6 37r6 39r10 45r25 46r25 53r7
+. 72r4 73r7 76r5
+X 13 s-oscons.ads
+44K16*OS_Constants 304e24 29|34w13 45r32
+281N4*CLOCK_REALTIME 29|66r33
+284N4*CLOCK_RT_Ada 29|66r12
+X 15 s-osprim.ads
+40K16*OS_Primitives 91e25 29|35w13 69r22
+66V13*Monotonic_Clock{duration} 29|69s36
+X 19 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 24 s-taspri.ads
+41K16*Task_Primitives 124e27 29|36r13 46r32 53r14 73r14
+X 25 s-taprop.ads
+39K32*Operations 571e38 29|36w29 46r48 53r30 73r30
+135V13*Self{26|107P9} 29|73s41
+314U14*Yield 29|53s41
+341V13*Monotonic_Clock{duration} 29|69s59
+X 26 s-taskin.ads
+47K16*Tasking 1216e19 28|38r17 29|37r13 39r17 72r11 76r12
+107P9*Task_Id(105R9)
+X 27 s-taasde.ads
+38K24*Async_Delays 147e32 28|38r25 29|39r25 76r20
+95P9*Delay_Block_Access(94R9) 28|40r8 29|41r8
+129b7*Timed_Out{boolean} 29|52m9
+139U14 Time_Enqueue 29|74s4
+X 28 s-tadeca.ads
+38V38*Enqueue_Calendar{boolean} 27|38k24 28|39>4 40>4 29|39b38 76l33 76t49
+39i4 T{2|38I9} 29|40b4 48r56 51r7
+40p4 D{27|95P9} 29|41b4 52r7 74r24
+X 29 s-tadeca.adb
+45K12 SOSC=45:32 66r7 66r28
+46K12 STPO=46:48 69r54
+48o4 RT_T{duration} 69m7 69r15 74r18
+X 30 s-tasini.ads
+35K24*Initialization 29|37w21 72r19 30|190e34
+107U14*Defer_Abort 29|72s34
+

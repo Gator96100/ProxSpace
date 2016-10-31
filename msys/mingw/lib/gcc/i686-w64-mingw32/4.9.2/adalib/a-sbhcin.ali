@@ -1,0 +1,62 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U ada.strings.bounded.hash_case_insensitive%b  a-sbhcin.adb  934953f6 NE OL SU GE
+W ada%s			ada.ads			ada.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.bounded%s	a-strbou.adb		a-strbou.ali
+W ada.strings.hash_case_insensitive%s  a-shcain.adb  a-shcain.ali
+
+U ada.strings.bounded.hash_case_insensitive%s  a-sbhcin.ads  aefaebd9 BN NE OL PR GE
+W ada%s			ada.ads			ada.ali
+W ada.containers%s	a-contai.ads		a-contai.ali
+W ada.strings.bounded%s	a-strbou.adb		a-strbou.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-contai.ads		20101025135030 61e5e089
+D a-string.ads		20070406091342 90ac6797
+D a-strbou.ads		20101008130256 9806fe84
+D a-sbhcin.ads		20111104105542 5719f5d4
+D a-sbhcin.adb		20111104105542 ccfff4fd
+D a-shcain.ads		20090409150020 08af52df
+D a-strmap.ads		20090409150020 9cb836fb
+D a-strsup.ads		20120309145048 a27dcb33
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 7|34r6 38r10 40r10 44r22 8|30r6 32r10 37r11 38r5
+X 4 a-contai.ads
+16K13*Containers 24e19 7|34w10 42r10 8|34r10
+19M9*Hash_Type 7|42r21 8|34r21
+X 5 a-string.ads
+16K13*Strings 35e16 7|38r14 40r14 44r26 8|30r10 32r14 37r15 38r9
+X 6 a-strbou.ads
+39K21*Bounded 914e24 7|38r22 40r22 44r34 8|32r22 38r17
+46k12*Generic_Bounded_Length 912e30 7|38r30
+50R12 Bounded_String<11|47R9> 7|41r18[37] 8|33r18[7|37]
+67V16 To_String{string} 8|37s54[7|37]
+X 7 a-sbhcin.ads
+37K17 Bounded[6|46] 41r10 8|33r10 37r46
+40v30*Hash_Case_Insensitive 6|39k21 7|41>4 44r42 8|32b30 38l25 38t46
+41r4 Key{6|50R12[37]} 8|33b4 37r65
+X 9 a-shcain.ads
+32V22*Hash_Case_Insensitive{4|19M9} 8|30w18 37s23
+

@@ -1,0 +1,14 @@
+prefix=C:\\Qt\\5.6\\mingw49_32
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Gui
+Description: Qt Gui module
+Version: 5.6.1
+Libs: -L${libdir} -lQt5Guid 
+Libs.private: -lgdi32 -lcomdlg32 -loleaut32 -limm32 -lwinmm -lws2_32 -lole32 -luuid -luser32 -ladvapi32 -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -LC:\Users\qt\work\qt\qtbase\lib C:\Users\qt\work\qt\qtbase\lib\libQt5Cored.a .obj\debug\Qt5Guid_resource_res.o C:\Users\qt\work\qt\qtbase\lib\libqtharfbuzzngd.a -LC:\utils\postgresql\pgsql\lib -LC:\utils\my_sql\my_sql\lib -lz  
+Cflags: -I${includedir}/QtGui -I${includedir}
+Requires: Qt5Core
+

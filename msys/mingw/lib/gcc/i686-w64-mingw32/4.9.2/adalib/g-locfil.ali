@@ -1,0 +1,87 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DELAY
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_RELATIVE_DELAY
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U gnat.lock_files%b	g-locfil.adb		9b66fd04 NE OL PK
+W ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+U gnat.lock_files%s	g-locfil.ads		0ba4cccc EE OL PR PK
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-calend.ads		20120515092648 d86d6c8c
+D a-caldel.ads		20140120152338 9f20b83d
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D gnat.ads		20110801150502 fd2ad2f1
+D g-locfil.ads		20110801150502 f68e1e3d
+D g-locfil.adb		20090409150020 32204d6f
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-parame.ads		20140225151140 ab8cb46a
+D s-stalib.ads		20140225151140 a891183f
+D s-traent.ads		20140225151140 b5116092
+X 6 gnat.ads
+34K9*GNAT 37e9 7|35r9 72r5 8|34r14 134r5
+X 7 g-locfil.ads
+35K14*Lock_Files 6|34k9 7|72l10 72e20 8|34b19 134l10 134t20
+38X4*Lock_Error 8|76r13
+41A12*Path_Name{string}<integer> 47r24 48r24 60r24 65r39 65r67 69r44 8|44r24
+. 45r24 84r24 109r44 123r39 123r67
+46U14*Lock_File 47>7 48>7 49>7 50>7 8|43b14 77l8 77t17 93s13 102s7
+47a7 Directory{41A12} 8|44b7 49r32 59r10 59r21 60r17 60r28
+48a7 Lock_File_Name{41A12} 8|45b7 50r32
+49o7 Wait{duration} 8|46b7 73r16
+50i7 Retries{natural} 8|47b7 67r21 72r24
+59U14*Lock_File 60>7 61>7 62>7 8|83b14 103l8 103t17
+60a7 Lock_File_Name{41A12} 8|84b7 89r24 90r13 91r20 94r16 94r32 95r16 95r41
+. 102r23
+61o7 Wait{duration} 8|85b7 96r16 102r39
+62i7 Retries{natural} 8|86b7 97r16 102r45
+65U14*Unlock_File 65>27 65>50 8|123b14 132l8 132t19
+65a27 Directory{41A12} 8|123b27 125r10 125r21 126r17 126r28 128r23 130r23
+65a50 Lock_File_Name{41A12} 8|123b50 128r35 130r51
+69U14*Unlock_File 69>27 8|109b14 117l8 117t19 128s10 130s10
+69a27 Lock_File_Name{41A12} 8|109b27 110r29
+X 8 g-locfil.adb
+36e4 Dir_Separator{character} 37m22 37r22 59r39 90r34 125r39 130r35
+49a7 Dir{string} 62m10 62r15 68m23 68r23
+50a7 File{string} 68m36 68r36
+52V16*Try_Lock{integer} 52>26 52>31 53b<c,__gnat_try_lock>25 68s13
+52m26 Dir{9|64M9}
+52m31 File{9|64M9}
+67i11 I{integer} 72r20
+89i11 J{integer} 90r29 91r36 94r56 95r32
+110a7 S{string} 116m15 116r15
+112U17*unlink 112>25 113b<c,unlink>25 116s7
+112m25 A{9|64M9}
+X 9 system.ads
+37K9*System 8|32w6 52r38 112r29 9|196e11
+64M9*Address 8|52r45 112r36
+

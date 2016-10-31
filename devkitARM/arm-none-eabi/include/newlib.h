@@ -11,11 +11,11 @@
 /* #undef _ELIX_LEVEL */
 
 /* Newlib version */
-#define _NEWLIB_VERSION "1.20.0"
+#define _NEWLIB_VERSION "2.2.0"
 
 /* C99 formats support (such as %a, %zu, ...) in IO functions like
  * printf/scanf enabled */
-/* #undef _WANT_IO_C99_FORMATS */
+#define _WANT_IO_C99_FORMATS 1
 
 /* long long type support in IO functions like printf/scanf enabled */
 #define _WANT_IO_LONG_LONG 1
@@ -27,7 +27,7 @@
 /* #undef _WANT_IO_LONG_DOUBLE */
 
 /* Positional argument support in printf functions enabled.  */
-/* #undef _WANT_IO_POS_ARGS */
+#define _WANT_IO_POS_ARGS 1
 
 /* Optional reentrant struct support.  Used mostly on platforms with
    very restricted storage.  */
@@ -56,8 +56,38 @@
 /* True if long double supported.  */
 #define _HAVE_LONG_DOUBLE 1
 
+/* Define if compiler supports -fno-tree-loop-distribute-patterns. */
+#define _HAVE_CC_INHIBIT_LOOP_TO_LIBCALL 1
+
 /* True if long double supported and it is equal to double.  */
 #define _LDBL_EQ_DBL 1
+ 
+/* Define if uintptr_t is unsigned long on this architecture */
+/* #undef _UINTPTR_EQ_ULONG */
+
+/* Define if uintptr_t is unsigned long long on this architecture */
+/* #undef _UINTPTR_EQ_ULONGLONG */
+
+/* Define if ivo supported in streamio.  */
+#define _FVWRITE_IN_STREAMIO 1
+
+/* Define if fseek functions support seek optimization.  */
+#define _FSEEK_OPTIMIZATION 1
+
+/* Define if wide char orientation is supported.  */
+#define _WIDE_ORIENT 1
+
+/* Define if unbuffered stream file optimization is supported.  */
+#define _UNBUF_STREAM_OPT 1
+
+/* Define if lite version of exit supported.  */
+/* #undef _LITE_EXIT */
+
+/* Define if declare atexit data as global.  */
+/* #undef _REENT_GLOBAL_ATEXIT */
+
+/* Define if small footprint nano-formatted-IO implementation used.  */
+/* #undef _NANO_FORMATTED_IO */
 
 /*
  * Iconv encodings enabled ("to" direction)

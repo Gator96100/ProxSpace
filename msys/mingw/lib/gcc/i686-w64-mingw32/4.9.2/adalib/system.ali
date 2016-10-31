@@ -1,0 +1,94 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system%s		system.ads		5fc8ae56 NE OL PU PK
+L "-Wl,--stack=0x2000000"
+
+D system.ads		20121001083726 5fc8ae56
+X 1 system.ads
+37K9*System 105E9 196l5 196e11
+43E9*Name 43e35 44r27
+43n18*SYSTEM_NAME_GNAT{43E9} 44r35
+44e4*System_Name{43E9}
+48N4*Min_Int
+49N4*Max_Int
+51N4*Max_Binary_Modulus
+52N4*Max_Nonbinary_Modulus
+54N4*Max_Base_Digits
+55N4*Max_Digits
+57N4*Max_Mantissa 58r49
+58N4*Fine_Delta
+60N4*Tick
+64M9*Address 65r41 66r28 74r33 75r33 76r33 77r33 78r33 105c9 106r28
+66m4*Null_Address{64M9} 106c4
+68N4*Storage_Unit
+69N4*Word_Size
+70N4*Memory_Size 105r24
+74V14*"<"{boolean} 74>19 74>25 80b31
+74m19 Left{64M9}
+74m25 Right{64M9}
+75V14*"<="{boolean} 75>19 75>25 81b31
+75m19 Left{64M9}
+75m25 Right{64M9}
+76V14*">"{boolean} 76>19 76>25 82b31
+76m19 Left{64M9}
+76m25 Right{64M9}
+77V14*">="{boolean} 77>19 77>25 83b31
+77m19 Left{64M9}
+77m25 Right{64M9}
+78V14*"="{boolean} 78>19 78>25 84b31
+78m19 Left{64M9}
+78m25 Right{64M9}
+88E9*Bit_Order 88e57 89r33
+88n23*High_Order_First{88E9}
+88n41*Low_Order_First{88E9} 89r46
+89e4*Default_Bit_Order{88E9} 90r26
+94i4*Max_Priority{positive}
+95i4*Max_Interrupt_Priority{positive}
+97I12*Any_Priority{integer} 98r34 99r34 157r38
+98I12*Priority{97I12} 101r32 162r7 178r7
+99I12*Interrupt_Priority{97I12} 179r7
+101i4*Default_Priority{98I12} 163r7 164r7 165r7 166r7 167r7 168r7 169r7 170r7
+. 171r7 172r7 173r7 174r7 175r7 176r7 177r7
+118b4 Backend_Divide_Checks{boolean}
+119b4 Backend_Overflow_Checks{boolean}
+120b4 Command_Line_Args{boolean}
+121b4 Configurable_Run_Time{boolean}
+122b4 Denorm{boolean}
+123b4 Duration_32_Bits{boolean}
+124b4 Exit_Status_Supported{boolean}
+125b4 Fractional_Fixed_Ops{boolean}
+126b4 Frontend_Layout{boolean}
+127b4 Machine_Overflows{boolean}
+128b4 Machine_Rounds{boolean}
+129b4 Preallocated_Stacks{boolean}
+130b4 Signed_Zeros{boolean}
+131b4 Stack_Check_Default{boolean}
+132b4 Stack_Check_Probes{boolean}
+133b4 Stack_Check_Limits{boolean}
+134b4 Support_Aggregates{boolean}
+135b4 Support_Atomic_Primitives{boolean}
+136b4 Support_Composite_Assign{boolean}
+137b4 Support_Composite_Compare{boolean}
+138b4 Support_Long_Shifts{boolean}
+139b4 Always_Compatible_Rep{boolean}
+140b4 Suppress_Standard_Library{boolean}
+141b4 Use_Ada_Main_Program_Name{boolean}
+142b4 ZCX_By_Default{boolean}
+157A9 Priorities_Mapping(integer)<integer> 158r36 161r37
+161a4 Underlying_Priorities{157A9}
+

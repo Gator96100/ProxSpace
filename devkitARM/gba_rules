@@ -4,6 +4,8 @@ endif
 
 include $(DEVKITARM)/base_rules
 
+PORTLIBS	:=	$(PORTLIBS_PATH)/gba $(PORTLIBS_PATH)/armv4
+
 LIBGBA	:=	$(DEVKITPRO)/libgba
 
 #---------------------------------------------------------------------------------

@@ -1,0 +1,111 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U ada.strings.utf_encoding.strings%b  a-suenst.adb  bb780f45 NE OL PK
+W ada.strings.utf_encoding%s  a-stuten.adb	a-stuten.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.strings.utf_encoding.strings%s  a-suenst.ads  fe1d64b5 NE OL PU PK
+W ada.strings.utf_encoding%s  a-stuten.adb	a-stuten.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-string.ads		20070406091342 90ac6797
+D a-stuten.ads		20110801150502 808c40ad
+D a-suenst.ads		20120410054430 7e912418
+D a-suenst.adb		20140127165438 c5e92b5d
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D unchconv.ads		20070406091342 ca2f9e18
+X 1 ada.ads
+16K9*Ada 19e8 4|20r9 65r5 5|32r14 350r5
+X 2 a-string.ads
+16K13*Strings 1|16k9 2|35e16 4|20r13 65r9 5|32r18 350r9
+X 3 a-stuten.ads
+42K21*UTF_Encoding 2|16k13 3|144e29 4|20r21 65r17 5|32r26 350r17
+45A12*UTF_String{string}<integer> 4|31r49 51r22 5|42r22 228r49
+56E9*Encoding_Scheme 56e55 4|30r23 52r22 5|43r22 227r23
+56n29*UTF_8{56E9} 5|46r25 233r26
+59A12*UTF_8_String{string}<integer> 4|37r46 58r14 5|55r28 248r46 250r16
+62A12*UTF_16_Wide_String{wide_string}<integer> 4|42r46 62r14 5|174r28 239r30
+. 314r46 316r16
+83a4*BOM_8{59A12} 5|103r44 279r29
+88a4*BOM_16BE{45A12} 5|110r45
+92a4*BOM_16LE{45A12} 5|112r45
+96a4*BOM_16{62A12} 5|191r49 329r24
+108V13 To_Unsigned_8[14|20]{7|57M9} 5|84s18 118s15 288s15 338s15
+111V13 To_Unsigned_16[14|20]{7|60M9} 5|198s15
+122V13 From_UTF_16{45A12} 5|239s17
+130V13 To_UTF_16{62A12} 5|49s25
+139U14 Raise_Encoding_Error 5|81s13 88s16 114s10 131s13 153s13 163s13 212s13
+X 4 a-suenst.ads
+20K34*Strings 3|42k21 4|21r17 65l30 65e37 5|32b39 350l30 350t37
+28V13*Encode{3|45A12} 29>7 30>7 31>7 5|225b13 242l8 242t14
+29s7 Item{string} 5|226b7 234r25 239r58
+30e7 Output_Scheme{3|56E9} 5|227b7 233r10 240r30
+31b7 Output_BOM{boolean} 5|228b7 234r31 240r45
+35V13*Encode{3|59A12} 36>7 37>7 5|234s17 246b13 308l8 308t14
+36s7 Item{string} 5|247b7 250r39 287r16 288r30
+37b7 Output_BOM{boolean} 5|248b7 278r10
+40V13*Encode{3|62A12} 41>7 42>7 5|239s50 312b13 348l8 348t14
+41s7 Item{string} 5|313b7 317r24 337r19 338r30
+42b7 Output_BOM{boolean} 5|314b7 317r51 328r10
+50V13*Decode{string} 51>7 52>7 5|41b13 51l8 51t14
+51a7 Item{3|45A12} 5|42b7 47r25 49r36
+52e7 Input_Scheme{3|56E9} 5|43b7 46r10 49r42
+57V13*Decode{string} 58>7 5|47s17 55b13 170l8 170t14
+58a7 Item{3|59A12} 5|55b21 56r29 80r20 84r33 98r15 102r10 103r18 109r13 110r19
+. 112r19 117r21 118r30
+61V13*Decode{string} 62>7 5|49s17 174b13 217l8 217t14
+62a7 Item{3|62A12} 5|174b21 175r29 189r15 191r10 191r35 197r21 198r31
+X 5 a-suenst.adb
+56a7 Result{string} 166m10 169r14
+59i7 Len{natural} 156m10 156r17 166r18 169r27
+62i7 Iptr{natural} 80r13 81r35 84r39 85m13 85r21 88r38 98m7 103r24 103r32
+. 105m10 105r18 110r25 110r33 112r25 112r33 114r32 117r13 118r36 119m10 119r18
+. 131r35 153r35 163r35
+65m7 C{7|57M9} 84m13 87r16 90r55 118m10 124r13 125r31 130r16 136r16 137r31
+66m7 R{7|60M9} 90m16 90r33 125m13 137m13 162r13 166r41
+68U17 Get_Continuation 78b17 93l11 93t27 138s13
+175a7 Result{string} 205m13 216r14
+178i7 Len{natural} 204m13 204r20 205r21 216r27
+181i7 Iptr{natural} 189m7 191r41 192m10 192r18 197r13 198r37 199m10 199r18
+. 212r35
+184m7 C{7|60M9} 198m10 203r13 205r44
+250a7 Result{3|59A12} 270m10 279m10 307r14
+253i7 Len{natural} 269m10 269r17 270r18 280m10 282m10 307r27
+256m7 C{7|57M9} 288m10 293r13 294r20 302r49 303r37
+259U17 Store 259>24 260r22 267b17 271l11 271t16 294s13 302s13 303s13
+259m24 C{7|57M9} 267b24 270r41
+287i11 J{integer} 288r36
+316a7 Result{3|62A12} 329m10 344m10 347r14
+320i7 Len{integer} 330m10 332m10 343m10 343r17 344r18
+323m7 C{7|57M9} 338m10 344r46
+337i11 Iptr{integer} 338r36
+X 7 interfac.ads
+38K9*Interfaces 5|33r8 7|179e15
+57M9*Unsigned_8 5|65r11 256r11 259r28 267r28 323r11
+60M9*Unsigned_16 5|66r11 90r42 125r18 137r18 184r11
+73V13*Shift_Right{57M9} 5|302s36
+89V13*Shift_Left{60M9} 5|90s21
+

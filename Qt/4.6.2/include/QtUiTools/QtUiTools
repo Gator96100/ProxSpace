@@ -1,5 +1,0 @@
-#ifndef QT_QTUITOOLS_MODULE_H
-#define QT_QTUITOOLS_MODULE_H
-#include <QtXml/QtXml>
-#include "quiloader.h"
-#endif

@@ -1,0 +1,61 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.strings%s		a-string.ads		af50e98f EE OL PU PK
+W ada%s			ada.ads			ada.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-string.ads		20070406091342 90ac6797
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+X 1 ada.ads
+16K9*Ada 19e8 2|16r9 35r5
+X 2 a-string.ads
+16K13*Strings 1|16k9 2|35l9 35e16
+19e4*Space{character}
+20e4*Wide_Space{wide_character}
+24e4*Wide_Wide_Space{wide_wide_character} 25r19
+27X4*Length_Error
+27X18*Pattern_Error
+27X33*Index_Error
+27X46*Translation_Error
+29E9*Alignment 29e44
+29n24*Left{29E9}
+29n30*Right{29E9}
+29n37*Center{29E9}
+30E9*Truncation 30e43
+30n24*Left{30E9}
+30n30*Right{30E9}
+30n37*Error{30E9}
+31E9*Membership 31e40
+31n24*Inside{31E9}
+31n32*Outside{31E9}
+32E9*Direction 32e42
+32n24*Forward{32E9}
+32n33*Backward{32E9}
+33E9*Trim_End 33e42
+33n24*Left{33E9}
+33n30*Right{33E9}
+33n37*Both{33E9}
+

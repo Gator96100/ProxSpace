@@ -1,0 +1,47 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_ENUMERATION_MAPS
+RV SPARK_05
+
+U system.val_char%b	s-valcha.adb		3cd48df1 NE OL PK
+W system%s		system.ads		system.ali
+W system.img_char%s	s-imgcha.adb		s-imgcha.ali
+W system.val_util%s	s-valuti.adb		s-valuti.ali
+
+U system.val_char%s	s-valcha.ads		286c2cf4 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgcha.ads		20101008123408 9c3458e7
+D s-valcha.ads		20090409150020 77a482a2
+D s-valcha.adb		20121029095828 e7d0b9ad
+D s-valuti.ads		20121029095828 aca0b6fe
+X 1 system.ads
+37K9*System 196e11 3|32r9 38r5 4|32r6 32r27 34r14 76r5
+X 3 s-valcha.ads
+32K16*Val_Char 1|37k9 3|38l12 38e20 4|34b21 76l12 76t20
+35V13*Value_Character{character} 35>30 4|40b13 74l8 74t23
+35s30 Str{string} 4|40b30 43r19 43r33 72r21
+X 4 s-valcha.adb
+41i7 F{natural} 46m28 50r14 50r32 51r50 57r19 63r19 68r16
+42i7 L{natural} 46m31 50r10 50r53 57r24 63r24 68r21
+43a7 S{string} 46m25 46r25 50r29 50r50 51r47 57r16 63r16 68r13
+56e14 C{character} 57r46 58r23
+62e14 C{character} 63r46 64r23
+X 5 s-valuti.ads
+34K16*Val_Util 4|32w13 32r34 5|117e20
+37U14*Bad_Value 4|72s10
+41U14*Normalize_String 4|46s7
+

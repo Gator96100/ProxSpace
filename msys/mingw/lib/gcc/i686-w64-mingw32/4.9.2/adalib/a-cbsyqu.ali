@@ -1,0 +1,107 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SIMPLE_BARRIERS
+RV NO_EXCEPTIONS
+RV NO_PROTECTED_TYPES
+RV STATIC_PRIORITIES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+RV MAX_PROTECTED_ENTRIES=2
+
+U ada.containers.bounded_synchronized_queues%b  a-cbsyqu.adb  3337dc61 NE OL PK GE
+W ada.containers%s	a-contai.ads		a-contai.ali
+
+U ada.containers.bounded_synchronized_queues%s  a-cbsyqu.ads  9b548bc2 BN NE OL PR PK GE
+W ada%s			ada.ads			ada.ali
+W ada.containers%s	a-contai.ads		a-contai.ali
+W ada.containers.synchronized_queue_interfaces%s
+W system%s		system.ads		system.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-contai.ads		20101025135030 61e5e089
+D a-cbsyqu.ads		20130708075250 81819250
+D a-cbsyqu.adb		20110906121430 b2b64e31
+D a-csquin.ads		20111013102228 24f8574d
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+X 1 ada.ads
+16K9*Ada 19e8 3|35r6 39r10 44r9 102r5 4|30r14 168r5
+X 2 a-contai.ads
+16K13*Containers 1|16k9 2|24e19 3|35r10 39r14 44r13 102r9 4|30r18 168r9
+20I9*Count_Type<integer> 3|41r23 53r34 63r49 65r53 72r16 74r34 75r24 76r24
+. 77r24 84r18 94r46 96r43 4|108r49 117r53 130r35 161r32
+22X4*Capacity_Error 4|74r19
+X 3 a-cbsyqu.ads
+38K17 Queue_Interfaces[5|37] 57r21 61r24 72r40 88r11 90r44 92r47 4|40r24
+. 70r21 139r36 150r33
+41i4 Default_Capacity{2|20I9} 84r32
+42i4 Default_Ceiling{8|97I12} 85r41
+44k24*Bounded_Synchronized_Queues 2|16k13 3|38z17 41z4 42z4 102l20 102e47
+. 4|30b29 168l20 168t47
+47K12*Implementation 71E12 81l8 81e22 99r14 4|32b17 122l8 122t22
+53R12 List_Type 53d23 55p17 56r28 59p17 60r27 63p16 63r31 65p16 65r35 74c12
+. 79e17 99r29 4|39r27 69r28 108r31 117r35
+53i23 Capacity{2|20I9} 74r23 78r44 4|58r34 73r33 83r33
+55U17 Enqueue 56=10 57>10 4|68b17 102l11 102t18 154s15
+56r10 List{53R12} 4|69b10 73r13 73r28 77r13 78m13 79m13 80m13 82r16 82r30
+. 83r16 83r28 84m16 84r31 85m16 85r29 88m16 89m16 93m13 93r28 94m13 94r26
+. 97m10 97r25 99r13 99r27 100m13 100r32
+57*10 New_Item{5|35+9[38]} 4|70b10 78r34 84r49 88r37 93r46
+59U17 Dequeue 60=10 61<10 4|38b17 62l11 62t18 143s15
+60r10 List{53R12} 4|39b10 42r37 45r25 46m10 46r25 48r13 49m13 50m13 52r16
+. 52r30 53m13 53r27 56m13 56r27 58r16 58r29 59m16
+61*10 Element{5|35+9[38]} 4|40b10 45m10
+63V16 Length{2|20I9} 63>24 4|108b16 111l11 111t17 132s22 140s19 151s19
+63r24 List{53R12} 4|108b24 110r17
+65V16 Max_Length{2|20I9} 65>28 4|117b16 120l11 120t21 163s22
+65r28 List{53R12} 4|117b28 119r17
+71A12 Element_Array(5|35+9[38])<2|20I9> 78r24 4|42r15
+75i10 First{2|20I9} 4|45r30 49m18 52r21 53m18 53r32 56m18 56r32 58r21 59m21
+. 79m18 82r21
+75i17 Last{2|20I9} 4|50m18 52r35 80m18 82r35 83r21 84r36 85m21 85r34 89m21
+. 93r33 94m18 94r31
+76i10 Length{2|20I9} 4|46m15 46r30 48r18 73r18 77r18 97m15 97r30 99r18 100r37
+. 110r22
+77i10 Max_Length{2|20I9} 4|99r32 100m18 119r22
+78a10 Elements{71A12} 4|42m42 78m18 84m21 88m21 93m18
+83W19*Queue 84d7 85d7 99E7 100l8 100e13 4|124b19 166l8 166t13
+84i7 Capacity{2|20I9} 99r40 4|151r28
+85i7 Ceiling{8|97I12} 87r18
+90Y24 Enqueue 90>33 4|150b13 155l11 155t18
+90*33 New_Item{5|35+9[38]} 4|154r24
+92Y24 Dequeue 92<33 4|139b13 144l11 144t18
+92*33 Element{5|35+9[38]} 4|143m24
+94V27 Current_Use{2|20I9}<5|64p13> 4|130b16 133l11 133t22
+96V27 Peak_Use{2|20I9}<5|66p13> 4|161b16 164l11 164t19
+99r7 List{53R12} 4|132r17 140r14 143m10 143r10 151r14 154m10 154r10 163r17
+X 4 a-cbsyqu.adb
+42a10 EE{3|71A12} 45r21
+139*22 Element{5|35+9[3|38]}
+150*22 New_Item{5|35+9[3|38]}
+X 5 a-csquin.ads
+35+9 Element_Type 3|57r38[38] 61r41[38] 72r57[38] 90r61[38] 92r64[38] 4|40r41[3|38]
+. 70r38[3|38] 139r53[3|38] 150r50[3|38]
+37k24*Synchronized_Queue_Interfaces 3|35w21 39r25 5|68e49
+40h9 Queue 3|88r28[38]
+X 8 system.ads
+37K9*System 3|34w6 42r23 42r46 85r18 8|196e11
+97I12*Any_Priority{integer} 3|42r30 85r25
+98I12*Priority{97I12} 3|42r53
+

@@ -1,0 +1,81 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+
+U gnat.altivec.vector_views%s  g-alvevi.ads	eb9b34f9 NE OL PK
+W gnat.altivec%s	g-altive.ads		g-altive.ali
+
+D gnat.ads		20110801150502 fd2ad2f1
+D g-altive.ads		20110804115738 de0831fa
+D g-alvevi.ads		20090409150020 35930503
+D system.ads		20121001083726 5fc8ae56
+X 1 gnat.ads
+34K9*GNAT 37e9 3|47r9 156r5
+X 2 g-altive.ads
+169K14*Altivec 1|34k9 2|427e17 3|47r14 156r10
+187N4*VECTOR_ALIGNMENT 3|56r43 63r41 70r39 83r44 90r42 97r40 110r42 117r40
+. 124r38 137r35 150r35
+218M9*unsigned_char 3|55r56
+221I9*signed_char<short_short_integer> 3|62r54
+224M12*bool_char{218M9} 3|69r52
+242M9*unsigned_short 3|82r58
+247I9*signed_short<short_integer> 3|89r56
+252M12*bool_short{242M9} 3|96r54
+269M9*unsigned_int 3|109r54
+272I9*signed_int<integer> 3|116r52
+275M12*bool_int{269M9} 3|123r50
+290F9*C_float<short_float> 3|136r49
+305M12*pixel{242M9} 3|149r49
+X 3 g-alvevi.ads
+47K22*Vector_Views 2|169k14 3|156l18 156e30
+53I9*Vchar_Range<short_short_integer> 55r40 62r38 69r36
+55A9*Varray_unsigned_char(2|218M9)<53I9> 56r8 59r16
+58R9*VUC_View 60e14
+59a7*Values{55A9}
+62A9*Varray_signed_char(2|221I9)<53I9> 63r8 66r16
+65R9*VSC_View 67e14
+66a7*Values{62A9}
+69A9*Varray_bool_char(2|224M12)<53I9> 70r8 73r16
+72R9*VBC_View 74e14
+73a7*Values{69A9}
+80I9*Vshort_Range<short_short_integer> 82r41 89r39 96r37
+82A9*Varray_unsigned_short(2|242M9)<80I9> 83r8 86r16
+85R9*VUS_View 87e14
+86a7*Values{82A9}
+89A9*Varray_signed_short(2|247I9)<80I9> 90r8 93r16
+92R9*VSS_View 94e14
+93a7*Values{89A9}
+96A9*Varray_bool_short(2|252M12)<80I9> 97r8 100r16
+99R9*VBS_View 101e14
+100a7*Values{96A9}
+107I9*Vint_Range<short_short_integer> 109r39 116r37 123r35
+109A9*Varray_unsigned_int(2|269M9)<107I9> 110r8 113r16
+112R9*VUI_View 114e14
+113a7*Values{109A9}
+116A9*Varray_signed_int(2|272I9)<107I9> 117r8 120r16
+119R9*VSI_View 121e14
+120a7*Values{116A9}
+123A9*Varray_bool_int(2|275M12)<107I9> 124r8 127r16
+126R9*VBI_View 128e14
+127a7*Values{123A9}
+134I9*Vfloat_Range<short_short_integer> 136r32
+136A9*Varray_float(2|290F9)<134I9> 137r8 140r16
+139R9*VF_View 141e14
+140a7*Values{136A9}
+147I9*Vpixel_Range<short_short_integer> 149r32
+149A9*Varray_pixel(2|305M12)<147I9> 150r8 153r16
+152R9*VP_View 154e14
+153a7*Values{149A9}
+

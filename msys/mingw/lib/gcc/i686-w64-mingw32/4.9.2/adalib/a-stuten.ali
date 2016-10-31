@@ -1,0 +1,117 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U ada.strings.utf_encoding%b  a-stuten.adb	cd3494c7 NE OL PK
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.strings.utf_encoding%s  a-stuten.ads	b3a2089b EE OL PU PK
+W ada.strings%s		a-string.ads		a-string.ali
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W unchecked_conversion%s
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-string.ads		20070406091342 90ac6797
+D a-stuten.ads		20110801150502 808c40ad
+D a-stuten.adb		20100623124434 4db8d46a
+D a-unccon.ads		20070406091342 f9eb8f06
+D interfac.ads		20140225151838 69adb1b9
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-imgint.ads		20090409150020 02dbe0c2
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-traent.ads		20140225151140 b5116092
+D unchconv.ads		20070406091342 ca2f9e18
+X 1 ada.ads
+16K9*Ada 19e8 4|42r9 144r5 5|32r14 209r5
+X 3 a-string.ads
+16K13*Strings 1|16k9 3|35e16 4|42r13 144r9 5|32r18 209r9
+X 4 a-stuten.ads
+42K21*UTF_Encoding 3|16k13 4|43r17 108E4 144l17 144e29 5|32b26 209l17 209t29
+45A12*UTF_String{string}<integer> 88r24 92r24 100r17 125r48 131r23 5|40r17
+. 68r48 71r16 135r22
+56E9*Encoding_Scheme 56e55 101r17 101r50 117r31 5|41r17 41r50
+56n29*UTF_8{56E9} 101r36 5|41r36 54r20
+56n36*UTF_16BE{56E9} 117r53 5|46r20 79r32 95r26 154r31 183r25
+56n46*UTF_16LE{56E9} 117r65 5|49r20 161r31
+59A12*UTF_8_String{string}<integer> 83r24
+62A12*UTF_16_Wide_String{wide_string}<integer> 96r24 123r23 133r48 5|66r23
+. 137r47 139r16
+69X4*Encoding_Error 5|126r13 145r16
+83a4*BOM_8{59A12} 5|52r59 167r68
+88a4*BOM_16BE{45A12} 5|45r51 79r46 153r39
+92a4*BOM_16LE{45A12} 5|48r54 79r60 160r42
+96a4*BOM_16{62A12} 5|89r51 175r24
+99V13*Encoding{56E9} 100>7 101>7 5|39b13 59l8 59t16
+100a7 Item{45A12} 5|40b7 44r10 45r13 45r19 45r33 48r16 48r22 48r36 51r16
+. 52r21 52r27 52r41
+101e7 Default{56E9} 5|41b7 58r14
+108V13 To_Unsigned_8[17|20]{7|57M9}
+111V13 To_Unsigned_16[17|20]{7|60M9} 5|97s18 108s18
+114V13 To_Unsigned_32[17|20]{7|63M9}
+117E12 UTF_XE_Encoding{56E9} 124r23 132r23 5|67r23 136r22
+122V13 From_UTF_16{45A12} 123>7 124>7 125>7 5|65b13 117l8 117t19
+123a7 Item{62A12} 5|66b7 71r37 87r15 89r18 89r37 96r24 97r34 107r24 108r34
+124e7 Output_Scheme{117E12} 5|67b7 79r16 95r10
+125b7 Output_BOM{boolean} 5|68b7 70r53 77r10
+130V13 To_UTF_16{62A12} 131>7 132>7 133>7 5|134b13 207l8 207t17
+131a7 Item{45A12} 5|135b7 139r41 144r10 150r15 152r10 153r13 160r16 167r16
+. 167r42 184r23 188r33 189r35 196r23 200r33 201r33
+132e7 Input_Scheme{117E12} 5|136b7 154r16 161r16 183r10
+133b7 Output_BOM{boolean} 5|137b7 174r10
+139U14 Raise_Encoding_Error 139>36 140r22 5|123b14 128l8 128t28 157s16 164s16
+. 168s13
+139i36 Index{natural} 5|123b36 124r32
+X 5 a-stuten.adb
+70i7 BSpace{natural} 71r51
+71a7 Result{4|45A12} 78m10 98m13 99m13 109m13 110m13 116r14
+72i7 Len{natural} 80m10 82m10 98r21 99r21 100m13 100r20 109r21 110r21 111m13
+. 111r20 116r27
+73m7 C{7|60M9} 97m13 98r61 99r48 108m13 109r48 110r61
+74i7 Iptr{natural} 87m7 89r10 89r43 90m10 90r18 96r16 97r40 101m13 101r21
+. 107r16 108r40 112m13 112r21
+124a7 Val{string} 127r33 127r38 127r55
+139a7 Result{4|62A12} 175m10 186m13 198m13 206r14
+140i7 Len{natural} 176m10 178m10 185m13 185r20 186r21 197m13 197r20 198r21
+. 206r27
+141i7 Iptr{natural} 150m7 153r19 153r27 155m16 155r24 157r38 160r22 160r30
+. 162m16 162r24 164r38 167r48 167r56 168r35 184r16 188r39 189r41 190m13 190r21
+. 196r16 200r39 201r39 202m13 202r21
+X 7 interfac.ads
+38K9*Interfaces 4|39w6 109r39 112r44 115r49 5|33r8 7|179e15
+57M9*Unsigned_8 4|109r50
+60M9*Unsigned_16 4|112r55 5|73r16
+63M9*Unsigned_32 4|115r60
+93V13*Shift_Right{60M9} 5|98s48 110s48
+X 17 unchconv.ads
+20v10*Unchecked_Conversion 4|40w6 109r6 112r6 115r6
+

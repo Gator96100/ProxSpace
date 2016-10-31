@@ -1,0 +1,58 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_RECURSION
+RV SPARK_05
+
+U system.img_llw%b	s-imgllw.adb		c2d63ebb NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U system.img_llw%s	s-imgllw.ads		204787dc NE OL PU PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-imgllw.ads		20090409150020 2e89bb25
+D s-imgllw.adb		20090409150020 bd591731
+D s-unstyp.ads		20140225151140 510692af
+X 1 system.ads
+37K9*System 196e11 2|36r6 38r9 56r11 69r5 3|32r6 32r33 34r14 136r5
+X 2 s-imgllw.ads
+38K16*Img_LLW 1|37k9 2|69l12 69e19 3|34b21 136l12 136t19
+41U14*Set_Image_Width_Long_Long_Integer 42>7 43>7 44<7 45=7 3|40b14 81l8
+. 81t41
+42i7 V{long_long_integer} 3|41b7 51r10 53r33 68r37
+43i7 W{integer} 3|42b7 53r37 68r41
+44s7 S{string} 3|43b7 53m40 60m10 68m48 74r16 78m10
+45i7 P{natural} 3|44b7 53m43 59m10 59r15 60r13 61r19 68m51
+55U14*Set_Image_Width_Long_Long_Unsigned 56>7 57>7 58<7 59=7 3|52s10 67s13
+. 87b14 134l8 134t42
+56m7 V{4|47M9} 3|88b7 114r19
+57i7 W{integer} 3|89b7 118r22 120r20
+58s7 S{string} 3|90b7 104m13 107m13 124m13 124r22 130m13
+59i7 P{natural} 3|91b7 93r35 103m13 103r18 104r16 106m13 106r18 107r16 118r10
+. 119r15 120m10 120r15 120r25 121r15
+X 3 s-imgllw.adb
+46i7 Start{natural} 61m10 74r19 75m13 75r22 78r13
+93i7 Start{natural} 118r14 120r29 123r20 129r19
+94i7 F{natural} 119m10 123r16 124r25 126m13 126r18
+94i10 T{natural} 121m10 124r16 125m13 125r18 129r32
+96U17 Set_Digits 96>29 99b17 102s13 109l11 109t21 114s7
+96m29 T{4|47M9} 99b29 101r13 102r25 104r37 107r37
+129i14 J{integer} 130r16
+X 4 s-unstyp.ads
+40K16*Unsigned_Types 2|36w13 56r18 3|32w13 32r40 4|208e26
+47M9*Long_Long_Unsigned 2|56r33 3|53r13 68r16 88r11 96r33 99r33
+

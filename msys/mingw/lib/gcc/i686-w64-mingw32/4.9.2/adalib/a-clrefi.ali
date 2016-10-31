@@ -1,0 +1,162 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
+RV NO_EXCEPTIONS
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_IMPLICIT_LOOPS
+RV NO_LOCAL_ALLOCATORS
+RV NO_RECURSION
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_DEALLOCATION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U ada.command_line.response_file%b  a-clrefi.adb  ccc78374 NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.unchecked_deallocation%s
+W system%s		system.ads		system.ali
+W system.os_lib%s	s-os_lib.adb		s-os_lib.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U ada.command_line.response_file%s  a-clrefi.ads  b1869dd1 EE OL PK
+W ada.command_line%s	a-comlin.adb		a-comlin.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.strings%s	s-string.adb		s-string.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-comlin.ads		20140225151544 ea62afbc
+D a-clrefi.ads		20140225151544 d4017dda
+D a-clrefi.adb		20140225151544 9a29f4b9
+D a-except.ads		20140129161954 f86a4103
+D a-unccon.ads		20070406091342 f9eb8f06
+D a-uncdea.ads		20070406091342 f15a5ed1
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-os_lib.ads		20140225151140 73b554c6
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-string.ads		20140225151140 8fe54fb7
+D s-traent.ads		20140225151140 b5116092
+X 1 ada.ads
+16K9*Ada 19e8 3|43r9 100r5 4|34r6 38r14 49r26 52r26 527r5
+X 2 a-comlin.ads
+38K13*Command_Line 1|16k9 2|139e21 3|43r13 100r9 4|38r18 527r9
+X 3 a-clrefi.ads
+43K26*Response_File 2|38k13 3|100l22 100e35 4|38b31 527l22 527t35
+45P12*String_Access{16|45P9} 48r31 4|43r14
+48U14*Free=48:69
+48p20 S{16|45P9}
+51A12*Argument_List{16|54A9}<integer> 76r14 4|51r40 53r7 64r14 70r48 90r22
+. 425r54 434r53 451r48 504r28
+54N4*Max_Line_Length 4|119r30
+57X4*File_Does_Not_Exist 4|234r22
+60X4*Line_Too_Long 4|281r22
+64X4*No_Closing_Quote 4|350r31 382r25
+68X4*Circularity_Detected 4|255r28
+72V13*Arguments_From{51A12} 73>7 74>7 75>7 4|60b13 525l8 525t22
+73s7 Response_File_Name{string} 4|61b7 499r16
+74b7 Recursive{boolean} 4|62b7 404r13
+75b7 Ignore_Non_Existing_Files{boolean} 4|63b7 231r16
+X 4 a-clrefi.adb
+40R9 File_Rec 41r28 42c9 46e14 49r54 242r19 263r22
+41P9 File_Ptr(40R9) 44r14 45r14 49r64 66r20 67r20 250r26
+43p7*Name{3|45P12} 243m18 254r30 264m21 476m45 482m44 519m45
+44p7*Next{41P9} 244m18 258r38 262m26 265m21 267r39 484m29 518r37
+45p7*Prev{41P9} 245m18 266m21 483r36
+49U14 Free[7|20] 477s13 484s13 520s13
+51P9 Argument_List_Access(3|51A12) 53r22 70r20 89r41
+52U14 Free[7|20] 94s16 445s31 506s10 515s10
+66p7 First_File{41P9} 240r13 241m13 246r27 250r38 475r13 476r34 477m19 477r19
+. 478m13 517r16 518r26 519r34 520m19 520r19 521m13
+67p7 Last_File{41P9} 246m13 262r16 266r29 267m16 267r29 475r26 479m13 482r34
+. 483m13 483r26 484r19 518m13 521r27
+70p7 Arguments{51P9} 87r24 90r42 92r31 92r51 93r16 94m22 94r22 95m16 100r10
+. 408r19 409r19 413r22 414r22 415r24 424r27 424r49 426r27 435r30 443r31 444r43
+. 445m37 445r37 451m31 456r28 504r45 506m16 506r16 515m16 515r16
+71i7 Last_Arg{natural} 87r13 99m10 99r22 100r21 223m10 406r26 414r40 415r46
+. 416m22 416r34 426r43 435r46 444m31 447r37 448m34 448r46 451r68 454m28 456r44
+. 504r61
+73U17 Add_Argument 73>31 85b17 101l11 101t23 391s19
+73s31 Arg{string} 85b31 100r46
+77U17 Recurse 77>26 107b17 428s25 492l11 492t18 499s7
+77s26 File_Name{string} 107b26 228r27 243r38 254r41 264r41
+89p16 New_Arguments{51P9} 92r16 95r29
+108i10 FD{10|171I9} 157r36 228m10 230r13 400r17 489r20
+110N10 Buffer_Size 111r32
+111a10 Buffer{string} 157m40 157r40 157r60 158r52 177r22 202r22
+113i10 Buffer_Length{natural} 148r65 157m13 158r36 192r35 210r35
+115i10 Buffer_Cursor{natural} 148r49 159m13 177r30 190m16 190r33 192r19 202r30
+. 208m16 208r33 210r19
+117b10 End_Of_File_Reached{boolean} 148r20 158m13 271m10
+119a10 Line{string} 184m16 186r26 280r23 293r29 294r29 311r25 315m25 316r27
+. 322r27 323r27 334r41 349r25 358r25 363m22 364r24 371r32 372r32 390r26
+120i10 Last{natural} 170m13 183m16 183r24 184r22 186r19 280r16 292r36 298r48
+. 306r35 315r44 316r50 317m25 317r33 321r40 345r37 349r31 363r41 364r47 365m22
+. 365r30
+122i10 First_Char{positive} 284m13 292r22 293r35 294r35 295m19 295r33 298r35
+. 300r29 388r50 390r32 396m16
+125i10 Last_Char{natural} 300m16 306r22 311r31 315r31 316r33 321r28 322r33
+. 323r33 327m28 327r41 334r47 337m31 337r44 342m25 342r38 345r25 358r31 363r28
+. 364r30 371r38 372r38 374m22 374r35 388r38 390r46 396r30
+128b10 In_String{boolean} 301m16 310r22 325m28 334m28 336r31 362m22 381r19
+131i10 Arg{positive} 405m13 406r19 408r30 409r30 413r33 414r33 415r35 424r38
+. 424r60 457r54 460r31 462m28 462r35 468m19 468r26
+133V19 End_Of_File{boolean} 146b19 149l14 149t25 172s16 195s22 213s22 277s20
+136U20 Get_Buffer 155b20 160l14 160t24 193s19 211s19 272s10
+139U20 Get_Line 166b20 218l14 218t22 278s13
+167e13 Ch{character} 177m16 179r26 180r26 181r26 184r31 202m16 204r26 205r26
+. 206r26
+250p16 Current{41P9} 254r22 258m19 258r30 259r29
+276l10 Line_Loop 398l19 398e28
+288l13 Arg_Loop 298r21 397l22 397e30
+305l16 Character_Loop 328r33 355r30 370r27 376l25 376e39
+388a19 Arg{string} 390m19 391r33
+423a25 Inc_File_Name{string} 428r34
+425a25 Current_Arguments{3|51A12} 437r30 457r30 459r28 460r42
+434a28 New_Arguments{3|51A12} 438r30 458r28 462r41
+436i28 New_Last_Arg{positive} 443r48 447r48 454r40
+504a10 Result{3|51A12} 507r17
+X 7 a-uncdea.ads
+20u15*Unchecked_Deallocation 4|34w10 49r30 52r30
+X 8 system.ads
+37K9*System 3|41r6 45r29 48r54 51r29 4|36r6 36r25 476r13 482r13 519r13 8|196e11
+X 10 s-os_lib.ads
+59K16*OS_Lib 4|36w13 36r32 10|1009e18
+88V14*"&"=89:41{16|54A9} 4|457r63 458r42
+171I9*File_Descriptor<integer> 4|108r15
+179i4*Invalid_FD{171I9} 4|230r18
+182n26*Text{182E9} 4|228r38
+193V13*Open_Read{171I9} 4|228s16
+284U14*Close 4|400s10 489s13
+387V13*Read{integer} 4|157s30
+X 16 s-string.ads
+42K16*Strings 3|41w13 45r36 48r61 51r36 4|476r20 482r20 519r20 16|63e19
+45P9*String_Access(string) 3|45r44
+49U14*Free[7|20] 3|48r69 4|476s28 482s28 519s28
+54A9*String_List(45P9)<integer> 3|51r44
+

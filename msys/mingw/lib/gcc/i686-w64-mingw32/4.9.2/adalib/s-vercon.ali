@@ -1,0 +1,44 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV SPARK_05
+
+U system.version_control%b  s-vercon.adb	23ea876e NE OL PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+U system.version_control%s  s-vercon.ads	bddcd774 NE OL PU PK
+W system%s		system.ads		system.ali
+W system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D system.ads		20121001083726 5fc8ae56
+D s-unstyp.ads		20140225151140 510692af
+D s-vercon.ads		20090409150020 b312eb8d
+D s-vercon.adb		20090409150020 c1fefe4c
+X 1 system.ads
+37K9*System 196e11 3|36r6 38r9 45r14 52r5 4|32r6 32r33 34r14 41r14 58r5
+X 2 s-unstyp.ads
+40K16*Unsigned_Types 208e26 3|36w13 45r21 4|32w13 32r40 41r21
+45M9*Unsigned 3|45r36 4|41r36 45r11 46r27
+X 3 s-vercon.ads
+38K16*Version_Control 1|37k9 3|52l12 52e27 4|34b21 58l12 58t27
+41A12*Version_String{string}<integer> 46r14 4|42r14 44r11
+44V13*Get_Version_String{41A12} 45>7 4|40b13 56l8 56t26
+45m7 V{2|45M9} 4|41b7 45r23
+X 4 s-vercon.adb
+44a7 S{3|41A12} 51m10 55r14
+45m7 D{2|45M9} 51r22 52m10 52r15
+46a7 H(character) 51r19
+50i11 J{integer} 51r13
+

@@ -1,0 +1,114 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P ZX
+
+RN
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.pool_global%b	s-pooglo.adb		e34550ca NE OL PK
+W system%s		system.ads		system.ali
+W system.memory%s	s-memory.adb		s-memory.ali
+W system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+
+U system.pool_global%s	s-pooglo.ads		c88d2d16 EB EE OL PF PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-exctab.ads		20140225151140 54135002
+D s-finroo.ads		20120426095924 4ff27390
+D s-memory.ads		20140225151140 597d6634
+D s-parame.ads		20140225151140 ab8cb46a
+D s-pooglo.ads		20110804083314 542f33d0
+D s-pooglo.adb		20110829101446 5f7651ec
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-traent.ads		20140225151140 b5116092
+X 3 a-finali.ads
+58U14*Initialize<9|44p14>
+59U14*Finalize<9|43p14>
+X 7 system.ads
+37K9*System 196e11 12|35w6 36r6 37r6 39r9 54r6 58r14 62r26 63r22 64r22 68r22
+. 69r22 70r22 79r5 13|32r6 32r32 33r6 35r14 37r24 45r26 53r25 54r25 85r29
+. 89r34 107r22 111r11 125r29 128r41 156r5
+64M9*Address 12|62r33 68r29 13|45r33 53r32 54r32 85r36 89r41 107r29 125r36
+. 128r48
+66m4*Null_Address{64M9} 13|67r22
+68N4*Storage_Unit 13|89r56 128r63
+78V14*"="{boolean} 13|67r20
+X 9 s-finroo.ads
+42U14*Adjust
+X 10 s-memory.ads
+45K16*Memory 107e18 13|33w13 61r20 61r34 130r13 134r10
+48M9*size_t 13|61r41
+53V13*Alloc{7|64M9} 103i<c,__gnat_malloc>22 13|61s27
+68U14*Free 104i<c,__gnat_free>22 13|130s20 134s17
+76V13*Realloc{7|64M9} 105i<c,__gnat_realloc>22
+X 12 s-pooglo.ads
+39K16*Pool_Global 7|37k9 12|79l12 79e23 13|35b21 156l12 156t23
+53R9*Unbounded_No_Reclaim_Pool<19|42R9> 3|58P14 59P14 9|42p14 12|54e61 56P24
+. 57r14 60P25 61r29 66P25 67r29 77r25 13|44r29 106r29 143r15
+56V24*Storage_Size{17|62I12}<19|60p13> 57>7 13|142b24 154l8 154t20
+57r7 Pool{53R9} 13|143b7 146r29
+60U25*Allocate<19|46p14> 61=7 62<7 63>7 64>7 13|43b25 99l8 99t16
+61r7 Pool{53R9} 13|44b7 50r29
+62m7 Address{7|64M9} 13|45b7 94m10 97m10
+63i7 Storage_Size{17|62I12} 13|46b7 52r42
+64i7 Alignment{17|62I12} 13|47b7 57r10 58r41 74r10 79r55 80r62
+66U25*Deallocate<19|53p14> 67=7 68>7 69>7 70>7 13|105b25 136l8 136t18
+67r7 Pool{53R9} 13|106b7 112r29
+68m7 Address{7|64M9} 13|107b7 128r15 134r23
+69i7 Storage_Size{17|62I12} 13|108b7 113r29
+70i7 Alignment{17|62I12} 13|109b7 120r10
+77r4*Global_Pool_Object{53R9}
+X 13 s-pooglo.adb
+37K12 SSE=37:31 46r22 47r22 49r11 108r22 109r22 144r15 153r14
+52i7 Aligned_Size{17|62I12} 58m10 58r26 61r49
+53m7 Aligned_Address{7|64M9} 78m10 88r16 94r21
+54m7 Allocated{7|64M9} 61m7 67r10 79r25 80r30 91r30 97r21
+85m13 Saved_Address{7|64M9} 86m33 86r33 87m17 87r17 91m13
+125m13 Saved_Address{7|64M9} 126m33 126r33 127m17 127r17 130r26
+X 17 s-stoele.ads
+42K16*Storage_Elements 12|37w13 58r21 63r29 64r29 69r29 70r29 13|37r31 111r18
+. 17|117e28
+54I9*Storage_Offset<integer> 13|89r18 128r25
+62I12*Storage_Count{54I9} 12|58r38 63r46 64r46 69r46 70r46 13|46r26 47r26
+. 52r25 108r26 109r26 144r19 153r18
+86V14*"-"{7|64M9} 13|89s16 128s23
+105M9*Integer_Address 13|79r38 80r45
+107V13*To_Address{7|64M9} 13|78s29
+112V13*To_Integer{105M9} 13|79s13 80s18
+X 19 s-stopoo.ads
+39K16*Storage_Pools 12|36w13 54r13 13|32w13 32r39 19|100e25
+42H9*Root_Storage_Pool<3|55R9> 12|54r27 19|67e62
+

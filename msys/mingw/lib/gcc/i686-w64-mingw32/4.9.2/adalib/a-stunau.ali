@@ -1,0 +1,89 @@
+V "GNAT Lib v4.9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -g
+A -gnatp
+A -gnatg
+A -mtune=generic
+A -march=i686
+P SS ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.strings.unbounded.aux%b  a-stunau.adb	da8cbe06 NE OL PK
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+
+U ada.strings.unbounded.aux%s  a-stunau.ads	5c293c89 BN NE OL PR PK
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+
+D ada.ads		20070406091342 3ffc8e18
+D a-charac.ads		20070912115822 2d3ec45b
+D a-chlat1.ads		20140225151544 66457d31
+D a-except.ads		20140129161954 f86a4103
+D a-finali.ads		20111121113556 52ecdc1b
+D a-stream.ads		20140122164720 1a984740
+D a-string.ads		20070406091342 90ac6797
+D a-strmap.ads		20090409150020 9cb836fb
+D a-strunb.ads		20120426100352 3f91d4c5
+D a-stunau.ads		20110805141436 63b8e84c
+D a-stunau.adb		20100623125138 b934564a
+D a-tags.ads		20111212115430 6c0509d0
+D a-unccon.ads		20070406091342 f9eb8f06
+D system.ads		20121001083726 5fc8ae56
+D s-atocou.ads		20131010110730 cd7c94ca
+D s-atocou.adb		20131010110730 276bb8fc
+D s-exctab.ads		20140225151140 54135002
+D s-finmas.ads		20140225151140 814daec4
+D s-finroo.ads		20120426095924 4ff27390
+D s-maccod.ads		20110906094622 0fbb7bce
+D s-parame.ads		20140225151140 ab8cb46a
+D s-secsta.ads		20140225151140 86a2856d
+D s-soflin.ads		20140225151140 aa763b52
+D s-stache.ads		20140225151140 a37c21ec
+D s-stalib.ads		20140225151140 a891183f
+D s-stoele.ads		20140225151140 2dc34a04
+D s-stoele.adb		20140225151140 ed88f8fb
+D s-stopoo.ads		20131010103754 b16154c2
+D s-stposu.ads		20121005142122 ffeba1c5
+D s-stratt.ads		20131014135146 aedef97e
+D s-traent.ads		20140225151140 b5116092
+D s-unstyp.ads		20140225151140 510692af
+X 1 ada.ads
+16K9*Ada 19e8 10|37r9 77r5 11|32r14 62r5
+X 7 a-string.ads
+16K13*Strings 1|16k9 7|35e16 10|37r13 77r9 11|32r18 62r9
+X 9 a-strunb.ads
+76K21*Unbounded 7|16k13 9|489e26 10|37r21 77r17 11|32r26 62r17
+79R9*Unbounded_String<5|48R9> 473e14 10|55r11 71r38 11|39r11 54r38
+86P9*String_Access(string) 10|71r60 11|54r60 55r11
+88U14*Free 11|59s7
+102U14*Set_Unbounded_String 11|58s7
+433R9 Shared_String
+437i7*Last{natural} 11|47r24
+438a7*Data{string} 11|44m37
+443P9 Shared_String_Access(433R9)
+472p7*Reference{443P9} 11|44r27 47r14
+X 10 a-stunau.ads
+37K31*Aux 9|76k21 10|77l27 77e30 11|32b36 62l27 62t30
+40A12*Big_String{string}<integer> 41r36 47r41 11|43r19
+47P9*Big_String_Access(40A12) 48r8 56r15 11|40r15
+54U14*Get_String 55>7 56<7 57<7 58r19 11|38b14 48l8 48t18
+55r7 U{9|79R9} 11|39b7 44r25 47r12
+56p7 S{47P9} 11|40b7 46m7
+57i7 L{natural} 11|41b7 47m7
+71U14*Set_String 71=26 71>56 72r19 11|54b14 60l8 60t18
+71r26 UP{9|79R9} 11|54b26 58m29
+71p56 S{9|86P9} 11|54b56 55r28 58r33
+X 11 a-stunau.adb
+43a7 X{10|40A12} 44m11 44r11 46m12 46r12
+55p7 X{9|86P9} 59m13 59r13
+

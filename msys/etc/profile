@@ -8,6 +8,7 @@
 
 export DEVKITARM=/devkitARM
 export QTDIR=/qt
+export QT_QPA_PLATFORM_PLUGIN_PATH=$QTDIR/plugins/platforms
 
 if [ -z "$MSYSTEM" ]; then
   MSYSTEM=MINGW32

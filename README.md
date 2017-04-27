@@ -13,6 +13,7 @@
 	* gcc 4.9.2
 	* Qt 5.6
 	* perl 5.8.6
+	* git 2.12.2
 ## Usage ##
 
 	Extract 'ProxSpace' to a location on drive without spaces.

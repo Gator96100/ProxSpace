@@ -1,6 +1,10 @@
 /* Script for ld -Ur: link w/out relocation, do create constructors */
+/* Copyright (C) 2014 Free Software Foundation, Inc.
+   Copying and distribution of this script, with or without modification,
+   are permitted in any medium without royalty provided the copyright
+   notice and this notice are preserved.  */
 OUTPUT_FORMAT(pe-i386)
-SEARCH_DIR("=/usr/local/lib"); SEARCH_DIR("=/lib"); SEARCH_DIR("=/usr/lib");
+SEARCH_DIR("=/c/mingw530/prerequisites/i686-binutils-nomulti/i686-w64-mingw32/lib"); SEARCH_DIR("=/c/mingw530/prerequisites/i686-binutils-nomulti/lib"); SEARCH_DIR("=/usr/local/lib"); SEARCH_DIR("=/lib"); SEARCH_DIR("=/usr/lib");
 SECTIONS
 {
   .text  :
@@ -74,7 +78,7 @@ SECTIONS
   {
     /* end is deprecated, don't use it */
   }
-  .rsrc  :
+  .rsrc  : SUBALIGN(4)
   {
     *(.rsrc)
   }

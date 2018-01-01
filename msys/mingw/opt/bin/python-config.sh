@@ -31,7 +31,7 @@ installed_prefix ()
     fi
     # Since we don't know where the output from this script will end up
     # we keep all paths in Windows-land since MSYS2 can handle that
-    # whilst native tools can't handle paths in MSYS2-land.
+    # while native tools can't handle paths in MSYS2-land.
     if [ "$OSTYPE" = "msys" ]; then
         RESULT=$(cd "$RESULT" && pwd -W)
     elif [ $(which $READLINK) ] ; then
@@ -40,7 +40,7 @@ installed_prefix ()
     echo $RESULT
 }
 
-prefix_build="/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt"
+prefix_build="/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt"
 prefix_real=$(installed_prefix "$0")
 
 # Use sed to fix paths from their built to locations to their installed to locations.
@@ -49,7 +49,7 @@ exec_prefix_build="${prefix}"
 exec_prefix=$(echo "$exec_prefix_build" | sed "s#$exec_prefix_build#$prefix_real#")
 includedir=$(echo "${prefix}/include" | sed "s#$prefix_build#$prefix_real#")
 libdir=$(echo "${exec_prefix}/lib" | sed "s#$prefix_build#$prefix_real#")
-CFLAGS=$(echo "-O2 -pipe -I/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include -I/c/mingw492/prerequisites/i686-zlib-static/include -I/c/mingw492/prerequisites/i686-w64-mingw32-static/include -fwrapv -DNDEBUG -D__USE_MINGW_ANSI_STDIO=1" | sed "s#$prefix_build#$prefix_real#")
+CFLAGS=$(echo "-O2 -pipe -I/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include -I/c/mingw530/prerequisites/i686-zlib-static/include -I/c/mingw530/prerequisites/i686-w64-mingw32-static/include -fwrapv -DNDEBUG -D__USE_MINGW_ANSI_STDIO=1" | sed "s#$prefix_build#$prefix_real#")
 VERSION="2.7"
 LIBM="-lm"
 LIBC=""

@@ -26,8 +26,9 @@ MODULE_SCOPE Tcl_Method Itcl_NewForwardClassMethod(Tcl_Interp *interp,
         Tcl_Class clsPtr, int flags, Tcl_Obj *nameObj, Tcl_Obj *prefixObj);
 MODULE_SCOPE int Itcl_SelfCmd(ClientData clientData, Tcl_Interp *interp,
         int objc, Tcl_Obj *const *objv);
+MODULE_SCOPE int Itcl_IsMethodCallFrame(Tcl_Interp *interp);
 MODULE_SCOPE int Itcl_InvokeEnsembleMethod(Tcl_Interp *interp, Tcl_Namespace *nsPtr,
     Tcl_Obj *namePtr, Tcl_Proc *procPtr, int objc, Tcl_Obj *const *objv);
 MODULE_SCOPE int Itcl_InvokeProcedureMethod(ClientData clientData, Tcl_Interp *interp,
 	int objc, Tcl_Obj *const *objv);
-
+MODULE_SCOPE void Itcl_IncrObjectRefCount(Tcl_Object ptr);

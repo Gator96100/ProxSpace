@@ -5,12 +5,23 @@
  */
 #ifndef _INC_WLANAPI
 #define _INC_WLANAPI
+
+#include <l2cmn.h>
 #include <windot11.h>
 #include <eaptypes.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define WLAN_NOTIFICATION_SOURCE_NONE      L2_NOTIFICATION_SOURCE_NONE
+#define WLAN_NOTIFICATION_SOURCE_ALL       L2_NOTIFICATION_SOURCE_ALL
+#define WLAN_NOTIFICATION_SOURCE_ACM       L2_NOTIFICATION_SOURCE_WLAN_ACM
+#define WLAN_NOTIFICATION_SOURCE_MSM       L2_NOTIFICATION_SOURCE_WLAN_MSM
+#define WLAN_NOTIFICATION_SOURCE_SECURITY  L2_NOTIFICATION_SOURCE_WLAN_SECURITY
+#define WLAN_NOTIFICATION_SOURCE_IHV       L2_NOTIFICATION_SOURCE_WLAN_IHV
+#define WLAN_NOTIFICATION_SOURCE_HNWK      L2_NOTIFICATION_SOURCE_WLAN_HNWK
+#define WLAN_NOTIFICATION_SOURCE_ONEX      L2_NOTIFICATION_SOURCE_ONEX
 
 typedef DWORD WLAN_REASON_CODE, *PWLAN_REASON_CODE;
 typedef ULONG WLAN_SIGNAL_QUALITY, *PWLAN_SIGNAL_QUALITY;
@@ -386,9 +397,6 @@ DWORD WINAPI WlanSetProfilePosition(
   PVOID pReserved
 );
 
-#if (_WIN32_WINNT >= 0x0600)
-typedef char DOT11_COUNTRY_OR_REGION_STRING[3];
-
 typedef enum _WLAN_AUTOCONF_OPCODE {
   wlan_autoconf_opcode_start                                       = 0,
   wlan_autoconf_opcode_show_denied_networks                        = 1,
@@ -737,8 +745,6 @@ DWORD WINAPI WlanUIEditProfile(
   PVOID pReserved,
   PWLAN_REASON_CODE *pWlanReasonCode
 );
-
-#endif /*(_WIN32_WINNT >= 0x0600)*/
 
 #ifdef __cplusplus
 }

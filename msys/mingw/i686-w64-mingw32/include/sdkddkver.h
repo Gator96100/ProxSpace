@@ -21,6 +21,7 @@
 #define _WIN32_WINNT_LONGHORN		0x0600
 #define _WIN32_WINNT_WIN7		0x0601
 #define _WIN32_WINNT_WIN8		0x0602
+#define _WIN32_WINNT_WINBLUE            0x0603
 
 /* _WIN32_IE */
 #define _WIN32_IE_IE20			0x0200
@@ -36,6 +37,8 @@
 #define _WIN32_IE_IE60SP2		0x0603
 #define _WIN32_IE_IE70			0x0700
 #define _WIN32_IE_IE80			0x0800
+#define _WIN32_IE_IE90                  0x0900
+#define _WIN32_IE_IE100                 0x0a00
 
 /* Mappings Between IE Version  and Windows Version */
 #define _WIN32_IE_NT4			_WIN32_IE_IE20
@@ -61,6 +64,8 @@
 #define _WIN32_IE_WIN6			_WIN32_IE_IE70
 #define _WIN32_IE_LONGHORN		_WIN32_IE_IE70
 #define _WIN32_IE_WIN7			_WIN32_IE_IE80
+#define _WIN32_IE_WIN8                  _WIN32_IE_IE100
+#define _WIN32_IE_WINBLUE               _WIN32_IE_IE100
 
 /* NTDDI_VERSION */
 #ifndef NTDDI_WIN2K
@@ -121,9 +126,10 @@
 
 #define NTDDI_WIN7			0x06010000
 #define NTDDI_WIN8                      0x06020000
+#define NTDDI_WINBLUE                   0x06030000
 
 /* Version Fields in NTDDI_VERSION */
-#define OSVERSION_MASK			0xFFFF0000
+#define OSVERSION_MASK			0xFFFF0000U
 #define SPVERSION_MASK			0x0000FF00
 #define SUBVERSION_MASK			0x000000FF
 
@@ -169,9 +175,15 @@
 #elif (_WIN32_WINNT <= _WIN32_WINNT_WINXP)
 #define _WIN32_IE	_WIN32_IE_IE60
 #elif (_WIN32_WINNT <= _WIN32_WINNT_WS03)
-#define _WIN32_IE	0x0602
+#define _WIN32_IE	_WIN32_IE_WS03
+#elif (_WIN32_WINNT <= _WIN32_WINNT_VISTA)
+#define _WIN32_IE       _WIN32_IE_LONGHORN
+#elif (_WIN32_WINNT <= _WIN32_WINNT_WIN7)
+#define _WIN32_IE       _WIN32_IE_WIN7
+#elif (_WIN32_WINNT <= _WIN32_WINNT_WIN8)
+#define _WIN32_IE       _WIN32_IE_WIN8
 #else
-#define _WIN32_IE	0x0700
+#define _WIN32_IE       0x0a00
 #endif
 #else
 #define _WIN32_IE	0x0700

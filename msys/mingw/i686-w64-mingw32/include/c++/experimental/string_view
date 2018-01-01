@@ -1,6 +1,6 @@
 // Components for manipulating non-owning sequences of characters -*- C++ -*-
 
-// Copyright (C) 2013-2014 Free Software Foundation, Inc.
+// Copyright (C) 2013-2015 Free Software Foundation, Inc.
 //
 // This file is part of the GNU ISO C++ Library.  This library is free
 // software; you can redistribute it and/or modify it under the
@@ -46,14 +46,19 @@ namespace std _GLIBCXX_VISIBILITY(default)
 {
 namespace experimental
 {
+inline namespace fundamentals_v1
+{
 _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
+#define __cpp_lib_experimental_string_view 201411
+
   /**
-   *  @class basic_string_view <string_view>
+   *  @class basic_string_view <experimental/string_view>
    *  @brief  A non-owning reference to a string.
    *
    *  @ingroup strings
    *  @ingroup sequences
+   *  @ingroup experimental
    *
    *  @tparam _CharT  Type of character
    *  @tparam _Traits  Traits for character type, defaults to
@@ -212,13 +217,6 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
       { return this->_M_str; }
 
       // [string.view.modifiers], modifiers:
-
-      void
-      clear() noexcept
-      {
-	this->_M_len = 0;
-	this->_M_str = nullptr;
-      }
 
       void
       remove_prefix(size_type __n)
@@ -581,6 +579,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 #endif
 
 _GLIBCXX_END_NAMESPACE_VERSION
+} // namespace fundamentals_v1
 } // namespace experimental
 
 
@@ -660,22 +659,22 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   inline namespace string_view_literals
   {
 
-    inline basic_string_view<char>
+    inline constexpr basic_string_view<char>
     operator""sv(const char* __str, size_t __len)
     { return basic_string_view<char>{__str, __len}; }
 
 #ifdef _GLIBCXX_USE_WCHAR_T
-    inline basic_string_view<wchar_t>
+    inline constexpr basic_string_view<wchar_t>
     operator""sv(const wchar_t* __str, size_t __len)
     { return basic_string_view<wchar_t>{__str, __len}; }
 #endif
 
 #ifdef _GLIBCXX_USE_C99_STDINT_TR1
-    inline basic_string_view<char16_t>
+    inline constexpr basic_string_view<char16_t>
     operator""sv(const char16_t* __str, size_t __len)
     { return basic_string_view<char16_t>{__str, __len}; }
 
-    inline basic_string_view<char32_t>
+    inline constexpr basic_string_view<char32_t>
     operator""sv(const char32_t* __str, size_t __len)
     { return basic_string_view<char32_t>{__str, __len}; }
 #endif

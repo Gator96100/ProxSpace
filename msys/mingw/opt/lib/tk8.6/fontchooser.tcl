@@ -29,6 +29,10 @@ namespace eval ::tk::fontchooser {
     set S(-title) [::msgcat::mc "Font"]
     set S(-command) ""
     set S(-font) TkDefaultFont
+}
+
+proc ::tk::fontchooser::Setup {} {
+    variable S
 
     # Canonical versions of font families, styles, etc. for easier searching
     set S(fonts,lcase) {}
@@ -52,6 +56,7 @@ namespace eval ::tk::fontchooser {
         configure ::tk::fontchooser::Configure
     }
 }
+::tk::fontchooser::Setup
 
 proc ::tk::fontchooser::Show {} {
     variable S
@@ -100,7 +105,7 @@ proc ::tk::fontchooser::Configure {args} {
 	    "bad option \"$option\": must be\
             -command, -font, -parent, -title or -visible"
     }
-    
+
     set cache [dict create -parent $S(-parent) -title $S(-title) \
                    -font $S(-font) -command $S(-command)]
     set r [tclParseConfigSpec [namespace which -variable S] $specs "" $args]

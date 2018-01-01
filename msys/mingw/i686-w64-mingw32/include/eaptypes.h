@@ -5,7 +5,7 @@
  */
 #ifndef _INC_EAPTYPES
 #define _INC_EAPTYPES
-#if (_WIN32_WINNT >= 0x0600)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -296,7 +296,7 @@ typedef struct _EAP_METHOD_INFO_ARRAY_EX {
 typedef struct _EAP_CRED_EXPIRY_REQ {
   EAP_CONFIG_INPUT_FIELD_ARRAY curCreds;
   EAP_CONFIG_INPUT_FIELD_ARRAY newCreds;
-} EAP_CRED_EXPIRY_REQ, *PEAP_CRED_EXPIRY_REQ;
+} /* EAP_CRED_EXPIRY_REQ, */ *PEAP_CRED_EXPIRY_REQ;
 
 typedef struct _EAP_CRED_EXPIRY_RESP {
   EAP_CONFIG_INPUT_FIELD_ARRAY curCreds;
@@ -306,5 +306,5 @@ typedef struct _EAP_CRED_EXPIRY_RESP {
 #ifdef __cplusplus
 }
 #endif
-#endif /*(_WIN32_WINNT >= 0x0600)*/
+
 #endif /*_INC_EAPTYPES*/

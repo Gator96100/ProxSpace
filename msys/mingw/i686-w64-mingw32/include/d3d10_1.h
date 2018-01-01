@@ -42,11 +42,50 @@ typedef interface ID3D10Device1 ID3D10Device1;
 extern "C" {
 #endif
 
-#include <d3d10_1shader.h>
+#ifndef _D3D10_1_CONSTANTS
+#define _D3D10_1_CONSTANTS
+#define D3D10_1_DEFAULT_SAMPLE_MASK (0xffffffff)
+
+#define D3D10_1_GS_INPUT_REGISTER_COUNT (32)
+
+#define D3D10_1_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT (32)
+
+#define D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENTS_COMPONENTS (128)
+
+#define D3D10_1_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT (32)
+
+#define D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENTS (1)
+
+#define D3D10_1_PS_OUTPUT_MASK_REGISTER_COMPONENT_BIT_COUNT (32)
+
+#define D3D10_1_PS_OUTPUT_MASK_REGISTER_COUNT (1)
+
 #define D3D10_1_SHADER_MAJOR_VERSION (4)
 
 #define D3D10_1_SHADER_MINOR_VERSION (1)
 
+#define D3D10_1_SO_BUFFER_MAX_STRIDE_IN_BYTES (2048)
+
+#define D3D10_1_SO_BUFFER_MAX_WRITE_WINDOW_IN_BYTES (256)
+
+#define D3D10_1_SO_BUFFER_SLOT_COUNT (4)
+
+#define D3D10_1_SO_MULTIPLE_BUFFER_ELEMENTS_PER_BUFFER (1)
+
+#define D3D10_1_SO_SINGLE_BUFFER_COMPONENT_LIMIT (64)
+
+#define D3D10_1_STANDARD_VERTEX_ELEMENT_COUNT (32)
+
+#define D3D10_1_SUBPIXEL_FRACTIONAL_BIT_COUNT (8)
+
+#define D3D10_1_VS_INPUT_REGISTER_COUNT (32)
+
+#define D3D10_1_VS_OUTPUT_REGISTER_COUNT (32)
+
+#endif
+#define D3D10_1_FLOAT16_FUSED_TOLERANCE_IN_ULP      (0.6)
+#define D3D10_1_FLOAT32_TO_INTEGER_TOLERANCE_IN_ULP (0.6f)
+#include <d3d10_1shader.h>
 typedef enum D3D10_FEATURE_LEVEL1 {
     D3D10_FEATURE_LEVEL_10_0 = 0xa000,
     D3D10_FEATURE_LEVEL_10_1 = 0xa100,
@@ -920,11 +959,11 @@ typedef struct ID3D10Device1Vtbl {
         const D3D10_COUNTER_DESC *pDesc,
         D3D10_COUNTER_TYPE *pType,
         UINT *pActiveCounters,
-        LPSTR szName,
+        char *name,
         UINT *pNameLength,
-        LPSTR szUnits,
+        char *units,
         UINT *pUnitsLength,
-        LPSTR szDescription,
+        char *description,
         UINT *pDescriptionLength);
 
     UINT (STDMETHODCALLTYPE *GetCreationFlags)(
@@ -1064,7 +1103,7 @@ interface ID3D10Device1 {
 #define ID3D10Device1_CheckFormatSupport(This,Format,pFormatSupport) (This)->lpVtbl->CheckFormatSupport(This,Format,pFormatSupport)
 #define ID3D10Device1_CheckMultisampleQualityLevels(This,Format,SampleCount,pNumQualityLevels) (This)->lpVtbl->CheckMultisampleQualityLevels(This,Format,SampleCount,pNumQualityLevels)
 #define ID3D10Device1_CheckCounterInfo(This,pCounterInfo) (This)->lpVtbl->CheckCounterInfo(This,pCounterInfo)
-#define ID3D10Device1_CheckCounter(This,pDesc,pType,pActiveCounters,szName,pNameLength,szUnits,pUnitsLength,szDescription,pDescriptionLength) (This)->lpVtbl->CheckCounter(This,pDesc,pType,pActiveCounters,szName,pNameLength,szUnits,pUnitsLength,szDescription,pDescriptionLength)
+#define ID3D10Device1_CheckCounter(This,pDesc,pType,pActiveCounters,name,pNameLength,units,pUnitsLength,description,pDescriptionLength) (This)->lpVtbl->CheckCounter(This,pDesc,pType,pActiveCounters,name,pNameLength,units,pUnitsLength,description,pDescriptionLength)
 #define ID3D10Device1_GetCreationFlags(This) (This)->lpVtbl->GetCreationFlags(This)
 #define ID3D10Device1_OpenSharedResource(This,hResource,ReturnedInterface,ppResource) (This)->lpVtbl->OpenSharedResource(This,hResource,ReturnedInterface,ppResource)
 #define ID3D10Device1_SetTextFilterSize(This,Width,Height) (This)->lpVtbl->SetTextFilterSize(This,Width,Height)
@@ -1355,8 +1394,8 @@ static FORCEINLINE HRESULT ID3D10Device1_CheckMultisampleQualityLevels(ID3D10Dev
 static FORCEINLINE void ID3D10Device1_CheckCounterInfo(ID3D10Device1* This,D3D10_COUNTER_INFO *pCounterInfo) {
     This->lpVtbl->CheckCounterInfo(This,pCounterInfo);
 }
-static FORCEINLINE HRESULT ID3D10Device1_CheckCounter(ID3D10Device1* This,const D3D10_COUNTER_DESC *pDesc,D3D10_COUNTER_TYPE *pType,UINT *pActiveCounters,LPSTR szName,UINT *pNameLength,LPSTR szUnits,UINT *pUnitsLength,LPSTR szDescription,UINT *pDescriptionLength) {
-    return This->lpVtbl->CheckCounter(This,pDesc,pType,pActiveCounters,szName,pNameLength,szUnits,pUnitsLength,szDescription,pDescriptionLength);
+static FORCEINLINE HRESULT ID3D10Device1_CheckCounter(ID3D10Device1* This,const D3D10_COUNTER_DESC *pDesc,D3D10_COUNTER_TYPE *pType,UINT *pActiveCounters,char *name,UINT *pNameLength,char *units,UINT *pUnitsLength,char *description,UINT *pDescriptionLength) {
+    return This->lpVtbl->CheckCounter(This,pDesc,pType,pActiveCounters,name,pNameLength,units,pUnitsLength,description,pDescriptionLength);
 }
 static FORCEINLINE UINT ID3D10Device1_GetCreationFlags(ID3D10Device1* This) {
     return This->lpVtbl->GetCreationFlags(This);
@@ -1416,6 +1455,8 @@ void __RPC_STUB ID3D10Device1_GetFeatureLevel_Stub(
 
 #define D3D10_1_SDK_VERSION (0x20)
 
+HRESULT WINAPI D3D10CreateDevice1(IDXGIAdapter*,D3D10_DRIVER_TYPE,
+    HMODULE,UINT,D3D10_FEATURE_LEVEL1,UINT,ID3D10Device1**);
 /* Begin additional prototypes for all interfaces */
 
 

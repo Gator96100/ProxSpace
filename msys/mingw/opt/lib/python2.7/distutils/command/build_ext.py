@@ -221,7 +221,7 @@ class build_ext (Command):
 
         # for extensions under Cygwin and AtheOS Python's library directory must be
         # appended to library_dirs
-        if sys.platform[:6] == 'cygwin' or sys.platform[:6] == 'atheos':
+        if sys.platform[:6] == 'cygwin' or sys.platform[:6] == 'atheos' or self.plat_name.startswith(('mingw')):
             if sys.executable.startswith(os.path.join(sys.exec_prefix, "bin")):
                 # building third party extensions
                 config_dir_name = os.path.basename(sysconfig.get_config_var('LIBPL'))

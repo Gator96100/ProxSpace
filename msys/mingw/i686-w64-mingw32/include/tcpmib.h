@@ -16,6 +16,11 @@
 extern "C" {
 #endif
 
+/* As I read msdn on Vista the defines above were moved into
+   typedef enum { MIB_..., } MIB_TCP_STATE;
+   We simply typedef it to int.  */
+typedef int MIB_TCP_STATE;
+
 typedef enum _TCP_CONNECTION_OFFLOAD_STATE {
   TcpConnectionOffloadStateInHost       = 0,
   TcpConnectionOffloadStateOffloading   = 1,

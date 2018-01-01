@@ -177,7 +177,10 @@ typedef enum DWRITE_INFORMATIONAL_STRING_ID {
   DWRITE_INFORMATIONAL_STRING_WIN32_SUBFAMILY_NAMES,
   DWRITE_INFORMATIONAL_STRING_PREFERRED_FAMILY_NAMES,
   DWRITE_INFORMATIONAL_STRING_PREFERRED_SUBFAMILY_NAMES,
-  DWRITE_INFORMATIONAL_STRING_SAMPLE_TEXT 
+  DWRITE_INFORMATIONAL_STRING_SAMPLE_TEXT,
+  DWRITE_INFORMATIONAL_STRING_FULL_NAME,
+  DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_NAME,
+  DWRITE_INFORMATIONAL_STRING_POSTSCRIPT_CID_NAME
 } DWRITE_INFORMATIONAL_STRING_ID;
 
 typedef enum DWRITE_BREAK_CONDITION {
@@ -565,6 +568,7 @@ typedef struct DWRITE_TEXT_METRICS {
   FLOAT  layoutWidth;
   FLOAT  layoutHeight;
   UINT32 maxBidiReorderingDepth;
+  UINT32 lineCount;
 } DWRITE_TEXT_METRICS;
 
 typedef struct DWRITE_TEXT_RANGE {
@@ -614,10 +618,12 @@ DECLARE_INTERFACE_(IDWriteBitmapRenderTarget,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteBitmapRenderTarget methods */
     STDMETHOD(DrawGlyphRun)(THIS_
@@ -670,10 +676,12 @@ DECLARE_INTERFACE_(IDWriteFactory,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFactory methods */
     STDMETHOD(GetSystemFontCollection)(THIS_
@@ -825,10 +833,12 @@ DECLARE_INTERFACE_(IDWriteFont,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFont methods */
     STDMETHOD(GetFontFamily)(THIS_
@@ -884,10 +894,12 @@ DECLARE_INTERFACE_(IDWriteFontCollection,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontCollection methods */
     STDMETHOD_(UINT32, GetFontFamilyCount)(THIS) PURE;
@@ -923,10 +935,12 @@ DECLARE_INTERFACE_(IDWriteFontFace,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontFace methods */
     STDMETHOD_(DWRITE_FONT_FACE_TYPE, GetType)(THIS) PURE;
@@ -1028,10 +1042,12 @@ DECLARE_INTERFACE_(IDWriteFontList,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontList methods */
     STDMETHOD(GetFontCollection)(THIS_
@@ -1060,6 +1076,7 @@ DECLARE_INTERFACE_(IDWriteFontFamily,IDWriteFontList)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
@@ -1074,6 +1091,7 @@ DECLARE_INTERFACE_(IDWriteFontFamily,IDWriteFontList)
     STDMETHOD(GetFont)(THIS_
         UINT32 index,
         IDWriteFont **font) PURE;
+#endif
 
     /* IDWriteFontFamily methods */
     STDMETHOD(GetFamilyNames)(THIS_
@@ -1111,10 +1129,12 @@ DECLARE_INTERFACE_(IDWriteFontFile,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontFile methods */
     STDMETHOD(GetReferenceKey)(THIS_
@@ -1147,10 +1167,12 @@ DECLARE_INTERFACE_(IDWriteFontFileLoader,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontFileLoader methods */
     STDMETHOD(CreateStreamFromKey)(
@@ -1173,10 +1195,12 @@ DECLARE_INTERFACE_(IDWriteFontFileStream,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontFileStream methods */
     STDMETHOD(ReadFileFragment)(THIS_
@@ -1212,10 +1236,12 @@ DECLARE_INTERFACE_(IDWriteFontCollectionLoader,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontCollectionLoader methods */
     STDMETHOD_(HRESULT,CreateEnumeratorFromKey)(THIS_ IDWriteFactory * factory,const void * collectionKey,UINT32  collectionKeySize,IDWriteFontFileEnumerator ** fontFileEnumerator) PURE;
@@ -1235,14 +1261,16 @@ DECLARE_INTERFACE_(IDWriteFontFileEnumerator,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteFontFileEnumerator methods */
-    STDMETHOD_(HRESULT,GetCurrentFontFile)(THIS_ IDWriteFontFile ** fontFile) PURE;
     STDMETHOD_(HRESULT,MoveNext)(THIS_ WINBOOL * hasCurrentFile) PURE;
+    STDMETHOD_(HRESULT,GetCurrentFontFile)(THIS_ IDWriteFontFile ** fontFile) PURE;
 
     END_INTERFACE
 };
@@ -1260,10 +1288,12 @@ DECLARE_INTERFACE_(IDWriteGdiInterop,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteGdiInterop methods */
     STDMETHOD(CreateFontFromLOGFONT)(THIS_
@@ -1308,10 +1338,12 @@ DECLARE_INTERFACE_(IDWriteGlyphRunAnalysis,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteGlyphRunAnalysis methods */
     STDMETHOD(GetAlphaTextureBounds)(THIS_
@@ -1347,10 +1379,12 @@ DECLARE_INTERFACE_(IDWriteInlineObject,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteInlineObject methods */
     STDMETHOD(Draw)(THIS_
@@ -1387,10 +1421,12 @@ DECLARE_INTERFACE_(IDWriteLocalFontFileLoader,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteLocalFontFileLoader methods */
     STDMETHOD_(HRESULT,GetFilePathLengthFromKey)(THIS_ const void *fontFileReferenceKey,UINT32 fontFileReferenceKeySize,UINT32 *filePathLength) PURE;
@@ -1414,10 +1450,12 @@ DECLARE_INTERFACE_(IDWriteLocalizedStrings,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteLocalizedStrings methods */
     STDMETHOD_(UINT32, GetCount)(THIS) PURE;
@@ -1465,10 +1503,12 @@ DECLARE_INTERFACE_(IDWriteNumberSubstitution,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteNumberSubstitution methods */
 
@@ -1486,10 +1526,12 @@ DECLARE_INTERFACE_(IDWritePixelSnapping,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWritePixelSnapping methods */
     STDMETHOD(IsPixelSnappingDisabled)(THIS_
@@ -1519,10 +1561,12 @@ DECLARE_INTERFACE_(IDWriteRenderingParams,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteRenderingParams methods */
     STDMETHOD_(FLOAT, GetGamma)(THIS) PURE;
@@ -1550,10 +1594,12 @@ DECLARE_INTERFACE_(IDWriteTextAnalysisSink,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteTextAnalysisSink methods */
     STDMETHOD(SetScriptAnalysis)(
@@ -1595,10 +1641,12 @@ DECLARE_INTERFACE_(IDWriteTextAnalysisSource,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteTextAnalysisSource methods */
     STDMETHOD(GetTextAtPosition)(THIS_
@@ -1642,10 +1690,12 @@ DECLARE_INTERFACE_(IDWriteTextAnalyzer,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteTextAnalyzer methods */
     STDMETHOD(AnalyzeScript)(THIS_
@@ -1755,10 +1805,12 @@ DECLARE_INTERFACE_(IDWriteTextFormat,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteTextFormat methods */
     STDMETHOD(SetTextAlignment)(THIS_
@@ -1847,6 +1899,7 @@ DECLARE_INTERFACE_(IDWriteTextLayout,IDWriteTextFormat)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
@@ -1899,6 +1952,7 @@ DECLARE_INTERFACE_(IDWriteTextLayout,IDWriteTextFormat)
     STDMETHOD(GetLocaleName)(THIS_
             WCHAR *localeName,
             UINT32 nameSize) PURE;
+#endif
 
     /* IDWriteTextLayout methods */
     STDMETHOD(SetMaxWidth)(THIS_
@@ -2119,6 +2173,7 @@ DECLARE_INTERFACE_(IDWriteTextRenderer,IDWritePixelSnapping)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
@@ -2134,6 +2189,7 @@ DECLARE_INTERFACE_(IDWriteTextRenderer,IDWritePixelSnapping)
     STDMETHOD(GetPixelsPerDip)(THIS_
             void *clientDrawingContext,
             FLOAT *pixelsPerDip) PURE;
+#endif
 
     /* IDWriteTextRenderer methods */
     STDMETHOD(DrawGlyphRun)(THIS_
@@ -2186,10 +2242,12 @@ DECLARE_INTERFACE_(IDWriteTypography,IUnknown)
 {
     BEGIN_INTERFACE
 
+#ifndef __cplusplus
     /* IUnknown methods */
     STDMETHOD(QueryInterface)(THIS_ REFIID riid, void **ppvObject) PURE;
     STDMETHOD_(ULONG, AddRef)(THIS) PURE;
     STDMETHOD_(ULONG, Release)(THIS) PURE;
+#endif
 
     /* IDWriteTypography methods */
     STDMETHOD_(HRESULT,AddFontFeature)(THIS_ DWRITE_FONT_FEATURE  fontFeature) PURE;
@@ -2243,8 +2301,9 @@ __CRT_UUID_DECL(IDWriteTextRenderer, 0xef8a8135,0x5cc6,0x45fe,0x88,0x25,0xc5,0xa
 __CRT_UUID_DECL(IDWriteInlineObject, 0x8339fde3,0x106f,0x47ab,0x83,0x73,0x1c,0x62,0x95,0xeb,0x10,0xb3);
 __CRT_UUID_DECL(IDWriteTextFormat, 0x9c906818,0x31d7,0x4fd3,0xa1,0x51,0x7c,0x5e,0x22,0x5d,0xb5,0x5a);
 __CRT_UUID_DECL(IDWriteTextLayout, 0x53737037,0x6d14,0x410b,0x9b,0xfe,0x0b,0x18,0x2b,0xb7,0x09,0x61);
+__CRT_UUID_DECL(IDWriteFontFileEnumerator, 0x72755049,0x5ff7,0x435d,0x83,0x48,0x4b,0xe9,0x7c,0xfa,0x6c,0x7c);
+__CRT_UUID_DECL(IDWriteFontCollectionLoader, 0xcca920e4,0x52f0,0x492b,0xbf,0xa8,0x29,0xc7,0x2e,0xe0,0xa4,0x68);
 
-#define IDWriteFontFileEnumerator __MINGW_POISON_NAME(IDWriteFontFileEnumerator)
 #define IDWriteLocalFontFileLoader __MINGW_POISON_NAME(IDWriteLocalFontFileLoader)
 #define IDWriteTypography __MINGW_POISON_NAME(IDWriteTypography)
 

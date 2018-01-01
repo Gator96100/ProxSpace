@@ -2,6 +2,8 @@
  * This file is (mostly) automatically generated from itcl.decls.
  */
 
+#ifndef _ITCLDECLS
+#define _ITCLDECLS
 
 #if defined(USE_ITCL_STUBS)
 
@@ -17,7 +19,11 @@ ITCLAPI const char *Itcl_InitStubs(
 /* !BEGIN!: Do not edit below this line. */
 
 #define ITCL_STUBS_EPOCH 0
-#define ITCL_STUBS_REVISION 144
+#define ITCL_STUBS_REVISION 149
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * Exported function declarations:
@@ -87,7 +93,7 @@ ITCLAPI int		Itcl_RestoreInterpState(Tcl_Interp *interp,
 /* 25 */
 ITCLAPI void		Itcl_DiscardInterpState(Itcl_InterpState state);
 
-typedef struct ItclStubHooks {
+typedef struct {
     const struct ItclIntStubs *itclIntStubs;
 } ItclStubHooks;
 
@@ -95,7 +101,7 @@ typedef struct ItclStubs {
     int magic;
     int epoch;
     int revision;
-    const struct ItclStubHooks *hooks;
+    const ItclStubHooks *hooks;
 
     void (*reserved0)(void);
     void (*reserved1)(void);
@@ -125,10 +131,8 @@ typedef struct ItclStubs {
     void (*itcl_DiscardInterpState) (Itcl_InterpState state); /* 25 */
 } ItclStubs;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 extern const ItclStubs *itclStubsPtr;
+
 #ifdef __cplusplus
 }
 #endif
@@ -193,3 +197,5 @@ extern const ItclStubs *itclStubsPtr;
 #endif /* defined(USE_ITCL_STUBS) */
 
 /* !END!: Do not edit above this line. */
+
+#endif /* _ITCLDECLS */

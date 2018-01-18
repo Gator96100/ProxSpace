@@ -2,9 +2,9 @@
 	#######################################
 	Proxmark III Develoment Kit for Windows
 	#######################################
-## Different branches ##
-    The master branch is designed for development, when 'runme.bat' is started a terminal opens that allows to run make.
-    The autoBuild branch runs a script (msys/scrip.sh) at startup that updates all git repositories in the pm3 folder and then wants to compile them, it was not designed for development, just for compiling.
+## Different runme ##
+    The runme.bat is designed for development, when 'runme.bat' is started a terminal opens that allows to run make.
+    The runme_autobuild.bat runs a script (msys/scrip.sh) at startup that updates all git repositories in the pm3 folder and then wants to compile them, it was not designed for development, just for compiling.
     
 ## What's installed ##
 

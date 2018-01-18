@@ -94,7 +94,8 @@ exit
 
 :startsh
 if NOT EXIST %WD%sh.exe goto notfound
-start %WD%sh --login -i
+if NOT %autobuild% == true start %WD%sh --login -i
+if %autobuild% == true start %WD%sh --login -i -c "sh /script.sh"
 exit
 
 :EOF

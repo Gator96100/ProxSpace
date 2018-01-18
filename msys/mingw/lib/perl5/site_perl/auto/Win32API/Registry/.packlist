@@ -1,0 +1,4 @@
+C:\perl-5.24.0\lib\perl5\site_perl\Win32API\Registry.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32API\Registry.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Win32API\Registry\cRegistry.pc relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32API\Registry\cRegistry.pc
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32API\Registry\Registry.dll relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32API\Registry\Registry.dll
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32API\Registry\libRegistry.dll.a relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32API\Registry\libRegistry.dll.a

@@ -1,0 +1,10 @@
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Config.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Config.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers\Auth.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers\Auth.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers\ETag.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers\ETag.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers\Util.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Headers\Util.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Message.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Message.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Request.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Request.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Request\Common.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Request\Common.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Response.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Response.pm
+C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Status.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\HTTP\Status.pm

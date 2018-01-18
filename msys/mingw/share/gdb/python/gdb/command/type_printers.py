@@ -1,5 +1,5 @@
 # Type printer commands.
-# Copyright (C) 2010-2014 Free Software Foundation, Inc.
+# Copyright (C) 2010-2015 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ class InfoTypePrinter(gdb.Command):
         sep = ''
         for objfile in gdb.objfiles():
             if objfile.type_printers:
-                print ("%sType printers for %s:" % (sep, objfile.name))
+                print ("%sType printers for %s:" % (sep, objfile.filename))
                 self.list_type_printers(objfile.type_printers)
                 sep = '\n'
         if gdb.current_progspace().type_printers:

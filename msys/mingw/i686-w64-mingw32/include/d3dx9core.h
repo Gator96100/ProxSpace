@@ -29,7 +29,9 @@
 /* D3DX_VERSION will be completely ignored since we are
     implementing all dlls from d3dx9_24 to d3dx9_36 */
 #define D3DX_VERSION 0x0902
+#ifndef D3DX_SDK_VERSION
 #define D3DX_SDK_VERSION 36
+#endif
 #define D3DXSPRITE_DONOTSAVESTATE          0x00000001
 #define D3DXSPRITE_DONOTMODIFY_RENDERSTATE 0x00000002
 #define D3DXSPRITE_OBJECTSPACE             0x00000004
@@ -219,9 +221,9 @@ DECLARE_INTERFACE_(ID3DXLine, IUnknown)
     STDMETHOD(GetDevice)(THIS_ struct IDirect3DDevice9 **device) PURE;
 
     STDMETHOD(Begin)(THIS) PURE;
-    STDMETHOD(Draw)(THIS_ CONST D3DXVECTOR2 *vertexlist, DWORD vertexlistcount, D3DCOLOR color) PURE;
-    STDMETHOD(DrawTransform)(THIS_ CONST D3DXVECTOR3 *vertexlist, DWORD vertexlistcount,
-                             CONST D3DXMATRIX *transform, D3DCOLOR color) PURE;
+    STDMETHOD(Draw)(THIS_ const D3DXVECTOR2 *vertexlist, DWORD vertexlistcount, D3DCOLOR color) PURE;
+    STDMETHOD(DrawTransform)(THIS_ const D3DXVECTOR3 *vertexlist, DWORD vertexlistcount,
+            const D3DXMATRIX *transform, D3DCOLOR color) PURE;
     STDMETHOD(SetPattern)(THIS_ DWORD pattern) PURE;
     STDMETHOD_(DWORD, GetPattern)(THIS) PURE;
     STDMETHOD(SetPatternScale)(THIS_ FLOAT scale) PURE;
@@ -420,9 +422,9 @@ DECLARE_INTERFACE_(ID3DXSprite, IUnknown)
     STDMETHOD(GetDevice)(THIS_ struct IDirect3DDevice9 **device) PURE;
 
     STDMETHOD(GetTransform)(THIS_ D3DXMATRIX *transform) PURE;
-    STDMETHOD(SetTransform)(THIS_ CONST D3DXMATRIX *transform) PURE;
-    STDMETHOD(SetWorldViewRH)(THIS_ CONST D3DXMATRIX *world, CONST D3DXMATRIX *view) PURE;
-    STDMETHOD(SetWorldViewLH)(THIS_ CONST D3DXMATRIX *world, CONST D3DXMATRIX *view) PURE;
+    STDMETHOD(SetTransform)(THIS_ const D3DXMATRIX *transform) PURE;
+    STDMETHOD(SetWorldViewRH)(THIS_ const D3DXMATRIX *world, const D3DXMATRIX *view) PURE;
+    STDMETHOD(SetWorldViewLH)(THIS_ const D3DXMATRIX *world, const D3DXMATRIX *view) PURE;
 
     STDMETHOD(Begin)(THIS_ DWORD flags) PURE;
     STDMETHOD(Draw)(THIS_ struct IDirect3DTexture9 *texture, const RECT *rect,

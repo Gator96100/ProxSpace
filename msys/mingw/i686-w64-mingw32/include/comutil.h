@@ -29,7 +29,11 @@
 #undef new
 
 #ifndef WINAPI
+#if defined(_ARM_)
+#define WINAPI
+#else
 #define WINAPI __stdcall
+#endif
 #endif
 
 class _com_error;
@@ -239,7 +243,7 @@ inline void _bstr_t::Attach(BSTR s) {
   if(!m_Data) { _com_issue_error(E_OUTOFMEMORY); }
 }
 
-inline BSTR _bstr_t::Detach() {
+inline BSTR _bstr_t::Detach() throw () {
   _COM_ASSERT(m_Data!=NULL && m_Data->RefCount()==1);
   if(m_Data!=NULL && m_Data->RefCount()==1) {
     BSTR b = m_Data->GetWString();

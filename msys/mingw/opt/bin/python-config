@@ -1,4 +1,4 @@
-#!/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/bin/python2.7.exe
+#!/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/bin/python2.7.exe
 
 import sys
 import os
@@ -44,8 +44,9 @@ for opt in opt_flags:
         print ' '.join(flags)
 
     elif opt in ('--libs', '--ldflags'):
-        libs = getvar('LIBS').split() + getvar('SYSLIBS').split()
-        libs.append('-lpython'+pyver)
+        libs = ['-lpython' + pyver]
+        libs += getvar('LIBS').split()
+        libs += getvar('SYSLIBS').split()
         # add the prefix/lib/pythonX.Y/config dir, but only if there is no
         # shared library in prefix/lib/.
         if opt == '--ldflags':

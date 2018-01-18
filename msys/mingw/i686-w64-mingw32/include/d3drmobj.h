@@ -361,7 +361,7 @@ DECLARE_INTERFACE_(IDirect3DRMVisual,IDirect3DRMObject)
 #undef GetClassName
 #endif
 #define INTERFACE IDirect3DRMDevice
-DECLARE_INTERFACE_(IDirect3DRMDevice,IUnknown)
+DECLARE_INTERFACE_(IDirect3DRMDevice,IDirect3DRMObject)
 {
     /*** IUnknown methods ***/
     STDMETHOD_(HRESULT,QueryInterface)(THIS_ REFIID riid, void** ppvObject) PURE;
@@ -1099,7 +1099,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame,IDirect3DRMVisual)
     /*** IDirect3DRMFrame methods ***/
     STDMETHOD(AddChild)(THIS_ IDirect3DRMFrame *child) PURE;
     STDMETHOD(AddLight)(THIS_ struct IDirect3DRMLight *light) PURE;
-    STDMETHOD(AddMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK, VOID *arg) PURE;
+    STDMETHOD(AddMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK cb, void *ctx) PURE;
     STDMETHOD(AddTransform)(THIS_ D3DRMCOMBINETYPE, D3DRMMATRIX4D) PURE;
     STDMETHOD(AddTranslation)(THIS_ D3DRMCOMBINETYPE, D3DVALUE x, D3DVALUE y, D3DVALUE z) PURE;
     STDMETHOD(AddScale)(THIS_ D3DRMCOMBINETYPE, D3DVALUE sx, D3DVALUE sy, D3DVALUE sz) PURE;
@@ -1128,7 +1128,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame,IDirect3DRMVisual)
     STDMETHOD(Move)(THIS_ D3DVALUE delta) PURE;
     STDMETHOD(DeleteChild)(THIS_ IDirect3DRMFrame *child) PURE;
     STDMETHOD(DeleteLight)(THIS_ struct IDirect3DRMLight *light) PURE;
-    STDMETHOD(DeleteMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK, VOID *arg) PURE;
+    STDMETHOD(DeleteMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK cb, void *ctx) PURE;
     STDMETHOD(DeleteVisual)(THIS_ IDirect3DRMVisual *visual) PURE;
     STDMETHOD_(D3DCOLOR, GetSceneBackground)(THIS) PURE;
     STDMETHOD(GetSceneBackgroundDepth)(THIS_ IDirectDrawSurface **surface) PURE;
@@ -1332,7 +1332,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame2,IDirect3DRMFrame)
     /*** IDirect3DRMFrame methods ***/
     STDMETHOD(AddChild)(THIS_ IDirect3DRMFrame *child) PURE;
     STDMETHOD(AddLight)(THIS_ struct IDirect3DRMLight *light) PURE;
-    STDMETHOD(AddMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK, VOID *arg) PURE;
+    STDMETHOD(AddMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK cb, void *ctx) PURE;
     STDMETHOD(AddTransform)(THIS_ D3DRMCOMBINETYPE, D3DRMMATRIX4D) PURE;
     STDMETHOD(AddTranslation)(THIS_ D3DRMCOMBINETYPE, D3DVALUE x, D3DVALUE y, D3DVALUE z) PURE;
     STDMETHOD(AddScale)(THIS_ D3DRMCOMBINETYPE, D3DVALUE sx, D3DVALUE sy, D3DVALUE sz) PURE;
@@ -1361,7 +1361,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame2,IDirect3DRMFrame)
     STDMETHOD(Move)(THIS_ D3DVALUE delta) PURE;
     STDMETHOD(DeleteChild)(THIS_ IDirect3DRMFrame *child) PURE;
     STDMETHOD(DeleteLight)(THIS_ struct IDirect3DRMLight *light) PURE;
-    STDMETHOD(DeleteMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK, VOID *arg) PURE;
+    STDMETHOD(DeleteMoveCallback)(THIS_ D3DRMFRAMEMOVECALLBACK cb, void *ctx) PURE;
     STDMETHOD(DeleteVisual)(THIS_ IDirect3DRMVisual *visual) PURE;
     STDMETHOD_(D3DCOLOR, GetSceneBackground)(THIS) PURE;
     STDMETHOD(GetSceneBackgroundDepth)(THIS_ IDirectDrawSurface **surface) PURE;
@@ -1393,7 +1393,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame2,IDirect3DRMFrame)
     STDMETHOD(SetZbufferMode)(THIS_ D3DRMZBUFFERMODE) PURE;
     STDMETHOD(Transform)(THIS_ D3DVECTOR *d, D3DVECTOR *s) PURE;
     /*** IDirect3DRMFrame2 methods ***/
-    STDMETHOD(AddMoveCallback2)(THIS_ D3DRMFRAMEMOVECALLBACK, VOID *arg, DWORD flags) PURE;
+    STDMETHOD(AddMoveCallback2)(THIS_ D3DRMFRAMEMOVECALLBACK cb, void *ctx, DWORD flags) PURE;
     STDMETHOD(GetBox)(THIS_ D3DRMBOX *box) PURE;
     STDMETHOD_(WINBOOL, GetBoxEnable)(THIS) PURE;
     STDMETHOD(GetAxes)(THIS_ D3DVECTOR *dir, D3DVECTOR *up);
@@ -1614,7 +1614,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame3,IDirect3DRMVisual)
     /*** IDirect3DRMFrame3 methods ***/
     STDMETHOD(AddChild)(THIS_ IDirect3DRMFrame3 *child) PURE;
     STDMETHOD(AddLight)(THIS_ struct IDirect3DRMLight *light) PURE;
-    STDMETHOD(AddMoveCallback)(THIS_ D3DRMFRAME3MOVECALLBACK, VOID *arg, DWORD flags) PURE;
+    STDMETHOD(AddMoveCallback)(THIS_ D3DRMFRAME3MOVECALLBACK cb, void *ctx, DWORD flags) PURE;
     STDMETHOD(AddTransform)(THIS_ D3DRMCOMBINETYPE, D3DRMMATRIX4D) PURE;
     STDMETHOD(AddTranslation)(THIS_ D3DRMCOMBINETYPE, D3DVALUE x, D3DVALUE y, D3DVALUE z) PURE;
     STDMETHOD(AddScale)(THIS_ D3DRMCOMBINETYPE, D3DVALUE sx, D3DVALUE sy, D3DVALUE sz) PURE;
@@ -1642,7 +1642,7 @@ DECLARE_INTERFACE_(IDirect3DRMFrame3,IDirect3DRMVisual)
     STDMETHOD(Move)(THIS_ D3DVALUE delta) PURE;
     STDMETHOD(DeleteChild)(THIS_ IDirect3DRMFrame3 *child) PURE;
     STDMETHOD(DeleteLight)(THIS_ struct IDirect3DRMLight *light) PURE;
-    STDMETHOD(DeleteMoveCallback)(THIS_ D3DRMFRAME3MOVECALLBACK, VOID *arg) PURE;
+    STDMETHOD(DeleteMoveCallback)(THIS_ D3DRMFRAME3MOVECALLBACK cb, void *ctx) PURE;
     STDMETHOD(DeleteVisual)(THIS_ IUnknown *visual) PURE;
     STDMETHOD_(D3DCOLOR, GetSceneBackground)(THIS) PURE;
     STDMETHOD(GetSceneBackgroundDepth)(THIS_ IDirectDrawSurface **surface) PURE;
@@ -3285,7 +3285,7 @@ DECLARE_INTERFACE_(IDirect3DRMTexture, IDirect3DRMVisual)
 #define IDirect3DRMTexture_SetDecalOrigin(p,a,b)            (p)->SetDecalOrigin(a,b)
 #define IDirect3DRMTexture_SetDecalScale(p,a)               (p)->SetDecalScale(a)
 #define IDirect3DRMTexture_SetDecalTransparency(p,a)        (p)->SetDecalTransparency(a)
-#define IDirect3DRMTexture_SetDecalTransparencyColor(p,a)   (p)->SetDecalTransparentColor(a)
+#define IDirect3DRMTexture_SetDecalTransparentColor(p,a)    (p)->SetDecalTransparentColor(a)
 #define IDirect3DRMTexture_GetDecalSize(p,a,b)              (p)->GetDecalSize(a,b)
 #define IDirect3DRMTexture_GetDecalOrigin(p,a,b)            (p)->GetDecalOrigin(a,b)
 #define IDirect3DRMTexture_GetImage(p)                      (p)->GetImage()
@@ -3293,7 +3293,7 @@ DECLARE_INTERFACE_(IDirect3DRMTexture, IDirect3DRMVisual)
 #define IDirect3DRMTexture_GetColors(p)                     (p)->GetColors()
 #define IDirect3DRMTexture_GetDecalScale(p)                 (p)->GetDecalScale()
 #define IDirect3DRMTexture_GetDecalTransparency(p)          (p)->GetDecalTransparency()
-#define IDirect3DRMTexture_GetDecalTransparencyColor(p)     (p)->GetDecalTransparencyColor()
+#define IDirect3DRMTexture_GetDecalTransparentColor(p)      (p)->GetDecalTransparentColor()
 #endif
 
 /*****************************************************************************
@@ -3405,7 +3405,7 @@ DECLARE_INTERFACE_(IDirect3DRMTexture2, IDirect3DRMTexture)
 #define IDirect3DRMTexture2_SetDecalOrigin(p,a,b)            (p)->SetDecalOrigin(a,b)
 #define IDirect3DRMTexture2_SetDecalScale(p,a)               (p)->SetDecalScale(a)
 #define IDirect3DRMTexture2_SetDecalTransparency(p,a)        (p)->SetDecalTransparency(a)
-#define IDirect3DRMTexture2_SetDecalTransparencyColor(p,a)   (p)->SetDecalTransparentColor(a)
+#define IDirect3DRMTexture2_SetDecalTransparentColor(p,a)    (p)->SetDecalTransparentColor(a)
 #define IDirect3DRMTexture2_GetDecalSize(p,a,b)              (p)->GetDecalSize(a,b)
 #define IDirect3DRMTexture2_GetDecalOrigin(p,a,b)            (p)->GetDecalOrigin(a,b)
 #define IDirect3DRMTexture2_GetImage(p)                      (p)->GetImage()
@@ -3413,7 +3413,7 @@ DECLARE_INTERFACE_(IDirect3DRMTexture2, IDirect3DRMTexture)
 #define IDirect3DRMTexture2_GetColors(p)                     (p)->GetColors()
 #define IDirect3DRMTexture2_GetDecalScale(p)                 (p)->GetDecalScale()
 #define IDirect3DRMTexture2_GetDecalTransparency(p)          (p)->GetDecalTransparency()
-#define IDirect3DRMTexture2_GetDecalTransparencyColor(p)     (p)->GetDecalTransparencyColor()
+#define IDirect3DRMTexture2_GetDecalTransparentColor(p)      (p)->GetDecalTransparentColor()
 /*** IDirect3DRMTexture2 methods ***/
 #define IDirect3DRMTexture2_InitFromImage(p,a)               (p)->InitFromImage(a)
 #define IDirect3DRMTexture2_InitFromResource2(p,a,b,c)       (p)->InitFromResource2(a,b,c)
@@ -3495,7 +3495,7 @@ DECLARE_INTERFACE_(IDirect3DRMTexture3, IDirect3DRMVisual)
 #define IDirect3DRMTexture3_SetDecalOrigin(p,a,b)            (p)->lpVtbl->SetDecalOrigin(p,a,b)
 #define IDirect3DRMTexture3_SetDecalScale(p,a)               (p)->lpVtbl->SetDecalScale(p,a)
 #define IDirect3DRMTexture3_SetDecalTransparency(p,a)        (p)->lpVtbl->SetDecalTransparency(p,a)
-#define IDirect3DRMTexture3_SetDecalTransparencyColor(p,a)   (p)->lpVtbl->SetDecalTransparentColor(p,a)
+#define IDirect3DRMTexture3_SetDecalTransparentColor(p,a)    (p)->lpVtbl->SetDecalTransparentColor(p,a)
 #define IDirect3DRMTexture3_GetDecalSize(p,a,b)              (p)->lpVtbl->GetDecalSize(p,a,b)
 #define IDirect3DRMTexture3_GetDecalOrigin(p,a,b)            (p)->lpVtbl->GetDecalOrigin(p,a,b)
 #define IDirect3DRMTexture3_GetImage(p)                      (p)->lpVtbl->GetImage(p)
@@ -3503,7 +3503,7 @@ DECLARE_INTERFACE_(IDirect3DRMTexture3, IDirect3DRMVisual)
 #define IDirect3DRMTexture3_GetColors(p)                     (p)->lpVtbl->GetColors(p)
 #define IDirect3DRMTexture3_GetDecalScale(p)                 (p)->lpVtbl->GetDecalScale(p)
 #define IDirect3DRMTexture3_GetDecalTransparency(p)          (p)->lpVtbl->GetDecalTransparency(p)
-#define IDirect3DRMTexture3_GetDecalTransparencyColor(p)     (p)->lpVtbl->GetDecalTransparencyColor(p)
+#define IDirect3DRMTexture3_GetDecalTransparentColor(p)      (p)->lpVtbl->GetDecalTransparentColor(p)
 #define IDirect3DRMTexture3_InitFromImage(p,a)               (p)->lpVtbl->InitFromImage(p,a)
 #define IDirect3DRMTexture3_InitFromResource2(p,a,b,c)       (p)->lpVtbl->InitFromResource2(p,a,b,c)
 #define IDirect3DRMTexture3_GenerateMIPMap(p,a)              (p)->lpVtbl->GenerateMIPMap(p,a)

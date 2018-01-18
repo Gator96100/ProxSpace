@@ -1,5 +1,5 @@
 # tclConfig.sh --
-# 
+#
 # This shell script (for sh) is generated automatically by Tcl's
 # configure script.  It will create shell variables for most of
 # the configuration options discovered by the configure script.
@@ -15,7 +15,7 @@ TCL_DLL_FILE="tcl86.dll"
 TCL_VERSION='8.6'
 TCL_MAJOR_VERSION='8'
 TCL_MINOR_VERSION='6'
-TCL_PATCH_LEVEL='.1'
+TCL_PATCH_LEVEL='.4'
 
 # C compiler to use for compilation.
 TCL_CC='i686-w64-mingw32-gcc'
@@ -55,11 +55,11 @@ TCL_LIBS='-lnetapi32 -lkernel32 -luser32 -ladvapi32 -lws2_32'
 
 # Top-level directory in which Tcl's platform-independent files are
 # installed.
-TCL_PREFIX='/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt'
+TCL_PREFIX='/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt'
 
 # Top-level directory in which Tcl's platform-specific files (e.g.
 # executables) are installed.
-TCL_EXEC_PREFIX='/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt'
+TCL_EXEC_PREFIX='/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt'
 
 # Flags to pass to cc when compiling the components of a shared library:
 TCL_SHLIB_CFLAGS=''
@@ -68,10 +68,10 @@ TCL_SHLIB_CFLAGS=''
 TCL_CFLAGS_WARNING='-Wall -Wdeclaration-after-statement'
 
 # Extra flags to pass to cc:
-TCL_EXTRA_CFLAGS=' -pipe'
+TCL_EXTRA_CFLAGS='-pipe'
 
 # Base command to use for combining object files into a shared library:
-TCL_SHLIB_LD='${CC} -shared ${CFLAGS}'
+TCL_SHLIB_LD='${CC} -shared'
 
 # Base command to use for combining object files into a static library:
 TCL_STLIB_LD='${AR} cr'
@@ -110,15 +110,15 @@ TCL_LIB_FLAG=''
 
 # String to pass to linker to pick up the Tcl library from its
 # build directory.
-TCL_BUILD_LIB_SPEC='-L/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/build/tcl8.6.1/win -ltcl86'
+TCL_BUILD_LIB_SPEC='-L/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/build/tcl8.6.4/win -ltcl86'
 
 # String to pass to linker to pick up the Tcl library from its
 # installed directory.
-TCL_LIB_SPEC='-L/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib -ltcl86'
+TCL_LIB_SPEC='-L/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib -ltcl86'
 
 # String to pass to the compiler so that an extension can
 # find installed Tcl headers.
-TCL_INCLUDE_SPEC='-I/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include'
+TCL_INCLUDE_SPEC='-I/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include'
 
 # Indicates whether a version numbers should be used in -l switches
 # ("ok" means it's safe to use switches like -ltcl7.5;  "nodots" means
@@ -145,12 +145,12 @@ TCL_UNSHARED_LIB_SUFFIX='${NODOT_VERSION}${DBGX}.a'
 # different place than the directory containing the source files, this
 # points to the location of the sources, not the location where Tcl was
 # compiled.
-TCL_SRC_DIR='/c/mingw492/src/tcl8.6.1'
+TCL_SRC_DIR='/c/mingw530/src/tcl8.6.4'
 
 # List of standard directories in which to look for packages during
 # "package require" commands.  Contains the "prefix" directory plus also
 # the "exec_prefix" directory, if it is different.
-TCL_PACKAGE_PATH='/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib'
+TCL_PACKAGE_PATH='/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib'
 
 # Tcl supports stub.
 TCL_SUPPORTS_STUBS=1
@@ -163,18 +163,18 @@ TCL_STUB_LIB_FLAG='-ltclstub86'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # build directory.
-TCL_BUILD_STUB_LIB_SPEC='-L/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/build/tcl8.6.1/win -ltclstub86'
+TCL_BUILD_STUB_LIB_SPEC='-L/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/build/tcl8.6.4/win -ltclstub86'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # installed directory.
-TCL_STUB_LIB_SPEC='-L/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib -ltclstub86'
+TCL_STUB_LIB_SPEC='-L/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib -ltclstub86'
 
 # Path to the Tcl stub library in the build directory.
-TCL_BUILD_STUB_LIB_PATH='/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/build/tcl8.6.1/win/libtclstub86.a'
+TCL_BUILD_STUB_LIB_PATH='/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/build/tcl8.6.4/win/libtclstub86.a'
 
 # Path to the Tcl stub library in the install directory.
-TCL_STUB_LIB_PATH='/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib/libtclstub86.a'
+TCL_STUB_LIB_PATH='/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib/libtclstub86.a'
 
-# Flag, 1: we built Tcl with threads enables, 0 we didn't
+# Flag, 1: we built Tcl with threads enabled, 0 we didn't
 TCL_THREADS=0
 

@@ -9,7 +9,7 @@ use vars qw/	$AUTHOR $VERSION
 		$sha1 $sha1_short $_revision $_repository
 		$_q $_authors $_authors_prog %users/;
 $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
-$VERSION = '2.12.2.windows.2';
+$VERSION = '2.15.1.windows.2';
 
 use Carp qw/croak/;
 use File::Basename qw/dirname basename/;
@@ -1176,10 +1176,10 @@ sub cmd_branch {
 	::_req_svn();
 	require SVN::Client;
 
+	my ($config, $baton, undef) = Git::SVN::Ra::prepare_config_once();
 	my $ctx = SVN::Client->new(
-		config => SVN::Core::config_get_config(
-			$Git::SVN::Ra::config_dir
-		),
+		auth => $baton,
+		config => $config,
 		log_msg => sub {
 			${ $_[0] } = defined $_message
 				? $_message

@@ -24,8 +24,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA}]
+along with this program; if not, see <http://www.gnu.org/licenses/>.}]
 
 ######################################################################
 ##
@@ -2513,10 +2512,25 @@ proc toggle_or_diff {mode w args} {
 		set pos [split [$w index @$x,$y] .]
 		foreach {lno col} $pos break
 	} else {
+		if {$mode eq "toggle"} {
+			if {$w eq $ui_workdir} {
+				do_add_selection
+				set last_clicked {}
+				return
+			}
+			if {$w eq $ui_index} {
+				do_unstage_selection
+				set last_clicked {}
+				return
+			}
+		}
+
 		if {$last_clicked ne {}} {
 			set lno [lindex $last_clicked 1]
 		} else {
-			if {[llength $file_lists($w)] == 0} {
+			if {![info exists file_lists]
+				|| ![info exists file_lists($w)]
+				|| [llength $file_lists($w)] == 0} {
 				set last_clicked {}
 				return
 			}
@@ -2530,7 +2544,13 @@ proc toggle_or_diff {mode w args} {
 		}
 	}
 
-	set path [lindex $file_lists($w) [expr {$lno - 1}]]
+	if {![info exists file_lists]
+		|| ![info exists file_lists($w)]
+		|| [llength $file_lists($w)] < $lno - 1} {
+		set path {}
+	} else {
+		set path [lindex $file_lists($w) [expr {$lno - 1}]]
+	}
 	if {$path eq {}} {
 		set last_clicked {}
 		return

@@ -2,11 +2,17 @@
  * This file is (mostly) automatically generated from itcl.decls.
  */
 
+#ifndef _ITCLINTDECLS
+#define _ITCLINTDECLS
 
 /* !BEGIN!: Do not edit below this line. */
 
 #define ITCLINT_STUBS_EPOCH 0
-#define ITCLINT_STUBS_REVISION 144
+#define ITCLINT_STUBS_REVISION 149
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * Exported function declarations:
@@ -132,7 +138,11 @@ ITCLAPI const char *	Itcl_GetCommonVar(Tcl_Interp *interp,
 				const char *name, ItclClass *contextClass);
 /* Slot 42 is reserved */
 /* Slot 43 is reserved */
-/* Slot 44 is reserved */
+/* 44 */
+ITCLAPI int		Itcl_CreateObject(Tcl_Interp *interp,
+				const char*name, ItclClass *iclsPtr,
+				int objc, Tcl_Obj *const objv[],
+				ItclObject **rioPtr);
 /* 45 */
 ITCLAPI int		Itcl_DeleteObject(Tcl_Interp *interp,
 				ItclObject *contextObj);
@@ -493,12 +503,28 @@ ITCLAPI Tcl_CallFrame *	 Itcl_GetUplevelCallFrame(Tcl_Interp *interp,
 /* 177 */
 ITCLAPI Tcl_CallFrame *	 Itcl_ActivateCallFrame(Tcl_Interp *interp,
 				Tcl_CallFrame *framePtr);
+/* 178 */
+ITCLAPI const char*	ItclSetInstanceVar(Tcl_Interp *interp,
+				const char *name, const char *name2,
+				const char *value, ItclObject *contextIoPtr,
+				ItclClass *contextIclsPtr);
+/* 179 */
+ITCLAPI Tcl_Obj *	ItclCapitalize(const char *str);
+/* 180 */
+ITCLAPI int		ItclClassBaseCmd(ClientData clientData,
+				Tcl_Interp *interp, int flags, int objc,
+				Tcl_Obj *const objv[],
+				ItclClass **iclsPtrPtr);
+/* 181 */
+ITCLAPI int		ItclCreateComponent(Tcl_Interp *interp,
+				ItclClass *iclsPtr, Tcl_Obj *componentPtr,
+				int type, ItclComponent **icPtrPtr);
 
 typedef struct ItclIntStubs {
     int magic;
     int epoch;
     int revision;
-    const struct ItclIntStubHooks *hooks;
+    void *hooks;
 
     int (*itcl_IsClassNamespace) (Tcl_Namespace *namesp); /* 0 */
     int (*itcl_IsClass) (Tcl_Command cmd); /* 1 */
@@ -544,7 +570,7 @@ typedef struct ItclIntStubs {
     const char * (*itcl_GetCommonVar) (Tcl_Interp *interp, const char *name, ItclClass *contextClass); /* 41 */
     void (*reserved42)(void);
     void (*reserved43)(void);
-    void (*reserved44)(void);
+    int (*itcl_CreateObject) (Tcl_Interp *interp, const char*name, ItclClass *iclsPtr, int objc, Tcl_Obj *const objv[], ItclObject **rioPtr); /* 44 */
     int (*itcl_DeleteObject) (Tcl_Interp *interp, ItclObject *contextObj); /* 45 */
     int (*itcl_DestructObject) (Tcl_Interp *interp, ItclObject *contextObj, int flags); /* 46 */
     void (*reserved47)(void);
@@ -678,12 +704,14 @@ typedef struct ItclIntStubs {
     void (*itcl_PopCallFrame) (Tcl_Interp *interp); /* 175 */
     Tcl_CallFrame * (*itcl_GetUplevelCallFrame) (Tcl_Interp *interp, int level); /* 176 */
     Tcl_CallFrame * (*itcl_ActivateCallFrame) (Tcl_Interp *interp, Tcl_CallFrame *framePtr); /* 177 */
+    const char* (*itclSetInstanceVar) (Tcl_Interp *interp, const char *name, const char *name2, const char *value, ItclObject *contextIoPtr, ItclClass *contextIclsPtr); /* 178 */
+    Tcl_Obj * (*itclCapitalize) (const char *str); /* 179 */
+    int (*itclClassBaseCmd) (ClientData clientData, Tcl_Interp *interp, int flags, int objc, Tcl_Obj *const objv[], ItclClass **iclsPtrPtr); /* 180 */
+    int (*itclCreateComponent) (Tcl_Interp *interp, ItclClass *iclsPtr, Tcl_Obj *componentPtr, int type, ItclComponent **icPtrPtr); /* 181 */
 } ItclIntStubs;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 extern const ItclIntStubs *itclIntStubsPtr;
+
 #ifdef __cplusplus
 }
 #endif
@@ -773,7 +801,8 @@ extern const ItclIntStubs *itclIntStubsPtr;
 	(itclIntStubsPtr->itcl_GetCommonVar) /* 41 */
 /* Slot 42 is reserved */
 /* Slot 43 is reserved */
-/* Slot 44 is reserved */
+#define Itcl_CreateObject \
+	(itclIntStubsPtr->itcl_CreateObject) /* 44 */
 #define Itcl_DeleteObject \
 	(itclIntStubsPtr->itcl_DeleteObject) /* 45 */
 #define Itcl_DestructObject \
@@ -992,7 +1021,17 @@ extern const ItclIntStubs *itclIntStubsPtr;
 	(itclIntStubsPtr->itcl_GetUplevelCallFrame) /* 176 */
 #define Itcl_ActivateCallFrame \
 	(itclIntStubsPtr->itcl_ActivateCallFrame) /* 177 */
+#define ItclSetInstanceVar \
+	(itclIntStubsPtr->itclSetInstanceVar) /* 178 */
+#define ItclCapitalize \
+	(itclIntStubsPtr->itclCapitalize) /* 179 */
+#define ItclClassBaseCmd \
+	(itclIntStubsPtr->itclClassBaseCmd) /* 180 */
+#define ItclCreateComponent \
+	(itclIntStubsPtr->itclCreateComponent) /* 181 */
 
 #endif /* defined(USE_ITCL_STUBS) */
 
 /* !END!: Do not edit above this line. */
+
+#endif /* _ITCLINTDECLS */

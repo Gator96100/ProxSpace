@@ -260,6 +260,16 @@ HRESULT WINAPI OPMGetVideoOutputsFromIDirect3DDevice9Object(
   IOPMVideoOutput ***pppOPMVideoOutputArray
 );
 
+typedef struct _OPM_GET_CODEC_INFO_INFORMATION {
+  OPM_RANDOM_NUMBER rnRandomNumber;
+  DWORD             Merit;
+} OPM_GET_CODEC_INFO_INFORMATION;
+
+typedef struct _OPM_GET_CODEC_INFO_PARAMETERS {
+  DWORD cbVerifier;
+  BYTE  Verifier[OPM_GET_INFORMATION_PARAMETERS_SIZE - 4];
+} OPM_GET_CODEC_INFO_PARAMETERS;
+
 #ifdef __cplusplus
 }
 #endif

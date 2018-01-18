@@ -26,10 +26,10 @@ MODLIBS=        $(LOCALMODLIBS) $(BASEMODLIBS)
 
 # === Variables set by configure
 VERSION=	2.7
-srcdir=		../../../src/Python-2.7.8
-VPATH=		../../../src/Python-2.7.8
-abs_srcdir=	/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/build/Python-2.7.8/../../../src/Python-2.7.8
-abs_builddir=	/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/build/Python-2.7.8
+srcdir=		../../../src/Python-2.7.9
+VPATH=		../../../src/Python-2.7.9
+abs_srcdir=	/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/build/Python-2.7.9/../../../src/Python-2.7.9
+abs_builddir=	/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/build/Python-2.7.9
 build=		i686-w64-mingw32
 host=		i686-w64-mingw32
 
@@ -69,12 +69,12 @@ MAKESETUP=      $(srcdir)/Modules/makesetup
 # Compiler options
 OPT=		-DNDEBUG 
 BASECFLAGS=	 -fno-strict-aliasing
-CFLAGS=		$(BASECFLAGS) -O2 -pipe -I/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include -I/c/mingw492/prerequisites/i686-zlib-static/include -I/c/mingw492/prerequisites/i686-w64-mingw32-static/include -fwrapv -DNDEBUG -D__USE_MINGW_ANSI_STDIO=1 $(OPT) $(EXTRA_CFLAGS)
+CFLAGS=		$(BASECFLAGS) -O2 -pipe -I/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include -I/c/mingw530/prerequisites/i686-zlib-static/include -I/c/mingw530/prerequisites/i686-w64-mingw32-static/include -fwrapv -DNDEBUG -D__USE_MINGW_ANSI_STDIO=1 $(OPT) $(EXTRA_CFLAGS)
 # Both CPPFLAGS and LDFLAGS need to contain the shell's value for setup.py to
 # be able to build extension modules using the directories specified in the
 # environment variables
-CPPFLAGS=	-I. -IInclude -I$(srcdir)/Include -I$(srcdir)/Python -I$(srcdir)/PC  -IC:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include -IC:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include/ncursesw -IC:/mingw492/prerequisites/i686-zlib-static/include
-LDFLAGS=	-pipe -L/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib -L/c/mingw492/prerequisites/i686-zlib-static/lib -L/c/mingw492/prerequisites/i686-w64-mingw32-static/lib -LC:/mingw492/prerequisites/i686-zlib-static/lib -LC:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib
+CPPFLAGS=	-I. -IInclude -I$(srcdir)/Include -I$(srcdir)/Python -I$(srcdir)/PC  -IC:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include -IC:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include/ncursesw -IC:/mingw530/prerequisites/i686-zlib-static/include
+LDFLAGS=	-pipe -L/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib -L/c/mingw530/prerequisites/i686-zlib-static/lib -L/c/mingw530/prerequisites/i686-w64-mingw32-static/lib -LC:/mingw530/prerequisites/i686-zlib-static/lib -LC:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib
 LDLAST=		
 SGI_ABI=	
 CCSHARED=	
@@ -94,7 +94,7 @@ MACHDEP=	win32
 MULTIARCH=	
 
 # Install prefix for architecture-independent files
-prefix=		/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt
+prefix=		/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt
 
 # Install prefix for architecture-dependent files
 exec_prefix=	${prefix}
@@ -103,11 +103,11 @@ exec_prefix=	${prefix}
 datarootdir=    ${prefix}/share
 
 # Locations needed for semi-native fixup of sysconfig.
-srcdir_b2h=		C:/mingw492/src/Python-2.7.8
-VPATH_b2h=		C:/mingw492/src/Python-2.7.8
-abs_srcdir_b2h=		C:/mingw492/src/Python-2.7.8
-abs_builddir_b2h=	C:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/build/Python-2.7.8
-prefix_b2h=		C:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt
+srcdir_b2h=		C:/mingw530/src/Python-2.7.9
+VPATH_b2h=		C:/mingw530/src/Python-2.7.9
+abs_srcdir_b2h=		C:/mingw530/src/Python-2.7.9
+abs_builddir_b2h=	C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/build/Python-2.7.9
+prefix_b2h=		C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt
 
 # Expanded directories
 BINDIR=		${exec_prefix}/bin
@@ -153,6 +153,9 @@ OTHER_LIBTOOL_OPT=
 # Environment to run shared python without installed libraries
 RUNSHARED=       
 
+# ensurepip options
+ENSUREPIP=      no
+
 # Modes for directories, executables and data files created by the
 # install process.  Default to user-only-writable for all file types.
 DIRMODE=	755
@@ -160,7 +163,7 @@ EXEMODE=	755
 FILEMODE=	644
 
 # configure script arguments
-CONFIG_ARGS=	 '--host=i686-w64-mingw32' '--build=i686-w64-mingw32' '--prefix=/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt' '--enable-shared' '--with-threads' '--with-system-expat' '--with-system-ffi' 'LIBFFI_INCLUDEDIR=C:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib/libffi-3.1/include' 'OPT=' 'CFLAGS=-O2 -pipe -I/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include -I/c/mingw492/prerequisites/i686-zlib-static/include -I/c/mingw492/prerequisites/i686-w64-mingw32-static/include -fwrapv -DNDEBUG -D__USE_MINGW_ANSI_STDIO=1' 'CPPFLAGS= -IC:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include -IC:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/include/ncursesw -IC:/mingw492/prerequisites/i686-zlib-static/include' 'LDFLAGS=-pipe -L/c/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib -L/c/mingw492/prerequisites/i686-zlib-static/lib -L/c/mingw492/prerequisites/i686-w64-mingw32-static/lib -LC:/mingw492/prerequisites/i686-zlib-static/lib -LC:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib' 'build_alias=i686-w64-mingw32' 'host_alias=i686-w64-mingw32'
+CONFIG_ARGS=	 '--host=i686-w64-mingw32' '--build=i686-w64-mingw32' '--prefix=/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt' '--enable-shared' '--with-threads' '--with-system-expat' '--with-system-ffi' 'LIBFFI_INCLUDEDIR=C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib/libffi-3.2.1/include' 'OPT=' 'CFLAGS=-O2 -pipe -I/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include -I/c/mingw530/prerequisites/i686-zlib-static/include -I/c/mingw530/prerequisites/i686-w64-mingw32-static/include -fwrapv -DNDEBUG -D__USE_MINGW_ANSI_STDIO=1' 'CPPFLAGS= -IC:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include -IC:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/include/ncursesw -IC:/mingw530/prerequisites/i686-zlib-static/include' 'LDFLAGS=-pipe -L/c/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib -L/c/mingw530/prerequisites/i686-zlib-static/lib -L/c/mingw530/prerequisites/i686-w64-mingw32-static/lib -LC:/mingw530/prerequisites/i686-zlib-static/lib -LC:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib' 'build_alias=i686-w64-mingw32' 'host_alias=i686-w64-mingw32'
 
 
 # Subdirectories with code
@@ -251,7 +254,7 @@ GRAMMAR_C=	Python/graminit.c
 GRAMMAR_INPUT=	$(srcdir)/Grammar/Grammar
 
 
-LIBFFI_INCLUDEDIR=	C:/mingw492/i686-492-posix-dwarf-rt_v3-rev1/mingw32/opt/lib/libffi-3.1/include
+LIBFFI_INCLUDEDIR=	C:/mingw530/i686-530-posix-dwarf-rt_v4-rev0/mingw32/opt/lib/libffi-3.2.1/include
 
 ##########################################################################
 # Parser
@@ -472,8 +475,18 @@ platform: $(BUILDPYTHON) pybuilddir.txt
 # Create build directory and generate the sysconfig build-time data there.
 # pybuilddir.txt contains the name of the build dir and is used for
 # sys.path fixup -- see Modules/getpath.c.
+# Since this step runs before shared modules are built, try to avoid bootstrap
+# problems by creating a dummy pybuilddir.txt just to allow interpreter
+# initialization to succeed.  It will be overwritten by generate-posix-vars
+# or removed in case of failure.
 pybuilddir.txt: $(BUILDPYTHON)
-		$(RUNSHARED) $(PYTHON_FOR_BUILD) -S -m sysconfig --generate-posix-vars
+	@echo "none" > ./pybuilddir.txt
+	$(RUNSHARED) $(PYTHON_FOR_BUILD) -S -m sysconfig --generate-posix-vars ;\
+	if test $$? -ne 0 ; then \
+		echo "generate-posix-vars failed" ; \
+		rm -f ./pybuilddir.txt ; \
+		exit 1 ; \
+	fi
 
 # Build the shared modules
 # Under GNU make, MAKEFLAGS are sorted and normalized; the 's' for
@@ -852,12 +865,31 @@ memtest:	all platform
 		$(TESTPYTHON) $(TESTPROG) $(MEMTESTOPTS)
 
 # Install everything
-install:	 altinstall bininstall maninstall 
+install:	 commoninstall bininstall maninstall 
+	if test "x$(ENSUREPIP)" != "xno"  ; then \
+		case $(ENSUREPIP) in \
+			upgrade) ensurepip="--upgrade" ;; \
+			install|*) ensurepip="" ;; \
+		esac; \
+		$(RUNSHARED) $(PYTHON_FOR_BUILD) -m ensurepip \
+			$$ensurepip --root=$(DESTDIR)/ ; \
+	fi
 
 # Install almost everything without disturbing previous versions
-altinstall:	 altbininstall libinstall inclinstall \
-				libainstall altmaninstall \
-                sharedinstall oldsharedinstall 
+altinstall:	commoninstall
+	if test "x$(ENSUREPIP)" != "xno"  ; then \
+		case $(ENSUREPIP) in \
+			upgrade) ensurepip="--altinstall --upgrade --no-default-pip" ;; \
+			install|*) ensurepip="--altinstall --no-default-pip" ;; \
+		esac; \
+		$(RUNSHARED) $(PYTHON_FOR_BUILD) -m ensurepip \
+			$$ensurepip --root=$(DESTDIR)/ ; \
+	fi
+
+commoninstall:	 \
+		altbininstall libinstall inclinstall libainstall \
+		sharedinstall oldsharedinstall altmaninstall \
+		
 
 # Install shared libraries enabled by Setup
 DESTDIRS=	$(exec_prefix) $(LIBDIR) $(BINLIBDEST) $(DESTSHARED)
@@ -964,13 +996,14 @@ PLATMACDIRS= plat-mac plat-mac/Carbon plat-mac/lib-scriptpackages \
 	plat-mac/lib-scriptpackages/Terminal
 PLATMACPATH=:plat-mac:plat-mac/lib-scriptpackages
 LIBSUBDIRS=	lib-tk lib-tk/test lib-tk/test/test_tkinter \
-		lib-tk/test/test_ttk site-packages test test/audiodata test/data \
-		test/cjkencodings test/decimaltestdata test/xmltestdata \
+		lib-tk/test/test_ttk site-packages test test/audiodata test/capath \
+		test/data test/cjkencodings test/decimaltestdata test/xmltestdata \
 		test/imghdrdata \
 		test/subprocessdata \
 		test/tracedmodules \
 		encodings compiler hotshot \
 		email email/mime email/test email/test/data \
+		ensurepip ensurepip/_bundled \
 		json json/tests \
 		sqlite3 sqlite3/test \
 		logging bsddb bsddb/test csv importlib wsgiref \
@@ -1406,7 +1439,7 @@ Python/thread.o:  $(srcdir)/Python/thread_atheos.h $(srcdir)/Python/thread_beos.
 .PHONY: frameworkinstall frameworkinstallframework frameworkinstallstructure
 .PHONY: frameworkinstallmaclib frameworkinstallapps frameworkinstallunixtools
 .PHONY: frameworkaltinstallunixtools recheck autoconf clean clobber distclean
-.PHONY: smelly funny patchcheck touch altmaninstall
+.PHONY: smelly funny patchcheck touch altmaninstall commoninstall
 .PHONY: gdbhooks
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

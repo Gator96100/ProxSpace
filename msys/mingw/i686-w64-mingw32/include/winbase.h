@@ -40,6 +40,10 @@
 #include <utilapiset.h>
 #include <wow64apiset.h>
 
+#ifdef __WIDL__
+#define NOWINBASEINTERLOCK 1
+#endif
+
 #ifndef NOWINBASEINTERLOCK
 #define __INTRINSIC_GROUP_WINBASE /* only define the intrinsics in this file */
 #include <psdk_inc/intrin-impl.h>
@@ -1139,6 +1143,7 @@ extern "C" {
 
 #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_APP)
   WINBASEAPI VOID WINAPI RaiseFailFastException (PEXCEPTION_RECORD pExceptionRecord, PCONTEXT pContextRecord, DWORD dwFlags);
+  WINBASEAPI DWORD WINAPI SetThreadIdealProcessor (HANDLE hThread, DWORD dwIdealProcessor);
 #endif
 
 #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
@@ -1153,7 +1158,6 @@ extern "C" {
   WINBASEAPI WINBOOL WINAPI ConvertFiberToThread (VOID);
   WINBASEAPI VOID WINAPI SwitchToFiber (LPVOID lpFiber);
   WINBASEAPI DWORD_PTR WINAPI SetThreadAffinityMask (HANDLE hThread, DWORD_PTR dwThreadAffinityMask);
-  WINBASEAPI DWORD WINAPI SetThreadIdealProcessor (HANDLE hThread, DWORD dwIdealProcessor);
 
   /* TODO: Add RTL_UMS... to winnt.h header and add UMS-base API.  */
 
@@ -1490,6 +1494,7 @@ extern "C" {
 #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP) || defined(WINSTORECOMPAT)
 #define CreateSemaphore __MINGW_NAME_AW(CreateSemaphore)
   WINBASEAPI HANDLE WINAPI CreateSemaphoreW (LPSECURITY_ATTRIBUTES lpSemaphoreAttributes, LONG lInitialCount, LONG lMaximumCount, LPCWSTR lpName);
+  WINBASEAPI HMODULE WINAPI LoadLibraryW (LPCWSTR lpLibFileName);
 #endif
 #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
   WINBASEAPI HANDLE WINAPI OpenMutexA (DWORD dwDesiredAccess, WINBOOL bInheritHandle, LPCSTR lpName);
@@ -1507,7 +1512,6 @@ extern "C" {
   WINBASEAPI HANDLE WINAPI OpenFileMappingA (DWORD dwDesiredAccess, WINBOOL bInheritHandle, LPCSTR lpName);
   WINBASEAPI DWORD WINAPI GetLogicalDriveStringsA (DWORD nBufferLength, LPSTR lpBuffer);
   WINBASEAPI HMODULE WINAPI LoadLibraryA (LPCSTR lpLibFileName);
-  WINBASEAPI HMODULE WINAPI LoadLibraryW (LPCWSTR lpLibFileName);
 
 #ifndef UNICODE
 #define OpenMutex OpenMutexA

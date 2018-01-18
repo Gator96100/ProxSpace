@@ -1,4 +1,4 @@
-/* Generated automatically from ../../../src/Python-2.7.8/Modules/config.c.in by makesetup. */
+/* Generated automatically from ../../../src/Python-2.7.9/Modules/config.c.in by makesetup. */
 /* -*- C -*- ***********************************************
 Copyright (c) 2000, BeOpen.com.
 Copyright (c) 1995-2000, Corporation for National Research Initiatives.

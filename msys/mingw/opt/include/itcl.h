@@ -57,7 +57,7 @@
 
 #include <tcl.h>
 
-#if (TCL_MAJOR_VERSION != 8) || (TCL_MINOR_VERSION < 6)
+#if (TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION < 6)
 #    error Itcl 4 build requires tcl.h from Tcl 8.6 or later
 #endif
 
@@ -82,10 +82,10 @@ extern "C" {
 #define ITCL_MAJOR_VERSION	4
 #define ITCL_MINOR_VERSION	0
 #define ITCL_RELEASE_LEVEL      TCL_FINAL_RELEASE
-#define ITCL_RELEASE_SERIAL     0
+#define ITCL_RELEASE_SERIAL     3
 
 #define ITCL_VERSION            "4.0"
-#define ITCL_PATCH_LEVEL        "4.0.0"
+#define ITCL_PATCH_LEVEL        "4.0.3"
 
 
 /*
@@ -111,15 +111,14 @@ extern "C" {
 #   endif
 #endif
 
-#undef TCL_STORAGE_CLASS
-#ifdef BUILD_itcl
-#   define TCL_STORAGE_CLASS DLLEXPORT
+#if defined(BUILD_itcl) && !defined(STATIC_BUILD)
+#   define ITCL_EXTERN extern DLLEXPORT
 #else
-#   define TCL_STORAGE_CLASS
+#   define ITCL_EXTERN extern
 #endif
 
-EXTERN int		Itcl_Init(Tcl_Interp *interp);
-EXTERN int		Itcl_SafeInit(Tcl_Interp *interp);
+ITCL_EXTERN int Itcl_Init(Tcl_Interp *interp);
+ITCL_EXTERN int Itcl_SafeInit(Tcl_Interp *interp);
 
 /*
  * Protection levels:
@@ -190,9 +189,6 @@ void ItclDbgReleaseData(ClientData cdata, int line, const char *file);
 #define Itcl_PreserveData(addr) ItclDbgPreserveData(addr, __LINE__, __FILE__)
 #define Itcl_ReleaseData(addr) ItclDbgReleaseData(addr, __LINE__, __FILE__)
 #endif
-
-#undef TCL_STORAGE_CLASS
-#define TCL_STORAGE_CLASS DLLIMPORT
 
 #endif /* RC_INVOKED */
 

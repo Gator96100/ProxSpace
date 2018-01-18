@@ -1,0 +1,15 @@
+C:\perl-5.24.0\bin\crc32 relocate_as=C:\perl-5.24.0\bin\crc32
+C:\perl-5.24.0\bin\crc32.bat relocate_as=C:\perl-5.24.0\bin\crc32.bat
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\Archive.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\Archive.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\BufferedFileHandle.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\BufferedFileHandle.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\DirectoryMember.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\DirectoryMember.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\FAQ.pod relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\FAQ.pod
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\FileMember.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\FileMember.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\Member.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\Member.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\MemberRead.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\MemberRead.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\MockFileHandle.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\MockFileHandle.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\NewFileMember.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\NewFileMember.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\StringMember.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\StringMember.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\Tree.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\Tree.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\ZipFileMember.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Archive\Zip\ZipFileMember.pm

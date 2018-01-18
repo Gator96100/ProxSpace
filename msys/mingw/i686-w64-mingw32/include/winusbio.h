@@ -45,10 +45,12 @@
 #ifndef __WINUSBIO_H
 #define __WINUSBIO_H
 
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 
 #include <windows.h>
 #include <usb.h>	/* for USBD_PIPE_TYPE */
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -89,6 +91,8 @@ typedef struct _WINUSB_PIPE_INFORMATION {
 
 #include <initguid.h>
 DEFINE_GUID (WinUSB_TestGuid, 0xda812bff, 0x12c3, 0x46a2, 0x8e, 0x2b, 0xdb, 0xd3, 0xb7, 0x83, 0x4c, 0x43);
+
+#endif
 
 #endif /* __WINUSBIO_H */
 

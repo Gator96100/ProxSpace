@@ -45,14 +45,17 @@
 #ifndef __WUSB_H__
 #define __WUSB_H__
 
+#include <winapifamily.h>
 
-#include <windows.h>
-#include <winusbio.h>	/* for PWINUSB_PIPE_INFORMATION  */
-#include <usb100.h>	/* for PUSB_INTERFACE_DESCRIPTOR */
+#if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <windows.h>
+#include <winusbio.h>   /* for PWINUSB_PIPE_INFORMATION  */
+#include <usb100.h>     /* for PUSB_INTERFACE_DESCRIPTOR */
 
   typedef PVOID WINUSB_INTERFACE_HANDLE,*PWINUSB_INTERFACE_HANDLE;
 
@@ -91,6 +94,8 @@ extern "C" {
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif
 
 #endif

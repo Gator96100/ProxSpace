@@ -13,7 +13,7 @@
 # Insist on running with compatible version of Tcl
 package require Tcl 8.6
 # Verify that we have Tk binary and script components from the same release
-package require -exact Tk  8.6.1
+package require -exact Tk  8.6.4
 
 # Create a ::tk namespace
 namespace eval ::tk {
@@ -24,7 +24,7 @@ namespace eval ::tk {
             # The msgcat package is not available.  Supply our own
             # minimal replacement.
             proc mc {src args} {
-                tailcall format $src {*}$args
+                return [format $src {*}$args]
             }
             proc mcmax {args} {
                 set max 0
@@ -302,7 +302,7 @@ tk::ScreenChanged [winfo screen .]
 
 proc ::tk::EventMotifBindings {n1 dummy dummy} {
     upvar $n1 name
-    
+
     if {$name} {
 	set op delete
     } else {
@@ -328,41 +328,41 @@ proc ::tk::EventMotifBindings {n1 dummy dummy} {
 }
 
 #----------------------------------------------------------------------
-# Define common dialogs on platforms where they are not implemented 
+# Define common dialogs on platforms where they are not implemented
 # using compiled code.
 #----------------------------------------------------------------------
 
 if {![llength [info commands tk_chooseColor]]} {
     proc ::tk_chooseColor {args} {
-	tailcall ::tk::dialog::color:: {*}$args
+	return [::tk::dialog::color:: {*}$args]
     }
 }
 if {![llength [info commands tk_getOpenFile]]} {
     proc ::tk_getOpenFile {args} {
 	if {$::tk_strictMotif} {
-	    tailcall ::tk::MotifFDialog open {*}$args
+	    return [::tk::MotifFDialog open {*}$args]
 	} else {
-	    tailcall ::tk::dialog::file:: open {*}$args
+	    return [::tk::dialog::file:: open {*}$args]
 	}
     }
 }
 if {![llength [info commands tk_getSaveFile]]} {
     proc ::tk_getSaveFile {args} {
 	if {$::tk_strictMotif} {
-	    tailcall ::tk::MotifFDialog save {*}$args
+	    return [::tk::MotifFDialog save {*}$args]
 	} else {
-	    tailcall ::tk::dialog::file:: save {*}$args
+	    return [::tk::dialog::file:: save {*}$args]
 	}
     }
 }
 if {![llength [info commands tk_messageBox]]} {
     proc ::tk_messageBox {args} {
-	tailcall ::tk::MessageBox {*}$args
+	return [::tk::MessageBox {*}$args]
     }
 }
 if {![llength [info command tk_chooseDirectory]]} {
     proc ::tk_chooseDirectory {args} {
-	tailcall ::tk::dialog::file::chooseDir:: {*}$args
+	return [::tk::dialog::file::chooseDir:: {*}$args]
     }
 }
 
@@ -543,7 +543,7 @@ proc ::tk::CancelRepeat {} {
 
 # ::tk::TabToWindow --
 # This procedure moves the focus to the given widget.
-# It sends a <<TraverseOut>> virtual event to the previous focus window, 
+# It sends a <<TraverseOut>> virtual event to the previous focus window,
 # if any, before changing the focus, and a <<TraverseIn>> event
 # to the new focus window afterwards.
 #
@@ -571,7 +571,7 @@ proc ::tk::UnderlineAmpersand {text} {
     return [list [string map {\ufeff {}} $s] $idx]
 }
 
-# ::tk::SetAmpText -- 
+# ::tk::SetAmpText --
 #	Given widget path and text with "magic ampersands", sets -text and
 #	-underline options for the widget
 #

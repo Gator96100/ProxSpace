@@ -54,7 +54,7 @@ for i in /etc/profile.d/*.sh ; do
 done
 
 export MAKE_MODE=unix
-export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\w\033[0m\]$ '
+export PS1='\[\033]0;$MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
 
 alias clear=clsb
 alias ls='ls --color=auto'

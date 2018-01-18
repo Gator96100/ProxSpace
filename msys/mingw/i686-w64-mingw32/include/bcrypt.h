@@ -15,7 +15,11 @@ extern "C" {
 #if WINAPI_FAMILY_PARTITION (WINAPI_PARTITION_DESKTOP)
 
 #ifndef WINAPI
+#if defined(_ARM_)
+#define WINAPI
+#else
 #define WINAPI __stdcall
+#endif
 #endif
 
 #if !defined (_NTDEF_) && !defined (_NTSTATUS_PSDK)
@@ -30,17 +34,16 @@ extern "C" {
 #ifndef CONST
 #define CONST const
 #endif
-
+#ifndef _NO_W32_PSEUDO_MODIFIERS
 #ifndef IN
 #define IN
 #endif
-
 #ifndef OUT
 #define OUT
 #endif
-
 #ifndef OPTIONAL
 #define OPTIONAL
+#endif
 #endif
 
 #define BCRYPT_OBJECT_ALIGNMENT 16

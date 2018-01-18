@@ -2,7 +2,7 @@
 MODULE_SCOPE void Itcl_GetVariableFullName (Tcl_Interp * interp,
                 Tcl_Var variable, Tcl_Obj * objPtr);
 MODULE_SCOPE Tcl_Var Itcl_FindNamespaceVar (Tcl_Interp * interp,
-                CONST char * name, Tcl_Namespace * contextNsPtr, int flags);
+                 const char * name, Tcl_Namespace * contextNsPtr, int flags);
 MODULE_SCOPE void Itcl_SetNamespaceResolvers (Tcl_Namespace * namespacePtr,
         Tcl_ResolveCmdProc * cmdProc, Tcl_ResolveVarProc * varProc,
         Tcl_ResolveCompiledVarProc * compiledVarProc);
@@ -22,7 +22,7 @@ struct Tcl_Resolve;
 
 MODULE_SCOPE Tcl_Command _Tcl_GetOriginalCommand(Tcl_Command command);
 MODULE_SCOPE int _Tcl_CreateProc(Tcl_Interp *interp, Tcl_Namespace *nsPtr,
-	CONST char *procName, Tcl_Obj *argsPtr, Tcl_Obj *bodyPtr,
+	 const char *procName, Tcl_Obj *argsPtr, Tcl_Obj *bodyPtr,
         Tcl_Proc *procPtrPtr);
 MODULE_SCOPE void _Tcl_ProcDeleteProc(ClientData clientData);
 MODULE_SCOPE void *_Tcl_GetObjInterpProc(void);

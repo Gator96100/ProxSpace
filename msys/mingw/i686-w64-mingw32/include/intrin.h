@@ -72,6 +72,10 @@ extern "C" {
 
 #include <x86intrin.h>
 
+/* Before 4.9.2, x86intrin.h had broken versions of these. */
+#undef _lrotl
+#undef _lrotr
+
 #if defined(__cplusplus)
 }
 #endif
@@ -92,8 +96,14 @@ typedef union __m128i { char v[16]; } __m128i;
 #endif
 
 #ifndef WINAPI
+#if defined(_ARM_)
+#define WINAPI
+#else
 #define WINAPI __stdcall
 #endif
+#endif
+
+#if (defined(_X86_) || defined(__x86_64))
 
 #if defined(__MMX__) || defined(__MINGW_FORCE_SYS_INTRINS)
 #if defined(__cplusplus)
@@ -146,6 +156,8 @@ extern "C" {
 #endif
 #endif
 
+#endif
+
 #if (defined(_X86_) && !defined(__x86_64))
 #if defined(__cplusplus)
 extern "C" {
@@ -157,11 +169,6 @@ extern "C" {
 }
 #endif
 
-#if defined(__cplusplus)
-#include <dvec.h>
-#include <fvec.h>
-#include <ivec.h>
-#endif
 #endif
 
 #define __MACHINEX64 __MACHINE
@@ -427,19 +434,8 @@ extern "C" {
     __MACHINEIA64(__MINGW_EXTENSION __int64 __load128_acq(void *,__int64 *))
     __MACHINEZ(void __cdecl longjmp(jmp_buf,int))
 
-#pragma push_macro ("_lrotl")
-#undef _lrotl
-#pragma push_macro ("_lrotr")
-#undef _lrotr
-#ifdef __x86_64__
-    __MACHINE(__MINGW_EXTENSION unsigned long long __cdecl _lrotl(unsigned long long,int))
-    __MACHINE(__MINGW_EXTENSION unsigned long long __cdecl _lrotr(unsigned long long,int))
-#else
-    __MACHINE(unsigned __LONG32 __cdecl _lrotl(unsigned __LONG32,int))
-    __MACHINE(unsigned __LONG32 __cdecl _lrotr(unsigned __LONG32,int))
-#endif
-#pragma pop_macro ("_lrotl")
-#pragma pop_macro ("_lrotr")
+    /* __MACHINE(unsigned long __cdecl _lrotl(unsigned long,int)) moved to psdk_inc/intrin-impl.h */
+    /* __MACHINE(unsigned long __cdecl _lrotr(unsigned long,int)) moved to psdk_inc/intrin-impl.h */
 
     __MACHINEI(__MINGW_EXTENSION unsigned __int64 __ll_lshift(unsigned __int64,int))
     __MACHINEI(__MINGW_EXTENSION __int64 __ll_rshift(__int64,int))
@@ -1054,7 +1050,7 @@ extern "C" {
     /* __MACHINEI(__MINGW_EXTENSION unsigned __int64 __readmsr(unsigned __LONG32)) moved to psdk_inc/intrin-impl.h */
     /* __MACHINEI(__MINGW_EXTENSION void __writemsr(unsigned __LONG32,unsigned __int64)) moved to psdk_inc/intrin-impl.h */
 #ifndef __GNUC__
-    __MACHINEI(__MINGW_EXTENSION unsigned __int64 __rdtsc(void))
+    __MACHINEIW64(__MINGW_EXTENSION unsigned __int64 __rdtsc(void))
 #endif
     /* __MACHINEI(void __movsb(unsigned char *,unsigned char const *,size_t)) moved to psdk_inc/intrin-impl.h */
     /* __MACHINEI(void __movsw(unsigned short *,unsigned short const *,size_t)) moved to psdk_inc/intrin-impl.h */

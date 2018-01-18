@@ -1,0 +1,72 @@
+=head1 NAME
+
+File::Find::Rule::Procedural - File::Find::Rule's procedural interface
+
+=head1 SYNOPSIS
+
+  use File::Find::Rule;
+
+  # find all .pm files, procedurally
+  my @files = find(file => name => '*.pm', in => \@INC);
+
+=head1 DESCRIPTION
+
+In addition to the regular object-oriented interface,
+L<File::Find::Rule> provides two subroutines for you to use.
+
+=over
+
+=item C<find( @clauses )>
+
+=item C<rule( @clauses )>
+
+C<find> and C<rule> can be used to invoke any methods available to the
+OO version.  C<rule> is a synonym for C<find>
+
+=back
+
+Passing more than one value to a clause is done with an anonymous
+array:
+
+ my $finder = find( name => [ '*.mp3', '*.ogg' ] );
+
+C<find> and C<rule> both return a File::Find::Rule instance, unless
+one of the arguments is C<in>, in which case it returns a list of
+things that match the rule.
+
+ my @files = find( name => [ '*.mp3', '*.ogg' ], in => $ENV{HOME} );
+
+Please note that C<in> will be the last clause evaluated, and so this
+code will search for mp3s regardless of size.
+
+ my @files = find( name => '*.mp3', in => $ENV{HOME}, size => '<2k' );
+                                                    ^
+                                                    |
+               Clause processing stopped here ------/
+
+It is also possible to invert a single rule by prefixing it with C<!>
+like so:
+
+ # large files that aren't videos
+ my @files = find( file    =>
+                   '!name' => [ '*.avi', '*.mov' ],
+                   size    => '>20M',
+                   in      => $ENV{HOME} );
+
+
+=head1 AUTHOR
+
+Richard Clamp <richardc@unixbeard.net>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2003 Richard Clamp.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<File::Find::Rule>
+
+=cut

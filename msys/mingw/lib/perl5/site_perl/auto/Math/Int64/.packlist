@@ -1,0 +1,6 @@
+C:\perl-5.24.0\lib\perl5\site_perl\Math\Int64.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Math\Int64.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Math\Int64\die_on_overflow.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Math\Int64\die_on_overflow.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Math\Int64\native_if_available.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Math\Int64\native_if_available.pm
+C:\perl-5.24.0\lib\perl5\site_perl\Math\UInt64.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Math\UInt64.pm
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Math\Int64\Int64.dll relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Math\Int64\Int64.dll
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Math\Int64\libInt64.dll.a relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Math\Int64\libInt64.dll.a

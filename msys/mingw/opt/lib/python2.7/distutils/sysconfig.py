@@ -190,7 +190,8 @@ def customize_compiler(compiler):
             # that Python itself was built on.  Also the user OS
             # version and build tools may not support the same set
             # of CPU architectures for universal builds.
-            if not _config_vars.get('CUSTOMIZED_OSX_COMPILER', ''):
+            # Use get_config_var() to ensure _config_vars is initialized.
+            if not get_config_var('CUSTOMIZED_OSX_COMPILER'):
                 import _osx_support
                 _osx_support.customize_compiler(_config_vars)
                 _config_vars['CUSTOMIZED_OSX_COMPILER'] = 'True'

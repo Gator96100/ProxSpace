@@ -22,8 +22,10 @@ extern "C" {
 
 #include <specstrings.h>
 
+#ifndef __WIDL__
 #define __INTRINSIC_GROUP_WINNT /* only define the intrinsics in this file */
 #include <psdk_inc/intrin-impl.h>
+#endif
 
 #if defined(__x86_64) && \
   !(defined(_X86_) || defined(__i386__) || defined(_IA64_) || defined (__arm__))
@@ -31,6 +33,13 @@ extern "C" {
 #define _AMD64_
 #endif
 #endif /* _AMD64_ */
+
+#if defined(__arm__) && \
+  !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__ia64__))
+#if !defined(_ARM_)
+#define _ARM_
+#endif
+#endif /* _ARM_ */
 
 #if defined(__ia64__) && \
   !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__arm__))
@@ -226,8 +235,13 @@ extern "C" {
 #endif /* FORCEINLINE */
 
 #ifndef DECLSPEC_DEPRECATED
+#if !defined (__WIDL__)
 #define DECLSPEC_DEPRECATED __declspec(deprecated)
 #define DEPRECATE_SUPPORTED
+#else
+#define DECLSPEC_DEPRECATED
+#undef DEPRECATE_SUPPORTED
+#endif
 #endif
 
 #define DECLSPEC_DEPRECATED_DDK
@@ -244,7 +258,11 @@ extern "C" {
 #endif
 #endif /* FASTCALL */
 
+#if defined(_ARM_)
+#define NTAPI
+#else
 #define NTAPI __stdcall
+#endif
 #define NTAPI_INLINE NTAPI
 
 #if !defined(_NTSYSTEM_)
@@ -400,20 +418,28 @@ typedef PVOID HANDLE;
 #define EXTERN_C extern
 #endif
 
+/* Keep in sync with basetyps.h header.  */
+#ifndef STDMETHODCALLTYPE
 #define STDMETHODCALLTYPE WINAPI
 #define STDMETHODVCALLTYPE __cdecl
 #define STDAPICALLTYPE WINAPI
 #define STDAPIVCALLTYPE __cdecl
+
 #define STDAPI EXTERN_C HRESULT WINAPI
 #define STDAPI_(type) EXTERN_C type WINAPI
+
 #define STDMETHODIMP HRESULT WINAPI
 #define STDMETHODIMP_(type) type WINAPI
-#define IFACEMETHODIMP STDMETHODIMP
-#define IFACEMETHODIMP_(type) STDMETHODIMP_(type)
+
 #define STDAPIV EXTERN_C HRESULT STDAPIVCALLTYPE
 #define STDAPIV_(type) EXTERN_C type STDAPIVCALLTYPE
+
 #define STDMETHODIMPV HRESULT STDMETHODVCALLTYPE
 #define STDMETHODIMPV_(type) type STDMETHODVCALLTYPE
+#endif
+
+#define IFACEMETHODIMP STDMETHODIMP
+#define IFACEMETHODIMP_(type) STDMETHODIMP_(type)
 #define IFACEMETHODIMPV STDMETHODIMPV
 #define IFACEMETHODIMPV_(type) STDMETHODIMPV_(type)
 
@@ -619,7 +645,7 @@ typedef struct _LARGE_INTEGER {
 #define MAXWORD 0xffff
 #define MAXDWORD 0xffffffff
 
-#define FIELD_OFFSET(type,field) ((LONG)(LONG_PTR)&(((type *)0)->field))
+#define FIELD_OFFSET(Type, Field) ((LONG) __builtin_offsetof(Type, Field))
 #define RTL_FIELD_SIZE(type,field) (sizeof(((type *)0)->field))
 #define RTL_SIZEOF_THROUGH_FIELD(type,field) (FIELD_OFFSET(type,field) + RTL_FIELD_SIZE(type,field))
 #define RTL_CONTAINS_FIELD(Struct,Size,Field) ((((PCHAR)(&(Struct)->Field)) + sizeof((Struct)->Field)) <= (((PCHAR)(Struct))+(Size)))
@@ -790,6 +816,9 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 #define PRODUCT_CORE                              0x65
 #define PRODUCT_PROFESSIONAL_WMC                  0x67
 #define PRODUCT_MOBILE_CORE                       0x68
+#define PRODUCT_EDUCATION                         0x79
+#define PRODUCT_EDUCATION_N                       0x7a
+#define PRODUCT_MOBILE_ENTERPRISE                 0x85
 
 #define PRODUCT_UNLICENSED                        0xabcdabcd
 
@@ -1472,20 +1501,15 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 
     /* LONG InterlockedExchangeAdd(LONG volatile *Addend,LONG Value); moved to psdk_inc/intrin-impl.h */
     /* LONG InterlockedCompareExchange(LONG volatile *Destination,LONG ExChange,LONG Comperand); moved to psdk_inc/intrin-impl.h */
-    LONG InterlockedAdd(LONG volatile *Addend,LONG Value);
+    /* LONG InterlockedAdd(LONG volatile *Addend,LONG Value); moved to psdk_inc/intrin-impl.h */
     /* LONG64 InterlockedIncrement64(LONG64 volatile *Addend); moved to psdk_inc/intrin-impl.h */
     /* LONG64 InterlockedDecrement64(LONG64 volatile *Addend); moved to psdk_inc/intrin-impl.h */
     /* LONG64 InterlockedExchange64(LONG64 volatile *Target,LONG64 Value); moved to psdk_inc/intrin-impl.h */
-
-    __forceinline LONG InterlockedAdd(LONG volatile *Addend,LONG Value) { return InterlockedExchangeAdd(Addend,Value) + Value; }
-
     /* LONG64 InterlockedExchangeAdd64(LONG64 volatile *Addend,LONG64 Value); moved to psdk_inc/intrin-impl.h */
-    LONG64 InterlockedAdd64(LONG64 volatile *Addend,LONG64 Value);
+    /* LONG64 InterlockedAdd64(LONG64 volatile *Addend,LONG64 Value); moved to psdk_inc/intrin-impl.h */
     /* LONG64 InterlockedCompareExchange64(LONG64 volatile *Destination,LONG64 ExChange,LONG64 Comperand); moved to psdk_inc/intrin-impl.h */
     /* PVOID InterlockedCompareExchangePointer(PVOID volatile *Destination,PVOID ExChange,PVOID Comperand); moved to psdk_inc/intrin-impl.h */
     /* PVOID InterlockedExchangePointer(PVOID volatile *Target,PVOID Value); moved to psdk_inc/intrin-impl.h */
-
-    __forceinline LONG64 InterlockedAdd64(LONG64 volatile *Addend,LONG64 Value) { return InterlockedExchangeAdd64(Addend,Value) + Value; }
 
 #define CacheLineFlush(Address) _mm_clflush(Address)
 
@@ -1720,7 +1744,200 @@ extern "C" {
   typedef DWORD (*POUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK)(HANDLE Process,PVOID TableAddress,PDWORD Entries,PRUNTIME_FUNCTION *Functions);
 
 #define OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME "OutOfProcessFunctionTableCallback"
+
+#define UNW_FLAG_NHANDLER   0x00
+#define UNW_FLAG_EHANDLER   0x01
+#define UNW_FLAG_UHANDLER   0x02
+#define UNW_FLAG_CHAININFO  0x04
+
 #endif /* end of _AMD64_ */
+
+
+#ifdef _ARM_
+
+#if defined(__arm__) && !defined(RC_INVOKED)
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
+#define BitTest _bittest
+#define BitTestAndComplement _bittestandcomplement
+#define BitTestAndSet _bittestandset
+#define BitTestAndReset _bittestandreset
+
+#define BitScanForward _BitScanForward
+#define BitScanReverse _BitScanReverse
+
+#define InterlockedIncrement16 _InterlockedIncrement16
+#define InterlockedDecrement16 _InterlockedDecrement16
+#define InterlockedCompareExchange16 _InterlockedCompareExchange16
+
+#define InterlockedAnd _InterlockedAnd
+#define InterlockedOr _InterlockedOr
+#define InterlockedXor _InterlockedXor
+#define InterlockedIncrement _InterlockedIncrement
+#define InterlockedIncrementAcquire InterlockedIncrement
+#define InterlockedIncrementRelease InterlockedIncrement
+#define InterlockedDecrement _InterlockedDecrement
+#define InterlockedDecrementAcquire InterlockedDecrement
+#define InterlockedDecrementRelease InterlockedDecrement
+#define InterlockedAdd _InterlockedAdd
+#define InterlockedExchange _InterlockedExchange
+#define InterlockedExchangeAdd _InterlockedExchangeAdd
+#define InterlockedCompareExchange _InterlockedCompareExchange
+#define InterlockedCompareExchangeAcquire InterlockedCompareExchange
+#define InterlockedCompareExchangeRelease InterlockedCompareExchange
+
+#define InterlockedAnd64 _InterlockedAnd64
+#define InterlockedAndAffinity InterlockedAnd64
+#define InterlockedOr64 _InterlockedOr64
+#define InterlockedOrAffinity InterlockedOr64
+#define InterlockedXor64 _InterlockedXor64
+#define InterlockedIncrement64 _InterlockedIncrement64
+#define InterlockedDecrement64 _InterlockedDecrement64
+#define InterlockedAdd64 _InterlockedAdd64
+#define InterlockedExchange64 _InterlockedExchange64
+#define InterlockedExchangeAcquire64 InterlockedExchange64
+#define InterlockedExchangeAdd64 _InterlockedExchangeAdd64
+#define InterlockedCompareExchange64 _InterlockedCompareExchange64
+#define InterlockedCompareExchangeAcquire64 InterlockedCompareExchange64
+#define InterlockedCompareExchangeRelease64 InterlockedCompareExchange64
+
+#define InterlockedExchangePointer _InterlockedExchangePointer
+#define InterlockedCompareExchangePointer _InterlockedCompareExchangePointer
+#define InterlockedCompareExchangePointerAcquire _InterlockedCompareExchangePointer
+#define InterlockedCompareExchangePointerRelease _InterlockedCompareExchangePointer
+
+#ifdef __cplusplus
+  }
+#endif
+#endif /* defined(__arm__) && !defined(RC_INVOKED) */
+
+#define EXCEPTION_READ_FAULT    0
+#define EXCEPTION_WRITE_FAULT   1
+#define EXCEPTION_EXECUTE_FAULT 8
+
+#if !defined(RC_INVOKED)
+
+#define CONTEXT_ARM    0x0200000
+
+#define CONTEXT_CONTROL         (CONTEXT_ARM | 0x00000001)
+#define CONTEXT_INTEGER         (CONTEXT_ARM | 0x00000002)
+#define CONTEXT_FLOATING_POINT  (CONTEXT_ARM | 0x00000004)
+#define CONTEXT_DEBUG_REGISTERS (CONTEXT_ARM | 0x00000008)
+
+#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_FLOATING_POINT)
+
+#define CONTEXT_ALL  (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_FLOATING_POINT | CONTEXT_DEBUG_REGISTERS)
+
+#define CONTEXT_EXCEPTION_ACTIVE    0x08000000
+#define CONTEXT_SERVICE_ACTIVE      0x10000000
+#define CONTEXT_EXCEPTION_REQUEST   0x40000000
+#define CONTEXT_EXCEPTION_REPORTING 0x80000000
+
+#define CONTEXT_UNWOUND_TO_CALL     0x20000000
+
+#endif /* !defined(RC_INVOKED) */
+
+#define INITIAL_CPSR  0x10
+#define INITIAL_FPSCR 0x00
+
+#define ARM_MAX_BREAKPOINTS 8
+#define ARM_MAX_WATCHPOINTS 1
+
+
+  typedef struct _NEON128 {
+    ULONGLONG Low;
+    LONGLONG High;
+  } NEON128, *PNEON128;
+
+  typedef struct _CONTEXT {
+    DWORD ContextFlags;
+
+    DWORD R0;
+    DWORD R1;
+    DWORD R2;
+    DWORD R3;
+    DWORD R4;
+    DWORD R5;
+    DWORD R6;
+    DWORD R7;
+    DWORD R8;
+    DWORD R9;
+    DWORD R10;
+    DWORD R11;
+    DWORD R12;
+
+    DWORD Sp;
+    DWORD Lr;
+    DWORD Pc;
+    DWORD Cpsr;
+
+    DWORD Fpscr;
+    DWORD Padding;
+    union {
+        NEON128   Q[16];
+        ULONGLONG D[32];
+        DWORD     S[32];
+    } DUMMYUNIONNAME;
+
+    DWORD Bvr[ARM_MAX_BREAKPOINTS];
+    DWORD Bcr[ARM_MAX_BREAKPOINTS];
+    DWORD Wvr[ARM_MAX_WATCHPOINTS];
+    DWORD Wcr[ARM_MAX_WATCHPOINTS];
+
+    DWORD Padding2[2];
+  } CONTEXT, *PCONTEXT;
+
+  typedef struct _IMAGE_ARM_RUNTIME_FUNCTION_ENTRY RUNTIME_FUNCTION, *PRUNTIME_FUNCTION;
+  typedef PRUNTIME_FUNCTION (*PGET_RUNTIME_FUNCTION_CALLBACK)(DWORD64 ControlPc,PVOID Context);
+
+#define UNW_FLAG_NHANDLER   0x0
+#define UNW_FLAG_EHANDLER   0x1
+#define UNW_FLAG_UHANDLER   0x2
+
+#define UNWIND_HISTORY_TABLE_SIZE 12
+
+  typedef struct _UNWIND_HISTORY_TABLE_ENTRY {
+    DWORD ImageBase;
+    PRUNTIME_FUNCTION FunctionEntry;
+  } UNWIND_HISTORY_TABLE_ENTRY, *PUNWIND_HISTORY_TABLE_ENTRY;
+
+  typedef struct _UNWIND_HISTORY_TABLE {
+    DWORD Count;
+    BYTE  LocalHint;
+    BYTE  GlobalHint;
+    BYTE  Search;
+    BYTE  Once;
+    DWORD LowAddress;
+    DWORD HighAddress;
+    UNWIND_HISTORY_TABLE_ENTRY Entry[UNWIND_HISTORY_TABLE_SIZE];
+  } UNWIND_HISTORY_TABLE, *PUNWIND_HISTORY_TABLE;
+
+  typedef struct _KNONVOLATILE_CONTEXT_POINTERS {
+    PDWORD R4;
+    PDWORD R5;
+    PDWORD R6;
+    PDWORD R7;
+    PDWORD R8;
+    PDWORD R9;
+    PDWORD R10;
+    PDWORD R11;
+    PDWORD Lr;
+    PULONGLONG D8;
+    PULONGLONG D9;
+    PULONGLONG D10;
+    PULONGLONG D11;
+    PULONGLONG D12;
+    PULONGLONG D13;
+    PULONGLONG D14;
+    PULONGLONG D15;
+  } KNONVOLATILE_CONTEXT_POINTERS, *PKNONVOLATILE_CONTEXT_POINTERS;
+
+#define OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME "OutOfProcessFunctionTableCallback"
+
+#endif /* _ARM_ */
 
 
 #ifdef _X86_
@@ -1739,6 +1956,8 @@ extern "C" {
 #define BitScanReverse _BitScanReverse
 
 #define InterlockedCompareExchange16 _InterlockedCompareExchange16
+#define InterlockedAdd _InterlockedAdd
+#define InterlockedAdd64 _InterlockedAdd64
 
 #ifdef _PREFIX_
     /* BYTE __readfsbyte(DWORD Offset); moved to psdk_inc/intrin-impl.h */
@@ -1779,15 +1998,15 @@ __buildmemorybarrier()
 
 #define DbgRaiseAssertionFailure __int2c
 
-  __CRT_INLINE struct _TEB *NtCurrentTeb(void)
+  FORCEINLINE struct _TEB *NtCurrentTeb(void)
   {
     return (struct _TEB *)__readfsdword(PcTeb);
   }
-  __CRT_INLINE PVOID GetCurrentFiber(void)
+  FORCEINLINE PVOID GetCurrentFiber(void)
   {
     return(PVOID)__readfsdword(0x10);
   }
-  __CRT_INLINE PVOID GetFiberData(void)
+  FORCEINLINE PVOID GetFiberData(void)
   {
       return *(PVOID *)GetCurrentFiber();
   }
@@ -5662,6 +5881,7 @@ __buildmemorybarrier()
 #define IMAGE_SUBSYSTEM_XBOX 14
 #define IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION 16
 
+#define IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA 0x0020
 #define IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE 0x0040
 #define IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY 0x0080
 #define IMAGE_DLLCHARACTERISTICS_NX_COMPAT 0x0100
@@ -5670,6 +5890,7 @@ __buildmemorybarrier()
 #define IMAGE_DLLCHARACTERISTICS_NO_BIND 0x0800
 #define IMAGE_DLLCHARACTERISTICS_APPCONTAINER 0x1000
 #define IMAGE_DLLCHARACTERISTICS_WDM_DRIVER 0x2000
+#define IMAGE_DLLCHARACTERISTICS_GUARD_CF 0x4000
 #define IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE 0x8000
 
 #define IMAGE_DIRECTORY_ENTRY_EXPORT 0

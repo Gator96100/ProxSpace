@@ -10,10 +10,10 @@
 
 	This cut down development environment has been created specifically for Windows users.
 	* devkitARM r45
-	* gcc 4.9.2
+	* gcc 5.3.0
 	* Qt 5.6
-	* perl 5.8.6
-	* git 2.12.2
+	* perl 5.24.0
+	* git 2.15.1.2
 ## Usage ##
 
 	Extract 'ProxSpace' to a location on drive without spaces.
@@ -33,6 +33,6 @@
 	Please note that more detail is available on the wiki: https://github.com/Proxmark/proxmark3/wiki
 
 	1. Attach the Proxmark III to a USB port on your computer.
-	3. To flash the BOOTROM run './client/flasher COM1 -b ./bootrom/obj/bootrom.elf'
-	4. To flash the FULLIMAGE run './client/flasher COM1 ./armsrc/obj/fullimage.elf'
-	5. Wait for the process to complete.
+	2. To flash the BOOTROM run './client/flasher COM1 -b ./bootrom/obj/bootrom.elf'
+	3. To flash the FULLIMAGE run './client/flasher COM1 ./armsrc/obj/fullimage.elf'
+	4. Wait for the process to complete.

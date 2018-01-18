@@ -1,5 +1,5 @@
 [http]
-	sslCAInfo = C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+	sslCAInfo = /ssl/certs/ca-bundle.crt
 	sslBackend = openssl
 [diff "astextplain"]
 	textconv = astextplain
@@ -10,5 +10,3 @@
 	required = true
 [credential]
 	helper = manager
-[core]
-	editor = 'C:\\Program Files\\Notepad++\\notepad++.exe' -multiInst -notabbar -nosession -noPlugin

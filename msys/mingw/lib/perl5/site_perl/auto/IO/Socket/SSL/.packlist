@@ -1,0 +1,5 @@
+C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL.pm
+C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL.pod relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL.pod
+C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL\Intercept.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL\Intercept.pm
+C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL\PublicSuffix.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL\PublicSuffix.pm
+C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL\Utils.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\IO\Socket\SSL\Utils.pm

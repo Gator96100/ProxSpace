@@ -1,0 +1,181 @@
+=head1 NAME
+
+Win32::API::Callback::IATPatch - Hooking and Patching a DLL's Imported C Functions
+
+=head1 SYNOPSIS
+
+  use Win32::API;
+  use Win32::API::Callback;
+  warn "usually fatally errors on Cygwin" if $^O eq 'cygwin';
+  # do not do a "use" or "require" on Win32::API::Callback::IATPatch
+  # IATPatch comes with Win32::API::Callback
+  my $LoadLibraryExA;
+  my $callback = Win32::API::Callback->new(
+    sub {
+      my $libname = unpack('p', pack('J', $_[0]));
+      print "got $libname\n";
+      return $LoadLibraryExA->Call($libname, $_[1], $_[2]);
+    },
+    'NNI',
+    'N'
+  );
+  my $patch = Win32::API::Callback::IATPatch->new(
+    $callback, "perl518.dll", 'kernel32.dll', 'LoadLibraryExA');
+  die "failed to create IATPatch Obj $^E" if ! defined $patch;
+  $LoadLibraryExA = Win32::API::More->new( undef, $patch->GetOriginalFunctionPtr(), '
+  HMODULE
+  WINAPI
+  LoadLibraryExA(
+    LPCSTR lpLibFileName,
+    HANDLE hFile,
+    DWORD dwFlags
+    );
+  ');
+  die "failed to make old function object" if ! defined $LoadLibraryExA;
+  require Encode;
+  #console will get a print of the dll filename now
+
+=head1 DESCRIPTION
+
+Win32::API::Callback::IATPatch allows you to hook a compile time dynamic linked
+function call from any DLL (or EXE, from now on all examples are from a DLL to
+another DLL, but from a EXE to a DLL is implied) in the Perl process, to a
+different DLL in the same Perl process, by placing a Win32::API::Callback object
+in between. This module does B<not> hook B<GetProcAddress> function calls. It
+also will not hook a function call from a DLL to another function in the same
+DLL. The function you want to hook B<must> appear in the B<import table> of the
+DLL you want to use the hook. Functions from delay loaded DLL have their own
+import table, it is different import table from the normal one IATPatch supports.
+IATPatch will not find a delay loaded function and will not patch it. The hook
+occurs at the caller DLL, not the callee DLL. This means your callback will be
+called from all the calls to a one function in different DLL from the one
+particular DLL the IATPatch object patched. The caller DLL is modified at
+runtime, in the Perl process where the IATPatch was created, not on disk,
+not globally among all processes. The callee or exporting DLL is NOT modified,
+so your hook callback will be called from the 1 DLL that you choose to hook with 
+1 IATPatch object. You can create multiple IATPatch objects, one for each DLL in
+the Perl process that you want to call your callback and not the original
+destination function. If a new DLL is loaded into the process during runtime,
+you must create a new IATPatch object specifically targeting it. There may be a
+period from when the new DLL is loaded into the process, and when your Perl
+script creates IATPatch object, where calls from that new DLL goto the real
+destination function without hooking. If a DLL is unloaded, then reloaded into
+the process, you must call C<Unpatch(0)> method on the old IATPatch object, then
+create a new IATPatch object. IATPatch has no notification feature that a DLL
+is being loaded or unloaded from the process. Unless you completely control, and
+have the source code of the caller DLL, and understand all of the source code of
+that DLL, there is a high chance that you will B<NOT> hook all calls from that
+DLL to the destination function. If a call to the destination function is
+dangerous or unacceptable, do not use IATPatch. IATPatch is not Microsoft
+Detours or the like in any sense. Detours and its brethern will rewrite the
+machine code in the beginning of the destination function call, hooking all
+calls to that function call process wide, without exception.
+
+Why this module was created? So I could mock kernel32 functions to
+unit test Perl's C function calls to Kernel32.
+
+=head2 CONSTRUCTORS
+
+=head3 new
+
+  my $patch = Win32::API::Callback::IATPatch->new(
+  $A_Win32_API_Callback_Obj,    $EXE_or_DLL_hmodule_or_name_to_hook,
+  $import_DLL_name,             $import_function_name_or_ordinal);
+
+Creates a new IATPatch object. The Win32::API::Callback will be called as long
+as the IATPatch object exists. When an IATPatch object is DESTROYed, unless
+C<-E<gt>Unpatch(0)> is called first, the patch is undone and the original
+function is directly called from then on by that DLL. The DLL is not reference
+count saved by an IATPatch object, so it may be unloaded at any time. If it is
+unloaded you must call C<-E<gt>Unpatch(0)> before a DESTROY. Otherwise the DESTROY
+will croak when it tries to unpatch the DLL. The DLL to hook must be a valid
+PE file, while in memory. DLL and EXE "packers" can create invalid PE
+files that do load successfully into memory, but they are not full PE files in
+memory. On error, undef is returned and an error code is available through
+L<Win32::GetLastError|Win32/Win32::GetLastError()>/L<perlvar/"$^E">. The error code may be from either
+IATPatch directly, or from a Win32 call that IATPatch made. IATPatch objects
+do not go through a L<perlfunc/"fork"> onto the child interp. IATPatch is fork safe.
+
+The hook dll name can be one of 3 things, if the dllname is multiple things
+(a number and a string), the first format found in the following order is used.
+A string C<"123"> (a very strange DLL name BTW), this DLL is converted to DLL
+HMODULE with GetModuleHandle. If there are 2 DLLs with the same filename,
+refer to GetModuleHandle's
+L<MSDN documentation|http://msdn.microsoft.com/en-us/library/windows/desktop/ms683199%28v=vs.85%29.aspx>
+on what happens. Then if the
+DLL name is an integer C<123456>, it is interpreted as a HMODULE directly.
+If DLL name undefined, the file used to create the calling process will be
+patched (a .exe). Finally if the DLL name is defined, a fatal error croak occurs.
+It is best to use an HMODULE, since things like SxS can create multiple DLLs with
+the same name in the same process. How to get an HMODULE, you are on your own.
+
+C<$import_function_name_or_ordinal> can be one of 2 things. First it is checked if
+it is a string, if so, it is used as the function name to hook. Else it is used
+as an integer ordinal to hook. Importing by ordinal is obsolete in Windows, and
+you shouldn't ever have to use it. The author of IATPatch was unable to test if
+ordinal hooking works correctly in IATPatch.
+
+=head2 METHODS
+
+=head3 Unpatch
+
+  die "failed to undo the patch error: $^E" if !
+    $IATPatch->Unpatch(); #undo the patch
+  #or
+  die "failed to undo the patch error: $^E" if !
+    $IATPatch->Unpatch(1); #undo the patch
+  #or
+  die "failed to undo the patch error: $^E" if !
+    $IATPatch->Unpatch(0); #never undo the patch
+  #or
+  die "failed to undo the patch error: $^E" if !
+    $IATPatch->Unpatch(undef); #never undo the patch
+
+Unpatches the DLL with the original destination function from the L<Win32::API::Callback::IATPatch/"new">
+call. Returns undef on failure with error number available through
+L<Win32::GetLastError|Win32/Win32::GetLastError()>/L<perlvar/"$^E">. If Unpatch was called once already,
+calling it again will fail, and error will be ERROR_NO_MORE_ITEMS.
+
+=head3 GetOriginalFunctionPtr
+
+Returns the original function pointer found in the import table in C<123456>
+format. If the returned pointer is 0, L<Win32::API::Callback::IATPatch/"Unpatch">
+was called earlier. There are no error numbers associated with this method.
+This value can be directly used to create a function pointer based Win32::API
+object to call the original destination function from inside your Perl callback.
+See L<Win32::API::Callback::IATPatch/"SYNOPSIS"> for a usage example.
+
+=head1 BUGS AND LIMITATIONS
+
+=over 4
+
+=item E<nbsp>Cygwin not supported
+
+L<new()|Win32::API::Callback::IATPatch/"new"> usually fatally errors on Cygwin
+with "IATPatch 3GB mode not supported" on Cygwins that allocate the heap at
+0x80000000 or are "Large Address Aware"
+
+=back
+
+=head1 SEE ALSO
+
+L<Win32::API::Callback>
+
+L<Win32::API>
+
+L<http://msdn.microsoft.com/en-us/magazine/cc301808.aspx>
+
+=head1 AUTHOR
+
+Daniel Dragan ( I<bulkdd@cpan.org> ).
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2012 by Daniel Dragan
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
+at your option, any later version of Perl 5 you may have available.
+
+
+=cut

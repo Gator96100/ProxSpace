@@ -1,0 +1,4 @@
+C:\perl-5.24.0\lib\perl5\site_perl\Crypt\OpenSSL\ECDSA.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Crypt\OpenSSL\ECDSA.pm
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\ECDSA\ECDSA.dll relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\ECDSA\ECDSA.dll
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\ECDSA\autosplit.ix relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\ECDSA\autosplit.ix
+C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\ECDSA\libECDSA.dll.a relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\ECDSA\libECDSA.dll.a

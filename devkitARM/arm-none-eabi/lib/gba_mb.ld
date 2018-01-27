@@ -61,17 +61,24 @@ __irq_flags	=	0x03007ff8;
 SECTIONS
 {
 	. = __text_start;
-	.init :
+	. = __text_start;
+	.crt0 :
 	{
-		KEEP (*(.init))
+		KEEP (*(.crt0))
 		. = ALIGN(4);
 	} >ewram =0xff
 
+	.init :
+	{
+		KEEP (*(SORT_NONE(.init)))
+	} >ewram
+
 	.plt :
- 	{
+	{
 		*(.plt)
 		. = ALIGN(4);   /* REQUIRED. LD is flaky without it. */
 	} >ewram
+
 
 	.text  ALIGN (4):
 	{

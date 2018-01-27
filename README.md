@@ -9,7 +9,7 @@
 ## What's installed ##
 
 	This cut down development environment has been created specifically for Windows users.
-	* devkitARM r45
+	* devkitARM r47
 	* gcc 5.3.0
 	* Qt 5.6
 	* perl 5.24.0

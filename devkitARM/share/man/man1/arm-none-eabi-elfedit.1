@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "ELFEDIT 1"
-.TH ELFEDIT 1 "2014-12-23" "binutils-2.25" "GNU Development Tools"
+.TH ELFEDIT 1 "2017-03-02" "binutils-2.28" "GNU Development Tools"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -170,8 +170,8 @@ Set the matching input \s-1ELF\s0 machine type to \fImachine\fR.  If
 \&\fB\-\-input\-mach\fR isn't specified, it will match any \s-1ELF\s0
 machine types.
 .Sp
-The supported \s-1ELF\s0 machine types are, \fIL1OM\fR, \fIK1OM\fR and
-\&\fIx86\-64\fR.
+The supported \s-1ELF\s0 machine types are, \fIi386\fR, \fI\s-1IAMCU\s0\fR, \fIL1OM\fR,
+\&\fIK1OM\fR and \fIx86\-64\fR.
 .IP "\fB\-\-output\-mach=\fR\fImachine\fR" 4
 .IX Item "--output-mach=machine"
 Change the \s-1ELF\s0 machine type in the \s-1ELF\s0 header to \fImachine\fR.  The
@@ -232,7 +232,7 @@ with a backslash.  The \fIfile\fR may itself contain additional
 \&\fIreadelf\fR\|(1), and the Info entries for \fIbinutils\fR.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright (c) 1991\-2014 Free Software Foundation, Inc.
+Copyright (c) 1991\-2017 Free Software Foundation, Inc.
 .PP
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the \s-1GNU\s0 Free Documentation License, Version 1.3

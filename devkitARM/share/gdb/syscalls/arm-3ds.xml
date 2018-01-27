@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!DOCTYPE syscalls_info SYSTEM "gdb-syscalls.dtd">
+<!-- This file is located inside GDB and is based on files which license are: -->
+<!-- Copyright (C) 2009-2017 Free Software Foundation, Inc.
+
+     Copying and distribution of this file, with or without modification,
+     are permitted in any medium without royalty provided the copyright
+     notice and this notice are preserved.  This file is offered as-is,
+     without any warranty. -->
+<syscalls_info>
+  <syscall name="ControlMemory" number="1" groups="memory"/>
+  <syscall name="QueryMemory" number="2" groups="memory"/>
+
+  <syscall name="ExitProcess" number="3" groups="process"/>
+  <syscall name="GetProcessAffinityMask" number="4" groups="process"/>
+  <syscall name="SetProcessAffinityMask" number="5" groups="process"/>
+  <syscall name="GetProcessIdealProcessor" number="6" groups="process"/>
+  <syscall name="SetProcessIdealProcessor" number="7" groups="process"/>
+
+  <syscall name="CreateThread" number="8" groups="thread"/>
+  <syscall name="ExitThread" number="9" groups="thread"/>
+  <syscall name="SleepThread" number="10" groups="thread"/>
+  <syscall name="GetThreadPriority" number="11" groups="thread"/>
+  <syscall name="SetThreadPriority" number="12" groups="thread"/>
+  <syscall name="GetThreadAffinityMask" number="13" groups="thread"/>
+  <syscall name="SetThreadAffinityMask" number="14" groups="thread"/> <!-- removed -->
+  <syscall name="GetThreadIdealProcessor" number="15" groups="thread"/>
+  <syscall name="SetThreadIdealProcessor" number="16" groups="thread"/> <!-- removed -->
+  <syscall name="GetCurrentProcessorNumber" number="17" groups="thread"/>
+  <syscall name="Run" number="18" groups="thread"/>
+
+  <syscall name="CreateMutex" number="19" groups="synchronization"/>
+  <syscall name="ReleaseMutex" number="20" groups="synchronization"/>
+  <syscall name="CreateSemaphore" number="21" groups="synchronization"/>
+  <syscall name="ReleaseSemaphore" number="22" groups="synchronization"/>
+  <syscall name="CreateEvent" number="23" groups="synchronization"/>
+  <syscall name="SignalEvent" number="24" groups="synchronization"/>
+  <syscall name="ClearEvent" number="25" groups="synchronization"/>
+  <syscall name="CreateTimer" number="26" groups="synchronization"/>
+  <syscall name="SetTimer" number="27" groups="synchronization"/>
+  <syscall name="CancelTimer" number="28" groups="synchronization"/>
+  <syscall name="ClearTimer" number="29" groups="synchronization"/>
+
+  <syscall name="CreateMemoryBlock" number="30" groups="memory,ipc"/>
+  <syscall name="MapMemoryBlock" number="31" groups="memory,ipc"/>
+  <syscall name="UnmapMemoryBlock" number="32" groups="memory,ipc"/>
+
+  <syscall name="CreateAddressArbiter" number="33" groups="memory,synchronization"/>
+  <syscall name="ArbitrateAddress" number="34" groups="memory,synchronization"/>
+
+  <syscall name="CloseHandle" number="35" groups="synchronization,ipc,memory,thread,process,debug"/>
+  <syscall name="WaitSynchronization" number="36" groups="synchronization,ipc,thread,process,debug"/>
+  <syscall name="WaitSynchronizationN" number="37" groups="synchronization,ipc,thread,process,debug"/>
+  <syscall name="SignalAndWait" number="38" groups="synchronization"/> <!-- removed -->
+  <syscall name="DuplicateHandle" number="39" groups="synchronization,ipc,memory,thread,process,debug"/>
+
+  <syscall name="GetSystemTick" number="40" groups="information"/>
+  <syscall name="GetHandleInfo" number="41" groups="information,synchronization,ipc,memory,thread,process,debug"/>
+  <syscall name="GetSystemInfo" number="42" groups="information"/>
+  <syscall name="GetProcessInfo" number="43" groups="information,process"/>
+  <syscall name="GetThreadInfo" number="44" groups="information,thread"/>
+
+  <syscall name="ConnectToPort" number="45" groups="ipc"/>
+  <syscall name="GetCFWInfo" number="46" groups="custom,information"/> <!-- deprecated -->
+  <syscall name="SendSyncRequest2" number="47" groups="ipc"/> <!-- removed -->
+  <syscall name="SendSyncRequest3" number="48" groups="ipc"/> <!-- removed -->
+  <syscall name="SendSyncRequest4" number="49" groups="ipc"/> <!-- removed -->
+  <syscall name="SendSyncRequest" number="50" groups="ipc"/> <!-- removed -->
+
+  <syscall name="OpenProcess" number="51" groups="process"/>
+  <syscall name="OpenThread" number="52" groups="thread"/>
+
+  <syscall name="GetProcessId" number="53" groups="process"/>
+  <syscall name="GetProcessIdOfThread" number="54" groups="process,thread"/>
+  <syscall name="GetThreadId" number="55" groups="thread"/>
+
+  <syscall name="GetResourceLimit" number="56" groups="process"/>
+  <syscall name="GetResourceLimitLimitValues" number="57" groups="process"/>
+  <syscall name="GetResourceLimitCurrentValues" number="58" groups="process"/>
+
+  <syscall name="GetThreadContext" number="59" groups="debug,thread"/> <!-- removed -->
+  <syscall name="Break" number="60" groups="debug"/>
+  <syscall name="OutputDebugString" number="61" groups="debug"/>
+  <syscall name="ControlPerformanceCounter" number="62" groups="debug"/>
+
+  <syscall name="CreatePort" number="71" groups="ipc"/>
+  <syscall name="CreateSessionToPort" number="72" groups="ipc"/>
+  <syscall name="CreateSession" number="73" groups="ipc"/>
+  <syscall name="AcceptSession" number="74" groups="ipc"/>
+  <syscall name="ReplyAndReceive1" number="75" groups="ipc"/>
+  <syscall name="ReplyAndReceive2" number="76" groups="ipc"/>
+  <syscall name="ReplyAndReceive3" number="77" groups="ipc"/>
+  <syscall name="ReplyAndReceive4" number="78" groups="ipc"/>
+  <syscall name="ReplyAndReceive" number="79" groups="ipc"/>
+
+  <syscall name="BindInterrupt" number="80" groups="io,synchronization"/>
+  <syscall name="UnbindInterrupt" number="81" groups="io,synchronization"/>
+  <syscall name="InvalidateProcessDataCache" number="82" groups="io,memory,process"/>
+  <syscall name="StoreProcessDataCache" number="83" groups="io,memory,process"/>
+  <syscall name="FlushProcessDataCache" number="84" groups="io,memory,process"/>
+
+  <syscall name="StartInterprocessDma" number="85" groups="io,memory,ipc"/>
+  <syscall name="StopDma" number="86" groups="io,memory,ipc"/>
+  <syscall name="GetDmaState" number="87" groups="io,memory,ipc"/>
+  <syscall name="RestartDma" number="88" groups="io,memory,ipc"/>
+
+  <syscall name="SetGpuProt" number="89" groups="io"/>
+  <syscall name="SetWifiEnabled" number="90" groups="io"/>
+
+  <syscall name="DebugActiveProcess" number="96" groups="debug,process"/>
+  <syscall name="BreakDebugProcess" number="97" groups="debug,process"/>
+  <syscall name="TerminateDebugProcess" number="98" groups="debug,process"/>
+  <syscall name="GetProcessDebugEvent" number="99" groups="debug"/>
+  <syscall name="ContinueDebugEvent" number="100" groups="debug"/>
+  <syscall name="GetProcessList" number="101" groups="information,debug,process"/>
+  <syscall name="GetThreadList" number="102" groups="information,debug,thread"/>
+  <syscall name="GetDebugThreadContext" number="103" groups="debug,thread"/>
+  <syscall name="SetDebugThreadContext" number="104" groups="debug,thread"/>
+  <syscall name="QueryDebugProcessMemory" number="105" groups="debug,process,memory"/>
+  <syscall name="ReadProcessMemory" number="106" groups="debug,process,memory"/>
+  <syscall name="WriteProcessMemory" number="107" groups="debug,process,memory"/>
+  <syscall name="SetHardwareBreakPoint" number="108" group="debug"/>
+  <syscall name="GetDebugThreadParam" number="109" group="debug,thread"/>
+
+  <syscall name="ControlProcessMemory" number="112" group="process,memory"/>
+  <syscall name="MapProcessMemory" number="113" group="process,memory"/>
+  <syscall name="UnmapProcessMemory" number="114" group="process,memory"/>
+
+  <syscall name="CreateCodeSet" number="115" group="process,memory"/>
+  <syscall name="RandomStub" number="116" group="process,memory"/> <!-- removed -->
+  <syscall name="CreateProcess" number="117" group="process"/>
+  <syscall name="TerminateProcess" number="118" group="process"/>
+  <syscall name="SetProcessResourceLimits" number="119" group="process"/>
+  <syscall name="CreateResourceLimit" number="120" group="process"/>
+  <syscall name="SetResourceLimitValues" number="121" group="process"/>
+  <syscall name="AddCodeSegment" number="122" group="process"/> <!-- removed -->
+
+  <syscall name="Backdoor" number="123" group="kernel"/>
+  <syscall name="KernelSetState" number="124" group="kernel"/>
+
+  <syscall name="QueryProcessMemory" number="125" group="process,memory"/>
+
+  <syscall name="CustomBackdoor" number="128" group="custom,kernel"/>
+
+  <syscall name="ConvertVAToPA" number="144" group="custom,io,memory"/>
+  <syscall name="FlushDataCacheRange" number="145" group="custom,io,memory"/>
+  <syscall name="FlushEntireDataCache" number="146" group="custom,io,memory"/>
+  <syscall name="InvalidateInstructionCacheRange" number="147" group="custom,io,memory"/>
+  <syscall name="InvalidateEntireInstructionCache" number="148" group="custom,io,memory"/>
+
+  <syscall name="MapProcessMemoryEx" number="160" group="custom,process,memory"/>
+  <syscall name="UnmapProcessMemoryEx" number="161" group="custom,process,memory"/>
+  <syscall name="ControlMemoryEx" number="162" group="custom,memory"/>
+
+  <syscall name="ControlService" number="176" group="custom,ipc"/>
+  <syscall name="CopyHandle" number="177" groups="custom,synchronization,ipc,thread,process,debug"/>
+  <syscall name="TranslateHandle" number="178" groups="custom,synchronization,ipc,thread,process,debug"/>
+
+</syscalls_info>

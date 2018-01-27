@@ -22,13 +22,24 @@ __irq_vector	=	__iwram_top - 4;
 
 SECTIONS
 {
-	.init	:
+	.crt0	:
 	{
 		__text_start = . ;
-		KEEP (*(.init))
+		KEEP (*(.crt0))
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
-		} >rom = 0xff
+	} >rom = 0xff
+
+	.init           :
+	{
+		KEEP (*(SORT_NONE(.init)))
+	} >rom = 0xff
+
 	.plt : { *(.plt) } >rom = 0xff
+
+	.init :
+	{
+		KEEP (*(SORT_NONE(.init)))
+	} >ewram
 
 	.text :   /* ALIGN (4): */
 	{

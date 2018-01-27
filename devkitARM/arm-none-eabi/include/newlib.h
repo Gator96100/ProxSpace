@@ -11,7 +11,7 @@
 /* #undef _ELIX_LEVEL */
 
 /* Newlib version */
-#define _NEWLIB_VERSION "2.2.0"
+#include <_newlib_version.h>
 
 /* C99 formats support (such as %a, %zu, ...) in IO functions like
  * printf/scanf enabled */
@@ -62,12 +62,6 @@
 /* True if long double supported and it is equal to double.  */
 #define _LDBL_EQ_DBL 1
  
-/* Define if uintptr_t is unsigned long on this architecture */
-/* #undef _UINTPTR_EQ_ULONG */
-
-/* Define if uintptr_t is unsigned long long on this architecture */
-/* #undef _UINTPTR_EQ_ULONGLONG */
-
 /* Define if ivo supported in streamio.  */
 #define _FVWRITE_IN_STREAMIO 1
 
@@ -75,7 +69,7 @@
 #define _FSEEK_OPTIMIZATION 1
 
 /* Define if wide char orientation is supported.  */
-#define _WIDE_ORIENT 1
+/* #undef _WIDE_ORIENT */
 
 /* Define if unbuffered stream file optimization is supported.  */
 #define _UNBUF_STREAM_OPT 1

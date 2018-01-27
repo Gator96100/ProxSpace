@@ -8,16 +8,16 @@ MEMORY {
 		the patcher / linker to find all shifted addresses within each section.
 		Changed sections are: glue_7, got
 	*/
-	ddmem	: ORIGIN = 0xBF800000, LENGTH = 32K		
+	ddmem	: ORIGIN = 0xBF800000, LENGTH = 16K		
 }
 
 
 SECTIONS
 {
-	.init	:
+	.crt0	:
 	{
 		__text_start = . ;
-		KEEP (*(.init))
+		KEEP (*(.crt0))
 		. = ALIGN(4);  /* REQUIRED. LD is flaky without it. */
 	} >ddmem = 0xff
 

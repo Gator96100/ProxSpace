@@ -35,11 +35,11 @@ typedef struct {
 	const char *name;
 	size_t structSize;
 	int (*open_r)(struct _reent *r, void *fileStruct, const char *path, int flags, int mode);
-	int (*close_r)(struct _reent *r, int fd);
-	ssize_t (*write_r)(struct _reent *r, int fd, const char *ptr, size_t len);
-	ssize_t (*read_r)(struct _reent *r, int fd, char *ptr, size_t len);
-	off_t (*seek_r)(struct _reent *r, int fd, off_t pos, int dir);
-	int (*fstat_r)(struct _reent *r, int fd, struct stat *st);
+	int (*close_r)(struct _reent *r, void *fd);
+	ssize_t (*write_r)(struct _reent *r, void *fd, const char *ptr, size_t len);
+	ssize_t (*read_r)(struct _reent *r, void *fd, char *ptr, size_t len);
+	off_t (*seek_r)(struct _reent *r, void *fd, off_t pos, int dir);
+	int (*fstat_r)(struct _reent *r, void *fd, struct stat *st);
 	int (*stat_r)(struct _reent *r, const char *file, struct stat *st);
 	int (*link_r)(struct _reent *r, const char *existing, const char  *newLink);
 	int (*unlink_r)(struct _reent *r, const char *name);
@@ -54,13 +54,13 @@ typedef struct {
 	int (*dirnext_r)(struct _reent *r, DIR_ITER *dirState, char *filename, struct stat *filestat);
 	int (*dirclose_r)(struct _reent *r, DIR_ITER *dirState);
 	int (*statvfs_r)(struct _reent *r, const char *path, struct statvfs *buf);
-	int (*ftruncate_r)(struct _reent *r, int fd, off_t len);
-	int (*fsync_r)(struct _reent *r, int fd);
+	int (*ftruncate_r)(struct _reent *r, void *fd, off_t len);
+	int (*fsync_r)(struct _reent *r, void *fd);
 
 	void *deviceData;
 
 	int (*chmod_r)(struct _reent *r, const char *path, mode_t mode);
-	int (*fchmod_r)(struct _reent *r, int fd, mode_t mode);
+	int (*fchmod_r)(struct _reent *r, void *fd, mode_t mode);
 	int (*rmdir_r)(struct _reent *r, const char *name);
 
 } devoptab_t;
@@ -93,7 +93,7 @@ void setDefaultDevice( int device );
 const devoptab_t* GetDeviceOpTab (const char *name);
 
 void __release_handle(int fd);
-int  __alloc_handle(size_t size);
+int  __alloc_handle(int device);
 __handle *__get_handle(int fd);
 
 #ifdef __cplusplus

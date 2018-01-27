@@ -65,6 +65,8 @@ Software development
 * gccinstall: (gccinstall).     Installing the GNU Compiler Collection.
 * gccint: (gccint).             Internals of the GNU Compiler Collection.
 * gcov: (gcc) Gcov.             'gcov'--a test coverage program.
+* gcov-dump: (gcc) Gcov-dump.   'gcov-dump'--an offline gcda and gcno profile 
+                                  dump tool.
 * gcov-tool: (gcc) Gcov-tool.   'gcov-tool'--an offline gcda profile 
                                   processing program.
 * gdbserver: (gdb) Server.      The GNU debugging server.

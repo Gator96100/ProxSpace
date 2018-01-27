@@ -161,7 +161,7 @@ Read firmware from device into
 .BR "\-D, \-\-download" " FILE"
 Write firmware from
 .B FILE
-into device.
+into device. When FILE is \-, the firmware is read from stdin.
 .TP
 .B "\-R, \-\-reset"
 Issue USB reset signalling after upload or download has finished.
@@ -227,14 +227,14 @@ ask the device to leave DFU mode:
 .B "  $ dfu-util -a 0 -s 0x08004000:leave -D /path/to/image.bin"
 .\" There are no bugs of course
 .SH BUGS
-Please report any bugs to the dfu-util mailing list at
-.BR dfu-util@lists.gnumonks.org .
+Please report any bugs to the dfu-util bug tracker at
+.BR http://sourceforge.net/p/dfu-util/tickets/ .
 Please use the
 .IR --verbose " option (repeated as necessary) to provide more"
 information in your bug report.
 .SH SEE ALSO
 The dfu-util home page is
-.B http://dfu-util.gnumonks.org
+.B http://sourceforge.net/p/dfu-util/
 .SH HISTORY
 dfu-util was originally written for the OpenMoko project by
 Weston Schmidt <weston_schmidt@yahoo.com> and 

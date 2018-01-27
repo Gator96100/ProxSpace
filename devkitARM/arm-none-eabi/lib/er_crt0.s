@@ -4,7 +4,7 @@
 @ author  : tim schuerewegen
 @ version : 1.0
 @---------------------------------------------------------------------------------
-	.section	".init"
+	.section	".crt0","ax"
 	.global     _start
 	.align
 	.arm

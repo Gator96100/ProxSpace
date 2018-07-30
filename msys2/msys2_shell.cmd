@@ -15,6 +15,14 @@ rem To export full current PATH from environment into MSYS2 use '-use-full-path'
 rem or uncomment next line
 rem set MSYS2_PATH_TYPE=inherit
 
+if not exist %MYPATH%msys2\etc\passwd (
+	SET PATH=%PATH%;%MYPATH%msys2\usr\bin
+	mkdir %MYPATH%msys2\tmp
+    %MYPATH%msys2\usr\bin\touch /etc/passwd
+    %MYPATH%msys2\usr\bin\touch /etc/group
+	%MYPATH%msys2\usr\bin\bash /user_setup.sh
+)
+
 :checkparams
 rem Help option
 if "x%~1" == "x-help" (

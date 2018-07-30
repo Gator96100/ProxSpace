@@ -20,7 +20,7 @@
 	* make
 	* pkg-config
 ## Updating packages  ##
-    msys2 comes with a package  manager, all installed packages can be updated with "pacman -Syuu"
+    msys2 comes with a package manager, all installed packages can be updated with "pacman -Syuu"
 
 ## Usage ##
 

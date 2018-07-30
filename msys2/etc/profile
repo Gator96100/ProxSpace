@@ -48,7 +48,6 @@ unset MINGW_MOUNT_POINT
 . '/etc/msystem'
 case "${MSYSTEM}" in
 MINGW32)
-  REQUIREDPACKAGE="mingw-w64-i686-gcc mingw-w64-i686-readline mingw-w64-i686-qt5 git make pkg-config"
   MINGW_MOUNT_POINT="${MINGW_PREFIX}"
   PATH="${MINGW_MOUNT_POINT}/bin:${MSYS2_PATH}${ORIGINAL_PATH:+:${ORIGINAL_PATH}}"
   PKG_CONFIG_PATH="${MINGW_MOUNT_POINT}/lib/pkgconfig:${MINGW_MOUNT_POINT}/share/pkgconfig"
@@ -162,8 +161,6 @@ if [ "$MAYBE_FIRST_START" = "true" ]; then
   then 
     sh /usr/bin/update-ca-trust
   fi
-  
-  pacman --noconfirm -S $REQUIREDPACKAGE
 
   clear
   echo

@@ -1,0 +1,869 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 4. Elementary Unicode string functions &lt;unistr.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 4. Elementary Unicode string functions &lt;unistr.h&gt;">
+<meta name="keywords" content="GNU libunistring: 4. Elementary Unicode string functions &lt;unistr.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_3.html#SEC10" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_5.html#SEC17" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="unistr_002eh"></a>
+<a name="SEC11"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC11">4. Elementary Unicode string functions <code>&lt;unistr.h&gt;</code></a> </h1>
+
+<p>This include file declares elementary functions for Unicode strings.  It is
+essentially the equivalent of what <code>&lt;string.h&gt;</code> is for C strings.
+</p>
+
+<hr size="6">
+<a name="Elementary-string-checks"></a>
+<a name="SEC12"></a>
+<h2 class="section"> <a href="libunistring.html#TOC12">4.1 Elementary string checks</a> </h2>
+
+<p>The following function is available to verify the integrity of a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> const uint8_t * <b>u8_check</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX20"></a>
+</dt>
+<dt><u>Function:</u> const uint16_t * <b>u16_check</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX21"></a>
+</dt>
+<dt><u>Function:</u> const uint32_t * <b>u32_check</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX22"></a>
+</dt>
+<dd><p>This function checks whether a Unicode string is well-formed.
+It returns NULL if valid, or a pointer to the first invalid unit otherwise.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Elementary-string-conversions"></a>
+<a name="SEC13"></a>
+<h2 class="section"> <a href="libunistring.html#TOC13">4.2 Elementary string conversions</a> </h2>
+
+<p>The following functions perform conversions between the different forms of Unicode strings.
+</p>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u8_to_u16</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX23"></a>
+</dt>
+<dd><p>Converts an UTF-8 string to an UTF-16 string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u8_to_u32</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX24"></a>
+</dt>
+<dd><p>Converts an UTF-8 string to an UTF-32 string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u16_to_u8</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX25"></a>
+</dt>
+<dd><p>Converts an UTF-16 string to an UTF-8 string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u16_to_u32</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX26"></a>
+</dt>
+<dd><p>Converts an UTF-16 string to an UTF-32 string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u32_to_u8</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX27"></a>
+</dt>
+<dd><p>Converts an UTF-32 string to an UTF-8 string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u32_to_u16</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX28"></a>
+</dt>
+<dd><p>Converts an UTF-32 string to an UTF-16 string.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Elementary-string-functions"></a>
+<a name="SEC14"></a>
+<h2 class="section"> <a href="libunistring.html#TOC14">4.3 Elementary string functions</a> </h2>
+
+<p>The following functions inspect and return details about the first character
+in a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_mblen</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX29"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_mblen</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX30"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_mblen</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX31"></a>
+</dt>
+<dd><p>Returns the length (number of units) of the first character in <var>s</var>, which
+is no longer than <var>n</var>.  Returns 0 if it is the NUL character.  Returns -1
+upon failure.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/mblen.html"><code>mblen</code></a>, except that it operates on a
+Unicode string and that <var>s</var> must not be NULL.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_mbtouc_unsafe</b><i> (ucs4_t *<var>puc</var>, const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX32"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_mbtouc_unsafe</b><i> (ucs4_t *<var>puc</var>, const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX33"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_mbtouc_unsafe</b><i> (ucs4_t *<var>puc</var>, const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX34"></a>
+</dt>
+<dd><p>Returns the length (number of units) of the first character in <var>s</var>,
+putting its <code>ucs4_t</code> representation in <code>*<var>puc</var></code>.  Upon failure,
+<code>*<var>puc</var></code> is set to <code>0xfffd</code>, and an appropriate number of units
+is returned.
+</p>
+<p>The number of available units, <var>n</var>, must be &gt; 0.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/mbtowc.html"><code>mbtowc</code></a>, except that it operates on a
+Unicode string, <var>puc</var> and <var>s</var> must not be NULL, <var>n</var> must be &gt; 0,
+and the NUL character is not treated specially.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_mbtouc</b><i> (ucs4_t *<var>puc</var>, const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX35"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_mbtouc</b><i> (ucs4_t *<var>puc</var>, const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX36"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_mbtouc</b><i> (ucs4_t *<var>puc</var>, const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX37"></a>
+</dt>
+<dd><p>This function is like <code>u8_mbtouc_unsafe</code>, except that it will detect an
+invalid UTF-8 character, even if the library is compiled without
+&lsquo;<samp>--enable-safety</samp>&rsquo;.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_mbtoucr</b><i> (ucs4_t *<var>puc</var>, const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX38"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_mbtoucr</b><i> (ucs4_t *<var>puc</var>, const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX39"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_mbtoucr</b><i> (ucs4_t *<var>puc</var>, const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX40"></a>
+</dt>
+<dd><p>Returns the length (number of units) of the first character in <var>s</var>,
+putting its <code>ucs4_t</code> representation in <code>*<var>puc</var></code>.  Upon failure,
+<code>*<var>puc</var></code> is set to <code>0xfffd</code>, and -1 is returned for an invalid
+sequence of units, -2 is returned for an incomplete sequence of units.
+</p>
+<p>The number of available units, <var>n</var>, must be &gt; 0.
+</p>
+<p>This function is similar to <code>u8_mbtouc</code>, except that the return value
+gives more details about the failure, similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/mbrtowc.html"><code>mbrtowc</code></a>.
+</p></dd></dl>
+
+<p>The following function stores a Unicode character as a Unicode string in
+memory.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_uctomb</b><i> (uint8_t *<var>s</var>, ucs4_t <var>uc</var>, int <var>n</var>)</i>
+<a name="IDX41"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_uctomb</b><i> (uint16_t *<var>s</var>, ucs4_t <var>uc</var>, int <var>n</var>)</i>
+<a name="IDX42"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_uctomb</b><i> (uint32_t *<var>s</var>, ucs4_t <var>uc</var>, int <var>n</var>)</i>
+<a name="IDX43"></a>
+</dt>
+<dd><p>Puts the multibyte character represented by <var>uc</var> in <var>s</var>, returning its
+length.  Returns -1 upon failure, -2 if the number of available units, <var>n</var>,
+is too small.  The latter case cannot occur if <var>n</var> &gt;= 6/2/1, respectively.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wctomb.html"><code>wctomb</code></a>, except that it operates on a
+Unicode strings, <var>s</var> must not be NULL, and the argument <var>n</var> must be
+specified.
+</p></dd></dl>
+
+<a name="IDX44"></a>
+<p>The following functions copy Unicode strings in memory.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_cpy</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX45"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_cpy</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX46"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_cpy</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX47"></a>
+</dt>
+<dd><p>Copies <var>n</var> units from <var>src</var> to <var>dest</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/memcpy.html"><code>memcpy</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_move</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX48"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_move</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX49"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_move</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX50"></a>
+</dt>
+<dd><p>Copies <var>n</var> units from <var>src</var> to <var>dest</var>, guaranteeing correct
+behavior for overlapping memory areas.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/memmove.html"><code>memmove</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<p>The following function fills a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_set</b><i> (uint8_t *<var>s</var>, ucs4_t <var>uc</var>, size_t <var>n</var>)</i>
+<a name="IDX51"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_set</b><i> (uint16_t *<var>s</var>, ucs4_t <var>uc</var>, size_t <var>n</var>)</i>
+<a name="IDX52"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_set</b><i> (uint32_t *<var>s</var>, ucs4_t <var>uc</var>, size_t <var>n</var>)</i>
+<a name="IDX53"></a>
+</dt>
+<dd><p>Sets the first <var>n</var> characters of <var>s</var> to <var>uc</var>.  <var>uc</var> should be
+a character that occupies only 1 unit.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/memset.html"><code>memset</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<a name="IDX54"></a>
+<p>The following function compares two Unicode strings of the same length.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_cmp</b><i> (const uint8_t *<var>s1</var>, const uint8_t *<var>s2</var>, size_t <var>n</var>)</i>
+<a name="IDX55"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_cmp</b><i> (const uint16_t *<var>s1</var>, const uint16_t *<var>s2</var>, size_t <var>n</var>)</i>
+<a name="IDX56"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_cmp</b><i> (const uint32_t *<var>s1</var>, const uint32_t *<var>s2</var>, size_t <var>n</var>)</i>
+<a name="IDX57"></a>
+</dt>
+<dd><p>Compares <var>s1</var> and <var>s2</var>, each of length <var>n</var>, lexicographically.
+Returns a negative value if <var>s1</var> compares smaller than <var>s2</var>,
+a positive value if <var>s1</var> compares larger than <var>s2</var>, or 0 if
+they compare equal.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/memcmp.html"><code>memcmp</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<p>The following function compares two Unicode strings of possibly different
+lengths.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_cmp2</b><i> (const uint8_t *<var>s1</var>, size_t <var>n1</var>, const uint8_t *<var>s2</var>, size_t <var>n2</var>)</i>
+<a name="IDX58"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_cmp2</b><i> (const uint16_t *<var>s1</var>, size_t <var>n1</var>, const uint16_t *<var>s2</var>, size_t <var>n2</var>)</i>
+<a name="IDX59"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_cmp2</b><i> (const uint32_t *<var>s1</var>, size_t <var>n1</var>, const uint32_t *<var>s2</var>, size_t <var>n2</var>)</i>
+<a name="IDX60"></a>
+</dt>
+<dd><p>Compares <var>s1</var> and <var>s2</var>, lexicographically.
+Returns a negative value if <var>s1</var> compares smaller than <var>s2</var>,
+a positive value if <var>s1</var> compares larger than <var>s2</var>, or 0 if
+they compare equal.
+</p>
+<p>This function is similar to the gnulib function <code>memcmp2</code>, except that it
+operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX61"></a>
+<p>The following function searches for a given Unicode character.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_chr</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX62"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_chr</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX63"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_chr</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX64"></a>
+</dt>
+<dd><p>Searches the string at <var>s</var> for <var>uc</var>.  Returns a pointer to the first
+occurrence of <var>uc</var> in <var>s</var>, or NULL if <var>uc</var> does not occur in
+<var>s</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/memchr.html"><code>memchr</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<a name="IDX65"></a>
+<p>The following function counts the number of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> size_t <b>u8_mbsnlen</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX66"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u16_mbsnlen</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX67"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u32_mbsnlen</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX68"></a>
+</dt>
+<dd><p>Counts and returns the number of Unicode characters in the <var>n</var> units
+from <var>s</var>.
+</p>
+<p>This function is similar to the gnulib function <code>mbsnlen</code>, except that
+it operates on Unicode strings.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Elementary-string-functions-with-memory-allocation"></a>
+<a name="SEC15"></a>
+<h2 class="section"> <a href="libunistring.html#TOC15">4.4 Elementary string functions with memory allocation</a> </h2>
+
+<p>The following function copies a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_cpy_alloc</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX69"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_cpy_alloc</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX70"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_cpy_alloc</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX71"></a>
+</dt>
+<dd><p>Makes a freshly allocated copy of <var>s</var>, of length <var>n</var>.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Elementary-string-functions-on-NUL-terminated-strings"></a>
+<a name="SEC16"></a>
+<h2 class="section"> <a href="libunistring.html#TOC16">4.5 Elementary string functions on NUL terminated strings</a> </h2>
+
+<p>The following functions inspect and return details about the first character
+in a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_strmblen</b><i> (const uint8_t *<var>s</var>)</i>
+<a name="IDX72"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_strmblen</b><i> (const uint16_t *<var>s</var>)</i>
+<a name="IDX73"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_strmblen</b><i> (const uint32_t *<var>s</var>)</i>
+<a name="IDX74"></a>
+</dt>
+<dd><p>Returns the length (number of units) of the first character in <var>s</var>.
+Returns 0 if it is the NUL character.  Returns -1 upon failure.
+</p></dd></dl>
+
+<a name="IDX75"></a>
+<dl>
+<dt><u>Function:</u> int <b>u8_strmbtouc</b><i> (ucs4_t *<var>puc</var>, const uint8_t *<var>s</var>)</i>
+<a name="IDX76"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_strmbtouc</b><i> (ucs4_t *<var>puc</var>, const uint16_t *<var>s</var>)</i>
+<a name="IDX77"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_strmbtouc</b><i> (ucs4_t *<var>puc</var>, const uint32_t *<var>s</var>)</i>
+<a name="IDX78"></a>
+</dt>
+<dd><p>Returns the length (number of units) of the first character in <var>s</var>,
+putting its <code>ucs4_t</code> representation in <code>*<var>puc</var></code>.  Returns 0
+if it is the NUL character.  Returns -1 upon failure.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> const uint8_t * <b>u8_next</b><i> (ucs4_t *<var>puc</var>, const uint8_t *<var>s</var>)</i>
+<a name="IDX79"></a>
+</dt>
+<dt><u>Function:</u> const uint16_t * <b>u16_next</b><i> (ucs4_t *<var>puc</var>, const uint16_t *<var>s</var>)</i>
+<a name="IDX80"></a>
+</dt>
+<dt><u>Function:</u> const uint32_t * <b>u32_next</b><i> (ucs4_t *<var>puc</var>, const uint32_t *<var>s</var>)</i>
+<a name="IDX81"></a>
+</dt>
+<dd><p>Forward iteration step.  Advances the pointer past the next character,
+or returns NULL if the end of the string has been reached.  Puts the
+character's <code>ucs4_t</code> representation in <code>*<var>puc</var></code>.
+</p></dd></dl>
+
+<p>The following function inspects and returns details about the previous
+character in a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> const uint8_t * <b>u8_prev</b><i> (ucs4_t *<var>puc</var>, const uint8_t *<var>s</var>, const uint8_t *<var>start</var>)</i>
+<a name="IDX82"></a>
+</dt>
+<dt><u>Function:</u> const uint16_t * <b>u16_prev</b><i> (ucs4_t *<var>puc</var>, const uint16_t *<var>s</var>, const uint16_t *<var>start</var>)</i>
+<a name="IDX83"></a>
+</dt>
+<dt><u>Function:</u> const uint32_t * <b>u32_prev</b><i> (ucs4_t *<var>puc</var>, const uint32_t *<var>s</var>, const uint32_t *<var>start</var>)</i>
+<a name="IDX84"></a>
+</dt>
+<dd><p>Backward iteration step.  Advances the pointer to point to the previous
+character (the one that ends at <code><var>s</var></code>), or returns NULL if the
+beginning of the string (specified by <code><var>start</var></code>) had been reached.
+Puts the character's <code>ucs4_t</code> representation in <code>*<var>puc</var></code>.
+Note that this function works only on well-formed Unicode strings.
+</p></dd></dl>
+
+<p>The following functions determine the length of a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> size_t <b>u8_strlen</b><i> (const uint8_t *<var>s</var>)</i>
+<a name="IDX85"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u16_strlen</b><i> (const uint16_t *<var>s</var>)</i>
+<a name="IDX86"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u32_strlen</b><i> (const uint32_t *<var>s</var>)</i>
+<a name="IDX87"></a>
+</dt>
+<dd><p>Returns the number of units in <var>s</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strlen.html"><code>strlen</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcslen.html"><code>wcslen</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> size_t <b>u8_strnlen</b><i> (const uint8_t *<var>s</var>, size_t <var>maxlen</var>)</i>
+<a name="IDX88"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u16_strnlen</b><i> (const uint16_t *<var>s</var>, size_t <var>maxlen</var>)</i>
+<a name="IDX89"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u32_strnlen</b><i> (const uint32_t *<var>s</var>, size_t <var>maxlen</var>)</i>
+<a name="IDX90"></a>
+</dt>
+<dd><p>Returns the number of units in <var>s</var>, but at most <var>maxlen</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strnlen.html"><code>strnlen</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsnlen.html"><code>wcsnlen</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX91"></a>
+<p>The following functions copy portions of Unicode strings in memory.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strcpy</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>)</i>
+<a name="IDX92"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strcpy</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>)</i>
+<a name="IDX93"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strcpy</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>)</i>
+<a name="IDX94"></a>
+</dt>
+<dd><p>Copies <var>src</var> to <var>dest</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcpy.html"><code>strcpy</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcscpy.html"><code>wcscpy</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_stpcpy</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>)</i>
+<a name="IDX95"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_stpcpy</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>)</i>
+<a name="IDX96"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_stpcpy</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>)</i>
+<a name="IDX97"></a>
+</dt>
+<dd><p>Copies <var>src</var> to <var>dest</var>, returning the address of the terminating NUL
+in <var>dest</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/stpcpy.html"><code>stpcpy</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strncpy</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX98"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strncpy</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX99"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strncpy</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX100"></a>
+</dt>
+<dd><p>Copies no more than <var>n</var> units of <var>src</var> to <var>dest</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strncpy.html"><code>strncpy</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsncpy.html"><code>wcsncpy</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_stpncpy</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX101"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_stpncpy</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX102"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_stpncpy</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX103"></a>
+</dt>
+<dd><p>Copies no more than <var>n</var> units of <var>src</var> to <var>dest</var>.  Returns a
+pointer past the last non-NUL unit written into <var>dest</var>.  In other words,
+if the units written into <var>dest</var> include a NUL, the return value is the
+address of the first such NUL unit, otherwise it is
+<code><var>dest</var> + <var>n</var></code>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/stpncpy.html"><code>stpncpy</code></a>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strcat</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>)</i>
+<a name="IDX104"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strcat</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>)</i>
+<a name="IDX105"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strcat</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>)</i>
+<a name="IDX106"></a>
+</dt>
+<dd><p>Appends <var>src</var> onto <var>dest</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcat.html"><code>strcat</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcscat.html"><code>wcscat</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strncat</b><i> (uint8_t *<var>dest</var>, const uint8_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX107"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strncat</b><i> (uint16_t *<var>dest</var>, const uint16_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX108"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strncat</b><i> (uint32_t *<var>dest</var>, const uint32_t *<var>src</var>, size_t <var>n</var>)</i>
+<a name="IDX109"></a>
+</dt>
+<dd><p>Appends no more than <var>n</var> units of <var>src</var> onto <var>dest</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strncat.html"><code>strncat</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsncat.html"><code>wcsncat</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX110"></a>
+<p>The following functions compare two Unicode strings.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_strcmp</b><i> (const uint8_t *<var>s1</var>, const uint8_t *<var>s2</var>)</i>
+<a name="IDX111"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_strcmp</b><i> (const uint16_t *<var>s1</var>, const uint16_t *<var>s2</var>)</i>
+<a name="IDX112"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_strcmp</b><i> (const uint32_t *<var>s1</var>, const uint32_t *<var>s2</var>)</i>
+<a name="IDX113"></a>
+</dt>
+<dd><p>Compares <var>s1</var> and <var>s2</var>, lexicographically.
+Returns a negative value if <var>s1</var> compares smaller than <var>s2</var>,
+a positive value if <var>s1</var> compares larger than <var>s2</var>, or 0 if
+they compare equal.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcmp.html"><code>strcmp</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcscmp.html"><code>wcscmp</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX114"></a>
+<dl>
+<dt><u>Function:</u> int <b>u8_strcoll</b><i> (const uint8_t *<var>s1</var>, const uint8_t *<var>s2</var>)</i>
+<a name="IDX115"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_strcoll</b><i> (const uint16_t *<var>s1</var>, const uint16_t *<var>s2</var>)</i>
+<a name="IDX116"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_strcoll</b><i> (const uint32_t *<var>s1</var>, const uint32_t *<var>s2</var>)</i>
+<a name="IDX117"></a>
+</dt>
+<dd><p>Compares <var>s1</var> and <var>s2</var> using the collation rules of the current
+locale.
+Returns -1 if <var>s1</var> &lt; <var>s2</var>, 0 if <var>s1</var> = <var>s2</var>, 1 if
+<var>s1</var> &gt; <var>s2</var>.  Upon failure, sets <code>errno</code> and returns any value.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcoll.html"><code>strcoll</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcscoll.html"><code>wcscoll</code></a>, except
+that it operates on Unicode strings.
+</p>
+<p>Note that this function may consider different canonical normalizations
+of the same string as having a large distance.  It is therefore better to
+use the function <code>u8_normcoll</code> instead of this one; see <a href="libunistring_13.html#SEC48">Normalization forms (composition and decomposition) <code>&lt;uninorm.h&gt;</code></a>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_strncmp</b><i> (const uint8_t *<var>s1</var>, const uint8_t *<var>s2</var>, size_t <var>n</var>)</i>
+<a name="IDX118"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_strncmp</b><i> (const uint16_t *<var>s1</var>, const uint16_t *<var>s2</var>, size_t <var>n</var>)</i>
+<a name="IDX119"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_strncmp</b><i> (const uint32_t *<var>s1</var>, const uint32_t *<var>s2</var>, size_t <var>n</var>)</i>
+<a name="IDX120"></a>
+</dt>
+<dd><p>Compares no more than <var>n</var> units of <var>s1</var> and <var>s2</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strncmp.html"><code>strncmp</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsncmp.html"><code>wcsncmp</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX121"></a>
+<p>The following function allocates a duplicate of a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strdup</b><i> (const uint8_t *<var>s</var>)</i>
+<a name="IDX122"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strdup</b><i> (const uint16_t *<var>s</var>)</i>
+<a name="IDX123"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strdup</b><i> (const uint32_t *<var>s</var>)</i>
+<a name="IDX124"></a>
+</dt>
+<dd><p>Duplicates <var>s</var>, returning an identical malloc'd string.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strdup.html"><code>strdup</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsdup.html"><code>wcsdup</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX125"></a>
+<p>The following functions search for a given Unicode character.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strchr</b><i> (const uint8_t *<var>str</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX126"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strchr</b><i> (const uint16_t *<var>str</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX127"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strchr</b><i> (const uint32_t *<var>str</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX128"></a>
+</dt>
+<dd><p>Finds the first occurrence of <var>uc</var> in <var>str</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strchr.html"><code>strchr</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcschr.html"><code>wcschr</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strrchr</b><i> (const uint8_t *<var>str</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX129"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strrchr</b><i> (const uint16_t *<var>str</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX130"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strrchr</b><i> (const uint32_t *<var>str</var>, ucs4_t <var>uc</var>)</i>
+<a name="IDX131"></a>
+</dt>
+<dd><p>Finds the last occurrence of <var>uc</var> in <var>str</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strrchr.html"><code>strrchr</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsrchr.html"><code>wcsrchr</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<p>The following functions search for the first occurrence of some Unicode
+character in or outside a given set of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> size_t <b>u8_strcspn</b><i> (const uint8_t *<var>str</var>, const uint8_t *<var>reject</var>)</i>
+<a name="IDX132"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u16_strcspn</b><i> (const uint16_t *<var>str</var>, const uint16_t *<var>reject</var>)</i>
+<a name="IDX133"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u32_strcspn</b><i> (const uint32_t *<var>str</var>, const uint32_t *<var>reject</var>)</i>
+<a name="IDX134"></a>
+</dt>
+<dd><p>Returns the length of the initial segment of <var>str</var> which consists entirely
+of Unicode characters not in <var>reject</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcspn.html"><code>strcspn</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcscspn.html"><code>wcscspn</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> size_t <b>u8_strspn</b><i> (const uint8_t *<var>str</var>, const uint8_t *<var>accept</var>)</i>
+<a name="IDX135"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u16_strspn</b><i> (const uint16_t *<var>str</var>, const uint16_t *<var>accept</var>)</i>
+<a name="IDX136"></a>
+</dt>
+<dt><u>Function:</u> size_t <b>u32_strspn</b><i> (const uint32_t *<var>str</var>, const uint32_t *<var>accept</var>)</i>
+<a name="IDX137"></a>
+</dt>
+<dd><p>Returns the length of the initial segment of <var>str</var> which consists entirely
+of Unicode characters in <var>accept</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strspn.html"><code>strspn</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsspn.html"><code>wcsspn</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strpbrk</b><i> (const uint8_t *<var>str</var>, const uint8_t *<var>accept</var>)</i>
+<a name="IDX138"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strpbrk</b><i> (const uint16_t *<var>str</var>, const uint16_t *<var>accept</var>)</i>
+<a name="IDX139"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strpbrk</b><i> (const uint32_t *<var>str</var>, const uint32_t *<var>accept</var>)</i>
+<a name="IDX140"></a>
+</dt>
+<dd><p>Finds the first occurrence in <var>str</var> of any character in <var>accept</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strpbrk.html"><code>strpbrk</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcspbrk.html"><code>wcspbrk</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<a name="IDX141"></a>
+<p>The following functions search whether a given Unicode string is a substring
+of another Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strstr</b><i> (const uint8_t *<var>haystack</var>, const uint8_t *<var>needle</var>)</i>
+<a name="IDX142"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strstr</b><i> (const uint16_t *<var>haystack</var>, const uint16_t *<var>needle</var>)</i>
+<a name="IDX143"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strstr</b><i> (const uint32_t *<var>haystack</var>, const uint32_t *<var>needle</var>)</i>
+<a name="IDX144"></a>
+</dt>
+<dd><p>Finds the first occurrence of <var>needle</var> in <var>haystack</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strstr.html"><code>strstr</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcsstr.html"><code>wcsstr</code></a>, except
+that it operates on Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>u8_startswith</b><i> (const uint8_t *<var>str</var>, const uint8_t *<var>prefix</var>)</i>
+<a name="IDX145"></a>
+</dt>
+<dt><u>Function:</u> bool <b>u16_startswith</b><i> (const uint16_t *<var>str</var>, const uint16_t *<var>prefix</var>)</i>
+<a name="IDX146"></a>
+</dt>
+<dt><u>Function:</u> bool <b>u32_startswith</b><i> (const uint32_t *<var>str</var>, const uint32_t *<var>prefix</var>)</i>
+<a name="IDX147"></a>
+</dt>
+<dd><p>Tests whether <var>str</var> starts with <var>prefix</var>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>u8_endswith</b><i> (const uint8_t *<var>str</var>, const uint8_t *<var>suffix</var>)</i>
+<a name="IDX148"></a>
+</dt>
+<dt><u>Function:</u> bool <b>u16_endswith</b><i> (const uint16_t *<var>str</var>, const uint16_t *<var>suffix</var>)</i>
+<a name="IDX149"></a>
+</dt>
+<dt><u>Function:</u> bool <b>u32_endswith</b><i> (const uint32_t *<var>str</var>, const uint32_t *<var>suffix</var>)</i>
+<a name="IDX150"></a>
+</dt>
+<dd><p>Tests whether <var>str</var> ends with <var>suffix</var>.
+</p></dd></dl>
+
+<p>The following function does one step in tokenizing a Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strtok</b><i> (uint8_t *<var>str</var>, const uint8_t *<var>delim</var>, uint8_t **<var>ptr</var>)</i>
+<a name="IDX151"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strtok</b><i> (uint16_t *<var>str</var>, const uint16_t *<var>delim</var>, uint16_t **<var>ptr</var>)</i>
+<a name="IDX152"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strtok</b><i> (uint32_t *<var>str</var>, const uint32_t *<var>delim</var>, uint32_t **<var>ptr</var>)</i>
+<a name="IDX153"></a>
+</dt>
+<dd><p>Divides <var>str</var> into tokens separated by characters in <var>delim</var>.
+</p>
+<p>This function is similar to <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strtok_r.html"><code>strtok_r</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wcstok.html"><code>wcstok</code></a>, except
+that it operates on Unicode strings.  Its interface is actually more similar to
+<code>wcstok</code> than to <code>strtok</code>.
+</p></dd></dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC11" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_5.html#SEC17" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

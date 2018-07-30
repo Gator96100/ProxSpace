@@ -1,0 +1,13 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-argp-0.dll
+usr/share/
+usr/share/doc/
+usr/share/doc/libargp/
+usr/share/doc/libargp/README
+usr/share/license/
+usr/share/license/libargp/
+usr/share/license/libargp/COPYING
+usr/share/license/libargp/COPYING.LESSER
+

@@ -1,8 +1,0 @@
-C:\perl-5.24.0\lib\perl5\site_perl\Crypt\OpenSSL\RSA.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Crypt\OpenSSL\RSA.pm
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\RSA.dll relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\RSA.dll
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\autosplit.ix relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\autosplit.ix
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\get_key_parameters.al relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\get_key_parameters.al
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\import_random_seed.al relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\import_random_seed.al
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\libRSA.dll.a relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\libRSA.dll.a
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\new_key_from_parameters.al relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\new_key_from_parameters.al
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\new_public_key.al relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Crypt\OpenSSL\RSA\new_public_key.al

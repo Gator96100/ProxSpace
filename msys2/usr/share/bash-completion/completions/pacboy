@@ -1,0 +1,91 @@
+# Bash completion for Pacboy
+# Copyright (C) 2015 Renato Silva
+# Licensed under BSD
+
+_pacboy_repositories() {
+    local repositories
+    local current="${1}"
+    local suffix="${2}"
+    for database in /var/lib/pacman/sync/*.db; do
+        database="${database##*/}"
+        repositories="${repositories} ${database%.db}${suffix}"
+    done
+    COMPREPLY+=($(compgen -W "${repositories}" -- ${current}))
+    __ltrim_colon_completions "${current}"
+}
+
+_pacboy() {
+    local commands='sync update refresh find packages files info origin remove'
+    local current command
+    local debug='enabled'
+    local help='enabled'
+    local repository
+    _get_comp_words_by_ref -n : -c current
+    COMPREPLY=()
+
+    # Commands
+    for argument in "${COMP_WORDS[@]}"; do
+        if [[ "${argument}" != "${current}" ]]; then
+            case "${argument}" in
+                help)  unset help;  continue ;;
+                debug) unset debug; continue ;;
+            esac
+        fi
+        test -n "${command}" && continue
+        for valid_command in ${commands}; do
+            if [[ "${argument}" = "${valid_command}" ]]; then
+                command="${argument}"
+                break
+            fi
+        done
+    done
+    COMPREPLY+=($(compgen -W "${help:+help}" -- ${current}))
+    COMPREPLY+=($(compgen -W "${debug:+debug}" -- ${current}))
+    if [[ -z "${command}" ]]; then
+        COMPREPLY+=($(compgen -W "${commands}" -- ${current}))
+        COMPREPLY=("${COMPREPLY[@]/%/ }")
+        return
+    fi
+
+    # Repositories
+    if [[ "${command}" = packages ]]; then
+        _pacboy_repositories "${current}"
+        COMPREPLY=("${COMPREPLY[@]/%/ }")
+        return
+    fi
+    if [[ "${command}" = sync ]]; then
+        if [[ "${current}" != *::* ]]
+            then _pacboy_repositories "${current}" ::
+            else repository="${current%::*}"
+                 current="${current##*::}"
+        fi
+    fi
+
+    # Packages
+    if [[ "${command}" =~ ^(sync|files|info|remove)$ ]]; then
+        local packages=$(cat /var/cache/pacboy/${repository:-*}.packages 2>/dev/null)
+        if [[ -z "${packages}" ]]; then
+            local mingw_suffix="${MSYSTEM/MSYS/:m}"
+            local msys_suffix="${MSYSTEM/MINGW*/:}"
+            for package in $(pacman --sync --list --quiet ${repository}); do
+                case "${package}" in
+                    mingw-w64-x86_64-*) package="${package/mingw-w64-x86_64-/}${mingw_suffix}" ;;
+                    mingw-w64-i686-*)   package="${package/mingw-w64-i686-/}${mingw_suffix}" ;;
+                    *)                  package="${package}${msys_suffix}"
+                esac
+                packages="${packages} ${package}"
+            done
+        elif [[ "${MSYSTEM}" = MSYS ]]; then
+            packages=$(sed -e 's/\([^:]\)$/\1:m/' -e 's/:$//' <<<"${packages}")
+        fi
+        COMPREPLY+=($(compgen -W "${packages}" -- ${current}))
+        __ltrim_colon_completions "${current}"
+    fi
+
+    if [[ "${current}" != *: || "${COMPREPLY[@]}" != : ]]; then
+        COMPREPLY=("${COMPREPLY[@]/%/ }")
+        COMPREPLY=("${COMPREPLY[@]/:: /::}")
+    fi
+}
+
+complete -F _pacboy -o nospace -o bashdefault -o default pacboy

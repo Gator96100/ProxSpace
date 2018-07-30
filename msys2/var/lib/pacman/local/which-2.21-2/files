@@ -1,0 +1,11 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/which.exe
+usr/share/
+usr/share/info/
+usr/share/info/which.info.gz
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/which.1.gz
+

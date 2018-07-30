@@ -1,0 +1,15 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-psl-5.dll
+usr/bin/psl-make-dafsa
+usr/bin/psl.exe
+usr/share/
+usr/share/licenses/
+usr/share/licenses/libpsl/
+usr/share/licenses/libpsl/COPYING
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/psl-make-dafsa.1.gz
+usr/share/man/man1/psl.1.gz
+

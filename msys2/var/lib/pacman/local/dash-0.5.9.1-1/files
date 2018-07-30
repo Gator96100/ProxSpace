@@ -1,0 +1,14 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/ash.exe
+usr/bin/dash.exe
+usr/share/
+usr/share/licenses/
+usr/share/licenses/dash/
+usr/share/licenses/dash/COPYING
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/ash.1.gz
+usr/share/man/man1/dash.1.gz
+

@@ -1,0 +1,564 @@
+#!/usr/bin/bash
+#
+# pacache - flexible pacman cache cleaning
+#
+# Copyright (C) 2011 Dave Reisner <dreisner@archlinux.org>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+shopt -s extglob
+
+declare -r myname='paccache'
+declare -r myver='5.0.1'
+
+declare -a cachedirs=() candidates=() cmdopts=() whitelist=() blacklist=()
+declare -i delete=0 dryrun=0 filecount=0 move=0 totalsaved=0 verbose=0
+declare    delim=$'\n' keep=3 movedir= scanarch=
+
+QUIET=0
+USE_COLOR='y'
+
+plain() {
+	(( QUIET )) && return
+	local mesg=$1; shift
+	printf "${BOLD}    ${mesg}${ALL_OFF}\n" "$@" >&1
+}
+
+msg() {
+	(( QUIET )) && return
+	local mesg=$1; shift
+	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&1
+}
+
+msg2() {
+	(( QUIET )) && return
+	local mesg=$1; shift
+	printf "${BLUE}  ->${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&1
+}
+
+ask() {
+	local mesg=$1; shift
+	printf "${BLUE}::${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}" "$@" >&1
+}
+
+warning() {
+	local mesg=$1; shift
+	printf "${YELLOW}==> $(gettext "WARNING:")${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
+error() {
+	local mesg=$1; shift
+	printf "${RED}==> $(gettext "ERROR:")${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
+}
+
+# getopt-like parser
+parseopts() {
+	local opt= optarg= i= shortopts=$1
+	local -a longopts=() unused_argv=()
+
+	shift
+	while [[ $1 && $1 != '--' ]]; do
+		longopts+=("$1")
+		shift
+	done
+	shift
+
+	longoptmatch() {
+		local o longmatch=()
+		for o in "${longopts[@]}"; do
+			if [[ ${o%:} = "$1" ]]; then
+				longmatch=("$o")
+				break
+			fi
+			[[ ${o%:} = "$1"* ]] && longmatch+=("$o")
+		done
+
+		case ${#longmatch[*]} in
+			1)
+				# success, override with opt and return arg req (0 == none, 1 == required)
+				opt=${longmatch%:}
+				if [[ $longmatch = *: ]]; then
+					return 1
+				else
+					return 0
+				fi ;;
+			0)
+				# fail, no match found
+				return 255 ;;
+			*)
+				# fail, ambiguous match
+				printf "paccache: $(gettext "option '%s' is ambiguous; possibilities:")" "--$1"
+				printf " '%s'" "${longmatch[@]%:}"
+				printf '\n'
+				return 254 ;;
+		esac >&2
+	}
+
+	while (( $# )); do
+		case $1 in
+			--) # explicit end of options
+				shift
+				break
+				;;
+			-[!-]*) # short option
+				for (( i = 1; i < ${#1}; i++ )); do
+					opt=${1:i:1}
+
+					# option doesn't exist
+					if [[ $shortopts != *$opt* ]]; then
+						printf "paccache: $(gettext "invalid option") -- '%s'\n" "$opt" >&2
+						OPTRET=(--)
+						return 1
+					fi
+
+					OPTRET+=("-$opt")
+					# option requires optarg
+					if [[ $shortopts = *$opt:* ]]; then
+						# if we're not at the end of the option chunk, the rest is the optarg
+						if (( i < ${#1} - 1 )); then
+							OPTRET+=("${1:i+1}")
+							break
+						# if we're at the end, grab the the next positional, if it exists
+						elif (( i == ${#1} - 1 )) && [[ $2 ]]; then
+							OPTRET+=("$2")
+							shift
+							break
+						# parse failure
+						else
+							printf "paccache: $(gettext "option requires an argument") -- '%s'\n" "$opt" >&2
+							OPTRET=(--)
+							return 1
+						fi
+					fi
+				done
+				;;
+			--?*=*|--?*) # long option
+				IFS='=' read -r opt optarg <<< "${1#--}"
+				longoptmatch "$opt"
+				case $? in
+					0)
+						# parse failure
+						if [[ $optarg ]]; then
+							printf "paccache: $(gettext "option '%s' does not allow an argument")\n" "--$opt" >&2
+							OPTRET=(--)
+							return 1
+						# --longopt
+						else
+							OPTRET+=("--$opt")
+						fi
+						;;
+					1)
+						# --longopt=optarg
+						if [[ $optarg ]]; then
+							OPTRET+=("--$opt" "$optarg")
+						# --longopt optarg
+						elif [[ $2 ]]; then
+							OPTRET+=("--$opt" "$2" )
+							shift
+						# parse failure
+						else
+							printf "paccache: $(gettext "option '%s' requires an argument")\n" "--$opt" >&2
+							OPTRET=(--)
+							return 1
+						fi
+						;;
+					254)
+						# ambiguous option -- error was reported for us by longoptmatch()
+						OPTRET=(--)
+						return 1
+						;;
+					255)
+						# parse failure
+						printf "paccache: $(gettext "invalid option") '--%s'\n" "$opt" >&2
+						OPTRET=(--)
+						return 1
+						;;
+				esac
+				;;
+			*) # non-option arg encountered, add it as a parameter
+				unused_argv+=("$1")
+				;;
+		esac
+		shift
+	done
+
+	# add end-of-opt terminator and any leftover positional parameters
+	OPTRET+=('--' "${unused_argv[@]}" "$@")
+	unset longoptmatch
+
+	return 0
+}
+
+
+die() {
+	error "$@"
+	exit 1
+}
+
+get_cachedir_from_config() {
+	local key value
+
+	while IFS=$'= \t' read -r key value _; do
+		if [[ $key = CacheDir ]]; then
+			echo "$value"
+			return 0
+		fi
+	done <"$1"
+
+	return 1
+}
+
+# reads a list of files on stdin and prints out deletion candidates
+pkgfilter() {
+	# there's whitelist and blacklist parameters passed to this
+	# script after the block of awk.
+
+	awk -v keep="$1" -v scanarch="$2" '
+	function basename(str) {
+		sub(".*/", "", str);
+		return str;
+	}
+
+	function parse_filename(filename,     parts, count, i, pkgname, arch) {
+
+		count = split(basename(filename), parts, "-")
+
+		i = 1
+		pkgname = parts[i++]
+		while (i <= count - 3) {
+			pkgname = pkgname "-" parts[i++]
+		}
+
+		arch = substr(parts[count], 1, index(parts[count], ".") - 1)
+
+		# filter on whitelist or blacklist
+		if (wlen && !whitelist[pkgname]) return
+		if (blen && blacklist[pkgname]) return
+
+		if ("" == packages[pkgname,arch]) {
+			packages[pkgname,arch] = filename
+		} else {
+			packages[pkgname,arch] = packages[pkgname,arch] SUBSEP filename
+		}
+	}
+
+	BEGIN {
+		# create whitelist
+		wlen = ARGV[1]; delete ARGV[1]
+		for (i = 2; i < 2 + wlen; i++) {
+			whitelist[ARGV[i]] = 1
+			delete ARGV[i]
+		}
+
+		# create blacklist
+		blen = ARGV[i]; delete ARGV[i]
+		while (i++ < ARGC) {
+			blacklist[ARGV[i]] = 1
+			delete ARGV[i]
+		}
+
+		# read package filenames
+		while (getline < "/dev/stdin") {
+			parse_filename($0)
+		}
+
+		for (pkglist in packages) {
+			# idx[1,2] = idx[pkgname,arch]
+			split(pkglist, idx, SUBSEP)
+
+			# enforce architecture match if specified
+			if (!scanarch || scanarch == idx[2]) {
+				count = split(packages[idx[1], idx[2]], pkgs, SUBSEP)
+				for(i = 1; i <= count - keep; i++) {
+					print pkgs[i]
+				}
+			}
+		}
+	}' "${@:3}"
+}
+
+size_to_human() {
+	awk -v size="$1" '
+	BEGIN {
+		suffix[1] = "B"
+		suffix[2] = "KiB"
+		suffix[3] = "MiB"
+		suffix[4] = "GiB"
+		suffix[5] = "TiB"
+		suffix[6] = "PiB"
+		suffix[7] = "EiB"
+		count = 1
+
+		while (size > 1024) {
+			size /= 1024
+			count++
+		}
+
+		sizestr = sprintf("%.2f", size)
+		sub(/\.?0+$/, "", sizestr)
+		printf("%s %s", sizestr, suffix[count])
+	}'
+}
+
+
+runcmd() {
+	"$@"
+}
+
+summarize() {
+	(( QUIET )) && return
+
+	local -i filecount=$1; shift
+	local seenarch= seen= arch= name=
+	local -r pkg_re='(.+)-[^-]+-[0-9]+-([^.]+)\.pkg.*'
+
+	if (( delete )); then
+		printf -v output 'finished: %d packages removed' "$filecount"
+	elif (( move )); then
+		printf -v output "finished: %d packages moved to '%s'" "$filecount" "$movedir"
+	elif (( dryrun )); then
+		if (( verbose )); then
+			msg "Candidate packages:"
+			while read -r pkg; do
+				if (( verbose >= 3 )); then
+					[[ $pkg =~ $pkg_re ]] && name=${BASH_REMATCH[1]} arch=${BASH_REMATCH[2]}
+					if [[ -z $seen || $seenarch != "$arch" || $seen != "$name" ]]; then
+						seen=$name seenarch=$arch
+						printf '%s (%s):\n' "${name##*/}" "$arch"
+					fi
+					printf '  %s\n' "${pkg##*/}"
+				elif (( verbose >= 2 )); then
+					printf "%s$delim" "$pkg"
+				else
+					printf "%s$delim" "${pkg##*/}"
+				fi
+			done < <(printf '%s\n' "$@" | pacsort --files)
+		fi
+		printf -v output 'finished dry run: %d candidates' "$filecount"
+	fi
+
+	echo
+	msg "$output (disk space saved: %s)" "$(size_to_human "$totalsaved")"
+}
+
+usage() {
+	cat <<EOF
+${myname} (pacman) v${myver}
+
+A flexible pacman cache cleaning utility.
+
+Usage: ${myname} <operation> [options] [targets...]
+
+  Operations:
+    -d, --dryrun          perform a dry run, only finding candidate packages.
+    -m, --move <dir>      move candidate packages to "dir".
+    -r, --remove          remove candidate packages.
+
+  Options:
+    -a, --arch <arch>     scan for "arch" (default: all architectures).
+    -c, --cachedir <dir>  scan "dir" for packages. can be used more than once.
+                          (default: read from /etc/pacman.conf).
+    -f, --force           apply force to mv(1) and rm(1) operations.
+    -h, --help            display this help message and exit.
+    -i, --ignore <pkgs>   ignore "pkgs", comma-separated. Alternatively, specify
+                          "-" to read package names from stdin, newline-
+                          delimited.
+    -k, --keep <num>      keep "num" of each package in the cache (default: 3).
+        --nocolor         remove color from output.
+    -q, --quiet           minimize output
+    -u, --uninstalled     target uninstalled packages.
+    -v, --verbose         increase verbosity. specify up to 3 times.
+    -z, --null            use null delimiters for candidate names (only with -v
+                          and -vv).
+
+EOF
+}
+
+version() {
+	printf "%s %s\n" "$myname" "$myver"
+	echo 'Copyright (C) 2011 Dave Reisner <dreisner@archlinux.org>'
+}
+
+OPT_SHORT=':a:c:dfhi:k:m:qrsuVvz'
+OPT_LONG=('arch:' 'cachedir:' 'dryrun' 'force' 'help' 'ignore:' 'keep:' 'move'
+          'nocolor' 'quiet' 'remove' 'uninstalled' 'version' 'verbose' 'null')
+
+if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
+	exit 1
+fi
+set -- "${OPTRET[@]}"
+unset OPT_SHORT OPT_LONG OPTRET
+
+while :; do
+	case $1 in
+		-a|--arch)
+			scanarch=$2
+			shift ;;
+		-c|--cachedir)
+			cachedirs+=("$2")
+			shift ;;
+		-d|--dryrun)
+			dryrun=1 ;;
+		-f|--force)
+			cmdopts=(-f) ;;
+		-h|--help)
+			usage
+			exit 0 ;;
+		-i|--ignore)
+			if [[ $2 = '-' ]]; then
+				[[ ! -t 0 ]] && IFS=$'\n' read -r -d '' -a ign
+			else
+				IFS=',' read -r -a ign <<< "$2"
+			fi
+			blacklist+=("${ign[@]}")
+			unset i ign
+			shift ;;
+		-k|--keep)
+			keep=$2
+			if [[ -z $keep || -n ${keep//[0-9]/} ]]; then
+				die 'argument to option -k must be a non-negative integer'
+			else
+				keep=$(( 10#$keep ))
+			fi
+			shift ;;
+		-m|--move)
+			move=1 movedir=$2
+			shift ;;
+		--nocolor)
+			USE_COLOR='n' ;;
+		-q|--quiet)
+			QUIET=1 ;;
+		-r|--remove)
+			delete=1 ;;
+		-u|--uninstalled)
+			IFS=$'\n' read -r -d '' -a ign < <(pacman -Qq)
+			# pacman -Qq may exit with an error, thus making ign an empty array
+			(( ${#ign[@]} )) || die 'failed to retrieve the list of installed packages'
+			blacklist+=("${ign[@]}")
+			unset ign ;;
+		-V|--version)
+			version
+			exit 0 ;;
+		-v|--verbose)
+			(( ++verbose )) ;;
+		-z|--null)
+			delim='\0' ;;
+		--)
+			shift
+			break 2 ;;
+	esac
+	shift
+done
+
+# check if messages are to be printed using color
+unset ALL_OFF BOLD BLUE GREEN RED YELLOW
+if [[ -t 2 && ! $USE_COLOR = "n" ]]; then
+	# prefer terminal safe colored and bold text when tput is supported
+	if tput setaf 0 &>/dev/null; then
+		ALL_OFF="$(tput sgr0)"
+		BOLD="$(tput bold)"
+		BLUE="${BOLD}$(tput setaf 4)"
+		GREEN="${BOLD}$(tput setaf 2)"
+		RED="${BOLD}$(tput setaf 1)"
+		YELLOW="${BOLD}$(tput setaf 3)"
+	else
+		ALL_OFF="\e[1;0m"
+		BOLD="\e[1;1m"
+		BLUE="${BOLD}\e[1;34m"
+		GREEN="${BOLD}\e[1;32m"
+		RED="${BOLD}\e[1;31m"
+		YELLOW="${BOLD}\e[1;33m"
+	fi
+fi
+readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
+
+
+# setting default cachedir
+if [[ -z $cachedirs ]]; then
+	if cachedir=$(get_cachedir_from_config "/etc/pacman.conf"); then
+		cachedirs=("$cachedir")
+	else
+		cachedirs=("${cachedirs[@]:-/var/cache/pacman/pkg}")
+	fi
+fi
+
+# remaining args are a whitelist
+whitelist=("$@")
+
+# sanity checks
+case $(( dryrun+delete+move )) in
+	0) die "no operation specified (use -h for help)" ;;
+	[^1]) die "only one operation may be used at a time" ;;
+esac
+
+[[ $movedir && ! -d $movedir ]] &&
+	die "destination directory '%s' does not exist or is not a directory" "$movedir"
+
+if (( move || delete )); then
+	# make it an absolute path since we're about to chdir
+	[[ $movedir && ${movedir:0:1} != '/' ]] && movedir=$PWD/$movedir
+fi
+
+for cachedir in "${cachedirs[@]}"; do
+	[[ -d $cachedir ]] ||
+		die "cachedir '%s' does not exist or is not a directory" "$cachedir"
+
+	# unlikely that this will fail, but better make sure
+	pushd "$cachedir" &>/dev/null || die "failed to chdir to '%s'" "$cachedir"
+
+	# note that these results are returned in an arbitrary order from awk, but
+	# they'll be resorted (in summarize) iff we have a verbosity level set.
+	IFS=$'\n' read -r -d '' -a cand < \
+		<(printf '%s\n' "$PWD"/*.pkg.tar?(.+([^.])) | pacsort --files |
+			pkgfilter "$keep" "$scanarch" \
+				"${#whitelist[*]}" "${whitelist[@]}" \
+				"${#blacklist[*]}" "${blacklist[@]}")
+
+	candidates+=("${cand[@]}")
+	unset cand
+
+	popd &>/dev/null
+done
+
+if (( ! ${#candidates[*]} )); then
+	msg 'no candidate packages found for pruning'
+	exit 0
+fi
+
+# grab this prior to signature scavenging
+pkgcount=${#candidates[*]}
+
+# copy the list, merging in any found sigs
+for cand in "${candidates[@]}"; do
+	candtemp+=("$cand")
+	[[ -f $cand.sig ]] && candtemp+=("$cand.sig")
+done
+candidates=("${candtemp[@]}")
+unset candtemp
+
+# do this before we destroy anything
+totalsaved=$(stat -c %s "${candidates[@]}" | awk '{ sum += $1 } END { print sum }')
+
+# crush. kill. destroy.
+(( verbose )) && cmdopts+=(-v)
+if (( delete )); then
+	printf '%s\0' "${candidates[@]}" | runcmd xargs -0 rm "${cmdopts[@]}"
+elif (( move )); then
+	printf '%s\0' "${candidates[@]}" | runcmd xargs -0 mv "${cmdopts[@]}" -t "$movedir"
+fi
+
+summarize "$pkgcount" "${candidates[@]}"
+
+# vim: set noet:

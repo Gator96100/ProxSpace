@@ -1,0 +1,105 @@
+#!/bin/bash
+
+__inarray() {
+  local i
+  for i in "${@:2}"; do
+    [[ $i == "$1" ]] && return
+  done
+}
+
+__hasprefix() {
+  local i
+  for i in "${@:2}"; do
+    [[ $i = "$1"* ]] && return
+  done
+}
+
+_pkgfile() {
+  local cur=${COMP_WORDS[COMP_CWORD]} prev=${COMP_WORDS[COMP_CWORD - 1]} prevprev=${COMP_WORDS[COMP_CWORD - 2]}
+
+  local shortopts=(-l -s -u -b -C -g -i -q -R -r -h -V -v -w -z -0)
+  local longopts=(--list --search --update --binaries --glob --ignorecase
+                  --quiet --regex --help --version --verbose --raw --null)
+  local longoptsarg=(--compress --config --repo)
+  local allopts=("${shortopts[@]}" "${longopts[@]}" "${longoptsarg[@]}")
+
+  local compressopts=(none gzip bzip2 lzma lzop xz)
+
+  # maybe mangle the arguments in case we're looking at a --longopt=$val
+  [[ $cur = '=' ]] && cur=
+  if [[ $prev = '=' ]] && __inarray "$prevprev" "${allopts[@]}"; then
+    prev=$prevprev
+  fi
+
+  case $prev in
+    -C|--config)
+      COMPREPLY=($(compgen -f -- "$cur"))
+      compopt -o filenames
+      return 0
+      ;;
+    -z|--compress)
+      COMPREPLY=($(compgen -W '${compressopts[*]}' -- "$cur"))
+      return 0
+      ;;
+    -R|--repo)
+      local repos=$(sed '/^\[\(.*\)\]$/!d;s//\1/g;/options/d' /etc/pacman.conf)
+      COMPREPLY=($(compgen -W '$repos' -- "$cur"))
+      return 0
+      ;;
+  esac
+
+  case $cur in
+    --*)
+      if __hasprefix "$cur" "${longoptsarg[@]}"; then
+        compopt -o nospace
+        COMPREPLY=($(compgen -W '${longoptsarg[*]}' -S = -- "$cur"))
+      else
+        COMPREPLY=($(compgen -W '${longopts[*]}' -- "$cur"))
+      fi
+      return 0
+      ;;
+    -*)
+      COMPREPLY=($(compgen -W '${allopts[*]}' -- "$cur"))
+      return 0
+      ;;
+    *)
+      # completion based on mode -- always take the last specified
+      local i j w mode
+      for (( i = 1; i < ${#COMP_WORDS[*]}; ++i )); do
+        w=${COMP_WORDS[i]}
+        if (( i == 1 )) || [[ ${COMP_WORDS[i-1]} != -* ]]; then
+          case $w in
+            # mode from shortopt (possibly a bunch mushed together)
+            -[^-]*)
+              for (( j = 0; j < ${#w}; j++ )); do
+                case ${w:j:1} in
+                  l|s)
+                    mode=${w:j:1}
+                    ;;
+                esac
+              done
+              ;;
+            # mode from long opt
+            --list|--search)
+              mode=${w#--}
+              ;;
+          esac
+        fi
+      done
+      case $mode in
+        l|list)
+          # complete based on package matches
+          COMPREPLY=($(compgen -W '$(command pacman -Ssq)' -- "$cur"))
+          return 0
+          ;;
+        *)
+          COMPREPLY=($(compgen -W '${allopts[*]}' -- "$cur"))
+          return 0
+          ;;
+      esac
+  esac
+}
+
+complete -F _pkgfile pkgfile
+
+# ex:et ts=2 sw=2 ft=sh

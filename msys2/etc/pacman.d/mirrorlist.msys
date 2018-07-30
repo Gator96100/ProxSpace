@@ -1,0 +1,9 @@
+##
+## MSYS2 repository mirrorlist
+##
+
+## Primary
+## msys2.org
+Server = http://repo.msys2.org/msys/$arch
+Server = https://downloads.sourceforge.net/project/msys2/REPOS/MSYS2/$arch
+Server = http://www2.futureware.at/~nickoe/msys2-mirror/msys/$arch/

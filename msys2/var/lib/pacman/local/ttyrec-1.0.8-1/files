@@ -1,0 +1,7 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/ttyplay.exe
+usr/bin/ttyrec.exe
+usr/bin/ttytime.exe
+

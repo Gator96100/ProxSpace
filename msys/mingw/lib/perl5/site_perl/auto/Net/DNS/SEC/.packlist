@@ -1,7 +1,0 @@
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\DSA.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\DSA.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\ECCGOST.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\ECCGOST.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\ECDSA.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\ECDSA.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\Keyset.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\Keyset.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\Private.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\Private.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\RSA.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Net\DNS\SEC\RSA.pm

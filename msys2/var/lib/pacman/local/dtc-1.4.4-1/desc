@@ -1,0 +1,36 @@
+%NAME%
+dtc
+
+%VERSION%
+1.4.4-1
+
+%DESC%
+Device Tree Compiler
+
+%URL%
+https://git.kernel.org/pub/scm/utils/dtc/dtc/git
+
+%ARCH%
+i686
+
+%BUILDDATE%
+1500010091
+
+%INSTALLDATE%
+1527758873
+
+%PACKAGER%
+Alexey Pavlov <alexpux@gmail.com>
+
+%SIZE%
+368640
+
+%GROUPS%
+base
+
+%LICENSE%
+GPL2
+
+%VALIDATION%
+pgp
+

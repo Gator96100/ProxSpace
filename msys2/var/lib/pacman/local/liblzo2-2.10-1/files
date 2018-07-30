@@ -1,0 +1,15 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-lzo2-2.dll
+usr/share/
+usr/share/doc/
+usr/share/doc/lzo/
+usr/share/doc/lzo/AUTHORS
+usr/share/doc/lzo/COPYING
+usr/share/doc/lzo/LZO.FAQ
+usr/share/doc/lzo/LZO.TXT
+usr/share/doc/lzo/LZOAPI.TXT
+usr/share/doc/lzo/NEWS
+usr/share/doc/lzo/THANKS
+

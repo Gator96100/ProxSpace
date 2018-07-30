@@ -1,6 +1,0 @@
-C:\perl-5.24.0\bin\pod_cover relocate_as=C:\perl-5.24.0\bin\pod_cover
-C:\perl-5.24.0\bin\pod_cover.bat relocate_as=C:\perl-5.24.0\bin\pod_cover.bat
-C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage\CountParents.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage\CountParents.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage\ExportOnly.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage\ExportOnly.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage\Overloader.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Pod\Coverage\Overloader.pm

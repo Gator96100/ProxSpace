@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 11. Word breaks in strings &lt;uniwbrk.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 11. Word breaks in strings &lt;uniwbrk.h&gt;">
+<meta name="keywords" content="GNU libunistring: 11. Word breaks in strings &lt;uniwbrk.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_10.html#SEC41" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_12.html#SEC47" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="uniwbrk_002eh"></a>
+<a name="SEC44"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC44">11. Word breaks in strings <code>&lt;uniwbrk.h&gt;</code></a> </h1>
+
+<p>This include file declares functions for determining where in a string
+&ldquo;words&rdquo; start and end.  Here &ldquo;words&rdquo; are not necessarily the same as
+entities that can be looked up in dictionaries, but rather groups of
+consecutive characters that should not be split by text processing
+operations.
+</p>
+
+<hr size="6">
+<a name="Word-breaks-in-a-string"></a>
+<a name="SEC45"></a>
+<h2 class="section"> <a href="libunistring.html#TOC45">11.1 Word breaks in a string</a> </h2>
+
+<p>The following functions determine the word breaks in a string.
+</p>
+<dl>
+<dt><u>Function:</u> void <b>u8_wordbreaks</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
+<a name="IDX736"></a>
+</dt>
+<dt><u>Function:</u> void <b>u16_wordbreaks</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
+<a name="IDX737"></a>
+</dt>
+<dt><u>Function:</u> void <b>u32_wordbreaks</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
+<a name="IDX738"></a>
+</dt>
+<dt><u>Function:</u> void <b>ulc_wordbreaks</b><i> (const char *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
+<a name="IDX739"></a>
+</dt>
+<dd><p>Determines the word break points in <var>s</var>, an array of <var>n</var> units, and
+stores the result at <code><var>p</var>[0..<var>n</var>-1]</code>.
+</p><dl compact="compact">
+<dt> <code><var>p</var>[i] = 1</code></dt>
+<dd><p>means that there is a word boundary between <code><var>s</var>[i-1]</code> and
+<code><var>s</var>[i]</code>.
+</p></dd>
+<dt> <code><var>p</var>[i] = 0</code></dt>
+<dd><p>means that <code><var>s</var>[i-1]</code> and <code><var>s</var>[i]</code> must not be separated.
+</p></dd>
+</dl>
+<p><code><var>p</var>[0]</code> is always set to 0.  If an application wants to consider a
+word break to be present at the beginning of the string (before
+<code><var>s</var>[0]</code>) or at the end of the string (after
+<code><var>s</var>[0..<var>n</var>-1]</code>), it has to treat these cases explicitly.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Word-break-property"></a>
+<a name="SEC46"></a>
+<h2 class="section"> <a href="libunistring.html#TOC46">11.2 Word break property</a> </h2>
+
+<p>This is a more low-level API.  The word break property is a property defined
+in Unicode Standard Annex #29, section &ldquo;Word Boundaries&rdquo;, see
+<a href="http://www.unicode.org/reports/tr29/#Word_Boundaries">http://www.unicode.org/reports/tr29/#Word_Boundaries</a>.  It is
+used for determining the word breaks in a string.
+</p>
+<p>The following are the possible values of the word break property.  More values
+may be added in the future.
+</p>
+<dl>
+<dt><u>Constant:</u> int <b>WBP_OTHER</b>
+<a name="IDX740"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_CR</b>
+<a name="IDX741"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_LF</b>
+<a name="IDX742"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_NEWLINE</b>
+<a name="IDX743"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_EXTEND</b>
+<a name="IDX744"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_FORMAT</b>
+<a name="IDX745"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_KATAKANA</b>
+<a name="IDX746"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_ALETTER</b>
+<a name="IDX747"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_MIDNUMLET</b>
+<a name="IDX748"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_MIDLETTER</b>
+<a name="IDX749"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_MIDNUM</b>
+<a name="IDX750"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_NUMERIC</b>
+<a name="IDX751"></a>
+</dt>
+<dt><u>Constant:</u> int <b>WBP_EXTENDNUMLET</b>
+<a name="IDX752"></a>
+</dt>
+</dl>
+
+<p>The following function looks up the word break property of a character.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_wordbreak_property</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX753"></a>
+</dt>
+<dd><p>Returns the Word_Break property of a Unicode character.
+</p></dd></dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC44" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_12.html#SEC47" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

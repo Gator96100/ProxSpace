@@ -1,0 +1,78 @@
+#compdef pkgfile
+
+_repos(){
+	local -a cmd repositories
+	repositories=(${(o)${${${(M)${(f)"$(</etc/pacman.conf)"}:#\[*}/\[/}/\]/}:#options})
+	# Uniq the array
+	typeset -U repositories
+	compadd "$@" -a repositories
+}
+
+_compression(){
+    local -a cmd _comps
+    _comps=('none' 'gzip' 'bzip2' 'lzma' 'lzop' 'xz')
+    typeset -U _comps
+    compadd "$@" -a _comps
+}
+
+_action_none(){
+  _arguments \
+    "$_shortopts[@]" \
+    "$_longopts[@]"
+}
+
+_longopts=(
+    '--help[display this help and exit]'
+    '--list[list contents of a package]'
+    '--search[search for packages containing the target (default)]'
+    '--update[update repo files lists]'
+    '--binaries[return only files contained in a bin dir]'
+    '--directories[match directories in searches]'
+    '--glob[enable matching with glob characters]'
+    '--ignorecase[use case-insensitive matching]'
+    '--quiet[output less when listing]'
+    '--repo[search a specific repo]: :_repos'
+    '--regex[enable matching with regular expressions]'
+    '--version[display program version]'
+    '--verbose[output more]'
+    '--raw[disable output justification]'
+    '--null[null terminate output]'
+    '--compress=[compress downloaded repos]: :_compression'
+    )
+
+_shortopts=(
+    '*-h[display this help and exit]'
+    '*-l[list contents of a package]'
+    '*-s[search for packages containing the target (default)]'
+    '*-u[update repo files lists]'
+    '*-b[return only files contained in a bin dir]'
+    '*-d[match directories in searches]'
+    '*-g[enable matching with glob characters]'
+    '*-i[use case-insensitive matching]'
+    '*-q[output less when listing]'
+    '*-R[search a specific repo]: :_repos'
+    '*-r[enable matching with regular expressions]'
+    '*-V[display program version]'
+    '*-v[output more]'
+    '*-w[disable output justification]'
+    '*-0[null terminate output]'
+    '*-z[compress downloaded repos]: :_compression'
+    )
+
+_pkgfile() {
+  case $words[CURRENT] in
+    -*)
+        _arguments -s -w : \
+            "$_shortopts[@]" \
+            "$_longopts[@]"
+        ;;
+    --*)
+        _arguments -s : \
+            "$_longopts[@]"
+      ;;
+    *)
+        _action_none;;
+  esac
+}
+
+_pkgfile "$@"

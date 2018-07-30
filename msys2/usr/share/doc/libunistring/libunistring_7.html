@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 7. Names of Unicode characters &lt;uniname.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 7. Names of Unicode characters &lt;uniname.h&gt;">
+<meta name="keywords" content="GNU libunistring: 7. Names of Unicode characters &lt;uniname.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_6.html#SEC18" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_8.html#SEC20" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="uniname_002eh"></a>
+<a name="SEC19"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC19">7. Names of Unicode characters <code>&lt;uniname.h&gt;</code></a> </h1>
+
+<p>This include file implements the association between a Unicode character and
+its name.
+</p>
+<p>The name of a Unicode character allows to distinguish it from other, similar
+looking characters.  For example, the character &lsquo;<samp>x</samp>&rsquo; has the name
+<code>&quot;LATIN SMALL LETTER X&quot;</code> and is therefore different from the character
+named <code>&quot;MULTIPLICATION SIGN&quot;</code>.
+</p>
+<dl>
+<dt><u>Macro:</u> unsigned int <b>UNINAME_MAX</b>
+<a name="IDX237"></a>
+</dt>
+<dd><p>This macro expands to a constant that is the required size of buffer for a
+Unicode character name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>unicode_character_name</b><i> (ucs4_t <var>uc</var>, char *<var>buf</var>)</i>
+<a name="IDX238"></a>
+</dt>
+<dd><p>Looks up the name of a Unicode character, in uppercase ASCII.
+<var>buf</var> must point to a buffer, at least <code>UNINAME_MAX</code> bytes in size.
+Returns the filled <var>buf</var>, or NULL if the character does not have a name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> ucs4_t <b>unicode_name_character</b><i> (const char *<var>name</var>)</i>
+<a name="IDX239"></a>
+</dt>
+<dd><p>Looks up the Unicode character with a given name, in upper- or lowercase
+ASCII.  <var>NAME</var> can also be an alias name of a character.
+Returns the character if found, or <code>UNINAME_INVALID</code> if not found.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> ucs4_t <b>UNINAME_INVALID</b>
+<a name="IDX240"></a>
+</dt>
+<dd><p>This macro expands to a constant that is a special return value of the
+<code>unicode_name_character</code> function.
+</p></dd></dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_6.html#SEC18" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_8.html#SEC20" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

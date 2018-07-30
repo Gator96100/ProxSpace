@@ -1,0 +1,11 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-gmp-10.dll
+usr/bin/msys-gmpxx-4.dll
+usr/share/
+usr/share/info/
+usr/share/info/gmp.info-1.gz
+usr/share/info/gmp.info-2.gz
+usr/share/info/gmp.info.gz
+

@@ -5,8 +5,9 @@ REM *******************************************
 set MYPATH=%~dp0
 set autobuild=false
 
-echo #Win32_Path		Mount_Point >msys/etc/fstab 
-echo %MYPATH%devkitARM	/devkitARM >>msys/etc/fstab
-echo %MYPATH%Qt\5.6 	/qt >>msys/etc/fstab
-echo %MYPATH%pm3		/pm3 >>msys/etc/fstab
-msys\msys.bat
+echo # For a description of the file format, see the Users Guide >msys2/etc/fstab 
+echo # http://cygwin.com/cygwin-ug-net/using.html#mount-table >>msys2/etc/fstab 
+echo none / cygdrive binary,posix=0,noacl,user 0 0 >>msys2/etc/fstab
+echo %MYPATH%pm3 /pm3 ntfs user ,posix=0 0 0 >>msys2/etc/fstab
+echo %MYPATH%gcc-arm-none-eabi /gcc-arm-none-eabi ntfs binary ,posix=0 0 0 >>msys2/etc/fstab
+msys2\msys2_shell.cmd -mingw32 -defterm

@@ -1,0 +1,9 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/bsdtar.exe
+usr/share/
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/bsdtar.1.gz
+

@@ -1,0 +1,9 @@
+%FILES%
+usr/
+usr/share/
+usr/share/pacman/
+usr/share/pacman/keyrings/
+usr/share/pacman/keyrings/msys2-revoked
+usr/share/pacman/keyrings/msys2-trusted
+usr/share/pacman/keyrings/msys2.gpg
+

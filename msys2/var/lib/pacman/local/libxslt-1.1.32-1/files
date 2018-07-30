@@ -1,0 +1,17 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-exslt-0.dll
+usr/bin/msys-xslt-1.dll
+usr/bin/xsltproc.exe
+usr/share/
+usr/share/licenses/
+usr/share/licenses/libxslt/
+usr/share/licenses/libxslt/COPYING
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/xsltproc.1.gz
+usr/share/man/man3/
+usr/share/man/man3/libexslt.3.gz
+usr/share/man/man3/libxslt.3.gz
+

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: GNU libunistring</title>
+
+<meta name="description" content="GNU libunistring: GNU libunistring">
+<meta name="keywords" content="GNU libunistring: GNU libunistring">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h1 class="settitle">GNU libunistring</h1>
+<a name="SEC_Contents"></a>
+<h1>Table of Contents</h1>
+<div class="contents">
+
+<ul class="toc">
+  <li><a name="TOC1" href="libunistring_1.html#SEC1">1. Introduction</a>
+  <ul class="toc">
+    <li><a name="TOC2" href="libunistring_1.html#SEC2">1.1 Unicode</a></li>
+    <li><a name="TOC3" href="libunistring_1.html#SEC3">1.2 Unicode and Internationalization</a></li>
+    <li><a name="TOC4" href="libunistring_1.html#SEC4">1.3 Locale encodings</a></li>
+    <li><a name="TOC5" href="libunistring_1.html#SEC5">1.4 Choice of in-memory representation of strings</a></li>
+    <li><a name="TOC6" href="libunistring_1.html#SEC6">1.5 &lsquo;<samp>char *</samp>&rsquo; strings</a></li>
+    <li><a name="TOC7" href="libunistring_1.html#SEC7">1.6 The <code>wchar_t</code> mess</a></li>
+    <li><a name="TOC8" href="libunistring_1.html#SEC8">1.7 Unicode strings</a></li>
+  </ul></li>
+  <li><a name="TOC9" href="libunistring_2.html#SEC9">2. Conventions</a></li>
+  <li><a name="TOC10" href="libunistring_3.html#SEC10">3. Elementary types <code>&lt;unitypes.h&gt;</code></a></li>
+  <li><a name="TOC11" href="libunistring_4.html#SEC11">4. Elementary Unicode string functions <code>&lt;unistr.h&gt;</code></a>
+  <ul class="toc">
+    <li><a name="TOC12" href="libunistring_4.html#SEC12">4.1 Elementary string checks</a></li>
+    <li><a name="TOC13" href="libunistring_4.html#SEC13">4.2 Elementary string conversions</a></li>
+    <li><a name="TOC14" href="libunistring_4.html#SEC14">4.3 Elementary string functions</a></li>
+    <li><a name="TOC15" href="libunistring_4.html#SEC15">4.4 Elementary string functions with memory allocation</a></li>
+    <li><a name="TOC16" href="libunistring_4.html#SEC16">4.5 Elementary string functions on NUL terminated strings</a></li>
+  </ul></li>
+  <li><a name="TOC17" href="libunistring_5.html#SEC17">5. Conversions between Unicode and encodings <code>&lt;uniconv.h&gt;</code></a></li>
+  <li><a name="TOC18" href="libunistring_6.html#SEC18">6. Output with Unicode strings <code>&lt;unistdio.h&gt;</code></a></li>
+  <li><a name="TOC19" href="libunistring_7.html#SEC19">7. Names of Unicode characters <code>&lt;uniname.h&gt;</code></a></li>
+  <li><a name="TOC20" href="libunistring_8.html#SEC20">8. Unicode character classification and properties <code>&lt;unictype.h&gt;</code></a>
+  <ul class="toc">
+    <li><a name="TOC21" href="libunistring_8.html#SEC21">8.1 General category</a>
+    <ul class="toc">
+      <li><a name="TOC22" href="libunistring_8.html#SEC22">8.1.1 The object oriented API for general category</a></li>
+      <li><a name="TOC23" href="libunistring_8.html#SEC23">8.1.2 The bit mask API for general category</a></li>
+    </ul></li>
+    <li><a name="TOC24" href="libunistring_8.html#SEC24">8.2 Canonical combining class</a></li>
+    <li><a name="TOC25" href="libunistring_8.html#SEC25">8.3 Bidi class</a></li>
+    <li><a name="TOC26" href="libunistring_8.html#SEC26">8.4 Decimal digit value</a></li>
+    <li><a name="TOC27" href="libunistring_8.html#SEC27">8.5 Digit value</a></li>
+    <li><a name="TOC28" href="libunistring_8.html#SEC28">8.6 Numeric value</a></li>
+    <li><a name="TOC29" href="libunistring_8.html#SEC29">8.7 Mirrored character</a></li>
+    <li><a name="TOC30" href="libunistring_8.html#SEC30">8.8 Arabic shaping</a>
+    <ul class="toc">
+      <li><a name="TOC31" href="libunistring_8.html#SEC31">8.8.1 Joining type of Arabic characters</a></li>
+      <li><a name="TOC32" href="libunistring_8.html#SEC32">8.8.2 Joining group of Arabic characters</a></li>
+    </ul></li>
+    <li><a name="TOC33" href="libunistring_8.html#SEC33">8.9 Properties</a>
+    <ul class="toc">
+      <li><a name="TOC34" href="libunistring_8.html#SEC34">8.9.1 Properties as objects &ndash; the object oriented API</a></li>
+      <li><a name="TOC35" href="libunistring_8.html#SEC35">8.9.2 Properties as functions &ndash; the functional API</a></li>
+    </ul></li>
+    <li><a name="TOC36" href="libunistring_8.html#SEC36">8.10 Scripts</a></li>
+    <li><a name="TOC37" href="libunistring_8.html#SEC37">8.11 Blocks</a></li>
+    <li><a name="TOC38" href="libunistring_8.html#SEC38">8.12 ISO C and Java syntax</a></li>
+    <li><a name="TOC39" href="libunistring_8.html#SEC39">8.13 Classifications like in ISO C</a></li>
+  </ul></li>
+  <li><a name="TOC40" href="libunistring_9.html#SEC40">9. Display width <code>&lt;uniwidth.h&gt;</code></a></li>
+  <li><a name="TOC41" href="libunistring_10.html#SEC41">10. Grapheme cluster breaks in strings <code>&lt;unigbrk.h&gt;</code></a>
+  <ul class="toc">
+    <li><a name="TOC42" href="libunistring_10.html#SEC42">10.1 Grapheme cluster breaks in a string</a></li>
+    <li><a name="TOC43" href="libunistring_10.html#SEC43">10.2 Grapheme cluster break property</a></li>
+  </ul></li>
+  <li><a name="TOC44" href="libunistring_11.html#SEC44">11. Word breaks in strings <code>&lt;uniwbrk.h&gt;</code></a>
+  <ul class="toc">
+    <li><a name="TOC45" href="libunistring_11.html#SEC45">11.1 Word breaks in a string</a></li>
+    <li><a name="TOC46" href="libunistring_11.html#SEC46">11.2 Word break property</a></li>
+  </ul></li>
+  <li><a name="TOC47" href="libunistring_12.html#SEC47">12. Line breaking <code>&lt;unilbrk.h&gt;</code></a></li>
+  <li><a name="TOC48" href="libunistring_13.html#SEC48">13. Normalization forms (composition and decomposition) <code>&lt;uninorm.h&gt;</code></a>
+  <ul class="toc">
+    <li><a name="TOC49" href="libunistring_13.html#SEC49">13.1 Decomposition of Unicode characters</a></li>
+    <li><a name="TOC50" href="libunistring_13.html#SEC50">13.2 Composition of Unicode characters</a></li>
+    <li><a name="TOC51" href="libunistring_13.html#SEC51">13.3 Normalization of strings</a></li>
+    <li><a name="TOC52" href="libunistring_13.html#SEC52">13.4 Normalizing comparisons</a></li>
+    <li><a name="TOC53" href="libunistring_13.html#SEC53">13.5 Normalization of streams of Unicode characters</a></li>
+  </ul></li>
+  <li><a name="TOC54" href="libunistring_14.html#SEC54">14. Case mappings <code>&lt;unicase.h&gt;</code></a>
+  <ul class="toc">
+    <li><a name="TOC55" href="libunistring_14.html#SEC55">14.1 Case mappings of characters</a></li>
+    <li><a name="TOC56" href="libunistring_14.html#SEC56">14.2 Case mappings of strings</a></li>
+    <li><a name="TOC57" href="libunistring_14.html#SEC57">14.3 Case mappings of substrings</a></li>
+    <li><a name="TOC58" href="libunistring_14.html#SEC58">14.4 Case insensitive comparison</a></li>
+    <li><a name="TOC59" href="libunistring_14.html#SEC59">14.5 Case detection</a></li>
+  </ul></li>
+  <li><a name="TOC60" href="libunistring_15.html#SEC60">15. Regular expressions <code>&lt;uniregex.h&gt;</code></a></li>
+  <li><a name="TOC61" href="libunistring_16.html#SEC61">16. Using the library</a>
+  <ul class="toc">
+    <li><a name="TOC62" href="libunistring_16.html#SEC62">16.1 Installation</a></li>
+    <li><a name="TOC63" href="libunistring_16.html#SEC63">16.2 Compiler options</a></li>
+    <li><a name="TOC64" href="libunistring_16.html#SEC64">16.3 Include files</a></li>
+    <li><a name="TOC65" href="libunistring_16.html#SEC65">16.4 Autoconf macro</a></li>
+    <li><a name="TOC66" href="libunistring_16.html#SEC66">16.5 Reporting problems</a></li>
+  </ul></li>
+  <li><a name="TOC67" href="libunistring_17.html#SEC67">17. More advanced functionality</a></li>
+  <li><a name="TOC68" href="libunistring_18.html#SEC68">A. Licenses</a>
+  <ul class="toc">
+    <li><a name="TOC69" href="libunistring_18.html#SEC69">A.1 GNU GENERAL PUBLIC LICENSE</a></li>
+    <li><a name="TOC70" href="libunistring_18.html#SEC74">A.2 GNU LESSER GENERAL PUBLIC LICENSE</a></li>
+    <li><a name="TOC71" href="libunistring_18.html#SEC75">A.3 GNU Free Documentation License</a></li>
+  </ul></li>
+  <li><a name="TOC72" href="libunistring_19.html#SEC77">Index</a></li>
+</ul>
+</div>
+
+<a name="Top"></a>
+<a name="SEC_Top"></a>
+
+
+<hr size="1">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

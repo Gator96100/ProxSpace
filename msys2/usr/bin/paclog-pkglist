@@ -1,0 +1,99 @@
+#!/usr/bin/bash
+#
+# paclog-pkglist - Parse a log file into a list of currently installed packages
+#
+# Copyright (C) 2011 Dave Reisner <dave@archlinux.org>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+declare -r myname='paclog-pkglist'
+declare -r myver='5.0.1'
+
+export TEXTDOMAIN='pacman'
+export TEXTDOMAINDIR='/usr/share/locale'
+declare logfile=${1:-/var/log/pacman.log}
+
+usage() {
+	printf "%s (pacman) v%s\n" "${myname}" "${myver}"
+	echo
+	echo "Parse a log file into a list of currently installed packages"
+	echo
+	printf "Usage: %s [path to pacman log]\n" "${myname}"
+	echo
+	printf "Example: %s /var/log/pacman.log\n" "${myname}"
+	echo
+	printf 'Defaults to: /var/log/pacman.log'
+}
+
+version() {
+	printf "%s %s\n" "$myname" "$myver"
+	echo 'Copyright (C) 2011 Dave Reisner <dave@archlinux.org>'
+}
+
+if [[ $1 ]]; then
+	if [[ $1 = -@(h|-help) ]]; then
+		usage
+		exit 0
+	elif [[ $1 = -@(V|-version) ]]; then
+		version
+		exit 0
+	elif [[ ! -e $logfile ]]; then
+		printf $"target not found: %s\n" "$1"
+		exit 1
+	fi
+fi
+
+<"$logfile" awk '
+{
+	if ($3 ~ /^\[.*\]$/) {
+		# new style with caller name
+		action  = $4
+		pkgname = $5
+		pkgver  = $6
+		upgver  = $8
+		nfields = NF
+	} else {
+		action  = $3
+		pkgname = $4
+		pkgver  = $5
+		upgver  = $7
+		nfields = (NF + 1)    # compensate for missing caller field
+	}
+}
+
+nfields == 6 && action == "installed" {
+	gsub(/[()]/, "", pkgver)
+	pkg[pkgname] = pkgver
+	next
+}
+
+nfields == 8 && (action == "upgraded" || action == "downgraded") {
+	sub(/\)/, "", upgver)
+	pkg[pkgname] = upgver
+	next
+}
+
+nfields == 6 && action == "removed" {
+	pkg[pkgname] = -1
+}
+
+END {
+	for (i in pkg) {
+		if (pkg[i] != -1) {
+			printf "%s %s\n",i,pkg[i]
+		}
+	}
+}' | sort
+
+# vim: set noet:

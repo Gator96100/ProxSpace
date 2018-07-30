@@ -1,0 +1,68 @@
+#!/usr/bin/bash
+# paclist - List all packages installed from a given repo
+#
+# Copyright (C) 2008 Dan McGee <dpmcgee@gmail.com>
+# Copyright (C) 2011 Dave Reisner <dreisner@archlinux.org>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+declare -r myname='paclist'
+declare -r myver='5.0.1'
+
+export TEXTDOMAIN='pacman'
+export TEXTDOMAINDIR='/usr/share/locale'
+
+# determine whether we have gettext; make it a no-op if we do not
+if ! type gettext &>/dev/null; then
+	gettext() {
+		echo "$@"
+	}
+fi
+
+usage() {
+	printf "%s (pacman) v%s\n" "${myname}" "${myver}"
+	echo
+	printf "List all packages installed from a given repository\n" "${myname}"
+	echo
+	printf "Usage: %s <repository>\n" "${myname}"
+	echo
+	printf "Example: %s testing\n" "${myname}"
+}
+
+version() {
+	printf "%s %s\n" "$myname" "$myver"
+	echo 'Copyright (C) 2008 Dan McGee <dpmcgee@gmail.com>'
+	echo 'Copyright (C) 2011 Dave Reisner <dreisner@archlinux.org>'
+}
+
+if [[ -z $1 ]]; then
+	usage
+	exit 1
+fi
+
+if [[ $1 = -@(h|-help) ]]; then
+	usage
+	exit 0
+elif [[ $1 = -@(V|-version) ]]; then
+	version
+	exit 0
+fi
+
+printf -v installed '[%s]' "$(/usr/bin/gettext installed)"
+pacman -Sl $1 | awk -v i="$installed" '$NF == i { print $2,$3 }'
+
+# exit with pacman's return value, not awk's
+exit ${PIPESTATUS[0]}
+
+# vim: set noet:

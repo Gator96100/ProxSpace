@@ -1,0 +1,12 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-z.dll
+usr/share/
+usr/share/licenses/
+usr/share/licenses/zlib/
+usr/share/licenses/zlib/LICENSE
+usr/share/man/
+usr/share/man/man3/
+usr/share/man/man3/zlib.3.gz
+

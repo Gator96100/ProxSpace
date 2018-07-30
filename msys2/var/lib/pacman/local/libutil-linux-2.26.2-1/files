@@ -1,0 +1,8 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-blkid-1.dll
+usr/bin/msys-fdisk-1.dll
+usr/bin/msys-smartcols-1.dll
+usr/bin/msys-uuid-1.dll
+

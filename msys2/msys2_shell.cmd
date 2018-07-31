@@ -16,14 +16,14 @@ rem or uncomment next line
 rem set MSYS2_PATH_TYPE=inherit
 
 
-SET PATH=%PATH%;%MYPATH%msys2\usr\bin
+SET PATH=%PATH%;%WD%
 rem /tmp is required for bash to work
-mkdir %MYPATH%msys2\tmp
-del %MYPATH%msys2\etc\passwd 
-del %MYPATH%msys2\etc\group 
-%MYPATH%msys2\usr\bin\touch /etc/passwd
-%MYPATH%msys2\usr\bin\touch /etc/group
-%MYPATH%msys2\usr\bin\bash /user_setup.sh
+mkdir %WD%..\..\tmp 2> nul
+del %WD%..\..\etc\passwd 2> nul
+del %WD%..\..\etc\group 2> nul
+%WD%touch /etc/passwd
+%WD%touch /etc/group
+%WD%bash /user_setup.sh
 
 :checkparams
 rem Help option

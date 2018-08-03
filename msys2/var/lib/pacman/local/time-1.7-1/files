@@ -1,0 +1,8 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/time.exe
+usr/share/
+usr/share/info/
+usr/share/info/time.info.gz
+

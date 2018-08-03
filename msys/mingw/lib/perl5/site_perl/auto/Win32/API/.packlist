@@ -1,9 +1,0 @@
-C:\perl-5.24.0\lib\perl5\site_perl\Win32\API.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32\API.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Callback.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Callback.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Callback\IATPatch.pod relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Callback\IATPatch.pod
-C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Struct.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Struct.pm
-C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Type.pm relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\Win32\API\Type.pm
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\API.dll relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\API.dll
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\Callback\Callback.dll relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\Callback\Callback.dll
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\Callback\libCallback.dll.a relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\Callback\libCallback.dll.a
-C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\libAPI.dll.a relocate_as=C:\perl-5.24.0\lib\perl5\site_perl\auto\Win32\API\libAPI.dll.a

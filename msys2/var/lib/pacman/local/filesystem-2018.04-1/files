@@ -1,0 +1,96 @@
+%FILES%
+dev/
+etc/
+etc/bash.bash_logout
+etc/bash.bashrc
+etc/config.site
+etc/fstab
+etc/fstab.d/
+etc/msystem
+etc/nsswitch.conf
+etc/post-install/
+etc/post-install/01-devices.post
+etc/post-install/03-mtab.post
+etc/post-install/05-home-dir.post
+etc/post-install/06-windows-files.post
+etc/post-install/07-pacman-key.post
+etc/post-install/08-xml-catalog.post
+etc/profile
+etc/profile.d/
+etc/profile.d/lang.sh
+etc/profile.d/tzset.sh
+etc/shells
+etc/skel/
+etc/skel/.bash_logout
+etc/skel/.bash_profile
+etc/skel/.bashrc
+etc/skel/.inputrc
+etc/skel/.profile
+home/
+mingw32/
+mingw32/bin/
+mingw32/etc/
+mingw32/etc/config.site
+mingw32/include/
+mingw32/lib/
+mingw32/share/
+mingw64/
+mingw64/bin/
+mingw64/etc/
+mingw64/etc/config.site
+mingw64/include/
+mingw64/lib/
+mingw64/share/
+msys2.ico
+msys2_shell.cmd
+opt/
+tmp/
+usr/
+usr/bin/
+usr/bin/cmd
+usr/bin/dep-search
+usr/bin/regen-info.sh
+usr/bin/shell
+usr/bin/start
+usr/include/
+usr/lib/
+usr/local/
+usr/local/etc/
+usr/local/etc/config.site
+usr/share/
+usr/share/Msys/
+usr/share/Msys/cygwin.ldif
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man2/
+usr/share/man/man3/
+usr/share/man/man4/
+usr/share/man/man5/
+usr/share/man/man6/
+usr/share/man/man7/
+usr/share/man/man8/
+usr/share/misc/
+usr/src/
+var/
+var/cache/
+var/cache/man/
+var/empty/
+var/lib/
+var/lib/misc/
+var/local/
+var/log/
+var/log/old/
+var/opt/
+var/tmp/
+
+%BACKUP%
+etc/fstab	b0eb2ba1c1bc95e678309fd36dac27db
+etc/shells	bb51026508581e55bbefe36e2b799108
+etc/profile	9dde609b5f647d3a5876c54ae20ec04d
+etc/bash.bashrc	7ada69e863428a4ea78c3de4ff747135
+etc/bash.bash_logout	3b95f37af49beb642c8fe174dd1f63fc
+etc/skel/.bashrc	7a8cf2e199bc046bcfed1fc75275b15c
+etc/skel/.bash_profile	e32cd0cf441ce0e8c57f550b0d28b182
+etc/skel/.bash_logout	42f4400ed2314bd7519c020d0187edc5
+etc/nsswitch.conf	b29485d6e832dce9b27a2c025b53bdd8
+

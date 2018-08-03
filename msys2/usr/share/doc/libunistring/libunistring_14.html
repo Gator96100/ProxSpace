@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 14. Case mappings &lt;unicase.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 14. Case mappings &lt;unicase.h&gt;">
+<meta name="keywords" content="GNU libunistring: 14. Case mappings &lt;unicase.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_13.html#SEC48" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_15.html#SEC60" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="unicase_002eh"></a>
+<a name="SEC54"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC54">14. Case mappings <code>&lt;unicase.h&gt;</code></a> </h1>
+
+<p>This include file defines functions for case mapping for Unicode strings and
+case insensitive comparison of Unicode strings and C strings.
+</p>
+<p>These string functions fix the problems that were mentioned in
+<a href="libunistring_1.html#SEC6">&lsquo;<samp>char *</samp>&rsquo; strings</a>, namely, they handle the Croatian
+<small>LETTER DZ WITH CARON</small>, the German <small>LATIN SMALL LETTER SHARP S</small>, the
+Greek sigma and the Lithuanian i correctly.
+</p>
+
+<hr size="6">
+<a name="Case-mappings-of-characters"></a>
+<a name="SEC55"></a>
+<h2 class="section"> <a href="libunistring.html#TOC55">14.1 Case mappings of characters</a> </h2>
+
+<p>The following functions implement case mappings on Unicode characters &mdash;
+for those cases only where the result of the mapping is a again a single
+Unicode character.
+</p>
+<p>These mappings are locale and context independent.
+</p>
+<table class="cartouche" border="1"><tr><td>
+<p><strong>WARNING!</strong> These functions are not sufficient for languages such as
+German, Greek and Lithuanian.  Better use the functions below that treat an
+entire string at once and are language aware.
+</p></td></tr></table>
+
+<dl>
+<dt><u>Function:</u> ucs4_t <b>uc_toupper</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX815"></a>
+</dt>
+<dd><p>Returns the uppercase mapping of the Unicode character <var>uc</var>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> ucs4_t <b>uc_tolower</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX816"></a>
+</dt>
+<dd><p>Returns the lowercase mapping of the Unicode character <var>uc</var>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> ucs4_t <b>uc_totitle</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX817"></a>
+</dt>
+<dd><p>Returns the titlecase mapping of the Unicode character <var>uc</var>.
+</p>
+<p>The titlecase mapping of a character is to be used when the character should
+look like upper case and the following characters are lower cased.
+</p>
+<p>For most characters, this is the same as the uppercase mapping.  There are
+only few characters where the title case variant and the uuper case variant
+are different.  These characters occur in the Latin writing of the Croatian,
+Bosnian, and Serbian languages.
+</p>
+<table>
+<thead><tr><th><p> Lower case </p></th><th><p> Title case </p></th><th><p> Upper case
+</p></th></tr></thead>
+<tr><td><p> LATIN SMALL LETTER LJ
+ </p></td><td><p> LATIN CAPITAL LETTER L WITH SMALL LETTER J
+ </p></td><td><p> LATIN CAPITAL LETTER LJ
+</p></td></tr>
+<tr><td><p> LATIN SMALL LETTER NJ
+ </p></td><td><p> LATIN CAPITAL LETTER N WITH SMALL LETTER J
+ </p></td><td><p> LATIN CAPITAL LETTER NJ
+</p></td></tr>
+<tr><td><p> LATIN SMALL LETTER DZ
+ </p></td><td><p> LATIN CAPITAL LETTER D WITH SMALL LETTER Z
+ </p></td><td><p> LATIN CAPITAL LETTER DZ
+</p></td></tr>
+<tr><td><p> LATIN SMALL LETTER DZ WITH CARON
+ </p></td><td><p> LATIN CAPITAL LETTER D WITH SMALL LETTER Z WITH CARON
+ </p></td><td><p> LATIN CAPITAL LETTER DZ WITH CARON
+</p></td></tr>
+</table>
+</dd></dl>
+
+<hr size="6">
+<a name="Case-mappings-of-strings"></a>
+<a name="SEC56"></a>
+<h2 class="section"> <a href="libunistring.html#TOC56">14.2 Case mappings of strings</a> </h2>
+
+<p>Case mapping should always be performed on entire strings, not on individual
+characters.  The functions in this sections do so.
+</p>
+<p>These functions allow to apply a normalization after the case mapping.  The
+reason is that if you want to treat &lsquo;<samp>&auml;</samp>&rsquo; and &lsquo;<samp>&Auml;</samp>&rsquo; the same,
+you most often also want to treat the composed and decomposed forms of such
+a character, U+00C4 <small>LATIN CAPITAL LETTER A WITH DIAERESIS</small> and
+U+0041 <small>LATIN CAPITAL LETTER A</small> U+0308 <small>COMBINING DIAERESIS</small> the same.
+The <var>nf</var> argument designates the normalization.
+</p>
+<a name="IDX818"></a>
+<p>These functions are locale dependent.  The <var>iso639_language</var> argument
+identifies the language (e.g. <code>&quot;tr&quot;</code> for Turkish).  NULL means to use
+locale independent case mappings.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>uc_locale_language</b><i> ()</i>
+<a name="IDX819"></a>
+</dt>
+<dd><p>Returns the ISO 639 language code of the current locale.
+Returns <code>&quot;&quot;</code> if it is unknown, or in the &quot;C&quot; locale.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_toupper</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX820"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_toupper</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX821"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_toupper</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX822"></a>
+</dt>
+<dd><p>Returns the uppercase mapping of a string.
+</p>
+<p>The <var>nf</var> argument identifies the normalization form to apply after the
+case-mapping.  It can also be NULL, for no normalization.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_tolower</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX823"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_tolower</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX824"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_tolower</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX825"></a>
+</dt>
+<dd><p>Returns the lowercase mapping of a string.
+</p>
+<p>The <var>nf</var> argument identifies the normalization form to apply after the
+case-mapping.  It can also be NULL, for no normalization.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_totitle</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX826"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_totitle</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX827"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_totitle</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX828"></a>
+</dt>
+<dd><p>Returns the titlecase mapping of a string.
+</p>
+<p>Mapping to title case means that, in each word, the first cased character
+is being mapped to title case and the remaining characters of the word
+are being mapped to lower case.
+</p>
+<p>The <var>nf</var> argument identifies the normalization form to apply after the
+case-mapping.  It can also be NULL, for no normalization.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Case-mappings-of-substrings"></a>
+<a name="SEC57"></a>
+<h2 class="section"> <a href="libunistring.html#TOC57">14.3 Case mappings of substrings</a> </h2>
+
+<p>Case mapping of a substring cannot simply be performed by extracting the
+substring and then applying the case mapping function to it.  This does not
+work because case mapping requires some information about the surrounding
+characters.  The following functions allow to apply case mappings to
+substrings of a given string, while taking into account the characters that
+precede it (the &ldquo;prefix&rdquo;) and the characters that follow it (the &ldquo;suffix&rdquo;).
+</p>
+<dl>
+<dt><u>Type:</u> <b>casing_prefix_context_t</b>
+<a name="IDX829"></a>
+</dt>
+<dd><p>This data type denotes the case-mapping context that is given by a prefix
+string.  It is an immediate type that can be copied by simple assignment,
+without involving memory allocation.  It is not an array type.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> casing_prefix_context_t <b>unicase_empty_prefix_context</b>
+<a name="IDX830"></a>
+</dt>
+<dd><p>This constant is the case-mapping context that corresponds to an empty prefix
+string.
+</p></dd></dl>
+
+<p>The following functions return <code>casing_prefix_context_t</code> objects:
+</p>
+<dl>
+<dt><u>Function:</u> casing_prefix_context_t <b>u8_casing_prefix_context</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX831"></a>
+</dt>
+<dt><u>Function:</u> casing_prefix_context_t <b>u16_casing_prefix_context</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX832"></a>
+</dt>
+<dt><u>Function:</u> casing_prefix_context_t <b>u32_casing_prefix_context</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX833"></a>
+</dt>
+<dd><p>Returns the case-mapping context of a given prefix string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> casing_prefix_context_t <b>u8_casing_prefixes_context</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>a_context</var>)</i>
+<a name="IDX834"></a>
+</dt>
+<dt><u>Function:</u> casing_prefix_context_t <b>u16_casing_prefixes_context</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>a_context</var>)</i>
+<a name="IDX835"></a>
+</dt>
+<dt><u>Function:</u> casing_prefix_context_t <b>u32_casing_prefixes_context</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>a_context</var>)</i>
+<a name="IDX836"></a>
+</dt>
+<dd><p>Returns the case-mapping context of the prefix concat(<var>a</var>, <var>s</var>),
+given the case-mapping context of the prefix <var>a</var>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Type:</u> <b>casing_suffix_context_t</b>
+<a name="IDX837"></a>
+</dt>
+<dd><p>This data type denotes the case-mapping context that is given by a suffix
+string.  It is an immediate type that can be copied by simple assignment,
+without involving memory allocation.  It is not an array type.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> casing_suffix_context_t <b>unicase_empty_suffix_context</b>
+<a name="IDX838"></a>
+</dt>
+<dd><p>This constant is the case-mapping context that corresponds to an empty suffix
+string.
+</p></dd></dl>
+
+<p>The following functions return <code>casing_suffix_context_t</code> objects:
+</p>
+<dl>
+<dt><u>Function:</u> casing_suffix_context_t <b>u8_casing_suffix_context</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX839"></a>
+</dt>
+<dt><u>Function:</u> casing_suffix_context_t <b>u16_casing_suffix_context</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX840"></a>
+</dt>
+<dt><u>Function:</u> casing_suffix_context_t <b>u32_casing_suffix_context</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>)</i>
+<a name="IDX841"></a>
+</dt>
+<dd><p>Returns the case-mapping context of a given suffix string.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> casing_suffix_context_t <b>u8_casing_suffixes_context</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, casing_suffix_context_t <var>a_context</var>)</i>
+<a name="IDX842"></a>
+</dt>
+<dt><u>Function:</u> casing_suffix_context_t <b>u16_casing_suffixes_context</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, casing_suffix_context_t <var>a_context</var>)</i>
+<a name="IDX843"></a>
+</dt>
+<dt><u>Function:</u> casing_suffix_context_t <b>u32_casing_suffixes_context</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, casing_suffix_context_t <var>a_context</var>)</i>
+<a name="IDX844"></a>
+</dt>
+<dd><p>Returns the case-mapping context of the suffix concat(<var>s</var>, <var>a</var>),
+given the case-mapping context of the suffix <var>a</var>.
+</p></dd></dl>
+
+<p>The following functions perform a case mapping, considering the
+prefix context and the suffix context.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_ct_toupper</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX845"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_ct_toupper</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX846"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_ct_toupper</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX847"></a>
+</dt>
+<dd><p>Returns the uppercase mapping of a string that is surrounded by a prefix
+and a suffix.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_ct_tolower</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX848"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_ct_tolower</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX849"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_ct_tolower</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX850"></a>
+</dt>
+<dd><p>Returns the lowercase mapping of a string that is surrounded by a prefix
+and a suffix.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_ct_totitle</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX851"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_ct_totitle</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX852"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_ct_totitle</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX853"></a>
+</dt>
+<dd><p>Returns the titlecase mapping of a string that is surrounded by a prefix
+and a suffix.
+</p></dd></dl>
+
+<p>For example, to uppercase the UTF-8 substring between <code>s + start_index</code>
+and <code>s + end_index</code> of a string that extends from <code>s</code> to
+<code>s + u8_strlen (s)</code>, you can use the statements
+</p>
+<table><tr><td>&nbsp;</td><td><pre class="smallexample">size_t result_length;
+uint8_t result =
+  u8_ct_toupper (s + start_index, end_index - start_index,
+                 u8_casing_prefix_context (s, start_index),
+                 u8_casing_suffix_context (s + end_index,
+                                           u8_strlen (s) - end_index),
+                 iso639_language, NULL, NULL, &amp;result_length);
+</pre></td></tr></table>
+
+<hr size="6">
+<a name="Case-insensitive-comparison"></a>
+<a name="SEC58"></a>
+<h2 class="section"> <a href="libunistring.html#TOC58">14.4 Case insensitive comparison</a> </h2>
+
+<p>The following functions implement comparison that ignores differences in case
+and normalization.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_casefold</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX854"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_casefold</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX855"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_casefold</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX856"></a>
+</dt>
+<dd><p>Returns the case folded string.
+</p>
+<p>Comparing <code>u8_casefold (<var>s1</var>)</code> and <code>u8_casefold (<var>s2</var>)</code>
+with the <code>u8_cmp2</code> function is equivalent to comparing <var>s1</var> and
+<var>s2</var> with <code>u8_casecmp</code>.
+</p>
+<p>The <var>nf</var> argument identifies the normalization form to apply after the
+case-mapping.  It can also be NULL, for no normalization.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_ct_casefold</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX857"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_ct_casefold</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX858"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_ct_casefold</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, casing_prefix_context_t <var>prefix_context</var>, casing_suffix_context_t <var>suffix_context</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX859"></a>
+</dt>
+<dd><p>Returns the case folded string.  The case folding takes into account the
+case mapping contexts of the prefix and suffix strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_casecmp</b><i> (const uint8_t *<var>s1</var>, size_t <var>n1</var>, const uint8_t *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX860"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_casecmp</b><i> (const uint16_t *<var>s1</var>, size_t <var>n1</var>, const uint16_t *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX861"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_casecmp</b><i> (const uint32_t *<var>s1</var>, size_t <var>n1</var>, const uint32_t *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX862"></a>
+</dt>
+<dt><u>Function:</u> int <b>ulc_casecmp</b><i> (const char *<var>s1</var>, size_t <var>n1</var>, const char *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX863"></a>
+</dt>
+<dd><p>Compares <var>s1</var> and <var>s2</var>, ignoring differences in case and normalization.
+</p>
+<p>The <var>nf</var> argument identifies the normalization form to apply after the
+case-mapping.  It can also be NULL, for no normalization.
+</p>
+<p>If successful, sets <code>*<var>resultp</var></code> to -1 if <var>s1</var> &lt; <var>s2</var>,
+0 if <var>s1</var> = <var>s2</var>, 1 if <var>s1</var> &gt; <var>s2</var>, and returns 0.
+Upon failure, returns -1 with <code>errno</code> set.
+</p></dd></dl>
+
+<a name="IDX864"></a>
+<a name="IDX865"></a>
+<a name="IDX866"></a>
+<a name="IDX867"></a>
+<p>The following functions additionally take into account the sorting rules of the
+current locale.
+</p>
+<dl>
+<dt><u>Function:</u> char * <b>u8_casexfrm</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX868"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u16_casexfrm</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX869"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u32_casexfrm</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX870"></a>
+</dt>
+<dt><u>Function:</u> char * <b>ulc_casexfrm</b><i> (const char *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX871"></a>
+</dt>
+<dd><p>Converts the string <var>s</var> of length <var>n</var> to a NUL-terminated byte
+sequence, in such a way that comparing <code>u8_casexfrm (<var>s1</var>)</code> and
+<code>u8_casexfrm (<var>s2</var>)</code> with the gnulib function <code>memcmp2</code> is
+equivalent to comparing <var>s1</var> and <var>s2</var> with <code>u8_casecoll</code>.
+</p>
+<p><var>nf</var> must be either <code>UNINORM_NFC</code>, <code>UNINORM_NFKC</code>, or NULL for
+no normalization.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_casecoll</b><i> (const uint8_t *<var>s1</var>, size_t <var>n1</var>, const uint8_t *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX872"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_casecoll</b><i> (const uint16_t *<var>s1</var>, size_t <var>n1</var>, const uint16_t *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX873"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_casecoll</b><i> (const uint32_t *<var>s1</var>, size_t <var>n1</var>, const uint32_t *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX874"></a>
+</dt>
+<dt><u>Function:</u> int <b>ulc_casecoll</b><i> (const char *<var>s1</var>, size_t <var>n1</var>, const char *<var>s2</var>, size_t <var>n2</var>, const char *<var>iso639_language</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
+<a name="IDX875"></a>
+</dt>
+<dd><p>Compares <var>s1</var> and <var>s2</var>, ignoring differences in case and normalization,
+using the collation rules of the current locale.
+</p>
+<p>The <var>nf</var> argument identifies the normalization form to apply after the
+case-mapping.  It must be either <code>UNINORM_NFC</code> or <code>UNINORM_NFKC</code>.
+It can also be NULL, for no normalization.
+</p>
+<p>If successful, sets <code>*<var>resultp</var></code> to -1 if <var>s1</var> &lt; <var>s2</var>,
+0 if <var>s1</var> = <var>s2</var>, 1 if <var>s1</var> &gt; <var>s2</var>, and returns 0.
+Upon failure, returns -1 with <code>errno</code> set.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Case-detection"></a>
+<a name="SEC59"></a>
+<h2 class="section"> <a href="libunistring.html#TOC59">14.5 Case detection</a> </h2>
+
+<p>The following functions determine whether a Unicode string is entirely in
+upper case. or entirely in lower case, or entirely in title case, or already
+case-folded.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_is_uppercase</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX876"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_is_uppercase</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX877"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_is_uppercase</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX878"></a>
+</dt>
+<dd><p>Sets <code>*<var>resultp</var></code> to true if mapping NFD(<var>s</var>) to upper case is
+a no-op, or to false otherwise, and returns 0.  Upon failure, returns -1 with
+<code>errno</code> set.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_is_lowercase</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX879"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_is_lowercase</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX880"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_is_lowercase</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX881"></a>
+</dt>
+<dd><p>Sets <code>*<var>resultp</var></code> to true if mapping NFD(<var>s</var>) to lower case is
+a no-op, or to false otherwise, and returns 0.  Upon failure, returns -1 with
+<code>errno</code> set.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_is_titlecase</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX882"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_is_titlecase</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX883"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_is_titlecase</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX884"></a>
+</dt>
+<dd><p>Sets <code>*<var>resultp</var></code> to true if mapping NFD(<var>s</var>) to title case is
+a no-op, or to false otherwise, and returns 0.  Upon failure, returns -1 with
+<code>errno</code> set.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>u8_is_casefolded</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX885"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_is_casefolded</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX886"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_is_casefolded</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX887"></a>
+</dt>
+<dd><p>Sets <code>*<var>resultp</var></code> to true if applying case folding to NFD(<var>S</var>) is
+a no-op, or to false otherwise, and returns 0.  Upon failure, returns -1 with
+<code>errno</code> set.
+</p></dd></dl>
+
+<p>The following functions determine whether case mappings have any effect on a
+Unicode string.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_is_cased</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX888"></a>
+</dt>
+<dt><u>Function:</u> int <b>u16_is_cased</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX889"></a>
+</dt>
+<dt><u>Function:</u> int <b>u32_is_cased</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>iso639_language</var>, bool *<var>resultp</var>)</i>
+<a name="IDX890"></a>
+</dt>
+<dd><p>Sets <code>*<var>resultp</var></code> to true if case matters for <var>s</var>, that is, if
+mapping NFD(<var>s</var>) to either upper case or lower case or title case is not
+a no-op.  Set <code>*<var>resultp</var></code> to false if NFD(<var>s</var>) maps to itself
+under the upper case mapping, under the lower case mapping, and under the title
+case mapping; in other words, when NFD(<var>s</var>) consists entirely of caseless
+characters. Upon failure, returns -1 with <code>errno</code> set.
+</p></dd></dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC54" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_15.html#SEC60" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,13 @@
+post_install() {
+  grep -q '/usr/bin/ash' etc/shells || echo '/usr/bin/ash' >> etc/shells
+  grep -q '/usr/bin/dash' etc/shells || echo '/usr/bin/dash' >> etc/shells
+}
+
+post_upgrade() {
+  post_install
+}
+
+pre_remove() {
+  sed -i '/^\/usr\/bin\/ash/d' etc/shells
+  sed -i '/^\/usr\/bin\/dash/d' etc/shells
+}

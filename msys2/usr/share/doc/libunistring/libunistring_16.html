@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 16. Using the library</title>
+
+<meta name="description" content="GNU libunistring: 16. Using the library">
+<meta name="keywords" content="GNU libunistring: 16. Using the library">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_15.html#SEC60" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_17.html#SEC67" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="Using-the-library"></a>
+<a name="SEC61"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC61">16. Using the library</a> </h1>
+
+<p>This chapter explains some practical considerations, regarding the
+installation and compiler options that are needed in order to use this
+library.
+</p>
+
+<hr size="6">
+<a name="Installation"></a>
+<a name="SEC62"></a>
+<h2 class="section"> <a href="libunistring.html#TOC62">16.1 Installation</a> </h2>
+
+<p>Before you can use the library, it must be installed.  First, you have to
+make sure all dependencies are installed.  They are listed in the file
+&lsquo;<tt>DEPENDENCIES</tt>&rsquo;.
+</p>
+<a name="IDX891"></a>
+<p>Then you can proceed to build and install the library, as described in the
+file &lsquo;<tt>INSTALL</tt>&rsquo;.  For installation on Windows systems, please refer to
+the file &lsquo;<tt>README.windows</tt>&rsquo;.
+</p>
+<hr size="6">
+<a name="Compiler-options"></a>
+<a name="SEC63"></a>
+<h2 class="section"> <a href="libunistring.html#TOC63">16.2 Compiler options</a> </h2>
+
+<p>Let's denote as <code>LIBUNISTRING_PREFIX</code> the value of the &lsquo;<samp>--prefix</samp>&rsquo;
+option that you passed to <code>configure</code> while installing this package.
+If you didn't pass any &lsquo;<samp>--prefix</samp>&rsquo; option, then the package is installed
+in &lsquo;<tt>/usr/local</tt>&rsquo;.
+</p>
+<p>Let's denote as <code>LIBUNISTRING_INCLUDEDIR</code> the directory where the
+include files were installed.  This is usually the same as
+<code>${LIBUNISTRING_PREFIX}/include</code>.  Except that if you passed an
+&lsquo;<samp>--includedir</samp>&rsquo; option to <code>configure</code>, it is the value of that
+option.
+</p>
+<p>Let's further denote as <code>LIBUNISTRING_LIBDIR</code> the directory where
+the library itself was installed.  This is the value that you passed
+with the &lsquo;<samp>--libdir</samp>&rsquo; option to <code>configure</code>, or otherwise the
+same as <code>${LIBUNISTRING_PREFIX}/lib</code>.  Recall that when building
+in 64-bit mode on a 64-bit GNU/Linux system that supports executables
+in either 64-bit mode or 32-bit mode, you should have used the option
+<code>--libdir=${LIBUNISTRING_PREFIX}/lib64</code>.
+</p>
+<a name="IDX892"></a>
+<p>So that the compiler finds the include files, you have to pass it the
+option <code>-I${LIBUNISTRING_INCLUDEDIR}</code>.
+</p>
+<p>So that the compiler finds the library during its linking pass, you have
+to pass it the options <code>-L${LIBUNISTRING_LIBDIR} -lunistring</code>.
+On some systems, in some configurations, you also have to pass options
+needed for linking with <code>libiconv</code>.  The autoconf macro
+<code>gl_LIBUNISTRING</code> (see <a href="#SEC65">Autoconf macro</a>) deals with this
+particularity.
+</p>
+<hr size="6">
+<a name="Include-files"></a>
+<a name="SEC64"></a>
+<h2 class="section"> <a href="libunistring.html#TOC64">16.3 Include files</a> </h2>
+
+<p>Most of the include files have been presented in the introduction, see
+<a href="libunistring_1.html#SEC1">Introduction</a>, and subsequent detailed chapters.
+</p>
+<p>Another include file is <code>&lt;unistring/version.h&gt;</code>. It contains the
+version number of the libunistring library.
+</p>
+<dl>
+<dt><u>Macro:</u> int <b>_LIBUNISTRING_VERSION</b>
+<a name="IDX893"></a>
+</dt>
+<dd><p>This constant contains the version of libunistring that is being used
+at compile time.  It encodes the major and minor parts of the version
+number only.  These parts are encoded in the form <code>(major&lt;&lt;8) + minor</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>_libunistring_version</b>
+<a name="IDX894"></a>
+</dt>
+<dd><p>This constant contains the version of libunistring that is being used
+at run time.  It encodes the major and minor parts of the version
+number only.  These parts are encoded in the form <code>(major&lt;&lt;8) + minor</code>.
+</p></dd></dl>
+
+<p>It is possible that <code>_libunistring_version</code> is greater than
+<code>_LIBUNISTRING_VERSION</code>.  This can happen when you use
+<code>libunistring</code> as a shared library, and a newer, binary
+backward-compatible version has been installed after your program
+that uses <code>libunistring</code> was installed.
+</p>
+<hr size="6">
+<a name="Autoconf-macro"></a>
+<a name="SEC65"></a>
+<h2 class="section"> <a href="libunistring.html#TOC65">16.4 Autoconf macro</a> </h2>
+
+<p>GNU Gnulib provides an autoconf macro that tests for the availability
+of <code>libunistring</code>.  It is contained in the Gnulib module
+&lsquo;<samp>libunistring</samp>&rsquo;, see
+<a href="http://www.gnu.org/software/gnulib/MODULES.html#module=libunistring">http://www.gnu.org/software/gnulib/MODULES.html#module=libunistring</a>.
+</p>
+<a name="IDX895"></a>
+<p>The macro is called <code>gl_LIBUNISTRING</code>.  It searches for an installed
+libunistring.  If found, it sets and AC_SUBSTs <code>HAVE_LIBUNISTRING=yes</code>
+and the <code>LIBUNISTRING</code> and <code>LTLIBUNISTRING</code> variables and augments
+the <code>CPPFLAGS</code> variable, and defines the C macro
+<code>HAVE_LIBUNISTRING</code> to 1.  Otherwise, it sets and AC_SUBSTs
+<code>HAVE_LIBUNISTRING=no</code> and <code>LIBUNISTRING</code> and <code>LTLIBUNISTRING</code>
+to empty.
+</p>
+<p>The complexities that <code>gl_LIBUNISTRING</code> deals with are the following:
+</p>
+<ul>
+<li>
+On some operating systems, in some configurations, libunistring depends
+on <code>libiconv</code>, and the options for linking with libiconv must be
+mentioned explicitly on the link command line.
+
+</li><li>
+GNU <code>libunistring</code>, if installed, is not necessarily already in the
+search path (<code>CPPFLAGS</code> for the include file search path,
+<code>LDFLAGS</code> for the library search path).
+
+</li><li>
+GNU <code>libunistring</code>, if installed, is not necessarily already in the
+run time library search path.  To avoid the need for setting an environment
+variable like <code>LD_LIBRARY_PATH</code>, the macro adds the appropriate
+run time search path options to the <code>LIBUNISTRING</code> variable.  This works
+on most systems.
+</li></ul>
+
+<hr size="6">
+<a name="Reporting-problems"></a>
+<a name="SEC66"></a>
+<h2 class="section"> <a href="libunistring.html#TOC66">16.5 Reporting problems</a> </h2>
+
+<p>If you encounter any problem, please don't hesitate to send a detailed
+bug report to the <code>bug-libunistring@gnu.org</code> mailing list.  You can
+alternatively also use the bug tracker at the project page
+<a href="https://savannah.gnu.org/projects/libunistring">https://savannah.gnu.org/projects/libunistring</a>.
+</p>
+<p>Please always include the version number of this library, and a short
+description of your operating system and compilation environment with
+corresponding version numbers.
+</p>
+<p>For problems that appear while building and installing <code>libunistring</code>,
+for which you don't find the remedy in the &lsquo;<tt>INSTALL</tt>&rsquo; file, please include
+a description of the options that you passed to the &lsquo;<samp>configure</samp>&rsquo; script.
+</p>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC61" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_17.html#SEC67" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

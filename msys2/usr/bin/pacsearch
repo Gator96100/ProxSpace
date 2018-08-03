@@ -1,0 +1,125 @@
+#!/usr/bin/perl
+# pacsearch - Perform a pacman search using both the local and the sync databases
+#
+# Copyright (C) 2008-2014 Dan McGee <dan@archlinux.org>
+#
+# Based off original shell script version:
+# Copyright (C) 2006-2007 Dan McGee <dan@archlinux.org>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+use strict;
+use warnings;
+use Term::ANSIColor;
+
+my $myname = 'pacsearch';
+my $myver = '5.0.1';
+
+sub usage {
+	print "$myname (pacman) v$myver\n\n";
+	print "Perform a pacman search using both the local and the sync databases.\n\n";
+	print "Usage: $myname [-n] <pattern>\n\n";
+	print "Options:\n";
+	print "	 -n, --nocolor: turn off coloring\n\n";
+	print "Example: $myname ^gnome\n";
+}
+
+sub version {
+	printf "%s %s\n", $myname, $myver;
+	print "Copyright (C) 2008-2014 Dan McGee <dan\@archlinux.org>\n\n";
+	print "Based off original shell script version:\n";
+	print "Copyright (C) 2006-2007 Dan McGee <dan\@archlinux.org>\n";
+}
+
+if ($#ARGV lt 0 || $ARGV[0] eq "--help" || $ARGV[0] eq "-h") {
+	usage;
+	if ($#ARGV lt 0) {
+		exit 1;
+	}
+	exit 0;
+}
+
+if ($ARGV[0] eq "--version" || $ARGV[0] eq "-V") {
+	version;
+	exit 0;
+}
+
+# define formatting variables
+my($BLUE, $CYAN, $GREEN, $MAGENTA, $RED, $YELLOW, $BOLD, $RESET);
+if ($ARGV[0] eq "--nocolor" || $ARGV[0] eq "-n") {
+	shift;
+	$BLUE = "";
+	$CYAN = "";
+	$GREEN = "";
+	$MAGENTA = "";
+	$RED = "";
+	$YELLOW = "";
+	$BOLD = "";
+	$RESET = "";
+} else {
+	$BLUE = color('blue');
+	$CYAN = color('cyan');
+	$GREEN = color('green');
+	$MAGENTA = color('magenta');
+	$RED = color('red');
+	$YELLOW = color('yellow');
+	$BOLD = color('bold');
+	$RESET = color('reset');
+}
+
+# localization
+my $LC_INSTALLED = `gettext pacman installed`;
+
+# Print a "repo/pkgname pkgver (groups) [installed]" line.
+# We stick to pacman colors.
+sub print_pkg {
+	my @v = @_;
+	print "$RESET$BOLD";
+	if ( "$v[0]" eq "local" ) {
+		print "$RED";
+	} else {
+		print "$MAGENTA";
+	}
+	print "$v[0]/$RESET$BOLD$v[1] $GREEN$v[2]$BLUE$v[3]$CYAN$v[4]$RESET\n";
+	print "$v[5]";
+}
+
+sub list_pkg {
+	my $db = shift;
+	open (my $out, '-|', 'pacman', $db, '--', @ARGV) or exit 1;
+	my @pkglist = ();
+	while ( readline($out) ) {
+		# We grab the following fields: repo, name, ver, group, installed, and
+		# desc. We grab leading space for 'group' and 'installed' so that we do
+		# not need to test if non-empty when printing.
+		my @pkgfields = /^(.*?)\/(.*?) (.*?)( \(.*?\))?( \[.*\])?$/s;
+		my $desc = readline($out);
+		# since 'group' and 'installed' are optional, we should fill it in if
+		# necessary
+		$pkgfields[3] = "" if not defined $pkgfields[3];
+		$pkgfields[4] = "" if not defined $pkgfields[4];
+		$pkgfields[5] = $desc;
+		push (@pkglist, \@pkgfields);
+	}
+	close ($out);
+	return @pkglist;
+}
+
+my @sync = list_pkg('-Ss', @ARGV);
+my %allpkgs = map {$_->[1] . $_->[2] => 1} @sync;
+my @query = grep { not $allpkgs{$_->[1] . $_->[2]}} list_pkg('-Qs', @ARGV);
+$_->[4] = " [$LC_INSTALLED]" foreach @query;
+print_pkg (@{$_}) foreach (@sync, @query);
+
+#vim: set noet:

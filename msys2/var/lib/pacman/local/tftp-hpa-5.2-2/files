@@ -1,0 +1,16 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/tftp.exe
+usr/include/
+usr/include/arpa/
+usr/include/arpa/tftp.h
+usr/share/
+usr/share/licenses/
+usr/share/licenses/tftp-hpa/
+usr/share/licenses/tftp-hpa/LICENSE
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/tftp.1.gz
+usr/share/man/man8/
+

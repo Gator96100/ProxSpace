@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 6. Output with Unicode strings &lt;unistdio.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 6. Output with Unicode strings &lt;unistdio.h&gt;">
+<meta name="keywords" content="GNU libunistring: 6. Output with Unicode strings &lt;unistdio.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_5.html#SEC17" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_7.html#SEC19" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="unistdio_002eh"></a>
+<a name="SEC18"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC18">6. Output with Unicode strings <code>&lt;unistdio.h&gt;</code></a> </h1>
+
+<p>This include file declares functions for doing formatted output with Unicode
+strings.  It defines a set of functions similar to <code>fprintf</code> and
+<code>sprintf</code>, which are declared in <code>&lt;stdio.h&gt;</code>.
+</p>
+<p>These functions work like the <code>printf</code> function family.
+In the format string:
+</p><ul class="toc">
+<li>
+The format directive &lsquo;<samp>U</samp>&rsquo; takes an UTF-8 string (<code>const uint8_t *</code>).
+</li><li>
+The format directive &lsquo;<samp>lU</samp>&rsquo; takes an UTF-16 string
+(<code>const uint16_t *</code>).
+</li><li>
+The format directive &lsquo;<samp>llU</samp>&rsquo; takes an UTF-32 string
+(<code>const uint32_t *</code>).
+</li></ul>
+
+<p>A function name with an infix &lsquo;<samp>v</samp>&rsquo; indicates that a <code>va_list</code> is
+passed instead of multiple arguments.
+</p>
+<p>The functions <code>*sprintf</code> have a <var>buf</var> argument that is assumed to be
+large enough.
+(<em>DANGEROUS!  Overflowing the buffer will crash the program.</em>)
+</p>
+<p>The functions <code>*snprintf</code> have a <var>buf</var> argument that is assumed to be
+<var>size</var> units large.  (<em>DANGEROUS!  The resulting string might be
+truncated in the middle of a multibyte character.</em>)
+</p>
+<p>The functions <code>*asprintf</code> have a <var>resultp</var> argument.  The result will
+be freshly allocated and stored in <code>*resultp</code>.
+</p>
+<p>The functions <code>*asnprintf</code> have a (<var>resultbuf</var>, <var>lengthp</var>)
+argument pair.  If <var>resultbuf</var> is not NULL and the result fits into
+<code>*<var>lengthp</var></code> units, it is put in <var>resultbuf</var>, and <var>resultbuf</var>
+is returned.  Otherwise, a freshly allocated string is returned.  In both
+cases, <code>*<var>lengthp</var></code> is set to the length (number of units) of the
+returned string.  In case of error, NULL is returned and <code>errno</code> is set.
+</p>
+<p>The following functions take an ASCII format string and return a result that
+is a <code>char *</code> string in locale encoding.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>ulc_sprintf</b><i> (char *<var>buf</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX179"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_snprintf</b><i> (char *<var>buf</var>, size_t size, const char *<var>format</var>, ...)</i>
+<a name="IDX180"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_asprintf</b><i> (char **<var>resultp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX181"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>ulc_asnprintf</b><i> (char *<var>resultbuf</var>, size_t *<var>lengthp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX182"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_vsprintf</b><i> (char *<var>buf</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX183"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_vsnprintf</b><i> (char *<var>buf</var>, size_t size, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX184"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_vasprintf</b><i> (char **<var>resultp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX185"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>ulc_vasnprintf</b><i> (char *<var>resultbuf</var>, size_t *<var>lengthp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX186"></a>
+</dt>
+</dl>
+
+<p>The following functions take an ASCII format string and return a result in
+UTF-8 format.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_sprintf</b><i> (uint8_t *<var>buf</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX187"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_snprintf</b><i> (uint8_t *<var>buf</var>, size_t <var>size</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX188"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_asprintf</b><i> (uint8_t **<var>resultp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX189"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_asnprintf</b><i> (uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX190"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_vsprintf</b><i> (uint8_t *<var>buf</var>, const char *<var>format</var>, va_list ap)</i>
+<a name="IDX191"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_vsnprintf</b><i> (uint8_t *<var>buf</var>, size_t <var>size</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX192"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_vasprintf</b><i> (uint8_t **<var>resultp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX193"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_vasnprintf</b><i> (uint8_t *resultbuf, size_t *<var>lengthp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX194"></a>
+</dt>
+</dl>
+
+<p>The following functions take an UTF-8 format string and return a result in
+UTF-8 format.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_sprintf</b><i> (uint8_t *<var>buf</var>, const uint8_t *<var>format</var>, ...)</i>
+<a name="IDX195"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_snprintf</b><i> (uint8_t *<var>buf</var>, size_t <var>size</var>, const uint8_t *<var>format</var>, ...)</i>
+<a name="IDX196"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_asprintf</b><i> (uint8_t **<var>resultp</var>, const uint8_t *<var>format</var>, ...)</i>
+<a name="IDX197"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_u8_asnprintf</b><i> (uint8_t *resultbuf, size_t *<var>lengthp</var>, const uint8_t *<var>format</var>, ...)</i>
+<a name="IDX198"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_vsprintf</b><i> (uint8_t *<var>buf</var>, const uint8_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX199"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_vsnprintf</b><i> (uint8_t *<var>buf</var>, size_t <var>size</var>, const uint8_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX200"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_vasprintf</b><i> (uint8_t **<var>resultp</var>, const uint8_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX201"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_u8_vasnprintf</b><i> (uint8_t *resultbuf, size_t *<var>lengthp</var>, const uint8_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX202"></a>
+</dt>
+</dl>
+
+<p>The following functions take an ASCII format string and return a result in
+UTF-16 format.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u16_sprintf</b><i> (uint16_t *<var>buf</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX203"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_snprintf</b><i> (uint16_t *<var>buf</var>, size_t <var>size</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX204"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_asprintf</b><i> (uint16_t **<var>resultp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX205"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u16_asnprintf</b><i> (uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX206"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_vsprintf</b><i> (uint16_t *<var>buf</var>, const char *<var>format</var>, va_list ap)</i>
+<a name="IDX207"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_vsnprintf</b><i> (uint16_t *<var>buf</var>, size_t <var>size</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX208"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_vasprintf</b><i> (uint16_t **<var>resultp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX209"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u16_vasnprintf</b><i> (uint16_t *resultbuf, size_t *<var>lengthp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX210"></a>
+</dt>
+</dl>
+
+<p>The following functions take an UTF-16 format string and return a result in
+UTF-16 format.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_sprintf</b><i> (uint16_t *<var>buf</var>, const uint16_t *<var>format</var>, ...)</i>
+<a name="IDX211"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_snprintf</b><i> (uint16_t *<var>buf</var>, size_t <var>size</var>, const uint16_t *<var>format</var>, ...)</i>
+<a name="IDX212"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_asprintf</b><i> (uint16_t **<var>resultp</var>, const uint16_t *<var>format</var>, ...)</i>
+<a name="IDX213"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u16_u16_asnprintf</b><i> (uint16_t *resultbuf, size_t *<var>lengthp</var>, const uint16_t *<var>format</var>, ...)</i>
+<a name="IDX214"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_vsprintf</b><i> (uint16_t *<var>buf</var>, const uint16_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX215"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_vsnprintf</b><i> (uint16_t *<var>buf</var>, size_t <var>size</var>, const uint16_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX216"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_vasprintf</b><i> (uint16_t **<var>resultp</var>, const uint16_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX217"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u16_u16_vasnprintf</b><i> (uint16_t *resultbuf, size_t *<var>lengthp</var>, const uint16_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX218"></a>
+</dt>
+</dl>
+
+<p>The following functions take an ASCII format string and return a result in
+UTF-32 format.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u32_sprintf</b><i> (uint32_t *<var>buf</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX219"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_snprintf</b><i> (uint32_t *<var>buf</var>, size_t <var>size</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX220"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_asprintf</b><i> (uint32_t **<var>resultp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX221"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u32_asnprintf</b><i> (uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX222"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_vsprintf</b><i> (uint32_t *<var>buf</var>, const char *<var>format</var>, va_list ap)</i>
+<a name="IDX223"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_vsnprintf</b><i> (uint32_t *<var>buf</var>, size_t <var>size</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX224"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_vasprintf</b><i> (uint32_t **<var>resultp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX225"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u32_vasnprintf</b><i> (uint32_t *resultbuf, size_t *<var>lengthp</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX226"></a>
+</dt>
+</dl>
+
+<p>The following functions take an UTF-32 format string and return a result in
+UTF-32 format.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_sprintf</b><i> (uint32_t *<var>buf</var>, const uint32_t *<var>format</var>, ...)</i>
+<a name="IDX227"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_snprintf</b><i> (uint32_t *<var>buf</var>, size_t <var>size</var>, const uint32_t *<var>format</var>, ...)</i>
+<a name="IDX228"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_asprintf</b><i> (uint32_t **<var>resultp</var>, const uint32_t *<var>format</var>, ...)</i>
+<a name="IDX229"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u32_u32_asnprintf</b><i> (uint32_t *resultbuf, size_t *<var>lengthp</var>, const uint32_t *<var>format</var>, ...)</i>
+<a name="IDX230"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_vsprintf</b><i> (uint32_t *<var>buf</var>, const uint32_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX231"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_vsnprintf</b><i> (uint32_t *<var>buf</var>, size_t <var>size</var>, const uint32_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX232"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_vasprintf</b><i> (uint32_t **<var>resultp</var>, const uint32_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX233"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u32_u32_vasnprintf</b><i> (uint32_t *resultbuf, size_t *<var>lengthp</var>, const uint32_t *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX234"></a>
+</dt>
+</dl>
+
+<p>The following functions take an ASCII format string and produce output in
+locale encoding to a <code>FILE</code> stream.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>ulc_fprintf</b><i> (FILE *<var>stream</var>, const char *<var>format</var>, ...)</i>
+<a name="IDX235"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>ulc_vfprintf</b><i> (FILE *<var>stream</var>, const char *<var>format</var>, va_list <var>ap</var>)</i>
+<a name="IDX236"></a>
+</dt>
+</dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_5.html#SEC17" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_7.html#SEC19" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

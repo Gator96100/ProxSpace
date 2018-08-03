@@ -1,0 +1,15 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/info.exe
+usr/bin/install-info.exe
+usr/share/
+usr/share/info/
+usr/share/info/info-stnd.info.gz
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/info.1.gz
+usr/share/man/man1/install-info.1.gz
+usr/share/man/man5/
+usr/share/man/man5/info.5.gz
+

@@ -1,0 +1,13 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/less.exe
+usr/bin/lessecho.exe
+usr/bin/lesskey.exe
+usr/share/
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/less.1.gz
+usr/share/man/man1/lessecho.1.gz
+usr/share/man/man1/lesskey.1.gz
+

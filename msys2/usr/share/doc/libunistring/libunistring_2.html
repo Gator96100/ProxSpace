@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 2. Conventions</title>
+
+<meta name="description" content="GNU libunistring: 2. Conventions">
+<meta name="keywords" content="GNU libunistring: 2. Conventions">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_1.html#SEC1" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_3.html#SEC10" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="Conventions"></a>
+<a name="SEC9"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC9">2. Conventions</a> </h1>
+
+<p>This chapter explains conventions valid throughout the libunistring library.
+</p>
+<a name="IDX14"></a>
+<p>Variables of type <code>char *</code> denote C strings in locale encoding.
+See <a href="libunistring_1.html#SEC4">Locale encodings</a>.
+</p>
+<p>Variables of type <code>uint8_t *</code> denote UTF-8 strings.  Their units
+are bytes.
+</p>
+<p>Variables of type <code>uint16_t *</code> denote UTF-16 strings, without byte
+order mark.  Their units are 2-byte words.
+</p>
+<p>Variables of type <code>uint32_t *</code> denote UTF-32 strings, without byte
+order mark.  Their units are 4-byte words.
+</p>
+<p>Argument pairs <code>(<var>s</var>, <var>n</var>)</code> denote a string
+<code><var>s</var>[0..<var>n</var>-1]</code> with exactly <var>n</var> units.
+</p>
+<p>All functions with prefix &lsquo;<samp>ulc_</samp>&rsquo; operate on C strings in locale
+encoding.
+</p>
+<p>All functions with prefix &lsquo;<samp>u8_</samp>&rsquo; operate on UTF-8 strings.
+</p>
+<p>All functions with prefix &lsquo;<samp>u16_</samp>&rsquo; operate on UTF-16 strings.
+</p>
+<p>All functions with prefix &lsquo;<samp>u32_</samp>&rsquo; operate on UTF-32 strings.
+</p>
+<p>For every function with prefix &lsquo;<samp>u8_</samp>&rsquo;, operating on UTF-8 strings,
+there is also a corresponding function with prefix &lsquo;<samp>u16_</samp>&rsquo;,
+operating on UTF-16 strings, and a corresponding function with prefix
+&lsquo;<samp>u32_</samp>&rsquo;, operating on UTF-32 strings.  Their description is
+analogous; in this documentation we describe only the function that
+operates on UTF-8 strings, for brevity.
+</p>
+<p>A declaration with a variable <var>n</var> denotes the three concrete
+declarations with <var>n</var> = 8, <var>n</var> = 16, <var>n</var> = 32.
+</p>
+<p>All parameters starting with &lsquo;<samp>str</samp>&rsquo; and the parameters of
+functions starting with <code>u8_str</code>/<code>u16_str</code>/<code>u32_str</code>
+denote a NUL terminated string.
+</p>
+<a name="IDX15"></a>
+<p>Error values are always returned through the <code>errno</code> variable,
+usually with a return value that indicates the presence of an error
+(NULL for functions that return an pointer, or -1 for functions that
+return an <code>int</code>).
+</p>
+<p>Functions returning a string result take a
+<code>(<var>resultbuf</var>, <var>lengthp</var>)</code>
+argument pair.  If <var>resultbuf</var> is not NULL and the result fits
+into <code>*<var>lengthp</var></code> units, it is put in <var>resultbuf</var>, and
+<var>resultbuf</var> is returned.  Otherwise, a freshly allocated string
+is returned.  In both cases, <code>*<var>lengthp</var></code> is set to the
+length (number of units) of the returned string.  In case of error,
+NULL is returned and <code>errno</code> is set.
+</p>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_1.html#SEC1" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_3.html#SEC10" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

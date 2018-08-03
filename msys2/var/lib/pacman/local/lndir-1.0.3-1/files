@@ -1,0 +1,12 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/lndir.exe
+usr/share/
+usr/share/licenses/
+usr/share/licenses/lndir/
+usr/share/licenses/lndir/COPYING
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/lndir.1.gz
+

@@ -1,5 +1,0 @@
-
-QMAKE_PRO_INPUT = freetype.pro
-QMAKE_PRL_TARGET = libqtfreetyped.a
-QMAKE_PRL_CONFIG = lex yacc debug depend_includepath testcase_targets import_plugins import_qpa_plugin rtti_off incremental_off windows qt_build_extra file_copies link_prl debug_and_release precompile_header no_plugin_manifest directwrite qpa win32 mingw gcc copy_dir_files precompile_header pcre compile_examples sse2 sse3 ssse3 sse4_1 sse4_2 avx avx2 largefile prefix_build force_independent create_prl link_prl prepare_docs qt_docs_targets no_private_qt_headers_warning QTDIR_build qt_example_installs exceptions_off testcase_exceptions debug DebugBuild Debug build_pass c++11 static hide_symbols exceptions_off rtti_off warn_off installed git_build c++11 strict_c++ c++14 debug_and_release build_all debug DebugBuild Debug build_pass have_target staticlib no_plist exclusive_builds debug_info no_autoqmake
-QMAKE_PRL_LIBS = -LC:/utils/postgresql/pgsql/lib -LC:/utils/my_sql/my_sql/lib -lz

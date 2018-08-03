@@ -1,0 +1,4 @@
+$Id$
+
+Change rebaseall to handle in-use DLLs.
+Change rebase to indicate why it considers a DLLs not to be rebaseable.

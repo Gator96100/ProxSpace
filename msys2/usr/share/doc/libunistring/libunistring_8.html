@@ -1,0 +1,2520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 8. Unicode character classification and properties &lt;unictype.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 8. Unicode character classification and properties &lt;unictype.h&gt;">
+<meta name="keywords" content="GNU libunistring: 8. Unicode character classification and properties &lt;unictype.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_7.html#SEC19" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_9.html#SEC40" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="unictype_002eh"></a>
+<a name="SEC20"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC20">8. Unicode character classification and properties <code>&lt;unictype.h&gt;</code></a> </h1>
+
+<p>This include file declares functions that classify Unicode characters
+and that test whether Unicode characters have specific properties.
+</p>
+<p>The classification assigns a &ldquo;general category&rdquo; to every Unicode
+character.  This is similar to the classification provided by ISO C in
+<code>&lt;wctype.h&gt;</code>.
+</p>
+<p>Properties are the data that guides various text processing algorithms
+in the presence of specific Unicode characters.
+</p>
+
+<hr size="6">
+<a name="General-category"></a>
+<a name="SEC21"></a>
+<h2 class="section"> <a href="libunistring.html#TOC21">8.1 General category</a> </h2>
+
+<p>Every Unicode character or code point has a <em>general category</em> assigned
+to it.  This classification is important for most algorithms that work on
+Unicode text.
+</p>
+<p>The GNU libunistring library provides two kinds of API for working with
+general categories.  The object oriented API uses a variable to denote
+every predefined general category value or combinations thereof.  The
+low-level API uses a bit mask instead.  The advantage of the object oriented
+API is that if only a few predefined general category values are used,
+the data tables are relatively small.  When you combine general category
+values (using <code>uc_general_category_or</code>, <code>uc_general_category_and</code>,
+or <code>uc_general_category_and_not</code>), or when you use the low level
+bit masks, a big table is used thats holds the complete general category
+information for all Unicode characters.
+</p>
+
+<hr size="6">
+<a name="Object-oriented-API"></a>
+<a name="SEC22"></a>
+<h3 class="subsection"> <a href="libunistring.html#TOC22">8.1.1 The object oriented API for general category</a> </h3>
+
+<dl>
+<dt><u>Type:</u> <b>uc_general_category_t</b>
+<a name="IDX241"></a>
+</dt>
+<dd><p>This data type denotes a general category value.  It is an immediate type that
+can be copied by simple assignment, without involving memory allocation.  It is
+not an array type.
+</p></dd></dl>
+
+<p>The following are the predefined general category value.  Additional general
+categories may be added in the future.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_L</b>
+<a name="IDX242"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_LC</b>
+<a name="IDX243"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Lu</b>
+<a name="IDX244"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Ll</b>
+<a name="IDX245"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Lt</b>
+<a name="IDX246"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Lm</b>
+<a name="IDX247"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Lo</b>
+<a name="IDX248"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_M</b>
+<a name="IDX249"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Mn</b>
+<a name="IDX250"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Mc</b>
+<a name="IDX251"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Me</b>
+<a name="IDX252"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_N</b>
+<a name="IDX253"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Nd</b>
+<a name="IDX254"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Nl</b>
+<a name="IDX255"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_No</b>
+<a name="IDX256"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_P</b>
+<a name="IDX257"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Pc</b>
+<a name="IDX258"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Pd</b>
+<a name="IDX259"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Ps</b>
+<a name="IDX260"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Pe</b>
+<a name="IDX261"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Pi</b>
+<a name="IDX262"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Pf</b>
+<a name="IDX263"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Po</b>
+<a name="IDX264"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_S</b>
+<a name="IDX265"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Sm</b>
+<a name="IDX266"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Sc</b>
+<a name="IDX267"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Sk</b>
+<a name="IDX268"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_So</b>
+<a name="IDX269"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Z</b>
+<a name="IDX270"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Zs</b>
+<a name="IDX271"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Zl</b>
+<a name="IDX272"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Zp</b>
+<a name="IDX273"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_C</b>
+<a name="IDX274"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Cc</b>
+<a name="IDX275"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Cf</b>
+<a name="IDX276"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Cs</b>
+<a name="IDX277"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Co</b>
+<a name="IDX278"></a>
+</dt>
+<dt><u>Constant:</u> uc_general_category_t <b>UC_CATEGORY_Cn</b>
+<a name="IDX279"></a>
+</dt>
+</dl>
+
+<p>The following are alias names for predefined General category values.
+</p>
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_LETTER</b>
+<a name="IDX280"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_L</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_CASED_LETTER</b>
+<a name="IDX281"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_LC</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_UPPERCASE_LETTER</b>
+<a name="IDX282"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Lu</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_LOWERCASE_LETTER</b>
+<a name="IDX283"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Ll</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_TITLECASE_LETTER</b>
+<a name="IDX284"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Lt</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_MODIFIER_LETTER</b>
+<a name="IDX285"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Lm</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_OTHER_LETTER</b>
+<a name="IDX286"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Lo</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_MARK</b>
+<a name="IDX287"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_M</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_NON_SPACING_MARK</b>
+<a name="IDX288"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Mn</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_COMBINING_SPACING_MARK</b>
+<a name="IDX289"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Mc</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_ENCLOSING_MARK</b>
+<a name="IDX290"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Me</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_NUMBER</b>
+<a name="IDX291"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_N</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_DECIMAL_DIGIT_NUMBER</b>
+<a name="IDX292"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Nd</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_LETTER_NUMBER</b>
+<a name="IDX293"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Nl</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_OTHER_NUMBER</b>
+<a name="IDX294"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_No</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_PUNCTUATION</b>
+<a name="IDX295"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_P</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_CONNECTOR_PUNCTUATION</b>
+<a name="IDX296"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Pc</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_DASH_PUNCTUATION</b>
+<a name="IDX297"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Pd</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_OPEN_PUNCTUATION</b>
+<a name="IDX298"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Ps</code> (&ldquo;start punctuation&rdquo;).
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_CLOSE_PUNCTUATION</b>
+<a name="IDX299"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Pe</code> (&ldquo;end punctuation&rdquo;).
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_INITIAL_QUOTE_PUNCTUATION</b>
+<a name="IDX300"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Pi</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_FINAL_QUOTE_PUNCTUATION</b>
+<a name="IDX301"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Pf</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_OTHER_PUNCTUATION</b>
+<a name="IDX302"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Po</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_SYMBOL</b>
+<a name="IDX303"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_S</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_MATH_SYMBOL</b>
+<a name="IDX304"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Sm</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_CURRENCY_SYMBOL</b>
+<a name="IDX305"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Sc</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_MODIFIER_SYMBOL</b>
+<a name="IDX306"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Sk</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_OTHER_SYMBOL</b>
+<a name="IDX307"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_So</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_SEPARATOR</b>
+<a name="IDX308"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Z</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_SPACE_SEPARATOR</b>
+<a name="IDX309"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Zs</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_LINE_SEPARATOR</b>
+<a name="IDX310"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Zl</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_PARAGRAPH_SEPARATOR</b>
+<a name="IDX311"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Zp</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_OTHER</b>
+<a name="IDX312"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_C</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_CONTROL</b>
+<a name="IDX313"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Cc</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_FORMAT</b>
+<a name="IDX314"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Cf</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_SURROGATE</b>
+<a name="IDX315"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Cs</code>.  All code points in this
+category are invalid characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_PRIVATE_USE</b>
+<a name="IDX316"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Co</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Macro:</u> uc_general_category_t <b>UC_UNASSIGNED</b>
+<a name="IDX317"></a>
+</dt>
+<dd><p>This is another name for <code>UC_CATEGORY_Cn</code>.  Some code points in this
+category are invalid characters.
+</p></dd></dl>
+
+<p>The following functions combine general categories, like in a boolean algebra,
+except that there is no &lsquo;<samp>not</samp>&rsquo; operation.
+</p>
+<dl>
+<dt><u>Function:</u> uc_general_category_t <b>uc_general_category_or</b><i> (uc_general_category_t <var>category1</var>, uc_general_category_t <var>category2</var>)</i>
+<a name="IDX318"></a>
+</dt>
+<dd><p>Returns the union of two general categories.
+This corresponds to the unions of the two sets of characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uc_general_category_t <b>uc_general_category_and</b><i> (uc_general_category_t <var>category1</var>, uc_general_category_t <var>category2</var>)</i>
+<a name="IDX319"></a>
+</dt>
+<dd><p>Returns the intersection of two general categories as bit masks.
+This <em>does not</em> correspond to the intersection of the two sets of
+characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uc_general_category_t <b>uc_general_category_and_not</b><i> (uc_general_category_t <var>category1</var>, uc_general_category_t <var>category2</var>)</i>
+<a name="IDX320"></a>
+</dt>
+<dd><p>Returns the intersection of a general category with the complement of a
+second general category, as bit masks.
+This <em>does not</em> correspond to the intersection with complement, when
+viewing the categories as sets of characters.
+</p></dd></dl>
+
+<p>The following functions associate general categories with their name.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>uc_general_category_name</b><i> (uc_general_category_t <var>category</var>)</i>
+<a name="IDX321"></a>
+</dt>
+<dd><p>Returns the name of a general category, more precisely, the abbreviated name.
+Returns NULL if the general category corresponds to a bit mask that does not
+have a name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> const char * <b>uc_general_category_long_name</b><i> (uc_general_category_t <var>category</var>)</i>
+<a name="IDX322"></a>
+</dt>
+<dd><p>Returns the long name of a general category.
+Returns NULL if the general category corresponds to a bit mask that does not
+have a name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uc_general_category_t <b>uc_general_category_byname</b><i> (const char *<var>category_name</var>)</i>
+<a name="IDX323"></a>
+</dt>
+<dd><p>Returns the general category given by name, e.g. <code>&quot;Lu&quot;</code>, or by long
+name, e.g. <code>&quot;Uppercase Letter&quot;</code>.
+This lookup ignores spaces, underscores, or hyphens as word separators and is
+case-insignificant.
+</p></dd></dl>
+
+<p>The following functions view general categories as sets of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> uc_general_category_t <b>uc_general_category</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX324"></a>
+</dt>
+<dd><p>Returns the general category of a Unicode character.
+</p>
+<p>This function uses a big table.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_general_category</b><i> (ucs4_t <var>uc</var>, uc_general_category_t <var>category</var>)</i>
+<a name="IDX325"></a>
+</dt>
+<dd><p>Tests whether a Unicode character belongs to a given category.
+The <var>category</var> argument can be a predefined general category or the
+combination of several predefined general categories.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Bit-mask-API"></a>
+<a name="SEC23"></a>
+<h3 class="subsection"> <a href="libunistring.html#TOC23">8.1.2 The bit mask API for general category</a> </h3>
+
+<p>The following are the predefined general category value as bit masks.
+Additional general categories may be added in the future.
+</p>
+<dl>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_L</b>
+<a name="IDX326"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_LC</b>
+<a name="IDX327"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Lu</b>
+<a name="IDX328"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Ll</b>
+<a name="IDX329"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Lt</b>
+<a name="IDX330"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Lm</b>
+<a name="IDX331"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Lo</b>
+<a name="IDX332"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_M</b>
+<a name="IDX333"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Mn</b>
+<a name="IDX334"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Mc</b>
+<a name="IDX335"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Me</b>
+<a name="IDX336"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_N</b>
+<a name="IDX337"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Nd</b>
+<a name="IDX338"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Nl</b>
+<a name="IDX339"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_No</b>
+<a name="IDX340"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_P</b>
+<a name="IDX341"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Pc</b>
+<a name="IDX342"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Pd</b>
+<a name="IDX343"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Ps</b>
+<a name="IDX344"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Pe</b>
+<a name="IDX345"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Pi</b>
+<a name="IDX346"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Pf</b>
+<a name="IDX347"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Po</b>
+<a name="IDX348"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_S</b>
+<a name="IDX349"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Sm</b>
+<a name="IDX350"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Sc</b>
+<a name="IDX351"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Sk</b>
+<a name="IDX352"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_So</b>
+<a name="IDX353"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Z</b>
+<a name="IDX354"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Zs</b>
+<a name="IDX355"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Zl</b>
+<a name="IDX356"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Zp</b>
+<a name="IDX357"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_C</b>
+<a name="IDX358"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Cc</b>
+<a name="IDX359"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Cf</b>
+<a name="IDX360"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Cs</b>
+<a name="IDX361"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Co</b>
+<a name="IDX362"></a>
+</dt>
+<dt><u>Macro:</u> uint32_t <b>UC_CATEGORY_MASK_Cn</b>
+<a name="IDX363"></a>
+</dt>
+</dl>
+
+<p>The following function views general categories as sets of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_general_category_withtable</b><i> (ucs4_t <var>uc</var>, uint32_t <var>bitmask</var>)</i>
+<a name="IDX364"></a>
+</dt>
+<dd><p>Tests whether a Unicode character belongs to a given category.
+The <var>bitmask</var> argument can be a predefined general category bitmask or the
+combination of several predefined general category bitmasks.
+</p>
+<p>This function uses a big table comprising all general categories.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Canonical-combining-class"></a>
+<a name="SEC24"></a>
+<h2 class="section"> <a href="libunistring.html#TOC24">8.2 Canonical combining class</a> </h2>
+
+<p>Every Unicode character or code point has a <em>canonical combining class</em>
+assigned to it.
+</p>
+<p>What is the meaning of the canonical combining class?  Essentially, it
+indicates the priority with which a combining character is attached to its
+base character.  The characters for which the canonical combining class is 0
+are the base characters, and the characters for which it is greater than 0 are
+the combining characters.  Combining characters are rendered
+near/attached/around their base character, and combining characters with small
+combining classes are attached &quot;first&quot; or &quot;closer&quot; to the base character.
+</p>
+<p>The canonical combining class of a character is a number in the range
+0..255.  The possible values are described in the Unicode Character Database
+<a href="http://www.unicode.org/Public/UNIDATA/UCD.html">http://www.unicode.org/Public/UNIDATA/UCD.html</a>.  The list here is
+not definitive; more values can be added in future versions.
+</p>
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_NR</b>
+<a name="IDX365"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Not Reordered&rdquo; characters.
+The value is 0.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_OV</b>
+<a name="IDX366"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Overlay&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_NK</b>
+<a name="IDX367"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Nukta&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_KV</b>
+<a name="IDX368"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Kana Voicing&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_VR</b>
+<a name="IDX369"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Virama&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_ATBL</b>
+<a name="IDX370"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Attached Below Left&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_ATB</b>
+<a name="IDX371"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Attached Below&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_ATA</b>
+<a name="IDX372"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Attached Above&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_ATAR</b>
+<a name="IDX373"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Attached Above Right&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_BL</b>
+<a name="IDX374"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Below Left&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_B</b>
+<a name="IDX375"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Below&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_BR</b>
+<a name="IDX376"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Below Right&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_L</b>
+<a name="IDX377"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Left&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_R</b>
+<a name="IDX378"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Right&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_AL</b>
+<a name="IDX379"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Above Left&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_A</b>
+<a name="IDX380"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Above&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_AR</b>
+<a name="IDX381"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Above Right&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_DB</b>
+<a name="IDX382"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Double Below&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_DA</b>
+<a name="IDX383"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Double Above&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_CCC_IS</b>
+<a name="IDX384"></a>
+</dt>
+<dd><p>The canonical combining class value for &ldquo;Iota Subscript&rdquo; characters.
+</p></dd></dl>
+
+<p>The following functions associate canonical combining classes with their name.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>uc_combining_class_name</b><i> (int <var>ccc</var>)</i>
+<a name="IDX385"></a>
+</dt>
+<dd><p>Returns the name of a canonical combining class, more precisely, the
+abbreviated name.
+Returns NULL if the canonical combining class is a numeric value without a
+name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> const char * <b>uc_combining_class_long_name</b><i> (int <var>ccc</var>)</i>
+<a name="IDX386"></a>
+</dt>
+<dd><p>Returns the long name of a canonical combining class.
+Returns NULL if the canonical combining class is a numeric value without a
+name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>uc_combining_class_byname</b><i> (const char *<var>ccc_name</var>)</i>
+<a name="IDX387"></a>
+</dt>
+<dd><p>Returns the canonical combining class given by name, e.g. <code>&quot;BL&quot;</code>, or by
+long name, e.g. <code>&quot;Below Left&quot;</code>.
+This lookup ignores spaces, underscores, or hyphens as word separators and is
+case-insignificant.
+</p></dd></dl>
+
+<p>The following function looks up the canonical combining class of a character.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_combining_class</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX388"></a>
+</dt>
+<dd><p>Returns the canonical combining class of a Unicode character.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Bidi-class"></a>
+<a name="SEC25"></a>
+<h2 class="section"> <a href="libunistring.html#TOC25">8.3 Bidi class</a> </h2>
+
+<p>Every Unicode character or code point has a <em>bidi class</em> assigned to it.
+Before Unicode 4.0, this concept was known as <em>bidirectional category</em>.
+</p>
+<p>The bidi class guides the bidirectional algorithm
+(<a href="http://www.unicode.org/reports/tr9/">http://www.unicode.org/reports/tr9/</a>).  The possible values are
+the following.
+</p>
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_L</b>
+<a name="IDX389"></a>
+</dt>
+<dd><p>The bidi class for `Left-to-Right`&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_LRE</b>
+<a name="IDX390"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Left-to-Right Embedding&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_LRO</b>
+<a name="IDX391"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Left-to-Right Override&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_R</b>
+<a name="IDX392"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Right-to-Left&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_AL</b>
+<a name="IDX393"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Right-to-Left Arabic&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_RLE</b>
+<a name="IDX394"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Right-to-Left Embedding&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_RLO</b>
+<a name="IDX395"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Right-to-Left Override&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_PDF</b>
+<a name="IDX396"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Pop Directional Format&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_EN</b>
+<a name="IDX397"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;European Number&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_ES</b>
+<a name="IDX398"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;European Number Separator&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_ET</b>
+<a name="IDX399"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;European Number Terminator&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_AN</b>
+<a name="IDX400"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Arabic Number&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_CS</b>
+<a name="IDX401"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Common Number Separator&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_NSM</b>
+<a name="IDX402"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Non-Spacing Mark&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_BN</b>
+<a name="IDX403"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Boundary Neutral&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_B</b>
+<a name="IDX404"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Paragraph Separator&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_S</b>
+<a name="IDX405"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Segment Separator&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_WS</b>
+<a name="IDX406"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Whitespace&rdquo; characters.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_BIDI_ON</b>
+<a name="IDX407"></a>
+</dt>
+<dd><p>The bidi class for &ldquo;Other Neutral&rdquo; characters.
+</p></dd></dl>
+
+<p>The following functions implement the association between a bidirectional
+category and its name.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>uc_bidi_class_name</b><i> (int <var>bidi_class</var>)</i>
+<a name="IDX408"></a>
+</dt>
+<dt><u>Function:</u> const char * <b>uc_bidi_category_name</b><i> (int <var>category</var>)</i>
+<a name="IDX409"></a>
+</dt>
+<dd><p>Returns the name of a bidi class, more precisely, the abbreviated name.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> const char * <b>uc_bidi_class_long_name</b><i> (int <var>bidi_class</var>)</i>
+<a name="IDX410"></a>
+</dt>
+<dd><p>Returns the long name of a bidi class.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>uc_bidi_class_byname</b><i> (const char *<var>bidi_class_name</var>)</i>
+<a name="IDX411"></a>
+</dt>
+<dt><u>Function:</u> int <b>uc_bidi_category_byname</b><i> (const char *<var>category_name</var>)</i>
+<a name="IDX412"></a>
+</dt>
+<dd><p>Returns the bidi class given by name, e.g. <code>&quot;LRE&quot;</code>, or by long name,
+e.g. <code>&quot;Left-to-Right Embedding&quot;</code>.
+This lookup ignores spaces, underscores, or hyphens as word separators and is
+case-insignificant.
+</p></dd></dl>
+
+<p>The following functions view bidirectional categories as sets of Unicode
+characters.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_bidi_class</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX413"></a>
+</dt>
+<dt><u>Function:</u> int <b>uc_bidi_category</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX414"></a>
+</dt>
+<dd><p>Returns the bidi class of a Unicode character.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_bidi_class</b><i> (ucs4_t <var>uc</var>, int <var>bidi_class</var>)</i>
+<a name="IDX415"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_bidi_category</b><i> (ucs4_t <var>uc</var>, int <var>category</var>)</i>
+<a name="IDX416"></a>
+</dt>
+<dd><p>Tests whether a Unicode character belongs to a given bidi class.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Decimal-digit-value"></a>
+<a name="SEC26"></a>
+<h2 class="section"> <a href="libunistring.html#TOC26">8.4 Decimal digit value</a> </h2>
+
+<p>Decimal digits (like the digits from &lsquo;<samp>0</samp>&rsquo; to &lsquo;<samp>9</samp>&rsquo;) exist in many
+scripts.  The following function converts a decimal digit character to its
+numerical value.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_decimal_value</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX417"></a>
+</dt>
+<dd><p>Returns the decimal digit value of a Unicode character.
+The return value is an integer in the range 0..9, or -1 for characters that
+do not represent a decimal digit.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Digit-value"></a>
+<a name="SEC27"></a>
+<h2 class="section"> <a href="libunistring.html#TOC27">8.5 Digit value</a> </h2>
+
+<p>Digit characters are like decimal digit characters, possibly in special forms,
+like as superscript, subscript, or circled.  The following function converts a
+digit character to its numerical value.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_digit_value</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX418"></a>
+</dt>
+<dd><p>Returns the digit value of a Unicode character.
+The return value is an integer in the range 0..9, or -1 for characters that
+do not represent a digit.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Numeric-value"></a>
+<a name="SEC28"></a>
+<h2 class="section"> <a href="libunistring.html#TOC28">8.6 Numeric value</a> </h2>
+
+<p>There are also characters that represent numbers without a digit system, like
+the Roman numerals, and fractional numbers, like 1/4 or 3/4.
+</p>
+<p>The following type represents the numeric value of a Unicode character.
+</p><dl>
+<dt><u>Type:</u> <b>uc_fraction_t</b>
+<a name="IDX419"></a>
+</dt>
+<dd><p>This is a structure type with the following fields:
+</p><table><tr><td>&nbsp;</td><td><pre class="smallexample">int numerator;
+int denominator;
+</pre></td></tr></table>
+<p>An integer <var>n</var> is represented by <code>numerator = <var>n</var></code>,
+<code>denominator = 1</code>.
+</p></dd></dl>
+
+<p>The following function converts a number character to its numerical value.
+</p>
+<dl>
+<dt><u>Function:</u> uc_fraction_t <b>uc_numeric_value</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX420"></a>
+</dt>
+<dd><p>Returns the numeric value of a Unicode character.
+The return value is a fraction, or the pseudo-fraction <code>{ 0, 0 }</code> for
+characters that do not represent a number.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Mirrored-character"></a>
+<a name="SEC29"></a>
+<h2 class="section"> <a href="libunistring.html#TOC29">8.7 Mirrored character</a> </h2>
+
+<p>Character mirroring is used to associate the closing parenthesis character
+to the opening parenthesis character, the closing brace character with the
+opening brace character, and so on.
+</p>
+<p>The following function looks up the mirrored character of a Unicode character.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_mirror_char</b><i> (ucs4_t <var>uc</var>, ucs4_t *<var>puc</var>)</i>
+<a name="IDX421"></a>
+</dt>
+<dd><p>Stores the mirrored character of a Unicode character <var>uc</var> in
+<code>*<var>puc</var></code> and returns <code>true</code>, if it exists.  Otherwise it
+stores <var>uc</var> unmodified in <code>*<var>puc</var></code> and returns <code>false</code>.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Arabic-shaping"></a>
+<a name="SEC30"></a>
+<h2 class="section"> <a href="libunistring.html#TOC30">8.8 Arabic shaping</a> </h2>
+
+<p>When Arabic characters are rendered, after bidi reordering has taken
+place, the shape of the glyphs are modified so that many adjacent glyphs
+are joined.  Two character properties describe how this &ldquo;Arabic shaping&rdquo;
+takes place: the joining type and the joining group.
+</p>
+
+<hr size="6">
+<a name="Joining-type"></a>
+<a name="SEC31"></a>
+<h3 class="subsection"> <a href="libunistring.html#TOC31">8.8.1 Joining type of Arabic characters</a> </h3>
+
+<p>The joining type of a character describes on which of the left and right
+neighbour characters the character's shape depends, and which of the two
+neighbour characters are rendered depending on this character.
+</p>
+<p>The joining type has the following possible values:
+</p>
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_TYPE_U</b>
+<a name="IDX422"></a>
+</dt>
+<dd><p>&ldquo;Non joining&rdquo;: Characters of this joining type prohibit joining.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_TYPE_T</b>
+<a name="IDX423"></a>
+</dt>
+<dd><p>&ldquo;Transparent&rdquo;: Characters of this joining type are skipped when
+considering joining.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_TYPE_C</b>
+<a name="IDX424"></a>
+</dt>
+<dd><p>&ldquo;Join causing&rdquo;: Characters of this joining type cause their neighbour
+characters to change their shapes but don't change their own shape.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_TYPE_L</b>
+<a name="IDX425"></a>
+</dt>
+<dd><p>&ldquo;Left joining&rdquo;: Characters of this joining type have two shapes,
+isolated and initial.  Such characters currently don't exist.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_TYPE_R</b>
+<a name="IDX426"></a>
+</dt>
+<dd><p>&ldquo;Right joining&rdquo;: Characters of this joining type have two shapes,
+isolated and final.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_TYPE_D</b>
+<a name="IDX427"></a>
+</dt>
+<dd><p>&ldquo;Dual joining&rdquo;: Characters of this joining type have four shapes,
+initial, medial, final, and isolated.
+</p></dd></dl>
+
+<p>The following functions implement the association between a joining type
+and its name.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>uc_joining_type_name</b><i> (int <var>joining_type</var>)</i>
+<a name="IDX428"></a>
+</dt>
+<dd><p>Returns the name of a joining type.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> const char * <b>uc_joining_type_long_name</b><i> (int <var>joining_type</var>)</i>
+<a name="IDX429"></a>
+</dt>
+<dd><p>Returns the long name of a joining type.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>uc_joining_type_byname</b><i> (const char *<var>joining_type_name</var>)</i>
+<a name="IDX430"></a>
+</dt>
+<dd><p>Returns the joining type given by name, e.g. <code>&quot;D&quot;</code>, or by long name,
+e.g. <code>&quot;Dual Joining</code>.
+This lookup ignores spaces, underscores, or hyphens as word separators and is
+case-insignificant.
+</p></dd></dl>
+
+<p>The following function gives the joining type of every Unicode character.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_joining_type</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX431"></a>
+</dt>
+<dd><p>Returns the joining type of a Unicode character.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Joining-group"></a>
+<a name="SEC32"></a>
+<h3 class="subsection"> <a href="libunistring.html#TOC32">8.8.2 Joining group of Arabic characters</a> </h3>
+
+<p>The joining group of a character describes how the character's shape
+is modified in the four contexts of dual-joining characters or in the
+two contexts of right-joining characters.
+</p>
+<p>The joining group has the following possible values:
+</p>
+<dl>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_NONE</b>
+<a name="IDX432"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_AIN</b>
+<a name="IDX433"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_ALAPH</b>
+<a name="IDX434"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_ALEF</b>
+<a name="IDX435"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_BEH</b>
+<a name="IDX436"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_BETH</b>
+<a name="IDX437"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_BURUSHASKI_YEH_BARREE</b>
+<a name="IDX438"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_DAL</b>
+<a name="IDX439"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_DALATH_RISH</b>
+<a name="IDX440"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_E</b>
+<a name="IDX441"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_FARSI_YEH</b>
+<a name="IDX442"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_FE</b>
+<a name="IDX443"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_FEH</b>
+<a name="IDX444"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_FINAL_SEMKATH</b>
+<a name="IDX445"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_GAF</b>
+<a name="IDX446"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_GAMAL</b>
+<a name="IDX447"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_HAH</b>
+<a name="IDX448"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_HE</b>
+<a name="IDX449"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_HEH</b>
+<a name="IDX450"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_HEH_GOAL</b>
+<a name="IDX451"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_HETH</b>
+<a name="IDX452"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_KAF</b>
+<a name="IDX453"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_KAPH</b>
+<a name="IDX454"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_KHAPH</b>
+<a name="IDX455"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_KNOTTED_HEH</b>
+<a name="IDX456"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_LAM</b>
+<a name="IDX457"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_LAMADH</b>
+<a name="IDX458"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_MEEM</b>
+<a name="IDX459"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_MIM</b>
+<a name="IDX460"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_NOON</b>
+<a name="IDX461"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_NUN</b>
+<a name="IDX462"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_NYA</b>
+<a name="IDX463"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_PE</b>
+<a name="IDX464"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_QAF</b>
+<a name="IDX465"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_QAPH</b>
+<a name="IDX466"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_REH</b>
+<a name="IDX467"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_REVERSED_PE</b>
+<a name="IDX468"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SAD</b>
+<a name="IDX469"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SADHE</b>
+<a name="IDX470"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SEEN</b>
+<a name="IDX471"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SEMKATH</b>
+<a name="IDX472"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SHIN</b>
+<a name="IDX473"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SWASH_KAF</b>
+<a name="IDX474"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_SYRIAC_WAW</b>
+<a name="IDX475"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_TAH</b>
+<a name="IDX476"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_TAW</b>
+<a name="IDX477"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_TEH_MARBUTA</b>
+<a name="IDX478"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_TEH_MARBUTA_GOAL</b>
+<a name="IDX479"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_TETH</b>
+<a name="IDX480"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_WAW</b>
+<a name="IDX481"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_YEH</b>
+<a name="IDX482"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_YEH_BARREE</b>
+<a name="IDX483"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_YEH_WITH_TAIL</b>
+<a name="IDX484"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_YUDH</b>
+<a name="IDX485"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_YUDH_HE</b>
+<a name="IDX486"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_ZAIN</b>
+<a name="IDX487"></a>
+</dt>
+<dt><u>Constant:</u> int <b>UC_JOINING_GROUP_ZHAIN</b>
+<a name="IDX488"></a>
+</dt>
+</dl>
+
+<p>The following functions implement the association between a joining group
+and its name.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>uc_joining_group_name</b><i> (int <var>joining_group</var>)</i>
+<a name="IDX489"></a>
+</dt>
+<dd><p>Returns the name of a joining group.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> int <b>uc_joining_group_byname</b><i> (const char *<var>joining_group_name</var>)</i>
+<a name="IDX490"></a>
+</dt>
+<dd><p>Returns the joining group given by name, e.g. <code>&quot;Teh_Marbuta&quot;</code>.
+This lookup ignores spaces, underscores, or hyphens as word separators and is
+case-insignificant.
+</p></dd></dl>
+
+<p>The following function gives the joining group of every Unicode character.
+</p>
+<dl>
+<dt><u>Function:</u> int <b>uc_joining_group</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX491"></a>
+</dt>
+<dd><p>Returns the joining group of a Unicode character.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Properties"></a>
+<a name="SEC33"></a>
+<h2 class="section"> <a href="libunistring.html#TOC33">8.9 Properties</a> </h2>
+
+<p>This section defines boolean properties of Unicode characters.  This
+means, a character either has the given property or does not have it.
+In other words, the property can be viewed as a subset of the set of
+Unicode characters.
+</p>
+<p>The GNU libunistring library provides two kinds of API for working with
+properties.  The object oriented API uses a type <code>uc_property_t</code>
+to designate a property.  In the function-based API, which is a bit more
+low level, a property is merely a function.
+</p>
+
+<hr size="6">
+<a name="Properties-as-objects"></a>
+<a name="SEC34"></a>
+<h3 class="subsection"> <a href="libunistring.html#TOC34">8.9.1 Properties as objects &ndash; the object oriented API</a> </h3>
+
+<p>The following type designates a property on Unicode characters.
+</p>
+<dl>
+<dt><u>Type:</u> <b>uc_property_t</b>
+<a name="IDX492"></a>
+</dt>
+<dd><p>This data type denotes a boolean property on Unicode characters. It is an
+immediate type that can be copied by simple assignment, without involving
+memory allocation.  It is not an array type.
+</p></dd></dl>
+
+<p>Many Unicode properties are predefined.
+</p>
+<p>The following are general properties.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_WHITE_SPACE</b>
+<a name="IDX493"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_ALPHABETIC</b>
+<a name="IDX494"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_ALPHABETIC</b>
+<a name="IDX495"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_NOT_A_CHARACTER</b>
+<a name="IDX496"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_DEFAULT_IGNORABLE_CODE_POINT</b>
+<a name="IDX497"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_DEFAULT_IGNORABLE_CODE_POINT</b>
+<a name="IDX498"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_DEPRECATED</b>
+<a name="IDX499"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_LOGICAL_ORDER_EXCEPTION</b>
+<a name="IDX500"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_VARIATION_SELECTOR</b>
+<a name="IDX501"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_PRIVATE_USE</b>
+<a name="IDX502"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_UNASSIGNED_CODE_VALUE</b>
+<a name="IDX503"></a>
+</dt>
+</dl>
+
+<p>The following properties are related to case folding.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_UPPERCASE</b>
+<a name="IDX504"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_UPPERCASE</b>
+<a name="IDX505"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_LOWERCASE</b>
+<a name="IDX506"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_LOWERCASE</b>
+<a name="IDX507"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_TITLECASE</b>
+<a name="IDX508"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CASED</b>
+<a name="IDX509"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CASE_IGNORABLE</b>
+<a name="IDX510"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CHANGES_WHEN_LOWERCASED</b>
+<a name="IDX511"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CHANGES_WHEN_UPPERCASED</b>
+<a name="IDX512"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CHANGES_WHEN_TITLECASED</b>
+<a name="IDX513"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CHANGES_WHEN_CASEFOLDED</b>
+<a name="IDX514"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CHANGES_WHEN_CASEMAPPED</b>
+<a name="IDX515"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_SOFT_DOTTED</b>
+<a name="IDX516"></a>
+</dt>
+</dl>
+
+<p>The following properties are related to identifiers.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_ID_START</b>
+<a name="IDX517"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_ID_START</b>
+<a name="IDX518"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_ID_CONTINUE</b>
+<a name="IDX519"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_ID_CONTINUE</b>
+<a name="IDX520"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_XID_START</b>
+<a name="IDX521"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_XID_CONTINUE</b>
+<a name="IDX522"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_PATTERN_WHITE_SPACE</b>
+<a name="IDX523"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_PATTERN_SYNTAX</b>
+<a name="IDX524"></a>
+</dt>
+</dl>
+
+<p>The following properties have an influence on shaping and rendering.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_JOIN_CONTROL</b>
+<a name="IDX525"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_GRAPHEME_BASE</b>
+<a name="IDX526"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_GRAPHEME_EXTEND</b>
+<a name="IDX527"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_GRAPHEME_EXTEND</b>
+<a name="IDX528"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_GRAPHEME_LINK</b>
+<a name="IDX529"></a>
+</dt>
+</dl>
+
+<p>The following properties relate to bidirectional reordering.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_CONTROL</b>
+<a name="IDX530"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_LEFT_TO_RIGHT</b>
+<a name="IDX531"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_HEBREW_RIGHT_TO_LEFT</b>
+<a name="IDX532"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_ARABIC_RIGHT_TO_LEFT</b>
+<a name="IDX533"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_EUROPEAN_DIGIT</b>
+<a name="IDX534"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_EUR_NUM_SEPARATOR</b>
+<a name="IDX535"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_EUR_NUM_TERMINATOR</b>
+<a name="IDX536"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_ARABIC_DIGIT</b>
+<a name="IDX537"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_COMMON_SEPARATOR</b>
+<a name="IDX538"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_BLOCK_SEPARATOR</b>
+<a name="IDX539"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_SEGMENT_SEPARATOR</b>
+<a name="IDX540"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_WHITESPACE</b>
+<a name="IDX541"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_NON_SPACING_MARK</b>
+<a name="IDX542"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_BOUNDARY_NEUTRAL</b>
+<a name="IDX543"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_PDF</b>
+<a name="IDX544"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_EMBEDDING_OR_OVERRIDE</b>
+<a name="IDX545"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_BIDI_OTHER_NEUTRAL</b>
+<a name="IDX546"></a>
+</dt>
+</dl>
+
+<p>The following properties deal with number representations.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_HEX_DIGIT</b>
+<a name="IDX547"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_ASCII_HEX_DIGIT</b>
+<a name="IDX548"></a>
+</dt>
+</dl>
+
+<p>The following properties deal with CJK.
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_IDEOGRAPHIC</b>
+<a name="IDX549"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_UNIFIED_IDEOGRAPH</b>
+<a name="IDX550"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_RADICAL</b>
+<a name="IDX551"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_IDS_BINARY_OPERATOR</b>
+<a name="IDX552"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_IDS_TRINARY_OPERATOR</b>
+<a name="IDX553"></a>
+</dt>
+</dl>
+
+<p>Other miscellaneous properties are:
+</p>
+<dl>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_ZERO_WIDTH</b>
+<a name="IDX554"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_SPACE</b>
+<a name="IDX555"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_NON_BREAK</b>
+<a name="IDX556"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_ISO_CONTROL</b>
+<a name="IDX557"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_FORMAT_CONTROL</b>
+<a name="IDX558"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_DASH</b>
+<a name="IDX559"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_HYPHEN</b>
+<a name="IDX560"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_PUNCTUATION</b>
+<a name="IDX561"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_LINE_SEPARATOR</b>
+<a name="IDX562"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_PARAGRAPH_SEPARATOR</b>
+<a name="IDX563"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_QUOTATION_MARK</b>
+<a name="IDX564"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_SENTENCE_TERMINAL</b>
+<a name="IDX565"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_TERMINAL_PUNCTUATION</b>
+<a name="IDX566"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_CURRENCY_SYMBOL</b>
+<a name="IDX567"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_MATH</b>
+<a name="IDX568"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_OTHER_MATH</b>
+<a name="IDX569"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_PAIRED_PUNCTUATION</b>
+<a name="IDX570"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_LEFT_OF_PAIR</b>
+<a name="IDX571"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_COMBINING</b>
+<a name="IDX572"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_COMPOSITE</b>
+<a name="IDX573"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_DECIMAL_DIGIT</b>
+<a name="IDX574"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_NUMERIC</b>
+<a name="IDX575"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_DIACRITIC</b>
+<a name="IDX576"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_EXTENDER</b>
+<a name="IDX577"></a>
+</dt>
+<dt><u>Constant:</u> uc_property_t <b>UC_PROPERTY_IGNORABLE_CONTROL</b>
+<a name="IDX578"></a>
+</dt>
+</dl>
+
+<p>The following function looks up a property by its name.
+</p>
+<dl>
+<dt><u>Function:</u> uc_property_t <b>uc_property_byname</b><i> (const char *<var>property_name</var>)</i>
+<a name="IDX579"></a>
+</dt>
+<dd><p>Returns the property given by name, e.g. <code>&quot;White space&quot;</code>.  If a property
+with the given name exists, the result will satisfy the
+<code>uc_property_is_valid</code> predicate.  Otherwise the result will not satisfy
+this predicate and must not be passed to functions that expect an
+<code>uc_property_t</code> argument.
+</p>
+<p>This lookup ignores spaces, underscores, or hyphens as word separators, is
+case-insignificant, and supports the aliases listed in Unicode's
+&lsquo;<tt>PropertyAliases.txt</tt>&rsquo; file.
+</p>
+<p>This function references a big table of all predefined properties.  Its use
+can significantly increase the size of your application.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_property_is_valid</b><i> (uc_property_t property)</i>
+<a name="IDX580"></a>
+</dt>
+<dd><p>Returns <code>true</code> when the given property is valid, or <code>false</code>
+otherwise.
+</p></dd></dl>
+
+<p>The following function views a property as a set of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property</b><i> (ucs4_t <var>uc</var>, uc_property_t <var>property</var>)</i>
+<a name="IDX581"></a>
+</dt>
+<dd><p>Tests whether the Unicode character <var>uc</var> has the given property.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Properties-as-functions"></a>
+<a name="SEC35"></a>
+<h3 class="subsection"> <a href="libunistring.html#TOC35">8.9.2 Properties as functions &ndash; the functional API</a> </h3>
+
+<p>The following are general properties.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_white_space</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX582"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_alphabetic</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX583"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_alphabetic</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX584"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_not_a_character</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX585"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_default_ignorable_code_point</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX586"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_default_ignorable_code_point</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX587"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_deprecated</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX588"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_logical_order_exception</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX589"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_variation_selector</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX590"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_private_use</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX591"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_unassigned_code_value</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX592"></a>
+</dt>
+</dl>
+
+<p>The following properties are related to case folding.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_uppercase</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX593"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_uppercase</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX594"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_lowercase</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX595"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_lowercase</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX596"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_titlecase</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX597"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_cased</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX598"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_case_ignorable</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX599"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_changes_when_lowercased</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX600"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_changes_when_uppercased</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX601"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_changes_when_titlecased</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX602"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_changes_when_casefolded</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX603"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_changes_when_casemapped</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX604"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_soft_dotted</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX605"></a>
+</dt>
+</dl>
+
+<p>The following properties are related to identifiers.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_id_start</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX606"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_id_start</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX607"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_id_continue</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX608"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_id_continue</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX609"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_xid_start</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX610"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_xid_continue</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX611"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_pattern_white_space</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX612"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_pattern_syntax</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX613"></a>
+</dt>
+</dl>
+
+<p>The following properties have an influence on shaping and rendering.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_join_control</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX614"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_grapheme_base</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX615"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_grapheme_extend</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX616"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_grapheme_extend</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX617"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_grapheme_link</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX618"></a>
+</dt>
+</dl>
+
+<p>The following properties relate to bidirectional reordering.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_control</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX619"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_left_to_right</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX620"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_hebrew_right_to_left</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX621"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_arabic_right_to_left</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX622"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_european_digit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX623"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_eur_num_separator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX624"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_eur_num_terminator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX625"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_arabic_digit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX626"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_common_separator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX627"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_block_separator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX628"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_segment_separator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX629"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_whitespace</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX630"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_non_spacing_mark</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX631"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_boundary_neutral</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX632"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_pdf</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX633"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_embedding_or_override</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX634"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_bidi_other_neutral</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX635"></a>
+</dt>
+</dl>
+
+<p>The following properties deal with number representations.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_hex_digit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX636"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_ascii_hex_digit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX637"></a>
+</dt>
+</dl>
+
+<p>The following properties deal with CJK.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_ideographic</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX638"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_unified_ideograph</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX639"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_radical</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX640"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_ids_binary_operator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX641"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_ids_trinary_operator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX642"></a>
+</dt>
+</dl>
+
+<p>Other miscellaneous properties are:
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_property_zero_width</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX643"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_space</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX644"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_non_break</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX645"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_iso_control</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX646"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_format_control</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX647"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_dash</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX648"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_hyphen</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX649"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_punctuation</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX650"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_line_separator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX651"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_paragraph_separator</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX652"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_quotation_mark</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX653"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_sentence_terminal</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX654"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_terminal_punctuation</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX655"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_currency_symbol</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX656"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_math</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX657"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_other_math</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX658"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_paired_punctuation</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX659"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_left_of_pair</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX660"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_combining</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX661"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_composite</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX662"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_decimal_digit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX663"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_numeric</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX664"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_diacritic</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX665"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_extender</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX666"></a>
+</dt>
+<dt><u>Function:</u> bool <b>uc_is_property_ignorable_control</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX667"></a>
+</dt>
+</dl>
+
+<hr size="6">
+<a name="Scripts"></a>
+<a name="SEC36"></a>
+<h2 class="section"> <a href="libunistring.html#TOC36">8.10 Scripts</a> </h2>
+
+<p>The Unicode characters are subdivided into scripts.
+</p>
+<p>The following type is used to represent a script:
+</p>
+<dl>
+<dt><u>Type:</u> <b>uc_script_t</b>
+<a name="IDX668"></a>
+</dt>
+<dd><p>This data type is a structure type that refers to statically allocated
+read-only data.  It contains the following fields:
+</p><table><tr><td>&nbsp;</td><td><pre class="smallexample">const char *name;
+</pre></td></tr></table>
+
+<p>The <code>name</code> field contains the name of the script.
+</p></dd></dl>
+
+<a name="IDX669"></a>
+<p>The following functions look up a script.
+</p>
+<dl>
+<dt><u>Function:</u> const uc_script_t * <b>uc_script</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX670"></a>
+</dt>
+<dd><p>Returns the script of a Unicode character.  Returns NULL if <var>uc</var> does not
+belong to any script.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> const uc_script_t * <b>uc_script_byname</b><i> (const char *<var>script_name</var>)</i>
+<a name="IDX671"></a>
+</dt>
+<dd><p>Returns the script given by its name, e.g. <code>&quot;HAN&quot;</code>.  Returns NULL if a
+script with the given name does not exist.
+</p></dd></dl>
+
+<p>The following function views a script as a set of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_script</b><i> (ucs4_t <var>uc</var>, const uc_script_t *<var>script</var>)</i>
+<a name="IDX672"></a>
+</dt>
+<dd><p>Tests whether a Unicode character belongs to a given script.
+</p></dd></dl>
+
+<p>The following gives a global picture of all scripts.
+</p>
+<dl>
+<dt><u>Function:</u> void <b>uc_all_scripts</b><i> (const uc_script_t **<var>scripts</var>, size_t *<var>count</var>)</i>
+<a name="IDX673"></a>
+</dt>
+<dd><p>Get the list of all scripts.  Stores a pointer to an array of all scripts in
+<code>*<var>scripts</var></code> and the length of this array in <code>*<var>count</var></code>.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Blocks"></a>
+<a name="SEC37"></a>
+<h2 class="section"> <a href="libunistring.html#TOC37">8.11 Blocks</a> </h2>
+
+<p>The Unicode characters are subdivided into blocks.  A block is an interval of
+Unicode code points.
+</p>
+<p>The following type is used to represent a block.
+</p>
+<dl>
+<dt><u>Type:</u> <b>uc_block_t</b>
+<a name="IDX674"></a>
+</dt>
+<dd><p>This data type is a structure type that refers to statically allocated data.
+It contains the following fields:
+</p><table><tr><td>&nbsp;</td><td><pre class="smallexample">ucs4_t start;
+ucs4_t end;
+const char *name;
+</pre></td></tr></table>
+
+<p>The <code>start</code> field is the first Unicode code point in the block.
+</p>
+<p>The <code>end</code> field is the last Unicode code point in the block.
+</p>
+<p>The <code>name</code> field is the name of the block.
+</p></dd></dl>
+
+<a name="IDX675"></a>
+<p>The following function looks up a block.
+</p>
+<dl>
+<dt><u>Function:</u> const uc_block_t * <b>uc_block</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX676"></a>
+</dt>
+<dd><p>Returns the block a character belongs to.
+</p></dd></dl>
+
+<p>The following function views a block as a set of Unicode characters.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_block</b><i> (ucs4_t <var>uc</var>, const uc_block_t *<var>block</var>)</i>
+<a name="IDX677"></a>
+</dt>
+<dd><p>Tests whether a Unicode character belongs to a given block.
+</p></dd></dl>
+
+<p>The following gives a global picture of all block.
+</p>
+<dl>
+<dt><u>Function:</u> void <b>uc_all_blocks</b><i> (const uc_block_t **<var>blocks</var>, size_t *<var>count</var>)</i>
+<a name="IDX678"></a>
+</dt>
+<dd><p>Get the list of all blocks.  Stores a pointer to an array of all blocks in
+<code>*<var>blocks</var></code> and the length of this array in <code>*<var>count</var></code>.
+</p></dd></dl>
+
+<hr size="6">
+<a name="ISO-C-and-Java-syntax"></a>
+<a name="SEC38"></a>
+<h2 class="section"> <a href="libunistring.html#TOC38">8.12 ISO C and Java syntax</a> </h2>
+
+<p>The following properties are taken from language standards.  The supported
+language standards are ISO C 99 and Java.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_c_whitespace</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX679"></a>
+</dt>
+<dd><p>Tests whether a Unicode character is considered whitespace in ISO C 99.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_java_whitespace</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX680"></a>
+</dt>
+<dd><p>Tests whether a Unicode character is considered whitespace in Java.
+</p></dd></dl>
+
+<p>The following enumerated values are the possible return values of the functions
+<code>uc_c_ident_category</code> and <code>uc_java_ident_category</code>.
+</p>
+<dl>
+<dt><u>Constant:</u> int <b>UC_IDENTIFIER_START</b>
+<a name="IDX681"></a>
+</dt>
+<dd><p>This return value means that the given character is valid as first or
+subsequent character in an identifier.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_IDENTIFIER_VALID</b>
+<a name="IDX682"></a>
+</dt>
+<dd><p>This return value means that the given character is valid as subsequent
+character only.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_IDENTIFIER_INVALID</b>
+<a name="IDX683"></a>
+</dt>
+<dd><p>This return value means that the given character is not valid in an identifier.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> int <b>UC_IDENTIFIER_IGNORABLE</b>
+<a name="IDX684"></a>
+</dt>
+<dd><p>This return value (only for Java) means that the given character is ignorable.
+</p></dd></dl>
+
+<p>The following function determine whether a given character can be a constituent
+of an identifier in the given programming language.
+</p>
+<a name="IDX685"></a>
+<dl>
+<dt><u>Function:</u> int <b>uc_c_ident_category</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX686"></a>
+</dt>
+<dd><p>Returns the categorization of a Unicode character with respect to the ISO C 99
+identifier syntax.
+</p></dd></dl>
+
+<a name="IDX687"></a>
+<dl>
+<dt><u>Function:</u> int <b>uc_java_ident_category</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX688"></a>
+</dt>
+<dd><p>Returns the categorization of a Unicode character with respect to the Java
+identifier syntax.
+</p></dd></dl>
+
+<hr size="6">
+<a name="Classifications-like-in-ISO-C"></a>
+<a name="SEC39"></a>
+<h2 class="section"> <a href="libunistring.html#TOC39">8.13 Classifications like in ISO C</a> </h2>
+
+<p>The following character classifications mimic those declared in the ISO C
+header files <code>&lt;ctype.h&gt;</code> and <code>&lt;wctype.h&gt;</code>.  These functions are
+deprecated, because this set of functions was designed with ASCII in mind and
+cannot reflect the more diverse reality of the Unicode character set.  But
+they can be a quick-and-dirty porting aid when migrating from <code>wchar_t</code>
+APIs to Unicode strings.
+</p>
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_alnum</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX689"></a>
+</dt>
+<dd><p>Tests for any character for which <code>uc_is_alpha</code> or <code>uc_is_digit</code> is
+true.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_alpha</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX690"></a>
+</dt>
+<dd><p>Tests for any character for which <code>uc_is_upper</code> or <code>uc_is_lower</code> is
+true, or any character that is one of a locale-specific set of characters for
+which none of <code>uc_is_cntrl</code>, <code>uc_is_digit</code>, <code>uc_is_punct</code>, or
+<code>uc_is_space</code> is true.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_cntrl</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX691"></a>
+</dt>
+<dd><p>Tests for any control character.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_digit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX692"></a>
+</dt>
+<dd><p>Tests for any character that corresponds to a decimal-digit character.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_graph</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX693"></a>
+</dt>
+<dd><p>Tests for any character for which <code>uc_is_print</code> is true and
+<code>uc_is_space</code> is false.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_lower</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX694"></a>
+</dt>
+<dd><p>Tests for any character that corresponds to a lowercase letter or is one
+of a locale-specific set of characters for which none of <code>uc_is_cntrl</code>,
+<code>uc_is_digit</code>, <code>uc_is_punct</code>, or <code>uc_is_space</code> is true.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_print</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX695"></a>
+</dt>
+<dd><p>Tests for any printing character.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_punct</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX696"></a>
+</dt>
+<dd><p>Tests for any printing character that is one of a locale-specific set of
+characters for which neither <code>uc_is_space</code> nor <code>uc_is_alnum</code> is true.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_space</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX697"></a>
+</dt>
+<dd><p>Test for any character that corresponds to a locale-specific set of characters
+for which none of <code>uc_is_alnum</code>, <code>uc_is_graph</code>, or <code>uc_is_punct</code>
+is true.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_upper</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX698"></a>
+</dt>
+<dd><p>Tests for any character that corresponds to an uppercase letter or is one
+of a locale-specific set of characters for which none of <code>uc_is_cntrl</code>,
+<code>uc_is_digit</code>, <code>uc_is_punct</code>, or <code>uc_is_space</code> is true.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_xdigit</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX699"></a>
+</dt>
+<dd><p>Tests for any character that corresponds to a hexadecimal-digit character.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> bool <b>uc_is_blank</b><i> (ucs4_t <var>uc</var>)</i>
+<a name="IDX700"></a>
+</dt>
+<dd><p>Tests for any character that corresponds to a standard blank character or
+a locale-specific set of characters for which <code>uc_is_alnum</code> is false.
+</p></dd></dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC20" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_9.html#SEC40" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

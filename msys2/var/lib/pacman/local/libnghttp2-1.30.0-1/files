@@ -1,0 +1,9 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-nghttp2-14.dll
+usr/share/
+usr/share/licenses/
+usr/share/licenses/libnghttp2/
+usr/share/licenses/libnghttp2/COPYING
+

@@ -9,11 +9,19 @@
 ## What's installed ##
 
 	This cut down development environment has been created specifically for Windows users.
-	* devkitARM r47
-	* gcc 5.3.0
-	* Qt 5.6
-	* perl 5.24.0
-	* git 2.15.1.2
+	* msys2
+	* GNU Arm Embedded Toolchain 7-2018-q2
+	After starting for the first time it will automatically download following packages:
+	* gcc
+	* Qt5
+	* readline
+	* git
+	* perl
+	* make
+	* pkg-config
+## Updating packages  ##
+    msys2 comes with a package manager, all installed packages can be updated with "pacman -Syuu"
+
 ## Usage ##
 
 	Extract 'ProxSpace' to a location on drive without spaces.

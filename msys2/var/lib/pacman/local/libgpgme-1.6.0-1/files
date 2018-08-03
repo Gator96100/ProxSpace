@@ -1,0 +1,11 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-gpgme-11.dll
+usr/bin/msys-gpgme-pthread-11.dll
+usr/share/
+usr/share/info/
+usr/share/info/gpgme.info-1.gz
+usr/share/info/gpgme.info-2.gz
+usr/share/info/gpgme.info.gz
+

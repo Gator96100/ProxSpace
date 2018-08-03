@@ -1,0 +1,12 @@
+post_upgrade() {
+  echo "Updating keyring"
+  if usr/bin/pacman-key -l >/dev/null 2>&1; then
+    usr/bin/pacman-key --populate msys2
+  fi
+}
+
+post_install() {
+  if [ -x usr/bin/pacman-key ]; then
+    post_upgrade
+  fi
+}

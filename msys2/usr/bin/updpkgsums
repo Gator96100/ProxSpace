@@ -1,0 +1,106 @@
+#!/usr/bin/bash
+#
+# updpkgsums - update source checksums in-place in PKGBUILDs
+#
+# Copyright (C) 2012-2013 Dave Reisner <dreisner@archlinux.org>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+shopt -s extglob
+
+declare -r myname='updpkgsums'
+declare -r myver='5.0.1'
+
+usage() {
+	printf "%s (pacman) v%s\n" "${myname}" "${myver}"
+	echo
+	printf "%s will perform an in place update of the checksums in the\n" "${myname}"
+	echo "path specified by [build file], defaulting to PKGBUILD in the current"
+	echo "working directory."
+	echo
+	printf "Usage: %s [build file]\n" "${myname}"
+	echo
+	echo "    -h, --help        display this help message and exit"
+	echo "    -V, --version     display version information and exit"
+}
+
+version() {
+	printf "%s %s\n" "$myname" "$myver"
+	echo 'Copyright (C) 2012-2013 Dave Reisner <dreisner@archlinux.org>'
+}
+
+die() {
+	printf "==> ERROR: $1\n" "${@:2}" >&2
+	exit 1
+}
+
+case $1 in
+	-h|--help) usage; exit ;;
+	-V|--version) version; exit ;;
+esac
+
+buildfile=${1:-PKGBUILD}
+if [[ ! -f $buildfile ]]; then
+	die "%s not found or is not a file" "$buildfile"
+fi
+
+# Resolve any symlinks to avoid replacing the symlink with a file. But, we
+# have to do this portably -- readlink's flags are inconsistent across OSes.
+while [[ -L $buildfile ]]; do
+	buildfile=$(readlink "$buildfile")
+	if [[ $buildfile = */* ]]; then
+		cd "${buildfile%/*}"
+		buildfile=${buildfile##*/}
+	fi
+done
+
+# cd into the directory with the build file. This avoids creating random src/
+# directories scattered about the filesystem, and avoids cases where we might
+# not be able to write in the $PWD.
+if [[ $buildfile = */* ]]; then
+	cd "${buildfile%/*}"
+	buildfile=${buildfile##*/}
+fi
+
+# Check $PWD/ for permission to unlink the $buildfile and write a new one
+if [[ ! -w . ]]; then
+	die "No write permission in '%s'" "$PWD"
+fi
+
+# Generate the new sums
+export BUILDDIR=$(mktemp -d  "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
+newbuildfile=$(mktemp "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
+
+trap "rm -rf '$BUILDDIR' '$newbuildfile'" EXIT
+newsums=$(MINGW_PACKAGE_PREFIX=mingw-w64-i686 makepkg -g -p "$buildfile") || die 'Failed to generate new checksums'
+awk -v newsums="$newsums" '
+	/^[[:blank:]]*(md|sha)[[:digit:]]+sums(_[^=]+)?=/,/\)[[:blank:]]*(#.*)?$/ {
+		if (!w) {
+			print newsums
+			w++
+		}
+		next
+	}
+
+	1
+	END { if (!w) print newsums }
+' "$buildfile" > "$newbuildfile" || die 'Failed to write new PKGBUILD'
+
+# Rewrite the original buildfile. Use cat instead of mv/cp to preserve
+# permissions implicitly.
+if ! cat -- "$newbuildfile" >"$buildfile"; then
+	die "Failed to update %s. The file has not been modified." "$buildfile"
+fi
+
+# vim: set noet:

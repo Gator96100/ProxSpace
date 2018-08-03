@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people.
+Send bugs and suggestions to <texi2html-bug@nongnu.org>
+
+-->
+<head>
+<title>GNU libunistring: 5. Conversions between Unicode and encodings &lt;uniconv.h&gt;</title>
+
+<meta name="description" content="GNU libunistring: 5. Conversions between Unicode and encodings &lt;uniconv.h&gt;">
+<meta name="keywords" content="GNU libunistring: 5. Conversions between Unicode and encodings &lt;uniconv.h&gt;">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.78a">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.roman {font-family:serif; font-weight:normal;}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_4.html#SEC11" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_6.html#SEC18" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+
+<hr size="2">
+<a name="uniconv_002eh"></a>
+<a name="SEC17"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC17">5. Conversions between Unicode and encodings <code>&lt;uniconv.h&gt;</code></a> </h1>
+
+<p>This include file declares functions for converting between Unicode strings
+and <code>char *</code> strings in locale encoding or in other specified encodings.
+</p>
+<a name="IDX154"></a>
+<p>The following function returns the locale encoding.
+</p>
+<dl>
+<dt><u>Function:</u> const char * <b>locale_charset</b><i> ()</i>
+<a name="IDX155"></a>
+</dt>
+<dd><p>Determines the current locale's character encoding, and canonicalizes it
+into one of the canonical names listed in &lsquo;<tt>config.charset</tt>&rsquo;.
+If the canonical name cannot be determined, the result is a non-canonical
+name.
+</p>
+<p>The result must not be freed; it is statically allocated.
+</p>
+<p>The result of this function can be used as an argument to the <code>iconv_open</code>
+function in GNU libc, in GNU libiconv, or in the gnulib provided wrapper
+around the native <code>iconv_open</code> function.  It may not work as an argument
+to the native <code>iconv_open</code> function directly.
+</p></dd></dl>
+
+<p>The handling of unconvertible characters during the conversions can be
+parametrized through the following enumeration type:
+</p>
+<dl>
+<dt><u>Type:</u> <b>enum iconv_ilseq_handler</b>
+<a name="IDX156"></a>
+</dt>
+<dd><p>This type specifies how unconvertible characters in the input are handled.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_error</b>
+<a name="IDX157"></a>
+</dt>
+<dd><p>This handler causes the function to return with <code>errno</code> set to
+<code>EILSEQ</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_question_mark</b>
+<a name="IDX158"></a>
+</dt>
+<dd><p>This handler produces one question mark &lsquo;<samp>?</samp>&rsquo; per unconvertible character.
+</p></dd></dl>
+
+<dl>
+<dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_escape_sequence</b>
+<a name="IDX159"></a>
+</dt>
+<dd><p>This handler produces an escape sequence <code>\u<var>xxxx</var></code> or
+<code>\U<var>xxxxxxxx</var></code> for each unconvertible character.
+</p></dd></dl>
+
+<a name="IDX160"></a>
+<p>The following functions convert between strings in a specified encoding and
+Unicode strings.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_conv_from_encoding</b><i> (const char *<var>fromcode</var>, enum iconv_ilseq_handler <var>handler</var>, const char *<var>src</var>, size_t <var>srclen</var>, size_t *<var>offsets</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX161"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_conv_from_encoding</b><i> (const char *<var>fromcode</var>, enum iconv_ilseq_handler <var>handler</var>, const char *<var>src</var>, size_t <var>srclen</var>, size_t *<var>offsets</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX162"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_conv_from_encoding</b><i> (const char *<var>fromcode</var>, enum iconv_ilseq_handler <var>handler</var>, const char *<var>src</var>, size_t <var>srclen</var>, size_t *<var>offsets</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX163"></a>
+</dt>
+<dd><p>Converts an entire string, possibly including NUL bytes, from one encoding
+to UTF-8 encoding.
+</p>
+<p>Converts a memory region given in encoding <var>fromcode</var>.  <var>fromcode</var> is
+as for the <code>iconv_open</code> function.
+</p>
+<p>The input is in the memory region between <var>src</var> (inclusive) and
+<code><var>src</var> + <var>srclen</var></code> (exclusive).
+</p>
+<p>If <var>offsets</var> is not NULL, it should point to an array of <var>srclen</var>
+integers; this array is filled with offsets into the result, i.e. the
+character starting at <code><var>src</var>[i]</code> corresponds to the character starting
+at <code><var>result</var>[<var>offsets</var>[i]]</code>, and other offsets are set to
+<code>(size_t)(-1)</code>.
+</p>
+<p><code><var>resultbuf</var></code> and <code>*<var>lengthp</var></code> should be a scratch
+buffer and its size, or <code><var>resultbuf</var></code> can be NULL.
+</p>
+<p>May erase the contents of the memory at <code><var>resultbuf</var></code>.
+</p>
+<p>If successful: The resulting Unicode string (non-NULL) is returned and
+its length stored in <code>*<var>lengthp</var></code>.  The resulting string is
+<code><var>resultbuf</var></code> if no dynamic memory allocation was necessary,
+or a freshly allocated memory block otherwise.
+</p>
+<p>In case of error: NULL is returned and <code>errno</code> is set.
+Particular <code>errno</code> values: <code>EINVAL</code>, <code>EILSEQ</code>, <code>ENOMEM</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>u8_conv_to_encoding</b><i> (const char *<var>tocode</var>, enum iconv_ilseq_handler <var>handler</var>, const uint8_t *<var>src</var>, size_t <var>srclen</var>, size_t *<var>offsets</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX164"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u16_conv_to_encoding</b><i> (const char *<var>tocode</var>, enum iconv_ilseq_handler <var>handler</var>, const uint16_t *<var>src</var>, size_t <var>srclen</var>, size_t *<var>offsets</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX165"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u32_conv_to_encoding</b><i> (const char *<var>tocode</var>, enum iconv_ilseq_handler <var>handler</var>, const uint32_t *<var>src</var>, size_t <var>srclen</var>, size_t *<var>offsets</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
+<a name="IDX166"></a>
+</dt>
+<dd><p>Converts an entire Unicode string, possibly including NUL units, from UTF-8
+encoding to a given encoding.
+</p>
+<p>Converts a memory region to encoding <var>tocode</var>.  <var>tocode</var> is as for
+the <code>iconv_open</code> function.
+</p>
+<p>The input is in the memory region between <var>src</var> (inclusive) and
+<code><var>src</var> + <var>srclen</var></code> (exclusive).
+</p>
+<p>If <var>offsets</var> is not NULL, it should point to an array of <var>srclen</var>
+integers; this array is filled with offsets into the result, i.e. the
+character starting at <code><var>src</var>[i]</code> corresponds to the character starting
+at <code><var>result</var>[<var>offsets</var>[i]]</code>, and other offsets are set to
+<code>(size_t)(-1)</code>.
+</p>
+<p><code><var>resultbuf</var></code> and <code>*<var>lengthp</var></code> should be a scratch
+buffer and its size, or <code><var>resultbuf</var></code> can be NULL.
+</p>
+<p>May erase the contents of the memory at <code><var>resultbuf</var></code>.
+</p>
+<p>If successful: The resulting Unicode string (non-NULL) is returned and
+its length stored in <code>*<var>lengthp</var></code>.  The resulting string is
+<code><var>resultbuf</var></code> if no dynamic memory allocation was necessary,
+or a freshly allocated memory block otherwise.
+</p>
+<p>In case of error: NULL is returned and <code>errno</code> is set.
+Particular <code>errno</code> values: <code>EINVAL</code>, <code>EILSEQ</code>, <code>ENOMEM</code>.
+</p></dd></dl>
+
+<p>The following functions convert between NUL terminated strings in a specified
+encoding and NUL terminated Unicode strings.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strconv_from_encoding</b><i> (const char *<var>string</var>, const char *<var>fromcode</var>, enum iconv_ilseq_handler <var>handler</var>)</i>
+<a name="IDX167"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strconv_from_encoding</b><i> (const char *<var>string</var>, const char *<var>fromcode</var>, enum iconv_ilseq_handler <var>handler</var>)</i>
+<a name="IDX168"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strconv_from_encoding</b><i> (const char *<var>string</var>, const char *<var>fromcode</var>, enum iconv_ilseq_handler <var>handler</var>)</i>
+<a name="IDX169"></a>
+</dt>
+<dd><p>Converts a NUL terminated string from a given encoding.
+</p>
+<p>The result is <code>malloc</code> allocated, or NULL (with <var>errno</var> set) in case of error.
+</p>
+<p>Particular <code>errno</code> values: <code>EILSEQ</code>, <code>ENOMEM</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>u8_strconv_to_encoding</b><i> (const uint8_t *<var>string</var>, const char *<var>tocode</var>, enum iconv_ilseq_handler <var>handler</var>)</i>
+<a name="IDX170"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u16_strconv_to_encoding</b><i> (const uint16_t *<var>string</var>, const char *<var>tocode</var>, enum iconv_ilseq_handler <var>handler</var>)</i>
+<a name="IDX171"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u32_strconv_to_encoding</b><i> (const uint32_t *<var>string</var>, const char *<var>tocode</var>, enum iconv_ilseq_handler <var>handler</var>)</i>
+<a name="IDX172"></a>
+</dt>
+<dd><p>Converts a NUL terminated string to a given encoding.
+</p>
+<p>The result is <code>malloc</code> allocated, or NULL (with <code>errno</code> set) in case of error.
+</p>
+<p>Particular <code>errno</code> values: <code>EILSEQ</code>, <code>ENOMEM</code>.
+</p></dd></dl>
+
+<p>The following functions are shorthands that convert between NUL terminated
+strings in locale encoding and NUL terminated Unicode strings.
+</p>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_strconv_from_locale</b><i> (const char *<var>string</var>)</i>
+<a name="IDX173"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_strconv_from_locale</b><i> (const char *<var>string</var>)</i>
+<a name="IDX174"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_strconv_from_locale</b><i> (const char *<var>string</var>)</i>
+<a name="IDX175"></a>
+</dt>
+<dd><p>Converts a NUL terminated string from the locale encoding.
+</p>
+<p>The result is <code>malloc</code> allocated, or NULL (with <code>errno</code> set) in case of error.
+</p>
+<p>Particular <code>errno</code> values: <code>ENOMEM</code>.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>u8_strconv_to_locale</b><i> (const uint8_t *<var>string</var>)</i>
+<a name="IDX176"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u16_strconv_to_locale</b><i> (const uint16_t *<var>string</var>)</i>
+<a name="IDX177"></a>
+</dt>
+<dt><u>Function:</u> char * <b>u32_strconv_to_locale</b><i> (const uint32_t *<var>string</var>)</i>
+<a name="IDX178"></a>
+</dt>
+<dd><p>Converts a NUL terminated string to the locale encoding.
+</p>
+<p>The result is <code>malloc</code> allocated, or NULL (with <code>errno</code> set) in case of error.
+</p>
+<p>Particular <code>errno</code> values: <code>ENOMEM</code>.
+</p></dd></dl>
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="libunistring_4.html#SEC11" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_6.html#SEC18" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

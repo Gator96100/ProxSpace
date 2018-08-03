@@ -1,0 +1,13 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/pax.exe
+usr/bin/paxcpio.exe
+usr/bin/paxtar.exe
+usr/share/
+usr/share/man/
+usr/share/man/man1/
+usr/share/man/man1/pax.1.gz
+usr/share/man/man1/paxcpio.1.gz
+usr/share/man/man1/paxtar.1.gz
+

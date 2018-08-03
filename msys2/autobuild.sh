@@ -48,7 +48,7 @@ for i in $( ls ); do
 	  mkdir -p "$buildDir/$i/firmware_win/JTAG Only"
 	  mkdir -p "$buildDir/$i/Windows Driver"
 	  #you have to thank QT5 for all that dlls
-	  cp $mingwDir/bin/{libbz2-1.dll,libfreetype-6.dll,libgcc_s_dw2-1.dll,libglib-2.0-0.dll,libgraphite2.dll,libharfbuzz-0.dll,libiconv-2.dll,libicudt61.dll,libicuin61.dll,libicuuc61.dll,libintl-8.dll,libpcre-1.dll,libpcre2-16-0.dll,libpng16-16.dll,libreadline7.dll,libstdc++-6.dll,libtermcap-0.dll,libwinpthread-1.dll,Qt5Core.dll,Qt5Gui.dll,Qt5Widgets.dll,zlib1.dll} $buildDir/$i/$winfolder
+	  cp $mingwDir/bin/{libbz2-1.dll,libfreetype-6.dll,libgcc_s_dw2-1.dll,libglib-2.0-0.dll,libgraphite2.dll,libharfbuzz-0.dll,libiconv-2.dll,libicudt61.dll,libicuin61.dll,libicuuc61.dll,libintl-8.dll,libpcre-1.dll,libpcre2-16-0.dll,libpng16-16.dll,libreadline7.dll,libstdc++-6.dll,libtermcap-0.dll,libwinpthread-1.dll,Qt5Core.dll,Qt5Gui.dll,Qt5Widgets.dll,zlib1.dll} $buildDir/$i/win$arch
 	  cp -r /autobuild/* $buildDir/$i/win$arch
 	  cp -r $pm3Dir/$i/client/{proxmark3.exe,flasher.exe,*.dic,lualibs,scripts,hardnested} $buildDir/$i/win$arch
 	  cp $pm3Dir/$i/armsrc/obj/{fullimage.elf,fullimage.s19} $buildDir/$i/firmware_win

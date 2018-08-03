@@ -37,7 +37,7 @@ for i in $( ls ); do
   git pull
   hash=$(git rev-parse HEAD)
   date=$(date +%Y%m%d)
-  if ! ls $copyDir/$i-$arch/$i-$arch-$date-$hash.zip 1> /dev/null 2>&1; then
+  if ! ls $copyDir/$i-$arch/*-$hash.zip 1> /dev/null 2>&1; then
     make clean
 	make all
 	if [ $? -eq 0 ]; then

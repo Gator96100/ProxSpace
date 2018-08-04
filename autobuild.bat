@@ -3,7 +3,6 @@ REM *******************************************
 REM CHANGE THIS PATH TO MATCH YOUR INSTALLATION
 REM *******************************************
 set MYPATH=%~dp0
-set autobuild=true
 
 echo # For a description of the file format, see the Users Guide >msys2/etc/fstab 
 echo # http://cygwin.com/cygwin-ug-net/using.html#mount-table >>msys2/etc/fstab 

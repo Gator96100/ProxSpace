@@ -5,11 +5,11 @@ maybe_proxspace ()
     wget https://github.com/Gator96100/ProxSpace-Repo/raw/master/mingw-w64-x86_64-gcc-libs-8.2.0-1-any.pkg.tar.xz https://github.com/Gator96100/ProxSpace-Repo/raw/master/mingw-w64-x86_64-gcc-8.2.0-1-any.pkg.tar.xz
 	pacman --noconfirm --force -U mingw-w64-x86_64-gcc-libs-8.2.0-1-any.pkg.tar.xz mingw-w64-x86_64-gcc-8.2.0-1-any.pkg.tar.xz
 	rm mingw-w64-x86_64-gcc-*.tar.xz
-	pacman --noconfirm --force -S mingw-w64-x86_64-readline mingw-w64-x86_64-qt5 git make pkg-config
+	pacman --noconfirm --force -S mingw-w64-x86_64-readline mingw-w64-x86_64-qt5 git make pkg-config mingw-w64-x86_64-jansson
   fi
   
   if [ ! -d /mingw32/include/readline ] && [ "$MSYSTEM" == "MINGW32" ]; then
-    pacman --noconfirm --force -S mingw-w64-i686-gcc mingw-w64-i686-readline mingw-w64-i686-qt5 git make pkg-config
+    pacman --noconfirm --force -S mingw-w64-i686-gcc mingw-w64-i686-readline mingw-w64-i686-qt5 git make pkg-config mingw-w64-i686-jansson
   fi
 }
 

@@ -1,16 +1,41 @@
-maybe_proxspace ()
+check_install ()
 { 
-  if [ ! -d /mingw64/include/readline ] && [ "$MSYSTEM" == "MINGW64" ]; then
-  
-    wget https://github.com/Gator96100/ProxSpace-Repo/raw/master/mingw-w64-x86_64-gcc-libs-8.2.0-1-any.pkg.tar.xz https://github.com/Gator96100/ProxSpace-Repo/raw/master/mingw-w64-x86_64-gcc-8.2.0-1-any.pkg.tar.xz
-	pacman --noconfirm --force -U mingw-w64-x86_64-gcc-libs-8.2.0-1-any.pkg.tar.xz mingw-w64-x86_64-gcc-8.2.0-1-any.pkg.tar.xz
-	rm mingw-w64-x86_64-gcc-*.tar.xz
-	pacman --noconfirm --force -S mingw-w64-x86_64-readline mingw-w64-x86_64-qt5 git make pkg-config mingw-w64-x86_64-jansson
+	pacman -Q $1 > /dev/null
+	if [ $? == 1 ]; then
+		pacman --noconfirm --force -S $1
+	fi
+}
+
+check_install_web ()
+{ 
+	pacman -Q $1 | grep $2 > /dev/null
+	if [ $? == 1 ]; then
+		pacman --noconfirm --force -U $3
+	fi
+}
+
+setup_proxspace ()
+{ 
+  if [ "$MSYSTEM" == "MINGW64" ]; then
+	check_install_web mingw-w64-x86_64-gcc-libs 8.2.0-3 http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-gcc-libs-8.2.0-3-any.pkg.tar.xz
+	check_install_web mingw-w64-x86_64-gcc 8.2.0-3 http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-gcc-8.2.0-3-any.pkg.tar.xz
+	check_install_web mingw-w64-x86_64-readline 6.3 http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-readline-6.3.008-1-any.pkg.tar.xz
+	check_install git
+	check_install make
+	check_install pkg-config
+	check_install mingw-w64-x86_64-jansson
+	check_install mingw-w64-x86_64-qt5
   fi
   
-  if [ ! -d /mingw32/include/readline ] && [ "$MSYSTEM" == "MINGW32" ]; then
-    pacman --noconfirm --force -S mingw-w64-i686-gcc mingw-w64-i686-readline mingw-w64-i686-qt5 git make pkg-config mingw-w64-i686-jansson
+  if [ "$MSYSTEM" == "MINGW32" ]; then
+	check_install_web mingw-w64-i686-readline 6.3 http://repo.msys2.org/mingw/i686/mingw-w64-i686-readline-6.3.008-1-any.pkg.tar.xz
+	check_install mingw-w64-i686-gcc
+	check_install git
+	check_install make
+	check_install pkg-config
+	check_install mingw-w64-i686-jansson
+	check_install mingw-w64-i686-qt5      
   fi
 }
 
-maybe_proxspace
+setup_proxspace

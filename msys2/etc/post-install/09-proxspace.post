@@ -1,18 +1,28 @@
-check_install ()
-{ 
+check_install () { 
 	pacman -Q $1 > /dev/null
 	if [ $? == 1 ]; then
 		pacman --noconfirm --force -S $1
+		pacman --noconfirm --force -Scc
 	fi
 }
 
-check_install_web ()
-{ 
+check_install_web () { 
 	pacman -Q $1 | grep $2 > /dev/null
 	if [ $? == 1 ]; then
 		pacman --noconfirm --force -U $3
+		pacman --noconfirm --force -Scc
 	fi
 }
+
+clean_qt5_86 () { 
+	rm -rf /mingw32/share/qt5/examples
+}
+
+clean_qt5_64 () { 
+	rm -rf /mingw64/share/qt5/examples
+}
+
+
 
 setup_proxspace ()
 { 
@@ -23,8 +33,8 @@ setup_proxspace ()
 	check_install git
 	check_install make
 	check_install pkg-config
-	check_install mingw-w64-x86_64-jansson
 	check_install mingw-w64-x86_64-qt5
+	clean_qt5_64
   fi
   
   if [ "$MSYSTEM" == "MINGW32" ]; then
@@ -33,8 +43,8 @@ setup_proxspace ()
 	check_install git
 	check_install make
 	check_install pkg-config
-	check_install mingw-w64-i686-jansson
-	check_install mingw-w64-i686-qt5      
+	check_install mingw-w64-i686-qt5
+	clean_qt5_86	
   fi
 }
 

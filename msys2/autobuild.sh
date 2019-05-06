@@ -3,7 +3,7 @@ pm3Dir=/pm3
 copyDir=/builds
 buildDir=/tmp
 
-export PATH=$PATH:/gcc-arm-none-eabi/bin
+export PATH=/gcc-arm-none-eabi/bin:$PATH
 
 pacman -Q zip 1> /dev/null
 if [[ $? != 0 ]]; then

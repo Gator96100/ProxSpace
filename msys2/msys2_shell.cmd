@@ -16,7 +16,7 @@ rem or uncomment next line
 rem set MSYS2_PATH_TYPE=inherit
 
 
-SET PATH=%PATH%;%WD%
+SET PATH=%WD%;%PATH%
 rem /tmp is required for bash to work
 mkdir %WD%..\..\tmp 2> nul
 del %WD%..\..\etc\passwd 2> nul

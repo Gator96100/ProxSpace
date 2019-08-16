@@ -17,13 +17,13 @@ __hasprefix() {
 _pkgfile() {
   local cur=${COMP_WORDS[COMP_CWORD]} prev=${COMP_WORDS[COMP_CWORD - 1]} prevprev=${COMP_WORDS[COMP_CWORD - 2]}
 
-  local shortopts=(-l -s -u -b -C -g -i -q -R -r -h -V -v -w -z -0)
+  local shortopts=(-l -s -u -b -C -D -g -i -q -R -r -h -V -v -w -z -0)
   local longopts=(--list --search --update --binaries --glob --ignorecase
                   --quiet --regex --help --version --verbose --raw --null)
-  local longoptsarg=(--compress --config --repo)
+  local longoptsarg=(--compress --config --cachedir --repo)
   local allopts=("${shortopts[@]}" "${longopts[@]}" "${longoptsarg[@]}")
 
-  local compressopts=(none gzip bzip2 lzma lzop xz)
+  local compressopts=(none gzip bzip2 lz4 lzma lzop xz)
 
   # maybe mangle the arguments in case we're looking at a --longopt=$val
   [[ $cur = '=' ]] && cur=
@@ -34,6 +34,11 @@ _pkgfile() {
   case $prev in
     -C|--config)
       COMPREPLY=($(compgen -f -- "$cur"))
+      compopt -o filenames
+      return 0
+      ;;
+    -D|--cachedir)
+      COMPREPLY=($(compgen -d -- "$cur"))
       compopt -o filenames
       return 0
       ;;

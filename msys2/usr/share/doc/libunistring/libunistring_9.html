@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!-- Created on May, 25 2018 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -42,8 +42,8 @@ ul.toc {list-style: none}
 <body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
 
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_8.html#SEC20" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_10.html#SEC41" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_8.html#SEC33" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_10.html#SEC54" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -51,20 +51,20 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="uniwidth_002eh"></a>
-<a name="SEC40"></a>
-<h1 class="chapter"> <a href="libunistring.html#TOC40">9. Display width <code>&lt;uniwidth.h&gt;</code></a> </h1>
+<a name="SEC53"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC53">9. Display width <code>&lt;uniwidth.h&gt;</code></a> </h1>
 
 <p>This include file declares functions that return the display width, measured
 in columns, of characters or strings, when output to a device that uses
 non-proportional fonts.
 </p>
-<a name="IDX701"></a>
+<a name="IDX692"></a>
 <p>Note that for some rarely used characters the actual fonts or terminal
 emulators can use a different width.  There is no mechanism for communicating
 the display width of characters across a Unix pseudo-terminal (tty).  Also,
@@ -76,12 +76,12 @@ most characters but can fail to represent the actual display width.
 <p>These functions are locale dependent.  The <var>encoding</var> argument identifies
 the encoding (e.g. <code>&quot;ISO-8859-2&quot;</code> for Polish).
 </p>
-<a name="IDX702"></a>
-<a name="IDX703"></a>
-<a name="IDX704"></a>
+<a name="IDX693"></a>
+<a name="IDX694"></a>
+<a name="IDX695"></a>
 <dl>
 <dt><u>Function:</u> int <b>uc_width</b><i> (ucs4_t <var>uc</var>, const char *<var>encoding</var>)</i>
-<a name="IDX705"></a>
+<a name="IDX696"></a>
 </dt>
 <dd><p>Determines and returns the number of column positions required for <var>uc</var>.
 Returns -1 if <var>uc</var> is a control character that has an influence on the
@@ -90,13 +90,13 @@ column position when output.
 
 <dl>
 <dt><u>Function:</u> int <b>u8_width</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>encoding</var>)</i>
-<a name="IDX706"></a>
+<a name="IDX697"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_width</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>encoding</var>)</i>
-<a name="IDX707"></a>
+<a name="IDX698"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_width</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>encoding</var>)</i>
-<a name="IDX708"></a>
+<a name="IDX699"></a>
 </dt>
 <dd><p>Determines and returns the number of column positions required for first
 <var>n</var> units (or fewer if <var>s</var> ends before this) in <var>s</var>.  This
@@ -105,21 +105,21 @@ function ignores control characters in the string.
 
 <dl>
 <dt><u>Function:</u> int <b>u8_strwidth</b><i> (const uint8_t *<var>s</var>, const char *<var>encoding</var>)</i>
-<a name="IDX709"></a>
+<a name="IDX700"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_strwidth</b><i> (const uint16_t *<var>s</var>, const char *<var>encoding</var>)</i>
-<a name="IDX710"></a>
+<a name="IDX701"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_strwidth</b><i> (const uint32_t *<var>s</var>, const char *<var>encoding</var>)</i>
-<a name="IDX711"></a>
+<a name="IDX702"></a>
 </dt>
 <dd><p>Determines and returns the number of column positions required for <var>s</var>.
 This function ignores control characters in the string.
 </p></dd></dl>
 <hr size="6">
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_8.html#SEC20" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_10.html#SEC41" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_8.html#SEC33" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_10.html#SEC54" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -127,12 +127,12 @@ This function ignores control characters in the string.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Daiki Ueno</em> on <em>May, 25 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

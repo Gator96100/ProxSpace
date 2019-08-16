@@ -4,7 +4,7 @@
 # has been customized for distribution. It should be symlinked linked to the
 # distribution's update-ca-certificates or update-ca-trust command as
 # appropriate. In the future this script will be called when the PKCS#11
-# trust module is used to modifiy trust anchors and related data.
+# trust module is used to modify trust anchors and related data.
 
 if [ $# -ne 0 ]; then
 	echo "usage: trust extract-compat" >&2

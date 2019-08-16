@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!-- Created on May, 25 2018 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -42,8 +42,8 @@ ul.toc {list-style: none}
 <body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
 
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_9.html#SEC40" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_11.html#SEC44" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_9.html#SEC53" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_11.html#SEC57" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -51,14 +51,14 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="unigbrk_002eh"></a>
-<a name="SEC41"></a>
-<h1 class="chapter"> <a href="libunistring.html#TOC41">10. Grapheme cluster breaks in strings <code>&lt;unigbrk.h&gt;</code></a> </h1>
+<a name="SEC54"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC54">10. Grapheme cluster breaks in strings <code>&lt;unigbrk.h&gt;</code></a> </h1>
 
 <p>This include file declares functions for determining where in a string
 &ldquo;grapheme clusters&rdquo; start and end.  A &ldquo;grapheme cluster&rdquo; is an
@@ -85,40 +85,50 @@ clusters.
 
 <hr size="6">
 <a name="Grapheme-cluster-breaks-in-a-string"></a>
-<a name="SEC42"></a>
-<h2 class="section"> <a href="libunistring.html#TOC42">10.1 Grapheme cluster breaks in a string</a> </h2>
+<a name="SEC55"></a>
+<h2 class="section"> <a href="libunistring.html#TOC55">10.1 Grapheme cluster breaks in a string</a> </h2>
 
 <p>The following functions find a single boundary between grapheme
 clusters in a string.
 </p>
 <dl>
 <dt><u>Function:</u> void <b>u8_grapheme_next</b><i> (const uint8_t *<var>s</var>, const uint8_t *<var>end</var>)</i>
-<a name="IDX712"></a>
+<a name="IDX703"></a>
 </dt>
 <dt><u>Function:</u> void <b>u16_grapheme_next</b><i> (const uint16_t *<var>s</var>, const uint16_t *<var>end</var>)</i>
-<a name="IDX713"></a>
+<a name="IDX704"></a>
 </dt>
 <dt><u>Function:</u> void <b>u32_grapheme_next</b><i> (const uint32_t *<var>s</var>, const uint32_t *<var>end</var>)</i>
-<a name="IDX714"></a>
+<a name="IDX705"></a>
 </dt>
 <dd><p>Returns the start of the next grapheme cluster following <var>s</var>,
 or <var>end</var> if no grapheme cluster break is encountered before it.
 Returns NULL if and only if <code><var>s</var> == <var>end</var></code>.
+</p>
+<p>Note that these functions do not handle the case when a character
+outside of the range between <var>s</var> and <var>end</var> is needed to
+determine the boundary.  Use <code>_grapheme_breaks</code> functions for such
+cases.
 </p></dd></dl>
 
 <dl>
 <dt><u>Function:</u> void <b>u8_grapheme_prev</b><i> (const uint8_t *<var>s</var>, const uint8_t *<var>start</var>)</i>
-<a name="IDX715"></a>
+<a name="IDX706"></a>
 </dt>
 <dt><u>Function:</u> void <b>u16_grapheme_prev</b><i> (const uint16_t *<var>s</var>, const uint16_t *<var>start</var>)</i>
-<a name="IDX716"></a>
+<a name="IDX707"></a>
 </dt>
 <dt><u>Function:</u> void <b>u32_grapheme_prev</b><i> (const uint32_t *<var>s</var>, const uint32_t *<var>start</var>)</i>
-<a name="IDX717"></a>
+<a name="IDX708"></a>
 </dt>
 <dd><p>Returns the start of the grapheme cluster preceding <var>s</var>, or
 <var>start</var> if no grapheme cluster break is encountered before it.
 Returns NULL if and only if <code><var>s</var> == <var>start</var></code>.
+</p>
+<p>Note that these functions do not handle the case when a character
+outside of the range between <var>start</var> and <var>s</var> is needed to
+determine the boundary.  Use <code>_grapheme_breaks</code> functions for such
+cases.
 </p></dd></dl>
 
 <p>The following functions determine all of the grapheme cluster
@@ -126,19 +136,22 @@ boundaries in a string.
 </p>
 <dl>
 <dt><u>Function:</u> void <b>u8_grapheme_breaks</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
-<a name="IDX718"></a>
+<a name="IDX709"></a>
 </dt>
 <dt><u>Function:</u> void <b>u16_grapheme_breaks</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
-<a name="IDX719"></a>
+<a name="IDX710"></a>
 </dt>
 <dt><u>Function:</u> void <b>u32_grapheme_breaks</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
-<a name="IDX720"></a>
+<a name="IDX711"></a>
 </dt>
 <dt><u>Function:</u> void <b>ulc_grapheme_breaks</b><i> (const char *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
-<a name="IDX721"></a>
+<a name="IDX712"></a>
+</dt>
+<dt><u>Function:</u> void <b>uc_grapheme_breaks</b><i> (const ucs_t *<var>s</var>, size_t <var>n</var>, char *<var>p</var>)</i>
+<a name="IDX713"></a>
 </dt>
 <dd><p>Determines the grapheme cluster break points in <var>s</var>, an array of
-<var>n</var> units, and stores the result at <code><var>p</var>[0..<var>n</var>-1]</code>.
+<var>n</var> units, and stores the result at <code><var>p</var>[0..<var>nx</var>-1]</code>.
 </p><dl compact="compact">
 <dt> <code><var>p</var>[i] = 1</code></dt>
 <dd><p>means that there is a grapheme cluster boundary between
@@ -151,12 +164,19 @@ same grapheme cluster.
 </dl>
 <p><code><var>p</var>[0]</code> is always set to 1, because there is always a
 grapheme cluster break at start of text.
+</p>
+<p>In addition to the above variants for UTF-8, UTF-16, and UTF-32 strings,
+<code>&lt;unigbrk.h&gt;</code> provides another variant: <code>uc_grapheme_breaks</code>.
+</p>
+<p>This is similar to <code>u32_grapheme_breaks</code>, but it accepts any
+characters which may not be represented in UTF-32, such as control
+characters.
 </p></dd></dl>
 
 <hr size="6">
 <a name="Grapheme-cluster-break-property"></a>
-<a name="SEC43"></a>
-<h2 class="section"> <a href="libunistring.html#TOC43">10.2 Grapheme cluster break property</a> </h2>
+<a name="SEC56"></a>
+<h2 class="section"> <a href="libunistring.html#TOC56">10.2 Grapheme cluster break property</a> </h2>
 
 <p>This is a more low-level API.  The grapheme cluster break property is a
 property defined in Unicode Standard Annex #29, section &ldquo;Grapheme Cluster
@@ -169,40 +189,58 @@ property.  More values may be added in the future.
 </p>
 <dl>
 <dt><u>Constant:</u> int <b>GBP_OTHER</b>
-<a name="IDX722"></a>
+<a name="IDX714"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_CR</b>
-<a name="IDX723"></a>
+<a name="IDX715"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_LF</b>
-<a name="IDX724"></a>
+<a name="IDX716"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_CONTROL</b>
-<a name="IDX725"></a>
+<a name="IDX717"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_EXTEND</b>
-<a name="IDX726"></a>
+<a name="IDX718"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_PREPEND</b>
-<a name="IDX727"></a>
+<a name="IDX719"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_SPACINGMARK</b>
-<a name="IDX728"></a>
+<a name="IDX720"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_L</b>
-<a name="IDX729"></a>
+<a name="IDX721"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_V</b>
-<a name="IDX730"></a>
+<a name="IDX722"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_T</b>
-<a name="IDX731"></a>
+<a name="IDX723"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_LV</b>
-<a name="IDX732"></a>
+<a name="IDX724"></a>
 </dt>
 <dt><u>Constant:</u> int <b>GBP_LVT</b>
-<a name="IDX733"></a>
+<a name="IDX725"></a>
+</dt>
+<dt><u>Constant:</u> int <b>GBP_RI</b>
+<a name="IDX726"></a>
+</dt>
+<dt><u>Constant:</u> int <b>GBP_ZWJ</b>
+<a name="IDX727"></a>
+</dt>
+<dt><u>Constant:</u> int <b>GBP_EB</b>
+<a name="IDX728"></a>
+</dt>
+<dt><u>Constant:</u> int <b>GBP_EM</b>
+<a name="IDX729"></a>
+</dt>
+<dt><u>Constant:</u> int <b>GBP_GAZ</b>
+<a name="IDX730"></a>
+</dt>
+<dt><u>Constant:</u> int <b>GBP_EBG</b>
+<a name="IDX731"></a>
 </dt>
 </dl>
 
@@ -211,7 +249,7 @@ character.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>uc_graphemeclusterbreak_property</b><i> (ucs4_t <var>uc</var>)</i>
-<a name="IDX734"></a>
+<a name="IDX732"></a>
 </dt>
 <dd><p>Returns the Grapheme_Cluster_Break property of a Unicode character.
 </p></dd></dl>
@@ -222,7 +260,7 @@ the higher-level functions in the previous section are directly based.
 </p>
 <dl>
 <dt><u>Function:</u> bool <b>uc_is_grapheme_break</b><i> (ucs4_t <var>a</var>, ucs4_t <var>b</var>)</i>
-<a name="IDX735"></a>
+<a name="IDX733"></a>
 </dt>
 <dd><p>Returns true if there is an grapheme cluster boundary between Unicode
 characters <var>a</var> and <var>b</var>.
@@ -234,11 +272,15 @@ of text, respectively.
 <p>This implements the extended (not legacy) grapheme cluster rules
 described in the Unicode standard, because the standard says that they
 are preferred.
+</p>
+<p>Note that this function does not handle the case when three or more
+consecutive characters are needed to determine the boundary.  Use
+<code>uc_grapheme_breaks</code> for such cases.
 </p></dd></dl>
 <hr size="6">
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="#SEC41" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_11.html#SEC44" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="#SEC54" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_11.html#SEC57" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -246,12 +288,12 @@ are preferred.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Daiki Ueno</em> on <em>May, 25 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

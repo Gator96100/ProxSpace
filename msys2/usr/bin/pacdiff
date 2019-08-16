@@ -21,7 +21,7 @@
 shopt -s extglob
 
 declare -r myname='pacdiff'
-declare -r myver='5.0.1'
+declare -r myver='1.0.0'
 
 diffprog=${DIFFPROG:-'vim -d'}
 diffsearchpath=${DIFFSEARCHPATH:-/etc}
@@ -65,7 +65,7 @@ error() {
 
 usage() {
 	cat <<EOF
-${myname} (pacman) v${myver}
+${myname} v${myver}
 
 A simple program to merge or remove pacnew/pacsave files.
 
@@ -183,12 +183,10 @@ case $(( USE_FIND + USE_LOCATE + USE_PACDB )) in
 esac
 
 if (( USE_PACDB )); then
-	if [[ ! -r /etc/pacman.conf ]]; then
+	if ! DBPath="$(pacman-conf DBPath)"; then
 		error "unable to read /etc/pacman.conf"
 		usage; exit 1
 	fi
-
-	eval $(awk '/DBPath/ {print $1$2$3}' /etc/pacman.conf)
 	pac_db="${DBPath:-/var/lib/pacman/}local"
 	if [[ ! -d "${pac_db}" ]]; then
 		error "unable to read pacman database %s". "${pac_db}"

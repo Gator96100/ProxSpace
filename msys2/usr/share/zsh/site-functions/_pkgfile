@@ -10,7 +10,7 @@ _repos(){
 
 _compression(){
     local -a cmd _comps
-    _comps=('none' 'gzip' 'bzip2' 'lzma' 'lzop' 'xz')
+    _comps=('none' 'gzip' 'bzip2' 'lzma' 'lzop' 'lz4' 'xz')
     typeset -U _comps
     compadd "$@" -a _comps
 }
@@ -38,6 +38,8 @@ _longopts=(
     '--raw[disable output justification]'
     '--null[null terminate output]'
     '--compress=[compress downloaded repos]: :_compression'
+    '--config=[use an alternate pacman config]: :_files'
+    '--cachedir=[use an alternate cache directory]: :_files -/'
     )
 
 _shortopts=(
@@ -57,6 +59,8 @@ _shortopts=(
     '*-w[disable output justification]'
     '*-0[null terminate output]'
     '*-z[compress downloaded repos]: :_compression'
+    '*-C[use an alternate pacman config]: :_files'
+    '*-D[use an alternate cache directory]: :_files -/'
     )
 
 _pkgfile() {

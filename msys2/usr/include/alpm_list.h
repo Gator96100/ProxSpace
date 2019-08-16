@@ -1,7 +1,7 @@
 /*
  *  alpm_list.h
  *
- *  Copyright (c) 2006-2016 Pacman Development Team <pacman-dev@archlinux.org>
+ *  Copyright (c) 2006-2018 Pacman Development Team <pacman-dev@archlinux.org>
  *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,8 +17,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _ALPM_LIST_H
-#define _ALPM_LIST_H
+#ifndef ALPM_LIST_H
+#define ALPM_LIST_H
 
 #include <stdlib.h> /* size_t */
 
@@ -58,6 +58,7 @@ void alpm_list_free_inner(alpm_list_t *list, alpm_list_fn_free fn);
 /* item mutators */
 alpm_list_t *alpm_list_add(alpm_list_t *list, void *data);
 alpm_list_t *alpm_list_append(alpm_list_t **list, void *data);
+alpm_list_t *alpm_list_append_strdup(alpm_list_t **list, const char *data);
 alpm_list_t *alpm_list_add_sorted(alpm_list_t *list, void *data, alpm_list_fn_cmp fn);
 alpm_list_t *alpm_list_join(alpm_list_t *first, alpm_list_t *second);
 alpm_list_t *alpm_list_mmerge(alpm_list_t *left, alpm_list_t *right, alpm_list_fn_cmp fn);
@@ -90,6 +91,4 @@ void *alpm_list_to_array(const alpm_list_t *list, size_t n, size_t size);
 #ifdef __cplusplus
 }
 #endif
-#endif /* _ALPM_LIST_H */
-
-/* vim: set noet: */
+#endif /* ALPM_LIST_H */

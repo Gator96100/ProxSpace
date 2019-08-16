@@ -3,7 +3,7 @@
 #   pacman-db-upgrade - upgrade the local pacman db to a newer format
 #   Generated from pacman-db-upgrade.sh.in; do not edit by hand.
 #
-#   Copyright (c) 2010-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2010-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ umask 022
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver='5.0.1'
+declare -r myver='5.1.3'
 
 plain() {
 	(( QUIET )) && return
@@ -62,144 +62,10 @@ error() {
 }
 
 
-# getopt-like parser
-parseopts() {
-	local opt= optarg= i= shortopts=$1
-	local -a longopts=() unused_argv=()
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
-	shift
-	while [[ $1 && $1 != '--' ]]; do
-		longopts+=("$1")
-		shift
-	done
-	shift
-
-	longoptmatch() {
-		local o longmatch=()
-		for o in "${longopts[@]}"; do
-			if [[ ${o%:} = "$1" ]]; then
-				longmatch=("$o")
-				break
-			fi
-			[[ ${o%:} = "$1"* ]] && longmatch+=("$o")
-		done
-
-		case ${#longmatch[*]} in
-			1)
-				# success, override with opt and return arg req (0 == none, 1 == required)
-				opt=${longmatch%:}
-				if [[ $longmatch = *: ]]; then
-					return 1
-				else
-					return 0
-				fi ;;
-			0)
-				# fail, no match found
-				return 255 ;;
-			*)
-				# fail, ambiguous match
-				printf "pacman-db-upgrade: $(gettext "option '%s' is ambiguous; possibilities:")" "--$1"
-				printf " '%s'" "${longmatch[@]%:}"
-				printf '\n'
-				return 254 ;;
-		esac >&2
-	}
-
-	while (( $# )); do
-		case $1 in
-			--) # explicit end of options
-				shift
-				break
-				;;
-			-[!-]*) # short option
-				for (( i = 1; i < ${#1}; i++ )); do
-					opt=${1:i:1}
-
-					# option doesn't exist
-					if [[ $shortopts != *$opt* ]]; then
-						printf "pacman-db-upgrade: $(gettext "invalid option") -- '%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-					fi
-
-					OPTRET+=("-$opt")
-					# option requires optarg
-					if [[ $shortopts = *$opt:* ]]; then
-						# if we're not at the end of the option chunk, the rest is the optarg
-						if (( i < ${#1} - 1 )); then
-							OPTRET+=("${1:i+1}")
-							break
-						# if we're at the end, grab the the next positional, if it exists
-						elif (( i == ${#1} - 1 )) && [[ $2 ]]; then
-							OPTRET+=("$2")
-							shift
-							break
-						# parse failure
-						else
-							printf "pacman-db-upgrade: $(gettext "option requires an argument") -- '%s'\n" "$opt" >&2
-							OPTRET=(--)
-							return 1
-						fi
-					fi
-				done
-				;;
-			--?*=*|--?*) # long option
-				IFS='=' read -r opt optarg <<< "${1#--}"
-				longoptmatch "$opt"
-				case $? in
-					0)
-						# parse failure
-						if [[ $optarg ]]; then
-							printf "pacman-db-upgrade: $(gettext "option '%s' does not allow an argument")\n" "--$opt" >&2
-							OPTRET=(--)
-							return 1
-						# --longopt
-						else
-							OPTRET+=("--$opt")
-						fi
-						;;
-					1)
-						# --longopt=optarg
-						if [[ $optarg ]]; then
-							OPTRET+=("--$opt" "$optarg")
-						# --longopt optarg
-						elif [[ $2 ]]; then
-							OPTRET+=("--$opt" "$2" )
-							shift
-						# parse failure
-						else
-							printf "pacman-db-upgrade: $(gettext "option '%s' requires an argument")\n" "--$opt" >&2
-							OPTRET=(--)
-							return 1
-						fi
-						;;
-					254)
-						# ambiguous option -- error was reported for us by longoptmatch()
-						OPTRET=(--)
-						return 1
-						;;
-					255)
-						# parse failure
-						printf "pacman-db-upgrade: $(gettext "invalid option") '--%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-						;;
-				esac
-				;;
-			*) # non-option arg encountered, add it as a parameter
-				unused_argv+=("$1")
-				;;
-		esac
-		shift
-	done
-
-	# add end-of-opt terminator and any leftover positional parameters
-	OPTRET+=('--' "${unused_argv[@]}" "$@")
-	unset longoptmatch
-
-	return 0
-}
-
+# Import parseopts.sh
+source "$LIBRARY"/util/parseopts.sh
 
 usage() {
 	printf "pacman-db-upgrade (pacman) %s\n" "${myver}"
@@ -209,7 +75,7 @@ usage() {
 	printf -- "$(gettext "Usage: %s [options]")\n" "$0"
 	echo
 	printf -- "$(gettext "options:")\n"
-	printf -- "$(gettext "  -b, --dbpath <path>  set an alternate database location")\n"
+	printf -- "$(gettext "  -d, --dbpath <path>  set an alternate database location")\n"
 	printf -- "$(gettext "  -h, --help           show this help message and exit")\n"
 	printf -- "$(gettext "  -r, --root <path>    set an alternate installation root")\n"
 	printf -- "$(gettext "  -V, --version        show version information and exit")\n"
@@ -221,7 +87,7 @@ usage() {
 version() {
 	printf "pacman-db-upgrade (pacman) %s\n" "$myver"
 	printf -- "$(gettext "\
-Copyright (c) 2010-2016 Pacman Development Team <pacman-dev@archlinux.org>.\n\
+Copyright (c) 2010-2018 Pacman Development Team <pacman-dev@archlinux.org>.\n\
 This is free software; see the source for copying conditions.\n\
 There is NO WARRANTY, to the extent permitted by law.\n")"
 }
@@ -234,18 +100,6 @@ die() {
 die_r() {
 	rm -f "$lockfile"
 	die "$@"
-}
-
-get_opt_from_config() {
-	local keyname="$1" conffile="$2"
-	local key value
-
-	while IFS=$'= \t' read -r key value _; do
-		if [[ $key = $keyname ]]; then
-			echo "$value"
-			return
-		fi
-	done <"$conffile"
 }
 
 resolve_dir() {
@@ -285,19 +139,14 @@ while true; do
 		-h|--help)    usage; exit 0 ;;
 		--nocolor)    USE_COLOR='n' ;;
 		-V|--version) version; exit 0 ;;
-		-- )          shift; break 2 ;;
+		--)           shift; break ;;
 	esac
 	shift
 done
 
 conffile=${conffile:-/etc/pacman.conf}
-[[ -z $pacroot ]] && pacroot="$(get_opt_from_config "RootDir" "$conffile")"
-[[ -z $dbroot ]] && dbroot="$(get_opt_from_config "DBPath" "$conffile")"
-
-[[ -z $dbroot && -n $pacroot ]] && dbroot="$pacroot//var/lib/pacman"
-
-[[ -z $pacroot ]] && pacroot="/"
-[[ -z $dbroot ]] && dbroot="/var/lib/pacman/"
+[[ -z $pacroot ]] && pacroot=$(pacman-conf --config="$conffile" rootdir)
+[[ -z $dbroot ]] && dbroot=$(pacman-conf --config="$conffile" --rootdir="$pacroot" dbpath)
 
 # check if messages are to be printed using color
 unset ALL_OFF BOLD BLUE GREEN RED YELLOW
@@ -448,5 +297,3 @@ echo "9" > "$dbroot"/local/ALPM_DB_VERSION
 
 # remove the lock file
 rm -f "$lockfile"
-
-# vim: set noet:

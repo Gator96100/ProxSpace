@@ -18,14 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 declare -r myname='paclog-pkglist'
-declare -r myver='5.0.1'
+declare -r myver='1.0.0'
 
 export TEXTDOMAIN='pacman'
 export TEXTDOMAINDIR='/usr/share/locale'
 declare logfile=${1:-/var/log/pacman.log}
 
 usage() {
-	printf "%s (pacman) v%s\n" "${myname}" "${myver}"
+	printf "%s v%s\n" "${myname}" "${myver}"
 	echo
 	echo "Parse a log file into a list of currently installed packages"
 	echo
@@ -33,7 +33,7 @@ usage() {
 	echo
 	printf "Example: %s /var/log/pacman.log\n" "${myname}"
 	echo
-	printf 'Defaults to: /var/log/pacman.log'
+	echo 'Defaults to: /var/log/pacman.log'
 }
 
 version() {

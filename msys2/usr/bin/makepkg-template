@@ -2,7 +2,7 @@
 #   makepkg-template - template system for makepkg
 #   Generated from makepkg-template.sh.in; do not edit by hand.
 #
-#   Copyright (c) 2013-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2013-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -189,9 +189,9 @@ sub usage {
 
 sub version {
 	my ($exitstatus) = @_;
-	printf "makepkg-template (pacman) %s\n", '5.0.1';
+	printf "makepkg-template (pacman) %s\n", '5.1.3';
 	print gettext(
-		'Copyright (c) 2013-2016 Pacman Development Team <pacman-dev@archlinux.org>.'."\n".
+		'Copyright (c) 2013-2018 Pacman Development Team <pacman-dev@archlinux.org>.'."\n".
 		'This is free software; see the source for copying conditions.'."\n".
 		'There is NO WARRANTY, to the extent permitted by law.'."\n");
 	exit($exitstatus);
@@ -213,5 +213,3 @@ $opts{input} = "/dev/stdin" if $opts{input} eq "-";
 $opts{output} = "/dev/stdout" if $opts{output} eq "-";
 
 burp($opts{output}, process_file($opts{input}));
-
-# vim: set noet:

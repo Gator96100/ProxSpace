@@ -1,0 +1,12 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/nettle-hash.exe
+usr/bin/nettle-lfib-stream.exe
+usr/bin/nettle-pbkdf2.exe
+usr/bin/pkcs1-conv.exe
+usr/bin/sexp-conv.exe
+usr/share/
+usr/share/info/
+usr/share/info/nettle.info.gz
+

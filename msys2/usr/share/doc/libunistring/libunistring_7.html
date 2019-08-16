@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!-- Created on May, 25 2018 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -42,8 +42,8 @@ ul.toc {list-style: none}
 <body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
 
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_6.html#SEC18" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_8.html#SEC20" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_6.html#SEC31" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_8.html#SEC33" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -51,14 +51,14 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="uniname_002eh"></a>
-<a name="SEC19"></a>
-<h1 class="chapter"> <a href="libunistring.html#TOC19">7. Names of Unicode characters <code>&lt;uniname.h&gt;</code></a> </h1>
+<a name="SEC32"></a>
+<h1 class="chapter"> <a href="libunistring.html#TOC32">7. Names of Unicode characters <code>&lt;uniname.h&gt;</code></a> </h1>
 
 <p>This include file implements the association between a Unicode character and
 its name.
@@ -70,7 +70,7 @@ named <code>&quot;MULTIPLICATION SIGN&quot;</code>.
 </p>
 <dl>
 <dt><u>Macro:</u> unsigned int <b>UNINAME_MAX</b>
-<a name="IDX237"></a>
+<a name="IDX228"></a>
 </dt>
 <dd><p>This macro expands to a constant that is the required size of buffer for a
 Unicode character name.
@@ -78,7 +78,7 @@ Unicode character name.
 
 <dl>
 <dt><u>Function:</u> char * <b>unicode_character_name</b><i> (ucs4_t <var>uc</var>, char *<var>buf</var>)</i>
-<a name="IDX238"></a>
+<a name="IDX229"></a>
 </dt>
 <dd><p>Looks up the name of a Unicode character, in uppercase ASCII.
 <var>buf</var> must point to a buffer, at least <code>UNINAME_MAX</code> bytes in size.
@@ -87,7 +87,7 @@ Returns the filled <var>buf</var>, or NULL if the character does not have a name
 
 <dl>
 <dt><u>Function:</u> ucs4_t <b>unicode_name_character</b><i> (const char *<var>name</var>)</i>
-<a name="IDX239"></a>
+<a name="IDX230"></a>
 </dt>
 <dd><p>Looks up the Unicode character with a given name, in upper- or lowercase
 ASCII.  <var>NAME</var> can also be an alias name of a character.
@@ -96,15 +96,15 @@ Returns the character if found, or <code>UNINAME_INVALID</code> if not found.
 
 <dl>
 <dt><u>Macro:</u> ucs4_t <b>UNINAME_INVALID</b>
-<a name="IDX240"></a>
+<a name="IDX231"></a>
 </dt>
 <dd><p>This macro expands to a constant that is a special return value of the
 <code>unicode_name_character</code> function.
 </p></dd></dl>
 <hr size="6">
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_6.html#SEC18" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_8.html#SEC20" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_6.html#SEC31" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_8.html#SEC33" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -112,12 +112,12 @@ Returns the character if found, or <code>UNINAME_INVALID</code> if not found.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Daiki Ueno</em> on <em>May, 25 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

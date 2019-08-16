@@ -15,3 +15,10 @@ trust-policy: yes
 # projects used this non-standard attribute to denote slots to use to
 # retrieve trust information.
 x-trust-lookup: pkcs11:library-description=PKCS%2311%20Kit%20Trust%20Module
+
+# Prevent this module being loaded by the proxy module
+disable-in: p11-kit-proxy
+
+# This will be overwritten by appending "verbose=yes", if the trust
+# command is called with the -v option.
+x-init-reserved:

@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 #   util.sh - general utility functions
 #
-#   Copyright (c) 2006-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
@@ -42,15 +42,10 @@ is_array() {
 	local v=$1
 	local ret=1
 
-	# this function requires extglob - save current options to restore later
-	local shellopts=$(shopt -p)
-	shopt -s extglob
-
-	if [[ $(declare -p "$i") == declare\ -*([[:alnum:]])a*([[:alnum:]])\ * ]]; then
+	if [[ $(declare -p "$v") == declare\ -*([[:alnum:]])a*([[:alnum:]])\ * ]]; then
 		ret=0
 	fi
 
-	eval "$shellopts"
 	return $ret
 }
 
@@ -82,4 +77,21 @@ cd_safe() {
 		plain "$(gettext "Aborting...")"
 		exit 1
 	fi
+}
+
+# Try to create directory if one does not yet exist. Fails if the directory
+# exists but has no write permissions, or if there is an existing file with
+# the same name.
+ensure_writable_dir() {
+	local dirtype="$1" dirpath="$2"
+
+	if ! mkdir -p "$dirpath" 2>/dev/null; then
+		error "$(gettext "Failed to create the directory \$%s (%s).")" "$dirtype" "$dirpath"
+		return 1
+	elif [[ ! -w $dirpath ]]; then
+		error "$(gettext "You do not have write permission for the directory \$%s (%s).")" "$dirtype" "$dirpath"
+		return 1
+	fi
+
+	return 0
 }

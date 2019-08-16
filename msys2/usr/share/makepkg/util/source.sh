@@ -2,7 +2,7 @@
 #
 #   source.sh - functions to extract information from source URLs
 #
-#   Copyright (c) 2010-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2010-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -65,6 +65,7 @@ get_filename() {
 	case $proto in
 		bzr*|git*|hg*|svn*)
 			filename=${netfile%%#*}
+			filename=${filename%%\?*}
 			filename=${filename%/}
 			filename=${filename##*/}
 			if [[ $proto = bzr* ]]; then
@@ -109,6 +110,32 @@ get_filepath() {
 	esac
 
 	printf "%s\n" "$file"
+}
+
+# extract the VCS revision/branch specifier from a source entry
+get_uri_fragment() {
+	local netfile=$1
+
+	local fragment=${netfile#*#}
+	if [[ $fragment = "$netfile" ]]; then
+		unset fragment
+	fi
+	fragment=${fragment%\?*}
+
+	printf "%s\n" "$fragment"
+}
+
+# extract the VCS "signed" status from a source entry
+get_uri_query() {
+	local netfile=$1
+
+	local query=${netfile#*\?}
+	if [[ $query = "$netfile" ]]; then
+		unset query
+	fi
+	query=${query%#*}
+
+	printf "%s\n" "$query"
 }
 
 get_downloadclient() {

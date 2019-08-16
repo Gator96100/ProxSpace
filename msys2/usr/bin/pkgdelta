@@ -26,8 +26,14 @@ set -o errexit
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver='5.0.1'
+declare -r myver='5.1.3'
 
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+
+# Import parseopts.sh
+source "$LIBRARY"/util/parseopts.sh
+
+# Options
 QUIET=0
 USE_COLOR='y'
 
@@ -40,144 +46,6 @@ max_delta_size=70
 
 # ensure we have a sane umask set
 umask 0022
-
-# getopt-like parser
-parseopts() {
-	local opt= optarg= i= shortopts=$1
-	local -a longopts=() unused_argv=()
-
-	shift
-	while [[ $1 && $1 != '--' ]]; do
-		longopts+=("$1")
-		shift
-	done
-	shift
-
-	longoptmatch() {
-		local o longmatch=()
-		for o in "${longopts[@]}"; do
-			if [[ ${o%:} = "$1" ]]; then
-				longmatch=("$o")
-				break
-			fi
-			[[ ${o%:} = "$1"* ]] && longmatch+=("$o")
-		done
-
-		case ${#longmatch[*]} in
-			1)
-				# success, override with opt and return arg req (0 == none, 1 == required)
-				opt=${longmatch%:}
-				if [[ $longmatch = *: ]]; then
-					return 1
-				else
-					return 0
-				fi ;;
-			0)
-				# fail, no match found
-				return 255 ;;
-			*)
-				# fail, ambiguous match
-				printf "pkgdelta: $(gettext "option '%s' is ambiguous; possibilities:")" "--$1"
-				printf " '%s'" "${longmatch[@]%:}"
-				printf '\n'
-				return 254 ;;
-		esac >&2
-	}
-
-	while (( $# )); do
-		case $1 in
-			--) # explicit end of options
-				shift
-				break
-				;;
-			-[!-]*) # short option
-				for (( i = 1; i < ${#1}; i++ )); do
-					opt=${1:i:1}
-
-					# option doesn't exist
-					if [[ $shortopts != *$opt* ]]; then
-						printf "pkgdelta: $(gettext "invalid option") -- '%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-					fi
-
-					OPTRET+=("-$opt")
-					# option requires optarg
-					if [[ $shortopts = *$opt:* ]]; then
-						# if we're not at the end of the option chunk, the rest is the optarg
-						if (( i < ${#1} - 1 )); then
-							OPTRET+=("${1:i+1}")
-							break
-						# if we're at the end, grab the the next positional, if it exists
-						elif (( i == ${#1} - 1 )) && [[ $2 ]]; then
-							OPTRET+=("$2")
-							shift
-							break
-						# parse failure
-						else
-							printf "pkgdelta: $(gettext "option requires an argument") -- '%s'\n" "$opt" >&2
-							OPTRET=(--)
-							return 1
-						fi
-					fi
-				done
-				;;
-			--?*=*|--?*) # long option
-				IFS='=' read -r opt optarg <<< "${1#--}"
-				longoptmatch "$opt"
-				case $? in
-					0)
-						# parse failure
-						if [[ $optarg ]]; then
-							printf "pkgdelta: $(gettext "option '%s' does not allow an argument")\n" "--$opt" >&2
-							OPTRET=(--)
-							return 1
-						# --longopt
-						else
-							OPTRET+=("--$opt")
-						fi
-						;;
-					1)
-						# --longopt=optarg
-						if [[ $optarg ]]; then
-							OPTRET+=("--$opt" "$optarg")
-						# --longopt optarg
-						elif [[ $2 ]]; then
-							OPTRET+=("--$opt" "$2" )
-							shift
-						# parse failure
-						else
-							printf "pkgdelta: $(gettext "option '%s' requires an argument")\n" "--$opt" >&2
-							OPTRET=(--)
-							return 1
-						fi
-						;;
-					254)
-						# ambiguous option -- error was reported for us by longoptmatch()
-						OPTRET=(--)
-						return 1
-						;;
-					255)
-						# parse failure
-						printf "pkgdelta: $(gettext "invalid option") '--%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-						;;
-				esac
-				;;
-			*) # non-option arg encountered, add it as a parameter
-				unused_argv+=("$1")
-				;;
-		esac
-		shift
-	done
-
-	# add end-of-opt terminator and any leftover positional parameters
-	OPTRET+=('--' "${unused_argv[@]}" "$@")
-	unset longoptmatch
-
-	return 0
-}
 
 plain() {
 	(( QUIET )) && return
@@ -369,7 +237,7 @@ create_xdelta()
 	newver="$pkgver"
 	newarch="$arch"
 
-	pkgsize="$(stat -c %s -L "$newfile")"
+	pkgsize="$(wc -c "$newfile" | cut -d' ' -f1)"
 
 	if ((pkgsize < min_pkg_size)); then
 		msg "$(gettext "Skipping delta creation for small package: %s - size %s")" "$newname" "$pkgsize"
@@ -401,7 +269,7 @@ create_xdelta()
 		return 1
 	fi
 
-	deltasize="$(stat -c %s -L "$deltafile")"
+	deltasize="$(wc -c "$deltafile" | cut -d' ' -f1)"
 
 	if ((max_delta_size * pkgsize / 100 < deltasize)); then
 		msg "$(gettext "Delta package larger than maximum size. Removing.")"
@@ -463,7 +331,7 @@ while :; do
 			shift ;;
 		--)
 			shift
-			break 2 ;;
+			break ;;
 	esac
 	shift
 done
@@ -509,5 +377,3 @@ if ! type xdelta3 &>/dev/null; then
 fi
 
 create_xdelta "$@"
-
-# vim: set noet:

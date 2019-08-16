@@ -10,6 +10,10 @@ _script_module()
 			COMPREPLY=( $(compgen -c -- $cur) )
 			return 0
 			;;
+		'-o'|'--output-limit')
+			COMPREPLY=( $(compgen -W "size" -- $cur) )
+			return 0
+			;;
 		'-h'|'--help'|'-V'|'--version')
 			return 0
 			;;
@@ -25,6 +29,7 @@ _script_module()
 				--flush
 				--force
 				--quiet
+				--output-limit
 				--timing=
 				--version
 				--help"

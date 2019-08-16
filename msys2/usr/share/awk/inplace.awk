@@ -21,11 +21,15 @@
 #
 # Andrew J. Schorr, aschorr@telemetry-investments.com
 # January 2013
+#
+# Revised for namespaces
+# Arnold Robbins, arnold@skeeve.com
+# July 2017
 
 @load "inplace"
 
-# Please set INPLACE_SUFFIX to make a backup copy.  For example, you may
-# want to set INPLACE_SUFFIX to .bak on the command line or in a BEGIN rule.
+# Please set inplace::suffix to make a backup copy.  For example, you may
+# want to set inplace::suffix to .bak on the command line or in a BEGIN rule.
 
 # By default, each filename on the command line will be edited inplace.
 # But you can selectively disable this by adding an inplace=0 argument
@@ -33,23 +37,25 @@
 # reenable it later on the commandline by putting inplace=1 before files
 # that you wish to be subject to inplace editing.
 
-# N.B. We call inplace_end() in the BEGINFILE and END rules so that any
+# N.B. We call inplace::end() in the BEGINFILE and END rules so that any
 # actions in an ENDFILE rule will be redirected as expected.
 
+@namespace "inplace"
+
 BEGIN {
-    inplace = 1         # enabled by default
+    enable = 1         # enabled by default
 }
 
 BEGINFILE {
-    if (_inplace_filename != "")
-        inplace_end(_inplace_filename, INPLACE_SUFFIX)
-    if (inplace)
-        inplace_begin(_inplace_filename = FILENAME, INPLACE_SUFFIX)
+    if (filename != "")
+        end(filename, suffix)
+    if (enable)
+        begin(filename = FILENAME, suffix)
     else
-        _inplace_filename = ""
+        filename = ""
 }
 
 END {
-    if (_inplace_filename != "")
-        inplace_end(_inplace_filename, INPLACE_SUFFIX)
+    if (filename != "")
+        end(filename, suffix)
 }

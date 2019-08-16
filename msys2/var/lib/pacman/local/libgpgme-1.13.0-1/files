@@ -1,0 +1,13 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/gpgme-json.exe
+usr/bin/gpgme-tool.exe
+usr/bin/msys-gpgme-11.dll
+usr/bin/msys-gpgmepp-6.dll
+usr/share/
+usr/share/info/
+usr/share/info/gpgme.info-1.gz
+usr/share/info/gpgme.info-2.gz
+usr/share/info/gpgme.info.gz
+

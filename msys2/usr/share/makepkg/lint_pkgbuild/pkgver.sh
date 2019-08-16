@@ -2,7 +2,7 @@
 #
 #   pkgver.sh - Check the 'pkgver' variable conforms to requirements.
 #
-#   Copyright (c) 2014-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -30,13 +30,15 @@ lint_pkgbuild_functions+=('lint_pkgver')
 
 
 check_pkgver() {
-	if [[ -z $1 ]]; then
-		error "$(gettext "%s is not allowed to be empty.")" "pkgver"
+	local ver=$1 type=$2
+
+	if [[ -z $ver ]]; then
+		error "$(gettext "%s is not allowed to be empty.")" "pkgver${type:+ in $type}"
 		return 1
 	fi
 
-	if [[ $1 = *[[:space:]:-]* ]]; then
-		error "$(gettext "%s is not allowed to contain colons, hyphens or whitespace.")" "pkgver"
+	if [[ $ver = *[[:space:]/:-]* ]]; then
+		error "$(gettext "%s is not allowed to contain colons, forward slashes, hyphens or whitespace.")" "pkgver${type:+ in $type}"
 		return 1
 	fi
 }
@@ -47,5 +49,5 @@ lint_pkgver() {
 		return 0
 	fi
 
-	check_pkgver $pkgver
+	check_pkgver "$pkgver"
 }

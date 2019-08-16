@@ -19,7 +19,7 @@
 #
 
 declare -r myname='checkupdates'
-declare -r myver='5.0.1'
+declare -r myver='1.0.0'
 
 plain() {
 	(( QUIET )) && return
@@ -78,7 +78,7 @@ readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
 
 
 if (( $# > 0 )); then
-	echo "${myname} (pacman) v${myver}"
+	echo "${myname} v${myver}"
 	echo
 	echo "Safely print a list of pending updates"
 	echo
@@ -94,12 +94,17 @@ fi
 
 trap 'rm -f $CHECKUPDATES_DB/db.lck' INT TERM EXIT
 
-DBPath="${DBPath:-/var/lib/pacman/}"
-eval $(awk -F' *= *' '$1 ~ /DBPath/ { print $1 "=" $2 }' /etc/pacman.conf)
+DBPath="$(pacman-conf DBPath)"
+if [[ -z "$DBPath" ]] || [[ ! -d "$DBPath" ]]; then
+	DBPath="/var/lib/pacman/"
+fi
 
 mkdir -p "$CHECKUPDATES_DB"
 ln -s "${DBPath}/local" "$CHECKUPDATES_DB" &> /dev/null
-pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null
+if ! pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
+       error 'Cannot fetch updates'
+       exit 1
+fi
 pacman -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]'
 
 exit 0

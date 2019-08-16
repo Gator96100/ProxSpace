@@ -2,7 +2,7 @@
 #
 #   optdepends.sh - Check the 'optdepends' array conforms to requirements.
 #
-#   Copyright (c) 2014-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -31,32 +31,22 @@ lint_pkgbuild_functions+=('lint_optdepends')
 
 
 lint_optdepends() {
-	local a list name optdepends_list ret=0
+	local optdepends_list optdepend name ver ret=0
 
-	optdepends_list=("${optdepends[@]}")
-	for a in "${arch[@]}"; do
-		array_build list "optdepends_$a"
-		optdepends_list+=("${list[@]}")
-	done
+	get_pkgbuild_all_split_attributes optdepends optdepends_list
 
-	for name in "${pkgname[@]}"; do
-		if extract_function_variable "package_$name" optdepends 1 list; then
-			optdepends_list+=("${list[@]}")
-		fi
+	# this function requires extglob - save current status to restore later
+	local shellopts=$(shopt -p extglob)
+	shopt -s extglob
 
-		for a in "${arch[@]}"; do
-			if extract_function_variable "package_$name" "optdepends_$a" 1 list; then
-				optdepends_list+=("${list[@]}")
-			fi
-		done
-	done
-
-	for name in "${optdepends_list[@]}"; do
-		local pkg=${name%%:[[:space:]]*}
-		# the '-' character _must_ be first or last in the character range
-		if [[ $pkg != +([-[:alnum:]><=.+_:]) ]]; then
-			error "$(gettext "Invalid syntax for %s: '%s'")" "optdepend" "$name"
-			ret=1
+	for optdepend in "${optdepends_list[@]%%:[[:space:]]*}"; do
+		name=${optdepend%%@(<|>|=|>=|<=)*}
+		# remove optional epoch in version specifier
+		ver=${optdepend##$name@(<|>|=|>=|<=)?(+([0-9]):)}
+		lint_one_pkgname optdepends "$name" || ret=1
+		if [[ $ver != $optdepend ]]; then
+			# remove optional pkgrel in version specifier
+			check_pkgver "${ver%-+([0-9])?(.+([0-9]))}" optdepends || ret=1
 		fi
 	done
 

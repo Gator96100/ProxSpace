@@ -449,7 +449,7 @@ def encode_prefix(label):
   """Encodes a node label as a list of bytes without a trailing high byte.
 
   This method encodes a node if there is exactly one child  and the
-  child follows immidiately after so that no jump is needed. This label
+  child follows immediately after so that no jump is needed. This label
   will then be a prefix to the label in the child node.
   """
   assert label
@@ -587,8 +587,6 @@ def parse_psl(infile, utf_mode, codecs):
       flags = PSL_FLAG_WILDCARD | PSL_FLAG_PLAIN | section
       line = line[2:]
     else:
-      if not b'.' in line:
-        continue # we do not need an explicit plain TLD rule, already covered by implicit '*' rule
       psl_nsuffixes += 1
       flags = PSL_FLAG_PLAIN | section
 

@@ -13,9 +13,9 @@ usr/share/bash-completion/completions/
 usr/share/bash-completion/completions/pacboy
 usr/share/licenses/
 usr/share/licenses/pactoys/
-usr/share/licenses/pactoys/LICENSE
 usr/share/licenses/pactoys/inih/
 usr/share/licenses/pactoys/inih/LICENSE
+usr/share/licenses/pactoys/LICENSE
 usr/share/pactoys/
 usr/share/pactoys/library/
 usr/share/pactoys/library/default.sh

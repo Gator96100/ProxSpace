@@ -2,7 +2,6 @@ check_install () {
 	pacman -Q $1 > /dev/null
 	if [ $? == 1 ]; then
 		pacman --noconfirm --force -S $1
-		pacman --noconfirm --force -Scc
 	fi
 }
 
@@ -10,16 +9,17 @@ check_install_web () {
 	pacman -Q $1 | grep $2 > /dev/null
 	if [ $? == 1 ]; then
 		pacman --noconfirm --force -U $3
-		pacman --noconfirm --force -Scc
 	fi
 }
 
-clean_qt5_86 () { 
+clean_86 () { 
 	rm -rf /mingw32/share/qt5/examples
+	pacman --noconfirm --force -Scc
 }
 
-clean_qt5_64 () { 
+clean_64 () { 
 	rm -rf /mingw64/share/qt5/examples
+	pacman --noconfirm --force -Scc
 }
 
 
@@ -27,25 +27,30 @@ clean_qt5_64 () {
 setup_proxspace ()
 { 
   if [ "$MSYSTEM" == "MINGW64" ]; then
-	check_install_web mingw-w64-x86_64-gcc-libs 8.2.0-3 http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-gcc-libs-8.2.0-3-any.pkg.tar.xz
-	check_install_web mingw-w64-x86_64-gcc 8.2.0-3 http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-gcc-8.2.0-3-any.pkg.tar.xz
-	check_install_web mingw-w64-x86_64-readline 6.3 http://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-readline-6.3.008-1-any.pkg.tar.xz
+	check_install mingw-w64-x86_64-gcc
+	check_install mingw-w64-x86_64-readline
 	check_install git
 	check_install make
 	check_install pkg-config
 	check_install mingw-w64-x86_64-qt5
-	clean_qt5_64
+	clean_64
   fi
   
   if [ "$MSYSTEM" == "MINGW32" ]; then
-	check_install_web mingw-w64-i686-readline 6.3 http://repo.msys2.org/mingw/i686/mingw-w64-i686-readline-6.3.008-1-any.pkg.tar.xz
+	check_install mingw-w64-i686-readline
 	check_install mingw-w64-i686-gcc
 	check_install git
 	check_install make
 	check_install pkg-config
 	check_install mingw-w64-i686-qt5
-	clean_qt5_86	
+	clean_86	
   fi
 }
 
-setup_proxspace
+export LANG=en_US.UTF-8
+	
+if [ "$MAYBE_FIRST_START" = "false" ]; then
+	yes | pacman -Syuu
+	setup_proxspace
+fi
+

@@ -1,0 +1,12 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/brotli.exe
+usr/bin/msys-brotlicommon-1.dll
+usr/bin/msys-brotlidec-1.dll
+usr/bin/msys-brotlienc-1.dll
+usr/share/
+usr/share/licenses/
+usr/share/licenses/brotli/
+usr/share/licenses/brotli/LICENSE
+

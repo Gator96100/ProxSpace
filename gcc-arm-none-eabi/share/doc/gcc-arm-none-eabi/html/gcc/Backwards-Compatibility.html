@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -90,10 +90,23 @@ deprecated.   See <a href="Deprecated-Features.html#Deprecated-Features">Depreca
 </p>
 <dl compact="compact">
 <dt><code>For scope</code></dt>
-<dd><p>If a variable is declared at for scope, it used to remain in scope until
-the end of the scope that contained the for statement (rather than just
-within the for scope).  G++ retains this, but issues a warning, if such a
+<dd><p>If a variable is declared at for scope, it used to remain in scope
+until the end of the scope that contained the for statement (rather
+than just within the for scope).  The deprecated
+<samp>-fno-for-scope</samp> option enables this non-standard behavior.
+Without the option, G++ retains this, but issues a warning, if such a
 variable is accessed outside the for scope.
+</p>
+<p>The behavior is deprecated, only available with <samp>-std=c++98</samp>
+<samp>-std=gnu++98</samp> languages and you must use the
+<samp>-fpermissive</samp> option to enable it.  The behavior will be
+removed.
+</p>
+</dd>
+<dt><code>Friend Injection</code></dt>
+<dd><p>The <samp>-ffriend-injection</samp> option makes injected friends visible
+to regular name lookup, unlike standard C++.  This option is
+deprecated and will be removed.
 </p>
 </dd>
 <dt><code>Implicit C language</code></dt>
@@ -106,6 +119,11 @@ than no arguments, as C++ demands.
 </dl>
 
 
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Deprecated-Features.html#Deprecated-Features" accesskey="p" rel="prev">Deprecated Features</a>, Up: <a href="C_002b_002b-Extensions.html#C_002b_002b-Extensions" accesskey="u" rel="up">C++ Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+</div>
 
 
 

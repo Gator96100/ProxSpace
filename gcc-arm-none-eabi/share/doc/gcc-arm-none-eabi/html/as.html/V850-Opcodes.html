@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,7 +67,7 @@ Previous: <a href="V850-Directives.html#V850-Directives" accesskey="p" rel="prev
 </div>
 <hr>
 <a name="Opcodes-19"></a>
-<h4 class="subsection">9.49.5 Opcodes</h4>
+<h4 class="subsection">9.48.5 Opcodes</h4>
 
 <a name="index-V850-opcodes"></a>
 <a name="index-opcodes-for-V850"></a>
@@ -153,7 +153,7 @@ into register 6, provided that the label is located somewhere within +/-
 that the GP register contains a fixed address set to the address of the
 label called &rsquo;__gp&rsquo;.  This can either be set up automatically by the
 linker, or specifically set by using the &lsquo;<samp>--defsym __gp=&lt;value&gt;</samp>&rsquo;
-command line option].
+command-line option].
 </p>
 <a name="index-tdaoff-pseudo_002dop_002c-V850"></a>
 </dd>
@@ -171,7 +171,7 @@ bytes of the address held in the EP register.  [Note the linker assumes
 that the EP register contains a fixed address set to the address of the
 label called &rsquo;__ep&rsquo;.  This can either be set up automatically by the
 linker, or specifically set by using the &lsquo;<samp>--defsym __ep=&lt;value&gt;</samp>&rsquo;
-command line option].
+command-line option].
 </p>
 <a name="index-zdaoff-pseudo_002dop_002c-V850"></a>
 </dd>
@@ -207,7 +207,7 @@ at the location labeled &rsquo;table_func1&rsquo;.
 <dd><p>Indicates that the following sequence of instructions is a long call
 to function <code>name</code>.  The linker will attempt to shorten this call
 sequence if <code>name</code> is within a 22bit offset of the call.  Only
-valid if the <code>-mrelax</code> command line switch has been enabled.
+valid if the <code>-mrelax</code> command-line switch has been enabled.
 </p>
 <a name="index-longjump-pseudo_002dop_002c-V850"></a>
 </dd>
@@ -215,7 +215,7 @@ valid if the <code>-mrelax</code> command line switch has been enabled.
 <dd><p>Indicates that the following sequence of instructions is a long jump
 to label <code>name</code>.  The linker will attempt to shorten this code
 sequence if <code>name</code> is within a 22bit offset of the jump.  Only
-valid if the <code>-mrelax</code> command line switch has been enabled.
+valid if the <code>-mrelax</code> command-line switch has been enabled.
 </p>
 </dd>
 </dl>

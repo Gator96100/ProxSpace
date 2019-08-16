@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="C_002b_002b-Expressions.html#C_002b_002b-Expressions" accesskey="
 </div>
 <hr>
 <a name="Statements-for-C_002b_002b-1"></a>
-<h4 class="subsection">10.10.5 Statements for C++</h4>
+<h4 class="subsection">11.10.5 Statements for C++</h4>
 <a name="index-statements-1"></a>
 <a name="index-BREAK_005fSTMT"></a>
 <a name="index-CLEANUP_005fSTMT"></a>
@@ -125,7 +125,7 @@ use of the particular value given by <code>DECL_INITIAL</code>.
 function.
 </p>
 <a name="Statements-2"></a>
-<h4 class="subsubsection">10.10.5.1 Statements</h4>
+<h4 class="subsubsection">11.10.5.1 Statements</h4>
 
 <p>There are tree nodes corresponding to all of the source-level
 statement constructs, used within the C and C++ frontends.  These are
@@ -192,32 +192,6 @@ several statements chained together.
 <p>Used to represent a <code>break</code> statement.  There are no additional
 fields.
 </p>
-</dd>
-<dt><code>CILK_SPAWN_STMT</code></dt>
-<dd>
-<p>Used to represent a spawning function in the Cilk Plus language extension.  
-This tree has one field that holds the name of the spawning function.
-<code>_Cilk_spawn</code> can be written in C in the following way:
-</p>
-<div class="smallexample">
-<pre class="smallexample"><code>_Cilk_spawn</code> &lt;function_name&gt; (&lt;parameters&gt;);
-</pre></div>
-
-<p>Detailed description for usage and functionality of <code>_Cilk_spawn</code> can be 
-found at <a href="https://www.cilkplus.org">https://www.cilkplus.org</a>.
-</p>
-</dd>
-<dt><code>CILK_SYNC_STMT</code></dt>
-<dd>
-<p>This statement is part of the Cilk Plus language extension.  It indicates that
-the current function cannot continue in parallel with its spawned children.  
-There are no additional fields.  <code>_Cilk_sync</code> can be written in C in the 
-following way:
-</p>
-<div class="smallexample">
-<pre class="smallexample"><code>_Cilk_sync</code>;
-</pre></div>
-
 </dd>
 <dt><code>CLEANUP_STMT</code></dt>
 <dd>

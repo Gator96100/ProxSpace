@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="WHOPR.html#WHOPR" accesskey="n" rel="next">WHOPR</a>, Previous: <
 </div>
 <hr>
 <a name="Using-summary-information-in-IPA-passes"></a>
-<h3 class="section">24.3 Using summary information in IPA passes</h3>
+<h3 class="section">25.3 Using summary information in IPA passes</h3>
 
 <p>Programs are represented internally as a <em>callgraph</em> (a
 multi-graph where nodes are functions and edges are call sites)
@@ -174,7 +174,7 @@ pass.
 </p>
 
 <a name="Virtual-clones"></a>
-<h4 class="subsection">24.3.1 Virtual clones</h4>
+<h4 class="subsection">25.3.1 Virtual clones</h4>
 
 <p>One of the main challenges of introducing the WHOPR compilation
 mode was addressing the interactions between optimization passes.
@@ -255,7 +255,7 @@ registered during the <em>Execute</em> stage to keep the
 optimization summaries updated for the <em>Transform</em> stage.
 </p>
 <a name="IPA-references"></a>
-<h4 class="subsection">24.3.2 IPA references</h4>
+<h4 class="subsection">25.3.2 IPA references</h4>
 
 <p>GCC represents IPA references in the callgraph.  For a function
 or variable <code>A</code>, the <em>IPA reference</em> is a list of all
@@ -269,7 +269,7 @@ and
 for details.
 </p>
 <a name="Jump-functions"></a>
-<h4 class="subsection">24.3.3 Jump functions</h4>
+<h4 class="subsection">25.3.3 Jump functions</h4>
 <p>Suppose that an optimization pass sees a function <code>A</code> and it
 knows the values of (some of) its arguments.  The <em>jump
 function</em> describes the value of a parameter of a given function

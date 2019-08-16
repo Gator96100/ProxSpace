@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Vectors.html#Vectors" accesskey="n" rel="next">Vectors</a>, Previ
 </div>
 <hr>
 <a name="Unary-and-Binary-Expressions-1"></a>
-<h4 class="subsection">10.6.3 Unary and Binary Expressions</h4>
+<h4 class="subsection">11.6.3 Unary and Binary Expressions</h4>
 <a name="index-NEGATE_005fEXPR"></a>
 <a name="index-ABS_005fEXPR"></a>
 <a name="index-BIT_005fNOT_005fEXPR"></a>
@@ -106,6 +106,7 @@ Next: <a href="Vectors.html#Vectors" accesskey="n" rel="next">Vectors</a>, Previ
 <a name="index-TRUTH_005fOR_005fEXPR"></a>
 <a name="index-TRUTH_005fXOR_005fEXPR"></a>
 <a name="index-POINTER_005fPLUS_005fEXPR"></a>
+<a name="index-POINTER_005fDIFF_005fEXPR"></a>
 <a name="index-PLUS_005fEXPR"></a>
 <a name="index-MINUS_005fEXPR"></a>
 <a name="index-MULT_005fEXPR"></a>
@@ -313,8 +314,17 @@ always of <code>BOOLEAN_TYPE</code> or <code>INTEGER_TYPE</code>.
 <dt><code>POINTER_PLUS_EXPR</code></dt>
 <dd><p>This node represents pointer arithmetic.  The first operand is always
 a pointer/reference type.  The second operand is always an unsigned
-integer type compatible with sizetype.  This is the only binary
-arithmetic operand that can operate on pointer types.
+integer type compatible with sizetype.  This and POINTER_DIFF_EXPR are
+the only binary arithmetic operators that can operate on pointer types.
+</p>
+</dd>
+<dt><code>POINTER_DIFF_EXPR</code></dt>
+<dd><p>This node represents pointer subtraction.  The two operands always
+have pointer/reference type.  It returns a signed integer of the same
+precision as the pointers.  The behavior is undefined if the difference
+of the two pointers, seen as infinite precision non-negative integers,
+does not fit in the result type.  The result does not depend on the
+pointer type, it is not divided by the size of the pointed-to type.
 </p>
 </dd>
 <dt><code>PLUS_EXPR</code></dt>
@@ -470,10 +480,10 @@ represented conveniently as <code>(i &gt;= 0 &amp;&amp; i &lt; 10) ? i : abort()
 <p>As a GNU extension, the C language front-ends allow the second
 operand of the <code>?:</code> operator may be omitted in the source.
 For example, <code>x ? : 3</code> is equivalent to <code>x ? x : 3</code>,
-assuming that <code>x</code> is an expression without side-effects.
+assuming that <code>x</code> is an expression without side effects.
 In the tree representation, however, the second operand is always
 present, possibly protected by <code>SAVE_EXPR</code> if the first
-argument does cause side-effects.
+argument does cause side effects.
 </p>
 </dd>
 <dt><code>CALL_EXPR</code></dt>
@@ -563,10 +573,10 @@ by the <code>COMPOUND_LITERAL_EXPR_DECL</code> macro.
 <dt><code>SAVE_EXPR</code></dt>
 <dd>
 <p>A <code>SAVE_EXPR</code> represents an expression (possibly involving
-side-effects) that is used more than once.  The side-effects should
+side effects) that is used more than once.  The side effects should
 occur only the first time the expression is evaluated.  Subsequent uses
 should just reuse the computed value.  The first operand to the
-<code>SAVE_EXPR</code> is the expression to evaluate.  The side-effects should
+<code>SAVE_EXPR</code> is the expression to evaluate.  The side effects should
 be executed where the <code>SAVE_EXPR</code> is first encountered in a
 depth-first preorder traversal of the expression tree.
 </p>
@@ -607,7 +617,7 @@ its sole argument yields the representation for <code>ap</code>.
 <dt><code>ANNOTATE_EXPR</code></dt>
 <dd><p>This node is used to attach markers to an expression. The first operand
 is the annotated expression, the second is an <code>INTEGER_CST</code> with
-a value from <code>enum annot_expr_kind</code>.
+a value from <code>enum annot_expr_kind</code>, the third is an <code>INTEGER_CST</code>.
 </p></dd>
 </dl>
 

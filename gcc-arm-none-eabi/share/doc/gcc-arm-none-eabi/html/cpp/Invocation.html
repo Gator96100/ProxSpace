@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1987-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1987-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -245,6 +245,8 @@ preprocessed output.
 <p>When used with the driver options <samp>-MD</samp> or <samp>-MMD</samp>,
 <samp>-MF</samp> overrides the default dependency output file.
 </p>
+<p>If <var>file</var> is <samp>-</samp>, then the dependencies are written to <samp>stdout</samp>.
+</p>
 </dd>
 <dt><code>-MG</code></dt>
 <dd><a name="index-MG"></a>
@@ -323,7 +325,7 @@ applies a <samp>.d</samp> suffix.
 is understood to specify a target object file.
 </p>
 <p>Since <samp>-E</samp> is not implied, <samp>-MD</samp> can be used to generate
-a dependency output file as a side-effect of the compilation process.
+a dependency output file as a side effect of the compilation process.
 </p>
 </dd>
 <dt><code>-MMD</code></dt>
@@ -416,6 +418,18 @@ When this option is given no argument, the default parameter value is
 <p>Note that <code>-ftrack-macro-expansion=2</code> is activated by default.
 </p>
 </dd>
+<dt><code>-fmacro-prefix-map=<var>old</var>=<var>new</var></code></dt>
+<dd><a name="index-fmacro_002dprefix_002dmap"></a>
+<p>When preprocessing files residing in directory <samp><var>old</var></samp>,
+expand the <code>__FILE__</code> and <code>__BASE_FILE__</code> macros as if the
+files resided in directory <samp><var>new</var></samp> instead.  This can be used
+to change an absolute path to a relative path by using <samp>.</samp> for
+<var>new</var> which can result in more reproducible builds that are
+location independent.  This option also affects
+<code>__builtin_FILE()</code> during compilation.  See also
+<samp>-ffile-prefix-map</samp>.
+</p>
+</dd>
 <dt><code>-fexec-charset=<var>charset</var></code></dt>
 <dd><a name="index-fexec_002dcharset"></a>
 <a name="index-character-set_002c-execution"></a>
@@ -498,7 +512,7 @@ source line, since the first token on the line is no longer a &lsquo;<samp>#</sa
 like <samp>-C</samp>, except that comments contained within macros are
 also passed through to the output file where the macro is expanded.
 </p>
-<p>In addition to the side-effects of the <samp>-C</samp> option, the
+<p>In addition to the side effects of the <samp>-C</samp> option, the
 <samp>-CC</samp> option causes all C++-style comments inside a macro
 to be converted to C-style comments.  This is to prevent later use
 of that macro from inadvertently commenting out the remainder of
@@ -629,7 +643,6 @@ belongs to.
 </p>
 
 
-
 </dd>
 <dt><code>-I <var>dir</var></code></dt>
 <dt><code>-iquote <var>dir</var></code></dt>
@@ -642,8 +655,9 @@ belongs to.
 <p>Add the directory <var>dir</var> to the list of directories to be searched
 for header files during preprocessing.
 See <a href="Search-Path.html#Search-Path">Search Path</a>.
-If <var>dir</var> begins with &lsquo;<samp>=</samp>&rsquo;, then the &lsquo;<samp>=</samp>&rsquo; is replaced
-by the sysroot prefix; see <samp>--sysroot</samp> and <samp>-isysroot</samp>.
+If <var>dir</var> begins with &lsquo;<samp>=</samp>&rsquo; or <code>$SYSROOT</code>, then the &lsquo;<samp>=</samp>&rsquo;
+or <code>$SYSROOT</code> is replaced by the sysroot prefix; see
+<samp>--sysroot</samp> and <samp>-isysroot</samp>.
 </p>
 <p>Directories specified with <samp>-iquote</samp> apply only to the quote 
 form of the directive, <code>#include&nbsp;&quot;<var>file</var>&quot;<!-- /@w --></code>.

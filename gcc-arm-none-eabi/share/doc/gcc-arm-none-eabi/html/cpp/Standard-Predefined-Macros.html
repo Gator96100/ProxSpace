@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1987-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1987-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -182,8 +182,11 @@ implementation, unless GNU CPP is being used with GCC.
 </p>
 <p>The value <code>199409L</code> signifies the 1989 C standard as amended in
 1994, which is the current default; the value <code>199901L</code> signifies
-the 1999 revision of the C standard.  Support for the 1999 revision is
-not yet complete.
+the 1999 revision of the C standard; the value <code>201112L</code>
+signifies the 2011 revision of the C standard; the value
+<code>201710L</code> signifies the 2017 revision of the C standard (which is
+otherwise identical to the 2011 version apart from correction of
+defects).
 </p>
 <p>This macro is not defined if the <samp>-traditional-cpp</samp> option is
 used, nor when compiling C++ or Objective-C.
@@ -204,9 +207,10 @@ selected, the value of the macro is
 <code>199711L</code> for the 1998 C++ standard,
 <code>201103L</code> for the 2011 C++ standard,
 <code>201402L</code> for the 2014 C++ standard,
-or an unspecified value strictly larger than <code>201402L</code> for the
-experimental languages enabled by <samp>-std=c++1z</samp> and
-<samp>-std=gnu++1z</samp>.
+<code>201703L</code> for the 2017 C++ standard,
+or an unspecified value strictly larger than <code>201703L</code> for the
+experimental languages enabled by <samp>-std=c++2a</samp> and
+<samp>-std=gnu++2a</samp>.
 </p>
 </dd>
 <dt><code>__OBJC__</code></dt>

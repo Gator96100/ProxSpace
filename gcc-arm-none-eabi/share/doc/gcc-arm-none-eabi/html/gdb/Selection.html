@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -79,23 +79,81 @@ of the stack frame just selected.
 <dd><a name="index-frame_002c-selecting"></a>
 <a name="index-f-_0028frame_0029"></a>
 </dd>
-<dt><code>frame <var>n</var></code></dt>
-<dt><code>f <var>n</var></code></dt>
-<dd><p>Select frame number <var>n</var>.  Recall that frame zero is the innermost
+<dt><code>frame <span class="roman">[</span> <var>frame-selection-spec</var> <span class="roman">]</span></code></dt>
+<dt><code>f <span class="roman">[</span> <var>frame-selection-spec</var> <span class="roman">]</span></code></dt>
+<dd><p>The <code>frame</code> command allows different stack frames to be
+selected.  The <var>frame-selection-spec</var> can be any of the following:
+</p>
+<dl compact="compact">
+<dd><a name="index-frame-level-1"></a>
+</dd>
+<dt><code><var>num</var></code></dt>
+<dt><code>level <var>num</var></code></dt>
+<dd><p>Select frame level <var>num</var>.  Recall that frame zero is the innermost
 (currently executing) frame, frame one is the frame that called the
-innermost one, and so on.  The highest-numbered frame is the one for
-<code>main</code>.
+innermost one, and so on.  The highest level frame is usually the one
+for <code>main</code>.
+</p>
+<p>As this is the most common method of navigating the frame stack, the
+string <code>level</code> can be omitted.  For example, the following two
+commands are equivalent:
+</p>
+<div class="smallexample">
+<pre class="smallexample">(gdb) frame 3
+(gdb) frame level 3
+</pre></div>
+
+<a name="index-frame-address"></a>
+</dd>
+<dt><code>address <var>stack-address</var></code></dt>
+<dd><p>Select the frame with stack address <var>stack-address</var>.  The
+<var>stack-address</var> for a frame can be seen in the output of
+<code>info frame</code>, for example:
+</p>
+<div class="smallexample">
+<pre class="smallexample">(gdb) info frame
+Stack level 1, frame at 0x7fffffffda30:
+ rip = 0x40066d in b (amd64-entry-value.cc:59); saved rip 0x4004c5
+ tail call frame, caller of frame at 0x7fffffffda30
+ source language c++.
+ Arglist at unknown address.
+ Locals at unknown address, Previous frame's sp is 0x7fffffffda30
+</pre></div>
+
+<p>The <var>stack-address</var> for this frame is <code>0x7fffffffda30</code> as
+indicated by the line:
+</p>
+<div class="smallexample">
+<pre class="smallexample">Stack level 1, frame at 0x7fffffffda30:
+</pre></div>
+
+<a name="index-frame-function"></a>
+</dd>
+<dt><code>function <var>function-name</var></code></dt>
+<dd><p>Select the stack frame for function <var>function-name</var>.  If there are
+multiple stack frames for function <var>function-name</var> then the inner
+most stack frame is selected.
+</p>
+<a name="index-frame-view"></a>
+</dd>
+<dt><code>view <var>stack-address</var> <span class="roman">[</span> <var>pc-addr</var> <span class="roman">]</span></code></dt>
+<dd><p>View a frame that is not part of <small>GDB</small>&rsquo;s backtrace.  The frame
+viewed has stack address <var>stack-addr</var>, and optionally, a program
+counter address of <var>pc-addr</var>.
+</p>
+<p>This is useful mainly if the chaining of stack frames has been
+damaged by a bug, making it impossible for <small>GDB</small> to assign
+numbers properly to all frames.  In addition, this can be useful
+when your program has multiple stacks and switches between them.
+</p>
+<p>When viewing a frame outside the current backtrace using
+<code>frame view</code> then you can always return to the original
+stack using one of the previous stack frame selection instructions,
+for example <code>frame level 0</code>.
 </p>
 </dd>
-<dt><code>frame <var>stack-addr</var> [ <var>pc-addr</var> ]</code></dt>
-<dt><code>f <var>stack-addr</var> [ <var>pc-addr</var> ]</code></dt>
-<dd><p>Select the frame at address <var>stack-addr</var>.  This is useful mainly if the
-chaining of stack frames has been damaged by a bug, making it
-impossible for <small>GDB</small> to assign numbers properly to all frames.  In
-addition, this can be useful when your program has multiple stacks and
-switches between them.  The optional <var>pc-addr</var> can also be given to
-specify the value of PC for the stack frame.
-</p>
+</dl>
+
 <a name="index-up"></a>
 </dd>
 <dt><code>up <var>n</var></code></dt>
@@ -138,11 +196,13 @@ for details.
 <dl compact="compact">
 <dd><a name="index-select_002dframe"></a>
 </dd>
-<dt><code>select-frame</code></dt>
+<dt><code>select-frame <span class="roman">[</span> <var>frame-selection-spec</var> <span class="roman">]</span></code></dt>
 <dd><p>The <code>select-frame</code> command is a variant of <code>frame</code> that does
 not display the new frame after selecting it.  This command is
 intended primarily for use in <small>GDB</small> command scripts, where the
-output might be unnecessary and distracting.
+output might be unnecessary and distracting.  The
+<var>frame-selection-spec</var> is as for the <code>frame</code> command
+described in <a href="#Selection">Selecting a Frame</a>.
 </p>
 <a name="index-down_002dsilently"></a>
 <a name="index-up_002dsilently"></a>

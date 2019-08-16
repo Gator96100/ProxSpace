@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -65,7 +65,7 @@ Next: <a href="readelf.html#readelf" accesskey="n" rel="next">readelf</a>, Previ
 </div>
 <hr>
 <a name="dlltool-1"></a>
-<h2 class="chapter">14 dlltool</h2>
+<h2 class="chapter">13 dlltool</h2>
 <a name="index-DLL"></a>
 <a name="index-dlltool"></a>
 
@@ -168,7 +168,7 @@ which in turn will import LoadLibraryA and GetProcAddress from kernel32.
 </p>
 <p><code>dlltool</code> builds the library file by hand, but it builds the
 exports file by creating temporary files containing assembler statements
-and then assembling these.  The <samp>-S</samp> command line option can be
+and then assembling these.  The <samp>-S</samp> command-line option can be
 used to specify the path to the assembler that dlltool will use,
 and the <samp>-f</samp> option can be used to pass specific flags to that
 assembler.  The <samp>-n</samp> can be used to prevent dlltool from deleting
@@ -194,7 +194,7 @@ description of the <samp>-I</samp> or <samp>--identify</samp> option.
 </p>
 
 
-<p>The command line options have the following meanings:
+<p>The command-line options have the following meanings:
 </p>
 <dl compact="compact">
 <dt><code>-d <var>filename</var></code></dt>
@@ -270,7 +270,7 @@ to create the exports file.
 </dd>
 <dt><code>-f <var>options</var></code></dt>
 <dt><code>--as-flags <var>options</var></code></dt>
-<dd><p>Specifies any specific command line options to be passed to the
+<dd><p>Specifies any specific command-line options to be passed to the
 assembler when building the exports file.  This option will work even if
 the <samp>-S</samp> option is not used.  This option only takes one argument,
 and if it occurs more than once on the command line, then later
@@ -416,7 +416,7 @@ is generated from the pid.
 </dd>
 <dt><code>-h</code></dt>
 <dt><code>--help</code></dt>
-<dd><p>Displays a list of command line options and then exits.
+<dd><p>Displays a list of command-line options and then exits.
 </p>
 </dd>
 <dt><code>-V</code></dt>

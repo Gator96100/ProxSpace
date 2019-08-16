@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -178,6 +178,13 @@ matches, printing a list of all breakpoints it set.  Once these
 breakpoints are set, they are treated just like the breakpoints set with
 the <code>break</code> command.  You can delete them, disable them, or make
 them conditional the same way as any other breakpoint.
+</p>
+<p>In programs using different languages, <small>GDB</small> chooses the syntax
+to print the list of all breakpoints it sets according to the
+&lsquo;<samp>set language</samp>&rsquo; value: using &lsquo;<samp>set language auto</samp>&rsquo;
+(see <a href="Automatically.html#Automatically">Set Language Automatically</a>) means to use the
+language of the breakpoint&rsquo;s function, other values mean to use
+the manually specified language (see <a href="Manually.html#Manually">Set Language Manually</a>).
 </p>
 <p>The syntax of the regular expression is the standard one used with tools
 like <samp>grep</samp>.  Note that this is different from the syntax used by

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Output-Statement.html#Output-Statement" accesskey="n" rel="next">
 </div>
 <hr>
 <a name="Output-Templates-and-Operand-Substitution"></a>
-<h3 class="section">16.5 Output Templates and Operand Substitution</h3>
+<h3 class="section">17.5 Output Templates and Operand Substitution</h3>
 <a name="index-output-templates"></a>
 <a name="index-operand-substitution"></a>
 
@@ -156,6 +156,11 @@ multiple assembler instructions, and there is a matching <code>define_split</cod
 already defined, then you can simply use <code>#</code> as the output template
 instead of writing an output template that emits the multiple assembler
 instructions.
+</p>
+<p>Note that <code>#</code> only has an effect while generating assembly code;
+it does not affect whether a split occurs earlier.  An associated
+<code>define_split</code> must exist and it must be suitable for use after
+register allocation.
 </p>
 <p>If the macro <code>ASSEMBLER_DIALECT</code> is defined, you can use construct
 of the form &lsquo;<samp>{option0|option1|option2}</samp>&rsquo; in the templates.  These

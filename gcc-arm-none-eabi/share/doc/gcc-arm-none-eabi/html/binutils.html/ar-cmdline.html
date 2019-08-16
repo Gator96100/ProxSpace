@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -180,9 +180,10 @@ modifier.  In either case it does the same thing.
 <dd><a name="index-contents-of-archive"></a>
 <p>Display a <em>table</em> listing the contents of <var>archive</var>, or those
 of the files listed in <var>member</var>&hellip; that are present in the
-archive.  Normally only the member name is shown; if you also want to
-see the modes (permissions), timestamp, owner, group, and size, you can
-request that by also specifying the &lsquo;<samp>v</samp>&rsquo; modifier.
+archive.  Normally only the member name is shown, but if the modifier
+&lsquo;<samp>O</samp>&rsquo; is specified, then the corresponding offset of the member is also
+displayed.  Finally, in order to see the modes (permissions), timestamp,
+owner, group, and size the &lsquo;<samp>v</samp>&rsquo; modifier should be included.
 </p>
 <p>If you do not specify a <var>member</var>, all files in the archive
 are listed.
@@ -282,6 +283,12 @@ you do not specify this modifier, files extracted from the archive
 are stamped with the time of extraction.
 </p>
 </dd>
+<dt>&lsquo;<samp>O</samp>&rsquo;</dt>
+<dd><a name="index-offsets-of-files"></a>
+<p>Display member offsets inside the archive. Use together with the &lsquo;<samp>t</samp>&rsquo;
+option.
+</p>
+</dd>
 <dt>&lsquo;<samp>P</samp>&rsquo;</dt>
 <dd><p>Use the full path name when matching names in the archive.  <small>GNU</small>
 <code>ar</code> can not create an archive with a full path name (such archives
@@ -348,13 +355,13 @@ when the modifier &lsquo;<samp>v</samp>&rsquo; is appended.
 </p></dd>
 </dl>
 
-<p>The <code>ar</code> program also supports some command line options which
+<p>The <code>ar</code> program also supports some command-line options which
 are neither modifiers nor actions, but which do change its behaviour
 in specific ways:
 </p>
 <dl compact="compact">
 <dt>&lsquo;<samp>--help</samp>&rsquo;</dt>
-<dd><p>Displays the list of command line options supported by <code>ar</code>
+<dd><p>Displays the list of command-line options supported by <code>ar</code>
 and then exits.
 </p>
 </dd>
@@ -372,7 +379,7 @@ of the other &lsquo;<samp>-X</samp>&rsquo; options; in particular, it does not s
 </dd>
 <dt>&lsquo;<samp>--plugin <var>name</var></samp>&rsquo;</dt>
 <dd><a name="index-plugins"></a>
-<p>The optional command line switch <samp>--plugin <var>name</var></samp> causes 
+<p>The optional command-line switch <samp>--plugin <var>name</var></samp> causes
 <code>ar</code> to load the plugin called <var>name</var> which adds support
 for more file formats, including object files with link-time
 optimization information.
@@ -396,7 +403,7 @@ sufficient to just copy the newest one.
 </p>
 </dd>
 <dt>&lsquo;<samp>--target <var>target</var></samp>&rsquo;</dt>
-<dd><p>The optional command line switch <samp>--target <var>bfdname</var></samp>
+<dd><p>The optional command-line switch <samp>--target <var>bfdname</var></samp>
 specifies that the archive members are in an object code format
 different from your system&rsquo;s default format.  See
 See <a href="Target-Selection.html#Target-Selection">Target Selection</a>, for more information.

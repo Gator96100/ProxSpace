@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -211,15 +211,25 @@ constructors are called; see <a href="http://gcc.gnu.org/onlinedocs/gccint/Colle
 </dd>
 <dt><code>-pie</code></dt>
 <dd><a name="index-pie"></a>
-<p>Produce a position independent executable on targets that support it.
-For predictable results, you must also specify the same set of options
-used for compilation (<samp>-fpie</samp>, <samp>-fPIE</samp>,
+<p>Produce a dynamically linked position independent executable on targets
+that support it.  For predictable results, you must also specify the same
+set of options used for compilation (<samp>-fpie</samp>, <samp>-fPIE</samp>,
 or model suboptions) when you specify this linker option.
 </p>
 </dd>
 <dt><code>-no-pie</code></dt>
 <dd><a name="index-no_002dpie"></a>
-<p>Don&rsquo;t produce a position independent executable.
+<p>Don&rsquo;t produce a dynamically linked position independent executable.
+</p>
+</dd>
+<dt><code>-static-pie</code></dt>
+<dd><a name="index-static_002dpie"></a>
+<p>Produce a static position independent executable on targets that support
+it.  A static position independent executable is similar to a static
+executable, but can be loaded at any address without a dynamic linker.
+For predictable results, you must also specify the same set of options
+used for compilation (<samp>-fpie</samp>, <samp>-fPIE</samp>, or model
+suboptions) when you specify this linker option.
 </p>
 </dd>
 <dt><code>-pthread</code></dt>
@@ -247,8 +257,9 @@ from within a program.
 </dd>
 <dt><code>-static</code></dt>
 <dd><a name="index-static"></a>
-<p>On systems that support dynamic linking, this prevents linking with the shared
-libraries.  On other systems, this option has no effect.
+<p>On systems that support dynamic linking, this overrides <samp>-pie</samp>
+and prevents linking with the shared libraries.  On other systems, this
+option has no effect.
 </p>
 </dd>
 <dt><code>-shared</code></dt>
@@ -275,9 +286,9 @@ of these is when the application wishes to throw and catch exceptions
 across different shared libraries.  In that case, each of the libraries
 as well as the application itself should use the shared <samp>libgcc</samp>.
 </p>
-<p>Therefore, the G++ and driver automatically adds <samp>-shared-libgcc</samp>
- whenever you build a shared library or a main executable, because C++
- programs typically use exceptions, so this is the right thing to do.
+<p>Therefore, the G++ driver automatically adds <samp>-shared-libgcc</samp>
+whenever you build a shared library or a main executable, because C++
+programs typically use exceptions, so this is the right thing to do.
 </p>
 <p>If, instead, you use the GCC driver to create shared libraries, you may
 find that they are not always linked with the shared <samp>libgcc</samp>.
@@ -291,8 +302,7 @@ propagate through such shared libraries, without incurring relocation
 costs at library load time.
 </p>
 <p>However, if a library or main executable is supposed to throw or catch
-exceptions, you must link it using the G++ driver, as appropriate
-for the languages used in the program, or using the option
+exceptions, you must link it using the G++ driver, or using the option
 <samp>-shared-libgcc</samp>, such that it is linked with the shared
 <samp>libgcc</samp>.
 </p>

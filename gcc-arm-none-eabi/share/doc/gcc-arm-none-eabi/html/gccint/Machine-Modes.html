@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Constants.html#Constants" accesskey="n" rel="next">Constants</a>,
 </div>
 <hr>
 <a name="Machine-Modes-1"></a>
-<h3 class="section">13.6 Machine Modes</h3>
+<h3 class="section">14.6 Machine Modes</h3>
 <a name="index-machine-modes"></a>
 
 <a name="index-machine_005fmode"></a>
@@ -501,6 +501,128 @@ classes.  Currently <code>VOIDmode</code> and <code>BLKmode</code> are in
 </p></dd>
 </dl>
 
+<a name="index-machine-mode-wrapper-classes"></a>
+<p><code>machmode.h</code> also defines various wrapper classes that combine a
+<code>machine_mode</code> with a static assertion that a particular
+condition holds.  The classes are:
+</p>
+<dl compact="compact">
+<dd><a name="index-scalar_005fint_005fmode"></a>
+</dd>
+<dt><code>scalar_int_mode</code></dt>
+<dd><p>A mode that has class <code>MODE_INT</code> or <code>MODE_PARTIAL_INT</code>.
+</p>
+<a name="index-scalar_005ffloat_005fmode"></a>
+</dd>
+<dt><code>scalar_float_mode</code></dt>
+<dd><p>A mode that has class <code>MODE_FLOAT</code> or <code>MODE_DECIMAL_FLOAT</code>.
+</p>
+<a name="index-scalar_005fmode"></a>
+</dd>
+<dt><code>scalar_mode</code></dt>
+<dd><p>A mode that holds a single numerical value.  In practice this means
+that the mode is a <code>scalar_int_mode</code>, is a <code>scalar_float_mode</code>,
+or has class <code>MODE_FRACT</code>, <code>MODE_UFRACT</code>, <code>MODE_ACCUM</code>,
+<code>MODE_UACCUM</code> or <code>MODE_POINTER_BOUNDS</code>.
+</p>
+<a name="index-complex_005fmode"></a>
+</dd>
+<dt><code>complex_mode</code></dt>
+<dd><p>A mode that has class <code>MODE_COMPLEX_INT</code> or <code>MODE_COMPLEX_FLOAT</code>.
+</p>
+<a name="index-fixed_005fsize_005fmode"></a>
+</dd>
+<dt><code>fixed_size_mode</code></dt>
+<dd><p>A mode whose size is known at compile time.
+</p></dd>
+</dl>
+
+<p>Named modes use the most constrained of the available wrapper classes,
+if one exists, otherwise they use <code>machine_mode</code>.  For example,
+<code>QImode</code> is a <code>scalar_int_mode</code>, <code>SFmode</code> is a
+<code>scalar_float_mode</code> and <code>BLKmode</code> is a plain
+<code>machine_mode</code>.  It is possible to refer to any mode as a raw
+<code>machine_mode</code> by adding the <code>E_</code> prefix, where <code>E</code>
+stands for &ldquo;enumeration&rdquo;.  For example, the raw <code>machine_mode</code>
+names of the modes just mentioned are <code>E_QImode</code>, <code>E_SFmode</code>
+and <code>E_BLKmode</code> respectively.
+</p>
+<p>The wrapper classes implicitly convert to <code>machine_mode</code> and to any
+wrapper class that represents a more general condition; for example
+<code>scalar_int_mode</code> and <code>scalar_float_mode</code> both convert
+to <code>scalar_mode</code> and all three convert to <code>fixed_size_mode</code>.
+The classes act like <code>machine_mode</code>s that accept only certain
+named modes.
+</p>
+<a name="index-opt_005fmode"></a>
+<p><samp>machmode.h</samp> also defines a template class <code>opt_mode&lt;<var>T</var>&gt;</code>
+that holds a <code>T</code> or nothing, where <code>T</code> can be either
+<code>machine_mode</code> or one of the wrapper classes above.  The main
+operations on an <code>opt_mode&lt;<var>T</var>&gt;</code> <var>x</var> are as follows:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp><var>x</var>.exists ()</samp>&rsquo;</dt>
+<dd><p>Return true if <var>x</var> holds a mode rather than nothing.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>x</var>.exists (&amp;<var>y</var>)</samp>&rsquo;</dt>
+<dd><p>Return true if <var>x</var> holds a mode rather than nothing, storing the
+mode in <var>y</var> if so.  <var>y</var> must be assignment-compatible with <var>T</var>.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>x</var>.require ()</samp>&rsquo;</dt>
+<dd><p>Assert that <var>x</var> holds a mode rather than nothing and return that mode.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>x</var> = <var>y</var></samp>&rsquo;</dt>
+<dd><p>Set <var>x</var> to <var>y</var>, where <var>y</var> is a <var>T</var> or implicitly converts
+to a <var>T</var>.
+</p></dd>
+</dl>
+
+<p>The default constructor sets an <code>opt_mode&lt;<var>T</var>&gt;</code> to nothing.
+There is also a constructor that takes an initial value of type <var>T</var>.
+</p>
+<p>It is possible to use the <samp>is-a.h</samp> accessors on a <code>machine_mode</code>
+or machine mode wrapper <var>x</var>:
+</p>
+<dl compact="compact">
+<dd><a name="index-is_005fa"></a>
+</dd>
+<dt>&lsquo;<samp>is_a &lt;<var>T</var>&gt; (<var>x</var>)</samp>&rsquo;</dt>
+<dd><p>Return true if <var>x</var> meets the conditions for wrapper class <var>T</var>.
+</p>
+</dd>
+<dt>&lsquo;<samp>is_a &lt;<var>T</var>&gt; (<var>x</var>, &amp;<var>y</var>)</samp>&rsquo;</dt>
+<dd><p>Return true if <var>x</var> meets the conditions for wrapper class <var>T</var>,
+storing it in <var>y</var> if so.  <var>y</var> must be assignment-compatible with
+<var>T</var>.
+</p>
+</dd>
+<dt>&lsquo;<samp>as_a &lt;<var>T</var>&gt; (<var>x</var>)</samp>&rsquo;</dt>
+<dd><p>Assert that <var>x</var> meets the conditions for wrapper class <var>T</var>
+and return it as a <var>T</var>.
+</p>
+</dd>
+<dt>&lsquo;<samp>dyn_cast &lt;<var>T</var>&gt; (<var>x</var>)</samp>&rsquo;</dt>
+<dd><p>Return an <code>opt_mode&lt;<var>T</var>&gt;</code> that holds <var>x</var> if <var>x</var> meets
+the conditions for wrapper class <var>T</var> and that holds nothing otherwise.
+</p></dd>
+</dl>
+
+<p>The purpose of these wrapper classes is to give stronger static type
+checking.  For example, if a function takes a <code>scalar_int_mode</code>,
+a caller that has a general <code>machine_mode</code> must either check or
+assert that the code is indeed a scalar integer first, using one of
+the functions above.
+</p>
+<p>The wrapper classes are normal C++ classes, with user-defined
+constructors.  Sometimes it is useful to have a POD version of
+the same type, particularly if the type appears in a <code>union</code>.
+The template class <code>pod_mode&lt;<var>T</var>&gt;</code> provides a POD version
+of wrapper class <var>T</var>.  It is assignment-compatible with <var>T</var>
+and implicitly converts to both <code>machine_mode</code> and <var>T</var>.
+</p>
 <p>Here are some C macros that relate to machine modes:
 </p>
 <dl compact="compact">
@@ -615,7 +737,12 @@ compute integer values.
 <a name="index-MAX_005fBITSIZE_005fMODE_005fANY_005fMODE"></a>
 </dd>
 <dt><code>MAX_BITSIZE_MODE_ANY_MODE</code></dt>
-<dd><p>The bitsize of the largest mode on the target.   
+<dd><p>The bitsize of the largest mode on the target.  The default value is
+the largest mode size given in the mode definition file, which is
+always correct for targets whose modes have a fixed size.  Targets
+that might increase the size of a mode beyond this default should define
+<code>MAX_BITSIZE_MODE_ANY_MODE</code> to the actual upper limit in
+<samp><var>machine</var>-modes.def</samp>.
 </p></dd>
 </dl>
 

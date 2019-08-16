@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -412,6 +412,16 @@ modify XML target descriptions.
 <dd><p>Check that the target descriptions dynamically created by <small>GDB</small>
 equal the descriptions created from XML files found in <var>dir</var>.
 </p>
+<a name="maint-check-libthread_002ddb"></a><a name="index-maint-check-libthread_002ddb"></a>
+</dd>
+<dt><code>maint check libthread-db</code></dt>
+<dd><p>Run integrity checks on the current inferior&rsquo;s thread debugging
+library.  This exercises all <code>libthread_db</code> functionality used by
+<small>GDB</small> on GNU/Linux systems, and by extension also exercises the
+<code>proc_service</code> functions provided by <small>GDB</small> that
+<code>libthread_db</code> uses.  Note that parts of the test may be skipped
+on some platforms when debugging core files.
+</p>
 <a name="index-maint-print-dummy_002dframes"></a>
 </dd>
 <dt><code>maint print dummy-frames</code></dt>
@@ -613,10 +623,35 @@ compilation units will be stored in memory longer, and more total
 memory will be used.  Setting it to zero disables caching, which will
 slow down <small>GDB</small> startup, but reduce memory consumption.
 </p>
+<a name="index-maint-set-dwarf-unwinders"></a>
+<a name="index-maint-show-dwarf-unwinders"></a>
+</dd>
+<dt><code>maint set dwarf unwinders</code></dt>
+<dt><code>maint show dwarf unwinders</code></dt>
+<dd><p>Control use of the DWARF frame unwinders.
+</p>
+<a name="index-DWARF-frame-unwinders"></a>
+<p>Many targets that support DWARF debugging use <small>GDB</small>&rsquo;s DWARF
+frame unwinders to build the backtrace.  Many of these targets will
+also have a second mechanism for building the backtrace for use in
+cases where DWARF information is not available, this second mechanism
+is often an analysis of a function&rsquo;s prologue.
+</p>
+<p>In order to extend testing coverage of the second level stack
+unwinding mechanisms it is helpful to be able to disable the DWARF
+stack unwinders, this can be done with this switch.
+</p>
+<p>In normal use of <small>GDB</small> disabling the DWARF unwinders is not
+advisable, there are cases that are better handled through DWARF than
+prologue analysis, and the debug experience is likely to be better
+with the DWARF frame unwinders enabled.
+</p>
+<p>If DWARF frame unwinders are not supported for a particular target
+architecture, then enabling this flag does not cause them to be used.
 <a name="index-maint-set-profile"></a>
 <a name="index-maint-show-profile"></a>
 <a name="index-profiling-GDB"></a>
-</dd>
+</p></dd>
 <dt><code>maint set profile</code></dt>
 <dt><code>maint show profile</code></dt>
 <dd><p>Control profiling of <small>GDB</small>.
@@ -741,6 +776,18 @@ If enabled, <small>GDB</small> will display the following information:
 </dd>
 </dl>
 
+<a name="index-maint-set-check_002dlibthread_002ddb"></a>
+<a name="index-maint-show-check_002dlibthread_002ddb"></a>
+</dd>
+<dt><code>maint set check-libthread-db [on|off]</code></dt>
+<dt><code>maint show check-libthread-db</code></dt>
+<dd><p>Control whether <small>GDB</small> should run integrity checks on inferior
+specific thread debugging libraries as they are loaded.  The default
+is not to perform such checks.  If any check fails <small>GDB</small> will
+unload the library and continue searching for a suitable candidate as
+described in <a href="Threads.html#set-libthread_002ddb_002dsearch_002dpath">set libthread-db-search-path</a>.  For more information
+about the tests, see <a href="#maint-check-libthread_002ddb">maint check libthread-db</a>.
+</p>
 <a name="index-maint-space"></a>
 <a name="index-memory-used-by-commands"></a>
 </dd>

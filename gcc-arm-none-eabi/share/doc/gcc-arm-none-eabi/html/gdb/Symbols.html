@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -523,9 +523,16 @@ types in your program whose names include the string <code>value</code>, but
 &lsquo;<samp>i type ^value$</samp>&rsquo; gives information only on types whose complete
 name is <code>value</code>.
 </p>
+<p>In programs using different languages, <small>GDB</small> chooses the syntax
+to print the type description according to the
+&lsquo;<samp>set language</samp>&rsquo; value: using &lsquo;<samp>set language auto</samp>&rsquo;
+(see <a href="Automatically.html#Automatically">Set Language Automatically</a>) means to use the
+language of the type, other values mean to use
+the manually specified language (see <a href="Manually.html#Manually">Set Language Manually</a>).
+</p>
 <p>This command differs from <code>ptype</code> in two ways: first, like
 <code>whatis</code>, it does not print a detailed description; second, it
-lists all source files where a type is defined.
+lists all source files and line numbers where a type is defined.
 </p>
 <a name="index-info-type_002dprinters"></a>
 </dd>
@@ -598,30 +605,90 @@ have already been read, and files whose symbols will be read when needed.
 </p>
 <a name="index-info-functions"></a>
 </dd>
-<dt><code>info functions</code></dt>
+<dt><code>info functions [-q]</code></dt>
 <dd><p>Print the names and data types of all defined functions.
+Similarly to &lsquo;<samp>info types</samp>&rsquo;, this command groups its output by source
+files and annotates each function definition with its source line
+number.
+</p>
+<p>In programs using different languages, <small>GDB</small> chooses the syntax
+to print the function name and type according to the
+&lsquo;<samp>set language</samp>&rsquo; value: using &lsquo;<samp>set language auto</samp>&rsquo;
+(see <a href="Automatically.html#Automatically">Set Language Automatically</a>) means to use the
+language of the function, other values mean to use
+the manually specified language (see <a href="Manually.html#Manually">Set Language Manually</a>).
+</p>
+<p>The optional flag &lsquo;<samp>-q</samp>&rsquo;, which stands for &lsquo;<samp>quiet</samp>&rsquo;, disables
+printing header information and messages explaining why no functions
+have been printed.
 </p>
 </dd>
-<dt><code>info functions <var>regexp</var></code></dt>
-<dd><p>Print the names and data types of all defined functions
-whose names contain a match for regular expression <var>regexp</var>.
-Thus, &lsquo;<samp>info fun step</samp>&rsquo; finds all functions whose names
-include <code>step</code>; &lsquo;<samp>info fun ^step</samp>&rsquo; finds those whose names
-start with <code>step</code>.  If a function name contains characters
-that conflict with the regular expression language (e.g.
+<dt><code>info functions [-q] [-t <var>type_regexp</var>] [<var>regexp</var>]</code></dt>
+<dd><p>Like &lsquo;<samp>info functions</samp>&rsquo;, but only print the names and data types
+of the functions selected with the provided regexp(s).
+</p>
+<p>If <var>regexp</var> is provided, print only the functions whose names
+match the regular expression <var>regexp</var>.
+Thus, &lsquo;<samp>info fun step</samp>&rsquo; finds all functions whose
+names include <code>step</code>; &lsquo;<samp>info fun ^step</samp>&rsquo; finds those whose names
+start with <code>step</code>.  If a function name contains characters that
+conflict with the regular expression language (e.g.
 &lsquo;<samp>operator*()</samp>&rsquo;), they may be quoted with a backslash.
 </p>
+<p>If <var>type_regexp</var> is provided, print only the functions whose
+types, as printed by the <code>whatis</code> command, match
+the regular expression <var>type_regexp</var>.
+If <var>type_regexp</var> contains space(s), it should be enclosed in
+quote characters.  If needed, use backslash to escape the meaning
+of special characters or quotes.
+Thus, &lsquo;<samp>info fun -t '^int ('</samp>&rsquo; finds the functions that return
+an integer; &lsquo;<samp>info fun -t '(.*int.*'</samp>&rsquo; finds the functions that
+have an argument type containing int; &lsquo;<samp>info fun -t '^int (' ^step</samp>&rsquo;
+finds the functions whose names start with <code>step</code> and that return
+int.
+</p>
+<p>If both <var>regexp</var> and <var>type_regexp</var> are provided, a function
+is printed only if its name matches <var>regexp</var> and its type matches
+<var>type_regexp</var>.
+</p>
+
 <a name="index-info-variables"></a>
 </dd>
-<dt><code>info variables</code></dt>
+<dt><code>info variables [-q]</code></dt>
 <dd><p>Print the names and data types of all variables that are defined
 outside of functions (i.e. excluding local variables).
+The printed variables are grouped by source files and annotated with
+their respective source line numbers.
+</p>
+<p>In programs using different languages, <small>GDB</small> chooses the syntax
+to print the variable name and type according to the
+&lsquo;<samp>set language</samp>&rsquo; value: using &lsquo;<samp>set language auto</samp>&rsquo;
+(see <a href="Automatically.html#Automatically">Set Language Automatically</a>) means to use the
+language of the variable, other values mean to use
+the manually specified language (see <a href="Manually.html#Manually">Set Language Manually</a>).
+</p>
+<p>The optional flag &lsquo;<samp>-q</samp>&rsquo;, which stands for &lsquo;<samp>quiet</samp>&rsquo;, disables
+printing header information and messages explaining why no variables
+have been printed.
 </p>
 </dd>
-<dt><code>info variables <var>regexp</var></code></dt>
-<dd><p>Print the names and data types of all variables (except for local
-variables) whose names contain a match for regular expression
-<var>regexp</var>.
+<dt><code>info variables [-q] [-t <var>type_regexp</var>] [<var>regexp</var>]</code></dt>
+<dd><p>Like <kbd>info variables</kbd>, but only print the variables selected
+with the provided regexp(s).
+</p>
+<p>If <var>regexp</var> is provided, print only the variables whose names
+match the regular expression <var>regexp</var>.
+</p>
+<p>If <var>type_regexp</var> is provided, print only the variables whose
+types, as printed by the <code>whatis</code> command, match
+the regular expression <var>type_regexp</var>.
+If <var>type_regexp</var> contains space(s), it should be enclosed in
+quote characters.  If needed, use backslash to escape the meaning
+of special characters or quotes.
+</p>
+<p>If both <var>regexp</var> and <var>type_regexp</var> are provided, an argument
+is printed only if its name matches <var>regexp</var> and its type matches
+<var>type_regexp</var>.
 </p>
 <a name="index-info-classes"></a>
 <a name="index-Objective_002dC_002c-classes-and-selectors"></a>

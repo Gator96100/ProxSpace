@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -33,7 +33,7 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Type-Attributes.html#Type-Attributes" rel="up" title="Type Attributes">
-<link href="ARM-Type-Attributes.html#ARM-Type-Attributes" rel="next" title="ARM Type Attributes">
+<link href="ARC-Type-Attributes.html#ARC-Type-Attributes" rel="next" title="ARC Type Attributes">
 <link href="Type-Attributes.html#Type-Attributes" rel="prev" title="Type Attributes">
 <style type="text/css">
 <!--
@@ -71,7 +71,7 @@ ul.no-bullet {list-style: none}
 <a name="Common-Type-Attributes"></a>
 <div class="header">
 <p>
-Next: <a href="ARM-Type-Attributes.html#ARM-Type-Attributes" accesskey="n" rel="next">ARM Type Attributes</a>, Up: <a href="Type-Attributes.html#Type-Attributes" accesskey="u" rel="up">Type Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="ARC-Type-Attributes.html#ARC-Type-Attributes" accesskey="n" rel="next">ARC Type Attributes</a>, Up: <a href="Type-Attributes.html#Type-Attributes" accesskey="u" rel="up">Type Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="Common-Type-Attributes-1"></a>
@@ -158,6 +158,57 @@ alignment.  See your linker documentation for further information.
 </p>
 <p>The <code>aligned</code> attribute can only increase alignment.  Alignment
 can be decreased by specifying the <code>packed</code> attribute.  See below.
+</p>
+<a name="index-warn_005fif_005fnot_005faligned-type-attribute"></a>
+</dd>
+<dt><code>warn_if_not_aligned (<var>alignment</var>)</code></dt>
+<dd><p>This attribute specifies a threshold for the structure field, measured
+in bytes.  If the structure field is aligned below the threshold, a
+warning will be issued.  For example, the declaration:
+</p>
+<div class="smallexample">
+<pre class="smallexample">typedef unsigned long long __u64
+   __attribute__((aligned(4),warn_if_not_aligned(8)));
+
+struct foo
+{
+  int i1;
+  int i2;
+  __u64 x;
+};
+</pre></div>
+
+<p>causes the compiler to issue an warning on <code>struct foo</code>, like
+&lsquo;<samp>warning: alignment 4 of 'struct foo' is less than 8</samp>&rsquo;.
+It is used to define <code>struct foo</code> in such a way that
+<code>struct foo</code> has the same layout and the structure field <code>x</code>
+has the same alignment when <code>__u64</code> is aligned at either 4 or
+8 bytes.  Align <code>struct foo</code> to 8 bytes:
+</p>
+<div class="smallexample">
+<pre class="smallexample">struct foo
+{
+  int i1;
+  int i2;
+  __u64 x;
+} __attribute__((aligned(8)));
+</pre></div>
+
+<p>silences the warning.  The compiler also issues a warning, like
+&lsquo;<samp>warning: 'x' offset 12 in 'struct foo' isn't aligned to 8</samp>&rsquo;,
+when the structure field has the misaligned offset:
+</p>
+<div class="smallexample">
+<pre class="smallexample">struct foo
+{
+  int i1;
+  int i2;
+  int i3;
+  __u64 x;
+} __attribute__((aligned(8)));
+</pre></div>
+
+<p>This warning can be disabled by <samp>-Wno-if-not-aligned</samp>.
 </p>
 </dd>
 <dt><code>bnd_variable_size</code></dt>
@@ -456,7 +507,7 @@ packed))</samp>&rsquo;.
 <hr>
 <div class="header">
 <p>
-Next: <a href="ARM-Type-Attributes.html#ARM-Type-Attributes" accesskey="n" rel="next">ARM Type Attributes</a>, Up: <a href="Type-Attributes.html#Type-Attributes" accesskey="u" rel="up">Type Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="ARC-Type-Attributes.html#ARC-Type-Attributes" accesskey="n" rel="next">ARC Type Attributes</a>, Up: <a href="Type-Attributes.html#Type-Attributes" accesskey="u" rel="up">Type Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -137,8 +137,8 @@ for maximum benefit.
 </p>
 <p>GCC no longer supports DWARF Version 1, which is substantially
 different than Version 2 and later.  For historical reasons, some
-other DWARF-related options (including <samp>-feliminate-dwarf2-dups</samp> 
-and <samp>-fno-dwarf2-cfi-asm</samp>) retain a reference to DWARF Version 2
+other DWARF-related options such as
+<samp>-fno-dwarf2-cfi-asm</samp>) retain a reference to DWARF Version 2
 in their names, but apply to all currently-supported versions of DWARF.
 </p>
 </dd>
@@ -147,7 +147,7 @@ in their names, but apply to all currently-supported versions of DWARF.
 <p>Produce debugging information in stabs format (if that is supported),
 without GDB extensions.  This is the format used by DBX on most BSD
 systems.  On MIPS, Alpha and System V Release 4 systems this option
-produces stabs debugging output that is not understood by DBX or SDB.
+produces stabs debugging output that is not understood by DBX.
 On System V Release 4 systems this option requires the GNU assembler.
 </p>
 </dd>
@@ -157,13 +157,6 @@ On System V Release 4 systems this option requires the GNU assembler.
 using GNU extensions understood only by the GNU debugger (GDB).  The
 use of these extensions is likely to make other debuggers crash or
 refuse to read the program.
-</p>
-</dd>
-<dt><code>-gcoff</code></dt>
-<dd><a name="index-gcoff"></a>
-<p>Produce debugging information in COFF format (if that is supported).
-This is the format used by SDB on most System V systems prior to
-System V Release 4.
 </p>
 </dd>
 <dt><code>-gxcoff</code></dt>
@@ -190,7 +183,6 @@ supported).  This is the format used by DEBUG on Alpha/VMS systems.
 <dt><code>-g<var>level</var></code></dt>
 <dt><code>-ggdb<var>level</var></code></dt>
 <dt><code>-gstabs<var>level</var></code></dt>
-<dt><code>-gcoff<var>level</var></code></dt>
 <dt><code>-gxcoff<var>level</var></code></dt>
 <dt><code>-gvms<var>level</var></code></dt>
 <dd><p>Request debugging information and also use <var>level</var> to specify how
@@ -242,8 +234,14 @@ link processing time.  Merging is enabled by default.
 </dd>
 <dt><code>-fdebug-prefix-map=<var>old</var>=<var>new</var></code></dt>
 <dd><a name="index-fdebug_002dprefix_002dmap"></a>
-<p>When compiling files in directory <samp><var>old</var></samp>, record debugging
-information describing them as in <samp><var>new</var></samp> instead.
+<p>When compiling files residing in directory <samp><var>old</var></samp>, record
+debugging information describing them as if the files resided in
+directory <samp><var>new</var></samp> instead.  This can be used to replace a
+build-time path with an install-time path in the debug info.  It can
+also be used to change an absolute path to a relative path by using
+<samp>.</samp> for <var>new</var>.  This can give more reproducible builds, which
+are location independent, but may require an extra command to tell GDB
+where to find the source files. See also <samp>-ffile-prefix-map</samp>.
 </p>
 </dd>
 <dt><code>-fvar-tracking</code></dt>
@@ -331,13 +329,120 @@ DWARF extensions from later standard versions is allowed.
 <samp>-gdwarf-<var>version</var></samp>.
 </p>
 </dd>
+<dt><code>-gas-loc-support</code></dt>
+<dd><a name="index-gas_002dloc_002dsupport"></a>
+<p>Inform the compiler that the assembler supports <code>.loc</code> directives.
+It may then use them for the assembler to generate DWARF2+ line number
+tables.
+</p>
+<p>This is generally desirable, because assembler-generated line-number
+tables are a lot more compact than those the compiler can generate
+itself.
+</p>
+<p>This option will be enabled by default if, at GCC configure time, the
+assembler was found to support such directives.
+</p>
+</dd>
+<dt><code>-gno-as-loc-support</code></dt>
+<dd><a name="index-gno_002das_002dloc_002dsupport"></a>
+<p>Force GCC to generate DWARF2+ line number tables internally, if DWARF2+
+line number tables are to be generated.
+</p>
+</dd>
+<dt><code>gas-locview-support</code></dt>
+<dd><a name="index-gas_002dlocview_002dsupport"></a>
+<p>Inform the compiler that the assembler supports <code>view</code> assignment
+and reset assertion checking in <code>.loc</code> directives.
+</p>
+<p>This option will be enabled by default if, at GCC configure time, the
+assembler was found to support them.
+</p>
+</dd>
+<dt><code>gno-as-locview-support</code></dt>
+<dd><p>Force GCC to assign view numbers internally, if
+<samp>-gvariable-location-views</samp> are explicitly requested.
+</p>
+</dd>
 <dt><code>-gcolumn-info</code></dt>
 <dt><code>-gno-column-info</code></dt>
 <dd><a name="index-gcolumn_002dinfo"></a>
 <a name="index-gno_002dcolumn_002dinfo"></a>
 <p>Emit location column information into DWARF debugging information, rather
 than just file and line.
-This option is disabled by default.
+This option is enabled by default.
+</p>
+</dd>
+<dt><code>-gstatement-frontiers</code></dt>
+<dt><code>-gno-statement-frontiers</code></dt>
+<dd><a name="index-gstatement_002dfrontiers"></a>
+<a name="index-gno_002dstatement_002dfrontiers"></a>
+<p>This option causes GCC to create markers in the internal representation
+at the beginning of statements, and to keep them roughly in place
+throughout compilation, using them to guide the output of <code>is_stmt</code>
+markers in the line number table.  This is enabled by default when
+compiling with optimization (<samp>-Os</samp>, <samp>-O</samp>, <samp>-O2</samp>,
+&hellip;), and outputting DWARF 2 debug information at the normal level.
+</p>
+</dd>
+<dt><code>-gvariable-location-views</code></dt>
+<dt><code>-gvariable-location-views=incompat5</code></dt>
+<dt><code>-gno-variable-location-views</code></dt>
+<dd><a name="index-gvariable_002dlocation_002dviews"></a>
+<a name="index-gvariable_002dlocation_002dviews_003dincompat5"></a>
+<a name="index-gno_002dvariable_002dlocation_002dviews"></a>
+<p>Augment variable location lists with progressive view numbers implied
+from the line number table.  This enables debug information consumers to
+inspect state at certain points of the program, even if no instructions
+associated with the corresponding source locations are present at that
+point.  If the assembler lacks support for view numbers in line number
+tables, this will cause the compiler to emit the line number table,
+which generally makes them somewhat less compact.  The augmented line
+number tables and location lists are fully backward-compatible, so they
+can be consumed by debug information consumers that are not aware of
+these augmentations, but they won&rsquo;t derive any benefit from them either.
+</p>
+<p>This is enabled by default when outputting DWARF 2 debug information at
+the normal level, as long as there is assembler support,
+<samp>-fvar-tracking-assignments</samp> is enabled and
+<samp>-gstrict-dwarf</samp> is not.  When assembler support is not
+available, this may still be enabled, but it will force GCC to output
+internal line number tables, and if
+<samp>-ginternal-reset-location-views</samp> is not enabled, that will most
+certainly lead to silently mismatching location views.
+</p>
+<p>There is a proposed representation for view numbers that is not backward
+compatible with the location list format introduced in DWARF 5, that can
+be enabled with <samp>-gvariable-location-views=incompat5</samp>.  This
+option may be removed in the future, is only provided as a reference
+implementation of the proposed representation.  Debug information
+consumers are not expected to support this extended format, and they
+would be rendered unable to decode location lists using it.
+</p>
+</dd>
+<dt><code>-ginternal-reset-location-views</code></dt>
+<dt><code>-gnointernal-reset-location-views</code></dt>
+<dd><a name="index-ginternal_002dreset_002dlocation_002dviews"></a>
+<a name="index-gno_002dinternal_002dreset_002dlocation_002dviews"></a>
+<p>Attempt to determine location views that can be omitted from location
+view lists.  This requires the compiler to have very accurate insn
+length estimates, which isn&rsquo;t always the case, and it may cause
+incorrect view lists to be generated silently when using an assembler
+that does not support location view lists.  The GNU assembler will flag
+any such error as a <code>view number mismatch</code>.  This is only enabled
+on ports that define a reliable estimation function.
+</p>
+</dd>
+<dt><code>-ginline-points</code></dt>
+<dt><code>-gno-inline-points</code></dt>
+<dd><a name="index-ginline_002dpoints"></a>
+<a name="index-gno_002dinline_002dpoints"></a>
+<p>Generate extended debug information for inlined functions.  Location
+view tracking markers are inserted at inlined entry points, so that
+address and view numbers can be computed and output in debug
+information.  This can be enabled independently of location views, in
+which case the view numbers won&rsquo;t be output, but it can only be enabled
+along with statement frontiers, and it is only enabled by default if
+location views are enabled.
 </p>
 </dd>
 <dt><code>-gz<span class="roman">[</span>=<var>type</var><span class="roman">]</span></code></dt>
@@ -351,13 +456,6 @@ compression in traditional GNU format).  If the linker doesn&rsquo;t support
 writing compressed debug sections, the option is rejected.  Otherwise,
 if the assembler does not support them, <samp>-gz</samp> is silently ignored
 when producing object files.
-</p>
-</dd>
-<dt><code>-feliminate-dwarf2-dups</code></dt>
-<dd><a name="index-feliminate_002ddwarf2_002ddups"></a>
-<p>Compress DWARF debugging information by eliminating duplicated
-information about each symbol.  This option only makes sense when
-generating DWARF debugging information.
 </p>
 </dd>
 <dt><code>-femit-struct-debug-baseonly</code></dt>

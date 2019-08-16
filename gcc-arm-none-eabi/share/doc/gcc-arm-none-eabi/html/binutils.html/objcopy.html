@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -83,6 +83,7 @@ Next: <a href="objdump.html#objdump" accesskey="n" rel="next">objdump</a>, Previ
         [<samp>--localize-hidden</samp>]
         [<samp>-L</samp> <var>symbolname</var>|<samp>--localize-symbol=</samp><var>symbolname</var>]
         [<samp>--globalize-symbol=</samp><var>symbolname</var>]
+        [<samp>--globalize-symbols=</samp><var>filename</var>]
         [<samp>-W</samp> <var>symbolname</var>|<samp>--weaken-symbol=</samp><var>symbolname</var>]
         [<samp>-w</samp>|<samp>--wildcard</samp>]
         [<samp>-x</samp>|<samp>--discard-all</samp>]
@@ -123,9 +124,8 @@ Next: <a href="objdump.html#objdump" accesskey="n" rel="next">objdump</a>, Previ
         [<samp>--strip-unneeded-symbols=</samp><var>filename</var>]
         [<samp>--keep-global-symbols=</samp><var>filename</var>]
         [<samp>--localize-symbols=</samp><var>filename</var>]
-        [<samp>--globalize-symbols=</samp><var>filename</var>]
         [<samp>--weaken-symbols=</samp><var>filename</var>]
-        [<samp>--add-symbol</samp> <var>name</var>=[<var>section</var>:]<var>value</var>[,<var>flags</var>]
+        [<samp>--add-symbol</samp> <var>name</var>=[<var>section</var>:]<var>value</var>[,<var>flags</var>]]
         [<samp>--alt-machine-code=</samp><var>index</var>]
         [<samp>--prefix-symbols=</samp><var>string</var>]
         [<samp>--prefix-sections=</samp><var>string</var>]
@@ -278,17 +278,20 @@ remove the section &rsquo;.text.foo&rsquo;.
 </p>
 </dd>
 <dt><code>--remove-relocations=<var>sectionpattern</var></code></dt>
-<dd><p>Remove relocations from the output file for any section matching
-<var>sectionpattern</var>.  This option may be given more than once.  Note
-that using this option inappropriately may make the output file
-unusable.  Wildcard characters are accepted in <var>sectionpattern</var>.
+<dd><p>Remove non-dynamic relocations from the output file for any section
+matching <var>sectionpattern</var>.  This option may be given more than
+once.  Note that using this option inappropriately may make the output
+file unusable, and attempting to remove a dynamic relocation section
+such as &lsquo;<samp>.rela.plt</samp>&rsquo; from an executable or shared library with
+<samp>--remove-relocations=.plt</samp> will not work.  Wildcard characters
+are accepted in <var>sectionpattern</var>.
 For example:
 </p>
 <div class="smallexample">
 <pre class="smallexample">  --remove-relocations=.text.*
 </pre></div>
 
-<p>will remove the relocations for all sections matching the patter
+<p>will remove the relocations for all sections matching the pattern
 &rsquo;.text.*&rsquo;.
 </p>
 <p>If the first character of <var>sectionpattern</var> is the exclamation
@@ -341,7 +344,9 @@ by a relocation.  This option may be given more than once.
 <dt><code>--keep-global-symbol=<var>symbolname</var></code></dt>
 <dd><p>Keep only symbol <var>symbolname</var> global.  Make all other symbols local
 to the file, so that they are not visible externally.  This option may
-be given more than once.
+be given more than once.  Note: this option cannot be used in
+conjunction with the <samp>--globalize-symbol</samp> or
+<samp>--globalize-symbols</samp> options.
 </p>
 </dd>
 <dt><code>--localize-hidden</code></dt>
@@ -365,7 +370,8 @@ given more than once.  Note - unique symbols are not converted.
 <dt><code>--globalize-symbol=<var>symbolname</var></code></dt>
 <dd><p>Give symbol <var>symbolname</var> global scoping so that it is visible
 outside of the file in which it is defined.  This option may be given
-more than once.
+more than once.  Note: this option cannot be used in conjunction with
+the <samp>-G</samp> or <samp>--keep-global-symbol</samp> options.
 </p>
 </dd>
 <dt><code>-w</code></dt>
@@ -779,7 +785,9 @@ This option may be given more than once.
 <dd><p>Apply <samp>--globalize-symbol</samp> option to each symbol listed in the file
 <var>filename</var>.  <var>filename</var> is simply a flat file, with one symbol
 name per line.  Line comments may be introduced by the hash character.
-This option may be given more than once.
+This option may be given more than once.  Note: this option cannot be
+used in conjunction with the <samp>-G</samp> or <samp>--keep-global-symbol</samp>
+options.
 </p>
 </dd>
 <dt><code>--weaken-symbols=<var>filename</var></code></dt>
@@ -895,7 +903,7 @@ needed if debugging abilities are required.  The suggested procedure
 to create these files is as follows:
 </p>
 <ol>
-<li> Link the executable as normal.  Assuming that is is called
+<li> Link the executable as normal.  Assuming that it is called
 <code>foo</code> then...
 </li><li> Run <code>objcopy --only-keep-debug foo foo.dbg</code> to
 create a file containing the debugging info.

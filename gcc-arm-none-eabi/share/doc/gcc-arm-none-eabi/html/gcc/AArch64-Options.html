@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -223,7 +223,11 @@ more feature modifiers.  This option has the form
 <samp>-march=<var>arch</var><span class="roman">{</span>+<span class="roman">[</span>no<span class="roman">]</span><var>feature</var><span class="roman">}*</span></samp>.
 </p>
 <p>The permissible values for <var>arch</var> are &lsquo;<samp>armv8-a</samp>&rsquo;,
-&lsquo;<samp>armv8.1-a</samp>&rsquo;, &lsquo;<samp>armv8.2-a</samp>&rsquo;, &lsquo;<samp>armv8.3-a</samp>&rsquo; or <var>native</var>.
+&lsquo;<samp>armv8.1-a</samp>&rsquo;, &lsquo;<samp>armv8.2-a</samp>&rsquo;, &lsquo;<samp>armv8.3-a</samp>&rsquo; or &lsquo;<samp>armv8.4-a</samp>&rsquo;
+or <var>native</var>.
+</p>
+<p>The value &lsquo;<samp>armv8.4-a</samp>&rsquo; implies &lsquo;<samp>armv8.3-a</samp>&rsquo; and enables compiler
+support for the ARMv8.4-A architecture extensions.
 </p>
 <p>The value &lsquo;<samp>armv8.3-a</samp>&rsquo; implies &lsquo;<samp>armv8.2-a</samp>&rsquo; and enables compiler
 support for the ARMv8.3-A architecture extensions.
@@ -233,7 +237,7 @@ support for the ARMv8.2-A architecture extensions.
 </p>
 <p>The value &lsquo;<samp>armv8.1-a</samp>&rsquo; implies &lsquo;<samp>armv8-a</samp>&rsquo; and enables compiler
 support for the ARMv8.1-A architecture extension.  In particular, it
-enables the &lsquo;<samp>+crc</samp>&rsquo; and &lsquo;<samp>+lse</samp>&rsquo; features.
+enables the &lsquo;<samp>+crc</samp>&rsquo;, &lsquo;<samp>+lse</samp>&rsquo;, and &lsquo;<samp>+rdma</samp>&rsquo; features.
 </p>
 <p>The value &lsquo;<samp>native</samp>&rsquo; is available on native AArch64 GNU/Linux and
 causes the compiler to pick the architecture of the host system.  This
@@ -256,17 +260,20 @@ processors implementing the target architecture.
 <dd><a name="index-mtune"></a>
 <p>Specify the name of the target processor for which GCC should tune the
 performance of the code.  Permissible values for this option are:
-&lsquo;<samp>generic</samp>&rsquo;, &lsquo;<samp>cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a57</samp>&rsquo;,
-&lsquo;<samp>cortex-a72</samp>&rsquo;, &lsquo;<samp>cortex-a73</samp>&rsquo;, &lsquo;<samp>exynos-m1</samp>&rsquo;, &lsquo;<samp>falkor</samp>&rsquo;,
-&lsquo;<samp>qdf24xx</samp>&rsquo;, &lsquo;<samp>xgene1</samp>&rsquo;, &lsquo;<samp>vulcan</samp>&rsquo;, &lsquo;<samp>thunderx</samp>&rsquo;,
+&lsquo;<samp>generic</samp>&rsquo;, &lsquo;<samp>cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a55</samp>&rsquo;,
+&lsquo;<samp>cortex-a57</samp>&rsquo;, &lsquo;<samp>cortex-a72</samp>&rsquo;, &lsquo;<samp>cortex-a73</samp>&rsquo;, &lsquo;<samp>cortex-a75</samp>&rsquo;,
+&lsquo;<samp>exynos-m1</samp>&rsquo;, &lsquo;<samp>falkor</samp>&rsquo;, &lsquo;<samp>qdf24xx</samp>&rsquo;, &lsquo;<samp>saphira</samp>&rsquo;,
+&lsquo;<samp>xgene1</samp>&rsquo;, &lsquo;<samp>vulcan</samp>&rsquo;, &lsquo;<samp>thunderx</samp>&rsquo;,
 &lsquo;<samp>thunderxt88</samp>&rsquo;, &lsquo;<samp>thunderxt88p1</samp>&rsquo;, &lsquo;<samp>thunderxt81</samp>&rsquo;,
 &lsquo;<samp>thunderxt83</samp>&rsquo;, &lsquo;<samp>thunderx2t99</samp>&rsquo;, &lsquo;<samp>cortex-a57.cortex-a53</samp>&rsquo;,
 &lsquo;<samp>cortex-a72.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a35</samp>&rsquo;,
-&lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;, &lsquo;<samp>native</samp>&rsquo;.
+&lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo;,
+&lsquo;<samp>native</samp>&rsquo;.
 </p>
 <p>The values &lsquo;<samp>cortex-a57.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a72.cortex-a53</samp>&rsquo;,
-&lsquo;<samp>cortex-a73.cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;
-specify that GCC should tune for a big.LITTLE system.
+&lsquo;<samp>cortex-a73.cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;,
+&lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo; specify that GCC should tune for a
+big.LITTLE system.
 </p>
 <p>Additionally on native AArch64 GNU/Linux systems the value
 &lsquo;<samp>native</samp>&rsquo; tunes performance to the host system.  This option has no effect
@@ -309,9 +316,17 @@ across releases.
 <p>This option is only intended to be useful when developing GCC.
 </p>
 </dd>
+<dt><code>-mverbose-cost-dump</code></dt>
+<dd><a name="index-mverbose_002dcost_002ddump"></a>
+<p>Enable verbose cost model dumping in the debug dump files.  This option is
+provided for use in debugging the compiler.
+</p>
+</dd>
 <dt><code>-mpc-relative-literal-loads</code></dt>
+<dt><code>-mno-pc-relative-literal-loads</code></dt>
 <dd><a name="index-mpc_002drelative_002dliteral_002dloads"></a>
-<p>Enable PC-relative literal loads.  With this option literal pools are
+<a name="index-mno_002dpc_002drelative_002dliteral_002dloads"></a>
+<p>Enable or disable PC-relative literal loads.  With this option literal pools are
 accessed using a single instruction and emitted after each function.  This
 limits the maximum size of functions to 1MB.  This is enabled by default for
 <samp>-mcmodel=tiny</samp>.
@@ -326,6 +341,27 @@ functions, and &lsquo;<samp>all</samp>&rsquo;, which enables pointer signing for
 default value is &lsquo;<samp>none</samp>&rsquo;.
 </p>
 </dd>
+<dt><code>-msve-vector-bits=<var>bits</var></code></dt>
+<dd><a name="index-msve_002dvector_002dbits"></a>
+<p>Specify the number of bits in an SVE vector register.  This option only has
+an effect when SVE is enabled.
+</p>
+<p>GCC supports two forms of SVE code generation: &ldquo;vector-length
+agnostic&rdquo; output that works with any size of vector register and
+&ldquo;vector-length specific&rdquo; output that allows GCC to make assumptions
+about the vector length when it is useful for optimization reasons.
+The possible values of &lsquo;<samp>bits</samp>&rsquo; are: &lsquo;<samp>scalable</samp>&rsquo;, &lsquo;<samp>128</samp>&rsquo;,
+&lsquo;<samp>256</samp>&rsquo;, &lsquo;<samp>512</samp>&rsquo;, &lsquo;<samp>1024</samp>&rsquo; and &lsquo;<samp>2048</samp>&rsquo;.
+Specifying &lsquo;<samp>scalable</samp>&rsquo; selects vector-length agnostic
+output.  At present &lsquo;<samp>-msve-vector-bits=128</samp>&rsquo; also generates vector-length
+agnostic output.  All other values generate vector-length specific code.
+The behavior of these values may change in future releases and no value except
+&lsquo;<samp>scalable</samp>&rsquo; should be relied on for producing code that is portable across
+different hardware SVE vector lengths.
+</p>
+<p>The default is &lsquo;<samp>-msve-vector-bits=scalable</samp>&rsquo;, which produces
+vector-length agnostic code.
+</p></dd>
 </dl>
 
 <a name="g_t_002dmarch-and-_002dmcpu-Feature-Modifiers"></a>
@@ -353,19 +389,56 @@ values for options <samp>-march</samp> and <samp>-mcpu</samp>.
 instructions.  This is on by default for all possible values for options
 <samp>-march</samp> and <samp>-mcpu</samp>.
 </p></dd>
+<dt>&lsquo;<samp>sve</samp>&rsquo;</dt>
+<dd><p>Enable Scalable Vector Extension instructions.  This also enables Advanced
+SIMD and floating-point instructions.
+</p></dd>
 <dt>&lsquo;<samp>lse</samp>&rsquo;</dt>
 <dd><p>Enable Large System Extension instructions.  This is on by default for
 <samp>-march=armv8.1-a</samp>.
 </p></dd>
+<dt>&lsquo;<samp>rdma</samp>&rsquo;</dt>
+<dd><p>Enable Round Double Multiply Accumulate instructions.  This is on by default
+for <samp>-march=armv8.1-a</samp>.
+</p></dd>
 <dt>&lsquo;<samp>fp16</samp>&rsquo;</dt>
 <dd><p>Enable FP16 extension.  This also enables floating-point instructions.
+</p></dd>
+<dt>&lsquo;<samp>fp16fml</samp>&rsquo;</dt>
+<dd><p>Enable FP16 fmla extension.  This also enables FP16 extensions and
+floating-point instructions. This option is enabled by default for <samp>-march=armv8.4-a</samp>. Use of this option with architectures prior to Armv8.2-A is not supported.
+</p>
+</dd>
+<dt>&lsquo;<samp>rcpc</samp>&rsquo;</dt>
+<dd><p>Enable the RcPc extension.  This does not change code generation from GCC,
+but is passed on to the assembler, enabling inline asm statements to use
+instructions from the RcPc extension.
+</p></dd>
+<dt>&lsquo;<samp>dotprod</samp>&rsquo;</dt>
+<dd><p>Enable the Dot Product extension.  This also enables Advanced SIMD instructions.
+</p></dd>
+<dt>&lsquo;<samp>aes</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8-a aes and pmull crypto extension.  This also enables Advanced
+SIMD instructions.
+</p></dd>
+<dt>&lsquo;<samp>sha2</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8-a sha2 crypto extension.  This also enables Advanced SIMD instructions.
+</p></dd>
+<dt>&lsquo;<samp>sha3</samp>&rsquo;</dt>
+<dd><p>Enable the sha512 and sha3 crypto extension.  This also enables Advanced SIMD
+instructions. Use of this option with architectures prior to Armv8.2-A is not supported.
+</p></dd>
+<dt>&lsquo;<samp>sm4</samp>&rsquo;</dt>
+<dd><p>Enable the sm3 and sm4 crypto extension.  This also enables Advanced SIMD instructions.
+Use of this option with architectures prior to Armv8.2-A is not supported.
 </p>
 </dd>
 </dl>
 
-<p>Feature <samp>crypto</samp> implies <samp>simd</samp>, which implies <samp>fp</samp>.
+<p>Feature <samp>crypto</samp> implies <samp>aes</samp>, <samp>sha2</samp>, and <samp>simd</samp>,
+which implies <samp>fp</samp>.
 Conversely, <samp>nofp</samp> implies <samp>nosimd</samp>, which implies
-<samp>nocrypto</samp>.
+<samp>nocrypto</samp>, <samp>noaes</samp> and <samp>nosha2</samp>.
 </p>
 <hr>
 <div class="header">

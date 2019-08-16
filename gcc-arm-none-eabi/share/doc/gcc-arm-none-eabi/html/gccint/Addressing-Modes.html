@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Anchored-Addresses.html#Anchored-Addresses" accesskey="n" rel="ne
 </div>
 <hr>
 <a name="Addressing-Modes-1"></a>
-<h3 class="section">17.13 Addressing Modes</h3>
+<h3 class="section">18.13 Addressing Modes</h3>
 <a name="index-addressing-modes"></a>
 
 <p>This is about addressing modes.
@@ -415,13 +415,42 @@ misalignment value (<var>misalign</var>).
 </p></dd></dl>
 
 <dl>
+<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fVECTOR_005fALIGNMENT"></a>Target Hook: <em>HOST_WIDE_INT</em> <strong>TARGET_VECTORIZE_PREFERRED_VECTOR_ALIGNMENT</strong> <em>(const_tree <var>type</var>)</em></dt>
+<dd><p>This hook returns the preferred alignment in bits for accesses to
+vectors of type <var>type</var> in vectorized code.  This might be less than
+or greater than the ABI-defined value returned by
+<code>TARGET_VECTOR_ALIGNMENT</code>.  It can be equal to the alignment of
+a single element, in which case the vectorizer will not try to optimize
+for alignment.
+</p>
+<p>The default hook returns <code>TYPE_ALIGN (<var>type</var>)</code>, which is
+correct for most targets.
+</p></dd></dl>
+
+<dl>
 <dt><a name="index-TARGET_005fVECTORIZE_005fVECTOR_005fALIGNMENT_005fREACHABLE"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_VECTOR_ALIGNMENT_REACHABLE</strong> <em>(const_tree <var>type</var>, bool <var>is_packed</var>)</em></dt>
 <dd><p>Return true if vector alignment is reachable (by peeling N iterations) for the given scalar type <var>type</var>.  <var>is_packed</var> is false if the scalar access using <var>type</var> is known to be naturally aligned.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fVEC_005fPERM_005fCONST_005fOK"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_VEC_PERM_CONST_OK</strong> <em>(machine_mode, const unsigned char *<var>sel</var>)</em></dt>
-<dd><p>Return true if a vector created for <code>vec_perm_const</code> is valid.
+<dt><a name="index-TARGET_005fVECTORIZE_005fVEC_005fPERM_005fCONST"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_VEC_PERM_CONST</strong> <em>(machine_mode <var>mode</var>, rtx <var>output</var>, rtx <var>in0</var>, rtx <var>in1</var>, const vec_perm_indices <var>&amp;sel</var>)</em></dt>
+<dd><p>This hook is used to test whether the target can permute up to two
+vectors of mode <var>mode</var> using the permutation vector <code>sel</code>, and
+also to emit such a permutation.  In the former case <var>in0</var>, <var>in1</var>
+and <var>out</var> are all null.  In the latter case <var>in0</var> and <var>in1</var> are
+the source vectors and <var>out</var> is the destination vector; all three are
+registers of mode <var>mode</var>.  <var>in1</var> is the same as <var>in0</var> if
+<var>sel</var> describes a permutation on one vector instead of two.
+</p>
+<p>Return true if the operation is possible, emitting instructions for it
+if rtxes are provided.
+</p>
+<a name="index-vec_005fpermm-instruction-pattern-1"></a>
+<p>If the hook returns false for a mode with multibyte elements, GCC will
+try the equivalent byte operation.  If that also fails, it will try forcing
+the selector into a register and using the <var>vec_perm<var>mode</var></var>
+instruction pattern.  There is no need for the hook to handle these two
+implementation approaches itself.
 </p></dd></dl>
 
 <dl>
@@ -464,7 +493,7 @@ parameter is true if the memory access is defined in a packed struct.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fSIMD_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</strong> <em>(machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fSIMD_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</strong> <em>(scalar_mode <var>mode</var>)</em></dt>
 <dd><p>This hook should return the preferred mode for vectorizing scalar
 mode <var>mode</var>.  The default is
 equal to <code>word_mode</code>, because the vectorizer can do some
@@ -472,18 +501,43 @@ transformations even in absence of specialized <acronym>SIMD</acronym> hardware.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fAUTOVECTORIZE_005fVECTOR_005fSIZES"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_VECTORIZE_AUTOVECTORIZE_VECTOR_SIZES</strong> <em>(void)</em></dt>
-<dd><p>This hook should return a mask of sizes that should be iterated over
-after trying to autovectorize using the vector size derived from the
-mode returned by <code>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</code>.
-The default is zero which means to not iterate over other vector sizes.
+<dt><a name="index-TARGET_005fVECTORIZE_005fSPLIT_005fREDUCTION"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_VECTORIZE_SPLIT_REDUCTION</strong> <em>(machine_mode)</em></dt>
+<dd><p>This hook should return the preferred mode to split the final reduction
+step on <var>mode</var> to.  The reduction is then carried out reducing upper
+against lower halves of vectors recursively until the specified mode is
+reached.  The default is <var>mode</var> which means no splitting.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fGET_005fMASK_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_VECTORIZE_GET_MASK_MODE</strong> <em>(unsigned <var>nunits</var>, unsigned <var>length</var>)</em></dt>
-<dd><p>This hook returns mode to be used for a mask to be used for a vector
-of specified <var>length</var> with <var>nunits</var> elements.  By default an integer
-vector mode of a proper size is returned.
+<dt><a name="index-TARGET_005fVECTORIZE_005fAUTOVECTORIZE_005fVECTOR_005fSIZES"></a>Target Hook: <em>void</em> <strong>TARGET_VECTORIZE_AUTOVECTORIZE_VECTOR_SIZES</strong> <em>(vector_sizes *<var>sizes</var>)</em></dt>
+<dd><p>If the mode returned by <code>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</code> is not
+the only one that is worth considering, this hook should add all suitable
+vector sizes to <var>sizes</var>, in order of decreasing preference.  The first
+one should be the size of <code>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</code>.
+</p>
+<p>The hook does not need to do anything if the vector returned by
+<code>TARGET_VECTORIZE_PREFERRED_SIMD_MODE</code> is the only one relevant
+for autovectorization.  The default implementation does nothing.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fVECTORIZE_005fGET_005fMASK_005fMODE"></a>Target Hook: <em>opt_machine_mode</em> <strong>TARGET_VECTORIZE_GET_MASK_MODE</strong> <em>(poly_uint64 <var>nunits</var>, poly_uint64 <var>length</var>)</em></dt>
+<dd><p>A vector mask is a value that holds one boolean result for every element
+in a vector.  This hook returns the machine mode that should be used to
+represent such a mask when the vector in question is <var>length</var> bytes
+long and contains <var>nunits</var> elements.  The hook returns an empty
+<code>opt_machine_mode</code> if no such mode exists.
+</p>
+<p>The default implementation returns the mode of an integer vector that
+is <var>length</var> bytes long and that contains <var>nunits</var> elements,
+if such a mode exists.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fVECTORIZE_005fEMPTY_005fMASK_005fIS_005fEXPENSIVE"></a>Target Hook: <em>bool</em> <strong>TARGET_VECTORIZE_EMPTY_MASK_IS_EXPENSIVE</strong> <em>(unsigned <var>ifn</var>)</em></dt>
+<dd><p>This hook returns true if masked internal function <var>ifn</var> (really of
+type <code>internal_fn</code>) should be considered expensive when the mask is
+all zeros.  GCC can then try to branch around the instruction instead.
 </p></dd></dl>
 
 <dl>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Plugins-recording.html#Plugins-recording" accesskey="n" rel="next
 </div>
 <hr>
 <a name="Registering-custom-attributes-or-pragmas"></a>
-<h3 class="section">23.6 Registering custom attributes or pragmas</h3>
+<h3 class="section">24.6 Registering custom attributes or pragmas</h3>
 
 <p>For analysis (or other) purposes it is useful to be able to add custom
 attributes or pragmas.
@@ -95,7 +95,7 @@ handle_user_attribute (tree *node, tree name, tree args,
 
 /* Attribute definition */
 static struct attribute_spec user_attr =
-  { &quot;user&quot;, 1, 1, false,  false, false, handle_user_attribute, false };
+  { &quot;user&quot;, 1, 1, false,  false, false, false, handle_user_attribute, NULL };
 
 /* Plugin callback called during attribute registration.
 Registered with register_callback (plugin_name, PLUGIN_ATTRIBUTES, register_attributes, NULL)

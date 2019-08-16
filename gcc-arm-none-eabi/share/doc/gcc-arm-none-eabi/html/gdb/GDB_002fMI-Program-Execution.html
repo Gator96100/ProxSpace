@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -79,7 +79,7 @@ other cases.
 <h4 class="subheading">The <code>-exec-continue</code> Command</h4>
 <a name="index-_002dexec_002dcontinue"></a>
 
-<a name="Synopsis-26"></a>
+<a name="Synopsis-27"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -102,12 +102,12 @@ specified, all threads (in all inferiors) will be resumed.  The &lsquo;<samp>--a
 ignored in all-stop mode.  If the &lsquo;<samp>--thread-group</samp>&rsquo; options is
 specified, then all threads in that thread group are resumed.
 </p>
-<a name="GDB-Command-25"></a>
+<a name="GDB-Command-26"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> corresponding is &lsquo;<samp>continue</samp>&rsquo;.
 </p>
-<a name="Example-25"></a>
+<a name="Example-26"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -117,7 +117,7 @@ specified, then all threads in that thread group are resumed.
 @Hello world
 *stopped,reason=&quot;breakpoint-hit&quot;,disp=&quot;keep&quot;,bkptno=&quot;2&quot;,frame={
 func=&quot;foo&quot;,args=[],file=&quot;hello.c&quot;,fullname=&quot;/home/foo/bar/hello.c&quot;,
-line=&quot;13&quot;}
+line=&quot;13&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -126,7 +126,7 @@ line=&quot;13&quot;}
 <h4 class="subheading">The <code>-exec-finish</code> Command</h4>
 <a name="index-_002dexec_002dfinish"></a>
 
-<a name="Synopsis-27"></a>
+<a name="Synopsis-28"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -139,12 +139,12 @@ If the &lsquo;<samp>--reverse</samp>&rsquo; option is specified, resumes the rev
 execution of the inferior program until the point where current
 function was called.
 </p>
-<a name="GDB-Command-26"></a>
+<a name="GDB-Command-27"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>finish</samp>&rsquo;.
 </p>
-<a name="Example-26"></a>
+<a name="Example-27"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>Function returning <code>void</code>.
@@ -155,7 +155,7 @@ function was called.
 (gdb)
 @hello from foo
 *stopped,reason=&quot;function-finished&quot;,frame={func=&quot;main&quot;,args=[],
-file=&quot;hello.c&quot;,fullname=&quot;/home/foo/bar/hello.c&quot;,line=&quot;7&quot;}
+file=&quot;hello.c&quot;,fullname=&quot;/home/foo/bar/hello.c&quot;,line=&quot;7&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -169,7 +169,8 @@ value itself.
 (gdb)
 *stopped,reason=&quot;function-finished&quot;,frame={addr=&quot;0x000107b0&quot;,func=&quot;foo&quot;,
 args=[{name=&quot;a&quot;,value=&quot;1&quot;],{name=&quot;b&quot;,value=&quot;9&quot;}},
-file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+arch=&quot;i386:x86_64&quot;},
 gdb-result-var=&quot;$1&quot;,return-value=&quot;0&quot;
 (gdb)
 </pre></div>
@@ -179,7 +180,7 @@ gdb-result-var=&quot;$1&quot;,return-value=&quot;0&quot;
 <h4 class="subheading">The <code>-exec-interrupt</code> Command</h4>
 <a name="index-_002dexec_002dinterrupt"></a>
 
-<a name="Synopsis-28"></a>
+<a name="Synopsis-29"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -202,12 +203,12 @@ All threads (in all inferiors) will be interrupted if the
 &lsquo;<samp>--all</samp>&rsquo;  option is specified.  If the &lsquo;<samp>--thread-group</samp>&rsquo;
 option is specified, all threads in that group will be interrupted.
 </p>
-<a name="GDB-Command-27"></a>
+<a name="GDB-Command-28"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>interrupt</samp>&rsquo;.
 </p>
-<a name="Example-27"></a>
+<a name="Example-28"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -221,7 +222,7 @@ option is specified, all threads in that group will be interrupted.
 (gdb)
 111*stopped,signal-name=&quot;SIGINT&quot;,signal-meaning=&quot;Interrupt&quot;,
 frame={addr=&quot;0x00010140&quot;,func=&quot;foo&quot;,args=[],file=&quot;try.c&quot;,
-fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;13&quot;}
+fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;13&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 
 (gdb)
@@ -234,7 +235,7 @@ fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;13&quot;}
 <h4 class="subheading">The <code>-exec-jump</code> Command</h4>
 <a name="index-_002dexec_002djump"></a>
 
-<a name="Synopsis-29"></a>
+<a name="Synopsis-30"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -245,12 +246,12 @@ fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;13&quot;}
 parameter.  See <a href="Specify-Location.html#Specify-Location">Specify Location</a>, for a description of the
 different forms of <var>location</var>.
 </p>
-<a name="GDB-Command-28"></a>
+<a name="GDB-Command-29"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>jump</samp>&rsquo;.
 </p>
-<a name="Example-28"></a>
+<a name="Example-29"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -264,7 +265,7 @@ different forms of <var>location</var>.
 <h4 class="subheading">The <code>-exec-next</code> Command</h4>
 <a name="index-_002dexec_002dnext"></a>
 
-<a name="Synopsis-30"></a>
+<a name="Synopsis-31"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -281,12 +282,12 @@ function, it will take you back to the caller of that function, to the
 source line where the function was called.
 </p>
 
-<a name="GDB-Command-29"></a>
+<a name="GDB-Command-30"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>next</samp>&rsquo;.
 </p>
-<a name="Example-29"></a>
+<a name="Example-30"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -302,7 +303,7 @@ source line where the function was called.
 <h4 class="subheading">The <code>-exec-next-instruction</code> Command</h4>
 <a name="index-_002dexec_002dnext_002dinstruction"></a>
 
-<a name="Synopsis-31"></a>
+<a name="Synopsis-32"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -320,12 +321,12 @@ previously executed instruction was a return from another function,
 it will continue to execute in reverse until the call to that function
 (from the current stack frame) is reached.
 </p>
-<a name="GDB-Command-30"></a>
+<a name="GDB-Command-31"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>nexti</samp>&rsquo;.
 </p>
-<a name="Example-30"></a>
+<a name="Example-31"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -344,7 +345,7 @@ addr=&quot;0x000100d4&quot;,line=&quot;5&quot;,file=&quot;hello.c&quot;
 <h4 class="subheading">The <code>-exec-return</code> Command</h4>
 <a name="index-_002dexec_002dreturn"></a>
 
-<a name="Synopsis-32"></a>
+<a name="Synopsis-33"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -354,12 +355,12 @@ addr=&quot;0x000100d4&quot;,line=&quot;5&quot;,file=&quot;hello.c&quot;
 <p>Makes current function return immediately.  Doesn&rsquo;t execute the inferior.
 Displays the new current frame.
 </p>
-<a name="GDB-Command-31"></a>
+<a name="GDB-Command-32"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>return</samp>&rsquo;.
 </p>
-<a name="Example-31"></a>
+<a name="Example-32"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -374,7 +375,8 @@ file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;}
 000*stopped,reason=&quot;breakpoint-hit&quot;,disp=&quot;keep&quot;,bkptno=&quot;1&quot;,
 frame={func=&quot;callee4&quot;,args=[],
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;}
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;,
+arch=&quot;i386:x86_64&quot;}
 (gdb)
 205-break-delete
 205^done
@@ -384,7 +386,8 @@ fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot
 args=[{name=&quot;strarg&quot;,
 value=&quot;0x11940 \&quot;A string argument.\&quot;&quot;}],
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;18&quot;}
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;18&quot;,
+arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -393,7 +396,7 @@ fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot
 <h4 class="subheading">The <code>-exec-run</code> Command</h4>
 <a name="index-_002dexec_002drun"></a>
 
-<a name="Synopsis-33"></a>
+<a name="Synopsis-34"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -416,7 +419,7 @@ the execution at the start of the inferior&rsquo;s main subprogram,
 following the same behavior as the <code>start</code> command
 (see <a href="Starting.html#Starting">Starting</a>).
 </p>
-<a name="GDB-Command-32"></a>
+<a name="GDB-Command-33"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>run</samp>&rsquo;.
@@ -434,7 +437,7 @@ following the same behavior as the <code>start</code> command
 (gdb)
 *stopped,reason=&quot;breakpoint-hit&quot;,disp=&quot;keep&quot;,bkptno=&quot;1&quot;,
 frame={func=&quot;main&quot;,args=[],file=&quot;recursive2.c&quot;,
-fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;4&quot;}
+fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;4&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -478,7 +481,7 @@ signal-meaning=&quot;Interrupt&quot;
 <h4 class="subheading">The <code>-exec-step</code> Command</h4>
 <a name="index-_002dexec_002dstep"></a>
 
-<a name="Synopsis-34"></a>
+<a name="Synopsis-35"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -492,12 +495,12 @@ function.  If the &lsquo;<samp>--reverse</samp>&rsquo; option is specified, resu
 execution of the inferior program, stopping at the beginning of the
 previously executed source line.
 </p>
-<a name="GDB-Command-33"></a>
+<a name="GDB-Command-34"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>step</samp>&rsquo;.
 </p>
-<a name="Example-32"></a>
+<a name="Example-33"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>Stepping into a function:
@@ -509,7 +512,7 @@ previously executed source line.
 *stopped,reason=&quot;end-stepping-range&quot;,
 frame={func=&quot;foo&quot;,args=[{name=&quot;a&quot;,value=&quot;10&quot;},
 {name=&quot;b&quot;,value=&quot;0&quot;}],file=&quot;recursive2.c&quot;,
-fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;11&quot;}
+fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;11&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -528,7 +531,7 @@ fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;11&quot;}
 <h4 class="subheading">The <code>-exec-step-instruction</code> Command</h4>
 <a name="index-_002dexec_002dstep_002dinstruction"></a>
 
-<a name="Synopsis-35"></a>
+<a name="Synopsis-36"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -543,12 +546,12 @@ whether we have stopped in the middle of a source line or not.  In the
 former case, the address at which the program stopped will be printed
 as well.
 </p>
-<a name="GDB-Command-34"></a>
+<a name="GDB-Command-35"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>stepi</samp>&rsquo;.
 </p>
-<a name="Example-33"></a>
+<a name="Example-34"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -559,7 +562,7 @@ as well.
 (gdb)
 *stopped,reason=&quot;end-stepping-range&quot;,
 frame={func=&quot;foo&quot;,args=[],file=&quot;try.c&quot;,
-fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;10&quot;}
+fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;10&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 -exec-step-instruction
 ^running
@@ -567,7 +570,7 @@ fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;10&quot;}
 (gdb)
 *stopped,reason=&quot;end-stepping-range&quot;,
 frame={addr=&quot;0x000100f4&quot;,func=&quot;foo&quot;,args=[],file=&quot;try.c&quot;,
-fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;10&quot;}
+fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;10&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -576,7 +579,7 @@ fullname=&quot;/home/foo/bar/try.c&quot;,line=&quot;10&quot;}
 <h4 class="subheading">The <code>-exec-until</code> Command</h4>
 <a name="index-_002dexec_002duntil"></a>
 
-<a name="Synopsis-36"></a>
+<a name="Synopsis-37"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -588,12 +591,12 @@ argument is reached.  If there is no argument, the inferior executes
 until a source line greater than the current one is reached.  The
 reason for stopping in this case will be &lsquo;<samp>location-reached</samp>&rsquo;.
 </p>
-<a name="GDB-Command-35"></a>
+<a name="GDB-Command-36"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>until</samp>&rsquo;.
 </p>
-<a name="Example-34"></a>
+<a name="Example-35"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -603,7 +606,8 @@ reason for stopping in this case will be &lsquo;<samp>location-reached</samp>&rs
 (gdb)
 x = 55
 *stopped,reason=&quot;location-reached&quot;,frame={func=&quot;main&quot;,args=[],
-file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;6&quot;}
+file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;6&quot;,
+arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 

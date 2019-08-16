@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Pattern-Ordering.html#Pattern-Ordering" accesskey="n" rel="next">
 </div>
 <hr>
 <a name="Standard-Pattern-Names-For-Generation"></a>
-<h3 class="section">16.9 Standard Pattern Names For Generation</h3>
+<h3 class="section">17.9 Standard Pattern Names For Generation</h3>
 <a name="index-standard-pattern-names"></a>
 <a name="index-pattern-names"></a>
 <a name="index-names_002c-pattern"></a>
@@ -157,7 +157,7 @@ it is unsafe to call <code>gen_reg_rtx</code> to allocate a new pseudo.
 </p>
 <p>The constraints on a &lsquo;<samp>mov<var>m</var></samp>&rsquo; must permit moving any hard
 register to any other hard register provided that
-<code>HARD_REGNO_MODE_OK</code> permits mode <var>m</var> in both registers and
+<code>TARGET_HARD_REGNO_MODE_OK</code> permits mode <var>m</var> in both registers and
 <code>TARGET_REGISTER_MOVE_COST</code> applied to their classes returns a value
 of 2.
 </p>
@@ -170,7 +170,7 @@ point members.
 <p>There may also be a need to support fixed point &lsquo;<samp>mov<var>m</var></samp>&rsquo;
 instructions in and out of floating point registers.  Unfortunately, I
 have forgotten why this was so, and I don&rsquo;t know whether it is still
-true.  If <code>HARD_REGNO_MODE_OK</code> rejects fixed point values in
+true.  If <code>TARGET_HARD_REGNO_MODE_OK</code> rejects fixed point values in
 floating point registers, then the constraints of the fixed point
 &lsquo;<samp>mov<var>m</var></samp>&rsquo; instructions must be designed to avoid ever trying to
 reload into a floating point register.
@@ -281,6 +281,27 @@ loads for vectors of mode <var>n</var>.
 </p>
 <p>This pattern is not allowed to <code>FAIL</code>.
 </p>
+<a name="index-vec_005fmask_005fload_005flanesmn-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>vec_mask_load_lanes<var>m</var><var>n</var></samp>&rsquo;</dt>
+<dd><p>Like &lsquo;<samp>vec_load_lanes<var>m</var><var>n</var></samp>&rsquo;, but takes an additional
+mask operand (operand 2) that specifies which elements of the destination
+vectors should be loaded.  Other elements of the destination
+vectors are set to zero.  The operation is equivalent to:
+</p>
+<div class="smallexample">
+<pre class="smallexample">int c = GET_MODE_SIZE (<var>m</var>) / GET_MODE_SIZE (<var>n</var>);
+for (j = 0; j &lt; GET_MODE_NUNITS (<var>n</var>); j++)
+  if (operand2[j])
+    for (i = 0; i &lt; c; i++)
+      operand0[i][j] = operand1[j * c + i];
+  else
+    for (i = 0; i &lt; c; i++)
+      operand0[i][j] = 0;
+</pre></div>
+
+<p>This pattern is not allowed to <code>FAIL</code>.
+</p>
 <a name="index-vec_005fstore_005flanesmn-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>vec_store_lanes<var>m</var><var>n</var></samp>&rsquo;</dt>
@@ -299,24 +320,142 @@ for (j = 0; j &lt; GET_MODE_NUNITS (<var>n</var>); j++)
 </p>
 <p>This pattern is not allowed to <code>FAIL</code>.
 </p>
+<a name="index-vec_005fmask_005fstore_005flanesmn-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>vec_mask_store_lanes<var>m</var><var>n</var></samp>&rsquo;</dt>
+<dd><p>Like &lsquo;<samp>vec_store_lanes<var>m</var><var>n</var></samp>&rsquo;, but takes an additional
+mask operand (operand 2) that specifies which elements of the source
+vectors should be stored.  The operation is equivalent to:
+</p>
+<div class="smallexample">
+<pre class="smallexample">int c = GET_MODE_SIZE (<var>m</var>) / GET_MODE_SIZE (<var>n</var>);
+for (j = 0; j &lt; GET_MODE_NUNITS (<var>n</var>); j++)
+  if (operand2[j])
+    for (i = 0; i &lt; c; i++)
+      operand0[j * c + i] = operand1[i][j];
+</pre></div>
+
+<p>This pattern is not allowed to <code>FAIL</code>.
+</p>
+<a name="index-gather_005floadm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>gather_load<var>m</var></samp>&rsquo;</dt>
+<dd><p>Load several separate memory locations into a vector of mode <var>m</var>.
+Operand 1 is a scalar base address and operand 2 is a vector of
+offsets from that base.  Operand 0 is a destination vector with the
+same number of elements as the offset.  For each element index <var>i</var>:
+</p>
+<ul>
+<li> extend the offset element <var>i</var> to address width, using zero
+extension if operand 3 is 1 and sign extension if operand 3 is zero;
+</li><li> multiply the extended offset by operand 4;
+</li><li> add the result to the base; and
+</li><li> load the value at that address into element <var>i</var> of operand 0.
+</li></ul>
+
+<p>The value of operand 3 does not matter if the offsets are already
+address width.
+</p>
+<a name="index-mask_005fgather_005floadm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>mask_gather_load<var>m</var></samp>&rsquo;</dt>
+<dd><p>Like &lsquo;<samp>gather_load<var>m</var></samp>&rsquo;, but takes an extra mask operand as
+operand 5.  Bit <var>i</var> of the mask is set if element <var>i</var>
+of the result should be loaded from memory and clear if element <var>i</var>
+of the result should be set to zero.
+</p>
+<a name="index-scatter_005fstorem-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>scatter_store<var>m</var></samp>&rsquo;</dt>
+<dd><p>Store a vector of mode <var>m</var> into several distinct memory locations.
+Operand 0 is a scalar base address and operand 1 is a vector of offsets
+from that base.  Operand 4 is the vector of values that should be stored,
+which has the same number of elements as the offset.  For each element
+index <var>i</var>:
+</p>
+<ul>
+<li> extend the offset element <var>i</var> to address width, using zero
+extension if operand 2 is 1 and sign extension if operand 2 is zero;
+</li><li> multiply the extended offset by operand 3;
+</li><li> add the result to the base; and
+</li><li> store element <var>i</var> of operand 4 to that address.
+</li></ul>
+
+<p>The value of operand 2 does not matter if the offsets are already
+address width.
+</p>
+<a name="index-mask_005fscatter_005fstorem-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>mask_scatter_store<var>m</var></samp>&rsquo;</dt>
+<dd><p>Like &lsquo;<samp>scatter_store<var>m</var></samp>&rsquo;, but takes an extra mask operand as
+operand 5.  Bit <var>i</var> of the mask is set if element <var>i</var>
+of the result should be stored to memory.
+</p>
 <a name="index-vec_005fsetm-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>vec_set<var>m</var></samp>&rsquo;</dt>
 <dd><p>Set given field in the vector value.  Operand 0 is the vector to modify,
 operand 1 is new value of field and operand 2 specify the field index.
 </p>
-<a name="index-vec_005fextractm-instruction-pattern"></a>
+<a name="index-vec_005fextractmn-instruction-pattern"></a>
 </dd>
-<dt>&lsquo;<samp>vec_extract<var>m</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>vec_extract<var>m</var><var>n</var></samp>&rsquo;</dt>
 <dd><p>Extract given field from the vector value.  Operand 1 is the vector, operand 2
-specify field index and operand 0 place to store value into.
+specify field index and operand 0 place to store value into.  The
+<var>n</var> mode is the mode of the field or vector of fields that should be
+extracted, should be either element mode of the vector mode <var>m</var>, or
+a vector mode with the same element mode and smaller number of elements.
+If <var>n</var> is a vector mode, the index is counted in units of that mode.
 </p>
-<a name="index-vec_005finitm-instruction-pattern"></a>
+<a name="index-vec_005finitmn-instruction-pattern"></a>
 </dd>
-<dt>&lsquo;<samp>vec_init<var>m</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>vec_init<var>m</var><var>n</var></samp>&rsquo;</dt>
 <dd><p>Initialize the vector to given values.  Operand 0 is the vector to initialize
-and operand 1 is parallel containing values for individual fields.
+and operand 1 is parallel containing values for individual fields.  The
+<var>n</var> mode is the mode of the elements, should be either element mode of
+the vector mode <var>m</var>, or a vector mode with the same element mode and
+smaller number of elements.
 </p>
+<a name="index-vec_005fduplicatem-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>vec_duplicate<var>m</var></samp>&rsquo;</dt>
+<dd><p>Initialize vector output operand 0 so that each element has the value given
+by scalar input operand 1.  The vector has mode <var>m</var> and the scalar has
+the mode appropriate for one element of <var>m</var>.
+</p>
+<p>This pattern only handles duplicates of non-constant inputs.  Constant
+vectors go through the <code>mov<var>m</var></code> pattern instead.
+</p>
+<p>This pattern is not allowed to <code>FAIL</code>.
+</p>
+<a name="index-vec_005fseriesm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>vec_series<var>m</var></samp>&rsquo;</dt>
+<dd><p>Initialize vector output operand 0 so that element <var>i</var> is equal to
+operand 1 plus <var>i</var> times operand 2.  In other words, create a linear
+series whose base value is operand 1 and whose step is operand 2.
+</p>
+<p>The vector output has mode <var>m</var> and the scalar inputs have the mode
+appropriate for one element of <var>m</var>.  This pattern is not used for
+floating-point vectors, in order to avoid having to specify the
+rounding behavior for <var>i</var> &gt; 1.
+</p>
+<p>This pattern is not allowed to <code>FAIL</code>.
+</p>
+<a name="index-while_005fultmn-instruction-pattern"></a>
+</dd>
+<dt><code>while_ult<var>m</var><var>n</var></code></dt>
+<dd><p>Set operand 0 to a mask that is true while incrementing operand 1
+gives a value that is less than operand 2.  Operand 0 has mode <var>n</var>
+and operands 1 and 2 are scalar integers of mode <var>m</var>.
+The operation is equivalent to:
+</p>
+<div class="smallexample">
+<pre class="smallexample">operand0[0] = operand1 &lt; operand2;
+for (i = 1; i &lt; GET_MODE_NUNITS (<var>n</var>); i++)
+  operand0[i] = operand0[i - 1] &amp;&amp; (operand1 + i &lt; operand2);
+</pre></div>
+
 <a name="index-vec_005fcmpmn-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>vec_cmp<var>m</var><var>n</var></samp>&rsquo;</dt>
@@ -411,21 +550,8 @@ where <var>q</var> is a vector of <code>QImode</code> of the same width as <var>
 the middle-end will lower the mode <var>m</var> <code>VEC_PERM_EXPR</code> to
 mode <var>q</var>.
 </p>
-<a name="index-vec_005fperm_005fconstm-instruction-pattern"></a>
-</dd>
-<dt>&lsquo;<samp>vec_perm_const<var>m</var></samp>&rsquo;</dt>
-<dd><p>Like &lsquo;<samp>vec_perm</samp>&rsquo; except that the permutation is a compile-time
-constant.  That is, operand 3, the <em>selector</em>, is a <code>CONST_VECTOR</code>.
-</p>
-<p>Some targets cannot perform a permutation with a variable selector,
-but can efficiently perform a constant permutation.  Further, the
-target hook <code>vec_perm_ok</code> is queried to determine if the 
-specific constant permutation is available efficiently; the named
-pattern is never expanded without <code>vec_perm_ok</code> returning true.
-</p>
-<p>There is no need for a target to supply both &lsquo;<samp>vec_perm<var>m</var></samp>&rsquo;
-and &lsquo;<samp>vec_perm_const<var>m</var></samp>&rsquo; if the former can trivially implement
-the operation with, say, the vector constant loaded into a register.
+<p>See also <code>TARGET_VECTORIZER_VEC_PERM_CONST</code>, which performs
+the analogous operation for constant selectors.
 </p>
 <a name="index-pushm1-instruction-pattern"></a>
 </dd>
@@ -598,6 +724,48 @@ the elements of the input vector.
 operand 0 is the scalar result, with mode equal to the mode of the elements of
 the input vector.
 </p>
+<a name="index-reduc_005fand_005fscal_005fm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>reduc_and_scal_<var>m</var></samp>&rsquo;</dt>
+<dd><a name="index-reduc_005fior_005fscal_005fm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>reduc_ior_scal_<var>m</var></samp>&rsquo;</dt>
+<dd><a name="index-reduc_005fxor_005fscal_005fm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>reduc_xor_scal_<var>m</var></samp>&rsquo;</dt>
+<dd><p>Compute the bitwise <code>AND</code>/<code>IOR</code>/<code>XOR</code> reduction of the elements
+of a vector of mode <var>m</var>.  Operand 1 is the vector input and operand 0
+is the scalar result.  The mode of the scalar result is the same as one
+element of <var>m</var>.
+</p>
+<a name="index-extract_005flast_005fm-instruction-pattern"></a>
+</dd>
+<dt><code>extract_last_<var>m</var></code></dt>
+<dd><p>Find the last set bit in mask operand 1 and extract the associated element
+of vector operand 2.  Store the result in scalar operand 0.  Operand 2
+has vector mode <var>m</var> while operand 0 has the mode appropriate for one
+element of <var>m</var>.  Operand 1 has the usual mask mode for vectors of mode
+<var>m</var>; see <code>TARGET_VECTORIZE_GET_MASK_MODE</code>.
+</p>
+<a name="index-fold_005fextract_005flast_005fm-instruction-pattern"></a>
+</dd>
+<dt><code>fold_extract_last_<var>m</var></code></dt>
+<dd><p>If any bits of mask operand 2 are set, find the last set bit, extract
+the associated element from vector operand 3, and store the result
+in operand 0.  Store operand 1 in operand 0 otherwise.  Operand 3
+has mode <var>m</var> and operands 0 and 1 have the mode appropriate for
+one element of <var>m</var>.  Operand 2 has the usual mask mode for vectors
+of mode <var>m</var>; see <code>TARGET_VECTORIZE_GET_MASK_MODE</code>.
+</p>
+<a name="index-fold_005fleft_005fplus_005fm-instruction-pattern"></a>
+</dd>
+<dt><code>fold_left_plus_<var>m</var></code></dt>
+<dd><p>Take scalar operand 1 and successively add each element from vector
+operand 2.  Store the result in scalar operand 0.  The vector has
+mode <var>m</var> and the scalars have the mode appropriate for one
+element of <var>m</var>.  The operation is strictly in-order: there is
+no reassociation.
+</p>
 <a name="index-sdot_005fprodm-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>sdot_prod<var>m</var></samp>&rsquo;</dt>
@@ -632,6 +800,15 @@ in operand 0, which is of the same mode as operand 3.
 operand 1. Add operand 1 to operand 2 and place the widened result in
 operand 0. (This is used express accumulation of elements into an accumulator
 of a wider mode.)
+</p>
+<a name="index-vec_005fshl_005finsert_005fm-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>vec_shl_insert_<var>m</var></samp>&rsquo;</dt>
+<dd><p>Shift the elements in vector input operand 1 left one element (i.e.
+away from element 0) and fill the vacated element 0 with the scalar
+in operand 2.  Store the result in vector output operand 0.  Operands
+0 and 1 have mode <var>m</var> and operand 2 has the mode appropriate for
+one element of <var>m</var>.
 </p>
 <a name="index-vec_005fshr_005fm-instruction-pattern"></a>
 </dd>
@@ -1731,6 +1908,43 @@ move operand 2 or (operands 2 + operand 3) into operand 0 according to the
 comparison in operand 1.  If the comparison is false, operand 2 is moved into
 operand 0, otherwise (operand 2 + operand 3) is moved.
 </p>
+<a name="index-cond_005faddmode-instruction-pattern"></a>
+<a name="index-cond_005fsubmode-instruction-pattern"></a>
+<a name="index-cond_005fandmode-instruction-pattern"></a>
+<a name="index-cond_005fiormode-instruction-pattern"></a>
+<a name="index-cond_005fxormode-instruction-pattern"></a>
+<a name="index-cond_005fsminmode-instruction-pattern"></a>
+<a name="index-cond_005fsmaxmode-instruction-pattern"></a>
+<a name="index-cond_005fuminmode-instruction-pattern"></a>
+<a name="index-cond_005fumaxmode-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>cond_add<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_sub<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_and<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_ior<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_xor<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_smin<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_smax<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_umin<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cond_umax<var>mode</var></samp>&rsquo;</dt>
+<dd><p>Perform an elementwise operation on vector operands 2 and 3,
+under the control of the vector mask in operand 1, and store the result
+in operand 0.  This is equivalent to:
+</p>
+<div class="smallexample">
+<pre class="smallexample">for (i = 0; i &lt; GET_MODE_NUNITS (<var>n</var>); i++)
+  op0[i] = op1[i] ? op2[i] <var>op</var> op3[i] : op2[i];
+</pre></div>
+
+<p>where, for example, <var>op</var> is <code>+</code> for &lsquo;<samp>cond_add<var>mode</var></samp>&rsquo;.
+</p>
+<p>When defined for floating-point modes, the contents of &lsquo;<samp>op3[i]</samp>&rsquo;
+are not interpreted if <var>op1[i]</var> is false, just like they would not
+be in a normal C &lsquo;<samp>?:</samp>&rsquo; condition.
+</p>
+<p>Operands 0, 2 and 3 all have mode <var>m</var>, while operand 1 has the mode
+returned by <code>TARGET_VECTORIZE_GET_MASK_MODE</code>.
+</p>
 <a name="index-negmodecc-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>neg<var>mode</var>cc</samp>&rsquo;</dt>
@@ -2331,6 +2545,16 @@ scheduler and other passes from moving instructions and using register
 equivalences across the boundary defined by the blockage insn.
 This needs to be an UNSPEC_VOLATILE pattern or a volatile ASM.
 </p>
+<a name="index-memory_005fblockage-instruction-pattern"></a>
+</dd>
+<dt>&lsquo;<samp>memory_blockage</samp>&rsquo;</dt>
+<dd><p>This pattern, if defined, represents a compiler memory barrier, and will be
+placed at points across which RTL passes may not propagate memory accesses.
+This instruction needs to read and write volatile BLKmode memory.  It does
+not need to generate any machine instruction.  If this pattern is not defined,
+the compiler falls back to emitting an instruction corresponding
+to <code>asm volatile (&quot;&quot; ::: &quot;memory&quot;)</code>.
+</p>
 <a name="index-memory_005fbarrier-instruction-pattern"></a>
 </dd>
 <dt>&lsquo;<samp>memory_barrier</samp>&rsquo;</dt>
@@ -2657,29 +2881,21 @@ the specified bit.
 counterparts.  If none of these are available a compare-and-swap
 loop will be used.
 </p>
-<a name="index-mem_005fthread_005ffencemode-instruction-pattern"></a>
+<a name="index-mem_005fthread_005ffence-instruction-pattern"></a>
 </dd>
-<dt>&lsquo;<samp>mem_thread_fence<var>mode</var></samp>&rsquo;</dt>
+<dt>&lsquo;<samp>mem_thread_fence</samp>&rsquo;</dt>
 <dd><p>This pattern emits code required to implement a thread fence with
 memory model semantics.  Operand 0 is the memory model to be used.
 </p>
-<p>If this pattern is not specified, all memory models except
-<code>__ATOMIC_RELAXED</code> will result in issuing a <code>sync_synchronize</code>
-barrier pattern.
+<p>For the <code>__ATOMIC_RELAXED</code> model no instructions need to be issued
+and this expansion is not invoked.
 </p>
-<a name="index-mem_005fsignal_005ffencemode-instruction-pattern"></a>
-</dd>
-<dt>&lsquo;<samp>mem_signal_fence<var>mode</var></samp>&rsquo;</dt>
-<dd><p>This pattern emits code required to implement a signal fence with
-memory model semantics.  Operand 0 is the memory model to be used.
+<p>The compiler always emits a compiler memory barrier regardless of what
+expanding this pattern produced.
 </p>
-<p>This pattern should impact the compiler optimizers the same way that
-mem_signal_fence does, but it does not need to issue any barrier
-instructions.
-</p>
-<p>If this pattern is not specified, all memory models except
-<code>__ATOMIC_RELAXED</code> will result in issuing a <code>sync_synchronize</code>
-barrier pattern.
+<p>If this pattern is not defined, the compiler falls back to expanding the
+<code>memory_barrier</code> pattern, then to emitting <code>__sync_synchronize</code>
+library call, and finally to just placing a compiler memory barrier.
 </p>
 <a name="index-get_005fthread_005fpointermode-instruction-pattern"></a>
 <a name="index-set_005fthread_005fpointermode-instruction-pattern"></a>

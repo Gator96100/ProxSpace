@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the BFD library.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -85,18 +85,13 @@ extra field.
 </p>
 <p>Coff in all its varieties is implemented with a few common
 files and a number of implementation specific files. For
-example, The 88k bcs coff format is implemented in the file
-<samp>coff-m88k.c</samp>. This file <code>#include</code>s
-<samp>coff/m88k.h</samp> which defines the external structure of the
-coff format for the 88k, and <samp>coff/internal.h</samp> which
-defines the internal structure. <samp>coff-m88k.c</samp> also
-defines the relocations used by the 88k format
+example, the i386 coff format is implemented in the file
+<samp>coff-i386.c</samp>.  This file <code>#include</code>s
+<samp>coff/i386.h</samp> which defines the external structure of the
+coff format for the i386, and <samp>coff/internal.h</samp> which
+defines the internal structure. <samp>coff-i386.c</samp> also
+defines the relocations used by the i386 coff format
 See <a href="Relocations.html#Relocations">Relocations</a>.
-</p>
-<p>The Intel i960 processor version of coff is implemented in
-<samp>coff-i960.c</samp>. This file has the same structure as
-<samp>coff-m88k.c</samp>, except that it includes <samp>coff/i960.h</samp>
-rather than <samp>coff-m88k.h</samp>.
 </p>
 <a name="Porting-to-a-new-version-of-coff"></a>
 <h4 class="subsection">3.3.1 Porting to a new version of coff</h4>
@@ -148,15 +143,6 @@ then include <samp>coffcode.h</samp>.
 </p>
 <p>Some of the Coff targets then also have additional routines in
 the target source file itself.
-</p>
-<p>For example, <samp>coff-i960.c</samp> includes
-<samp>coff/internal.h</samp> and <samp>coff/i960.h</samp>.  It then
-defines a few constants, such as <code>I960</code>, and includes
-<samp>coffcode.h</samp>.  Since the i960 has complex relocation
-types, <samp>coff-i960.c</samp> also includes some code to
-manipulate the i960 relocs.  This code is not in
-<samp>coffcode.h</samp> because it would not be used by any other
-target.
 </p>
 <a name="Coff-long-section-names"></a>
 <h4 class="subsubsection">3.3.2.2 Coff long section names</h4>
@@ -771,9 +757,8 @@ routine and save the result if a canonicalization hasn&rsquo;t been done.
 
 </li><li> The reloc index is turned into a pointer to a howto
 structure, in a back end specific way. For instance, the 386
-and 960 use the <code>r_type</code> to directly produce an index
-into a howto table vector; the 88k subtracts a number from the
-<code>r_type</code> field and creates an addend field.
+uses the <code>r_type</code> to directly produce an index
+into a howto table vector.
 </li></ul>
 
 

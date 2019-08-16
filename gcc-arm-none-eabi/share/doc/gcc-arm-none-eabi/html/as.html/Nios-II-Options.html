@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,13 +67,13 @@ Next: <a href="Nios-II-Syntax.html#Nios-II-Syntax" accesskey="n" rel="next">Nios
 </div>
 <hr>
 <a name="Options-15"></a>
-<h4 class="subsection">9.31.1 Options</h4>
+<h4 class="subsection">9.30.1 Options</h4>
 <a name="index-Nios-II-options"></a>
 <a name="index-options-for-Nios-II"></a>
 
 <dl compact="compact">
 <dd>
-<a name="index-relax_002dsection-command-line-option_002c-Nios-II"></a>
+<a name="index-relax_002dsection-command_002dline-option_002c-Nios-II"></a>
 </dd>
 <dt><code>-relax-section</code></dt>
 <dd><p>Replace identified out-of-range branches with PC-relative <code>jmp</code>
@@ -82,7 +82,7 @@ for use in position-independent code, but there is a practical limit
 on the extended branch range because of the length of the sequences.
 This option is the default.
 </p>
-<a name="index-relax_002dall-command-line-option_002c-Nios-II"></a>
+<a name="index-relax_002dall-command_002dline-option_002c-Nios-II"></a>
 </dd>
 <dt><code>-relax-all</code></dt>
 <dd><p>Replace branch instructions not determinable to be in range
@@ -90,22 +90,22 @@ and all call instructions with <code>jmp</code> and <code>callr</code> sequences
 (respectively).  This option generates absolute relocations against the
 target symbols and is not appropriate for position-independent code.
 </p>
-<a name="index-no_002drelax-command-line-option_002c-Nios-II"></a>
+<a name="index-no_002drelax-command_002dline-option_002c-Nios-II"></a>
 </dd>
 <dt><code>-no-relax</code></dt>
 <dd><p>Do not replace any branches or calls.
 </p>
-<a name="index-EB-command-line-option_002c-Nios-II"></a>
+<a name="index-EB-command_002dline-option_002c-Nios-II"></a>
 </dd>
 <dt><code>-EB</code></dt>
 <dd><p>Generate big-endian output.
 </p>
-<a name="index-EL-command-line-option_002c-Nios-II"></a>
+<a name="index-EL-command_002dline-option_002c-Nios-II"></a>
 </dd>
 <dt><code>-EL</code></dt>
 <dd><p>Generate little-endian output.  This is the default.
 </p>
-<a name="index-march-command-line-option_002c-Nios-II"></a>
+<a name="index-march-command_002dline-option_002c-Nios-II"></a>
 </dd>
 <dt><code>-march=<var>architecture</var></code></dt>
 <dd><p>This option specifies the target architecture.  The assembler issues

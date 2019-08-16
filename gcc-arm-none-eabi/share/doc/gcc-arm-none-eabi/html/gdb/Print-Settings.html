@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -626,36 +626,10 @@ or demangled form.
 <a name="index-set-demangle_002dstyle"></a>
 </dd>
 <dt><code>set demangle-style <var>style</var></code></dt>
-<dd><p>Choose among several encoding schemes used by different compilers to
-represent C<tt>++</tt> names.  The choices for <var>style</var> are currently:
-</p>
-<dl compact="compact">
-<dt><code>auto</code></dt>
-<dd><p>Allow <small>GDB</small> to choose a decoding style by inspecting your program.
-This is the default.
-</p>
-</dd>
-<dt><code>gnu</code></dt>
-<dd><p>Decode based on the <small>GNU</small> C<tt>++</tt> compiler (<code>g++</code>) encoding algorithm.
-</p>
-</dd>
-<dt><code>hp</code></dt>
-<dd><p>Decode based on the HP ANSI C<tt>++</tt> (<code>aCC</code>) encoding algorithm.
-</p>
-</dd>
-<dt><code>lucid</code></dt>
-<dd><p>Decode based on the Lucid C<tt>++</tt> compiler (<code>lcc</code>) encoding algorithm.
-</p>
-</dd>
-<dt><code>arm</code></dt>
-<dd><p>Decode using the algorithm in the <cite>C<tt>++</tt> Annotated Reference Manual</cite>.
-<strong>Warning:</strong> this setting alone is not sufficient to allow
-debugging <code>cfront</code>-generated executables.  <small>GDB</small> would
-require further enhancement to permit that.
-</p>
-</dd>
-</dl>
-<p>If you omit <var>style</var>, you will see a list of possible formats.
+<dd><p>Choose among several encoding schemes used by different compilers to represent
+C<tt>++</tt> names.  If you omit <var>style</var>, you will see a list of possible
+formats.  The default value is <var>auto</var>, which lets <small>GDB</small> choose a
+decoding style by inspecting your program.
 </p>
 </dd>
 <dt><code>show demangle-style</code></dt>

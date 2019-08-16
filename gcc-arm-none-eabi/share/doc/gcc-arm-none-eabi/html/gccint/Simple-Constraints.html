@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Multi_002dAlternative.html#Multi_002dAlternative" accesskey="n" r
 </div>
 <hr>
 <a name="Simple-Constraints-1"></a>
-<h4 class="subsection">16.8.1 Simple Constraints</h4>
+<h4 class="subsection">17.8.1 Simple Constraints</h4>
 <a name="index-simple-constraints"></a>
 
 <p>The simplest kind of constraint is a string full of letters, each of
@@ -134,9 +134,9 @@ would fit the &lsquo;<samp>m</samp>&rsquo; constraint but not the &lsquo;<samp>o
 <dd><p>A memory operand with autodecrement addressing (either predecrement or
 postdecrement) is allowed.  In inline <code>asm</code> this constraint is only
 allowed if the operand is used exactly once in an instruction that can
-handle the side-effects.  Not using an operand with &lsquo;<samp>&lt;</samp>&rsquo; in constraint
+handle the side effects.  Not using an operand with &lsquo;<samp>&lt;</samp>&rsquo; in constraint
 string in the inline <code>asm</code> pattern at all or using it in multiple
-instructions isn&rsquo;t valid, because the side-effects wouldn&rsquo;t be performed
+instructions isn&rsquo;t valid, because the side effects wouldn&rsquo;t be performed
 or would be performed more than once.  Furthermore, on some targets
 the operand with &lsquo;<samp>&lt;</samp>&rsquo; in constraint string must be accompanied by
 special instruction suffixes like <code>%U0</code> instruction suffix on PowerPC

@@ -71,16 +71,12 @@ Return the natural logarithm of <var>x</var>, that is, its logarithm base e
 (where e is the base of the natural system of logarithms, 2.71828&hellip;).
 <code>log</code> and <code>logf</code> are identical save for the return and argument types.
 </p>
-<p>You can use the (non-ANSI) function <code>matherr</code> to specify error
-handling for these functions. 
-</p>
 <br>
 <p><strong>Returns</strong><br>
 Normally, returns the calculated value.  When <var>x</var> is zero, the
 returned value is <code>-HUGE_VAL</code> and <code>errno</code> is set to <code>ERANGE</code>.
 When <var>x</var> is negative, the returned value is NaN (not a number) and
-<code>errno</code> is set to <code>EDOM</code>.  You can control the error behavior via
-<code>matherr</code>.
+<code>errno</code> is set to <code>EDOM</code>.
 </p>
 <br>
 <p><strong>Portability</strong><br>

@@ -74,17 +74,13 @@ Arguments to <code>asin</code> must be in the range -1 to 1.
 <p><code>asinf</code> is identical to <code>asin</code>, other than taking and
 returning floats.
 </p>
-<p>You can modify error handling for these routines using <code>matherr</code>. 
-</p>
 <br>
 <p><strong>Returns</strong><br>
 <code>asin</code> returns values in radians, in the range of -pi/2 to pi/2.
 </p>
 <p>If <var>x</var> is not in the range -1 to 1, <code>asin</code> and <code>asinf</code>
-return NaN (not a number), set the global variable <code>errno</code> to
-<code>EDOM</code>, and issue a <code>DOMAIN error</code> message.
-</p>
-<p>You can change this error treatment using <code>matherr</code>.
+return NaN (not a number), and the global variable <code>errno</code> is set to
+<code>EDOM</code>.
 </p>
 <br>
 

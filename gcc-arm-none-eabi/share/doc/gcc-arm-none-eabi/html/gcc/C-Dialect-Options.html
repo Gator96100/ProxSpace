@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -187,6 +187,17 @@ Annexes F and G) and the optional Annexes K (Bounds-checking
 interfaces) and L (Analyzability).  The name &lsquo;<samp>c1x</samp>&rsquo; is deprecated.
 </p>
 </dd>
+<dt>&lsquo;<samp>c17</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>c18</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>iso9899:2017</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>iso9899:2018</samp>&rsquo;</dt>
+<dd><p>ISO C17, the 2017 revision of the ISO C standard (expected to be
+published in 2018).  This standard is
+same as C11 except for corrections of defects (all of which are also
+applied with <samp>-std=c11</samp>) and a new value of
+<code>__STDC_VERSION__</code>, and so is supported to the same extent as C11.
+</p>
+</dd>
 <dt>&lsquo;<samp>gnu90</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>gnu89</samp>&rsquo;</dt>
 <dd><p>GNU dialect of ISO C90 (including some C99 features).
@@ -199,8 +210,13 @@ interfaces) and L (Analyzability).  The name &lsquo;<samp>c1x</samp>&rsquo; is d
 </dd>
 <dt>&lsquo;<samp>gnu11</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>gnu1x</samp>&rsquo;</dt>
-<dd><p>GNU dialect of ISO C11.  This is the default for C code.
+<dd><p>GNU dialect of ISO C11.
 The name &lsquo;<samp>gnu1x</samp>&rsquo; is deprecated.
+</p>
+</dd>
+<dt>&lsquo;<samp>gnu17</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>gnu18</samp>&rsquo;</dt>
+<dd><p>GNU dialect of ISO C17.  This is the default for C code.
 </p>
 </dd>
 <dt>&lsquo;<samp>c++98</samp>&rsquo;</dt>
@@ -239,14 +255,26 @@ This is the default for C++ code.
 The name &lsquo;<samp>gnu++1y</samp>&rsquo; is deprecated.
 </p>
 </dd>
+<dt>&lsquo;<samp>c++17</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>c++1z</samp>&rsquo;</dt>
+<dd><p>The 2017 ISO C++ standard plus amendments.
+The name &lsquo;<samp>c++1z</samp>&rsquo; is deprecated.
+</p>
+</dd>
+<dt>&lsquo;<samp>gnu++17</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>gnu++1z</samp>&rsquo;</dt>
+<dd><p>GNU dialect of <samp>-std=c++17</samp>.
+The name &lsquo;<samp>gnu++1z</samp>&rsquo; is deprecated.
+</p>
+</dd>
+<dt>&lsquo;<samp>c++2a</samp>&rsquo;</dt>
 <dd><p>The next revision of the ISO C++ standard, tentatively planned for
-2017.  Support is highly experimental, and will almost certainly
+2020.  Support is highly experimental, and will almost certainly
 change in incompatible ways in future releases.
 </p>
 </dd>
-<dt>&lsquo;<samp>gnu++1z</samp>&rsquo;</dt>
-<dd><p>GNU dialect of <samp>-std=c++1z</samp>.  Support is highly experimental,
+<dt>&lsquo;<samp>gnu++2a</samp>&rsquo;</dt>
+<dd><p>GNU dialect of <samp>-std=c++2a</samp>.  Support is highly experimental,
 and will almost certainly change in incompatible ways in future
 releases.
 </p></dd>
@@ -420,7 +448,7 @@ freestanding and hosted environments.
 <p>Enable handling of OpenACC directives <code>#pragma acc</code> in C/C++ and
 <code>!$acc</code> in Fortran.  When <samp>-fopenacc</samp> is specified, the
 compiler generates accelerated code according to the OpenACC Application
-Programming Interface v2.0 <a href="http://www.openacc.org/">http://www.openacc.org/</a><!-- /@w -->.  This option
+Programming Interface v2.0 <a href="https://www.openacc.org">https://www.openacc.org</a><!-- /@w -->.  This option
 implies <samp>-pthread</samp>, and thus is only supported on targets that
 have support for <samp>-pthread</samp>.
 </p>
@@ -453,19 +481,6 @@ have support for <samp>-pthread</samp>. <samp>-fopenmp</samp> implies
 <p>Enable handling of OpenMP&rsquo;s SIMD directives with <code>#pragma omp</code>
 in C/C++ and <code>!$omp</code> in Fortran. Other OpenMP directives
 are ignored.
-</p>
-</dd>
-<dt><code>-fcilkplus</code></dt>
-<dd><a name="index-fcilkplus"></a>
-<a name="index-Enable-Cilk-Plus"></a>
-<p>Enable the usage of Cilk Plus language extension features for C/C++.
-When the option <samp>-fcilkplus</samp> is specified, enable the usage of
-the Cilk Plus Language extension features for C/C++.  The present
-implementation follows ABI version 1.2.  This is an experimental
-feature that is only partially complete, and whose interface may
-change in future versions of GCC as the official specification
-changes.  Currently, all features but <code>_Cilk_for</code> have been
-implemented.
 </p>
 </dd>
 <dt><code>-fgnu-tm</code></dt>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -97,7 +97,7 @@ fallback.
 </p>
 <p>You can also change <small>GDB</small>&rsquo;s current working directory by using
 the <code>cd</code> command.
-See <a href="#cd-command">cd command</a>
+See <a href="#cd-command">cd command</a>.
 </p>
 <a name="index-show-cwd"></a>
 <a name="index-show-inferior_0027s-working-directory"></a>
@@ -117,7 +117,7 @@ given, <var>directory</var> uses <samp>'~'</samp>.
 <p>The <small>GDB</small> working directory serves as a default for the
 commands that specify files for <small>GDB</small> to operate on.
 See <a href="Files.html#Files">Commands to Specify Files</a>.
-See <a href="#set-cwd-command">set cwd command</a>
+See <a href="#set-cwd-command">set cwd command</a>.
 </p>
 <a name="index-pwd"></a>
 </dd>
@@ -128,9 +128,9 @@ See <a href="#set-cwd-command">set cwd command</a>
 
 <p>It is generally impossible to find the current working directory of
 the process being debugged (since a program can change its directory
-during its run).  If you work on a system where <small>GDB</small> is
-configured with the <samp>/proc</samp> support, you can use the <code>info
-proc</code> command (see <a href="SVR4-Process-Information.html#SVR4-Process-Information">SVR4 Process Information</a>) to find out the
+during its run).  If you work on a system where <small>GDB</small> supports
+the <code>info proc</code> command (see <a href="Process-Information.html#Process-Information">Process Information</a>), you can
+use the <code>info proc</code> command to find out the
 current working directory of the debuggee.
 </p>
 <hr>

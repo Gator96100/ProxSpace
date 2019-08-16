@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(GNU Tools for Arm Embedded Processors 7-2018-q2-update)
-version 2.30.0.
+(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
+version 2.32.0.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -68,7 +68,7 @@ Next: <a href="HPPA-ELF32.html#HPPA-ELF32" accesskey="n" rel="next">HPPA ELF32</
 </div>
 <hr>
 <a name="ld-and-the-ARM-family"></a>
-<h3 class="section">4.4 <code>ld</code> and the ARM family</h3>
+<h3 class="section">4.3 <code>ld</code> and the ARM family</h3>
 
 <a name="index-ARM-interworking-support"></a>
 <a name="index-_002d_002dsupport_002dold_002dcode"></a>
@@ -77,7 +77,7 @@ between ARM and Thumb code.  These stubs only work with code that has
 been compiled and assembled with the &lsquo;<samp>-mthumb-interwork</samp>&rsquo; command
 line option.  If it is necessary to link with old ARM object files or
 libraries, which have not been compiled with the -mthumb-interwork
-option then the &lsquo;<samp>--support-old-code</samp>&rsquo; command line switch should be
+option then the &lsquo;<samp>--support-old-code</samp>&rsquo; command-line switch should be
 given to the linker.  This will make it generate larger stub functions
 which will work with non-interworking aware ARM code.  Note, however,
 the linker does not support generating stubs for function calls to
@@ -286,7 +286,7 @@ is not PIC.  This avoids problems on uClinux targets where
 code into a linked ARM ELF executable whenever an attempt is made to
 perform a function call to a symbol that is too far away.  The
 placement of these sequences of instructions - called stubs - is
-controlled by the command line option <samp>--stub-group-size=N</samp>.
+controlled by the command-line option <samp>--stub-group-size=N</samp>.
 The placement is important because a poor choice can create a need for
 duplicate stubs, increasing the code size.  The linker will try to
 group stubs together in order to reduce interruptions to the flow of
@@ -343,7 +343,7 @@ link-time values for dynamic relocations.
 </p>
 <a name="index-Placement-of-SG-veneers"></a>
 <p>All SG veneers are placed in the special output section <code>.gnu.sgstubs</code>.
-Its start address must be set, either with the command line option
+Its start address must be set, either with the command-line option
 &lsquo;<samp>--section-start</samp>&rsquo; or in a linker script, to indicate where to place these
 veneers in memory.
 </p>

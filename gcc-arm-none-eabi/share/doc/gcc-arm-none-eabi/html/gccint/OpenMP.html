@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="OpenACC.html#OpenACC" accesskey="n" rel="next">OpenACC</a>, Previ
 </div>
 <hr>
 <a name="OpenMP-1"></a>
-<h4 class="subsection">10.7.7 OpenMP</h4>
+<h4 class="subsection">11.7.7 OpenMP</h4>
 <a name="index-OMP_005fPARALLEL"></a>
 <a name="index-OMP_005fFOR"></a>
 <a name="index-OMP_005fSECTIONS"></a>
@@ -138,9 +138,9 @@ of the form <code>VAR {&lt;,&gt;,&lt;=,&gt;=} N2</code>.
 <p>Operand <code>OMP_FOR_INCR</code> is the loop index increment of the
 form <code>VAR {+=,-=} INCR</code>.
 </p>
-<p>Operand <code>OMP_FOR_PRE_BODY</code> contains side-effect code from
+<p>Operand <code>OMP_FOR_PRE_BODY</code> contains side effect code from
 operands <code>OMP_FOR_INIT</code>, <code>OMP_FOR_COND</code> and
-<code>OMP_FOR_INC</code>.  These side-effects are part of the
+<code>OMP_FOR_INC</code>.  These side effects are part of the
 <code>OMP_FOR</code> block but must be evaluated before the start of
 loop body.
 </p>
@@ -149,7 +149,7 @@ which is implicitly private to each thread.  Bounds
 <code>N1</code> and <code>N2</code> and the increment expression
 <code>INCR</code> are required to be loop invariant integer
 expressions that are evaluated without any synchronization. The
-evaluation order, frequency of evaluation and side-effects are
+evaluation order, frequency of evaluation and side effects are
 unspecified by the standard.
 </p>
 </dd>

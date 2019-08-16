@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -99,7 +99,9 @@ subject, see the hardware manufacturer&rsquo;s manual.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="CRIS_002dDependent.html#CRIS_002dDependent" accesskey="8">CRIS-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">CRIS Dependent Features
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="D10V_002dDependent.html#D10V_002dDependent" accesskey="9">D10V-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">D10V Dependent Features
+<tr><td align="left" valign="top">&bull; <a href="C_002dSKY_002dDependent.html#C_002dSKY_002dDependent" accesskey="9">C-SKY-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">C-SKY Dependent Features
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="D10V_002dDependent.html#D10V_002dDependent">D10V-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">D10V Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="D30V_002dDependent.html#D30V_002dDependent">D30V-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">D30V Dependent Features
 </td></tr>
@@ -109,13 +111,7 @@ subject, see the hardware manufacturer&rsquo;s manual.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="HPPA_002dDependent.html#HPPA_002dDependent">HPPA-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">HPPA Dependent Features
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="ESA_002f390_002dDependent.html#ESA_002f390_002dDependent">ESA/390-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">IBM ESA/390 Dependent Features
-</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="i386_002dDependent.html#i386_002dDependent">i386-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Intel 80386 and AMD x86-64 Dependent Features
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="i860_002dDependent.html#i860_002dDependent">i860-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Intel 80860 Dependent Features
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="i960_002dDependent.html#i960_002dDependent">i960-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Intel 80960 Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="IA_002d64_002dDependent.html#IA_002d64_002dDependent">IA-64-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Intel IA-64 Dependent Features
 </td></tr>
@@ -130,6 +126,8 @@ subject, see the hardware manufacturer&rsquo;s manual.
 <tr><td align="left" valign="top">&bull; <a href="M68K_002dDependent.html#M68K_002dDependent">M68K-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">M680x0 Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="M68HC11_002dDependent.html#M68HC11_002dDependent">M68HC11-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">M68HC11 and 68HC12 Dependent Features
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="S12Z_002dDependent.html#S12Z_002dDependent">S12Z-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">S12Z Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Meta_002dDependent.html#Meta_002dDependent">Meta-Dependent </a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Meta Dependent Features
 </td></tr>
@@ -146,6 +144,8 @@ subject, see the hardware manufacturer&rsquo;s manual.
 <tr><td align="left" valign="top">&bull; <a href="NiosII_002dDependent.html#NiosII_002dDependent">NiosII-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Altera Nios II Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="NS32K_002dDependent.html#NS32K_002dDependent">NS32K-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">NS32K Dependent Features
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="OpenRISC_002dDependent.html#OpenRISC_002dDependent">OpenRISC-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">OpenRISC 1000 Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="PDP_002d11_002dDependent.html#PDP_002d11_002dDependent">PDP-11-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">PDP-11 Dependent Features
 </td></tr>
@@ -166,8 +166,6 @@ subject, see the hardware manufacturer&rsquo;s manual.
 <tr><td align="left" valign="top">&bull; <a href="SCORE_002dDependent.html#SCORE_002dDependent">SCORE-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">SCORE Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="SH_002dDependent.html#SH_002dDependent">SH-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Renesas / SuperH SH Dependent Features
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="SH64_002dDependent.html#SH64_002dDependent">SH64-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">SuperH SH64 Dependent Features
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Sparc_002dDependent.html#Sparc_002dDependent">Sparc-Dependent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">SPARC Dependent Features
 </td></tr>

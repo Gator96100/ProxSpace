@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Calls.html#Calls" accesskey="n" rel="next">Calls</a>, Previous: <
 </div>
 <hr>
 <a name="Insns-1"></a>
-<h3 class="section">13.19 Insns</h3>
+<h3 class="section">14.19 Insns</h3>
 <a name="index-insns"></a>
 
 <p>The RTL representation of the code for a function is a doubly-linked
@@ -361,6 +361,21 @@ can be computed by evaluating the RTL expression from that static
 point in the program up to the next such note for the same user
 variable.
 </p>
+<a name="index-NOTE_005fINSN_005fBEGIN_005fSTMT"></a>
+</dd>
+<dt><code>NOTE_INSN_BEGIN_STMT</code></dt>
+<dd><p>This note is used to generate <code>is_stmt</code> markers in line number
+debuggign information.  It indicates the beginning of a user
+statement.
+</p>
+<a name="index-NOTE_005fINSN_005fINLINE_005fENTRY"></a>
+</dd>
+<dt><code>NOTE_INSN_INLINE_ENTRY</code></dt>
+<dd><p>This note is used to generate <code>entry_pc</code> for inlined subroutines in
+debugging information.  It indicates an inspection point at which all
+arguments for the inlined function have been bound, and before its first
+statement.
+</p>
 </dd>
 </dl>
 
@@ -380,15 +395,29 @@ binds a user variable tree to an RTL representation of the
 it stands for the value bound to the corresponding
 <code>DEBUG_EXPR_DECL</code>.
 </p>
-<p>Throughout optimization passes, binding information is kept in
-pseudo-instruction form, so that, unlike notes, it gets the same
-treatment and adjustments that regular instructions would.  It is the
-variable tracking pass that turns these pseudo-instructions into var
-location notes, analyzing control flow, value equivalences and changes
-to registers and memory referenced in value expressions, propagating
-the values of debug temporaries and determining expressions that can
-be used to compute the value of each user variable at as many points
-(ranges, actually) in the program as possible.
+<p><code>GIMPLE_DEBUG_BEGIN_STMT</code> and <code>GIMPLE_DEBUG_INLINE_ENTRY</code> are
+expanded to RTL as a <code>DEBUG_INSN</code> with a <code>DEBUG_MARKER</code>
+<code>PATTERN</code>; the difference is the RTL mode: the former&rsquo;s
+<code>DEBUG_MARKER</code> is <code>VOIDmode</code>, whereas the latter is
+<code>BLKmode</code>; information about the inlined function can be taken from
+the lexical block encoded in the <code>INSN_LOCATION</code>.  These
+<code>DEBUG_INSN</code>s, that do not carry <code>VAR_LOCATION</code> information,
+just <code>DEBUG_MARKER</code>s, can be detected by testing
+<code>DEBUG_MARKER_INSN_P</code>, whereas those that do can be recognized as
+<code>DEBUG_BIND_INSN_P</code>.
+</p>
+<p>Throughout optimization passes, <code>DEBUG_INSN</code>s are not reordered
+with respect to each other, particularly during scheduling.  Binding
+information is kept in pseudo-instruction form, so that, unlike notes,
+it gets the same treatment and adjustments that regular instructions
+would.  It is the variable tracking pass that turns these
+pseudo-instructions into <code>NOTE_INSN_VAR_LOCATION</code>,
+<code>NOTE_INSN_BEGIN_STMT</code> and <code>NOTE_INSN_INLINE_ENTRY</code> notes,
+analyzing control flow, value equivalences and changes to registers and
+memory referenced in value expressions, propagating the values of debug
+temporaries and determining expressions that can be used to compute the
+value of each user variable at as many points (ranges, actually) in the
+program as possible.
 </p>
 <p>Unlike <code>NOTE_INSN_VAR_LOCATION</code>, the value expression in an
 <code>INSN_VAR_LOCATION</code> denotes a value at that specific point in the
@@ -573,17 +602,6 @@ multiple targets; the last label in the insn (in the highest numbered
 insn-field) goes into the <code>JUMP_LABEL</code> field and does not have a
 <code>REG_LABEL_TARGET</code> note.  See <a href="#Insns">JUMP_LABEL</a>.
 </p>
-<a name="index-REG_005fCROSSING_005fJUMP"></a>
-</dd>
-<dt><code>REG_CROSSING_JUMP</code></dt>
-<dd><p>This insn is a branching instruction (either an unconditional jump or
-an indirect jump) which crosses between hot and cold sections, which
-could potentially be very far apart in the executable.  The presence
-of this note indicates to other optimizations that this branching
-instruction should not be &ldquo;collapsed&rdquo; into a simpler branching
-construct.  It is used when the optimization to partition basic blocks
-into hot and cold sections is turned on.
-</p>
 <a name="index-REG_005fSETJMP"></a>
 </dd>
 <dt><code>REG_SETJMP</code></dt>
@@ -720,9 +738,10 @@ are stored in the <code>REG_NOTES</code> field of an insn.
 <dt><code>REG_BR_PROB</code></dt>
 <dd><p>This is used to specify the ratio of branches to non-branches of a
 branch insn according to the profile data.  The note is represented
-as an <code>int_list</code> expression whose integer value is between 0 and
-REG_BR_PROB_BASE.  Larger values indicate a higher probability that
-the branch will be taken.
+as an <code>int_list</code> expression whose integer value is an encoding
+of <code>profile_probability</code> type.  <code>profile_probability</code> provide
+member function <code>from_reg_br_prob_note</code> and <code>to_reg_br_prob_note</code>
+to extract and store the probability into the RTL encoding.
 </p>
 <a name="index-REG_005fBR_005fPRED"></a>
 </dd>
@@ -737,6 +756,24 @@ of the JUMP.  The format is a bitmask of ATTR_FLAG_* values.
 <dd><p>This is used on an RTX_FRAME_RELATED_P insn wherein the attached expression
 is used in place of the actual insn pattern.  This is done in cases where
 the pattern is either complex or misleading.
+</p></dd>
+</dl>
+
+<p>The note <code>REG_CALL_NOCF_CHECK</code> is used in conjunction with the
+<samp>-fcf-protection=branch</samp> option.  The note is set if a
+<code>nocf_check</code> attribute is specified for a function type or a
+pointer to function type.  The note is stored in the <code>REG_NOTES</code>
+field of an insn.
+</p>
+<dl compact="compact">
+<dd><a name="index-REG_005fCALL_005fNOCF_005fCHECK"></a>
+</dd>
+<dt><code>REG_CALL_NOCF_CHECK</code></dt>
+<dd><p>Users have control through the <code>nocf_check</code> attribute to identify
+which calls to a function should be skipped from control-flow instrumentation
+when the option <samp>-fcf-protection=branch</samp> is specified.  The compiler
+puts a <code>REG_CALL_NOCF_CHECK</code> note on each <code>CALL_INSN</code> instruction
+that has a function type marked with a <code>nocf_check</code> attribute.
 </p></dd>
 </dl>
 

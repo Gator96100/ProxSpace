@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -33,7 +33,7 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Variable-Attributes.html#Variable-Attributes" rel="up" title="Variable Attributes">
-<link href="AVR-Variable-Attributes.html#AVR-Variable-Attributes" rel="next" title="AVR Variable Attributes">
+<link href="ARC-Variable-Attributes.html#ARC-Variable-Attributes" rel="next" title="ARC Variable Attributes">
 <link href="Variable-Attributes.html#Variable-Attributes" rel="prev" title="Variable Attributes">
 <style type="text/css">
 <!--
@@ -71,7 +71,7 @@ ul.no-bullet {list-style: none}
 <a name="Common-Variable-Attributes"></a>
 <div class="header">
 <p>
-Next: <a href="AVR-Variable-Attributes.html#AVR-Variable-Attributes" accesskey="n" rel="next">AVR Variable Attributes</a>, Up: <a href="Variable-Attributes.html#Variable-Attributes" accesskey="u" rel="up">Variable Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="ARC-Variable-Attributes.html#ARC-Variable-Attributes" accesskey="n" rel="next">ARC Variable Attributes</a>, Up: <a href="Variable-Attributes.html#Variable-Attributes" accesskey="u" rel="up">Variable Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="Common-Variable-Attributes-1"></a>
@@ -148,6 +148,41 @@ alignment.  See your linker documentation for further information.
 <p>The <code>aligned</code> attribute can also be used for functions
 (see <a href="Common-Function-Attributes.html#Common-Function-Attributes">Common Function Attributes</a>.)
 </p>
+<a name="index-warn_005fif_005fnot_005faligned-variable-attribute"></a>
+</dd>
+<dt><code>warn_if_not_aligned (<var>alignment</var>)</code></dt>
+<dd><p>This attribute specifies a threshold for the structure field, measured
+in bytes.  If the structure field is aligned below the threshold, a
+warning will be issued.  For example, the declaration:
+</p>
+<div class="smallexample">
+<pre class="smallexample">struct foo
+{
+  int i1;
+  int i2;
+  unsigned long long x __attribute__((warn_if_not_aligned(16)));
+};
+</pre></div>
+
+<p>causes the compiler to issue an warning on <code>struct foo</code>, like
+&lsquo;<samp>warning: alignment 8 of 'struct foo' is less than 16</samp>&rsquo;.
+The compiler also issues a warning, like &lsquo;<samp>warning: 'x' offset
+8 in 'struct foo' isn't aligned to 16</samp>&rsquo;, when the structure field has
+the misaligned offset:
+</p>
+<div class="smallexample">
+<pre class="smallexample">struct foo
+{
+  int i1;
+  int i2;
+  unsigned long long x __attribute__((warn_if_not_aligned(16)));
+} __attribute__((aligned(16)));
+</pre></div>
+
+<p>This warning can be disabled by <samp>-Wno-if-not-aligned</samp>.
+The <code>warn_if_not_aligned</code> attribute can also be used for types
+(see <a href="Common-Type-Attributes.html#Common-Type-Attributes">Common Type Attributes</a>.)
+</p>
 </dd>
 <dt><code>cleanup (<var>cleanup_function</var>)</code></dt>
 <dd><a name="index-cleanup-variable-attribute"></a>
@@ -205,6 +240,42 @@ present.
 types (see <a href="Common-Function-Attributes.html#Common-Function-Attributes">Common Function Attributes</a>,
 see <a href="Common-Type-Attributes.html#Common-Type-Attributes">Common Type Attributes</a>).
 </p>
+</dd>
+<dt><code>nonstring</code></dt>
+<dd><a name="index-nonstring-variable-attribute"></a>
+<p>The <code>nonstring</code> variable attribute specifies that an object or member
+declaration with type array of <code>char</code>, <code>signed char</code>, or
+<code>unsigned char</code>, or pointer to such a type is intended to store
+character arrays that do not necessarily contain a terminating <code>NUL</code>.
+This is useful in detecting uses of such arrays or pointers with functions
+that expect <code>NUL</code>-terminated strings, and to avoid warnings when such
+an array or pointer is used as an argument to a bounded string manipulation
+function such as <code>strncpy</code>.  For example, without the attribute, GCC
+will issue a warning for the <code>strncpy</code> call below because it may
+truncate the copy without appending the terminating <code>NUL</code> character.
+Using the attribute makes it possible to suppress the warning.  However,
+when the array is declared with the attribute the call to <code>strlen</code> is
+diagnosed because when the array doesn&rsquo;t contain a <code>NUL</code>-terminated
+string the call is undefined.  To copy, compare, of search non-string
+character arrays use the <code>memcpy</code>, <code>memcmp</code>, <code>memchr</code>,
+and other functions that operate on arrays of bytes.  In addition,
+calling <code>strnlen</code> and <code>strndup</code> with such arrays is safe
+provided a suitable bound is specified, and not diagnosed.
+</p>
+<div class="smallexample">
+<pre class="smallexample">struct Data
+{
+  char name [32] __attribute__ ((nonstring));
+};
+
+int f (struct Data *pd, const char *s)
+{
+  strncpy (pd-&gt;name, s, sizeof pd-&gt;name);
+  &hellip;
+  return strlen (pd-&gt;name);   // unsafe, gets a warning
+}
+</pre></div>
+
 </dd>
 <dt><code>mode (<var>mode</var>)</code></dt>
 <dd><a name="index-mode-variable-attribute"></a>
@@ -371,7 +442,7 @@ The <code>visibility</code> attribute is described in
 <hr>
 <div class="header">
 <p>
-Next: <a href="AVR-Variable-Attributes.html#AVR-Variable-Attributes" accesskey="n" rel="next">AVR Variable Attributes</a>, Up: <a href="Variable-Attributes.html#Variable-Attributes" accesskey="u" rel="up">Variable Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="ARC-Variable-Attributes.html#ARC-Variable-Attributes" accesskey="n" rel="next">ARC Variable Attributes</a>, Up: <a href="Variable-Attributes.html#Variable-Attributes" accesskey="u" rel="up">Variable Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

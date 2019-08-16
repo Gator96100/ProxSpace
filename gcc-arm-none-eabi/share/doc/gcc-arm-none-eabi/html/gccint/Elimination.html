@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Stack-Arguments.html#Stack-Arguments" accesskey="n" rel="next">St
 </div>
 <hr>
 <a name="Eliminating-Frame-Pointer-and-Arg-Pointer"></a>
-<h4 class="subsection">17.9.5 Eliminating Frame Pointer and Arg Pointer</h4>
+<h4 class="subsection">18.9.5 Eliminating Frame Pointer and Arg Pointer</h4>
 
 <p>This is about eliminating the frame pointer and arg pointer.
 </p>
@@ -148,6 +148,16 @@ knows about.
 of registers.  The value would be computed from information
 such as the result of <code>get_frame_size ()</code> and the tables of
 registers <code>df_regs_ever_live_p</code> and <code>call_used_regs</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fCOMPUTE_005fFRAME_005fLAYOUT"></a>Target Hook: <em>void</em> <strong>TARGET_COMPUTE_FRAME_LAYOUT</strong> <em>(void)</em></dt>
+<dd><p>This target hook is called once each time the frame layout needs to be
+recalculated.  The calculations can be cached by the target and can then
+be used by <code>INITIAL_ELIMINATION_OFFSET</code> instead of re-computing the
+layout on every invocation of that hook.  This is particularly useful
+for targets that have an expensive frame layout function.  Implementing
+this callback is optional.
 </p></dd></dl>
 
 <hr>

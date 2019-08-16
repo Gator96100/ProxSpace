@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -67,8 +67,8 @@ ul.no-bullet {list-style: none}
 Next: <a href="Blocks-In-Python.html#Blocks-In-Python" accesskey="n" rel="next">Blocks In Python</a>, Previous: <a href="Objfiles-In-Python.html#Objfiles-In-Python" accesskey="p" rel="prev">Objfiles In Python</a>, Up: <a href="Python-API.html#Python-API" accesskey="u" rel="up">Python API</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<a name="Accessing-inferior-stack-frames-from-Python_002e"></a>
-<h4 class="subsubsection">23.2.2.25 Accessing inferior stack frames from Python.</h4>
+<a name="Accessing-inferior-stack-frames-from-Python"></a>
+<h4 class="subsubsection">23.2.2.25 Accessing inferior stack frames from Python</h4>
 
 <a name="index-frames-in-python"></a>
 <p>When the debugged program stops, <small>GDB</small> is able to analyze its call
@@ -251,7 +251,10 @@ if reason &gt;=  gdb.FRAME_UNWIND_FIRST_ERROR:
 
 <dl>
 <dt><a name="index-Frame_002eblock"></a>Function: <strong>Frame.block</strong> <em>()</em></dt>
-<dd><p>Return the frame&rsquo;s code block.  See <a href="Blocks-In-Python.html#Blocks-In-Python">Blocks In Python</a>.
+<dd><p>Return the frame&rsquo;s code block.  See <a href="Blocks-In-Python.html#Blocks-In-Python">Blocks In Python</a>.  If the frame
+does not have a block &ndash; for example, if there is no debugging
+information for the code in question &ndash; then this will throw an
+exception.
 </p></dd></dl>
 
 <dl>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -106,7 +106,15 @@ the meanings of that architecture&rsquo;s constraints.
 </p>
 </dd>
 <dt><code>w</code></dt>
-<dd><p>Floating point or SIMD vector register
+<dd><p>Floating point register, Advanced SIMD vector register or SVE vector register
+</p>
+</dd>
+<dt><code>Upl</code></dt>
+<dd><p>One of the low eight SVE predicate registers (<code>P0</code> to <code>P7</code>)
+</p>
+</dd>
+<dt><code>Upa</code></dt>
+<dd><p>Any of the SVE predicate registers (<code>P0</code> to <code>P15</code>)
 </p>
 </dd>
 <dt><code>I</code></dt>
@@ -3018,7 +3026,10 @@ or <code>dx</code>.  You have to use the following variant instead:
 }
 </pre></div>
 
-
+</dd>
+<dt><code>U</code></dt>
+<dd><p>The call-clobbered integer registers.
+</p>
 </dd>
 <dt><code>f</code></dt>
 <dd><p>Any 80387 floating-point (stack) register.
@@ -3031,6 +3042,7 @@ or <code>dx</code>.  You have to use the following variant instead:
 <dt><code>u</code></dt>
 <dd><p>Second from top of 80387 floating-point stack (<code>%st(1)</code>).
 </p>
+
 </dd>
 <dt><code>y</code></dt>
 <dd><p>Any MMX register.
@@ -3039,6 +3051,11 @@ or <code>dx</code>.  You have to use the following variant instead:
 <dt><code>x</code></dt>
 <dd><p>Any SSE register.
 </p>
+</dd>
+<dt><code>v</code></dt>
+<dd><p>Any EVEX encodable SSE register (<code>%xmm0-%xmm31</code>).
+</p>
+
 </dd>
 <dt><code>Yz</code></dt>
 <dd><p>First SSE register (<code>%xmm0</code>).
@@ -3085,10 +3102,43 @@ to fit that range (for immediate operands in sign-extending x86-64
 instructions).
 </p>
 </dd>
+<dt><code>We</code></dt>
+<dd><p>32-bit signed integer constant, or a symbolic reference known
+to fit that range (for sign-extending conversion operations that
+require non-<code>VOIDmode</code> immediate operands).
+</p>
+</dd>
+<dt><code>Wz</code></dt>
+<dd><p>32-bit unsigned integer constant, or a symbolic reference known
+to fit that range (for zero-extending conversion operations that
+require non-<code>VOIDmode</code> immediate operands).
+</p>
+</dd>
+<dt><code>Wd</code></dt>
+<dd><p>128-bit integer constant where both the high and low 64-bit word
+satisfy the <code>e</code> constraint.
+</p>
+</dd>
 <dt><code>Z</code></dt>
 <dd><p>32-bit unsigned integer constant, or a symbolic reference known
 to fit that range (for immediate operands in zero-extending x86-64
 instructions).
+</p>
+</dd>
+<dt><code>Tv</code></dt>
+<dd><p>VSIB address operand.
+</p>
+</dd>
+<dt><code>Ts</code></dt>
+<dd><p>Address operand without segment register.
+</p>
+</dd>
+<dt><code>Ti</code></dt>
+<dd><p>MPX address operand without index.
+</p>
+</dd>
+<dt><code>Tb</code></dt>
+<dd><p>MPX address operand without base.
 </p>
 </dd>
 </dl>

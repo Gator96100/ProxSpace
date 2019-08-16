@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Misc.html#Misc" accesskey="n" rel="next">Misc</a>, Previous: <a h
 </div>
 <hr>
 <a name="Adding-support-for-named-address-spaces"></a>
-<h3 class="section">17.29 Adding support for named address spaces</h3>
+<h3 class="section">18.29 Adding support for named address spaces</h3>
 <a name="index-named-address-spaces"></a>
 
 <p>The draft technical report of the ISO/IEC JTC1 S22 WG14 N1275
@@ -113,21 +113,21 @@ c_register_addr_space (&quot;__ea&quot;, ADDR_SPACE_EA);
 </pre></div>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fPOINTER_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_ADDR_SPACE_POINTER_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fPOINTER_005fMODE"></a>Target Hook: <em>scalar_int_mode</em> <strong>TARGET_ADDR_SPACE_POINTER_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
 <dd><p>Define this to return the machine mode to use for pointers to
 <var>address_space</var> if the target supports named address spaces.
 The default version of this hook returns <code>ptr_mode</code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fADDRESS_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_ADDR_SPACE_ADDRESS_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fADDRESS_005fMODE"></a>Target Hook: <em>scalar_int_mode</em> <strong>TARGET_ADDR_SPACE_ADDRESS_MODE</strong> <em>(addr_space_t <var>address_space</var>)</em></dt>
 <dd><p>Define this to return the machine mode to use for addresses in
 <var>address_space</var> if the target supports named address spaces.
 The default version of this hook returns <code>Pmode</code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fADDR_005fSPACE_005fVALID_005fPOINTER_005fMODE"></a>Target Hook: <em>bool</em> <strong>TARGET_ADDR_SPACE_VALID_POINTER_MODE</strong> <em>(machine_mode <var>mode</var>, addr_space_t <var>as</var>)</em></dt>
+<dt><a name="index-TARGET_005fADDR_005fSPACE_005fVALID_005fPOINTER_005fMODE"></a>Target Hook: <em>bool</em> <strong>TARGET_ADDR_SPACE_VALID_POINTER_MODE</strong> <em>(scalar_int_mode <var>mode</var>, addr_space_t <var>as</var>)</em></dt>
 <dd><p>Define this to return nonzero if the port can handle pointers
 with machine mode <var>mode</var> to address space <var>as</var>.  This target
 hook is the same as the <code>TARGET_VALID_POINTER_MODE</code> target hook,

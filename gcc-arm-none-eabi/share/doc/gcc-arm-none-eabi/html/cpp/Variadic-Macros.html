@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1987-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1987-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -127,28 +127,51 @@ macro.  We could define <code>eprintf</code> like this, instead:
 <pre class="smallexample">#define eprintf(format, &hellip;) fprintf (stderr, format, __VA_ARGS__)
 </pre></div>
 
-<p>This formulation looks more descriptive, but unfortunately it is less
-flexible: you must now supply at least one argument after the format
-string.  In standard C, you cannot omit the comma separating the named
-argument from the variable arguments.  Furthermore, if you leave the
-variable argument empty, you will get a syntax error, because
-there will be an extra comma after the format string.
+<p>This formulation looks more descriptive, but historically it was less
+flexible: you had to supply at least one argument after the format
+string.  In standard C, you could not omit the comma separating the
+named argument from the variable arguments.  (Note that this
+restriction has been lifted in C++2a, and never existed in GNU C; see
+below.)
+</p>
+<p>Furthermore, if you left the variable argument empty, you would have
+gotten a syntax error, because there would have been an extra comma
+after the format string.
 </p>
 <div class="smallexample">
 <pre class="smallexample">eprintf(&quot;success!\n&quot;, );
      &rarr; fprintf(stderr, &quot;success!\n&quot;, );
 </pre></div>
 
-<p>GNU CPP has a pair of extensions which deal with this problem.  First,
-you are allowed to leave the variable argument out entirely:
+<p>This has been fixed in C++2a, and GNU CPP also has a pair of
+extensions which deal with this problem.
+</p>
+<p>First, in GNU CPP, and in C++ beginning in C++2a, you are allowed to
+leave the variable argument out entirely:
 </p>
 <div class="smallexample">
 <pre class="smallexample">eprintf (&quot;success!\n&quot;)
      &rarr; fprintf(stderr, &quot;success!\n&quot;, );
 </pre></div>
 
-<p>Second, the &lsquo;<samp>##</samp>&rsquo; token paste operator has a special meaning when
-placed between a comma and a variable argument.  If you write
+<p>Second, C++2a introduces the <code><span class="nolinebreak">__VA_OPT__</span><!-- /@w --></code> function macro.
+This macro may only appear in the definition of a variadic macro.  If
+the variable argument has any tokens, then a <code><span class="nolinebreak">__VA_OPT__</span><!-- /@w --></code>
+invocation expands to its argument; but if the variable argument does
+not have any tokens, the <code><span class="nolinebreak">__VA_OPT__</span><!-- /@w --></code> expands to nothing:
+</p>
+<div class="smallexample">
+<pre class="smallexample">#define eprintf(format, &hellip;) \
+  fprintf (stderr, format __VA_OPT__(,) __VA_ARGS__)
+</pre></div>
+
+<p><code><span class="nolinebreak">__VA_OPT__</span><!-- /@w --></code> is also available in GNU C and GNU C++.
+</p>
+<p>Historically, GNU CPP has also had another extension to handle the
+trailing comma: the &lsquo;<samp>##</samp>&rsquo; token paste operator has a special
+meaning when placed between a comma and a variable argument.  Despite
+the introduction of <code><span class="nolinebreak">__VA_OPT__</span><!-- /@w --></code>, this extension remains
+supported in GNU CPP, for backward compatibility.  If you write
 </p>
 <div class="smallexample">
 <pre class="smallexample">#define eprintf(format, &hellip;) fprintf (stderr, format, ##__VA_ARGS__)
@@ -178,6 +201,9 @@ be used as a macro name, macro argument name, or within a different type
 of macro.  It may also be forbidden in open text; the standard is
 ambiguous.  We recommend you avoid using it except for its defined
 purpose.
+</p>
+<p>Likewise, C++ forbids <code><span class="nolinebreak">__VA_OPT__</span><!-- /@w --></code> anywhere outside the
+replacement list of a variadic macro.
 </p>
 <p>Variadic macros became a standard part of the C language with C99.  
 GNU CPP previously supported them

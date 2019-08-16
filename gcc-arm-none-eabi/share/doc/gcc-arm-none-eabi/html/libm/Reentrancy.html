@@ -61,21 +61,11 @@ Next: <a href="Long-Double-Functions.html#Long-Double-Functions" accesskey="n" r
 <a name="index-reentrancy"></a>
 <a name="index-matherr-and-reentrancy"></a>
 <p>When a libm function detects an exceptional case, <code>errno</code> may be
-set, the <code>matherr</code> function may be called, and a error message 
-may be written to the standard error stream.  This behavior may not
-be reentrant.
+set.
 </p>
 
-<p>With reentrant C libraries like the Red Hat newlib C library, <code>errno</code> is
-a macro which expands to the per-thread error value.  This makes it thread
-safe.
-</p>
-<p>When the user provides his own <code>matherr</code> function it must be
-reentrant for the math library as a whole to be reentrant.
-</p>
-<p>In normal debugged programs, there are usually no math subroutine
-errors&mdash;and therefore no assignments to <code>errno</code> and no <code>matherr</code>
-calls; in that situation, the math functions behave reentrantly.
+<p><code>errno</code> is a macro which expands to the per-thread error value.
+This makes it thread safe, and therefore reentrant.
 </p>
 
 

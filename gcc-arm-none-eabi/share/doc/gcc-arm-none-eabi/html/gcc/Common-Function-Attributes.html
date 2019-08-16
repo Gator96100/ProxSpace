@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -240,16 +240,22 @@ are automatically detected and this attribute is ignored.
 <dd><a name="index-const-function-attribute"></a>
 <a name="index-functions-that-have-no-side-effects"></a>
 <p>Many functions do not examine any values except their arguments, and
-have no effects except the return value.  Basically this is just slightly
-more strict class than the <code>pure</code> attribute below, since function is not
-allowed to read global memory.
+have no effects except to return a value.  Calls to such functions lend
+themselves to optimization such as common subexpression elimination.
+The <code>const</code> attribute imposes greater restrictions on a function&rsquo;s
+definition than the similar <code>pure</code> attribute below because it prohibits
+the function from reading global variables.  Consequently, the presence of
+the attribute on a function declaration allows GCC to emit more efficient
+code for some calls to the function.  Decorating the same function with
+both the <code>const</code> and the <code>pure</code> attribute is diagnosed.
 </p>
 <a name="index-pointer-arguments"></a>
 <p>Note that a function that has pointer arguments and examines the data
 pointed to must <em>not</em> be declared <code>const</code>.  Likewise, a
 function that calls a non-<code>const</code> function usually must not be
-<code>const</code>.  It does not make sense for a <code>const</code> function to
-return <code>void</code>.
+<code>const</code>.  Because a <code>const</code> function cannot have any side
+effects it does not make sense for such a function to return <code>void</code>.
+Declaring such a function is diagnosed.
 </p>
 </dd>
 <dt><code>constructor</code></dt>
@@ -540,23 +546,25 @@ are automatically detected and this attribute is ignored.
 function using the STT_GNU_IFUNC symbol type extension to the ELF
 standard.  This allows the resolution of the symbol value to be
 determined dynamically at load time, and an optimized version of the
-routine can be selected for the particular processor or other system
+routine to be selected for the particular processor or other system
 characteristics determined then.  To use this attribute, first define
 the implementation functions available, and a resolver function that
 returns a pointer to the selected implementation function.  The
 implementation functions&rsquo; declarations must match the API of the
-function being implemented, the resolver&rsquo;s declaration is be a
-function returning pointer to void function returning void:
+function being implemented.  The resolver should be declared to
+be a function taking no arguments and returning a pointer to
+a function of the same type as the implementation.  For example:
 </p>
 <div class="smallexample">
 <pre class="smallexample">void *my_memcpy (void *dst, const void *src, size_t len)
 {
   &hellip;
+  return dst;
 }
 
-static void (*resolve_memcpy (void)) (void)
+static void * (*resolve_memcpy (void))(void *, const void *, size_t)
 {
-  return my_memcpy; // we'll just always select this routine
+  return my_memcpy; // we will just always select this routine
 }
 </pre></div>
 
@@ -567,13 +575,54 @@ contain:
 <pre class="smallexample">extern void *memcpy (void *, const void *, size_t);
 </pre></div>
 
-<p>allowing the user to call this as a regular function, unaware of the
-implementation.  Finally, the indirect function needs to be defined in
-the same translation unit as the resolver function:
+<p>allowing the user to call <code>memcpy</code> as a regular function, unaware of
+the actual implementation.  Finally, the indirect function needs to be
+defined in the same translation unit as the resolver function:
 </p>
 <div class="smallexample">
 <pre class="smallexample">void *memcpy (void *, const void *, size_t)
      __attribute__ ((ifunc (&quot;resolve_memcpy&quot;)));
+</pre></div>
+
+<p>In C++, the <code>ifunc</code> attribute takes a string that is the mangled name
+of the resolver function.  A C++ resolver for a non-static member function
+of class <code>C</code> should be declared to return a pointer to a non-member
+function taking pointer to <code>C</code> as the first argument, followed by
+the same arguments as of the implementation function.  G++ checks
+the signatures of the two functions and issues
+a <samp>-Wattribute-alias</samp> warning for mismatches.  To suppress a warning
+for the necessary cast from a pointer to the implementation member function
+to the type of the corresponding non-member function use
+the <samp>-Wno-pmf-conversions</samp> option.  For example:
+</p>
+<div class="smallexample">
+<pre class="smallexample">class S
+{
+private:
+  int debug_impl (int);
+  int optimized_impl (int);
+
+  typedef int Func (S*, int);
+
+  static Func* resolver ();
+public:
+
+  int interface (int);
+};
+
+int S::debug_impl (int) { /* <span class="roman">&hellip;</span> */ }
+int S::optimized_impl (int) { /* <span class="roman">&hellip;</span> */ }
+
+S::Func* S::resolver ()
+{
+  int (S::*pimpl) (int)
+    = getenv (&quot;DEBUG&quot;) ? &amp;S::debug_impl : &amp;S::optimized_impl;
+
+  // Cast triggers -Wno-pmf-conversions.
+  return reinterpret_cast&lt;Func*&gt;(pimpl);
+}
+
+int S::interface (int) __attribute__ ((ifunc (&quot;_ZN1S8resolverEv&quot;)));
 </pre></div>
 
 <p>Indirect functions cannot be weak.  Binutils version 2.20.1 or higher
@@ -674,6 +723,21 @@ as the <samp>-fno-toplevel-reorder</samp> option, but only applies to the
 marked symbols.
 </p>
 </dd>
+<dt><code>no_sanitize (&quot;<var>sanitize_option</var>&quot;)</code></dt>
+<dd><a name="index-no_005fsanitize-function-attribute"></a>
+<p>The <code>no_sanitize</code> attribute on functions is used
+to inform the compiler that it should not do sanitization of all options
+mentioned in <var>sanitize_option</var>.  A list of values acceptable by
+<samp>-fsanitize</samp> option can be provided.
+</p>
+<div class="smallexample">
+<pre class="smallexample">void __attribute__ ((no_sanitize (&quot;alignment&quot;, &quot;object-size&quot;)))
+f () { /* <span class="roman">Do something.</span> */; }
+void __attribute__ ((no_sanitize (&quot;alignment,object-size&quot;)))
+g () { /* <span class="roman">Do something.</span> */; }
+</pre></div>
+
+</dd>
 <dt><code>no_sanitize_address</code></dt>
 <dt><code>no_address_safety_analysis</code></dt>
 <dd><a name="index-no_005fsanitize_005faddress-function-attribute"></a>
@@ -727,7 +791,7 @@ propagation.
 <dd><a name="index-noinline-function-attribute"></a>
 <p>This function attribute prevents a function from being considered for
 inlining.
-If the function does not have side-effects, there are optimizations
+If the function does not have side effects, there are optimizations
 other than inlining that cause function calls to be optimized away,
 although the function call is live.  To keep such calls from being
 optimized away, put
@@ -736,7 +800,21 @@ optimized away, put
 </pre></div>
 
 <p>(see <a href="Extended-Asm.html#Extended-Asm">Extended Asm</a>) in the called function, to serve as a special
-side-effect.
+side effect.
+</p>
+</dd>
+<dt><code>noipa</code></dt>
+<dd><a name="index-noipa-function-attribute"></a>
+<p>Disable interprocedural optimizations between the function with this
+attribute and its callers, as if the body of the function is not available
+when optimizing callers and the callers are unavailable when optimizing
+the body.  This attribute implies <code>noinline</code>, <code>noclone</code> and
+<code>no_icf</code> attributes.    However, this attribute is not equivalent
+to a combination of other attributes, because its purpose is to suppress
+existing and future optimizations employing interprocedural analysis,
+including those that do not have an attribute suitable for disabling
+them individually.  This attribute is supported mainly for the purpose
+of testing the compiler.
 </p>
 </dd>
 <dt><code>nonnull (<var>arg-index</var>, &hellip;)</code></dt>
@@ -860,12 +938,34 @@ See <a href="Function-Specific-Option-Pragmas.html#Function-Specific-Option-Prag
 suitable in production code.
 </p>
 </dd>
+<dt><code>patchable_function_entry</code></dt>
+<dd><a name="index-patchable_005ffunction_005fentry-function-attribute"></a>
+<a name="index-extra-NOP-instructions-at-the-function-entry-point"></a>
+<p>In case the target&rsquo;s text segment can be made writable at run time by
+any means, padding the function entry with a number of NOPs can be
+used to provide a universal tool for instrumentation.
+</p>
+<p>The <code>patchable_function_entry</code> function attribute can be used to
+change the number of NOPs to any desired value.  The two-value syntax
+is the same as for the command-line switch
+<samp>-fpatchable-function-entry=N,M</samp>, generating <var>N</var> NOPs, with
+the function entry point before the <var>M</var>th NOP instruction.
+<var>M</var> defaults to 0 if omitted e.g. function entry point is before
+the first NOP.
+</p>
+<p>If patchable function entries are enabled globally using the command-line
+option <samp>-fpatchable-function-entry=N,M</samp>, then you must disable
+instrumentation on all functions that are part of the instrumentation
+framework with the attribute <code>patchable_function_entry (0)</code>
+to prevent recursion.
+</p>
+</dd>
 <dt><code>pure</code></dt>
 <dd><a name="index-pure-function-attribute"></a>
 <a name="index-functions-that-have-no-side-effects-1"></a>
 <p>Many functions have no effects except the return value and their
 return value depends only on the parameters and/or global variables.
-Such a function can be subject
+Calls to such functions can be subject
 to common subexpression elimination and loop optimization just as an
 arithmetic operator would be.  These functions should be declared
 with the attribute <code>pure</code>.  For example,
@@ -881,6 +981,14 @@ fewer times than the program says.
 Interesting non-pure functions are functions with infinite loops or those
 depending on volatile memory or other system resource, that may change between
 two consecutive calls (such as <code>feof</code> in a multithreading environment).
+</p>
+<p>The <code>pure</code> attribute imposes similar but looser restrictions on
+a function&rsquo;s defintion than the <code>const</code> attribute: it allows the
+function to read global variables.  Decorating the same function with
+both the <code>pure</code> and the <code>const</code> attribute is diagnosed.
+Because a <code>pure</code> function cannot have any side effects it does not
+make sense for such a function to return <code>void</code>.  Declaring such
+a function is diagnosed.
 </p>
 </dd>
 <dt><code>returns_nonnull</code></dt>
@@ -975,9 +1083,6 @@ x86_64 target this document can be found
 and instructs the compiler to generate non-masked or masked
 clones correspondingly. By default, all clones are generated.
 </p>
-<p>The attribute should not be used together with Cilk Plus <code>vector</code>
-attribute on the same function.
-</p>
 <p>If the attribute is specified and <code>#pragma omp declare simd</code> is
 present on a declaration and the <samp>-fopenmp</samp> or <samp>-fopenmp-simd</samp>
 switch is specified, then the attribute is ignored.
@@ -1023,7 +1128,8 @@ strings separated by commas to specify multiple options,
 or separate the options with a comma (&lsquo;<samp>,</samp>&rsquo;) within a single string.
 </p>
 <p>The options supported are specific to each target; refer to <a href="x86-Function-Attributes.html#x86-Function-Attributes">x86 Function Attributes</a>, <a href="PowerPC-Function-Attributes.html#PowerPC-Function-Attributes">PowerPC Function Attributes</a>,
-<a href="ARM-Function-Attributes.html#ARM-Function-Attributes">ARM Function Attributes</a>,and <a href="Nios-II-Function-Attributes.html#Nios-II-Function-Attributes">Nios II Function Attributes</a>,
+<a href="ARM-Function-Attributes.html#ARM-Function-Attributes">ARM Function Attributes</a>, <a href="AArch64-Function-Attributes.html#AArch64-Function-Attributes">AArch64 Function Attributes</a>,
+<a href="Nios-II-Function-Attributes.html#Nios-II-Function-Attributes">Nios II Function Attributes</a>, and <a href="S_002f390-Function-Attributes.html#S_002f390-Function-Attributes">S/390 Function Attributes</a>
 for details.
 </p>
 </dd>
@@ -1037,8 +1143,17 @@ are the same as for <code>target</code> attribute.
 <p>For instance, on an x86, you could compile a function with
 <code>target_clones(&quot;sse4.1,avx&quot;)</code>.  GCC creates two function clones,
 one compiled with <samp>-msse4.1</samp> and another with <samp>-mavx</samp>.
-It also creates a resolver function (see the <code>ifunc</code> attribute
-above) that dynamically selects a clone suitable for current architecture.
+</p>
+<p>On a PowerPC, you can compile a function with
+<code>target_clones(&quot;cpu=power9,default&quot;)</code>.  GCC will create two
+function clones, one compiled with <samp>-mcpu=power9</samp> and another
+with the default options.  GCC must be configured to use GLIBC 2.23 or
+newer in order to use the <code>target_clones</code> attribute.
+</p>
+<p>It also creates a resolver function (see
+the <code>ifunc</code> attribute above) that dynamically selects a clone
+suitable for current architecture.  The resolver is created only if there
+is a usage of a function with <code>target_clones</code> attribute.
 </p>
 </dd>
 <dt><code>unused</code></dt>

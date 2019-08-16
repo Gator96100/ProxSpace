@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Disable-Insn-Alternatives.html#Disable-Insn-Alternatives" accessk
 </div>
 <hr>
 <a name="Constraints-for-Particular-Machines"></a>
-<h4 class="subsection">16.8.5 Constraints for Particular Machines</h4>
+<h4 class="subsection">17.8.5 Constraints for Particular Machines</h4>
 <a name="index-machine-specific-constraints"></a>
 <a name="index-constraints_002c-machine-specific"></a>
 
@@ -106,7 +106,15 @@ the meanings of that architecture&rsquo;s constraints.
 </p>
 </dd>
 <dt><code>w</code></dt>
-<dd><p>Floating point or SIMD vector register
+<dd><p>Floating point register, Advanced SIMD vector register or SVE vector register
+</p>
+</dd>
+<dt><code>Upl</code></dt>
+<dd><p>One of the low eight SVE predicate registers (<code>P0</code> to <code>P7</code>)
+</p>
+</dd>
+<dt><code>Upa</code></dt>
+<dd><p>Any of the SVE predicate registers (<code>P0</code> to <code>P15</code>)
 </p>
 </dd>
 <dt><code>I</code></dt>
@@ -3053,7 +3061,10 @@ or <code>dx</code>.  You have to use the following variant instead:
 }
 </pre></div>
 
-
+</dd>
+<dt><code>U</code></dt>
+<dd><p>The call-clobbered integer registers.
+</p>
 </dd>
 <dt><code>f</code></dt>
 <dd><p>Any 80387 floating-point (stack) register.
@@ -3067,6 +3078,14 @@ or <code>dx</code>.  You have to use the following variant instead:
 <dd><p>Second from top of 80387 floating-point stack (<code>%st(1)</code>).
 </p>
 </dd>
+<dt><code>Yk</code></dt>
+<dd><p>Any mask register that can be used as a predicate, i.e. <code>k1-k7</code>.
+</p>
+</dd>
+<dt><code>k</code></dt>
+<dd><p>Any mask register.
+</p>
+</dd>
 <dt><code>y</code></dt>
 <dd><p>Any MMX register.
 </p>
@@ -3075,20 +3094,100 @@ or <code>dx</code>.  You have to use the following variant instead:
 <dd><p>Any SSE register.
 </p>
 </dd>
-<dt><code>Yz</code></dt>
-<dd><p>First SSE register (<code>%xmm0</code>).
+<dt><code>v</code></dt>
+<dd><p>Any EVEX encodable SSE register (<code>%xmm0-%xmm31</code>).
 </p>
 </dd>
-<dt><code>Y2</code></dt>
-<dd><p>Any SSE register, when SSE2 is enabled.
+<dt><code>w</code></dt>
+<dd><p>Any bound register.
+</p>
+</dd>
+<dt><code>Yz</code></dt>
+<dd><p>First SSE register (<code>%xmm0</code>).
 </p>
 </dd>
 <dt><code>Yi</code></dt>
 <dd><p>Any SSE register, when SSE2 and inter-unit moves are enabled.
 </p>
 </dd>
+<dt><code>Yj</code></dt>
+<dd><p>Any SSE register, when SSE2 and inter-unit moves from vector registers are enabled.
+</p>
+</dd>
 <dt><code>Ym</code></dt>
 <dd><p>Any MMX register, when inter-unit moves are enabled.
+</p>
+</dd>
+<dt><code>Yn</code></dt>
+<dd><p>Any MMX register, when inter-unit moves from vector registers are enabled.
+</p>
+</dd>
+<dt><code>Yp</code></dt>
+<dd><p>Any integer register when <code>TARGET_PARTIAL_REG_STALL</code> is disabled.
+</p>
+</dd>
+<dt><code>Ya</code></dt>
+<dd><p>Any integer register when zero extensions with <code>AND</code> are disabled.
+</p>
+</dd>
+<dt><code>Yb</code></dt>
+<dd><p>Any register that can be used as the GOT base when calling<br>
+<code>___tls_get_addr</code>: that is, any general register except <code>a</code>
+and <code>sp</code> registers, for <samp>-fno-plt</samp> if linker supports it.
+Otherwise, <code>b</code> register.
+</p>
+</dd>
+<dt><code>Yf</code></dt>
+<dd><p>Any x87 register when 80387 floating-point arithmetic is enabled.
+</p>
+</dd>
+<dt><code>Yr</code></dt>
+<dd><p>Lower SSE register when avoiding REX prefix and all SSE registers otherwise.
+</p>
+</dd>
+<dt><code>Yv</code></dt>
+<dd><p>For AVX512VL, any EVEX-encodable SSE register (<code>%xmm0-%xmm31</code>),
+otherwise any SSE register.
+</p>
+</dd>
+<dt><code>Yh</code></dt>
+<dd><p>Any EVEX-encodable SSE register, that has number factor of four.
+</p>
+</dd>
+<dt><code>Bf</code></dt>
+<dd><p>Flags register operand.
+</p>
+</dd>
+<dt><code>Bg</code></dt>
+<dd><p>GOT memory operand.
+</p>
+</dd>
+<dt><code>Bm</code></dt>
+<dd><p>Vector memory operand.
+</p>
+</dd>
+<dt><code>Bc</code></dt>
+<dd><p>Constant memory operand.
+</p>
+</dd>
+<dt><code>Bn</code></dt>
+<dd><p>Memory operand without REX prefix.
+</p>
+</dd>
+<dt><code>Bs</code></dt>
+<dd><p>Sibcall memory operand.
+</p>
+</dd>
+<dt><code>Bw</code></dt>
+<dd><p>Call memory operand.
+</p>
+</dd>
+<dt><code>Bz</code></dt>
+<dd><p>Constant call address operand.
+</p>
+</dd>
+<dt><code>BC</code></dt>
+<dd><p>SSE constant -1 operand.
 </p>
 </dd>
 <dt><code>I</code></dt>
@@ -3134,10 +3233,43 @@ to fit that range (for immediate operands in sign-extending x86-64
 instructions).
 </p>
 </dd>
+<dt><code>We</code></dt>
+<dd><p>32-bit signed integer constant, or a symbolic reference known
+to fit that range (for sign-extending conversion operations that
+require non-<code>VOIDmode</code> immediate operands).
+</p>
+</dd>
+<dt><code>Wz</code></dt>
+<dd><p>32-bit unsigned integer constant, or a symbolic reference known
+to fit that range (for zero-extending conversion operations that
+require non-<code>VOIDmode</code> immediate operands).
+</p>
+</dd>
+<dt><code>Wd</code></dt>
+<dd><p>128-bit integer constant where both the high and low 64-bit word
+satisfy the <code>e</code> constraint.
+</p>
+</dd>
 <dt><code>Z</code></dt>
 <dd><p>32-bit unsigned integer constant, or a symbolic reference known
 to fit that range (for immediate operands in zero-extending x86-64
 instructions).
+</p>
+</dd>
+<dt><code>Tv</code></dt>
+<dd><p>VSIB address operand.
+</p>
+</dd>
+<dt><code>Ts</code></dt>
+<dd><p>Address operand without segment register.
+</p>
+</dd>
+<dt><code>Ti</code></dt>
+<dd><p>MPX address operand without index.
+</p>
+</dd>
+<dt><code>Tb</code></dt>
+<dd><p>MPX address operand without base.
 </p>
 </dd>
 </dl>

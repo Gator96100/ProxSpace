@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -74,10 +74,10 @@ Next: <a href="CRIS_002dExpand.html#CRIS_002dExpand" accesskey="n" rel="next">CR
 <p>The CRIS version of <code>as</code> has these
 machine-dependent command-line options.
 </p>
-<a name="index-_002d_002demulation_003dcriself-command-line-option_002c-CRIS"></a>
-<a name="index-_002d_002demulation_003dcrisaout-command-line-option_002c-CRIS"></a>
-<a name="index-CRIS-_002d_002demulation_003dcriself-command-line-option"></a>
-<a name="index-CRIS-_002d_002demulation_003dcrisaout-command-line-option"></a>
+<a name="index-_002d_002demulation_003dcriself-command_002dline-option_002c-CRIS"></a>
+<a name="index-_002d_002demulation_003dcrisaout-command_002dline-option_002c-CRIS"></a>
+<a name="index-CRIS-_002d_002demulation_003dcriself-command_002dline-option"></a>
+<a name="index-CRIS-_002d_002demulation_003dcrisaout-command_002dline-option"></a>
 
 <p>The format of the generated object files can be either ELF or
 a.out, specified by the command-line options
@@ -86,10 +86,10 @@ The default is ELF (criself), unless <code>as</code> has been
 configured specifically for a.out by using the configuration
 name <code>cris-axis-aout</code>.
 </p>
-<a name="index-_002d_002dunderscore-command-line-option_002c-CRIS"></a>
-<a name="index-_002d_002dno_002dunderscore-command-line-option_002c-CRIS"></a>
-<a name="index-CRIS-_002d_002dunderscore-command-line-option"></a>
-<a name="index-CRIS-_002d_002dno_002dunderscore-command-line-option"></a>
+<a name="index-_002d_002dunderscore-command_002dline-option_002c-CRIS"></a>
+<a name="index-_002d_002dno_002dunderscore-command_002dline-option_002c-CRIS"></a>
+<a name="index-CRIS-_002d_002dunderscore-command_002dline-option"></a>
+<a name="index-CRIS-_002d_002dno_002dunderscore-command_002dline-option"></a>
 <p>There are two different link-incompatible ELF object file
 variants for CRIS, for use in environments where symbols are
 expected to be prefixed by a leading &lsquo;<samp>_</samp>&rsquo; character and for
@@ -104,8 +104,8 @@ difference, the effect of this option is to parse register names
 differently (see <a href="CRIS_002dPseudos.html#crisnous">crisnous</a>).  The <samp>--no-underscore</samp>
 option makes a &lsquo;<samp>$</samp>&rsquo; register prefix mandatory.
 </p>
-<a name="index-_002d_002dpic-command-line-option_002c-CRIS"></a>
-<a name="index-CRIS-_002d_002dpic-command-line-option"></a>
+<a name="index-_002d_002dpic-command_002dline-option_002c-CRIS"></a>
+<a name="index-CRIS-_002d_002dpic-command_002dline-option"></a>
 <a name="index-Position_002dindependent-code_002c-CRIS"></a>
 <a name="index-CRIS-position_002dindependent-code"></a>
 <p>The option <samp>--pic</samp> must be passed to <code>as</code> in
@@ -116,8 +116,8 @@ affect expansion of instructions.  The expansion with
 faster) absolute addresses in those expansions.  This option is only
 valid when generating ELF format object files.
 </p>
-<a name="index-_002d_002dmarch_003darchitecture-command-line-option_002c-CRIS"></a>
-<a name="index-CRIS-_002d_002dmarch_003darchitecture-command-line-option"></a>
+<a name="index-_002d_002dmarch_003darchitecture-command_002dline-option_002c-CRIS"></a>
+<a name="index-CRIS-_002d_002dmarch_003darchitecture-command_002dline-option"></a>
 <a name="index-Architecture-variant-option_002c-CRIS"></a>
 <a name="index-CRIS-architecture-variant-option"></a>
 <p>The option <samp>--march=<var>architecture</var></samp>
@@ -152,29 +152,29 @@ opcodes common to the v10 and v32 are recognized.
 </p></dd>
 </dl>
 
-<a name="index-_002dN-command-line-option_002c-CRIS"></a>
-<a name="index-CRIS-_002dN-command-line-option"></a>
+<a name="index-_002dN-command_002dline-option_002c-CRIS"></a>
+<a name="index-CRIS-_002dN-command_002dline-option"></a>
 <p>When <samp>-N</samp> is specified, <code>as</code> will emit a
 warning when a 16-bit branch instruction is expanded into a
 32-bit multiple-instruction construct (see <a href="CRIS_002dExpand.html#CRIS_002dExpand">CRIS-Expand</a>).
 </p>
-<a name="index-_002d_002dno_002dmul_002dbug_002dabort-command-line-option_002c-CRIS"></a>
-<a name="index-_002d_002dmul_002dbug_002dabort-command-line-option_002c-CRIS"></a>
-<a name="index-CRIS-_002d_002dno_002dmul_002dbug_002dabort-command-line-option"></a>
-<a name="index-CRIS-_002d_002dmul_002dbug_002dabort-command-line-option"></a>
+<a name="index-_002d_002dno_002dmul_002dbug_002dabort-command_002dline-option_002c-CRIS"></a>
+<a name="index-_002d_002dmul_002dbug_002dabort-command_002dline-option_002c-CRIS"></a>
+<a name="index-CRIS-_002d_002dno_002dmul_002dbug_002dabort-command_002dline-option"></a>
+<a name="index-CRIS-_002d_002dmul_002dbug_002dabort-command_002dline-option"></a>
 
 <p>Some versions of the CRIS v10, for example in the Etrax 100 LX,
 contain a bug that causes destabilizing memory accesses when a
 multiply instruction is executed with certain values in the
 first operand just before a cache-miss.  When the
-<samp>--mul-bug-abort</samp> command line option is active (the
+<samp>--mul-bug-abort</samp> command-line option is active (the
 default value), <code>as</code> will refuse to assemble a file
 containing a multiply instruction at a dangerous offset, one
 that could be the last on a cache-line, or is in a section with
 insufficient alignment.  This placement checking does not catch
 any case where the multiply instruction is dangerously placed
 because it is located in a delay-slot.  The
-<samp>--mul-bug-abort</samp> command line option turns off the
+<samp>--mul-bug-abort</samp> command-line option turns off the
 checking.
 </p>
 <hr>

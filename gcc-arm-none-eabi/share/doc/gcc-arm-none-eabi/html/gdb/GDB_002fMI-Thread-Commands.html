@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="GDB_002fMI-Ada-Tasking-Commands.html#GDB_002fMI-Ada-Tasking-Comma
 <h4 class="subheading">The <code>-thread-info</code> Command</h4>
 <a name="index-_002dthread_002dinfo"></a>
 
-<a name="Synopsis-22"></a>
+<a name="Synopsis-23"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -88,7 +88,7 @@ Next: <a href="GDB_002fMI-Ada-Tasking-Commands.html#GDB_002fMI-Ada-Tasking-Comma
 information about all threads, also reports the global ID of the
 current thread.
 </p>
-<a name="GDB-Command-21"></a>
+<a name="GDB-Command-22"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The &lsquo;<samp>info thread</samp>&rsquo; command prints the same information
@@ -114,7 +114,7 @@ the command.
 </dd>
 </dl>
 
-<a name="Example-21"></a>
+<a name="Example-22"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -126,7 +126,7 @@ the command.
 {id=&quot;1&quot;,target-id=&quot;Thread 0xb7e156b0 (LWP 21254)&quot;,
    frame={level=&quot;0&quot;,addr=&quot;0x0804891f&quot;,func=&quot;foo&quot;,
            args=[{name=&quot;i&quot;,value=&quot;10&quot;}],
-           file=&quot;/tmp/a.c&quot;,fullname=&quot;/tmp/a.c&quot;,line=&quot;158&quot;},
+           file=&quot;/tmp/a.c&quot;,fullname=&quot;/tmp/a.c&quot;,line=&quot;158&quot;,arch=&quot;i386:x86_64&quot;},
            state=&quot;running&quot;}],
 current-thread-id=&quot;1&quot;
 (gdb)
@@ -136,7 +136,7 @@ current-thread-id=&quot;1&quot;
 <h4 class="subheading">The <code>-thread-list-ids</code> Command</h4>
 <a name="index-_002dthread_002dlist_002dids"></a>
 
-<a name="Synopsis-23"></a>
+<a name="Synopsis-24"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -150,12 +150,12 @@ threads.
 <p>This command is retained for historical reasons, the
 <code>-thread-info</code> command should be used instead.
 </p>
-<a name="GDB-Command-22"></a>
+<a name="GDB-Command-23"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>Part of &lsquo;<samp>info threads</samp>&rsquo; supplies the same information.
 </p>
-<a name="Example-22"></a>
+<a name="Example-23"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -171,7 +171,7 @@ current-thread-id=&quot;1&quot;,number-of-threads=&quot;3&quot;
 <h4 class="subheading">The <code>-thread-select</code> Command</h4>
 <a name="index-_002dthread_002dselect"></a>
 
-<a name="Synopsis-24"></a>
+<a name="Synopsis-25"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -185,12 +185,12 @@ topmost frame for that thread.
 <p>This command is deprecated in favor of explicitly using the
 &lsquo;<samp>--thread</samp>&rsquo; option to each command.
 </p>
-<a name="GDB-Command-23"></a>
+<a name="GDB-Command-24"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>thread</samp>&rsquo;.
 </p>
-<a name="Example-23"></a>
+<a name="Example-24"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -210,7 +210,7 @@ number-of-threads=&quot;3&quot;
 ^done,new-thread-id=&quot;3&quot;,
 frame={level=&quot;0&quot;,func=&quot;vprintf&quot;,
 args=[{name=&quot;format&quot;,value=&quot;0x8048e9c \&quot;%*s%c %d %c\\n\&quot;&quot;},
-{name=&quot;arg&quot;,value=&quot;0x2&quot;}],file=&quot;vprintf.c&quot;,line=&quot;31&quot;}
+{name=&quot;arg&quot;,value=&quot;0x2&quot;}],file=&quot;vprintf.c&quot;,line=&quot;31&quot;,arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 

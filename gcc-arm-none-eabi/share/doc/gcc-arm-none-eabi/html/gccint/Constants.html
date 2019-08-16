@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Regs-and-Memory.html#Regs-and-Memory" accesskey="n" rel="next">Re
 </div>
 <hr>
 <a name="Constant-Expression-Types"></a>
-<h3 class="section">13.7 Constant Expression Types</h3>
+<h3 class="section">14.7 Constant Expression Types</h3>
 <a name="index-RTL-constants"></a>
 <a name="index-RTL-constant-expression-types"></a>
 
@@ -195,20 +195,105 @@ is accessed with the macro <code>CONST_FIXED_VALUE</code>.  The high part of
 data is accessed with <code>CONST_FIXED_VALUE_HIGH</code>; the low part is
 accessed with <code>CONST_FIXED_VALUE_LOW</code>.
 </p>
+<a name="index-const_005fpoly_005fint"></a>
+</dd>
+<dt><code>(const_poly_int:<var>m</var> [<var>c0</var> <var>c1</var> &hellip;])</code></dt>
+<dd><p>Represents a <code>poly_int</code>-style polynomial integer with coefficients
+<var>c0</var>, <var>c1</var>, &hellip;.  The coefficients are <code>wide_int</code>-based
+integers rather than rtxes.  <code>CONST_POLY_INT_COEFFS</code> gives the
+values of individual coefficients (which is mostly only useful in
+low-level routines) and <code>const_poly_int_value</code> gives the full
+<code>poly_int</code> value.
+</p>
 <a name="index-const_005fvector"></a>
 </dd>
 <dt><code>(const_vector:<var>m</var> [<var>x0</var> <var>x1</var> &hellip;])</code></dt>
-<dd><p>Represents a vector constant.  The square brackets stand for the vector
-containing the constant elements.  <var>x0</var>, <var>x1</var> and so on are
-the <code>const_int</code>, <code>const_double</code> or <code>const_fixed</code> elements.
+<dd><p>Represents a vector constant.  The values in square brackets are
+elements of the vector, which are always <code>const_int</code>,
+<code>const_wide_int</code>, <code>const_double</code> or <code>const_fixed</code>
+expressions.
 </p>
-<p>The number of units in a <code>const_vector</code> is obtained with the macro
-<code>CONST_VECTOR_NUNITS</code> as in <code>CONST_VECTOR_NUNITS (<var>v</var>)</code>.
+<p>Each vector constant <var>v</var> is treated as a specific instance of an
+arbitrary-length sequence that itself contains
+&lsquo;<samp>CONST_VECTOR_NPATTERNS (<var>v</var>)</samp>&rsquo; interleaved patterns.  Each
+pattern has the form:
 </p>
-<p>Individual elements in a vector constant are accessed with the macro
-<code>CONST_VECTOR_ELT</code> as in <code>CONST_VECTOR_ELT (<var>v</var>, <var>n</var>)</code>
-where <var>v</var> is the vector constant and <var>n</var> is the element
-desired.
+<div class="smallexample">
+<pre class="smallexample">{ <var>base0</var>, <var>base1</var>, <var>base1</var> + <var>step</var>, <var>base1</var> + <var>step</var> * 2, &hellip; }
+</pre></div>
+
+<p>The first three elements in each pattern are enough to determine the
+values of the other elements.  However, if all <var>step</var>s are zero,
+only the first two elements are needed.  If in addition each <var>base1</var>
+is equal to the corresponding <var>base0</var>, only the first element in
+each pattern is needed.  The number of determining elements per pattern
+is given by &lsquo;<samp>CONST_VECTOR_NELTS_PER_PATTERN (<var>v</var>)</samp>&rsquo;.
+</p>
+<p>For example, the constant:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{ 0, 1, 2, 6, 3, 8, 4, 10, 5, 12, 6, 14, 7, 16, 8, 18 }
+</pre></div>
+
+<p>is interpreted as an interleaving of the sequences:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{ 0, 2, 3, 4, 5, 6, 7, 8 }
+{ 1, 6, 8, 10, 12, 14, 16, 18 }
+</pre></div>
+
+<p>where the sequences are represented by the following patterns:
+</p>
+<div class="smallexample">
+<pre class="smallexample"><var>base0</var> == 0, <var>base1</var> == 2, <var>step</var> == 1
+<var>base0</var> == 1, <var>base1</var> == 6, <var>step</var> == 2
+</pre></div>
+
+<p>In this case:
+</p>
+<div class="smallexample">
+<pre class="smallexample">CONST_VECTOR_NPATTERNS (<var>v</var>) == 2
+CONST_VECTOR_NELTS_PER_PATTERN (<var>v</var>) == 3
+</pre></div>
+
+<p>Thus the first 6 elements (&lsquo;<samp>{ 0, 1, 2, 6, 3, 8 }</samp>&rsquo;) are enough
+to determine the whole sequence; we refer to them as the &ldquo;encoded&rdquo;
+elements.  They are the only elements present in the square brackets
+for variable-length <code>const_vector</code>s (i.e. for
+<code>const_vector</code>s whose mode <var>m</var> has a variable number of
+elements).  However, as a convenience to code that needs to handle
+both <code>const_vector</code>s and <code>parallel</code>s, all elements are
+present in the square brackets for fixed-length <code>const_vector</code>s;
+the encoding scheme simply reduces the amount of work involved in
+processing constants that follow a regular pattern.
+</p>
+<p>Sometimes this scheme can create two possible encodings of the same
+vector.  For example { 0, 1 } could be seen as two patterns with
+one element each or one pattern with two elements (<var>base0</var> and
+<var>base1</var>).  The canonical encoding is always the one with the
+fewest patterns or (if both encodings have the same number of
+petterns) the one with the fewest encoded elements.
+</p>
+<p>&lsquo;<samp>const_vector_encoding_nelts (<var>v</var>)</samp>&rsquo; gives the total number of
+encoded elements in <var>v</var>, which is 6 in the example above.
+<code>CONST_VECTOR_ENCODED_ELT (<var>v</var>, <var>i</var>)</code> accesses the value
+of encoded element <var>i</var>.
+</p>
+<p>&lsquo;<samp>CONST_VECTOR_DUPLICATE_P (<var>v</var>)</samp>&rsquo; is true if <var>v</var> simply contains
+repeated instances of &lsquo;<samp>CONST_VECTOR_NPATTERNS (<var>v</var>)</samp>&rsquo; values.  This is
+a shorthand for testing &lsquo;<samp>CONST_VECTOR_NELTS_PER_PATTERN (<var>v</var>) == 1</samp>&rsquo;.
+</p>
+<p>&lsquo;<samp>CONST_VECTOR_STEPPED_P (<var>v</var>)</samp>&rsquo; is true if at least one
+pattern in <var>v</var> has a nonzero step.  This is a shorthand for
+testing &lsquo;<samp>CONST_VECTOR_NELTS_PER_PATTERN (<var>v</var>) == 3</samp>&rsquo;.
+</p>
+<p><code>CONST_VECTOR_NUNITS (<var>v</var>)</code> gives the total number of elements
+in <var>v</var>; it is a shorthand for getting the number of units in
+&lsquo;<samp>GET_MODE (<var>v</var>)</samp>&rsquo;.
+</p>
+<p>The utility function <code>const_vector_elt</code> gives the value of an
+arbitrary element as an <code>rtx</code>.  <code>const_vector_int_elt</code> gives
+the same value as a <code>wide_int</code>.
 </p>
 <a name="index-const_005fstring"></a>
 </dd>
@@ -247,13 +332,11 @@ Usually that is the only mode for which a label is directly valid.
 </dd>
 <dt><code>(const:<var>m</var> <var>exp</var>)</code></dt>
 <dd><p>Represents a constant that is the result of an assembly-time
-arithmetic computation.  The operand, <var>exp</var>, is an expression that
-contains only constants (<code>const_int</code>, <code>symbol_ref</code> and
-<code>label_ref</code> expressions) combined with <code>plus</code> and
-<code>minus</code>.  However, not all combinations are valid, since the
-assembler cannot do arbitrary arithmetic on relocatable symbols.
-</p>
-<p><var>m</var> should be <code>Pmode</code>.
+arithmetic computation.  The operand, <var>exp</var>, contains only
+<code>const_int</code>, <code>symbol_ref</code>, <code>label_ref</code> or <code>unspec</code>
+expressions, combined with <code>plus</code> and <code>minus</code>.  Any such
+<code>unspec</code>s are target-specific and typically represent some form
+of relocation operator.  <var>m</var> should be a valid address mode.
 </p>
 <a name="index-high"></a>
 </dd>

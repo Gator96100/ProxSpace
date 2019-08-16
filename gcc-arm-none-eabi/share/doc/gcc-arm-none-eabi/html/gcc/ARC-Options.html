@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -86,6 +86,12 @@ is being compiled:
 <dd><a name="index-mbarrel_002dshifter"></a>
 <p>Generate instructions supported by barrel shifter.  This is the default
 unless <samp>-mcpu=ARC601</samp> or &lsquo;<samp>-mcpu=ARCEM</samp>&rsquo; is in effect.
+</p>
+</dd>
+<dt><code>-mjli-always</code></dt>
+<dd><a name="index-mjli_002dalawys"></a>
+<p>Force to call a function using jli_s instruction.  This option is
+valid only for ARCv2 architecture.
 </p>
 </dd>
 <dt><code>-mcpu=<var>cpu</var></code></dt>
@@ -192,6 +198,11 @@ instructions enabled.
 </dd>
 <dt>&lsquo;<samp>nps400</samp>&rsquo;</dt>
 <dd><p>Compile for ARC 700 on NPS400 chip.
+</p>
+</dd>
+<dt>&lsquo;<samp>em_mini</samp>&rsquo;</dt>
+<dd><p>Compile for ARC EM minimalist configuration featuring reduced register
+set.
 </p>
 </dd>
 </dl>
@@ -466,6 +477,46 @@ hardware extensions.  Not available for ARC EM.
 </dl>
 
 </dd>
+<dt><code>-mirq-ctrl-saved=<var>register-range</var>, <var>blink</var>, <var>lp_count</var></code></dt>
+<dd><a name="index-mirq_002dctrl_002dsaved"></a>
+<p>Specifies general-purposes registers that the processor automatically
+saves/restores on interrupt entry and exit.  <var>register-range</var> is
+specified as two registers separated by a dash.  The register range
+always starts with <code>r0</code>, the upper limit is <code>fp</code> register.
+<var>blink</var> and <var>lp_count</var> are optional.  This option is only
+valid for ARC EM and ARC HS cores.
+</p>
+</dd>
+<dt><code>-mrgf-banked-regs=<var>number</var></code></dt>
+<dd><a name="index-mrgf_002dbanked_002dregs"></a>
+<p>Specifies the number of registers replicated in second register bank
+on entry to fast interrupt.  Fast interrupts are interrupts with the
+highest priority level P0.  These interrupts save only PC and STATUS32
+registers to avoid memory transactions during interrupt entry and exit
+sequences.  Use this option when you are using fast interrupts in an
+ARC V2 family processor.  Permitted values are 4, 8, 16, and 32.
+</p>
+</dd>
+<dt><code>-mlpc-width=<var>width</var></code></dt>
+<dd><a name="index-mlpc_002dwidth"></a>
+<p>Specify the width of the <code>lp_count</code> register.  Valid values for
+<var>width</var> are 8, 16, 20, 24, 28 and 32 bits.  The default width is
+fixed to 32 bits.  If the width is less than 32, the compiler does not
+attempt to transform loops in your program to use the zero-delay loop
+mechanism unless it is known that the <code>lp_count</code> register can
+hold the required loop-counter value.  Depending on the width
+specified, the compiler and run-time library might continue to use the
+loop mechanism for various needs.  This option defines macro
+<code>__ARC_LPC_WIDTH__</code> with the value of <var>width</var>.
+</p>
+</dd>
+<dt><code>-mrf16</code></dt>
+<dd><a name="index-mrf16"></a>
+<p>This option instructs the compiler to generate code for a 16-entry
+register file.  This option defines the <code>__ARC_RF16__</code>
+preprocessor macro.
+</p>
+</dd>
 </dl>
 
 <p>The following options are passed through to the assembler, and also
@@ -590,6 +641,14 @@ conditional branch-and-link.  This is the default for tool chains built
 for <code><span class="nolinebreak">arc-linux-uclibc</span></code><!-- /@w --> and <code><span class="nolinebreak">arceb-linux-uclibc</span></code><!-- /@w --> targets.
 </p>
 </dd>
+<dt><code>-G <var>num</var></code></dt>
+<dd><a name="index-G"></a>
+<p>Put definitions of externally-visible data in a small data section if
+that data is no bigger than <var>num</var> bytes.  The default value of
+<var>num</var> is 4 for any ARC configuration, or 8 when we have double
+load/store operations.
+</p>
+</dd>
 <dt><code>-mno-sdata</code></dt>
 <dd><a name="index-mno_002dsdata"></a>
 <p>Do not generate sdata references.  This is the default for tool chains
@@ -673,7 +732,7 @@ offset range because they are conditionalized, you should consider using
 <dt><code>-mexpand-adddi</code></dt>
 <dd><a name="index-mexpand_002dadddi"></a>
 <p>Expand <code>adddi3</code> and <code>subdi3</code> at RTL generation time into
-<code>add.f</code>, <code>adc</code> etc.
+<code>add.f</code>, <code>adc</code> etc.  This option is deprecated.
 </p>
 </dd>
 <dt><code>-mindexed-loads</code></dt>
@@ -682,7 +741,9 @@ offset range because they are conditionalized, you should consider using
 optimizers then assume that indexed stores exist, which is not
 the case.
 </p>
-<a name="index-mlra"></a>
+</dd>
+<dt><code>-mlra</code></dt>
+<dd><a name="index-mlra"></a>
 <p>Enable Local Register Allocation.  This is still experimental for ARC,
 so by default the compiler uses standard reload
 (i.e. <samp>-mno-lra</samp>).

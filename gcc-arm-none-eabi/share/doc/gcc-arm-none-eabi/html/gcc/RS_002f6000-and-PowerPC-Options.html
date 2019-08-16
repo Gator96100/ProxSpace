@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="RX-Options.html#RX-Options" accesskey="n" rel="next">RX Options</
 </div>
 <hr>
 <a name="IBM-RS_002f6000-and-PowerPC-Options"></a>
-<h4 class="subsection">3.18.39 IBM RS/6000 and PowerPC Options</h4>
+<h4 class="subsection">3.18.40 IBM RS/6000 and PowerPC Options</h4>
 <a name="index-RS_002f6000-and-PowerPC-Options"></a>
 <a name="index-IBM-RS_002f6000-and-PowerPC-Options"></a>
 
@@ -107,10 +107,10 @@ Next: <a href="RX-Options.html#RX-Options" accesskey="n" rel="next">RX Options</
 <a name="index-mno_002dpowerpc_002dgfxopt"></a>
 <a name="index-mpowerpc64"></a>
 <a name="index-mno_002dpowerpc64"></a>
-<a name="index-mmfcrf"></a>
-<a name="index-mno_002dmfcrf"></a>
-<a name="index-mpopcntb"></a>
-<a name="index-mno_002dpopcntb"></a>
+<a name="index-mmfcrf-1"></a>
+<a name="index-mno_002dmfcrf-1"></a>
+<a name="index-mpopcntb-1"></a>
+<a name="index-mno_002dpopcntb-1"></a>
 <a name="index-mpopcntd"></a>
 <a name="index-mno_002dpopcntd"></a>
 <a name="index-mfprnd"></a>
@@ -166,7 +166,7 @@ and to treat GPRs as 64-bit, doubleword quantities.  GCC defaults to
 </p>
 </dd>
 <dt><code>-mcpu=<var>cpu_type</var></code></dt>
-<dd><a name="index-mcpu-9"></a>
+<dd><a name="index-mcpu-10"></a>
 <p>Set architecture type, register usage, and
 instruction scheduling parameters for machine type <var>cpu_type</var>.
 Supported values for <var>cpu_type</var> are &lsquo;<samp>401</samp>&rsquo;, &lsquo;<samp>403</samp>&rsquo;,
@@ -180,13 +180,19 @@ Supported values for <var>cpu_type</var> are &lsquo;<samp>401</samp>&rsquo;, &ls
 &lsquo;<samp>titan</samp>&rsquo;, &lsquo;<samp>power3</samp>&rsquo;, &lsquo;<samp>power4</samp>&rsquo;, &lsquo;<samp>power5</samp>&rsquo;, &lsquo;<samp>power5+</samp>&rsquo;,
 &lsquo;<samp>power6</samp>&rsquo;, &lsquo;<samp>power6x</samp>&rsquo;, &lsquo;<samp>power7</samp>&rsquo;, &lsquo;<samp>power8</samp>&rsquo;,
 &lsquo;<samp>power9</samp>&rsquo;, &lsquo;<samp>powerpc</samp>&rsquo;, &lsquo;<samp>powerpc64</samp>&rsquo;, &lsquo;<samp>powerpc64le</samp>&rsquo;,
-and &lsquo;<samp>rs64</samp>&rsquo;.
+&lsquo;<samp>rs64</samp>&rsquo;, and &lsquo;<samp>native</samp>&rsquo;.
 </p>
 <p><samp>-mcpu=powerpc</samp>, <samp>-mcpu=powerpc64</samp>, and
 <samp>-mcpu=powerpc64le</samp> specify pure 32-bit PowerPC (either
 endian), 64-bit big endian PowerPC and 64-bit little endian PowerPC
 architecture machine types, with an appropriate, generic processor
 model assumed for scheduling purposes.
+</p>
+<p>Specifying &lsquo;<samp>native</samp>&rsquo; as cpu type detects and selects the
+architecture option that corresponds to the host processor of the
+system performing the compilation.
+<samp>-mcpu=native</samp> has no effect if GCC does not recognize the
+processor.
 </p>
 <p>The other options specify a specific processor.  Code generated under
 those options runs best on that processor, and may not run at all on
@@ -199,8 +205,8 @@ following options:
 <pre class="smallexample">-maltivec  -mfprnd  -mhard-float  -mmfcrf  -mmultiple 
 -mpopcntb -mpopcntd  -mpowerpc64 
 -mpowerpc-gpopt  -mpowerpc-gfxopt  -msingle-float -mdouble-float 
--msimple-fpu -mstring  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
--mcrypto -mdirect-move -mhtm -mpower8-fusion -mpower8-vector 
+-msimple-fpu  -mmulhw  -mdlmzb  -mmfpgpr -mvsx 
+-mcrypto -mhtm -mpower8-fusion -mpower8-vector 
 -mquad-memory -mquad-memory-atomic -mfloat128 -mfloat128-hardware
 </pre></div>
 
@@ -219,7 +225,7 @@ environment.
 </p>
 </dd>
 <dt><code>-mtune=<var>cpu_type</var></code></dt>
-<dd><a name="index-mtune-11"></a>
+<dd><a name="index-mtune-12"></a>
 <p>Set the instruction scheduling parameters for machine type
 <var>cpu_type</var>, but do not set the architecture type or register usage,
 as <samp>-mcpu=<var>cpu_type</var></samp> does.  The same
@@ -273,7 +279,9 @@ little-endian platform.
 <dd><a name="index-maltivec_003dbe"></a>
 <p>Generate AltiVec instructions using big-endian element order,
 regardless of whether the target is big- or little-endian.  This is
-the default when targeting a big-endian platform.
+the default when targeting a big-endian platform.  Using this option
+is currently deprecated.  Support for this feature will be removed in
+GCC 9.
 </p>
 <p>The element order is used to interpret element numbers in AltiVec
 intrinsics such as <code>vec_splat</code>, <code>vec_extract</code>, and
@@ -301,19 +309,8 @@ corresponding to the endianness for the target.
 <p>Generate VRSAVE instructions when generating AltiVec code.
 </p>
 </dd>
-<dt><code>-mgen-cell-microcode</code></dt>
-<dd><a name="index-mgen_002dcell_002dmicrocode"></a>
-<p>Generate Cell microcode instructions.
-</p>
-</dd>
-<dt><code>-mwarn-cell-microcode</code></dt>
-<dd><a name="index-mwarn_002dcell_002dmicrocode"></a>
-<p>Warn when a Cell microcode instruction is emitted.  An example
-of a Cell microcode instruction is a variable shift.
-</p>
-</dd>
 <dt><code>-msecure-plt</code></dt>
-<dd><a name="index-msecure_002dplt"></a>
+<dd><a name="index-msecure_002dplt-1"></a>
 <p>Generate code that allows <code>ld</code> and <code>ld.so</code>
 to build executables and shared
 libraries with non-executable <code>.plt</code> and <code>.got</code> sections.
@@ -322,7 +319,7 @@ This is a PowerPC
 </p>
 </dd>
 <dt><code>-mbss-plt</code></dt>
-<dd><a name="index-mbss_002dplt"></a>
+<dd><a name="index-mbss_002dplt-1"></a>
 <p>Generate code that uses a BSS <code>.plt</code> section that <code>ld.so</code>
 fills in, and
 requires <code>.plt</code> and <code>.got</code>
@@ -332,8 +329,8 @@ This is a PowerPC 32-bit SYSV ABI option.
 </dd>
 <dt><code>-misel</code></dt>
 <dt><code>-mno-isel</code></dt>
-<dd><a name="index-misel"></a>
-<a name="index-mno_002disel"></a>
+<dd><a name="index-misel-1"></a>
+<a name="index-mno_002disel-1"></a>
 <p>This switch enables or disables the generation of ISEL instructions.
 </p>
 </dd>
@@ -342,31 +339,12 @@ This is a PowerPC 32-bit SYSV ABI option.
 <samp>-mno-isel</samp> instead.
 </p>
 </dd>
-<dt><code>-mlra</code></dt>
-<dd><a name="index-mlra-2"></a>
-<p>Enable Local Register Allocation. By default the port uses LRA.
-(i.e. <samp>-mno-lra</samp>).
-</p>
-</dd>
-<dt><code>-mspe</code></dt>
-<dt><code>-mno-spe</code></dt>
-<dd><a name="index-mspe"></a>
-<a name="index-mno_002dspe"></a>
-<p>This switch enables or disables the generation of SPE simd
-instructions.
-</p>
-</dd>
 <dt><code>-mpaired</code></dt>
 <dt><code>-mno-paired</code></dt>
 <dd><a name="index-mpaired"></a>
 <a name="index-mno_002dpaired"></a>
 <p>This switch enables or disables the generation of PAIRED simd
 instructions.
-</p>
-</dd>
-<dt><code>-mspe=<var>yes/no</var></code></dt>
-<dd><p>This option has been deprecated.  Use <samp>-mspe</samp> and
-<samp>-mno-spe</samp> instead.
 </p>
 </dd>
 <dt><code>-mvsx</code></dt>
@@ -385,15 +363,6 @@ more direct access to the VSX instruction set.
 <p>Enable the use (disable) of the built-in functions that allow direct
 access to the cryptographic instructions that were added in version
 2.07 of the PowerPC ISA.
-</p>
-</dd>
-<dt><code>-mdirect-move</code></dt>
-<dt><code>-mno-direct-move</code></dt>
-<dd><a name="index-mdirect_002dmove"></a>
-<a name="index-mno_002ddirect_002dmove"></a>
-<p>Generate code that uses (does not use) the instructions to move data
-between the general purpose registers and the vector/scalar (VSX)
-registers that were added in version 2.07 of the PowerPC ISA.
 </p>
 </dd>
 <dt><code>-mhtm</code></dt>
@@ -442,71 +411,29 @@ instructions.  The <samp>-mquad-memory-atomic</samp> option requires use of
 64-bit mode.
 </p>
 </dd>
-<dt><code>-mupper-regs-di</code></dt>
-<dt><code>-mno-upper-regs-di</code></dt>
-<dd><a name="index-mupper_002dregs_002ddi"></a>
-<a name="index-mno_002dupper_002dregs_002ddi"></a>
-<p>Generate code that uses (does not use) the scalar instructions that
-target all 64 registers in the vector/scalar floating point register
-set that were added in version 2.06 of the PowerPC ISA when processing
-integers.  <samp>-mupper-regs-di</samp> is turned on by default if you use
-any of the <samp>-mcpu=power7</samp>, <samp>-mcpu=power8</samp>,
-<samp>-mcpu=power9</samp>, or <samp>-mvsx</samp> options.
-</p>
-</dd>
-<dt><code>-mupper-regs-df</code></dt>
-<dt><code>-mno-upper-regs-df</code></dt>
-<dd><a name="index-mupper_002dregs_002ddf"></a>
-<a name="index-mno_002dupper_002dregs_002ddf"></a>
-<p>Generate code that uses (does not use) the scalar double precision
-instructions that target all 64 registers in the vector/scalar
-floating point register set that were added in version 2.06 of the
-PowerPC ISA.  <samp>-mupper-regs-df</samp> is turned on by default if you
-use any of the <samp>-mcpu=power7</samp>, <samp>-mcpu=power8</samp>,
-<samp>-mcpu=power9</samp>, or <samp>-mvsx</samp> options.
-</p>
-</dd>
-<dt><code>-mupper-regs-sf</code></dt>
-<dt><code>-mno-upper-regs-sf</code></dt>
-<dd><a name="index-mupper_002dregs_002dsf"></a>
-<a name="index-mno_002dupper_002dregs_002dsf"></a>
-<p>Generate code that uses (does not use) the scalar single precision
-instructions that target all 64 registers in the vector/scalar
-floating point register set that were added in version 2.07 of the
-PowerPC ISA.  <samp>-mupper-regs-sf</samp> is turned on by default if you
-use either of the <samp>-mcpu=power8</samp>, <samp>-mpower8-vector</samp>, or
-<samp>-mcpu=power9</samp> options.
-</p>
-</dd>
-<dt><code>-mupper-regs</code></dt>
-<dt><code>-mno-upper-regs</code></dt>
-<dd><a name="index-mupper_002dregs"></a>
-<a name="index-mno_002dupper_002dregs"></a>
-<p>Generate code that uses (does not use) the scalar
-instructions that target all 64 registers in the vector/scalar
-floating point register set, depending on the model of the machine.
-</p>
-<p>If the <samp>-mno-upper-regs</samp> option is used, it turns off both
-<samp>-mupper-regs-sf</samp> and <samp>-mupper-regs-df</samp> options.
-</p>
-</dd>
 <dt><code>-mfloat128</code></dt>
 <dt><code>-mno-float128</code></dt>
-<dd><a name="index-mfloat128"></a>
-<a name="index-mno_002dfloat128"></a>
+<dd><a name="index-mfloat128-1"></a>
+<a name="index-mno_002dfloat128-1"></a>
 <p>Enable/disable the <var>__float128</var> keyword for IEEE 128-bit floating point
 and use either software emulation for IEEE 128-bit floating point or
 hardware instructions.
 </p>
-<p>The VSX instruction set (<samp>-mvsx</samp>, <samp>-mcpu=power7</samp>, or
-<samp>-mcpu=power8</samp>) must be enabled to use the <samp>-mfloat128</samp>
-option.  The <samp>-mfloat128</samp> option only works on PowerPC 64-bit
-Linux systems.
+<p>The VSX instruction set (<samp>-mvsx</samp>, <samp>-mcpu=power7</samp>,
+<samp>-mcpu=power8</samp>), or <samp>-mcpu=power9</samp> must be enabled to
+use the IEEE 128-bit floating point support.  The IEEE 128-bit
+floating point support only works on PowerPC Linux systems.
 </p>
-<p>If you use the ISA 3.0 instruction set (<samp>-mcpu=power9</samp>), the
-<samp>-mfloat128</samp> option will also enable the generation of ISA 3.0
-IEEE 128-bit floating point instructions.  Otherwise, IEEE 128-bit
-floating point will be done with software emulation.
+<p>The default for <samp>-mfloat128</samp> is enabled on PowerPC Linux
+systems using the VSX instruction set, and disabled on other systems.
+</p>
+<p>If you use the ISA 3.0 instruction set (<samp>-mpower9-vector</samp> or
+<samp>-mcpu=power9</samp>) on a 64-bit system, the IEEE 128-bit floating
+point support will also enable the generation of ISA 3.0 IEEE 128-bit
+floating point instructions.  Otherwise, if you do not specify to
+generate ISA 3.0 instructions or you are targeting a 32-bit big endian
+system, IEEE 128-bit floating point will be done with software
+emulation.
 </p>
 </dd>
 <dt><code>-mfloat128-hardware</code></dt>
@@ -516,31 +443,9 @@ floating point will be done with software emulation.
 <p>Enable/disable using ISA 3.0 hardware instructions to support the
 <var>__float128</var> data type.
 </p>
-<p>If you use <samp>-mfloat128-hardware</samp>, it will enable the option
-<samp>-mfloat128</samp> as well.
-</p>
-<p>If you select ISA 3.0 instructions with <samp>-mcpu=power9</samp>, but do
-not use either <samp>-mfloat128</samp> or <samp>-mfloat128-hardware</samp>,
-the IEEE 128-bit floating point support will not be enabled.
-</p>
-</dd>
-<dt><code>-mfloat-gprs=<var>yes/single/double/no</var></code></dt>
-<dt><code>-mfloat-gprs</code></dt>
-<dd><a name="index-mfloat_002dgprs"></a>
-<p>This switch enables or disables the generation of floating-point
-operations on the general-purpose registers for architectures that
-support it.
-</p>
-<p>The argument &lsquo;<samp>yes</samp>&rsquo; or &lsquo;<samp>single</samp>&rsquo; enables the use of
-single-precision floating-point operations.
-</p>
-<p>The argument &lsquo;<samp>double</samp>&rsquo; enables the use of single and
-double-precision floating-point operations.
-</p>
-<p>The argument &lsquo;<samp>no</samp>&rsquo; disables floating-point operations on the
-general-purpose registers.
-</p>
-<p>This option is currently only available on the MPC854x.
+<p>The default for <samp>-mfloat128-hardware</samp> is enabled on PowerPC
+Linux systems using the ISA 3.0 instruction set, and disabled on other
+systems.
 </p>
 </dd>
 <dt><code>-m32</code></dt>
@@ -559,10 +464,10 @@ pointer to 64 bits, and generates code for PowerPC64, as for
 <dt><code>-mno-fp-in-toc</code></dt>
 <dt><code>-mno-sum-in-toc</code></dt>
 <dt><code>-mminimal-toc</code></dt>
-<dd><a name="index-mfull_002dtoc"></a>
-<a name="index-mno_002dfp_002din_002dtoc"></a>
-<a name="index-mno_002dsum_002din_002dtoc"></a>
-<a name="index-mminimal_002dtoc"></a>
+<dd><a name="index-mfull_002dtoc-1"></a>
+<a name="index-mno_002dfp_002din_002dtoc-1"></a>
+<a name="index-mno_002dsum_002din_002dtoc-1"></a>
+<a name="index-mminimal_002dtoc-1"></a>
 <p>Modify generation of the TOC (Table Of Contents), which is created for
 every executable file.  The <samp>-mfull-toc</samp> option is selected by
 default.  In that case, GCC allocates at least one TOC entry for
@@ -591,7 +496,7 @@ only on files that contain less frequently-executed code.
 <dt><code>-maix64</code></dt>
 <dt><code>-maix32</code></dt>
 <dd><a name="index-maix64"></a>
-<a name="index-maix32"></a>
+<a name="index-maix32-1"></a>
 <p>Enable 64-bit AIX ABI and calling convention: 64-bit pointers, 64-bit
 <code>long</code> type, and the infrastructure needed to support them.
 Specifying <samp>-maix64</samp> implies <samp>-mpowerpc64</samp>,
@@ -601,8 +506,8 @@ implies <samp>-mno-powerpc64</samp>.  GCC defaults to <samp>-maix32</samp>.
 </dd>
 <dt><code>-mxl-compat</code></dt>
 <dt><code>-mno-xl-compat</code></dt>
-<dd><a name="index-mxl_002dcompat"></a>
-<a name="index-mno_002dxl_002dcompat"></a>
+<dd><a name="index-mxl_002dcompat-1"></a>
+<a name="index-mno_002dxl_002dcompat-1"></a>
 <p>Produce code that conforms more closely to IBM XL compiler semantics
 when using AIX-compatible ABI.  Pass floating-point arguments to
 prototyped functions beyond the register save area (RSA) on the stack
@@ -636,8 +541,8 @@ option are incompatible.
 </dd>
 <dt><code>-malign-natural</code></dt>
 <dt><code>-malign-power</code></dt>
-<dd><a name="index-malign_002dnatural"></a>
-<a name="index-malign_002dpower"></a>
+<dd><a name="index-malign_002dnatural-1"></a>
+<a name="index-malign_002dpower-1"></a>
 <p>On AIX, 32-bit Darwin, and 64-bit PowerPC GNU/Linux, the option
 <samp>-malign-natural</samp> overrides the ABI-defined alignment of larger
 types, such as floating-point doubles, on their natural size-based boundary.
@@ -650,8 +555,8 @@ is not supported.
 </dd>
 <dt><code>-msoft-float</code></dt>
 <dt><code>-mhard-float</code></dt>
-<dd><a name="index-msoft_002dfloat-8"></a>
-<a name="index-mhard_002dfloat-4"></a>
+<dd><a name="index-msoft_002dfloat-9"></a>
+<a name="index-mhard_002dfloat-5"></a>
 <p>Generate code that does not use (uses) the floating-point register set.
 Software floating-point emulation is provided if you use the
 <samp>-msoft-float</samp> option, and pass the option to GCC when linking.
@@ -659,8 +564,8 @@ Software floating-point emulation is provided if you use the
 </dd>
 <dt><code>-msingle-float</code></dt>
 <dt><code>-mdouble-float</code></dt>
-<dd><a name="index-msingle_002dfloat-1"></a>
-<a name="index-mdouble_002dfloat-1"></a>
+<dd><a name="index-msingle_002dfloat-2"></a>
+<a name="index-mdouble_002dfloat-2"></a>
 <p>Generate code for single- or double-precision floating-point operations.
 <samp>-mdouble-float</samp> implies <samp>-msingle-float</samp>.
 </p>
@@ -687,8 +592,8 @@ and &lsquo;<samp>dp_full</samp>&rsquo; (equivalent to <samp>-mdouble-float</samp
 </dd>
 <dt><code>-mmultiple</code></dt>
 <dt><code>-mno-multiple</code></dt>
-<dd><a name="index-mmultiple"></a>
-<a name="index-mno_002dmultiple"></a>
+<dd><a name="index-mmultiple-1"></a>
+<a name="index-mno_002dmultiple-1"></a>
 <p>Generate code that uses (does not use) the load multiple word
 instructions and the store multiple word instructions.  These
 instructions are generated by default on POWER systems, and not
@@ -698,24 +603,10 @@ processor is in little-endian mode.  The exceptions are PPC740 and
 PPC750 which permit these instructions in little-endian mode.
 </p>
 </dd>
-<dt><code>-mstring</code></dt>
-<dt><code>-mno-string</code></dt>
-<dd><a name="index-mstring"></a>
-<a name="index-mno_002dstring"></a>
-<p>Generate code that uses (does not use) the load string instructions
-and the store string word instructions to save multiple registers and
-do small block moves.  These instructions are generated by default on
-POWER systems, and not generated on PowerPC systems.  Do not use
-<samp>-mstring</samp> on little-endian PowerPC systems, since those
-instructions do not work when the processor is in little-endian mode.
-The exceptions are PPC740 and PPC750 which permit these instructions
-in little-endian mode.
-</p>
-</dd>
 <dt><code>-mupdate</code></dt>
 <dt><code>-mno-update</code></dt>
-<dd><a name="index-mupdate"></a>
-<a name="index-mno_002dupdate"></a>
+<dd><a name="index-mupdate-1"></a>
+<a name="index-mno_002dupdate-1"></a>
 <p>Generate code that uses (does not use) the load or store instructions
 that update the base register to the address of the calculated memory
 location.  These instructions are generated by default.  If you use
@@ -727,8 +618,8 @@ signals may get corrupted data.
 </dd>
 <dt><code>-mavoid-indexed-addresses</code></dt>
 <dt><code>-mno-avoid-indexed-addresses</code></dt>
-<dd><a name="index-mavoid_002dindexed_002daddresses"></a>
-<a name="index-mno_002davoid_002dindexed_002daddresses"></a>
+<dd><a name="index-mavoid_002dindexed_002daddresses-1"></a>
+<a name="index-mno_002davoid_002dindexed_002daddresses-1"></a>
 <p>Generate code that tries to avoid (not avoid) the use of indexed load
 or store instructions. These instructions can incur a performance
 penalty on Power6 processors in certain situations, such as when
@@ -738,8 +629,8 @@ is enabled by default when targeting Power6 and disabled otherwise.
 </dd>
 <dt><code>-mfused-madd</code></dt>
 <dt><code>-mno-fused-madd</code></dt>
-<dd><a name="index-mfused_002dmadd-2"></a>
-<a name="index-mno_002dfused_002dmadd-2"></a>
+<dd><a name="index-mfused_002dmadd-3"></a>
+<a name="index-mno_002dfused_002dmadd-3"></a>
 <p>Generate code that uses (does not use) the floating-point multiply and
 accumulate instructions.  These instructions are generated by default
 if hardware floating point is used.  The machine-dependent
@@ -784,16 +675,16 @@ size.
 </dd>
 <dt><code>-mno-strict-align</code></dt>
 <dt><code>-mstrict-align</code></dt>
-<dd><a name="index-mno_002dstrict_002dalign-1"></a>
-<a name="index-mstrict_002dalign-3"></a>
+<dd><a name="index-mno_002dstrict_002dalign-2"></a>
+<a name="index-mstrict_002dalign-4"></a>
 <p>On System V.4 and embedded PowerPC systems do not (do) assume that
 unaligned memory references are handled by the system.
 </p>
 </dd>
 <dt><code>-mrelocatable</code></dt>
 <dt><code>-mno-relocatable</code></dt>
-<dd><a name="index-mrelocatable"></a>
-<a name="index-mno_002drelocatable"></a>
+<dd><a name="index-mrelocatable-1"></a>
+<a name="index-mno_002drelocatable-1"></a>
 <p>Generate code that allows (does not allow) a static executable to be
 relocated to a different address at run time.  A simple embedded
 PowerPC system loader should relocate the entire contents of
@@ -806,8 +697,8 @@ work, all objects linked together must be compiled with
 </dd>
 <dt><code>-mrelocatable-lib</code></dt>
 <dt><code>-mno-relocatable-lib</code></dt>
-<dd><a name="index-mrelocatable_002dlib"></a>
-<a name="index-mno_002drelocatable_002dlib"></a>
+<dd><a name="index-mrelocatable_002dlib-1"></a>
+<a name="index-mno_002drelocatable_002dlib-1"></a>
 <p>Like <samp>-mrelocatable</samp>, <samp>-mrelocatable-lib</samp> generates a
 <code>.fixup</code> section to allow static executables to be relocated at
 run time, but <samp>-mrelocatable-lib</samp> does not use the smaller stack
@@ -818,8 +709,8 @@ any combination of the <samp>-mrelocatable</samp> options.
 </dd>
 <dt><code>-mno-toc</code></dt>
 <dt><code>-mtoc</code></dt>
-<dd><a name="index-mno_002dtoc"></a>
-<a name="index-mtoc"></a>
+<dd><a name="index-mno_002dtoc-1"></a>
+<a name="index-mtoc-1"></a>
 <p>On System V.4 and embedded PowerPC systems do not (do) assume that
 register 2 contains a pointer to a global area pointing to the addresses
 used in the program.
@@ -827,8 +718,8 @@ used in the program.
 </dd>
 <dt><code>-mlittle</code></dt>
 <dt><code>-mlittle-endian</code></dt>
-<dd><a name="index-mlittle"></a>
-<a name="index-mlittle_002dendian-8"></a>
+<dd><a name="index-mlittle-1"></a>
+<a name="index-mlittle_002dendian-9"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the
 processor in little-endian mode.  The <samp>-mlittle-endian</samp> option is
 the same as <samp>-mlittle</samp>.
@@ -836,15 +727,15 @@ the same as <samp>-mlittle</samp>.
 </dd>
 <dt><code>-mbig</code></dt>
 <dt><code>-mbig-endian</code></dt>
-<dd><a name="index-mbig"></a>
-<a name="index-mbig_002dendian-8"></a>
+<dd><a name="index-mbig-1"></a>
+<a name="index-mbig_002dendian-9"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the
 processor in big-endian mode.  The <samp>-mbig-endian</samp> option is
 the same as <samp>-mbig</samp>.
 </p>
 </dd>
 <dt><code>-mdynamic-no-pic</code></dt>
-<dd><a name="index-mdynamic_002dno_002dpic"></a>
+<dd><a name="index-mdynamic_002dno_002dpic-1"></a>
 <p>On Darwin and Mac OS X systems, compile code so that it is not
 relocatable, but that its external references are relocatable.  The
 resulting code is suitable for applications, but not shared
@@ -852,7 +743,7 @@ libraries.
 </p>
 </dd>
 <dt><code>-msingle-pic-base</code></dt>
-<dd><a name="index-msingle_002dpic_002dbase-1"></a>
+<dd><a name="index-msingle_002dpic_002dbase-2"></a>
 <p>Treat the register used for PIC addressing as read-only, rather than
 loading it in the prologue for each function.  The runtime system is
 responsible for initializing this register with an appropriate value
@@ -860,7 +751,7 @@ before execution begins.
 </p>
 </dd>
 <dt><code>-mprioritize-restricted-insns=<var>priority</var></code></dt>
-<dd><a name="index-mprioritize_002drestricted_002dinsns"></a>
+<dd><a name="index-mprioritize_002drestricted_002dinsns-1"></a>
 <p>This option controls the priority that is assigned to
 dispatch-slot restricted instructions during the second scheduling
 pass.  The argument <var>priority</var> takes the value &lsquo;<samp>0</samp>&rsquo;, &lsquo;<samp>1</samp>&rsquo;,
@@ -870,7 +761,7 @@ instructions.
 </p>
 </dd>
 <dt><code>-msched-costly-dep=<var>dependence_type</var></code></dt>
-<dd><a name="index-msched_002dcostly_002ddep"></a>
+<dd><a name="index-msched_002dcostly_002ddep-1"></a>
 <p>This option controls which dependences are considered costly
 by the target during instruction scheduling.  The argument
 <var>dependence_type</var> takes one of the following values:
@@ -900,7 +791,7 @@ by the target during instruction scheduling.  The argument
 
 </dd>
 <dt><code>-minsert-sched-nops=<var>scheme</var></code></dt>
-<dd><a name="index-minsert_002dsched_002dnops"></a>
+<dd><a name="index-minsert_002dsched_002dnops-1"></a>
 <p>This option controls which NOP insertion scheme is used during
 the second scheduling pass.  The argument <var>scheme</var> takes one of the
 following values:
@@ -929,7 +820,7 @@ separate groups.  Insert <var>number</var> NOPs to force an insn to a new group.
 
 </dd>
 <dt><code>-mcall-sysv</code></dt>
-<dd><a name="index-mcall_002dsysv"></a>
+<dd><a name="index-mcall_002dsysv-1"></a>
 <p>On System V.4 and embedded PowerPC systems compile code using calling
 conventions that adhere to the March 1995 draft of the System V
 Application Binary Interface, PowerPC processor supplement.  This is the
@@ -938,91 +829,93 @@ default unless you configured GCC using &lsquo;<samp>powerpc-*-eabiaix</samp>&rs
 </dd>
 <dt><code>-mcall-sysv-eabi</code></dt>
 <dt><code>-mcall-eabi</code></dt>
-<dd><a name="index-mcall_002dsysv_002deabi"></a>
-<a name="index-mcall_002deabi"></a>
+<dd><a name="index-mcall_002dsysv_002deabi-1"></a>
+<a name="index-mcall_002deabi-1"></a>
 <p>Specify both <samp>-mcall-sysv</samp> and <samp>-meabi</samp> options.
 </p>
 </dd>
 <dt><code>-mcall-sysv-noeabi</code></dt>
-<dd><a name="index-mcall_002dsysv_002dnoeabi"></a>
+<dd><a name="index-mcall_002dsysv_002dnoeabi-1"></a>
 <p>Specify both <samp>-mcall-sysv</samp> and <samp>-mno-eabi</samp> options.
 </p>
 </dd>
 <dt><code>-mcall-aixdesc</code></dt>
-<dd><a name="index-m"></a>
+<dd><a name="index-m-1"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the AIX
 operating system.
 </p>
 </dd>
 <dt><code>-mcall-linux</code></dt>
-<dd><a name="index-mcall_002dlinux"></a>
+<dd><a name="index-mcall_002dlinux-1"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the
 Linux-based GNU system.
 </p>
 </dd>
 <dt><code>-mcall-freebsd</code></dt>
-<dd><a name="index-mcall_002dfreebsd"></a>
+<dd><a name="index-mcall_002dfreebsd-1"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the
 FreeBSD operating system.
 </p>
 </dd>
 <dt><code>-mcall-netbsd</code></dt>
-<dd><a name="index-mcall_002dnetbsd"></a>
+<dd><a name="index-mcall_002dnetbsd-2"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the
 NetBSD operating system.
 </p>
 </dd>
 <dt><code>-mcall-openbsd</code></dt>
-<dd><a name="index-mcall_002dnetbsd-1"></a>
+<dd><a name="index-mcall_002dnetbsd-3"></a>
 <p>On System V.4 and embedded PowerPC systems compile code for the
 OpenBSD operating system.
 </p>
 </dd>
+<dt><code>-mtraceback=<var>traceback_type</var></code></dt>
+<dd><a name="index-mtraceback"></a>
+<p>Select the type of traceback table. Valid values for <var>traceback_type</var>
+are &lsquo;<samp>full</samp>&rsquo;, &lsquo;<samp>part</samp>&rsquo;, and &lsquo;<samp>no</samp>&rsquo;.
+</p>
+</dd>
 <dt><code>-maix-struct-return</code></dt>
-<dd><a name="index-maix_002dstruct_002dreturn"></a>
+<dd><a name="index-maix_002dstruct_002dreturn-1"></a>
 <p>Return all structures in memory (as specified by the AIX ABI).
 </p>
 </dd>
 <dt><code>-msvr4-struct-return</code></dt>
-<dd><a name="index-msvr4_002dstruct_002dreturn"></a>
+<dd><a name="index-msvr4_002dstruct_002dreturn-1"></a>
 <p>Return structures smaller than 8 bytes in registers (as specified by the
 SVR4 ABI).
 </p>
 </dd>
 <dt><code>-mabi=<var>abi-type</var></code></dt>
-<dd><a name="index-mabi-3"></a>
+<dd><a name="index-mabi-4"></a>
 <p>Extend the current ABI with a particular extension, or remove such extension.
 Valid values are &lsquo;<samp>altivec</samp>&rsquo;, &lsquo;<samp>no-altivec</samp>&rsquo;, &lsquo;<samp>spe</samp>&rsquo;,
 &lsquo;<samp>no-spe</samp>&rsquo;, &lsquo;<samp>ibmlongdouble</samp>&rsquo;, &lsquo;<samp>ieeelongdouble</samp>&rsquo;,
 &lsquo;<samp>elfv1</samp>&rsquo;, &lsquo;<samp>elfv2</samp>&rsquo;.
 </p>
 </dd>
-<dt><code>-mabi=spe</code></dt>
-<dd><a name="index-mabi_003dspe"></a>
-<p>Extend the current ABI with SPE ABI extensions.  This does not change
-the default ABI, instead it adds the SPE ABI extensions to the current
-ABI.
-</p>
-</dd>
-<dt><code>-mabi=no-spe</code></dt>
-<dd><a name="index-mabi_003dno_002dspe"></a>
-<p>Disable Book-E SPE ABI extensions for the current ABI.
-</p>
-</dd>
 <dt><code>-mabi=ibmlongdouble</code></dt>
-<dd><a name="index-mabi_003dibmlongdouble"></a>
+<dd><a name="index-mabi_003dibmlongdouble-1"></a>
 <p>Change the current ABI to use IBM extended-precision long double.
-This is a PowerPC 32-bit SYSV ABI option.
+This is not likely to work if your system defaults to using IEEE
+extended-precision long double.  If you change the long double type
+from IEEE extended-precision, the compiler will issue a warning unless
+you use the <samp>-Wno-psabi</samp> option.  Requires <samp>-mlong-double-128</samp>
+to be enabled.
 </p>
 </dd>
 <dt><code>-mabi=ieeelongdouble</code></dt>
-<dd><a name="index-mabi_003dieeelongdouble"></a>
+<dd><a name="index-mabi_003dieeelongdouble-1"></a>
 <p>Change the current ABI to use IEEE extended-precision long double.
-This is a PowerPC 32-bit Linux ABI option.
+This is not likely to work if your system defaults to using IBM
+extended-precision long double.  If you change the long double type
+from IBM extended-precision, the compiler will issue a warning unless
+you use the <samp>-Wno-psabi</samp> option.  Requires <samp>-mlong-double-128</samp>
+to be enabled.
 </p>
 </dd>
 <dt><code>-mabi=elfv1</code></dt>
-<dd><a name="index-mabi_003delfv1"></a>
+<dd><a name="index-mabi_003delfv1-1"></a>
 <p>Change the current ABI to use the ELFv1 ABI.
 This is the default ABI for big-endian PowerPC 64-bit Linux.
 Overriding the default ABI requires special system support and is
@@ -1030,7 +923,7 @@ likely to fail in spectacular ways.
 </p>
 </dd>
 <dt><code>-mabi=elfv2</code></dt>
-<dd><a name="index-mabi_003delfv2"></a>
+<dd><a name="index-mabi_003delfv2-1"></a>
 <p>Change the current ABI to use the ELFv2 ABI.
 This is the default ABI for little-endian PowerPC 64-bit Linux.
 Overriding the default ABI requires special system support and is
@@ -1039,8 +932,8 @@ likely to fail in spectacular ways.
 </dd>
 <dt><code>-mgnu-attribute</code></dt>
 <dt><code>-mno-gnu-attribute</code></dt>
-<dd><a name="index-mgnu_002dattribute"></a>
-<a name="index-mno_002dgnu_002dattribute"></a>
+<dd><a name="index-mgnu_002dattribute-1"></a>
+<a name="index-mno_002dgnu_002dattribute-1"></a>
 <p>Emit .gnu_attribute assembly directives to set tag/value pairs in a
 .gnu.attributes section that specify ABI variations in function
 parameters or return values.
@@ -1048,8 +941,8 @@ parameters or return values.
 </dd>
 <dt><code>-mprototype</code></dt>
 <dt><code>-mno-prototype</code></dt>
-<dd><a name="index-mprototype"></a>
-<a name="index-mno_002dprototype"></a>
+<dd><a name="index-mprototype-1"></a>
+<a name="index-mno_002dprototype-1"></a>
 <p>On System V.4 and embedded PowerPC systems assume that all calls to
 variable argument functions are properly prototyped.  Otherwise, the
 compiler must insert an instruction before every non-prototyped call to
@@ -1061,7 +954,7 @@ set or clear the bit.
 </p>
 </dd>
 <dt><code>-msim</code></dt>
-<dd><a name="index-msim-8"></a>
+<dd><a name="index-msim-9"></a>
 <p>On embedded PowerPC systems, assume that the startup module is called
 <samp>sim-crt0.o</samp> and that the standard C libraries are <samp>libsim.a</samp> and
 <samp>libc.a</samp>.  This is the default for &lsquo;<samp>powerpc-*-eabisim</samp>&rsquo;
@@ -1069,42 +962,42 @@ configurations.
 </p>
 </dd>
 <dt><code>-mmvme</code></dt>
-<dd><a name="index-mmvme"></a>
+<dd><a name="index-mmvme-1"></a>
 <p>On embedded PowerPC systems, assume that the startup module is called
 <samp>crt0.o</samp> and the standard C libraries are <samp>libmvme.a</samp> and
 <samp>libc.a</samp>.
 </p>
 </dd>
 <dt><code>-mads</code></dt>
-<dd><a name="index-mads"></a>
+<dd><a name="index-mads-1"></a>
 <p>On embedded PowerPC systems, assume that the startup module is called
 <samp>crt0.o</samp> and the standard C libraries are <samp>libads.a</samp> and
 <samp>libc.a</samp>.
 </p>
 </dd>
 <dt><code>-myellowknife</code></dt>
-<dd><a name="index-myellowknife"></a>
+<dd><a name="index-myellowknife-1"></a>
 <p>On embedded PowerPC systems, assume that the startup module is called
 <samp>crt0.o</samp> and the standard C libraries are <samp>libyk.a</samp> and
 <samp>libc.a</samp>.
 </p>
 </dd>
 <dt><code>-mvxworks</code></dt>
-<dd><a name="index-mvxworks"></a>
+<dd><a name="index-mvxworks-1"></a>
 <p>On System V.4 and embedded PowerPC systems, specify that you are
 compiling for a VxWorks system.
 </p>
 </dd>
 <dt><code>-memb</code></dt>
-<dd><a name="index-memb"></a>
+<dd><a name="index-memb-1"></a>
 <p>On embedded PowerPC systems, set the <code>PPC_EMB</code> bit in the ELF flags
 header to indicate that &lsquo;<samp>eabi</samp>&rsquo; extended relocations are used.
 </p>
 </dd>
 <dt><code>-meabi</code></dt>
 <dt><code>-mno-eabi</code></dt>
-<dd><a name="index-meabi"></a>
-<a name="index-mno_002deabi"></a>
+<dd><a name="index-meabi-1"></a>
+<a name="index-mno_002deabi-1"></a>
 <p>On System V.4 and embedded PowerPC systems do (do not) adhere to the
 Embedded Applications Binary Interface (EABI), which is a set of
 modifications to the System V.4 specifications.  Selecting <samp>-meabi</samp>
@@ -1120,7 +1013,7 @@ configured GCC using one of the &lsquo;<samp>powerpc*-*-eabi*</samp>&rsquo; opti
 </p>
 </dd>
 <dt><code>-msdata=eabi</code></dt>
-<dd><a name="index-msdata_003deabi"></a>
+<dd><a name="index-msdata_003deabi-1"></a>
 <p>On System V.4 and embedded PowerPC systems, put small initialized
 <code>const</code> global and static data in the <code>.sdata2</code> section, which
 is pointed to by register <code>r2</code>.  Put small initialized
@@ -1133,7 +1026,7 @@ incompatible with the <samp>-mrelocatable</samp> option.  The
 </p>
 </dd>
 <dt><code>-msdata=sysv</code></dt>
-<dd><a name="index-msdata_003dsysv"></a>
+<dd><a name="index-msdata_003dsysv-1"></a>
 <p>On System V.4 and embedded PowerPC systems, put small global and static
 data in the <code>.sdata</code> section, which is pointed to by register
 <code>r13</code>.  Put small uninitialized global and static data in the
@@ -1144,15 +1037,15 @@ The <samp>-msdata=sysv</samp> option is incompatible with the
 </dd>
 <dt><code>-msdata=default</code></dt>
 <dt><code>-msdata</code></dt>
-<dd><a name="index-msdata_003ddefault-1"></a>
-<a name="index-msdata-1"></a>
+<dd><a name="index-msdata_003ddefault-2"></a>
+<a name="index-msdata-2"></a>
 <p>On System V.4 and embedded PowerPC systems, if <samp>-meabi</samp> is used,
 compile code the same as <samp>-msdata=eabi</samp>, otherwise compile code the
 same as <samp>-msdata=sysv</samp>.
 </p>
 </dd>
 <dt><code>-msdata=data</code></dt>
-<dd><a name="index-msdata_003ddata"></a>
+<dd><a name="index-msdata_003ddata-1"></a>
 <p>On System V.4 and embedded PowerPC systems, put small global
 data in the <code>.sdata</code> section.  Put small uninitialized global
 data in the <code>.sbss</code> section.  Do not use register <code>r13</code>
@@ -1162,8 +1055,8 @@ other <samp>-msdata</samp> options are used.
 </dd>
 <dt><code>-msdata=none</code></dt>
 <dt><code>-mno-sdata</code></dt>
-<dd><a name="index-msdata_003dnone-2"></a>
-<a name="index-mno_002dsdata-2"></a>
+<dd><a name="index-msdata_003dnone-3"></a>
+<a name="index-mno_002dsdata-3"></a>
 <p>On embedded PowerPC systems, put all initialized global and static data
 in the <code>.data</code> section, and all uninitialized data in the
 <code>.bss</code> section.
@@ -1178,17 +1071,45 @@ default.
 </p>
 </dd>
 <dt><code>-mblock-move-inline-limit=<var>num</var></code></dt>
-<dd><a name="index-mblock_002dmove_002dinline_002dlimit"></a>
+<dd><a name="index-mblock_002dmove_002dinline_002dlimit-1"></a>
 <p>Inline all block moves (such as calls to <code>memcpy</code> or structure
 copies) less than or equal to <var>num</var> bytes.  The minimum value for
 <var>num</var> is 32 bytes on 32-bit targets and 64 bytes on 64-bit
 targets.  The default value is target-specific.
 </p>
 </dd>
+<dt><code>-mblock-compare-inline-limit=<var>num</var></code></dt>
+<dd><a name="index-mblock_002dcompare_002dinline_002dlimit"></a>
+<p>Generate non-looping inline code for all block compares (such as calls
+to <code>memcmp</code> or structure compares) less than or equal to <var>num</var>
+bytes. If <var>num</var> is 0, all inline expansion (non-loop and loop) of
+block compare is disabled. The default value is target-specific.
+</p>
+</dd>
+<dt><code>-mblock-compare-inline-loop-limit=<var>num</var></code></dt>
+<dd><a name="index-mblock_002dcompare_002dinline_002dloop_002dlimit"></a>
+<p>Generate an inline expansion using loop code for all block compares that
+are less than or equal to <var>num</var> bytes, but greater than the limit
+for non-loop inline block compare expansion. If the block length is not
+constant, at most <var>num</var> bytes will be compared before <code>memcmp</code>
+is called to compare the remainder of the block. The default value is
+target-specific.
+</p>
+</dd>
+<dt><code>-mstring-compare-inline-limit=<var>num</var></code></dt>
+<dd><a name="index-mstring_002dcompare_002dinline_002dlimit"></a>
+<p>Generate at most <var>num</var> pairs of load instructions to compare the
+string inline. If the difference or end of string is not found at the
+end of the inline compare a call to <code>strcmp</code> or <code>strncmp</code> will
+take care of the rest of the comparison. The default is 8 pairs of
+loads, which will compare 64 bytes on a 64-bit target and 32 bytes on a
+32-bit target.
+</p>
+</dd>
 <dt><code>-G <var>num</var></code></dt>
-<dd><a name="index-G-3"></a>
-<a name="index-smaller-data-references-_0028PowerPC_0029"></a>
-<a name="index-_002esdata_002f_002esdata2-references-_0028PowerPC_0029"></a>
+<dd><a name="index-G-5"></a>
+<a name="index-smaller-data-references-_0028PowerPC_0029-1"></a>
+<a name="index-_002esdata_002f_002esdata2-references-_0028PowerPC_0029-1"></a>
 <p>On embedded PowerPC systems, put global and static items less than or
 equal to <var>num</var> bytes into the small data or BSS sections instead of
 the normal data or BSS section.  By default, <var>num</var> is 8.  The
@@ -1198,16 +1119,16 @@ All modules should be compiled with the same <samp>-G <var>num</var></samp> valu
 </dd>
 <dt><code>-mregnames</code></dt>
 <dt><code>-mno-regnames</code></dt>
-<dd><a name="index-mregnames"></a>
-<a name="index-mno_002dregnames"></a>
+<dd><a name="index-mregnames-1"></a>
+<a name="index-mno_002dregnames-1"></a>
 <p>On System V.4 and embedded PowerPC systems do (do not) emit register
 names in the assembly language output using symbolic forms.
 </p>
 </dd>
 <dt><code>-mlongcall</code></dt>
 <dt><code>-mno-longcall</code></dt>
-<dd><a name="index-mlongcall"></a>
-<a name="index-mno_002dlongcall"></a>
+<dd><a name="index-mlongcall-1"></a>
+<a name="index-mno_002dlongcall-1"></a>
 <p>By default assume that all calls are far away so that a longer and more
 expensive calling sequence is required.  This is required for calls
 farther than 32 megabytes (33,554,432 bytes) from the current location.
@@ -1242,8 +1163,8 @@ when the linker is known to generate glue.
 </dd>
 <dt><code>-mtls-markers</code></dt>
 <dt><code>-mno-tls-markers</code></dt>
-<dd><a name="index-mtls_002dmarkers"></a>
-<a name="index-mno_002dtls_002dmarkers"></a>
+<dd><a name="index-mtls_002dmarkers-1"></a>
+<a name="index-mno_002dtls_002dmarkers-1"></a>
 <p>Mark (do not mark) calls to <code>__tls_get_addr</code> with a relocation
 specifying the function argument.  The relocation allows the linker to
 reliably associate function call with argument setup instructions for
@@ -1253,7 +1174,7 @@ sequence.
 </dd>
 <dt><code>-mrecip</code></dt>
 <dt><code>-mno-recip</code></dt>
-<dd><a name="index-mrecip"></a>
+<dd><a name="index-mrecip-1"></a>
 <p>This option enables use of the reciprocal estimate and
 reciprocal square root estimate instructions with additional
 Newton-Raphson steps to increase precision instead of doing a divide or
@@ -1269,7 +1190,7 @@ roots.
 </p>
 </dd>
 <dt><code>-mrecip=<var>opt</var></code></dt>
-<dd><a name="index-mrecip_003dopt"></a>
+<dd><a name="index-mrecip_003dopt-1"></a>
 <p>This option controls which reciprocal estimate instructions
 may be used.  <var>opt</var> is a comma-separated list of options, which may
 be preceded by a <code>!</code> to invert the option:
@@ -1323,7 +1244,7 @@ which handle the double-precision reciprocal square root calculations.
 </dd>
 <dt><code>-mrecip-precision</code></dt>
 <dt><code>-mno-recip-precision</code></dt>
-<dd><a name="index-mrecip_002dprecision"></a>
+<dd><a name="index-mrecip_002dprecision-1"></a>
 <p>Assume (do not assume) that the reciprocal estimate instructions
 provide higher-precision estimates than is mandated by the PowerPC
 ABI.  Selecting <samp>-mcpu=power6</samp>, <samp>-mcpu=power7</samp> or
@@ -1370,7 +1291,7 @@ the floating-point number is too large to fit in an integer.
 </dd>
 <dt><code>-mpointers-to-nested-functions</code></dt>
 <dt><code>-mno-pointers-to-nested-functions</code></dt>
-<dd><a name="index-mpointers_002dto_002dnested_002dfunctions"></a>
+<dd><a name="index-mpointers_002dto_002dnested_002dfunctions-1"></a>
 <p>Generate (do not generate) code to load up the static chain register
 (<code>r11</code>) when calling through a pointer on AIX and 64-bit Linux
 systems where a function pointer points to a 3-word descriptor giving
@@ -1384,7 +1305,7 @@ you use <samp>-mno-pointers-to-nested-functions</samp>.
 </dd>
 <dt><code>-msave-toc-indirect</code></dt>
 <dt><code>-mno-save-toc-indirect</code></dt>
-<dd><a name="index-msave_002dtoc_002dindirect"></a>
+<dd><a name="index-msave_002dtoc_002dindirect-1"></a>
 <p>Generate (do not generate) code to save the TOC value in the reserved
 stack location in the function prologue if the function calls through
 a pointer on AIX and 64-bit Linux systems.  If the TOC value is not
@@ -1394,7 +1315,7 @@ pointer.  The <samp>-mno-save-toc-indirect</samp> option is the default.
 </dd>
 <dt><code>-mcompat-align-parm</code></dt>
 <dt><code>-mno-compat-align-parm</code></dt>
-<dd><a name="index-mcompat_002dalign_002dparm"></a>
+<dd><a name="index-mcompat_002dalign_002dparm-1"></a>
 <p>Generate (do not generate) code to pass structure parameters with a
 maximum alignment of 64 bits, for compatibility with older versions
 of GCC.
@@ -1412,9 +1333,11 @@ GCC.
 <dt><code>-mstack-protector-guard=<var>guard</var></code></dt>
 <dt><code>-mstack-protector-guard-reg=<var>reg</var></code></dt>
 <dt><code>-mstack-protector-guard-offset=<var>offset</var></code></dt>
-<dd><a name="index-mstack_002dprotector_002dguard"></a>
-<a name="index-mstack_002dprotector_002dguard_002dreg"></a>
-<a name="index-mstack_002dprotector_002dguard_002doffset"></a>
+<dt><code>-mstack-protector-guard-symbol=<var>symbol</var></code></dt>
+<dd><a name="index-mstack_002dprotector_002dguard-1"></a>
+<a name="index-mstack_002dprotector_002dguard_002dreg-1"></a>
+<a name="index-mstack_002dprotector_002dguard_002doffset-1"></a>
+<a name="index-mstack_002dprotector_002dguard_002dsymbol-1"></a>
 <p>Generate stack protection code using canary at <var>guard</var>.  Supported
 locations are &lsquo;<samp>global</samp>&rsquo; for global canary or &lsquo;<samp>tls</samp>&rsquo; for per-thread
 canary in the TLS block (the default with GNU libc version 2.4 or later).
@@ -1424,7 +1347,8 @@ canary in the TLS block (the default with GNU libc version 2.4 or later).
 <samp>-mstack-protector-guard-offset=<var>offset</var></samp> furthermore specify
 which register to use as base register for reading the canary, and from what
 offset from that base register. The default for those is as specified in the
-relevant ABI.
+relevant ABI.  <samp>-mstack-protector-guard-symbol=<var>symbol</var></samp> overrides
+the offset with a symbol reference to a canary in the TLS block.
 </p></dd>
 </dl>
 

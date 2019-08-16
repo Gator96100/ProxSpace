@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -144,6 +144,7 @@ compilation time.
 -fipa-reference 
 -fmerge-constants 
 -fmove-loop-invariants 
+-fomit-frame-pointer 
 -freorder-blocks 
 -fshrink-wrap 
 -fshrink-wrap-separate 
@@ -169,9 +170,6 @@ compilation time.
 -funit-at-a-time
 </pre></div>
 
-<p><samp>-O</samp> also turns on <samp>-fomit-frame-pointer</samp> on machines
-where doing so does not interfere with debugging.
-</p>
 </dd>
 <dt><code>-O2</code></dt>
 <dd><a name="index-O2"></a>
@@ -213,7 +211,7 @@ also turns on the following optimization flags:
 -fsched-interblock  -fsched-spec 
 -fschedule-insns  -fschedule-insns2 
 -fstore-merging 
--fstrict-aliasing -fstrict-overflow 
+-fstrict-aliasing 
 -ftree-builtin-call-dce 
 -ftree-switch-conversion -ftree-tail-merge 
 -fcode-hoisting 
@@ -229,14 +227,25 @@ invoking <samp>-O2</samp> on programs that use computed gotos.
 <dt><code>-O3</code></dt>
 <dd><a name="index-O3"></a>
 <p>Optimize yet more.  <samp>-O3</samp> turns on all optimizations specified
-by <samp>-O2</samp> and also turns on the <samp>-finline-functions</samp>,
-<samp>-funswitch-loops</samp>, <samp>-fpredictive-commoning</samp>,
-<samp>-fgcse-after-reload</samp>, <samp>-ftree-loop-vectorize</samp>,
-<samp>-ftree-loop-distribute-patterns</samp>, <samp>-fsplit-paths</samp>
-<samp>-ftree-slp-vectorize</samp>, <samp>-fvect-cost-model</samp>,
-<samp>-ftree-partial-pre</samp>, <samp>-fpeel-loops</samp>
-and <samp>-fipa-cp-clone</samp> options.
-</p>
+by <samp>-O2</samp> and also turns on the following optimization flags:
+</p><div class="smallexample">
+<pre class="smallexample">-finline-functions 
+-funswitch-loops 
+-fpredictive-commoning 
+-fgcse-after-reload 
+-ftree-loop-vectorize 
+-ftree-loop-distribution 
+-ftree-loop-distribute-patterns 
+-floop-interchange 
+-floop-unroll-and-jam 
+-fsplit-paths 
+-ftree-slp-vectorize 
+-fvect-cost-model 
+-ftree-partial-pre 
+-fpeel-loops 
+-fipa-cp-clone
+</pre></div>
+
 </dd>
 <dt><code>-O0</code></dt>
 <dd><a name="index-O0"></a>
@@ -247,16 +256,18 @@ results.  This is the default.
 <dt><code>-Os</code></dt>
 <dd><a name="index-Os"></a>
 <p>Optimize for size.  <samp>-Os</samp> enables all <samp>-O2</samp> optimizations that
-do not typically increase code size.  It also performs further
-optimizations designed to reduce code size.
+do not typically increase code size.
 </p>
 <p><samp>-Os</samp> disables the following optimization flags:
 </p><div class="smallexample">
 <pre class="smallexample">-falign-functions  -falign-jumps  -falign-loops 
--falign-labels  -freorder-blocks  -freorder-blocks-algorithm=stc 
--freorder-blocks-and-partition  -fprefetch-loop-arrays
+-falign-labels  -fprefetch-loop-arrays
 </pre></div>
 
+<p>It also enables <samp>-finline-functions</samp>, causes the compiler to tune for
+code size rather than execution speed, and performs further optimizations
+designed to reduce code size.
+</p>
 </dd>
 <dt><code>-Ofast</code></dt>
 <dd><a name="index-Ofast"></a>
@@ -264,7 +275,8 @@ optimizations designed to reduce code size.
 <samp>-O3</samp> optimizations.  It also enables optimizations that are not
 valid for all standard-compliant programs.
 It turns on <samp>-ffast-math</samp> and the Fortran-specific
-<samp>-fno-protect-parens</samp> and <samp>-fstack-arrays</samp>.
+<samp>-fstack-arrays</samp>, unless <samp>-fmax-stack-var-size</samp> is
+specified, and <samp>-fno-protect-parens</samp>.
 </p>
 </dd>
 <dt><code>-Og</code></dt>
@@ -329,25 +341,18 @@ and treated equal to <samp>-ffp-contract=off</samp>.
 </dd>
 <dt><code>-fomit-frame-pointer</code></dt>
 <dd><a name="index-fomit_002dframe_002dpointer"></a>
-<p>Don&rsquo;t keep the frame pointer in a register for functions that
-don&rsquo;t need one.  This avoids the instructions to save, set up and
-restore frame pointers; it also makes an extra register available
-in many functions.  <strong>It also makes debugging impossible on
-some machines.</strong>
+<p>Omit the frame pointer in functions that don&rsquo;t need one.  This avoids the
+instructions to save, set up and restore the frame pointer; on many targets
+it also makes an extra register available.
 </p>
-<p>On some machines, such as the VAX, this flag has no effect, because
-the standard calling sequence automatically handles the frame pointer
-and nothing is saved by pretending it doesn&rsquo;t exist.  The
-machine-description macro <code>FRAME_POINTER_REQUIRED</code> controls
-whether a target machine supports this flag.  See <a href="http://gcc.gnu.org/onlinedocs/gccint/Registers.html#Registers">Register
-Usage</a> in <cite>GNU Compiler Collection (GCC) Internals</cite>.
+<p>On some targets this flag has no effect because the standard calling sequence
+always uses a frame pointer, so it cannot be omitted.
 </p>
-<p>The default setting (when not optimizing for
-size) for 32-bit GNU/Linux x86 and 32-bit Darwin x86 targets is
-<samp>-fomit-frame-pointer</samp>.  You can configure GCC with the
-<samp>--enable-frame-pointer</samp> configure option to change the default.
+<p>Note that <samp>-fno-omit-frame-pointer</samp> doesn&rsquo;t guarantee the frame pointer
+is used in all functions.  Several targets always omit the frame pointer in
+leaf functions.
 </p>
-<p>Enabled at levels <samp>-O</samp>, <samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
+<p>Enabled by default at <samp>-O</samp> and higher.
 </p>
 </dd>
 <dt><code>-foptimize-sibling-calls</code></dt>
@@ -384,7 +389,7 @@ heuristically decides which functions are simple enough to be worth integrating
 in this way.  This inlining applies to all functions, even those not declared
 inline.
 </p>
-<p>Enabled at level <samp>-O2</samp>.
+<p>Enabled at levels <samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
 </p>
 </dd>
 <dt><code>-findirect-inlining</code></dt>
@@ -394,7 +399,8 @@ time thanks to previous inlining.  This option has any effect only
 when inlining itself is turned on by the <samp>-finline-functions</samp>
 or <samp>-finline-small-functions</samp> options.
 </p>
-<p>Enabled at level <samp>-O2</samp>.
+<p>Enabled at levels <samp>-O3</samp>, <samp>-Os</samp>.  Also enabled
+by <samp>-fprofile-use</samp> and <samp>-fauto-profile</samp>.
 </p>
 </dd>
 <dt><code>-finline-functions</code></dt>
@@ -407,7 +413,7 @@ in this way.
 declared <code>static</code>, then the function is normally not output as
 assembler code in its own right.
 </p>
-<p>Enabled at level <samp>-O3</samp>.
+<p>Enabled at levels <samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
 </p>
 </dd>
 <dt><code>-finline-functions-called-once</code></dt>
@@ -785,7 +791,7 @@ Use <samp>-fno-delete-null-pointer-checks</samp> to disable this optimization
 for programs that depend on that behavior.
 </p>
 <p>This option is enabled by default on most targets.  On Nios II ELF, it
-defaults to off.  On AVR and CR16, this option is completely disabled.  
+defaults to off.  On AVR, CR16, and MSP430, this option is completely disabled.
 </p>
 <p>Passes that use the dataflow information
 are enabled independently at different optimization levels.
@@ -1430,7 +1436,7 @@ default at <samp>-O</samp> and higher.
 <dt><code>-ftree-builtin-call-dce</code></dt>
 <dd><a name="index-ftree_002dbuiltin_002dcall_002ddce"></a>
 <p>Perform conditional dead code elimination (DCE) for calls to built-in functions
-that may set <code>errno</code> but are otherwise side-effect free.  This flag is
+that may set <code>errno</code> but are otherwise free of side effects.  This flag is
 enabled by default at <samp>-O2</samp> and higher if <samp>-Os</samp> is not also
 specified.
 </p>
@@ -1467,15 +1473,11 @@ at <samp>-O</samp> and higher.
 </p>
 </dd>
 <dt><code>-ftree-loop-linear</code></dt>
-<dt><code>-floop-interchange</code></dt>
 <dt><code>-floop-strip-mine</code></dt>
 <dt><code>-floop-block</code></dt>
-<dt><code>-floop-unroll-and-jam</code></dt>
 <dd><a name="index-ftree_002dloop_002dlinear"></a>
-<a name="index-floop_002dinterchange"></a>
 <a name="index-floop_002dstrip_002dmine"></a>
 <a name="index-floop_002dblock"></a>
-<a name="index-floop_002dunroll_002dand_002djam"></a>
 <p>Perform loop nest optimizations.  Same as
 <samp>-floop-nest-optimize</samp>.  To use this code transformation, GCC has
 to be configured with <samp>--with-isl</samp> to enable the Graphite loop
@@ -1573,6 +1575,34 @@ DO I = 1, N
 ENDDO
 </pre></div>
 <p>and the initialization loop is transformed into a call to memset zero.
+</p>
+</dd>
+<dt><code>-floop-interchange</code></dt>
+<dd><a name="index-floop_002dinterchange"></a>
+<p>Perform loop interchange outside of graphite.  This flag can improve cache
+performance on loop nest and allow further loop optimizations, like
+vectorization, to take place.  For example, the loop
+</p><div class="smallexample">
+<pre class="smallexample">for (int i = 0; i &lt; N; i++)
+  for (int j = 0; j &lt; N; j++)
+    for (int k = 0; k &lt; N; k++)
+      c[i][j] = c[i][j] + a[i][k]*b[k][j];
+</pre></div>
+<p>is transformed to
+</p><div class="smallexample">
+<pre class="smallexample">for (int i = 0; i &lt; N; i++)
+  for (int k = 0; k &lt; N; k++)
+    for (int j = 0; j &lt; N; j++)
+      c[i][j] = c[i][j] + a[i][k]*b[k][j];
+</pre></div>
+<p>This flag is enabled by default at <samp>-O3</samp>.
+</p>
+</dd>
+<dt><code>-floop-unroll-and-jam</code></dt>
+<dd><a name="index-floop_002dunroll_002dand_002djam"></a>
+<p>Apply unroll and jam transformations on feasible loops.  In a loop
+nest this unrolls the outer loop by some factor and fuses the resulting
+multiple inner loops.  This flag is enabled by default at <samp>-O3</samp>.
 </p>
 </dd>
 <dt><code>-ftree-loop-im</code></dt>
@@ -1685,7 +1715,7 @@ either &lsquo;<samp>dynamic</samp>&rsquo; or &lsquo;<samp>cheap</samp>&rsquo;.
 <dt><code>-fsimd-cost-model=<var>model</var></code></dt>
 <dd><a name="index-fsimd_002dcost_002dmodel"></a>
 <p>Alter the cost model used for vectorization of loops marked with the OpenMP
-or Cilk Plus simd directive.  The <var>model</var> argument should be one of
+simd directive.  The <var>model</var> argument should be one of
 &lsquo;<samp>unlimited</samp>&rsquo;, &lsquo;<samp>dynamic</samp>&rsquo;, &lsquo;<samp>cheap</samp>&rsquo;.  All values of <var>model</var>
 have the same meaning as described in <samp>-fvect-cost-model</samp> and by
 default a cost model defined with <samp>-fvect-cost-model</samp> is used.
@@ -1735,7 +1765,7 @@ local variables when unrolling a loop, which can result in superior code.
 when inlining itself is turned on by the <samp>-finline-functions</samp>
 or <samp>-finline-small-functions</samp> options.
 </p>
-<p>Enabled at level <samp>-O2</samp>.
+<p>Enabled at levels <samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
 </p>
 </dd>
 <dt><code>-fpredictive-commoning</code></dt>
@@ -1779,9 +1809,9 @@ if (snprintf (buf, &quot;%08x&quot;, i) &gt;= sizeof buf)
 </pre></div>
 
 <p>The <samp>-fprintf-return-value</samp> option relies on other optimizations
-and yields best results with <samp>-O2</samp>.  It works in tandem with the
-<samp>-Wformat-overflow</samp> and <samp>-Wformat-truncation</samp> options.
-The <samp>-fprintf-return-value</samp> option is enabled by default.
+and yields best results with <samp>-O2</samp> and above.  It works in tandem
+with the <samp>-Wformat-overflow</samp> and <samp>-Wformat-truncation</samp>
+options.  The <samp>-fprintf-return-value</samp> option is enabled by default.
 </p>
 </dd>
 <dt><code>-fno-peephole</code></dt>
@@ -1844,11 +1874,13 @@ into separate sections of the assembly and <samp>.o</samp> files, to improve
 paging and cache locality performance.
 </p>
 <p>This optimization is automatically turned off in the presence of
-exception handling, for linkonce sections, for functions with a user-defined
+exception handling or unwind tables (on targets using setjump/longjump or target specific scheme), for linkonce sections, for functions with a user-defined
 section attribute and on any architecture that does not support named
-sections.
+sections.  When <samp>-fsplit-stack</samp> is used this option is not
+enabled by default (to avoid linker errors), but may be enabled
+explicitly (if using a working linker).
 </p>
-<p>Enabled for x86 at levels <samp>-O2</samp>, <samp>-O3</samp>.
+<p>Enabled for x86 at levels <samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
 </p>
 </dd>
 <dt><code>-freorder-functions</code></dt>
@@ -1916,42 +1948,6 @@ uses a union type, e.g.:
 </pre></div>
 
 <p>The <samp>-fstrict-aliasing</samp> option is enabled at levels
-<samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
-</p>
-</dd>
-<dt><code>-fstrict-overflow</code></dt>
-<dd><a name="index-fstrict_002doverflow"></a>
-<p>Allow the compiler to assume strict signed overflow rules, depending
-on the language being compiled.  For C (and C++) this means that
-overflow when doing arithmetic with signed numbers is undefined, which
-means that the compiler may assume that it does not happen.  This
-permits various optimizations.  For example, the compiler assumes
-that an expression like <code>i + 10 &gt; i</code> is always true for
-signed <code>i</code>.  This assumption is only valid if signed overflow is
-undefined, as the expression is false if <code>i + 10</code> overflows when
-using twos complement arithmetic.  When this option is in effect any
-attempt to determine whether an operation on signed numbers 
-overflows must be written carefully to not actually involve overflow.
-</p>
-<p>This option also allows the compiler to assume strict pointer
-semantics: given a pointer to an object, if adding an offset to that
-pointer does not produce a pointer to the same object, the addition is
-undefined.  This permits the compiler to conclude that <code>p + u &gt;
-p</code> is always true for a pointer <code>p</code> and unsigned integer
-<code>u</code>.  This assumption is only valid because pointer wraparound is
-undefined, as the expression is false if <code>p + u</code> overflows using
-twos complement arithmetic.
-</p>
-<p>See also the <samp>-fwrapv</samp> option.  Using <samp>-fwrapv</samp> means
-that integer signed overflow is fully defined: it wraps.  When
-<samp>-fwrapv</samp> is used, there is no difference between
-<samp>-fstrict-overflow</samp> and <samp>-fno-strict-overflow</samp> for
-integers.  With <samp>-fwrapv</samp> certain types of overflow are
-permitted.  For example, if the compiler gets an overflow when doing
-arithmetic on constants, the overflowed value can still be used with
-<samp>-fwrapv</samp>, but not otherwise.
-</p>
-<p>The <samp>-fstrict-overflow</samp> option is enabled at levels
 <samp>-O2</samp>, <samp>-O3</samp>, <samp>-Os</samp>.
 </p>
 </dd>
@@ -2238,7 +2234,7 @@ for LTO, use <code>gcc-ar</code> and <code>gcc-ranlib</code> instead of <code>ar
 and <code>ranlib</code>; 
 to show the symbols of object files with GIMPLE bytecode, use
 <code>gcc-nm</code>.  Those commands require that <code>ar</code>, <code>ranlib</code>
-and <code>nm</code> have been compiled with plugin support.  At link time, use the the
+and <code>nm</code> have been compiled with plugin support.  At link time, use the
 flag <samp>-fuse-linker-plugin</samp> to ensure that the library participates in
 the LTO optimization process:
 </p>
@@ -2272,9 +2268,8 @@ strict version check, so bytecode files generated in one version of
 GCC do not work with an older or newer version of GCC.
 </p>
 <p>Link-time optimization does not work well with generation of debugging
-information.  Combining <samp>-flto</samp> with
-<samp>-g</samp> is currently experimental and expected to produce unexpected
-results.
+information on systems other than those using a combination of ELF and
+DWARF.
 </p>
 <p>If you specify the optional <var>n</var>, the optimization and code
 generation done at link time is executed in parallel using <var>n</var>
@@ -2358,6 +2353,11 @@ need to support linker plugins to allow a full-featured build environment
 (capable of building static libraries etc).  GCC provides the <code>gcc-ar</code>,
 <code>gcc-nm</code>, <code>gcc-ranlib</code> wrappers to pass the right options
 to these tools. With non fat LTO makefiles need to be modified to use them.
+</p>
+<p>Note that modern binutils provide plugin auto-load mechanism.
+Installing the linker plugin into <samp>$libdir/bfd-plugins</samp> has the same
+effect as usage of the command wrappers (<code>gcc-ar</code>, <code>gcc-nm</code> and
+<code>gcc-ranlib</code>).
 </p>
 <p>The default is <samp>-fno-fat-lto-objects</samp> on targets with linker plugin
 support.
@@ -2862,18 +2862,26 @@ file if the target supports arbitrary sections.  The name of the
 function or the name of the data item determines the section&rsquo;s name
 in the output file.
 </p>
-<p>Use these options on systems where the linker can perform optimizations
-to improve locality of reference in the instruction space.  Most systems
-using the ELF object format and SPARC processors running Solaris 2 have
-linkers with such optimizations.  AIX may have these optimizations in
-the future.
+<p>Use these options on systems where the linker can perform optimizations to
+improve locality of reference in the instruction space.  Most systems using the
+ELF object format have linkers with such optimizations.  On AIX, the linker
+rearranges sections (CSECTs) based on the call graph.  The performance impact
+varies.
 </p>
-<p>Only use these options when there are significant benefits from doing
-so.  When you specify these options, the assembler and linker
-create larger object and executable files and are also slower.
-You cannot use <code>gprof</code> on all systems if you
-specify this option, and you may have problems with debugging if
-you specify both this option and <samp>-g</samp>.
+<p>Together with a linker garbage collection (linker <samp>--gc-sections</samp>
+option) these options may lead to smaller statically-linked executables (after
+stripping).
+</p>
+<p>On ELF/DWARF systems these options do not degenerate the quality of the debug
+information.  There could be issues with other object files/debug info formats.
+</p>
+<p>Only use these options when there are significant benefits from doing so.  When
+you specify these options, the assembler and linker create larger object and
+executable files and are also slower.  These options affect code generation.
+They prevent optimizations by the compiler and assembler using relative
+locations inside a translation unit since the locations are unknown until
+link time.  An example of such an optimization is relaxing calls to short call
+instructions.
 </p>
 </dd>
 <dt><code>-fbranch-target-load-optimize</code></dt>
@@ -3064,7 +3072,7 @@ a lot of functions that would otherwise not be considered for inlining
 by the compiler are investigated.  To those functions, a different
 (more restrictive) limit compared to functions declared inline can
 be applied.
-The default value is 40.
+The default value is 30.
 </p>
 </dd>
 <dt><code>inline-min-speedup</code></dt>
@@ -3072,6 +3080,7 @@ The default value is 40.
 threshold (in percent), the function can be inlined regardless of the limit on
 <samp>--param max-inline-insns-single</samp> and <samp>--param
 max-inline-insns-auto</samp>.
+The default value is 15.
 </p>
 </dd>
 <dt><code>large-function-insns</code></dt>
@@ -3440,6 +3449,23 @@ needs to be more conservative (higher) in order to make tracer
 effective.
 </p>
 </dd>
+<dt><code>stack-clash-protection-guard-size</code></dt>
+<dd><p>Specify the size of the operating system provided stack guard as
+2 raised to <var>num</var> bytes.  The default value is 12 (4096 bytes).
+Acceptable values are between 12 and 30.  Higher values may reduce the
+number of explicit probes, but a value larger than the operating system
+provided guard will leave code vulnerable to stack clash style attacks.
+</p>
+</dd>
+<dt><code>stack-clash-protection-probe-interval</code></dt>
+<dd><p>Stack clash protection involves probing stack space as it is allocated.  This
+param controls the maximum distance between probes into the stack as 2 raised
+to <var>num</var> bytes.  Acceptable values are between 10 and 16 and defaults to
+12.  Higher values may reduce the number of explicit probes, but a value
+larger than the operating system provided guard will leave code vulnerable to
+stack clash style attacks.
+</p>
+</dd>
 <dt><code>max-cse-path-length</code></dt>
 <dd>
 <p>The maximum number of basic blocks on path that CSE considers.
@@ -3643,6 +3669,14 @@ streams being prefetched (see <samp>simultaneous-prefetches</samp>).
 <dd><p>The size of L2 cache, in kilobytes.
 </p>
 </dd>
+<dt><code>loop-interchange-max-num-stmts</code></dt>
+<dd><p>The maximum number of stmts in a loop to be interchanged.
+</p>
+</dd>
+<dt><code>loop-interchange-stride-ratio</code></dt>
+<dd><p>The minimum ratio between stride of two loops for interchange to be profitable.
+</p>
+</dd>
 <dt><code>min-insn-to-prefetch-ratio</code></dt>
 <dd><p>The minimum ratio between the number of instructions and the
 number of prefetches to enable prefetching in a loop.
@@ -3766,6 +3800,14 @@ enable the compiler to find more complex debug expressions, but compile
 time and memory use may grow.  The default is 12.
 </p>
 </dd>
+<dt><code>max-debug-marker-count</code></dt>
+<dd><p>Sets a threshold on the number of debug markers (e.g. begin stmt
+markers) to avoid complexity explosion at inlining or expanding to RTL.
+If a function has more such gimple stmts than the set limit, such stmts
+will be dropped from the inlined copy of a function, and from its RTL
+expansion.  The default is 100000.
+</p>
+</dd>
 <dt><code>min-nondebug-insn-uid</code></dt>
 <dd><p>Use uids starting at this parameter for nondebug insns.  The range below
 the parameter is reserved exclusively for debug insns created by
@@ -3802,14 +3844,9 @@ sequence pairs.  This option only applies when using
 <dt><code>graphite-max-nb-scop-params</code></dt>
 <dd><p>To avoid exponential effects in the Graphite loop transforms, the
 number of parameters in a Static Control Part (SCoP) is bounded.  The
-default value is 10 parameters.  A variable whose value is unknown at
-compilation time and defined outside a SCoP is a parameter of the SCoP.
-</p>
-</dd>
-<dt><code>graphite-max-bbs-per-function</code></dt>
-<dd><p>To avoid exponential effects in the detection of SCoPs, the size of
-the functions analyzed by Graphite is bounded.  The default value is
-100 basic blocks.
+default value is 10 parameters, a value of zero can be used to lift
+the bound.  A variable whose value is unknown at compilation time and
+defined outside a SCoP is a parameter of the SCoP.
 </p>
 </dd>
 <dt><code>loop-block-tile-size</code></dt>
@@ -4044,6 +4081,13 @@ is 0.
 dynamic, guided, auto, runtime).  The default is static.
 </p>
 </dd>
+<dt><code>parloops-min-per-thread</code></dt>
+<dd><p>The minimum number of iterations per thread of an innermost parallelized
+loop for which the parallelized variant is prefered over the single threaded
+one.  The default is 100.  Note that for a parallelized loop nest the
+minimum number of iterations of the outermost loop per thread is two.
+</p>
+</dd>
 <dt><code>max-ssa-name-query-depth</code></dt>
 <dd><p>Maximum depth of recursion when querying properties of SSA names in things
 like fold routines.  One level of recursion corresponds to following a
@@ -4066,6 +4110,16 @@ we may be able to devirtualize speculatively.
 <dt><code>max-vrp-switch-assertions</code></dt>
 <dd><p>The maximum number of assertions to add along the default edge of a switch
 statement during VRP.  The default is 10.
+</p>
+</dd>
+<dt><code>unroll-jam-min-percent</code></dt>
+<dd><p>The minimum percentage of memory references that must be optimized
+away for the unroll-and-jam transformation to be considered profitable.
+</p>
+</dd>
+<dt><code>unroll-jam-max-unroll</code></dt>
+<dd><p>The maximum number of times the outer loop should be unrolled by
+the unroll-and-jam transformation.
 </p></dd>
 </dl>
 </dd>

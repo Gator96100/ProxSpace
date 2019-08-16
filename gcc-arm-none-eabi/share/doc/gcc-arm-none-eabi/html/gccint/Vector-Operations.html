@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Conversions.html#Conversions" accesskey="n" rel="next">Conversion
 </div>
 <hr>
 <a name="Vector-Operations-1"></a>
-<h3 class="section">13.12 Vector Operations</h3>
+<h3 class="section">14.12 Vector Operations</h3>
 <a name="index-vector-operations"></a>
 
 <p>All normal RTL expressions can be used with vector modes; they are
@@ -121,7 +121,12 @@ the same submodes as the input vector mode or the scalar modes, and the
 number of output parts must be an integer multiple of the number of input
 parts.
 </p>
+<a name="index-vec_005fseries"></a>
 </dd>
+<dt><code>(vec_series:<var>m</var> <var>base</var> <var>step</var>)</code></dt>
+<dd><p>This operation creates a vector in which element <var>i</var> is equal to
+&lsquo;<samp><var>base</var> + <var>i</var>*<var>step</var></samp>&rsquo;.  <var>m</var> must be a vector integer mode.
+</p></dd>
 </dl>
 
 <hr>

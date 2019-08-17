@@ -9,18 +9,18 @@ ProxSpace comes with 3 different executables .bat files.
  - `autobuild.bat` runs a script (msys2/autobuild.sh) in x86 mode as well as in x64 mode at startup. The script will update all git repositories in the pm3 folder and then compile them and move a zip file with the just compiled firmware and client into the build folder. It is not designed for development, just for compiling.
 
 ## What's installed
-ProxSpace comes with already installed tools, but most of the required tools will be automatically downloaded. All tools will be contained within the ProxSpace folder which means ProxSpace can be moved into a different directory or even a different Windows machine without the need to reinstall anything.
+ProxSpace does not come with already installed packages, rather it will download the latest required packages. All tools will be contained within the ProxSpace folder, which means ProxSpace can be moved into a different directory or even a different Windows machine without the need to reinstall anything.
 Following tools are already installed with the current ProxSpace version:
  - msys2
- - GNU Arm Embedded Toolchain 7-2018-q2
+ - GNU Arm Embedded Toolchain 8-2019-q3
  
- Following tools will be automatically download:
- - gcc
- - Qt5
- - readline
+ Following packages will be automatically download:
  - git
- - perl
+ - make
+ - gcc
  - pkg-config
+ - readline
+ - Qt5
 
 ## Package management system
 MSYS2 features a package management system to provide easy installation of packages, Pacman. It brings many powerful features such as dependency resolution and simple complete system upgrades (excluding the GNU Arm Embedded Toolchain), as well as straight-forward package building. All installed packages can be updated with `pacman -Syuu`

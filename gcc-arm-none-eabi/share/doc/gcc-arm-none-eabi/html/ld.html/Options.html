@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(GNU Tools for Arm Embedded Processors 7-2018-q2-update)
-version 2.30.0.
+(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
+version 2.32.0.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,8 +67,8 @@ ul.no-bullet {list-style: none}
 Next: <a href="Environment.html#Environment" accesskey="n" rel="next">Environment</a>, Up: <a href="Invocation.html#Invocation" accesskey="u" rel="up">Invocation</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="LD-Index.html#LD-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<a name="Command-Line-Options"></a>
-<h3 class="section">2.1 Command Line Options</h3>
+<a name="Command_002dline-Options"></a>
+<h3 class="section">2.1 Command-line Options</h3>
 
 <a name="index-command-line"></a>
 <a name="index-options"></a>
@@ -146,7 +146,7 @@ Unique abbreviations of the names of multiple-letter options are
 accepted.
 </p>
 <p>Note&mdash;if the linker is being invoked indirectly, via a compiler driver
-(e.g. &lsquo;<samp>gcc</samp>&rsquo;) then all the linker command line options should be
+(e.g. &lsquo;<samp>gcc</samp>&rsquo;) then all the linker command-line options should be
 prefixed by &lsquo;<samp>-Wl,</samp>&rsquo; (or whatever is appropriate for the particular
 compiler driver) like this:
 </p>
@@ -166,7 +166,7 @@ the joined forms of both single- and multiple-letter options, such as:
 <pre class="smallexample">  gcc foo.o bar.o -Wl,-eENTRY -Wl,-Map=a.map
 </pre></div>
 
-<p>Here is a table of the generic command line switches accepted by the GNU
+<p>Here is a table of the generic command-line switches accepted by the GNU
 linker:
 </p>
 <dl compact="compact">
@@ -203,23 +203,6 @@ finds an object with an audit entry while searching for shared libraries,
 it will add a corresponding <code>DT_DEPAUDIT</code> entry in the output file.
 This option is only meaningful on ELF platforms supporting the rtld-audit
 interface.
-</p>
-<a name="index-architectures"></a>
-<a name="index-_002dA-arch"></a>
-</dd>
-<dt><code>-A <var>architecture</var></code></dt>
-<dd><a name="index-_002d_002darchitecture_003darch"></a>
-</dd>
-<dt><code>--architecture=<var>architecture</var></code></dt>
-<dd><p>In the current release of <code>ld</code>, this option is useful only for the
-Intel 960 family of architectures.  In that <code>ld</code> configuration, the
-<var>architecture</var> argument identifies the particular architecture in
-the 960 family, enabling some safeguards and modifying the
-archive-library search path.  See <a href="i960.html#i960"><code>ld</code> and the Intel 960
-family</a>, for details.
-</p>
-<p>Future releases of <code>ld</code> may support similar functionality for
-other architecture families.
 </p>
 <a name="index-binary-input-format"></a>
 <a name="index-_002db-format"></a>
@@ -601,6 +584,28 @@ option is used:
 
 <p>See <a href="Expressions.html#Expressions">Expressions</a> for more information about expressions in linker
 scripts.
+</p>
+</li><li> How GNU properties are merged.
+
+<p>When linker merges input .note.gnu.property sections into one output
+.note.gnu.property section, some properties are removed or updated,
+which are reported in the link map as
+</p>
+<div class="smallexample">
+<pre class="smallexample">Removed property 0xc0000002 to merge foo.o (0x1) and bar.o (not found)
+</pre></div>
+
+<p>It indicates that property 0xc0000002 is removed from output when
+merging properties in  <samp>foo.o</samp>, whose property 0xc0000002 value
+is 0x1, and <samp>bar.o</samp>, which doesn&rsquo;t have property 0xc0000002.
+</p>
+<div class="smallexample">
+<pre class="smallexample">Updated property 0xc0000002 (0x1) to merge foo.o (0x1) and bar.o (0x1)
+</pre></div>
+
+<p>It indicates that property 0xc0010001 value is updated to 0x1 in output
+when merging properties in  <samp>foo.o</samp>, whose 0xc0010001 property value
+is 0x1, and <samp>bar.o</samp>, whose 0xc0010001 property value is 0x1.
 </p></li></ul>
 
 <a name="index-_002dn"></a>
@@ -796,7 +801,11 @@ Enabled by default.
 </dd>
 <dt><code>-t</code></dt>
 <dt><code>--trace</code></dt>
-<dd><p>Print the names of the input files as <code>ld</code> processes them.
+<dd><p>Print the names of the input files as <code>ld</code> processes them.  If
+&lsquo;<samp>-t</samp>&rsquo; is given twice then members within archives are also printed.
+&lsquo;<samp>-t</samp>&rsquo; output is useful to generate a list of all the object files
+and scripts involved in linking, for example, when packaging files for
+a linker bug report.
 </p>
 <a name="index-_002dT-script"></a>
 <a name="index-_002d_002dscript_003dscript"></a>
@@ -1036,7 +1045,7 @@ of subsequently loaded libraries.
 This option marks the executable as requiring global auditing by
 setting the <code>DF_1_GLOBAUDIT</code> bit in the <code>DT_FLAGS_1</code> dynamic
 tag.  Global auditing requires that any auditing library defined via
-the <samp>--depaudit</samp> or <samp>-P</samp> command line options be run for
+the <samp>--depaudit</samp> or <samp>-P</samp> command-line options be run for
 all dynamic objects loaded by the application.
 </p>
 </dd>
@@ -1359,7 +1368,7 @@ been assigned to see if there are any overlaps.  Normally the linker will
 perform this check, and if it finds any overlaps it will produce
 suitable error messages.  The linker does know about, and does make
 allowances for sections in overlays.  The default behaviour can be
-restored by using the command line switch <samp>--check-sections</samp>.
+restored by using the command-line switch <samp>--check-sections</samp>.
 Section overlap is not usually checked for relocatable links.  You can
 force checking in that case by using the <samp>--check-sections</samp>
 option.
@@ -1493,6 +1502,12 @@ that the relocs are stored in a target specific section.  This option
 is only supported by the &lsquo;<samp>BFIN</samp>&rsquo;, &lsquo;<samp>CR16</samp>&rsquo; and <em>M68K</em>
 targets.
 </p>
+<a name="index-_002d_002ddisable_002dmultiple_002dabs_002ddefs"></a>
+</dd>
+<dt><code>--disable-multiple-abs-defs</code></dt>
+<dd><p>Do not allow multiple definitions with symbols included
+in filename invoked by -R or &ndash;just-symbols
+</p>
 <a name="index-_002d_002dfatal_002dwarnings"></a>
 <a name="index-_002d_002dno_002dfatal_002dwarnings"></a>
 </dd>
@@ -1534,12 +1549,14 @@ referenced by dynamic objects.  Note that when building shared
 libraries, the linker must assume that any visible symbol is
 referenced.  Once this initial set of sections has been determined,
 the linker recursively marks as used any section referenced by their
-relocations.  See &lsquo;<samp>--entry</samp>&rsquo; and &lsquo;<samp>--undefined</samp>&rsquo;.
+relocations.  See &lsquo;<samp>--entry</samp>&rsquo;, &lsquo;<samp>--undefined</samp>&rsquo;, and
+&lsquo;<samp>--gc-keep-exported</samp>&rsquo;.
 </p>
 <p>This option can be set when doing a partial link (enabled with option
 &lsquo;<samp>-r</samp>&rsquo;).  In this case the root of symbols kept must be explicitly
-specified either by an &lsquo;<samp>--entry</samp>&rsquo; or &lsquo;<samp>--undefined</samp>&rsquo; option or by
-a <code>ENTRY</code> command in the linker script.
+specified either by one of the options &lsquo;<samp>--entry</samp>&rsquo;,
+&lsquo;<samp>--undefined</samp>&rsquo;, or &lsquo;<samp>--gc-keep-exported</samp>&rsquo; or by a <code>ENTRY</code>
+command in the linker script.
 </p>
 <a name="index-_002d_002dprint_002dgc_002dsections"></a>
 <a name="index-_002d_002dno_002dprint_002dgc_002dsections"></a>
@@ -1791,7 +1808,6 @@ defined in the executable cannot be overridden by shared libraries.
 <dd><p>An option with machine dependent effects.
 This option is only supported on a few targets.
 See <a href="H8_002f300.html#H8_002f300"><code>ld</code> and the H8/300</a>.
-See <a href="i960.html#i960"><code>ld</code> and the Intel 960 family</a>.
 See <a href="Xtensa.html#Xtensa"><code>ld</code> and Xtensa Processors</a>.
 See <a href="M68HC11_002f68HC12.html#M68HC11_002f68HC12"><code>ld</code> and the 68HC11 and 68HC12</a>.
 See <a href="Nios-II.html#Nios-II"><code>ld</code> and the Altera Nios II</a>.
@@ -2324,6 +2340,25 @@ you should not put the definition of <code>__real_malloc</code> in the same
 file as <code>__wrap_malloc</code>; if you do, the assembler may resolve the
 call before the linker has a chance to wrap it to <code>malloc</code>.
 </p>
+<p>Only undefined references are replaced by the linker.  So, translation unit
+internal references to <var>symbol</var> are not resolved to
+<code>__wrap_<var>symbol</var></code>.  In the next example, the call to <code>f</code> in
+<code>g</code> is not resolved to <code>__wrap_f</code>.
+</p>
+<div class="smallexample">
+<pre class="smallexample">int
+f (void)
+{
+  return 123;
+}
+
+int
+g (void)
+{
+  return f();
+}
+</pre></div>
+
 <a name="index-_002d_002deh_002dframe_002dhdr"></a>
 <a name="index-_002d_002dno_002deh_002dframe_002dhdr"></a>
 </dd>
@@ -2369,7 +2404,8 @@ value can reduce the memory requirements at the expense of speed.
 <code>sysv</code> for classic ELF <code>.hash</code> section, <code>gnu</code> for
 new style GNU <code>.gnu.hash</code> section or <code>both</code> for both
 the classic ELF <code>.hash</code> and new style GNU <code>.gnu.hash</code>
-hash tables.  The default is <code>sysv</code>.
+hash tables.  The default depends upon how the linker was configured,
+but for most Linux based systems it will be <code>both</code>.
 </p>
 <a name="index-_002d_002dcompress_002ddebug_002dsections_003dnone"></a>
 <a name="index-_002d_002dcompress_002ddebug_002dsections_003dzlib"></a>
@@ -2462,7 +2498,7 @@ symbols from, to ensure that they get linked in, just like a normal
 object file).
 </p>
 <p>In addition to the options common to all targets, the i386 PE linker
-support additional command line options that are specific to the i386
+support additional command-line options that are specific to the i386
 PE target.  Options that take values may be separated from their
 values by either a space or an equals sign.
 </p>
@@ -2724,11 +2760,16 @@ uwin, pw, etc.  For instance, cygwin DLLs typically use
 </dd>
 <dt><code>--enable-auto-import</code></dt>
 <dd><p>Do sophisticated linking of <code>_symbol</code> to <code>__imp__symbol</code> for
-DATA imports from DLLs, and create the necessary thunking symbols when
-building the import libraries with those DATA exports. Note: Use of the
-&rsquo;auto-import&rsquo; extension will cause the text section of the image file
-to be made writable. This does not conform to the PE-COFF format
-specification published by Microsoft.
+DATA imports from DLLs, thus making it possible to bypass the dllimport
+mechanism on the user side and to reference unmangled symbol names.
+[This option is specific to the i386 PE targeted port of the linker]
+</p>
+<p>The following remarks pertain to the original implementation of the
+feature and are obsolete nowadays for Cygwin and MinGW targets.
+</p>
+<p>Note: Use of the &rsquo;auto-import&rsquo; extension will cause the text section
+of the image file to be made writable. This does not conform to the
+PE-COFF format specification published by Microsoft.
 </p>
 <p>Note - use of the &rsquo;auto-import&rsquo; extension will also cause read only
 data which would normally be placed into the .rdata section to be
@@ -2850,7 +2891,6 @@ void main(int argc, char **argv){
 library to use a functional interface rather than a data interface
 for the offending variables (e.g. set_foo() and get_foo() accessor
 functions).
-[This option is specific to the i386 PE targeted port of the linker]
 </p>
 <a name="index-_002d_002ddisable_002dauto_002dimport"></a>
 </dd>
@@ -2871,8 +2911,7 @@ environment to adjust references to such data in your client code.
 <a name="index-_002d_002ddisable_002druntime_002dpseudo_002dreloc"></a>
 </dd>
 <dt><code>--disable-runtime-pseudo-reloc</code></dt>
-<dd><p>Do not create pseudo relocations for non-zero offset DATA imports from
-DLLs.
+<dd><p>Do not create pseudo relocations for non-zero offset DATA imports from DLLs.
 [This option is specific to the i386 PE targeted port of the linker]
 </p>
 <a name="index-_002d_002denable_002dextra_002dpe_002ddebug"></a>
@@ -3013,8 +3052,38 @@ exidx entries in frame unwind info.
 </dl>
 
 
+<a name="Options-specific-to-C_002dSKY-targets"></a>
+<h4 class="subsection">2.1.3 Options specific to C-SKY targets</h4>
+
+
+<dl compact="compact">
+<dd>
+<a name="index-_002d_002dbranch_002dstub-on-C_002dSKY"></a>
+</dd>
+<dt><code>--branch-stub</code></dt>
+<dd><p>This option enables linker branch relaxation by inserting branch stub
+sections when needed to extend the range of branches.  This option is
+usually not required since C-SKY supports branch and call instructions that
+can access the full memory range and branch relaxation is normally handled by
+the compiler or assembler.
+</p>
+<a name="index-_002d_002dstub_002dgroup_002dsize-on-C_002dSKY"></a>
+</dd>
+<dt><code>--stub-group-size=<var>N</var></code></dt>
+<dd><p>This option allows finer control of linker branch stub creation.
+It sets the maximum size of a group of input sections that can
+be handled by one stub section.  A negative value of <var>N</var> locates
+stub sections after their branches, while a positive value allows stub
+sections to appear either before or after the branches.  Values of
+&lsquo;<samp>1</samp>&rsquo; or &lsquo;<samp>-1</samp>&rsquo; indicate that the
+linker should choose suitable defaults.
+</p>
+</dd>
+</dl>
+
+
 <a name="Options-specific-to-Motorola-68HC11-and-68HC12-targets"></a>
-<h4 class="subsection">2.1.3 Options specific to Motorola 68HC11 and 68HC12 targets</h4>
+<h4 class="subsection">2.1.4 Options specific to Motorola 68HC11 and 68HC12 targets</h4>
 
 
 <p>The 68HC11 and 68HC12 linkers support specific options to control the
@@ -3042,7 +3111,7 @@ paging and addresses within the memory window.
 
 
 <a name="Options-specific-to-Motorola-68K-target"></a>
-<h4 class="subsection">2.1.4 Options specific to Motorola 68K target</h4>
+<h4 class="subsection">2.1.5 Options specific to Motorola 68K target</h4>
 
 
 <p>The following options are supported to control handling of GOT generation
@@ -3063,7 +3132,7 @@ Info entry for <samp>ld</samp>.
 
 
 <a name="Options-specific-to-MIPS-targets"></a>
-<h4 class="subsection">2.1.5 Options specific to MIPS targets</h4>
+<h4 class="subsection">2.1.6 Options specific to MIPS targets</h4>
 
 
 <p>The following options are supported to control microMIPS instruction

@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 #   message.sh - functions for outputting messages in makepkg
 #
-#   Copyright (c) 2006-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
 #
 #   This program is free software; you can redistribute it and/or modify

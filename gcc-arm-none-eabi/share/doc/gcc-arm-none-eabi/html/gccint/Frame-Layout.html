@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Exception-Handling.html#Exception-Handling" accesskey="n" rel="ne
 </div>
 <hr>
 <a name="Basic-Stack-Layout"></a>
-<h4 class="subsection">17.9.1 Basic Stack Layout</h4>
+<h4 class="subsection">18.9.1 Basic Stack Layout</h4>
 <a name="index-stack-frame-layout"></a>
 <a name="index-frame-layout"></a>
 
@@ -117,13 +117,12 @@ addresses on the stack.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-STARTING_005fFRAME_005fOFFSET"></a>Macro: <strong>STARTING_FRAME_OFFSET</strong></dt>
-<dd><p>Offset from the frame pointer to the first local variable slot to be allocated.
-</p>
-<p>If <code>FRAME_GROWS_DOWNWARD</code>, find the next slot&rsquo;s offset by
-subtracting the first slot&rsquo;s length from <code>STARTING_FRAME_OFFSET</code>.
-Otherwise, it is found by adding the length of the first slot to the
-value <code>STARTING_FRAME_OFFSET</code>.
+<dt><a name="index-TARGET_005fSTARTING_005fFRAME_005fOFFSET"></a>Target Hook: <em>HOST_WIDE_INT</em> <strong>TARGET_STARTING_FRAME_OFFSET</strong> <em>(void)</em></dt>
+<dd><p>This hook returns the offset from the frame pointer to the first local
+variable slot to be allocated.  If <code>FRAME_GROWS_DOWNWARD</code>, it is the
+offset to <em>end</em> of the first slot allocated, otherwise it is the
+offset to <em>beginning</em> of the first slot allocated.  The default
+implementation returns 0.
 </p></dd></dl>
 
 <dl>
@@ -131,7 +130,7 @@ value <code>STARTING_FRAME_OFFSET</code>.
 <dd><p>Define to zero to disable final alignment of the stack during reload.
 The nonzero default for this macro is suitable for most ports.
 </p>
-<p>On ports where <code>STARTING_FRAME_OFFSET</code> is nonzero or where there
+<p>On ports where <code>TARGET_STARTING_FRAME_OFFSET</code> is nonzero or where there
 is a register save block following the local block that doesn&rsquo;t require
 alignment to <code>STACK_BOUNDARY</code>, it may be beneficial to disable
 stack alignment and do it in the backend.
@@ -291,6 +290,20 @@ the insn and <var>index</var> is <code>UNSPEC_INDEX</code> or <code>UNSPECV_INDE
 </p></dd></dl>
 
 <dl>
+<dt><a name="index-TARGET_005fDWARF_005fPOLY_005fINDETERMINATE_005fVALUE"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_DWARF_POLY_INDETERMINATE_VALUE</strong> <em>(unsigned int <var>i</var>, unsigned int *<var>factor</var>, int *<var>offset</var>)</em></dt>
+<dd><p>Express the value of <code>poly_int</code> indeterminate <var>i</var> as a DWARF
+expression, with <var>i</var> counting from 1.  Return the number of a DWARF
+register <var>R</var> and set &lsquo;<samp>*<var>factor</var></samp>&rsquo; and &lsquo;<samp>*<var>offset</var></samp>&rsquo; such
+that the value of the indeterminate is:
+</p><div class="smallexample">
+<pre class="smallexample">value_of(<var>R</var>) / <var>factor</var> - <var>offset</var>
+</pre></div>
+
+<p>A target only needs to define this hook if it sets
+&lsquo;<samp>NUM_POLY_INT_COEFFS</samp>&rsquo; to a value greater than 1.
+</p></dd></dl>
+
+<dl>
 <dt><a name="index-INCOMING_005fFRAME_005fSP_005fOFFSET"></a>Macro: <strong>INCOMING_FRAME_SP_OFFSET</strong></dt>
 <dd><p>A C expression whose value is an integer giving the offset, in bytes,
 from the value of the stack pointer register to the top of the stack
@@ -300,6 +313,16 @@ previous frame, just before the call instruction.
 </p>
 <p>You only need to define this macro if you want to support call frame
 debugging information like that provided by DWARF 2.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-DEFAULT_005fINCOMING_005fFRAME_005fSP_005fOFFSET"></a>Macro: <strong>DEFAULT_INCOMING_FRAME_SP_OFFSET</strong></dt>
+<dd><p>Like <code>INCOMING_FRAME_SP_OFFSET</code>, but must be the same for all
+functions of the same ABI, and when using GAS <code>.cfi_*</code> directives
+must also agree with the default CFI GAS emits.  Define this macro
+only if <code>INCOMING_FRAME_SP_OFFSET</code> can have different values
+between different functions of the same ABI or when
+<code>INCOMING_FRAME_SP_OFFSET</code> does not agree with GAS default CFI.
 </p></dd></dl>
 
 <dl>

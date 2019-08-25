@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="RTL-Classes.html#RTL-Classes" accesskey="n" rel="next">RTL Classe
 </div>
 <hr>
 <a name="RTL-Object-Types"></a>
-<h3 class="section">13.1 RTL Object Types</h3>
+<h3 class="section">14.1 RTL Object Types</h3>
 <a name="index-RTL-object-types"></a>
 
 <a name="index-RTL-integers"></a>
@@ -140,10 +140,10 @@ and what kinds of objects they are.  In RTL, unlike Lisp, you cannot tell
 by looking at an operand what kind of object it is.  Instead, you must know
 from its context&mdash;from the expression code of the containing expression.
 For example, in an expression of code <code>subreg</code>, the first operand is
-to be regarded as an expression and the second operand as an integer.  In
-an expression of code <code>plus</code>, there are two operands, both of which
-are to be regarded as expressions.  In a <code>symbol_ref</code> expression,
-there is one operand, which is to be regarded as a string.
+to be regarded as an expression and the second operand as a polynomial
+integer.  In an expression of code <code>plus</code>, there are two operands,
+both of which are to be regarded as expressions.  In a <code>symbol_ref</code>
+expression, there is one operand, which is to be regarded as a string.
 </p>
 <p>Expressions are written as parentheses containing the name of the
 expression type, its flags and machine mode if any, and then the operands

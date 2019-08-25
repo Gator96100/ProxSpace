@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -96,6 +96,13 @@ return <code>None</code>.  The code in <small>GDB</small> that enables writing
 unwinders in Python uses this object to return frame&rsquo;s ID and previous
 frame registers when <small>GDB</small> core asks for them.
 </p>
+<p>An unwinder should do as little work as possible.  Some otherwise
+innocuous operations can cause problems (even crashes, as this code is
+not not well-hardened yet).  For example, making an inferior call from
+an unwinder is unadvisable, as an inferior call will reset
+<small>GDB</small>&rsquo;s stack unwinding process, potentially causing re-entrant
+unwinding.
+</p>
 <a name="Unwinder-Input"></a>
 <h4 class="subheading">Unwinder Input</h4>
 
@@ -104,11 +111,27 @@ provides a method to read frame&rsquo;s registers:
 </p>
 <dl>
 <dt><a name="index-PendingFrame_002eread_005fregister"></a>Function: <strong>PendingFrame.read_register</strong> <em>(reg)</em></dt>
-<dd><p>This method returns the contents of the register <var>regn</var> in the
+<dd><p>This method returns the contents of the register <var>reg</var> in the
 frame as a <code>gdb.Value</code> object.  <var>reg</var> can be either a
 register number or a register name; the values are platform-specific.
 They are usually found in the corresponding
-<samp><var>platform</var>-tdep.h</samp> file in the <small>GDB</small> source tree.
+<samp><var>platform</var>-tdep.h</samp> file in the <small>GDB</small> source tree.  If
+<var>reg</var> does not name a register for the current architecture, this
+method will throw an exception.
+</p>
+<p>Note that this method will always return a <code>gdb.Value</code> for a
+valid register name.  This does not mean that the value will be valid.
+For example, you may request a register that an earlier unwinder could
+not unwind&mdash;the value will be unavailable.  Instead, the
+<code>gdb.Value</code> returned from this method will be lazy; that is, its
+underlying bits will not be fetched until it is first used.  So,
+attempting to use such a value will cause an exception at the point of
+use.
+</p>
+<p>The type of the returned <code>gdb.Value</code> depends on the register and
+the architecture.  It is common for registers to have a scalar type,
+like <code>long long</code>; but many other types are possible, such as
+pointer, pointer-to-function, floating point or vector types.
 </p></dd></dl>
 
 <p>It also provides a factory method to create a <code>gdb.UnwindInfo</code>
@@ -122,21 +145,35 @@ using one of functions provided by <small>GDB</small>.  <var>frame_id</var>&rsqu
 determine which function will be used, as follows:
 </p>
 <dl compact="compact">
-<dt><code>sp, pc, special</code></dt>
-<dd><p><code>frame_id_build_special (<var>frame_id</var>.sp, <var>frame_id</var>.pc, <var>frame_id</var>.special)</code>
+<dt><code>sp, pc</code></dt>
+<dd><p>The frame is identified by the given stack address and PC.  The stack
+address must be chosen so that it is constant throughout the lifetime
+of the frame, so a typical choice is the value of the stack pointer at
+the start of the function&mdash;in the DWARF standard, this would be the
+&ldquo;Call Frame Address&rdquo;.
+</p>
+<p>This is the most common case by far.  The other cases are documented
+for completeness but are only useful in specialized situations.
 </p>
 </dd>
-<dt><code>sp, pc</code></dt>
-<dd><p><code>frame_id_build (<var>frame_id</var>.sp, <var>frame_id</var>.pc)</code>
-</p>
-<p>This is the most common case.
+<dt><code>sp, pc, special</code></dt>
+<dd><p>The frame is identified by the stack address, the PC, and a
+&ldquo;special&rdquo; address.  The special address is used on architectures
+that can have frames that do not change the stack, but which are still
+distinct, for example the IA-64, which has a second stack for
+registers.  Both <var>sp</var> and <var>special</var> must be constant
+throughout the lifetime of the frame.
 </p>
 </dd>
 <dt><code>sp</code></dt>
-<dd><p><code>frame_id_build_wild (<var>frame_id</var>.sp)</code>
+<dd><p>The frame is identified by the stack address only.  Any other stack
+frame with a matching <var>sp</var> will be considered to match this frame.
+Inside gdb, this is called a &ldquo;wild frame&rdquo;.  You will never need
+this.
 </p></dd>
 </dl>
-<p>The attribute values should be <code>gdb.Value</code>
+
+<p>Each attribute value should be an instance of <code>gdb.Value</code>.
 </p>
 </dd></dl>
 

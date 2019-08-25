@@ -31,7 +31,7 @@ OS="msys"
 CC="gcc"
 CFLAGS=" -DPROGRAM='bash.exe' -DCONF_HOSTTYPE='i686' -DCONF_OSTYPE='msys' -DCONF_MACHTYPE='i686-pc-msys' -DCONF_VENDOR='pc' -DLOCALEDIR='/usr/share/locale' -DPACKAGE='bash' -DSHELL -DHAVE_CONFIG_H -DRECYCLES_PIDS   -I.  -I. -I./include -I./lib  -DWORDEXP_OPTION -march=i686 -mtune=generic -O2 -pipe -Wno-parentheses -Wno-format-security -D_STATIC_BUILD"
 RELEASE="4.4"
-PATCHLEVEL="19"
+PATCHLEVEL="23"
 RELSTATUS="release"
 MACHTYPE="i686-pc-msys"
 

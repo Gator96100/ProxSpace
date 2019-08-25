@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -75,7 +75,7 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
 <pre class="smallexample">objdump [<samp>-a</samp>|<samp>--archive-headers</samp>]
         [<samp>-b</samp> <var>bfdname</var>|<samp>--target=<var>bfdname</var></samp>]
         [<samp>-C</samp>|<samp>--demangle</samp>[=<var>style</var>] ]
-        [<samp>-d</samp>|<samp>--disassemble</samp>]
+        [<samp>-d</samp>|<samp>--disassemble</samp>[=<var>symbol</var>]]
         [<samp>-D</samp>|<samp>--disassemble-all</samp>]
         [<samp>-z</samp>|<samp>--disassemble-zeroes</samp>]
         [<samp>-EB</samp>|<samp>-EL</samp>|<samp>--endian=</samp>{big | little }]
@@ -97,7 +97,7 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
         [<samp>-R</samp>|<samp>--dynamic-reloc</samp>]
         [<samp>-s</samp>|<samp>--full-contents</samp>]
         [<samp>-W[lLiaprmfFsoRtUuTgAckK]</samp>|
-         <samp>--dwarf</samp>[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]
+         <samp>--dwarf</samp>[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]]
         [<samp>-G</samp>|<samp>--stabs</samp>]
         [<samp>-t</samp>|<samp>--syms</samp>]
         [<samp>-T</samp>|<samp>--dynamic-syms</samp>]
@@ -110,6 +110,7 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
         [<samp>--adjust-vma=</samp><var>offset</var>]
         [<samp>--dwarf-depth=<var>n</var></samp>]
         [<samp>--dwarf-start=<var>n</var></samp>]
+        [<samp>--no-recurse-limit</samp>|<samp>--recurse-limit</samp>]
         [<samp>--special-syms</samp>]
         [<samp>--prefix=</samp><var>prefix</var>]
         [<samp>--prefix-strip=</samp><var>level</var>]
@@ -185,11 +186,28 @@ choose an appropriate demangling style for your compiler. See <a href="c_002b_00
 for more information on demangling.
 </p>
 </dd>
+<dt><code>--recurse-limit</code></dt>
+<dt><code>--no-recurse-limit</code></dt>
+<dt><code>--recursion-limit</code></dt>
+<dt><code>--no-recursion-limit</code></dt>
+<dd><p>Enables or disables a limit on the amount of recursion performed
+whilst demangling strings.  Since the name mangling formats allow for
+an inifinite level of recursion it is possible to create strings whose
+decoding will exhaust the amount of stack space available on the host
+machine, triggering a memory fault.  The limit tries to prevent this
+from happening by restricting recursion to 2048 levels of nesting.
+</p>
+<p>The default is for this limit to be enabled, but disabling it may be
+necessary in order to demangle truly complicated names.  Note however
+that if the recursion limit is disabled then stack exhaustion is
+possible and any bug reports about such an event will be rejected.
+</p>
+</dd>
 <dt><code>-g</code></dt>
 <dt><code>--debugging</code></dt>
-<dd><p>Display debugging information.  This attempts to parse STABS and IEEE
+<dd><p>Display debugging information.  This attempts to parse STABS
 debugging format information stored in the file and print it out using
-a C like syntax.  If neither of these formats are found this option
+a C like syntax.  If no STABS debuging was found this option
 falls back on the <samp>-W</samp> option to print any DWARF information in
 the file.
 </p>
@@ -202,11 +220,17 @@ with ctags tool.
 </dd>
 <dt><code>-d</code></dt>
 <dt><code>--disassemble</code></dt>
+<dt><code>--disassemble=<var>symbol</var></code></dt>
 <dd><a name="index-disassembling-object-code"></a>
 <a name="index-machine-instructions"></a>
-<p>Display the assembler mnemonics for the machine instructions from
-<var>objfile</var>.  This option only disassembles those sections which are
-expected to contain instructions.
+<p>Display the assembler mnemonics for the machine instructions from the
+input file.  This option only disassembles those sections which are 
+expected to contain instructions.  If the optional <var>symbol</var>
+argument is given, then display the assembler mnemonics starting at
+<var>symbol</var>.  If <var>symbol</var> is a function name then disassembly
+will stop at the end of the function, otherwise it will stop when the
+next symbol is encountered.  If there are no matches for <var>symbol</var>
+then nothing will be displayed.
 </p>
 </dd>
 <dt><code>-D</code></dt>
@@ -348,7 +372,7 @@ precision FP instructions, <samp>quarkse_em</samp> selects the printing of
 special QuarkSE-EM instructions, <samp>fpuda</samp> selects the printing
 of double precision assist instructions, <samp>fpus</samp> selects the
 printing of FPU single precision FP instructions, while <samp>fpud</samp>
-selects the printing of FPU souble precision FP instructions.
+selects the printing of FPU double precision FP instructions.
 Additionally, one can choose to have all the immediates printed in
 hexadecimal using <samp>hex</samp>.  By default, the short immediates are
 printed using the decimal representation, while the long immediate
@@ -381,6 +405,11 @@ disassembler to interpret all instructions as Thumb instructions by
 using the switch <samp>--disassembler-options=force-thumb</samp>.  This can be
 useful when attempting to disassemble thumb code produced by other
 compilers.
+</p>
+<p>For AArch64 targets this switch can be used to set whether instructions are
+disassembled as the most general instruction using the <samp>-M no-aliases</samp>
+option or whether instruction notes should be generated as comments in the
+disasssembly using <samp>-M notes</samp>.
 </p>
 <p>For the x86, some of the options duplicate functions of the <samp>-m</samp>
 switch, but allow finer grained control.  Multiple selections from the

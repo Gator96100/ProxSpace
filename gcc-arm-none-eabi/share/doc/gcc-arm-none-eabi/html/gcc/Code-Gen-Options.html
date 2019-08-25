@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -191,6 +191,20 @@ The options <samp>-ftrapv</samp> and <samp>-fwrapv</samp> override each other, s
 <samp>-fwrapv</samp> being effective.  Note that only active options override, so
 using <samp>-ftrapv</samp> <samp>-fwrapv</samp> <samp>-fno-wrapv</samp> on the command-line
 results in <samp>-ftrapv</samp> being effective.
+</p>
+</dd>
+<dt><code>-fwrapv-pointer</code></dt>
+<dd><a name="index-fwrapv_002dpointer"></a>
+<p>This option instructs the compiler to assume that pointer arithmetic
+overflow on addition and subtraction wraps around using twos-complement
+representation.  This flag disables some optimizations which assume
+pointer overflow is invalid.
+</p>
+</dd>
+<dt><code>-fstrict-overflow</code></dt>
+<dd><a name="index-fstrict_002doverflow"></a>
+<p>This option implies <samp>-fno-wrapv</samp> <samp>-fno-wrapv-pointer</samp> and when
+negated implies <samp>-fwrapv</samp> <samp>-fwrapv-pointer</samp>.
 </p>
 </dd>
 <dt><code>-fexceptions</code></dt>

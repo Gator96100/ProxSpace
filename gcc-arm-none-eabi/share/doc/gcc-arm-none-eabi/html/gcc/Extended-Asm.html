@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -85,18 +85,20 @@ Extended <code>asm</code> syntax uses colons (&lsquo;<samp>:</samp>&rsquo;) to d
 the operand parameters after the assembler template:
 </p>
 <div class="example">
-<pre class="example">asm <span class="roman">[</span>volatile<span class="roman">]</span> ( <var>AssemblerTemplate</var> 
+<pre class="example">asm <var>asm-qualifiers</var> ( <var>AssemblerTemplate</var> 
                  : <var>OutputOperands</var> 
                  <span class="roman">[</span> : <var>InputOperands</var>
                  <span class="roman">[</span> : <var>Clobbers</var> <span class="roman">]</span> <span class="roman">]</span>)
 
-asm <span class="roman">[</span>volatile<span class="roman">]</span> goto ( <var>AssemblerTemplate</var> 
+asm <var>asm-qualifiers</var> ( <var>AssemblerTemplate</var> 
                       : 
                       : <var>InputOperands</var>
                       : <var>Clobbers</var>
                       : <var>GotoLabels</var>)
 </pre></div>
-
+<p>where in the last form, <var>asm-qualifiers</var> contains <code>goto</code> (and in the
+first form, not).
+</p>
 <p>The <code>asm</code> keyword is a GNU extension.
 When writing code that can be compiled with <samp>-ansi</samp> and the
 various <samp>-std</samp> options, use <code>__asm__</code> instead of 
@@ -110,6 +112,11 @@ various <samp>-std</samp> options, use <code>__asm__</code> instead of
 values to produce output values. However, your <code>asm</code> statements may 
 also produce side effects. If so, you may need to use the <code>volatile</code> 
 qualifier to disable certain optimizations. See <a href="#Volatile">Volatile</a>.
+</p>
+</dd>
+<dt><code>inline</code></dt>
+<dd><p>If you use the <code>inline</code> qualifier, then for inlining purposes the size
+of the asm is taken as the smallest size possible (see <a href="Size-of-an-asm.html#Size-of-an-asm">Size of an asm</a>).
 </p>
 </dd>
 <dt><code>goto</code></dt>
@@ -141,7 +148,7 @@ and goto parameters. See <a href="#AssemblerTemplate">AssemblerTemplate</a>.
 <dt><var>Clobbers</var></dt>
 <dd><p>A comma-separated list of registers or other values changed by the 
 <var>AssemblerTemplate</var>, beyond those listed as outputs.
-An empty list is permitted.  See <a href="#Clobbers">Clobbers</a>.
+An empty list is permitted.  See <a href="#Clobbers-and-Scratch-Registers">Clobbers and Scratch Registers</a>.
 </p>
 </dd>
 <dt><var>GotoLabels</var></dt>
@@ -509,7 +516,7 @@ The enclosing parentheses are a required part of the syntax.
 
 <p>When the compiler selects the registers to use to 
 represent the output operands, it does not use any of the clobbered registers 
-(see <a href="#Clobbers">Clobbers</a>).
+(see <a href="#Clobbers-and-Scratch-Registers">Clobbers and Scratch Registers</a>).
 </p>
 <p>Output operand expressions must be lvalues. The compiler cannot check whether 
 the operands have data types that are reasonable for the instruction being 
@@ -762,7 +769,8 @@ as input.  The enclosing parentheses are a required part of the syntax.
 </dl>
 
 <p>When the compiler selects the registers to use to represent the input 
-operands, it does not use any of the clobbered registers (see <a href="#Clobbers">Clobbers</a>).
+operands, it does not use any of the clobbered registers
+(see <a href="#Clobbers-and-Scratch-Registers">Clobbers and Scratch Registers</a>).
 </p>
 <p>If there are no output operands but there are input operands, place two 
 consecutive colons where the output operands would go:
@@ -813,9 +821,10 @@ the generated assembler code.
    : &quot;r&quot; (test), &quot;r&quot; (new), &quot;[result]&quot; (old));
 </pre></div>
 
-<a name="Clobbers"></a><a name="Clobbers-1"></a>
-<h4 class="subsubsection">6.45.2.6 Clobbers</h4>
+<a name="Clobbers-and-Scratch-Registers"></a><a name="Clobbers-and-Scratch-Registers-1"></a>
+<h4 class="subsubsection">6.45.2.6 Clobbers and Scratch Registers</h4>
 <a name="index-asm-clobbers"></a>
+<a name="index-asm-scratch-registers"></a>
 
 <p>While the compiler is aware of changes to entries listed in the output 
 operands, the inline <code>asm</code> code may modify more than just the outputs. For 
@@ -845,7 +854,7 @@ registers:
 <pre class="example">asm volatile (&quot;movc3 %0, %1, %2&quot;
                    : /* No outputs. */
                    : &quot;g&quot; (from), &quot;g&quot; (to), &quot;g&quot; (count)
-                   : &quot;r0&quot;, &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot;, &quot;r4&quot;, &quot;r5&quot;);
+                   : &quot;r0&quot;, &quot;r1&quot;, &quot;r2&quot;, &quot;r3&quot;, &quot;r4&quot;, &quot;r5&quot;, &quot;memory&quot;);
 </pre></div>
 
 <p>Also, there are two special clobber arguments:
@@ -877,15 +886,142 @@ memory barrier for the compiler.
 speculative reads past the <code>asm</code> statement. To prevent that, you need 
 processor-specific fence instructions.
 </p>
-<p>Flushing registers to memory has performance implications and may be an issue 
-for time-sensitive code.  You can use a trick to avoid this if the size of 
-the memory being accessed is known at compile time. For example, if accessing 
-ten bytes of a string, use a memory input like: 
-</p>
-<p><code>{&quot;m&quot;( ({ struct { char x[10]; } *p = (void *)ptr ; *p; }) )}</code>.
-</p>
 </dd>
 </dl>
+
+<p>Flushing registers to memory has performance implications and may be
+an issue for time-sensitive code.  You can provide better information
+to GCC to avoid this, as shown in the following examples.  At a
+minimum, aliasing rules allow GCC to know what memory <em>doesn&rsquo;t</em>
+need to be flushed.
+</p>
+<p>Here is a fictitious sum of squares instruction, that takes two
+pointers to floating point values in memory and produces a floating
+point register output.
+Notice that <code>x</code>, and <code>y</code> both appear twice in the <code>asm</code>
+parameters, once to specify memory accessed, and once to specify a
+base register used by the <code>asm</code>.  You won&rsquo;t normally be wasting a
+register by doing this as GCC can use the same register for both
+purposes.  However, it would be foolish to use both <code>%1</code> and
+<code>%3</code> for <code>x</code> in this <code>asm</code> and expect them to be the
+same.  In fact, <code>%3</code> may well not be a register.  It might be a
+symbolic memory reference to the object pointed to by <code>x</code>.
+</p>
+<div class="smallexample">
+<pre class="smallexample">asm (&quot;sumsq %0, %1, %2&quot;
+     : &quot;+f&quot; (result)
+     : &quot;r&quot; (x), &quot;r&quot; (y), &quot;m&quot; (*x), &quot;m&quot; (*y));
+</pre></div>
+
+<p>Here is a fictitious <code>*z++ = *x++ * *y++</code> instruction.
+Notice that the <code>x</code>, <code>y</code> and <code>z</code> pointer registers
+must be specified as input/output because the <code>asm</code> modifies
+them.
+</p>
+<div class="smallexample">
+<pre class="smallexample">asm (&quot;vecmul %0, %1, %2&quot;
+     : &quot;+r&quot; (z), &quot;+r&quot; (x), &quot;+r&quot; (y), &quot;=m&quot; (*z)
+     : &quot;m&quot; (*x), &quot;m&quot; (*y));
+</pre></div>
+
+<p>An x86 example where the string memory argument is of unknown length.
+</p>
+<div class="smallexample">
+<pre class="smallexample">asm(&quot;repne scasb&quot;
+    : &quot;=c&quot; (count), &quot;+D&quot; (p)
+    : &quot;m&quot; (*(const char (*)[]) p), &quot;0&quot; (-1), &quot;a&quot; (0));
+</pre></div>
+
+<p>If you know the above will only be reading a ten byte array then you
+could instead use a memory input like:
+<code>&quot;m&quot; (*(const char (*)[10]) p)</code>.
+</p>
+<p>Here is an example of a PowerPC vector scale implemented in assembly,
+complete with vector and condition code clobbers, and some initialized
+offset registers that are unchanged by the <code>asm</code>.
+</p>
+<div class="smallexample">
+<pre class="smallexample">void
+dscal (size_t n, double *x, double alpha)
+{
+  asm (&quot;/* lots of asm here */&quot;
+       : &quot;+m&quot; (*(double (*)[n]) x), &quot;+&amp;r&quot; (n), &quot;+b&quot; (x)
+       : &quot;d&quot; (alpha), &quot;b&quot; (32), &quot;b&quot; (48), &quot;b&quot; (64),
+         &quot;b&quot; (80), &quot;b&quot; (96), &quot;b&quot; (112)
+       : &quot;cr0&quot;,
+         &quot;vs32&quot;,&quot;vs33&quot;,&quot;vs34&quot;,&quot;vs35&quot;,&quot;vs36&quot;,&quot;vs37&quot;,&quot;vs38&quot;,&quot;vs39&quot;,
+         &quot;vs40&quot;,&quot;vs41&quot;,&quot;vs42&quot;,&quot;vs43&quot;,&quot;vs44&quot;,&quot;vs45&quot;,&quot;vs46&quot;,&quot;vs47&quot;);
+}
+</pre></div>
+
+<p>Rather than allocating fixed registers via clobbers to provide scratch
+registers for an <code>asm</code> statement, an alternative is to define a
+variable and make it an early-clobber output as with <code>a2</code> and
+<code>a3</code> in the example below.  This gives the compiler register
+allocator more freedom.  You can also define a variable and make it an
+output tied to an input as with <code>a0</code> and <code>a1</code>, tied
+respectively to <code>ap</code> and <code>lda</code>.  Of course, with tied
+outputs your <code>asm</code> can&rsquo;t use the input value after modifying the
+output register since they are one and the same register.  What&rsquo;s
+more, if you omit the early-clobber on the output, it is possible that
+GCC might allocate the same register to another of the inputs if GCC
+could prove they had the same value on entry to the <code>asm</code>.  This
+is why <code>a1</code> has an early-clobber.  Its tied input, <code>lda</code>
+might conceivably be known to have the value 16 and without an
+early-clobber share the same register as <code>%11</code>.  On the other
+hand, <code>ap</code> can&rsquo;t be the same as any of the other inputs, so an
+early-clobber on <code>a0</code> is not needed.  It is also not desirable in
+this case.  An early-clobber on <code>a0</code> would cause GCC to allocate
+a separate register for the <code>&quot;m&quot; (*(const double (*)[]) ap)</code>
+input.  Note that tying an input to an output is the way to set up an
+initialized temporary register modified by an <code>asm</code> statement.
+An input not tied to an output is assumed by GCC to be unchanged, for
+example <code>&quot;b&quot; (16)</code> below sets up <code>%11</code> to 16, and GCC might
+use that register in following code if the value 16 happened to be
+needed.  You can even use a normal <code>asm</code> output for a scratch if
+all inputs that might share the same register are consumed before the
+scratch is used.  The VSX registers clobbered by the <code>asm</code>
+statement could have used this technique except for GCC&rsquo;s limit on the
+number of <code>asm</code> parameters.
+</p>
+<div class="smallexample">
+<pre class="smallexample">static void
+dgemv_kernel_4x4 (long n, const double *ap, long lda,
+                  const double *x, double *y, double alpha)
+{
+  double *a0;
+  double *a1;
+  double *a2;
+  double *a3;
+
+  __asm__
+    (
+     /* lots of asm here */
+     &quot;#n=%1 ap=%8=%12 lda=%13 x=%7=%10 y=%0=%2 alpha=%9 o16=%11\n&quot;
+     &quot;#a0=%3 a1=%4 a2=%5 a3=%6&quot;
+     :
+       &quot;+m&quot; (*(double (*)[n]) y),
+       &quot;+&amp;r&quot; (n),	// 1
+       &quot;+b&quot; (y),	// 2
+       &quot;=b&quot; (a0),	// 3
+       &quot;=&amp;b&quot; (a1),	// 4
+       &quot;=&amp;b&quot; (a2),	// 5
+       &quot;=&amp;b&quot; (a3)	// 6
+     :
+       &quot;m&quot; (*(const double (*)[n]) x),
+       &quot;m&quot; (*(const double (*)[]) ap),
+       &quot;d&quot; (alpha),	// 9
+       &quot;r&quot; (x),		// 10
+       &quot;b&quot; (16),	// 11
+       &quot;3&quot; (ap),	// 12
+       &quot;4&quot; (lda)	// 13
+     :
+       &quot;cr0&quot;,
+       &quot;vs32&quot;,&quot;vs33&quot;,&quot;vs34&quot;,&quot;vs35&quot;,&quot;vs36&quot;,&quot;vs37&quot;,
+       &quot;vs40&quot;,&quot;vs41&quot;,&quot;vs42&quot;,&quot;vs43&quot;,&quot;vs44&quot;,&quot;vs45&quot;,&quot;vs46&quot;,&quot;vs47&quot;
+     );
+}
+</pre></div>
 
 <a name="GotoLabels"></a><a name="Goto-Labels"></a>
 <h4 class="subsubsection">6.45.2.7 Goto Labels</h4>

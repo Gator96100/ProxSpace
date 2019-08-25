@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -125,10 +125,15 @@ discard information on the executable file.
 </p>
 <a name="index-symbol_002dfile"></a>
 </dd>
-<dt><code>symbol-file <span class="roman">[</span> <var>filename</var> <span class="roman">]</span></code></dt>
+<dt><code>symbol-file <span class="roman">[</span> <var>filename</var> <span class="roman">[</span> -o <var>offset</var> <span class="roman">]]</span></code></dt>
 <dd><p>Read symbol table information from file <var>filename</var>.  <code>PATH</code> is
 searched when necessary.  Use the <code>file</code> command to get both symbol
 table and program to run from the same file.
+</p>
+<p>If an optional <var>offset</var> is specified, it is added to the start
+address of each section in the symbol file.  This is useful if the
+program is relocated at runtime, such as the Linux kernel with kASLR
+enabled.
 </p>
 <p><code>symbol-file</code> with no argument clears out <small>GDB</small> information on your
 program&rsquo;s symbol table.
@@ -212,18 +217,21 @@ the program is running.  To do this, use the <code>kill</code> command
 <a name="index-add_002dsymbol_002dfile"></a>
 <a name="index-dynamic-linking"></a>
 </dd>
-<dt><code>add-symbol-file <var>filename</var> <var>address</var></code></dt>
-<dt><code>add-symbol-file <var>filename</var> <var>address</var> <span class="roman">[</span> -readnow <span class="roman">|</span> -readnever <span class="roman">]</span></code></dt>
-<dt><code>add-symbol-file <var>filename</var> <var>address</var> -s <var>section</var> <var>address</var> &hellip;</code></dt>
+<dt><code>add-symbol-file <var>filename</var> <span class="roman">[</span> -readnow <span class="roman">|</span> -readnever <span class="roman">]</span> <span class="roman">[</span> -o <var>offset</var> <span class="roman">]</span> <span class="roman">[</span> <var>textaddress</var> <span class="roman">]</span> <span class="roman">[</span> -s <var>section</var> <var>address</var> &hellip; <span class="roman">]</span></code></dt>
 <dd><p>The <code>add-symbol-file</code> command reads additional symbol table
 information from the file <var>filename</var>.  You would use this command
 when <var>filename</var> has been dynamically loaded (by some other means)
-into the program that is running.  The <var>address</var> should give the memory
-address at which the file has been loaded; <small>GDB</small> cannot figure
-this out for itself.  You can additionally specify an arbitrary number
-of &lsquo;<samp>-s <var>section</var> <var>address</var></samp>&rsquo; pairs, to give an explicit
-section name and base address for that section.  You can specify any
-<var>address</var> as an expression.
+into the program that is running.  The <var>textaddress</var> parameter gives
+the memory address at which the file&rsquo;s text section has been loaded.
+You can additionally specify the base address of other sections using
+an arbitrary number of &lsquo;<samp>-s <var>section</var> <var>address</var></samp>&rsquo; pairs.
+If a section is omitted, <small>GDB</small> will use its default addresses
+as found in <var>filename</var>.  Any <var>address</var> or <var>textaddress</var>
+can be given as an expression.
+</p>
+<p>If an optional <var>offset</var> is specified, it is added to the start
+address of each section, except those for which the address was
+specified explicitly.
 </p>
 <p>The symbol table of the file <var>filename</var> is added to the symbol table
 originally read with the <code>symbol-file</code> command.  You can use the

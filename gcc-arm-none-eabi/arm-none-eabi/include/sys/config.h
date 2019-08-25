@@ -8,6 +8,10 @@
 #define MALLOC_ALIGNMENT 16
 #endif
 
+#ifdef __AMDGCN__
+#define __DYNAMIC_REENT__
+#endif
+
 /* exceptions first */
 #if defined(__H8500__) || defined(__W65__)
 #define __SMALL_BITFIELDS
@@ -108,7 +112,7 @@
 #define _POINTER_INT short
 #endif
 
-#ifdef __v850
+#if defined(__v850) && !defined(__rtems__)
 #define __ATTRIBUTE_IMPURE_PTR__ __attribute__((__sda__))
 #endif
 

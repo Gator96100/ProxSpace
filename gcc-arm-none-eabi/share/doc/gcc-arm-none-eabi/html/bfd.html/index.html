@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the BFD library.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -101,8 +101,9 @@ ul.no-bullet {list-style: none}
     </ul></li>
     <li><a name="toc-BFD-error-handler" href="Error-reporting.html#BFD-error-handler">2.2.2 BFD error handler</a>
     <ul class="no-bullet">
-      <li><a name="toc-bfd_005fset_005ferror_005fhandler" href="Error-reporting.html#bfd_005fset_005ferror_005fhandler">2.2.2.1 <code>bfd_set_error_handler</code></a></li>
-      <li><a name="toc-bfd_005fset_005ferror_005fprogram_005fname" href="Error-reporting.html#bfd_005fset_005ferror_005fprogram_005fname">2.2.2.2 <code>bfd_set_error_program_name</code></a></li>
+      <li><a name="toc-_005fbfd_005ferror_005fhandler" href="Error-reporting.html#g_t_005fbfd_005ferror_005fhandler">2.2.2.1 <code>_bfd_error_handler</code></a></li>
+      <li><a name="toc-bfd_005fset_005ferror_005fhandler" href="Error-reporting.html#bfd_005fset_005ferror_005fhandler">2.2.2.2 <code>bfd_set_error_handler</code></a></li>
+      <li><a name="toc-bfd_005fset_005ferror_005fprogram_005fname" href="Error-reporting.html#bfd_005fset_005ferror_005fprogram_005fname">2.2.2.3 <code>bfd_set_error_program_name</code></a></li>
     </ul></li>
     <li><a name="toc-BFD-assert-handler" href="Error-reporting.html#BFD-assert-handler">2.2.3 BFD assert handler</a>
     <ul class="no-bullet">
@@ -172,18 +173,17 @@ ul.no-bullet {list-style: none}
       <li><a name="toc-bfd_005fmake_005fsection_005fanyway" href="section-prototypes.html#bfd_005fmake_005fsection_005fanyway">2.6.5.9 <code>bfd_make_section_anyway</code></a></li>
       <li><a name="toc-bfd_005fmake_005fsection_005fwith_005fflags" href="section-prototypes.html#bfd_005fmake_005fsection_005fwith_005fflags">2.6.5.10 <code>bfd_make_section_with_flags</code></a></li>
       <li><a name="toc-bfd_005fmake_005fsection" href="section-prototypes.html#bfd_005fmake_005fsection">2.6.5.11 <code>bfd_make_section</code></a></li>
-      <li><a name="toc-bfd_005fget_005fnext_005fsection_005fid" href="section-prototypes.html#bfd_005fget_005fnext_005fsection_005fid">2.6.5.12 <code>bfd_get_next_section_id</code></a></li>
-      <li><a name="toc-bfd_005fset_005fsection_005fflags" href="section-prototypes.html#bfd_005fset_005fsection_005fflags">2.6.5.13 <code>bfd_set_section_flags</code></a></li>
-      <li><a name="toc-bfd_005frename_005fsection" href="section-prototypes.html#bfd_005frename_005fsection">2.6.5.14 <code>bfd_rename_section</code></a></li>
-      <li><a name="toc-bfd_005fmap_005fover_005fsections" href="section-prototypes.html#bfd_005fmap_005fover_005fsections">2.6.5.15 <code>bfd_map_over_sections</code></a></li>
-      <li><a name="toc-bfd_005fsections_005ffind_005fif" href="section-prototypes.html#bfd_005fsections_005ffind_005fif">2.6.5.16 <code>bfd_sections_find_if</code></a></li>
-      <li><a name="toc-bfd_005fset_005fsection_005fsize" href="section-prototypes.html#bfd_005fset_005fsection_005fsize">2.6.5.17 <code>bfd_set_section_size</code></a></li>
-      <li><a name="toc-bfd_005fset_005fsection_005fcontents" href="section-prototypes.html#bfd_005fset_005fsection_005fcontents">2.6.5.18 <code>bfd_set_section_contents</code></a></li>
-      <li><a name="toc-bfd_005fget_005fsection_005fcontents" href="section-prototypes.html#bfd_005fget_005fsection_005fcontents">2.6.5.19 <code>bfd_get_section_contents</code></a></li>
-      <li><a name="toc-bfd_005fmalloc_005fand_005fget_005fsection" href="section-prototypes.html#bfd_005fmalloc_005fand_005fget_005fsection">2.6.5.20 <code>bfd_malloc_and_get_section</code></a></li>
-      <li><a name="toc-bfd_005fcopy_005fprivate_005fsection_005fdata" href="section-prototypes.html#bfd_005fcopy_005fprivate_005fsection_005fdata">2.6.5.21 <code>bfd_copy_private_section_data</code></a></li>
-      <li><a name="toc-bfd_005fgeneric_005fis_005fgroup_005fsection" href="section-prototypes.html#bfd_005fgeneric_005fis_005fgroup_005fsection">2.6.5.22 <code>bfd_generic_is_group_section</code></a></li>
-      <li><a name="toc-bfd_005fgeneric_005fdiscard_005fgroup" href="section-prototypes.html#bfd_005fgeneric_005fdiscard_005fgroup">2.6.5.23 <code>bfd_generic_discard_group</code></a></li>
+      <li><a name="toc-bfd_005fset_005fsection_005fflags" href="section-prototypes.html#bfd_005fset_005fsection_005fflags">2.6.5.12 <code>bfd_set_section_flags</code></a></li>
+      <li><a name="toc-bfd_005frename_005fsection" href="section-prototypes.html#bfd_005frename_005fsection">2.6.5.13 <code>bfd_rename_section</code></a></li>
+      <li><a name="toc-bfd_005fmap_005fover_005fsections" href="section-prototypes.html#bfd_005fmap_005fover_005fsections">2.6.5.14 <code>bfd_map_over_sections</code></a></li>
+      <li><a name="toc-bfd_005fsections_005ffind_005fif" href="section-prototypes.html#bfd_005fsections_005ffind_005fif">2.6.5.15 <code>bfd_sections_find_if</code></a></li>
+      <li><a name="toc-bfd_005fset_005fsection_005fsize" href="section-prototypes.html#bfd_005fset_005fsection_005fsize">2.6.5.16 <code>bfd_set_section_size</code></a></li>
+      <li><a name="toc-bfd_005fset_005fsection_005fcontents" href="section-prototypes.html#bfd_005fset_005fsection_005fcontents">2.6.5.17 <code>bfd_set_section_contents</code></a></li>
+      <li><a name="toc-bfd_005fget_005fsection_005fcontents" href="section-prototypes.html#bfd_005fget_005fsection_005fcontents">2.6.5.18 <code>bfd_get_section_contents</code></a></li>
+      <li><a name="toc-bfd_005fmalloc_005fand_005fget_005fsection" href="section-prototypes.html#bfd_005fmalloc_005fand_005fget_005fsection">2.6.5.19 <code>bfd_malloc_and_get_section</code></a></li>
+      <li><a name="toc-bfd_005fcopy_005fprivate_005fsection_005fdata" href="section-prototypes.html#bfd_005fcopy_005fprivate_005fsection_005fdata">2.6.5.20 <code>bfd_copy_private_section_data</code></a></li>
+      <li><a name="toc-bfd_005fgeneric_005fis_005fgroup_005fsection" href="section-prototypes.html#bfd_005fgeneric_005fis_005fgroup_005fsection">2.6.5.21 <code>bfd_generic_is_group_section</code></a></li>
+      <li><a name="toc-bfd_005fgeneric_005fdiscard_005fgroup" href="section-prototypes.html#bfd_005fgeneric_005fdiscard_005fgroup">2.6.5.22 <code>bfd_generic_discard_group</code></a></li>
     </ul></li>
   </ul></li>
   <li><a name="toc-Symbols-1" href="Symbols.html#Symbols">2.7 Symbols</a>
@@ -381,13 +381,14 @@ ul.no-bullet {list-style: none}
       <li><a name="toc-bfd_005flink_005fsplit_005fsection" href="Writing-the-symbol-table.html#bfd_005flink_005fsplit_005fsection">2.17.3.4 <code>bfd_link_split_section</code></a></li>
       <li><a name="toc-bfd_005fsection_005falready_005flinked" href="Writing-the-symbol-table.html#bfd_005fsection_005falready_005flinked">2.17.3.5 <code>bfd_section_already_linked</code></a></li>
       <li><a name="toc-bfd_005fgeneric_005fdefine_005fcommon_005fsymbol" href="Writing-the-symbol-table.html#bfd_005fgeneric_005fdefine_005fcommon_005fsymbol">2.17.3.6 <code>bfd_generic_define_common_symbol</code></a></li>
-      <li><a name="toc-bfd_005fgeneric_005fdefine_005fstart_005fstop" href="Writing-the-symbol-table.html#bfd_005fgeneric_005fdefine_005fstart_005fstop">2.17.3.7 <code>bfd_generic_define_start_stop</code></a></li>
-      <li><a name="toc-bfd_005ffind_005fversion_005ffor_005fsym" href="Writing-the-symbol-table.html#bfd_005ffind_005fversion_005ffor_005fsym">2.17.3.8 <code>bfd_find_version_for_sym</code></a></li>
-      <li><a name="toc-bfd_005fhide_005fsym_005fby_005fversion" href="Writing-the-symbol-table.html#bfd_005fhide_005fsym_005fby_005fversion">2.17.3.9 <code>bfd_hide_sym_by_version</code></a></li>
-      <li><a name="toc-bfd_005flink_005fcheck_005frelocs" href="Writing-the-symbol-table.html#bfd_005flink_005fcheck_005frelocs">2.17.3.10 <code>bfd_link_check_relocs</code></a></li>
-      <li><a name="toc-_005fbfd_005fgeneric_005flink_005fcheck_005frelocs" href="Writing-the-symbol-table.html#g_t_005fbfd_005fgeneric_005flink_005fcheck_005frelocs">2.17.3.11 <code>_bfd_generic_link_check_relocs</code></a></li>
-      <li><a name="toc-bfd_005fmerge_005fprivate_005fbfd_005fdata" href="Writing-the-symbol-table.html#bfd_005fmerge_005fprivate_005fbfd_005fdata">2.17.3.12 <code>bfd_merge_private_bfd_data</code></a></li>
-      <li><a name="toc-_005fbfd_005fgeneric_005fverify_005fendian_005fmatch" href="Writing-the-symbol-table.html#g_t_005fbfd_005fgeneric_005fverify_005fendian_005fmatch">2.17.3.13 <code>_bfd_generic_verify_endian_match</code></a></li>
+      <li><a name="toc-_005fbfd_005fgeneric_005flink_005fhide_005fsymbol" href="Writing-the-symbol-table.html#g_t_005fbfd_005fgeneric_005flink_005fhide_005fsymbol">2.17.3.7 <code>_bfd_generic_link_hide_symbol</code></a></li>
+      <li><a name="toc-bfd_005fgeneric_005fdefine_005fstart_005fstop" href="Writing-the-symbol-table.html#bfd_005fgeneric_005fdefine_005fstart_005fstop">2.17.3.8 <code>bfd_generic_define_start_stop</code></a></li>
+      <li><a name="toc-bfd_005ffind_005fversion_005ffor_005fsym" href="Writing-the-symbol-table.html#bfd_005ffind_005fversion_005ffor_005fsym">2.17.3.9 <code>bfd_find_version_for_sym</code></a></li>
+      <li><a name="toc-bfd_005fhide_005fsym_005fby_005fversion" href="Writing-the-symbol-table.html#bfd_005fhide_005fsym_005fby_005fversion">2.17.3.10 <code>bfd_hide_sym_by_version</code></a></li>
+      <li><a name="toc-bfd_005flink_005fcheck_005frelocs" href="Writing-the-symbol-table.html#bfd_005flink_005fcheck_005frelocs">2.17.3.11 <code>bfd_link_check_relocs</code></a></li>
+      <li><a name="toc-_005fbfd_005fgeneric_005flink_005fcheck_005frelocs" href="Writing-the-symbol-table.html#g_t_005fbfd_005fgeneric_005flink_005fcheck_005frelocs">2.17.3.12 <code>_bfd_generic_link_check_relocs</code></a></li>
+      <li><a name="toc-bfd_005fmerge_005fprivate_005fbfd_005fdata" href="Writing-the-symbol-table.html#bfd_005fmerge_005fprivate_005fbfd_005fdata">2.17.3.13 <code>bfd_merge_private_bfd_data</code></a></li>
+      <li><a name="toc-_005fbfd_005fgeneric_005fverify_005fendian_005fmatch" href="Writing-the-symbol-table.html#g_t_005fbfd_005fgeneric_005fverify_005fendian_005fmatch">2.17.3.14 <code>_bfd_generic_verify_endian_match</code></a></li>
     </ul></li>
   </ul></li>
   <li><a name="toc-Hash-Tables-1" href="Hash-Tables.html#Hash-Tables">2.18 Hash Tables</a>

@@ -24,10 +24,10 @@ use warnings;
 use Term::ANSIColor;
 
 my $myname = 'pacsearch';
-my $myver = '5.0.1';
+my $myver = '1.0.0';
 
 sub usage {
-	print "$myname (pacman) v$myver\n\n";
+	print "$myname v$myver\n\n";
 	print "Perform a pacman search using both the local and the sync databases.\n\n";
 	print "Usage: $myname [-n] <pattern>\n\n";
 	print "Options:\n";

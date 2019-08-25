@@ -1,7 +1,7 @@
 # Configuration file for dircolors, a utility to help you set the
 # LS_COLORS environment variable used by GNU ls with the --color option.
 
-# Copyright (C) 1996-2016 Free Software Foundation, Inc.
+# Copyright (C) 1996-2019 Free Software Foundation, Inc.
 # Copying and distribution of this file, with or without modification,
 # are permitted provided the copyright notice and this notice are preserved.
 
@@ -35,8 +35,10 @@ TERM tmux*
 TERM vt100
 TERM xterm*
 
-# Below are the color init strings for the basic file types. A color init
-# string consists of one or more of the following numeric codes:
+# Below are the color init strings for the basic file types.
+# One can use codes for 256 or more colors supported by modern terminals.
+# The default color codes use the capabilities of an 8 color terminal
+# with some additional attributes as per the following codes:
 # Attribute codes:
 # 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
 # Text color codes:
@@ -98,7 +100,6 @@ EXEC 01;32
 .t7z 01;31
 .zip 01;31
 .z   01;31
-.Z   01;31
 .dz  01;31
 .gz  01;31
 .lrz 01;31
@@ -126,6 +127,10 @@ EXEC 01;32
 .7z  01;31
 .rz  01;31
 .cab 01;31
+.wim 01;31
+.swm 01;31
+.dwm 01;31
+.esd 01;31
 
 # image formats
 .jpg 01;35
@@ -176,7 +181,7 @@ EXEC 01;32
 .cgm 01;35
 .emf 01;35
 
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
+# https://wiki.xiph.org/MIME_Types_and_File_Extensions
 .ogv 01;35
 .ogx 01;35
 
@@ -194,7 +199,7 @@ EXEC 01;32
 .ra 00;36
 .wav 00;36
 
-# http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
+# https://wiki.xiph.org/MIME_Types_and_File_Extensions
 .oga 00;36
 .opus 00;36
 .spx 00;36

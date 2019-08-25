@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -67,8 +67,8 @@ ul.no-bullet {list-style: none}
 Next: <a href="Frame-Decorator-API.html#Frame-Decorator-API" accesskey="n" rel="next">Frame Decorator API</a>, Previous: <a href="Type-Printing-API.html#Type-Printing-API" accesskey="p" rel="prev">Type Printing API</a>, Up: <a href="Python-API.html#Python-API" accesskey="u" rel="up">Python API</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<a name="Filtering-Frames_002e"></a>
-<h4 class="subsubsection">23.2.2.9 Filtering Frames.</h4>
+<a name="Filtering-Frames"></a>
+<h4 class="subsubsection">23.2.2.9 Filtering Frames</h4>
 <a name="index-frame-filters-api"></a>
 
 <p>Frame filters are Python objects that manipulate the visibility of a
@@ -220,7 +220,7 @@ frame filters.  Although <code>priority</code> can be negative, it is
 recommended practice to assume zero is the lowest priority that a
 frame filter can be assigned.  Frame filters that have the same
 priority are executed in unsorted order in that priority slot.  This
-attribute is mandatory.
+attribute is mandatory.  100 is a good default priority.
 </p></dd></dl>
 
 <hr>

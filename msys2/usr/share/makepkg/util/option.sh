@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/bash
 #
 #   option.sh - functions to test if build/packaging options are enabled
 #
-#   Copyright (c) 2009-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2009-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by

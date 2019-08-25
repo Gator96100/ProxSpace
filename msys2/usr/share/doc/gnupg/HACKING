@@ -1,0 +1,433 @@
+# HACKING                                                       -*- org -*-
+#+TITLE: A Hacker's Guide to GnuPG
+#+TEXT: Some notes on GnuPG internals
+#+STARTUP: showall
+#+OPTIONS: ^:{}
+
+* How to contribute
+
+  The following stuff explains some basic procedures you need to
+  follow if you want to contribute code or documentation.
+
+** No more ChangeLog files
+
+Do not modify any of the ChangeLog files in GnuPG.  Starting on
+December 1st, 2011 we put change information only in the GIT commit
+log, and generate a top-level ChangeLog file from logs at "make dist"
+time.  As such, there are strict requirements on the form of the
+commit log messages.  The old ChangeLog files have all be renamed to
+ChangeLog-2011
+
+** Commit log requirements
+
+Your commit log should always start with a one-line summary, the
+second line should be blank, and the remaining lines are usually
+ChangeLog-style entries for all affected files.  However, it's fine
+--- even recommended --- to write a few lines of prose describing the
+change, when the summary and ChangeLog entries don't give enough of
+the big picture.  Omit the leading TABs that you are seeing in a
+"real" ChangeLog file, but keep the maximum line length at 72 or
+smaller, so that the generated ChangeLog lines, each with its leading
+TAB, will not exceed 80 columns.  If you want to add text which shall
+not be copied to the ChangeLog, separate it by a line consisting of
+two dashes at the begin of a line.
+
+The one-line summary usually starts with a keyword to identify the
+mainly affected subsystem.  If more than one keyword is required the
+are delimited by a comma (e.g. =scd,w32:=). Commonly found keywords
+are
+
+ - agent   :: The gpg-agent component
+ - build   :: Changes to the build system
+ - ccid    :: The CCID driver in scdaemon
+ - common  :: Code in common
+ - dirmngr :: The dirmngr component
+ - doc     :: Documentation changes
+ - gpg     :: The gpg or gpgv components
+ - sm      :: The gpgsm component (also "gpgsm")
+ - gpgscm  :: The regression test driver
+ - indent  :: Indentation and similar changes
+ - iobuf   :: The IOBUF system in common
+ - po      :: Translations
+ - scd     :: The scdaemon component
+ - speedo  :: Speedo build system specific changes
+ - ssh     :: The ssh-agent part of the agent
+ - tests   :: The regressions tests
+ - tools   :: Other code in tools
+ - w32     :: Windows related code
+ - wks     :: The web key service tools
+ - yat2m   :: The yat2m tool.
+
+Typo fixes and documentation updates don't need a ChangeLog entry;
+thus you would use a commit message like
+
+#+begin_example
+doc: Fix typo in a comment
+
+--
+#+end_example
+
+The marker line here is important; without it the first line would
+appear in the ChangeLog.
+
+If you exceptionally need to have longer lines in a commit log you may
+do this after this scissor line:
+#+begin_example
+# ------------------------ >8 ------------------------
+#+end_example
+(hash, blank, 24 dashes, blank, scissor, blank, 24 dashes).
+Note that such a comment will be removed if the git commit option
+=--cleanup=scissor= is used.
+
+** License policy
+
+  GnuPG is licensed under the GPLv3+ with some files under a mixed
+  LGPLv3+/GPLv2+ license.  It is thus important, that all contributed
+  code allows for an update of the license; for example we can't
+  accept code under the GPLv2(only).
+
+  GnuPG used to have a strict policy of requiring copyright
+  assignments to the FSF.  To avoid this major organizational overhead
+  and to allow inclusion of code, not copyrighted by the FSF, this
+  policy has been relaxed on 2013-03-29.  It is now also possible to
+  contribute code by asserting that the contribution is in accordance
+  to the "Libgcrypt Developer's Certificate of Origin" as found in the
+  file "DCO".  (Except for a slight wording change, this DCO is
+  identical to the one used by the Linux kernel.)
+
+  If you want to contribute code or documentation to GnuPG and you
+  didn't sign a copyright assignment with the FSF in the past, you
+  need to take these simple steps:
+
+  - Decide which mail address you want to use.  Please have your real
+    name in the address and not a pseudonym.  Anonymous contributions
+    can only be done if you find a proxy who certifies for you.
+
+  - If your employer or school might claim ownership of code written
+    by you; you need to talk to them to make sure that you have the
+    right to contribute under the DCO.
+
+  - Send an OpenPGP signed mail to the gnupg-devel@gnupg.org mailing
+    list from your mail address.  Include a copy of the DCO as found
+    in the official master branch.  Insert your name and email address
+    into the DCO in the same way you want to use it later.  Example:
+
+      Signed-off-by: Joe R. Hacker <joe@example.org>
+
+    (If you really need it, you may perform simple transformations of
+    the mail address: Replacing "@" by " at " or "." by " dot ".)
+
+  - That's it.  From now on you only need to add a "Signed-off-by:"
+    line with your name and mail address to the commit message.  It is
+    recommended to send the patches using a PGP/MIME signed mail.
+
+** Coding standards
+
+  Please follow the GNU coding standards.  If you are in doubt consult
+  the existing code as an example.  Do no re-indent code without a
+  need.  If you really need to do it, use a separate commit for such a
+  change.
+
+  - Only certain C99 features may be used (see below); in general
+    stick to C90.
+  - Please do not use C++ =//= style comments.
+  - Do not use comments like:
+#+begin_src
+      if (foo)
+        /* Now that we know that foo is true we can call bar.  */
+        bar ();
+#+end_src
+    instead write the comment on the if line or before it.  You may
+    also use a block and put the comment inside.
+  - Please use asterisks on the left of longer comments.  This makes
+    it easier to read without syntax highlighting, on printouts, and
+    for blind people.
+  - Try to fit lines into 80 columns.
+  - Ignore signed/unsigned pointer mismatches
+  - No arithmetic on void pointers; cast to char* first.
+  - Do not use
+#+begin_src
+      if ( 42 == foo )
+#+end_src
+    this is harder to read and modern compilers are pretty good in
+    detecing accidential assignments.  It is also suggested not to
+    compare to 0 or NULL but to test the value direct or with a '!';
+    this makes it easier to see that a boolean test is done.
+  - We use our own printf style functions like =es_printf=, and
+    =gpgrt_asprintf= (or the =es_asprintf= macro) which implement most
+    C99 features with the exception of =wchar_t= (which should anyway
+    not be used).  Please use them always and do not resort to those
+    provided by libc.  The rationale for using them is that we know
+    that the format specifiers work on all platforms and that we do
+    not need to chase platform dependent bugs.  Note also that in
+    gnupg asprintf is a macro already evaluating to gpgrt_asprintf.
+  - It is common to have a label named "leave" for a function's
+    cleanup and return code.  This helps with freeing memory and is a
+    convenient location to set a breakpoint for debugging.
+  - Always use xfree() instead of free().  If it is not easy to see
+    that the freed variable is not anymore used, explicitly set the
+    variable to NULL.
+  - New code shall in general use xtrymalloc or xtrycalloc and check
+    for an error (use gpg_error_from_syserror()).
+  - Init function local variables only if needed so that the compiler
+    can do a better job in detecting uninitialized variables which may
+    indicate a problem with the code.
+  - Never init static or file local variables to 0 to make sure they
+    end up in BSS.
+  - Put extra parenthesis around terms with binary operators to make
+    it clear that the binary operator was indeed intended.
+  - Use --enable-maintainer-mode with configure so that all suitable
+    warnings are enabled.
+
+** Variable names
+
+  Follow the GNU standards.  Here are some conventions you may want to
+  stick to (do not rename existing "wrong" uses without a goog
+  reason).
+
+  - err :: This conveys an error code of type =gpg_error_t= which is
+           compatible to an =int=.  To compare such a variable to a
+           GPG_ERR_ constant, it is necessary to map the value like
+           this: =gpg_err_code(err)=.
+  - ec  :: This is used for a gpg-error code which has no source part
+           (=gpg_err_code_t=) and will eventually be used as input to
+           =gpg_err_make=.
+  - rc  :: Used for all kind of other errors; for example system
+           calls.  The value is not compatible with gpg-error.
+
+
+*** C99 language features
+
+  In GnuPG 2.x, but *not in 1.4* and not in most libraries, a limited
+  set of C99 features may be used:
+
+  - Variadic macros:
+    : #define foo(a,...)  bar(a, __VA_ARGS__)
+
+  - The predefined macro =__func__=:
+    : log_debug ("%s: Problem with foo\n", __func__);
+
+  - Variable declaration inside a for():
+    : for (int i = 0; i < 5; ++)
+    :   bar (i);
+
+  Although we usually make use of the =u16=, =u32=, and =u64= types,
+  it is also possible to include =<stdint.h>= and use =int16_t=,
+  =int32_t=, =int64_t=, =uint16_t=, =uint32_t=, and =uint64_t=.  But do
+  not use =int8_t= or =uint8_t=.
+
+** Commit log keywords
+
+  - GnuPG-bug-id :: Values are comma or space delimited bug numbers
+                    from bug.gnupg.org pertaining to this commit.
+  - Debian-bug-id :: Same as above but from the Debian bug tracker.
+  - CVE-id :: CVE id number pertaining to this commit.
+  - Regression-due-to :: Commit id of the regression fixed by this commit.
+  - Fixes-commit :: Commit id this commit fixes.
+  - Updates-commit :: Commit id this commit updates.
+  - Reported-by :: Value is a name or mail address of a bug reporte.
+  - Suggested-by :: Value is a name or mail address of someone how
+                    suggested this change.
+  - Co-authored-by :: Name or mail address of a co-author
+  - Some-comments-by :: Name or mail address of the author of
+                        additional comments (commit log or code).
+  - Proofread-by :: Sometimes used by translation commits.
+  - Signed-off-by :: Name or mail address of the developer
+
+* Windows
+** How to build an installer for Windows
+
+   Your best bet is to use a decent Debian System for development.
+   You need to install a long list of tools for building.  This list
+   still needs to be compiled.  However, the build process will stop
+   if a tool is missing.  GNU make is required (on non GNU systems
+   often installed as "gmake").  The installer requires a couple of
+   extra software to be available either as tarballs or as local git
+   repositories.  In case this file here is part of a gnupg-w32-2.*.xz
+   complete tarball as distributed from the same place as a binary
+   installer, all such tarballs are already included.
+
+   Cd to the GnuPG source directory and use one of one of these
+   command:
+
+   - If sources are included (gnupg-w32-*.tar.xz)
+
+     make -f build-aux/speedo.mk WHAT=this installer
+
+   - To build from tarballs
+
+     make -f build-aux/speedo.mk WHAT=release TARBALLS=TARDIR installer
+
+   - To build from local GIT repos
+
+     make -f build-aux/speedo.mk WHAT=git TARBALLS=TARDIR installer
+
+   Note that also you need to supply tarballs with supporting
+   libraries even if you build from git.  The makefile expects only
+   the core GnuPG software to be available as local GIT repositories.
+   speedo.mk has the versions of the tarballs and the branch names of
+   the git repositories.  In case of problems, don't hesitate to ask
+   on the gnupg-devel mailing for help.
+
+* Debug hints
+
+  See the manual for some hints.
+
+* Standards
+** RFCs
+
+1423  Privacy Enhancement for Internet Electronic Mail:
+      Part III: Algorithms, Modes, and Identifiers.
+
+1489  Registration of a Cyrillic Character Set.
+
+1750  Randomness Recommendations for Security.
+
+1991  PGP Message Exchange Formats (obsolete)
+
+2144  The CAST-128 Encryption Algorithm.
+
+2279  UTF-8, a transformation format of ISO 10646.
+
+2440  OpenPGP (obsolete).
+
+3156  MIME Security with Pretty Good Privacy (PGP).
+
+4880  Current OpenPGP specification.
+
+6337  Elliptic Curve Cryptography (ECC) in OpenPGP
+
+* Various information
+
+** Directory Layout
+
+  - ./	      :: Readme, configure
+  - ./agent   :: Gpg-agent and related tools
+  - ./doc     :: Documentation
+  - ./g10     :: Gpg program here called gpg2
+  - ./sm      :: Gpgsm program
+  - ./jnlib   :: Not used (formerly used utility functions)
+  - ./common  :: Utility functions
+  - ./kbx     :: Keybox library
+  - ./scd     :: Smartcard daemon
+  - ./scripts :: Scripts needed by configure and others
+  - ./dirmngr :: The directory manager
+
+** Detailed Roadmap
+
+  This list of files is not up to date!
+
+  - g10/gpg.c :: Main module with option parsing and all the stuff you
+                 have to do on startup.  Also has the exit handler and
+                 some helper functions.
+
+  - g10/parse-packet.c ::
+  - g10/build-packet.c ::
+  - g10/free-packet.c :: Parsing and creating of OpenPGP message packets.
+
+  - g10/getkey.c   :: Key selection code
+  - g10/pkclist.c  :: Build a list of public keys
+  - g10/skclist.c  :: Build a list of secret keys
+  - g10/keyring.c  :: Keyring access functions
+  - g10/keydb.h    ::
+
+  - g10/keyid.c	  :: Helper functions to get the keyid, fingerprint etc.
+
+  - g10/trustdb.c :: Web-of-Trust computations
+  - g10/trustdb.h ::
+  - g10/tdbdump.c :: Export/import/list the trustdb.gpg
+  - g10/tdbio.c   :: I/O handling for the trustdb.gpg
+  - g10/tdbio.h   ::
+
+  - g10/compress.c :: Filter to handle compression
+  - g10/filter.h   :: Declarations for all filter functions
+  - g10/delkey.c   :: Delete a key
+  - g10/kbnode.c   :: Helper for the kbnode_t linked list
+  - g10/main.h     :: Prototypes and some constants
+  - g10/mainproc.c :: Message processing
+  - g10/armor.c    :: Ascii armor filter
+  - g10/mdfilter.c :: Filter to calculate hashs
+  - g10/textfilter.c :: Filter to handle CR/LF and trailing white space
+  - g10/cipher.c   :: En-/Decryption filter
+  - g10/misc.c     :: Utility functions
+  - g10/options.h  :: Structure with all the command line options
+                      and related constants
+  - g10/openfile.c :: Create/Open Files
+  - g10/keyserver.h :: Keyserver access dispatcher.
+  - g10/packet.h   :: Definition of OpenPGP structures.
+  - g10/passphrase.c :: Passphrase handling code
+
+  - g10/pubkey-enc.c :: Process a public key encoded packet.
+  - g10/seckey-cert.c :: Not anymore used
+  - g10/seskey.c     :: Make session keys etc.
+  - g10/import.c     :: Import keys into our key storage.
+  - g10/export.c     :: Export keys to the OpenPGP format.
+  - g10/sign.c       :: Create signature and optionally encrypt.
+  - g10/plaintext.c  :: Process plaintext packets.
+  - g10/decrypt-data.c :: Decrypt an encrypted data packet
+  - g10/encrypt.c    :: Main encryption driver
+  - g10/revoke.c     :: Create recovation certificates.
+  - g10/keylist.c    :: Print information about OpenPGP keys
+  - g10/sig-check.c  :: Check a signature
+  - g10/helptext.c   :: Show online help texts
+  - g10/verify.c     :: Verify signed data.
+  - g10/decrypt.c    :: Decrypt and verify data.
+  - g10/keyedit.c    :: Edit properties of a key.
+  - g10/dearmor.c    :: Armor utility.
+  - g10/keygen.c     :: Generate a key pair
+
+** Memory allocation
+
+Use only the functions:
+
+ - xmalloc
+ - xmalloc_secure
+ - xtrymalloc
+ - xtrymalloc_secure
+ - xcalloc
+ - xcalloc_secure
+ - xtrycalloc
+ - xtrycalloc_secure
+ - xrealloc
+ - xtryrealloc
+ - xstrdup
+ - xtrystrdup
+ - xfree
+
+
+The *secure versions allocate memory in the secure memory.  That is,
+swapping out of this memory is avoided and is gets overwritten on
+free.  Use this for passphrases, session keys and other sensitive
+material.  This memory set aside for secure memory is linited to a few
+k.  In general the function don't print a memeory message and
+terminate the process if there is not enough memory available.  The
+"try" versions of the functions return NULL instead.
+
+** Logging
+
+ TODO
+
+** Option parsing
+
+GnuPG does not use getopt or GNU getopt but functions of it's own.
+See util/argparse.c for details.  The advantage of these functions is
+that it is more easy to display and maintain the help texts for the
+options.  The same option table is also used to parse resource files.
+
+** What is an IOBUF
+
+This is the data structure used for most I/O of gnupg. It is similar
+to System V Streams but much simpler.  Because OpenPGP messages are
+nested in different ways; the use of such a system has big advantages.
+Here is an example, how it works: If the parser sees a packet header
+with a partial length, it pushes the block_filter onto the IOBUF to
+handle these partial length packets: from now on you don't have to
+worry about this.  When it sees a compressed packet it pushes the
+uncompress filter and the next read byte is one which has already been
+uncompressed by this filter. Same goes for enciphered packet,
+plaintext packets and so on.  The file g10/encode.c might be a good
+starting point to see how it is used - actually this is the other way:
+constructing messages using pushed filters but it may be easier to
+understand.
+
+

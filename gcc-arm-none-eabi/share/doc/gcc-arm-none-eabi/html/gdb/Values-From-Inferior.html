@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -168,14 +168,14 @@ this value, thus it is not available for fetching from the inferior.
 
 <dl>
 <dt><a name="index-Value_002edynamic_005ftype"></a>Variable: <strong>Value.dynamic_type</strong></dt>
-<dd><p>The dynamic type of this <code>gdb.Value</code>.  This uses C<tt>++</tt> run-time
-type information (<acronym>RTTI</acronym>) to determine the dynamic type of the
-value.  If this value is of class type, it will return the class in
-which the value is embedded, if any.  If this value is of pointer or
-reference to a class type, it will compute the dynamic type of the
-referenced object, and return a pointer or reference to that type,
-respectively.  In all other cases, it will return the value&rsquo;s static
-type.
+<dd><p>The dynamic type of this <code>gdb.Value</code>.  This uses the object&rsquo;s
+virtual table and the C<tt>++</tt> run-time type information
+(<acronym>RTTI</acronym>) to determine the dynamic type of the value.  If this
+value is of class type, it will return the class in which the value is
+embedded, if any.  If this value is of pointer or reference to a class
+type, it will compute the dynamic type of the referenced object, and
+return a pointer or reference to that type, respectively.  In all
+other cases, it will return the value&rsquo;s static type.
 </p>
 <p>Note that this feature will only work when debugging a C<tt>++</tt> program
 that includes <acronym>RTTI</acronym> for the object in question.  Otherwise,
@@ -244,6 +244,15 @@ its result is used.
 </p></dd>
 </dl>
 </dd></dl>
+
+<dl>
+<dt><a name="index-Value_002e_005f_005finit_005f_005f-1"></a>Function: <strong>Value.__init__</strong> <em>(<var>val</var>, <span class="roman">[</span>, type <span class="roman">]</span>)</em></dt>
+<dd><p>This second form of the <code>gdb.Value</code> constructor returns a
+<code>gdb.Value</code> of type <var>type</var> where the value contents are taken
+from the Python buffer object specified by <var>val</var>.  The number of
+bytes in the Python buffer object must be greater than or equal to the
+size of <var>type</var>.
+</p></dd></dl>
 
 <dl>
 <dt><a name="index-Value_002ecast"></a>Function: <strong>Value.cast</strong> <em>(type)</em></dt>

@@ -2,7 +2,7 @@
 #
 #   variable.sh - Check that variables are or are not arrays as appropriate
 #
-#   Copyright (c) 2014-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -34,7 +34,8 @@ lint_variable() {
 	local array=(arch backup checkdepends groups license noextract options
 	             validpgpkeys)
 	local arch_array=(conflicts depends makedepends md5sums optdepends provides
-	                  replaces sha1sums sha256sums sha384sums sha512sums source)
+	                  replaces sha1sums sha224sums sha256sums sha384sums sha512sums
+			  source)
 	local string=(changelog epoch install pkgdesc pkgrel pkgver url)
 
 	local i a v pkg keys out bad ret=0

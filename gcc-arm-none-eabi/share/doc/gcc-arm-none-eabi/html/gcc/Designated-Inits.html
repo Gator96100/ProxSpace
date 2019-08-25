@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -118,7 +118,7 @@ extension.  For example,
 <pre class="smallexample">int widths[] = { [0 ... 9] = 1, [10 ... 99] = 2, [100] = 3 };
 </pre></div>
 
-<p>If the value in it has side-effects, the side-effects happen only once,
+<p>If the value in it has side effects, the side effects happen only once,
 not for each initialized field by the range initializer.
 </p>
 <p>Note that the length of the array is the highest value specified
@@ -209,7 +209,7 @@ example, with the &lsquo;<samp>struct point</samp>&rsquo; declaration above:
 
 <p>If the same field is initialized multiple times, it has the value from
 the last initialization.  If any such overridden initialization has
-side-effect, it is unspecified whether the side-effect happens or not.
+side effect, it is unspecified whether the side effect happens or not.
 Currently, GCC discards them and issues a warning.
 </p>
 <hr>

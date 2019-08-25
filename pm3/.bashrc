@@ -189,6 +189,6 @@
 # 
 # alias cd=cd_func
 export LANG=en_US.UTF-8
-export PS1='\[\033]0;ProxSpace v3.0 - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
+export PS1='\[\033]0;ProxSpace v3.2 - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
 export PATH=/gcc-arm-none-eabi/bin:$PATH
 alias ls='ls -hF --color=auto' 

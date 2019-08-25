@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the BFD library.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -142,9 +142,6 @@ macro to define them both!
   bfd_target_ecoff_flavour,
   bfd_target_xcoff_flavour,
   bfd_target_elf_flavour,
-  bfd_target_ieee_flavour,
-  bfd_target_nlm_flavour,
-  bfd_target_oasys_flavour,
   bfd_target_tekhex_flavour,
   bfd_target_srec_flavour,
   bfd_target_verilog_flavour,
@@ -461,6 +458,7 @@ BFD_JUMP_TABLE macros.
   NAME##_bfd_discard_group, \
   NAME##_section_already_linked, \
   NAME##_bfd_define_common_symbol, \
+  NAME##_bfd_link_hide_symbol, \
   NAME##_bfd_define_start_stop
 
   int         (*_bfd_sizeof_headers) (bfd *, struct bfd_link_info *);
@@ -526,6 +524,10 @@ BFD_JUMP_TABLE macros.
   /* Define a common symbol.  */
   bfd_boolean (*_bfd_define_common_symbol) (bfd *, struct bfd_link_info *,
                                             struct bfd_link_hash_entry *);
+
+  /* Hide a symbol.  */
+  void (*_bfd_link_hide_symbol) (bfd *, struct bfd_link_info *,
+                                 struct bfd_link_hash_entry *);
 
   /* Define a __start, __stop, .startof. or .sizeof. symbol.  */
   struct bfd_link_hash_entry *

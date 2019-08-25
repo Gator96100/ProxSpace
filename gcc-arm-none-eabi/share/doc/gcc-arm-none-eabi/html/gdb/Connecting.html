@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -204,7 +204,8 @@ programs.
 <a name="Remote-Connection-Commands"></a>
 <h4 class="subsection">20.1.3 Remote Connection Commands</h4>
 <a name="index-remote-connection-commands"></a>
-<p><small>GDB</small> can communicate with the target over a serial line, or
+<p><small>GDB</small> can communicate with the target over a serial line, a
+local Unix domain socket, or
 over an <acronym>IP</acronym> network using <acronym>TCP</acronym> or <acronym>UDP</acronym>.  In
 each case, <small>GDB</small> uses the same protocol for debugging your
 program; only the medium carrying the debugging packets varies.  The
@@ -229,17 +230,47 @@ to use a serial line connected to the device named <samp>/dev/ttyb</samp>:
 <code>target</code> command.
 </p>
 </dd>
+<dt><code>target remote <var>local-socket</var></code></dt>
+<dt><code>target extended-remote <var>local-socket</var></code></dt>
+<dd><a name="index-local-socket_002c-target-remote"></a>
+<a name="index-Unix-domain-socket"></a>
+<p>Use <var>local-socket</var> to communicate with the target.  For example,
+to use a local Unix domain socket bound to the file system entry <samp>/tmp/gdb-socket0</samp>:
+</p>
+<div class="smallexample">
+<pre class="smallexample">target remote /tmp/gdb-socket0
+</pre></div>
+
+<p>Note that this command has the same form as the command to connect
+to a serial line.  <small>GDB</small> will automatically determine which
+kind of file you have specified and will make the appropriate kind
+of connection.
+This feature is not available if the host system does not support
+Unix domain sockets.
+</p>
+</dd>
 <dt><code>target remote <code><var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code><var>[host]</var>:<var>port</var></code></code></dt>
 <dt><code>target remote <code>tcp:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>tcp:<var>[host]</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>tcp4:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>tcp6:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>tcp6:<var>[host]</var>:<var>port</var></code></code></dt>
 <dt><code>target extended-remote <code><var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code><var>[host]</var>:<var>port</var></code></code></dt>
 <dt><code>target extended-remote <code>tcp:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>tcp:<var>[host]</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>tcp4:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>tcp6:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>tcp6:<var>[host]</var>:<var>port</var></code></code></dt>
 <dd><a name="index-TCP-port_002c-target-remote"></a>
 <p>Debug using a <acronym>TCP</acronym> connection to <var>port</var> on <var>host</var>.
-The <var>host</var> may be either a host name or a numeric <acronym>IP</acronym>
-address; <var>port</var> must be a decimal number.  The <var>host</var> could be
-the target machine itself, if it is directly connected to the net, or
-it might be a terminal server which in turn has a serial line to the
-target.
+The <var>host</var> may be either a host name, a numeric <acronym>IPv4</acronym>
+address, or a numeric <acronym>IPv6</acronym> address (with or without the
+square brackets to separate the address from the port); <var>port</var>
+must be a decimal number.  The <var>host</var> could be the target machine
+itself, if it is directly connected to the net, or it might be a
+terminal server which in turn has a serial line to the target.
 </p>
 <p>For example, to connect to port 2828 on a terminal server named
 <code>manyfarms</code>:
@@ -248,6 +279,27 @@ target.
 <pre class="smallexample">target remote manyfarms:2828
 </pre></div>
 
+<p>To connect to port 2828 on a terminal server whose address is
+<code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>, you can either use the
+square bracket syntax:
+</p>
+<div class="smallexample">
+<pre class="smallexample">target remote [2001:0db8:85a3:0000:0000:8a2e:0370:7334]:2828
+</pre></div>
+
+<p>or explicitly specify the <acronym>IPv6</acronym> protocol:
+</p>
+<div class="smallexample">
+<pre class="smallexample">target remote tcp6:2001:0db8:85a3:0000:0000:8a2e:0370:7334:2828
+</pre></div>
+
+<p>This last example may be confusing to the reader, because there is no
+visible separation between the hostname and the port number.
+Therefore, we recommend the user to provide <acronym>IPv6</acronym> addresses
+using square brackets for clarity.  However, it is important to
+mention that for <small>GDB</small> there is no ambiguity: the number after
+the last colon is considered to be the port number.
+</p>
 <p>If your remote target is actually running on the same machine as your
 debugger session (e.g. a simulator for your target running on the
 same host), you can omit the hostname.  For example, to connect to
@@ -261,7 +313,15 @@ port 1234 on your local machine:
 </p>
 </dd>
 <dt><code>target remote <code>udp:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>udp:<var>[host]</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>udp4:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target remote <code>udp6:<var>[host]</var>:<var>port</var></code></code></dt>
 <dt><code>target extended-remote <code>udp:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>udp:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>udp:<var>[host]</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>udp4:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>udp6:<var>host</var>:<var>port</var></code></code></dt>
+<dt><code>target extended-remote <code>udp6:<var>[host]</var>:<var>port</var></code></code></dt>
 <dd><a name="index-UDP-port_002c-target-remote"></a>
 <p>Debug using <acronym>UDP</acronym> packets to <var>port</var> on <var>host</var>.  For example, to
 connect to <acronym>UDP</acronym> port 2828 on a terminal server named <code>manyfarms</code>:

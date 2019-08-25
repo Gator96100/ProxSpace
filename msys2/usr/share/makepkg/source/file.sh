@@ -2,7 +2,7 @@
 #
 #   file.sh - function for handling the download and extraction of source files
 #
-#   Copyright (c) 2015-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ extract_file() {
 	fi
 
 	# do not rely on extension for file type
-	local file_type=$(file -bizL "$file")
+	local file_type=$(file -bizL -- "$file")
 	local ext=${file##*.}
 	local cmd=''
 	case "$file_type" in
@@ -132,7 +132,7 @@ extract_file() {
 		$cmd -xf "$file" || ret=$?
 	else
 		rm -f -- "${file%.*}"
-		$cmd -dcf "$file" > "${file%.*}" || ret=$?
+		$cmd -dcf -- "$file" > "${file%.*}" || ret=$?
 	fi
 	if (( ret )); then
 		error "$(gettext "Failed to extract %s")" "$file"

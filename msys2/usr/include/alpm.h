@@ -1,7 +1,7 @@
 /*
  * alpm.h
  *
- *  Copyright (c) 2006-2016 Pacman Development Team <pacman-dev@archlinux.org>
+ *  Copyright (c) 2006-2018 Pacman Development Team <pacman-dev@archlinux.org>
  *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
  *  Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
  *  Copyright (c) 2005 by Christian Hamar <krics@linuxforum.hu>
@@ -20,8 +20,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _ALPM_H
-#define _ALPM_H
+#ifndef ALPM_H
+#define ALPM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -53,7 +53,8 @@ typedef struct __alpm_trans_t alpm_trans_t;
  * @{
  */
 typedef enum _alpm_errno_t {
-	ALPM_ERR_MEMORY = 1,
+	ALPM_ERR_OK = 0,
+	ALPM_ERR_MEMORY,
 	ALPM_ERR_SYSTEM,
 	ALPM_ERR_BADPERMS,
 	ALPM_ERR_NOT_A_FILE,
@@ -203,7 +204,7 @@ typedef enum _alpm_siglevel_t {
 	ALPM_SIG_DATABASE_MARGINAL_OK = (1 << 12),
 	ALPM_SIG_DATABASE_UNKNOWN_OK = (1 << 13),
 
-	ALPM_SIG_USE_DEFAULT = (1 << 31)
+	ALPM_SIG_USE_DEFAULT = (1 << 30)
 } alpm_siglevel_t;
 
 /** PGP signature verification status return codes */
@@ -464,7 +465,7 @@ typedef enum _alpm_event_type_t {
 	ALPM_EVENT_HOOK_DONE,
 	/** A hook is starting */
 	ALPM_EVENT_HOOK_RUN_START,
-	/** A hook has finnished runnning */
+	/** A hook has finished running */
 	ALPM_EVENT_HOOK_RUN_DONE
 } alpm_event_type_t;
 
@@ -829,6 +830,11 @@ int alpm_option_add_hookdir(alpm_handle_t *handle, const char *hookdir);
 int alpm_option_remove_hookdir(alpm_handle_t *handle, const char *hookdir);
 /** @} */
 
+alpm_list_t *alpm_option_get_overwrite_files(alpm_handle_t *handle);
+int alpm_option_set_overwrite_files(alpm_handle_t *handle, alpm_list_t *globs);
+int alpm_option_add_overwrite_file(alpm_handle_t *handle, const char *glob);
+int alpm_option_remove_overwrite_file(alpm_handle_t *handle, const char *glob);
+
 /** Returns the logfile name. */
 const char *alpm_option_get_logfile(alpm_handle_t *handle);
 /** Sets the logfile name. */
@@ -916,14 +922,16 @@ int alpm_option_set_checkspace(alpm_handle_t *handle, int checkspace);
 const char *alpm_option_get_dbext(alpm_handle_t *handle);
 int alpm_option_set_dbext(alpm_handle_t *handle, const char *dbext);
 
-alpm_siglevel_t alpm_option_get_default_siglevel(alpm_handle_t *handle);
-int alpm_option_set_default_siglevel(alpm_handle_t *handle, alpm_siglevel_t level);
+int alpm_option_get_default_siglevel(alpm_handle_t *handle);
+int alpm_option_set_default_siglevel(alpm_handle_t *handle, int level);
 
-alpm_siglevel_t alpm_option_get_local_file_siglevel(alpm_handle_t *handle);
-int alpm_option_set_local_file_siglevel(alpm_handle_t *handle, alpm_siglevel_t level);
+int alpm_option_get_local_file_siglevel(alpm_handle_t *handle);
+int alpm_option_set_local_file_siglevel(alpm_handle_t *handle, int level);
 
-alpm_siglevel_t alpm_option_get_remote_file_siglevel(alpm_handle_t *handle);
-int alpm_option_set_remote_file_siglevel(alpm_handle_t *handle, alpm_siglevel_t level);
+int alpm_option_get_remote_file_siglevel(alpm_handle_t *handle);
+int alpm_option_set_remote_file_siglevel(alpm_handle_t *handle, int level);
+
+int alpm_option_set_disable_dl_timeout(alpm_handle_t *handle, unsigned short disable_dl_timeout);
 
 /** @} */
 
@@ -956,7 +964,7 @@ alpm_list_t *alpm_get_syncdbs(alpm_handle_t *handle);
  * @return an alpm_db_t* on success (the value), NULL on error
  */
 alpm_db_t *alpm_register_syncdb(alpm_handle_t *handle, const char *treename,
-		alpm_siglevel_t level);
+		int level);
 
 /** Unregister all package databases.
  * @param handle the context handle
@@ -982,7 +990,7 @@ const char *alpm_db_get_name(const alpm_db_t *db);
  * @param db pointer to the package database
  * @return the signature verification level
  */
-alpm_siglevel_t alpm_db_get_siglevel(alpm_db_t *db);
+int alpm_db_get_siglevel(alpm_db_t *db);
 
 /** Check the validity of a database.
  * This is most useful for sync databases and verifying signature status.
@@ -1049,14 +1057,14 @@ typedef enum _alpm_db_usage_ {
  * @param usage a bitmask of alpm_db_usage_t values
  * @return 0 on success, or -1 on error
  */
-int alpm_db_set_usage(alpm_db_t *db, alpm_db_usage_t usage);
+int alpm_db_set_usage(alpm_db_t *db, int usage);
 
 /** Gets the usage of a database.
  * @param db pointer to the package database to get the status of
  * @param usage pointer to an alpm_db_usage_t to store db's status
  * @return 0 on success, or -1 on error
  */
-int alpm_db_get_usage(alpm_db_t *db, alpm_db_usage_t *usage);
+int alpm_db_get_usage(alpm_db_t *db, int *usage);
 
 /** @} */
 
@@ -1080,7 +1088,7 @@ int alpm_db_get_usage(alpm_db_t *db, alpm_db_usage_t *usage);
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
 int alpm_pkg_load(alpm_handle_t *handle, const char *filename, int full,
-		alpm_siglevel_t level, alpm_pkg_t **pkg);
+		int level, alpm_pkg_t **pkg);
 
 /** Find a package in a list by name.
  * @param haystack a list of alpm_pkg_t
@@ -1260,6 +1268,18 @@ alpm_list_t *alpm_pkg_get_depends(alpm_pkg_t *pkg);
  */
 alpm_list_t *alpm_pkg_get_optdepends(alpm_pkg_t *pkg);
 
+/** Returns a list of package check dependencies
+ * @param pkg a pointer to package
+ * @return a reference to an internal list of alpm_depend_t structures.
+ */
+alpm_list_t *alpm_pkg_get_checkdepends(alpm_pkg_t *pkg);
+
+/** Returns a list of package make dependencies
+ * @param pkg a pointer to package
+ * @return a reference to an internal list of alpm_depend_t structures.
+ */
+alpm_list_t *alpm_pkg_get_makedepends(alpm_pkg_t *pkg);
+
 /** Returns the list of packages conflicting with pkg.
  * @param pkg a pointer to package
  * @return a reference to an internal list of alpm_depend_t structures.
@@ -1317,7 +1337,7 @@ const char *alpm_pkg_get_base64_sig(alpm_pkg_t *pkg);
  * @param pkg a pointer to package
  * @return an enum member giving the validation method
  */
-alpm_pkgvalidation_t alpm_pkg_get_validation(alpm_pkg_t *pkg);
+int alpm_pkg_get_validation(alpm_pkg_t *pkg);
 
 /* End of alpm_pkg_t accessors */
 /* @} */
@@ -1479,7 +1499,7 @@ typedef enum _alpm_transflag_t {
  * @param handle the context handle
  * @return the bitfield of transaction flags
  */
-alpm_transflag_t alpm_trans_get_flags(alpm_handle_t *handle);
+int alpm_trans_get_flags(alpm_handle_t *handle);
 
 /** Returns a list of packages added by the transaction.
  * @param handle the context handle
@@ -1495,10 +1515,10 @@ alpm_list_t *alpm_trans_get_remove(alpm_handle_t *handle);
 
 /** Initialize the transaction.
  * @param handle the context handle
- * @param flags flags of the transaction (like nodeps, etc)
+ * @param flags flags of the transaction (like nodeps, etc; see alpm_transflag_t)
  * @return 0 on success, -1 on error (pm_errno is set accordingly)
  */
-int alpm_trans_init(alpm_handle_t *handle, alpm_transflag_t flags);
+int alpm_trans_init(alpm_handle_t *handle, int flags);
 
 /** Prepare a transaction.
  * @param handle the context handle
@@ -1621,7 +1641,8 @@ enum alpm_caps {
 };
 
 const char *alpm_version(void);
-enum alpm_caps alpm_capabilities(void);
+/* Return a bitfield of capabilities using values from 'enum alpm_caps' */
+int alpm_capabilities(void);
 
 void alpm_fileconflict_free(alpm_fileconflict_t *conflict);
 void alpm_depmissing_free(alpm_depmissing_t *miss);
@@ -1633,6 +1654,4 @@ void alpm_conflict_free(alpm_conflict_t *conflict);
 #ifdef __cplusplus
 }
 #endif
-#endif /* _ALPM_H */
-
-/* vim: set noet: */
+#endif /* ALPM_H */

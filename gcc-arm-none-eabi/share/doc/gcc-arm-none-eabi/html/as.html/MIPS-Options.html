@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,7 +67,7 @@ Next: <a href="MIPS-Macros.html#MIPS-Macros" accesskey="n" rel="next">MIPS Macro
 </div>
 <hr>
 <a name="Assembler-options"></a>
-<h4 class="subsection">9.27.1 Assembler options</h4>
+<h4 class="subsection">9.26.1 Assembler options</h4>
 
 <p>The MIPS configurations of <small>GNU</small> <code>as</code> support these
 special options:
@@ -287,6 +287,52 @@ This tells the assembler to accept Virtualization instructions.
 &lsquo;<samp>-mno-virt</samp>&rsquo; turns off this option.
 </p>
 </dd>
+<dt><code>-mcrc</code></dt>
+<dt><code>-mno-crc</code></dt>
+<dd><p>Generate code for the cyclic redundancy check (CRC) Application Specific
+Extension.  This tells the assembler to accept CRC instructions.
+&lsquo;<samp>-mno-crc</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mginv</code></dt>
+<dt><code>-mno-ginv</code></dt>
+<dd><p>Generate code for the Global INValidate (GINV) Application Specific
+Extension.  This tells the assembler to accept GINV instructions.
+&lsquo;<samp>-mno-ginv</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-mmi</code></dt>
+<dt><code>-mno-loongson-mmi</code></dt>
+<dd><p>Generate code for the Loongson MultiMedia extensions Instructions (MMI)
+Application Specific Extension.  This tells the assembler to accept MMI
+instructions.
+&lsquo;<samp>-mno-loongson-mmi</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-cam</code></dt>
+<dt><code>-mno-loongson-cam</code></dt>
+<dd><p>Generate code for the Loongson Content Address Memory (CAM)
+Application Specific Extension.  This tells the assembler to accept CAM
+instructions.
+&lsquo;<samp>-mno-loongson-cam</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-ext</code></dt>
+<dt><code>-mno-loongson-ext</code></dt>
+<dd><p>Generate code for the Loongson EXTensions (EXT) instructions
+Application Specific Extension.  This tells the assembler to accept EXT
+instructions.
+&lsquo;<samp>-mno-loongson-ext</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-ext2</code></dt>
+<dt><code>-mno-loongson-ext2</code></dt>
+<dd><p>Generate code for the Loongson EXTensions R2 (EXT2) instructions
+Application Specific Extension.  This tells the assembler to accept EXT2
+instructions.
+&lsquo;<samp>-mno-loongson-ext2</samp>&rsquo; turns off this option.
+</p>
+</dd>
 <dt><code>-minsn32</code></dt>
 <dt><code>-mno-insn32</code></dt>
 <dd><p>Only use 32-bit instruction encodings when generating code for the
@@ -347,6 +393,15 @@ all problems in hand-written assembler code.
 <dt><code>-mno-fix-cn63xxp1</code></dt>
 <dd><p>Replace <code>pref</code> hints 0 - 4 and 6 - 24 with hint 28 to work around
 certain CN63XXP1 errata.
+</p>
+</dd>
+<dt><code>-mfix-r5900</code></dt>
+<dt><code>-mno-fix-r5900</code></dt>
+<dd><p>Do not attempt to schedule the preceding instruction into the delay slot
+of a branch instruction placed at the end of a short loop of six
+instructions or fewer and always schedule a <code>nop</code> instruction there
+instead.  The short loop bug under certain conditions causes loops to
+execute only once or twice, due to a hardware bug in the R5900 chip.
 </p>
 </dd>
 <dt><code>-m4010</code></dt>
@@ -462,7 +517,9 @@ i6400,
 p6600,
 loongson2e,
 loongson2f,
-loongson3a,
+gs464,
+gs464e,
+gs264e,
 octeon,
 octeon+,
 octeon2,
@@ -584,7 +641,7 @@ for branches.
 <p>By default &lsquo;<samp>-mno-ignore-branch-isa</samp>&rsquo; is selected, causing any invalid
 branch requiring a transition between ISA modes to produce an error.
 </p>
-<a name="index-_002dmnan_003d-command-line-option_002c-MIPS"></a>
+<a name="index-_002dmnan_003d-command_002dline-option_002c-MIPS"></a>
 </dd>
 <dt><code>-mnan=<var>encoding</var></code></dt>
 <dd><p>This option indicates whether the source code uses the IEEE 2008

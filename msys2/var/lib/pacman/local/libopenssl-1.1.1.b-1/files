@@ -1,0 +1,11 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-crypto-1.1.dll
+usr/bin/msys-ssl-1.1.dll
+usr/lib/
+usr/lib/openssl/
+usr/lib/openssl/engines-1.1/
+usr/lib/openssl/engines-1.1/capi.dll
+usr/lib/openssl/engines-1.1/padlock.dll
+

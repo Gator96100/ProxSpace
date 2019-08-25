@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 #
 #   rankmirrors - read a list of mirrors from a file and rank them by speed
-#   @configure_input@
+#   Generated from rankmirrors.sh.in; do not edit by hand.
 #
 #   Copyright (c) 2009 Matthew Bruenig <matthewbruenig@gmail.com>
 #
@@ -22,10 +22,10 @@
 trap finaloutput INT
 
 declare -r myname='rankmirrors'
-declare -r myver='5.0.1'
+declare -r myver='1.0.0'
 
 usage() {
-	echo "${myname} (pacman) v${myver}"
+	echo "${myname} v${myver}"
 	echo
 	echo "Ranks pacman mirrors by their connection and opening speed. Pacman mirror"
 	echo "files are located in /etc/pacman.d/. It can also rank one mirror if the URL is"
@@ -39,7 +39,7 @@ usage() {
 	echo "  -n NUM         number of servers to output, 0 for all"
 	echo "  -t, --times    only output mirrors and their response times"
 	echo "  -u, --url      test a specific URL"
-	echo "  -v, --verbose  be verbose in ouptut"
+	echo "  -v, --verbose  be verbose in output"
 	echo "  -r, --repo     specify a repository name instead of guessing"
 	exit 0
 }

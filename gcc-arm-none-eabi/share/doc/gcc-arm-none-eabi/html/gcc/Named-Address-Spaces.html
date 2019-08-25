@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -97,11 +97,24 @@ in order to put read-only data into the flash memory and access that
 data by means of the special instructions <code>LPM</code> or <code>ELPM</code>
 needed to read from flash.
 </p>
-<p>Per default, any data including read-only data is located in RAM
-(the generic address space) so that non-generic address spaces are
-needed to locate read-only data in flash memory
-<em>and</em> to generate the right instructions to access this data
-without using (inline) assembler code.
+<p>Devices belonging to <code>avrtiny</code> and <code>avrxmega3</code> can access
+flash memory by means of <code>LD*</code> instructions because the flash
+memory is mapped into the RAM address space.  There is <em>no need</em>
+for language extensions like <code>__flash</code> or attribute
+<a href="AVR-Variable-Attributes.html#AVR-Variable-Attributes"><code>progmem</code></a>.
+The default linker description files for these devices cater for that
+feature and <code>.rodata</code> stays in flash: The compiler just generates
+<code>LD*</code> instructions, and the linker script adds core specific
+offsets to all <code>.rodata</code> symbols: <code>0x4000</code> in the case of
+<code>avrtiny</code> and <code>0x8000</code> in the case of <code>avrxmega3</code>.
+See <a href="AVR-Options.html#AVR-Options">AVR Options</a> for a list of respective devices.
+</p>
+<p>For devices not in <code>avrtiny</code> or <code>avrxmega3</code>,
+any data including read-only data is located in RAM (the generic
+address space) because flash memory is not visible in the RAM address
+space.  In order to locate read-only data in flash memory <em>and</em>
+to generate the right instructions to access this data without
+using (inline) assembler code, special address spaces are needed.
 </p>
 <dl compact="compact">
 <dt><code>__flash</code></dt>
@@ -228,12 +241,10 @@ located in static storage with a 24-bit address:
 const __memx void *pfoo = &amp;foo;
 </pre></div>
 
-<p>Such code requires at least binutils 2.23, see
-<a href="https://sourceware.org/PR13503">PR13503</a><!-- /@w -->.
-</p>
 </li><li> On the reduced Tiny devices like ATtiny40, no address spaces are supported.
-Data can be put into and read from flash memory by means of
-attribute <code>progmem</code>, see <a href="AVR-Variable-Attributes.html#AVR-Variable-Attributes">AVR Variable Attributes</a>.
+Just use vanilla C / C++ code without overhead as outlined above.
+Attribute <code>progmem</code> is supported but works differently,
+see <a href="AVR-Variable-Attributes.html#AVR-Variable-Attributes">AVR Variable Attributes</a>.
 
 </li></ul>
 

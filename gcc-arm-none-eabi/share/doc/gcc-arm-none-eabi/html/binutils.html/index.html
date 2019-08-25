@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -83,25 +83,24 @@ ul.no-bullet {list-style: none}
   <li><a name="toc-strip-1" href="strip.html#strip">8 strip</a></li>
   <li><a name="toc-c_002b_002bfilt-1" href="c_002b_002bfilt.html#c_002b_002bfilt">9 c++filt</a></li>
   <li><a name="toc-addr2line-1" href="addr2line.html#addr2line">10 addr2line</a></li>
-  <li><a name="toc-nlmconv-1" href="nlmconv.html#nlmconv">11 nlmconv</a></li>
-  <li><a name="toc-windmc-1" href="windmc.html#windmc">12 windmc</a></li>
-  <li><a name="toc-windres-1" href="windres.html#windres">13 windres</a></li>
-  <li><a name="toc-dlltool-1" href="dlltool.html#dlltool">14 dlltool</a>
+  <li><a name="toc-windmc-1" href="windmc.html#windmc">11 windmc</a></li>
+  <li><a name="toc-windres-1" href="windres.html#windres">12 windres</a></li>
+  <li><a name="toc-dlltool-1" href="dlltool.html#dlltool">13 dlltool</a>
   <ul class="no-bullet">
-    <li><a name="toc-The-format-of-the-dlltool-_002edef-file" href="def-file-format.html#def-file-format">14.1 The format of the <code>dlltool</code> <samp>.def</samp> file</a></li>
+    <li><a name="toc-The-format-of-the-dlltool-_002edef-file" href="def-file-format.html#def-file-format">13.1 The format of the <code>dlltool</code> <samp>.def</samp> file</a></li>
   </ul></li>
-  <li><a name="toc-readelf-1" href="readelf.html#readelf">15 readelf</a></li>
-  <li><a name="toc-elfedit-1" href="elfedit.html#elfedit">16 elfedit</a></li>
-  <li><a name="toc-Common-Options-1" href="Common-Options.html#Common-Options">17 Common Options</a></li>
-  <li><a name="toc-Selecting-the-Target-System-1" href="Selecting-the-Target-System.html#Selecting-the-Target-System">18 Selecting the Target System</a>
+  <li><a name="toc-readelf-1" href="readelf.html#readelf">14 readelf</a></li>
+  <li><a name="toc-elfedit-1" href="elfedit.html#elfedit">15 elfedit</a></li>
+  <li><a name="toc-Common-Options-1" href="Common-Options.html#Common-Options">16 Common Options</a></li>
+  <li><a name="toc-Selecting-the-Target-System-1" href="Selecting-the-Target-System.html#Selecting-the-Target-System">17 Selecting the Target System</a>
   <ul class="no-bullet">
-    <li><a name="toc-Target-Selection-1" href="Target-Selection.html#Target-Selection">18.1 Target Selection</a></li>
-    <li><a name="toc-Architecture-Selection-1" href="Architecture-Selection.html#Architecture-Selection">18.2 Architecture Selection</a></li>
+    <li><a name="toc-Target-Selection-1" href="Target-Selection.html#Target-Selection">17.1 Target Selection</a></li>
+    <li><a name="toc-Architecture-Selection-1" href="Architecture-Selection.html#Architecture-Selection">17.2 Architecture Selection</a></li>
   </ul></li>
-  <li><a name="toc-Reporting-Bugs-1" href="Reporting-Bugs.html#Reporting-Bugs">19 Reporting Bugs</a>
+  <li><a name="toc-Reporting-Bugs-1" href="Reporting-Bugs.html#Reporting-Bugs">18 Reporting Bugs</a>
   <ul class="no-bullet">
-    <li><a name="toc-Have-You-Found-a-Bug_003f" href="Bug-Criteria.html#Bug-Criteria">19.1 Have You Found a Bug?</a></li>
-    <li><a name="toc-How-to-Report-Bugs" href="Bug-Reporting.html#Bug-Reporting">19.2 How to Report Bugs</a></li>
+    <li><a name="toc-Have-You-Found-a-Bug_003f" href="Bug-Criteria.html#Bug-Criteria">18.1 Have You Found a Bug?</a></li>
+    <li><a name="toc-How-to-Report-Bugs" href="Bug-Reporting.html#Bug-Reporting">18.2 How to Report Bugs</a></li>
   </ul></li>
   <li><a name="toc-GNU-Free-Documentation-License-1" href="GNU-Free-Documentation-License.html#GNU-Free-Documentation-License">Appendix A GNU Free Documentation License</a></li>
   <li><a name="toc-Binutils-Index-1" href="Binutils-Index.html#Binutils-Index">Binutils Index</a></li>
@@ -121,8 +120,8 @@ Next: <a href="ar.html#ar" accesskey="n" rel="next">ar</a>, Up: <a href="../dir/
 <a name="index-version"></a>
 <p>This brief manual contains documentation for the <small>GNU</small> binary
 utilities
-(GNU Tools for Arm Embedded Processors 7-2018-q2-update)
-version 2.30.0:
+(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
+version 2.32.0:
 </p>
 
 <p>This document is distributed under the terms of the GNU Free
@@ -152,8 +151,6 @@ in the section entitled &ldquo;GNU Free Documentation License&rdquo;.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="addr2line.html#addr2line">addr2line</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Convert addresses to file and line
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="nlmconv.html#nlmconv">nlmconv</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Converts object code into an NLM
-</td></tr>
 <tr><td align="left" valign="top">&bull; <a href="windmc.html#windmc">windmc</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Generator for Windows message resources
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="windres.html#windres">windres</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Manipulate Windows resources
@@ -162,7 +159,7 @@ in the section entitled &ldquo;GNU Free Documentation License&rdquo;.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="readelf.html#readelf">readelf</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Display the contents of ELF format files
 </td></tr>
-<tr><td align="left" valign="top">&bull; <a href="elfedit.html#elfedit">elfedit</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Update the ELF header of ELF files
+<tr><td align="left" valign="top">&bull; <a href="elfedit.html#elfedit">elfedit</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Update ELF header and property of ELF files
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Common-Options.html#Common-Options">Common Options</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Command-line options for all utilities
 </td></tr>

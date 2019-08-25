@@ -2,7 +2,7 @@
 #
 #   build_references.sh - Warn about files containing references to build directories
 #
-#   Copyright (c) 2013-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2013-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,16 +25,18 @@ LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 source "$LIBRARY/util/message.sh"
 
-
 lint_package_functions+=('warn_build_references')
 
 warn_build_references() {
-	if find "${pkgdir}" -type f -print0 | xargs -0 grep -q -I "${srcdir}" ; then
-		warning "$(gettext "Package contains reference to %s")" "\$srcdir"
-	fi
-	if find "${pkgdir}" -type f -print0 | xargs -0 grep -q -I "${pkgdirbase}" ; then
-		warning "$(gettext "Package contains reference to %s")" "\$pkgdir"
-	fi
+	local refs
+
+	for var in srcdir pkgdir; do
+		mapfile -t refs < <(find "$pkgdir" -type f -exec grep -l "${!var}" {} +)
+		if  (( ${#refs} > 0 )); then
+			warning "$(gettext 'Package contains reference to %s')" "\$$var"
+			printf '%s\n' "${refs[@]#"$pkgdir/"}" >&2
+		fi
+	done
 
 	# Check for Windows-style MSYS2 root path
 	if find "${pkgdir}" -type f -print0 | xargs -0 grep -iFqI "$(cygpath -m /)" ; then
@@ -43,4 +45,5 @@ warn_build_references() {
 	if find "${pkgdir}" -type f -print0 | xargs -0 grep -iFqI "$(cygpath -w /)" ; then
 		warning "$(gettext "Package contains reference to %s")" "\$(cygpath -w /)"
 	fi
+	return 0
 }

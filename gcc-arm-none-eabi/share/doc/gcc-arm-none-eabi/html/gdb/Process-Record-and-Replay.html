@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -338,10 +338,72 @@ and to read-write memory.  Beware that the accessed memory corresponds
 to the live target and not necessarily to the current replay
 position.
 </p>
+</dd>
+<dt><code>set record btrace cpu <var>identifier</var></code></dt>
+<dd><p>Set the processor to be used for enabling workarounds for processor
+errata when decoding the trace.
+</p>
+<p>Processor errata are defects in processor operation, caused by its
+design or manufacture.  They can cause a trace not to match the
+specification.  This, in turn, may cause trace decode to fail.
+<small>GDB</small> can detect erroneous trace packets and correct them, thus
+avoiding the decoding failures.  These corrections are known as
+<em>errata workarounds</em>, and are enabled based on the processor on
+which the trace was recorded.
+</p>
+<p>By default, <small>GDB</small> attempts to detect the processor
+automatically, and apply the necessary workarounds for it.  However,
+you may need to specify the processor if <small>GDB</small> does not yet
+support it.  This command allows you to do that, and also allows to
+disable the workarounds.
+</p>
+<p>The argument <var>identifier</var> identifies the <small>CPU</small> and is of the
+form: <code><var>vendor</var>:<var>procesor identifier</var></code>.  In addition,
+there are two special identifiers, <code>none</code> and <code>auto</code>
+(default).
+</p>
+<p>The following vendor identifiers and corresponding processor
+identifiers are currently supported:
+</p>
+<table>
+<tr><td width="10%"><code>intel</code></td><td width="90%"><var>family</var>/<var>model</var>[/<var>stepping</var>]</td></tr>
+</table>
+
+<p>On GNU/Linux systems, the processor <var>family</var>, <var>model</var>, and
+<var>stepping</var> can be obtained from <code>/proc/cpuinfo</code>.
+</p>
+<p>If <var>identifier</var> is <code>auto</code>, enable errata workarounds for the
+processor on which the trace was recorded.  If <var>identifier</var> is
+<code>none</code>, errata workarounds are disabled.
+</p>
+<p>For example, when using an old <small>GDB</small> on a new system, decode
+may fail because <small>GDB</small> does not support the new processor.  It
+often suffices to specify an older processor that <small>GDB</small>
+supports.
+</p>
+<div class="smallexample">
+<pre class="smallexample">(gdb) info record
+Active record target: record-btrace
+Recording format: Intel Processor Trace.
+Buffer size: 16kB.
+Failed to configure the Intel Processor Trace decoder: unknown cpu.
+(gdb) set record btrace cpu intel:6/158
+(gdb) info record
+Active record target: record-btrace
+Recording format: Intel Processor Trace.
+Buffer size: 16kB.
+Recorded 84872 instructions in 3189 functions (0 gaps) for thread 1 (...).
+</pre></div>
+
 <a name="index-show-record-btrace"></a>
 </dd>
 <dt><code>show record btrace replay-memory-access</code></dt>
 <dd><p>Show the current setting of <code>replay-memory-access</code>.
+</p>
+</dd>
+<dt><code>show record btrace cpu</code></dt>
+<dd><p>Show the processor to be used for enabling trace decode errata
+workarounds.
 </p>
 <a name="index-set-record-btrace-bts"></a>
 </dd>

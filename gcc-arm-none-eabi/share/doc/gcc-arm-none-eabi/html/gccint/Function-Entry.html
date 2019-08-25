@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Profiling.html#Profiling" accesskey="n" rel="next">Profiling</a>,
 </div>
 <hr>
 <a name="Function-Entry-and-Exit"></a>
-<h4 class="subsection">17.9.11 Function Entry and Exit</h4>
+<h4 class="subsection">18.9.11 Function Entry and Exit</h4>
 <a name="index-function-entry-and-exit"></a>
 <a name="index-prologue"></a>
 <a name="index-epilogue"></a>
@@ -84,13 +84,23 @@ Next: <a href="Profiling.html#Profiling" accesskey="n" rel="next">Profiling</a>,
 (<em>prologue</em>) and exit (<em>epilogue</em>) code.
 </p>
 <dl>
-<dt><a name="index-TARGET_005fASM_005fFUNCTION_005fPROLOGUE"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_FUNCTION_PROLOGUE</strong> <em>(FILE *<var>file</var>, HOST_WIDE_INT <var>size</var>)</em></dt>
+<dt><a name="index-TARGET_005fASM_005fPRINT_005fPATCHABLE_005fFUNCTION_005fENTRY"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_PRINT_PATCHABLE_FUNCTION_ENTRY</strong> <em>(FILE *<var>file</var>, unsigned HOST_WIDE_INT <var>patch_area_size</var>, bool <var>record_p</var>)</em></dt>
+<dd><p>Generate a patchable area at the function start, consisting of
+<var>patch_area_size</var> NOP instructions.  If the target supports named
+sections and if <var>record_p</var> is true, insert a pointer to the current
+location in the table of patchable functions.  The default implementation
+of the hook places the table of pointers in the special section named
+<code>__patchable_function_entries</code>.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fASM_005fFUNCTION_005fPROLOGUE"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_FUNCTION_PROLOGUE</strong> <em>(FILE *<var>file</var>)</em></dt>
 <dd><p>If defined, a function that outputs the assembler code for entry to a
 function.  The prologue is responsible for setting up the stack frame,
 initializing the frame pointer register, saving registers that must be
 saved, and allocating <var>size</var> additional bytes of storage for the
-local variables.  <var>size</var> is an integer.  <var>file</var> is a stdio
-stream to which the assembler code should be output.
+local variables.  <var>file</var> is a stdio stream to which the assembler
+code should be output.
 </p>
 <p>The label for the beginning of the function need not be output by this
 macro.  That has already been done when the macro is run.
@@ -146,12 +156,12 @@ emitted.  See <a href="Standard-Names.html#epilogue-instruction-pattern">epilogu
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fASM_005fFUNCTION_005fEPILOGUE"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_FUNCTION_EPILOGUE</strong> <em>(FILE *<var>file</var>, HOST_WIDE_INT <var>size</var>)</em></dt>
+<dt><a name="index-TARGET_005fASM_005fFUNCTION_005fEPILOGUE"></a>Target Hook: <em>void</em> <strong>TARGET_ASM_FUNCTION_EPILOGUE</strong> <em>(FILE *<var>file</var>)</em></dt>
 <dd><p>If defined, a function that outputs the assembler code for exit from a
 function.  The epilogue is responsible for restoring the saved
 registers and stack pointer to their values when the function was
 called, and returning control to the caller.  This macro takes the
-same arguments as the macro <code>TARGET_ASM_FUNCTION_PROLOGUE</code>, and the
+same argument as the macro <code>TARGET_ASM_FUNCTION_PROLOGUE</code>, and the
 registers to restore are determined from <code>regs_ever_live</code> and
 <code>CALL_USED_REGISTERS</code> in the same way.
 </p>

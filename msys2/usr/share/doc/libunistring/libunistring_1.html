@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on December, 2 2016 by texi2html 1.78a -->
+<!-- Created on May, 25 2018 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -43,7 +43,7 @@ ul.toc {list-style: none}
 
 <table cellpadding="1" cellspacing="1" border="0">
 <tr><td valign="middle" align="left">[ &lt;&lt; ]</td>
-<td valign="middle" align="left">[<a href="libunistring_2.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_2.html#SEC8" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
@@ -113,8 +113,8 @@ in general, contain characters of all kinds of scripts.  The text processing
 functions provided by this library handle all scripts and all languages.
 </p>
 <p>libunistring is for you if your application already uses the ISO C / POSIX
-<code>&lt;ctype.h&gt;</code>, <code>&lt;wctype.h&gt;</code> functions and the text it operates on is
-provided by the user and can be in any language.
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html"><code>&lt;ctype.h&gt;</code></a>, <a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wctype.h.html"><code>&lt;wctype.h&gt;</code></a> functions and the text it
+operates on is provided by the user and can be in any language.
 </p>
 <p>libunistring is also for you if your application uses Unicode strings as
 internal in-memory representation.
@@ -195,7 +195,7 @@ in multiple languages present in the same document or even in the same line
 of text.
 </p>
 <p>But use of Unicode is not everything.  Internationalization usually consists
-of three features:
+of four features:
 </p><ul>
 <li>
 Use of Unicode where needed for text processing.  This is what this library
@@ -207,6 +207,10 @@ GNU gettext is about.
 Use of locale specific conventions for date and time formats, for numeric
 formatting, or for sorting of text.  This can be done adequately with the
 POSIX APIs and the implementation of locales in the GNU C library.
+</li><li>
+In graphical user interfaces, adapting the GUI to the default text direction
+of the current locale (see
+<a href="https://en.wikipedia.org/wiki/Right-to-left">right-to-left languages</a>).
 </li></ul>
 
 <hr size="6">
@@ -221,7 +225,7 @@ yet universally implemented and not widely used.)
 <a name="IDX7"></a>
 The locale is partitioned into several aspects, called the &ldquo;categories&rdquo;
 of the locale.  The main various aspects are:
-</p><ul class="toc">
+</p><ul>
 <li>
 The character encoding and the character properties.  This is the
 <code>LC_CTYPE</code> category.
@@ -259,7 +263,7 @@ this country earlier.
 </p>
 <p>The legacy locale encodings, ISO-8859-15 (which supplanted ISO-8859-1 in
 most of Europe), ISO-8859-2, KOI8-R, EUC-JP, etc., are still in use in
-many places, though.
+some places, though.
 </p>
 <p>UTF-16 and UTF-32 are not used as locale encodings, because they are not
 ASCII compatible.
@@ -271,7 +275,7 @@ ASCII compatible.
 
 <p>There are three ways of representing strings in memory of a running
 program.
-</p><ul class="toc">
+</p><ul>
 <li>
 As &lsquo;<samp>char *</samp>&rsquo; strings.  Such strings are represented in locale encoding.
 This approach is employed when not much text processing is done by the
@@ -285,9 +289,24 @@ a significant amount of text processing, or when the program has multiple
 threads operating on the same data but in different locales.
 </li><li>
 As &lsquo;<samp>wchar_t *</samp>&rsquo;, a.k.a. &ldquo;wide strings&rdquo;.  This approach is misguided,
-see <a href="#SEC7">The <code>wchar_t</code> mess</a>.
+see <a href="libunistring_18.html#SEC81">The <code>wchar_t</code> mess</a>.
 </li></ul>
 
+<p>Of course, a &lsquo;<samp>char *</samp>&rsquo; string can, in some cases, be encoded in UTF-8.
+You will use the data type depending on what you can guarantee about how
+it's encoded: If a string is encoded in the locale encoding, or if you
+don't know how it's encoded, use &lsquo;<samp>char *</samp>&rsquo;.  If, on the other hand,
+you can <em>guarantee</em> that it is UTF-8 encoded, then you can use the
+UTF-8 string type, <code>uint8_t *</code>, for it.
+</p>
+<p>The five types <code>char *</code>, <code>uint8_t *</code>, <code>uint16_t *</code>,
+<code>uint32_t *</code>, and <code>wchar_t *</code> are incompatible types at the C
+level.  Therefore, &lsquo;<samp>gcc -Wall</samp>&rsquo; will produce a warning if, by mistake,
+your code contains a mismatch between these types.  In the context of
+using GNU libunistring, even a warning about a mismatch between
+<code>char *</code> and <code>uint8_t *</code> is a sign of a bug in your code
+that you should not try to silence through a cast.
+</p>
 <hr size="6">
 <a name="char-_002a-strings"></a>
 <a name="SEC6"></a>
@@ -318,75 +337,75 @@ using multibyte locales.
 </p></td></tr></table>
 
 <p>As a consequence:
-</p><ul class="toc">
+</p><ul>
 <li>
-The <code>&lt;ctype.h&gt;</code> API is useless in this context; it does not work in
+The <a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html"><code>&lt;ctype.h&gt;</code></a> API is useless in this context; it does not work in
 multibyte locales.
 </li><li>
-The <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strlen.html"><code>strlen</code></a> function does not return the number of characters
+The <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strlen.html"><code>strlen</code></a> function does not return the number of characters
 in a string.  Nor does it return the number of screen columns occupied
 by a string after it is output.  It merely returns the number of
 <em>bytes</em> occupied by a string.
 </li><li>
-Truncating a string, for example, with <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strncpy.html"><code>strncpy</code></a>, can have the
+Truncating a string, for example, with <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strncpy.html"><code>strncpy</code></a>, can have the
 effect of truncating it in the middle of a multibyte character.  Such
 a string will, when output, have a garbled character at its end, often
 represented by a hollow box.
 </li><li>
-<a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strchr.html"><code>strchr</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strrchr.html"><code>strrchr</code></a> do not work with multibyte strings
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strchr.html"><code>strchr</code></a> and <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strrchr.html"><code>strrchr</code></a> do not work with multibyte strings
 if the locale encoding is GB18030 and the character to be searched is
 a digit.
 </li><li>
-<a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strstr.html"><code>strstr</code></a> does not work with multibyte strings if the locale encoding
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strstr.html"><code>strstr</code></a> does not work with multibyte strings if the locale encoding
 is different from UTF-8.
 </li><li>
-<a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcspn.html"><code>strcspn</code></a>, <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strpbrk.html"><code>strpbrk</code></a>, <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strspn.html"><code>strspn</code></a> cannot work
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strcspn.html"><code>strcspn</code></a>, <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strpbrk.html"><code>strpbrk</code></a>, <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strspn.html"><code>strspn</code></a> cannot work
 correctly in multibyte locales: they assume the second argument is a list of
 single-byte characters.  Even in this simple case, they do not work with
 multibyte strings if the locale encoding is GB18030 and one of the
 characters to be searched is a digit.
 </li><li>
-<a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strsep.html"><code>strsep</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strtok_r.html"><code>strtok_r</code></a> do not work with multibyte strings
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strsep.html"><code>strsep</code></a> and <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strtok_r.html"><code>strtok_r</code></a> do not work with multibyte strings
 unless all of the delimiter characters are ASCII characters &lt; 0x30.
 </li><li>
-The <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcasecmp.html"><code>strcasecmp</code></a>, <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strncasecmp.html"><code>strncasecmp</code></a>, and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcasestr.html"><code>strcasestr</code></a>
+The <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strcasecmp.html"><code>strcasecmp</code></a>, <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strncasecmp.html"><code>strncasecmp</code></a>, and <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strcasestr.html"><code>strcasestr</code></a>
 functions do not work with multibyte strings.
 </li></ul>
 
 <p>The workarounds can be found in GNU gnulib
 <a href="http://www.gnu.org/software/gnulib/">http://www.gnu.org/software/gnulib/</a>.
-</p><ul class="toc">
+</p><ul>
 <li>
 gnulib has modules &lsquo;<samp>mbchar</samp>&rsquo;, &lsquo;<samp>mbiter</samp>&rsquo;, &lsquo;<samp>mbuiter</samp>&rsquo; that
 represent multibyte characters and allow to iterate across a multibyte
 string with the same ease as through a unibyte string.
 </li><li>
 gnulib has functions <code>mbslen</code> and <code>mbswidth</code> that can be
-used instead of <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strlen.html"><code>strlen</code></a> when the number of characters or the
+used instead of <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strlen.html"><code>strlen</code></a> when the number of characters or the
 number of screen columns of a string is requested.
 </li><li>
 gnulib has functions <code>mbschr</code> and <code>mbsrrchr</code> that are
-like <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strchr.html"><code>strchr</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strrchr.html"><code>strrchr</code></a>, but work in multibyte locales.
+like <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strchr.html"><code>strchr</code></a> and <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strrchr.html"><code>strrchr</code></a>, but work in multibyte locales.
 </li><li>
-gnulib has a function <code>mbsstr</code>, like <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strstr.html"><code>strstr</code></a>, but works
+gnulib has a function <code>mbsstr</code>, like <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strstr.html"><code>strstr</code></a>, but works
 in multibyte locales.
 </li><li>
 gnulib has functions <code>mbscspn</code>, <code>mbspbrk</code>, <code>mbsspn</code>
-that are like <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcspn.html"><code>strcspn</code></a>, <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strpbrk.html"><code>strpbrk</code></a>, <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strspn.html"><code>strspn</code></a>, but
+that are like <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strcspn.html"><code>strcspn</code></a>, <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strpbrk.html"><code>strpbrk</code></a>, <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strspn.html"><code>strspn</code></a>, but
 work in multibyte locales.
 </li><li>
 gnulib has functions <code>mbssep</code> and <code>mbstok_r</code> that are
-like <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strsep.html"><code>strsep</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strtok_r.html"><code>strtok_r</code></a> but work in multibyte locales.
+like <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strsep.html"><code>strsep</code></a> and <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strtok_r.html"><code>strtok_r</code></a> but work in multibyte locales.
 </li><li>
 gnulib has functions <code>mbscasecmp</code>, <code>mbsncasecmp</code>,
-<code>mbspcasecmp</code>, and <code>mbscasestr</code> that are like <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcasecmp.html"><code>strcasecmp</code></a>,
-<a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strncasecmp.html"><code>strncasecmp</code></a>, and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/strcasestr.html"><code>strcasestr</code></a>, but
+<code>mbspcasecmp</code>, and <code>mbscasestr</code> that are like <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strcasecmp.html"><code>strcasecmp</code></a>,
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strncasecmp.html"><code>strncasecmp</code></a>, and <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strcasestr.html"><code>strcasestr</code></a>, but
 work in multibyte locales.  Still, the function <code>ulc_casecmp</code> is
 preferable to these functions; see below.
 </li></ul>
 
 <p>The second problem with the C library API is that it has some assumptions built-in that are not valid in some languages:
-</p><ul class="toc">
+</p><ul>
 <li>
 It assumes that there are only two forms of every character: uppercase
 and lowercase.  This is not true for Croatian, where the character
@@ -418,71 +437,18 @@ to view case transformations as functions that operates on strings,
 rather than on characters.
 </li></ol>
 
-<p>This is implemented in this library, through the functions declared in <code>&lt;unicase.h&gt;</code>, see <a href="libunistring_14.html#SEC54">Case mappings <code>&lt;unicase.h&gt;</code></a>.
-</p>
-<hr size="6">
-<a name="The-wchar_005ft-mess"></a>
-<a name="SEC7"></a>
-<h2 class="section"> <a href="libunistring.html#TOC7">1.6 The <code>wchar_t</code> mess</a> </h2>
-
-<p>The ISO C and POSIX standard creators made an attempt to fix the first
-problem mentioned in the previous section.  They introduced
-</p><ul class="toc">
-<li>
-a type &lsquo;<samp>wchar_t</samp>&rsquo;, designed to encapsulate an entire character,
-</li><li>
-a &ldquo;wide string&rdquo; type &lsquo;<samp>wchar_t *</samp>&rsquo;, and
-</li><li>
-functions declared in <code>&lt;wctype.h&gt;</code> that were meant to supplant the
-ones in <code>&lt;ctype.h&gt;</code>.
-</li></ul>
-
-<p>Unfortunately, this API and its implementation has numerous problems:
-</p>
-<ul class="toc">
-<li>
-On AIX and Windows platforms, <code>wchar_t</code> is a 16-bit type.  This
-means that it can never accommodate an entire Unicode character.  Either
-the <code>wchar_t *</code> strings are limited to characters in UCS-2 (the
-&ldquo;Basic Multilingual Plane&rdquo; of Unicode), or &mdash; if <code>wchar_t *</code>
-strings are encoded in UTF-16 &mdash; a <code>wchar_t</code> represents only half
-of a character in the worst case, making the <code>&lt;wctype.h&gt;</code> functions
-pointless.
-
-</li><li>
-On Solaris and FreeBSD, the <code>wchar_t</code> encoding is locale dependent
-and undocumented.  This means, if you want to know any property of a
-<code>wchar_t</code> character, other than the properties defined by
-<code>&lt;wctype.h&gt;</code> &mdash; such as whether it's a dash, currency symbol,
-paragraph separator, or similar &mdash;, you have to convert it to
-<code>char *</code> encoding first, by use of the function <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/wctomb.html"><code>wctomb</code></a>.
-
-</li><li>
-When you read a stream of wide characters, through the functions
-<a href="http://www.opengroup.org/onlinepubs/9699919799/functions/fgetwc.html"><code>fgetwc</code></a> and <a href="http://www.opengroup.org/onlinepubs/9699919799/functions/fgetws.html"><code>fgetws</code></a>, and when the input stream/file is
-not in the expected encoding, you have no way to determine the invalid
-byte sequence and do some corrective action.  If you use these
-functions, your program becomes &ldquo;garbage in - more garbage out&rdquo; or
-&ldquo;garbage in - abort&rdquo;.
-</li></ul>
-
-<p>As a consequence, it is better to use multibyte strings, as explained in
-the previous section.  Such multibyte strings can bypass limitations
-of the <code>wchar_t</code> type, if you use functions defined in gnulib and
-libunistring for text processing.  They can also faithfully transport
-malformed characters that were present in the input, without requiring
-the program to produce garbage or abort.
+<p>This is implemented in this library, through the functions declared in <code>&lt;unicase.h&gt;</code>, see <a href="libunistring_14.html#SEC67">Case mappings <code>&lt;unicase.h&gt;</code></a>.
 </p>
 <hr size="6">
 <a name="Unicode-strings"></a>
-<a name="SEC8"></a>
-<h2 class="section"> <a href="libunistring.html#TOC8">1.7 Unicode strings</a> </h2>
+<a name="SEC7"></a>
+<h2 class="section"> <a href="libunistring.html#TOC7">1.6 Unicode strings</a> </h2>
 
 <p>libunistring supports Unicode strings in three representations:
 <a name="IDX11"></a>
 <a name="IDX12"></a>
 <a name="IDX13"></a>
-</p><ul class="toc">
+</p><ul>
 <li>
 UTF-8 strings, through the type &lsquo;<samp>uint8_t *</samp>&rsquo;.  The units are bytes
 (<code>uint8_t</code>).
@@ -495,7 +461,7 @@ memory words (<code>uint32_t</code>).
 </li></ul>
 
 <p>As with C strings, there are two variants:
-</p><ul class="toc">
+</p><ul>
 <li>
 Unicode strings with a terminating NUL character are represented as
 a pointer to the first unit of the string.  There is a unit containing
@@ -512,7 +478,7 @@ zero-valued unit used as &ldquo;end marker&rdquo;.
 <hr size="6">
 <table cellpadding="1" cellspacing="1" border="0">
 <tr><td valign="middle" align="left">[<a href="#SEC1" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_2.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_2.html#SEC8" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -520,12 +486,12 @@ zero-valued unit used as &ldquo;end marker&rdquo;.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC77" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Daiki Ueno</em> on <em>December, 2 2016</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Daiki Ueno</em> on <em>May, 25 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

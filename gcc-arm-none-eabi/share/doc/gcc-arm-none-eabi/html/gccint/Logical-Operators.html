@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Previous: <a href="Conditional-Expressions.html#Conditional-Expressions" accessk
 </div>
 <hr>
 <a name="Logical-Operators-1"></a>
-<h4 class="subsection">11.6.4 Logical Operators</h4>
+<h4 class="subsection">12.6.4 Logical Operators</h4>
 <a name="index-Logical-Operators"></a>
 
 <p>Except when they appear in the condition operand of a
@@ -93,7 +93,7 @@ a = T1;
 because it has two different assignments.
 </p>
 <a name="Manipulating-operands"></a>
-<h4 class="subsection">11.6.5 Manipulating operands</h4>
+<h4 class="subsection">12.6.5 Manipulating operands</h4>
 
 <p>All gimple operands are of type <code>tree</code>.  But only certain
 types of trees are allowed to be used as operand tuples.  Basic
@@ -157,7 +157,7 @@ and flattened into the GIMPLE tuple as follows:
 </pre></div>
 
 <a name="Operand-vector-allocation"></a>
-<h4 class="subsection">11.6.6 Operand vector allocation</h4>
+<h4 class="subsection">12.6.6 Operand vector allocation</h4>
 
 <p>The operand vector is stored at the bottom of the three tuple
 structures that accept operands. This means, that depending on
@@ -194,7 +194,7 @@ access the operands.
 </p></dd></dl>
 
 <a name="Operand-validation"></a>
-<h4 class="subsection">11.6.7 Operand validation</h4>
+<h4 class="subsection">12.6.7 Operand validation</h4>
 
 <p>When adding a new operand to a gimple statement, the operand will
 be validated according to what each tuple accepts in its operand
@@ -261,7 +261,7 @@ program is running (and which is valid in all functions).
 
 
 <a name="Statement-validation"></a>
-<h4 class="subsection">11.6.8 Statement validation</h4>
+<h4 class="subsection">12.6.8 Statement validation</h4>
 
 <dl>
 <dt><a name="index-is_005fgimple_005fassign"></a>GIMPLE function: <em>bool</em> <strong>is_gimple_assign</strong> <em>(gimple g)</em></dt>
@@ -293,6 +293,24 @@ expression to a variable.
 <dl>
 <dt><a name="index-is_005fgimple_005fomp"></a>GIMPLE function: <em>bool</em> <strong>is_gimple_omp</strong> <em>(gimple g)</em></dt>
 <dd><p>Return true if g is any of the OpenMP codes.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_0028gimple"></a>GIMPLE function: <em>gimple_debug_begin_stmt_p</em> <strong>(gimple</strong> <em>g)</em></dt>
+<dd><p>Return true if g is a <code>GIMPLE_DEBUG</code> that marks the beginning of
+a source statement.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_0028gimple-1"></a>GIMPLE function: <em>gimple_debug_inline_entry_p</em> <strong>(gimple</strong> <em>g)</em></dt>
+<dd><p>Return true if g is a <code>GIMPLE_DEBUG</code> that marks the entry
+point of an inlined function.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_0028gimple-2"></a>GIMPLE function: <em>gimple_debug_nonbind_marker_p</em> <strong>(gimple</strong> <em>g)</em></dt>
+<dd><p>Return true if g is a <code>GIMPLE_DEBUG</code> that marks a program location,
+without any variable binding.
 </p></dd></dl>
 
 <hr>

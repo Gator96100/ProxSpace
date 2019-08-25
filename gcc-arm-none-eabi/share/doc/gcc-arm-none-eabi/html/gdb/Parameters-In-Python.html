@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -148,16 +148,42 @@ parameter.  It can be read and assigned to just as any other
 attribute.  <small>GDB</small> does validation when assignments are made.
 </p></dd></dl>
 
-<p>There are two methods that should be implemented in any
-<code>Parameter</code> class.  These are:
+<p>There are two methods that may be implemented in any <code>Parameter</code>
+class.  These are:
 </p>
 <dl>
 <dt><a name="index-Parameter_002eget_005fset_005fstring"></a>Function: <strong>Parameter.get_set_string</strong> <em>(self)</em></dt>
-<dd><p><small>GDB</small> will call this method when a <var>parameter</var>&rsquo;s value has
-been changed via the <code>set</code> API (for example, <kbd>set foo off</kbd>).
-The <code>value</code> attribute has already been populated with the new
-value and may be used in output.  This method must return a string.
-</p></dd></dl>
+<dd><p>If this method exists, <small>GDB</small> will call it when a
+<var>parameter</var>&rsquo;s value has been changed via the <code>set</code> API (for
+example, <kbd>set foo off</kbd>).  The <code>value</code> attribute has already
+been populated with the new value and may be used in output.  This
+method must return a string.  If the returned string is not empty,
+<small>GDB</small> will present it to the user.
+</p>
+<p>If this method raises the <code>gdb.GdbError</code> exception
+(see <a href="Exception-Handling.html#Exception-Handling">Exception Handling</a>), then <small>GDB</small> will print the
+exception&rsquo;s string and the <code>set</code> command will fail.  Note,
+however, that the <code>value</code> attribute will not be reset in this
+case.  So, if your parameter must validate values, it should store the
+old value internally and reset the exposed value, like so:
+</p>
+<div class="smallexample">
+<pre class="smallexample">class ExampleParam (gdb.Parameter):
+   def __init__ (self, name):
+      super (ExampleParam, self).__init__ (name,
+                   gdb.COMMAND_DATA,
+                   gdb.PARAM_BOOLEAN)
+      self.value = True
+      self.saved_value = True
+   def validate(self):
+      return False
+   def get_set_string (self):
+      if not self.validate():
+        self.value = self.saved_value
+        raise gdb.GdbError('Failed to validate')
+      self.saved_value = self.value
+</pre></div>
+</dd></dl>
 
 <dl>
 <dt><a name="index-Parameter_002eget_005fshow_005fstring"></a>Function: <strong>Parameter.get_show_string</strong> <em>(self, svalue)</em></dt>
@@ -236,6 +262,21 @@ passed through untranslated.
 <dt><code>gdb.PARAM_ZINTEGER</code></dt>
 <dd><p>The value is an integer.  This is like <code>PARAM_INTEGER</code>, except 0
 is interpreted as itself.
+</p>
+<a name="index-PARAM_005fZUINTEGER"></a>
+<a name="index-gdb_002ePARAM_005fZUINTEGER"></a>
+</dd>
+<dt><code>gdb.PARAM_ZUINTEGER</code></dt>
+<dd><p>The value is an unsigned integer.  This is like <code>PARAM_INTEGER</code>,
+except 0 is interpreted as itself, and the value cannot be negative.
+</p>
+<a name="index-PARAM_005fZUINTEGER_005fUNLIMITED"></a>
+<a name="index-gdb_002ePARAM_005fZUINTEGER_005fUNLIMITED"></a>
+</dd>
+<dt><code>gdb.PARAM_ZUINTEGER_UNLIMITED</code></dt>
+<dd><p>The value is a signed integer.  This is like <code>PARAM_ZUINTEGER</code>,
+except the special value -1 should be interpreted to mean
+&ldquo;unlimited&rdquo;.  Other negative values are not allowed.
 </p>
 <a name="index-PARAM_005fENUM"></a>
 <a name="index-gdb_002ePARAM_005fENUM"></a>

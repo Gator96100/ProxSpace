@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -151,6 +151,7 @@ processor names are recognized:
 <code>bdver3</code>,
 <code>bdver4</code>,
 <code>znver1</code>,
+<code>znver2</code>,
 <code>btver1</code>,
 <code>btver2</code>,
 <code>generic32</code> and
@@ -168,6 +169,10 @@ accept various extension mnemonics.  For example,
 <code>no287</code>,
 <code>no387</code>,
 <code>no687</code>,
+<code>cmov</code>,
+<code>nocmov</code>,
+<code>fxsr</code>,
+<code>nofxsr</code>,
 <code>mmx</code>,
 <code>nommx</code>,
 <code>sse</code>,
@@ -204,6 +209,8 @@ accept various extension mnemonics.  For example,
 <code>clflushopt</code>,
 <code>se1</code>,
 <code>clwb</code>,
+<code>movdiri</code>,
+<code>movdir64b</code>,
 <code>avx512f</code>,
 <code>avx512cd</code>,
 <code>avx512er</code>,
@@ -257,6 +264,10 @@ accept various extension mnemonics.  For example,
 <code>clflush</code>,
 <code>mwaitx</code>,
 <code>clzero</code>,
+<code>wbnoinvd</code>,
+<code>pconfig</code>,
+<code>waitpkg</code>,
+<code>cldemote</code>,
 <code>lwp</code>,
 <code>fma4</code>,
 <code>xop</code>,
@@ -318,6 +329,17 @@ instructions.  <samp>-mavxscalar=<var>128</var></samp> will encode scalar
 AVX instructions with 128bit vector length, which is the default.
 <samp>-mavxscalar=<var>256</var></samp> will encode scalar AVX instructions
 with 256bit vector length.
+</p>
+<a name="index-_002dmvexwig_003d-option_002c-i386"></a>
+<a name="index-_002dmvexwig_003d-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-mvexwig=<var>0</var></code></dt>
+<dt><code>-mvexwig=<var>1</var></code></dt>
+<dd><p>These options control how the assembler should encode VEX.W-ignored (WIG)
+VEX instructions.  <samp>-mvexwig=<var>0</var></samp> will encode WIG VEX
+instructions with vex.w = 0, which is the default.
+<samp>-mvexwig=<var>1</var></samp> will encode WIG EVEX instructions with
+vex.w = 1.
 </p>
 <a name="index-_002dmevexlig_003d-option_002c-i386"></a>
 <a name="index-_002dmevexlig_003d-option_002c-x86_002d64"></a>
@@ -432,6 +454,16 @@ R_X86_64_REX_GOTPCRELX, in 64-bit mode.
 relocations.  The default can be controlled by a configure option
 <samp>--enable-x86-relax-relocations</samp>.
 </p>
+<a name="index-_002dmx86_002dused_002dnote_003d-option_002c-i386"></a>
+<a name="index-_002dmx86_002dused_002dnote_003d-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-mx86-used-note=<var>no</var></code></dt>
+<dt><code>-mx86-used-note=<var>yes</var></code></dt>
+<dd><p>These options control whether the assembler should generate
+GNU_PROPERTY_X86_ISA_1_USED and GNU_PROPERTY_X86_FEATURE_2_USED
+GNU property notes.  The default can be controlled by the
+<samp>--enable-x86-used-note</samp> configure option.
+</p>
 <a name="index-_002dmevexrcig_003d-option_002c-i386"></a>
 <a name="index-_002dmevexrcig_003d-option_002c-x86_002d64"></a>
 </dd>
@@ -453,6 +485,29 @@ with 01, 10 and 11 RC bits, respectively.
 <dt><code>-mintel64</code></dt>
 <dd><p>This option specifies that the assembler should accept only AMD64 or
 Intel64 ISA in 64-bit mode.  The default is to accept both.
+</p>
+<a name="index-_002dO0-option_002c-i386"></a>
+<a name="index-_002dO0-option_002c-x86_002d64"></a>
+<a name="index-_002dO-option_002c-i386"></a>
+<a name="index-_002dO-option_002c-x86_002d64"></a>
+<a name="index-_002dO1-option_002c-i386"></a>
+<a name="index-_002dO1-option_002c-x86_002d64"></a>
+<a name="index-_002dO2-option_002c-i386"></a>
+<a name="index-_002dO2-option_002c-x86_002d64"></a>
+<a name="index-_002dOs-option_002c-i386"></a>
+<a name="index-_002dOs-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-O0 | -O | -O1 | -O2 | -Os</code></dt>
+<dd><p>Optimize instruction encoding with smaller instruction size.  &lsquo;<samp>-O</samp>&rsquo;
+and &lsquo;<samp>-O1</samp>&rsquo; encode 64-bit register load instructions with 64-bit
+immediate as 32-bit register load instructions with 31-bit or 32-bits
+immediates and encode 64-bit register clearing instructions with 32-bit
+register clearing instructions.  &lsquo;<samp>-O2</samp>&rsquo; includes &lsquo;<samp>-O1</samp>&rsquo;
+optimization plus encodes 256-bit and 512-bit vector register clearing
+instructions with 128-bit vector register clearing instructions.
+&lsquo;<samp>-Os</samp>&rsquo; includes &lsquo;<samp>-O2</samp>&rsquo; optimization plus encodes 16-bit, 32-bit
+and 64-bit register tests with immediate as 8-bit register test with
+immediate.  &lsquo;<samp>-O0</samp>&rsquo; turns off this optimization.
 </p>
 </dd>
 </dl>

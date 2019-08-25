@@ -24,7 +24,7 @@ _arch_ptr2comp() {
 }
 
 _arch_incomp() {
-  local r="\s-(-${1#* }\s|\w*${1% *})"; [[ $COMP_LINE =~ $r ]]
+  local r="[[:space:]]-(-${1#* }[[:space:]]|[[:alnum:]_]*${1% *})"; [[ $COMP_LINE =~ $r ]]
 }
 
 _pacman_keyids() {
@@ -74,7 +74,7 @@ _makepkg() {
   local cur opts prev
   COMPREPLY=()
   _get_comp_words_by_ref cur prev
-  if [[ $cur = -* && ! $prev =~ ^-(-(config|help|key|version)$|\w*[Vhp]) ]]; then
+  if [[ $cur = -* && ! $prev =~ ^-(-(config|help|key|version)$|[[:alnum:]_]*[Vhp]) ]]; then
     opts=('allsource asdeps check clean cleanbuild config force geninteg help
            holdver ignorearch install key log needed noarchive nobuild nocheck
            nocolor noconfirm nodeps noextract noprepare noprogressbar nosign
@@ -96,14 +96,18 @@ _pacman_pkg() {
   )"
 }
 
+_pacman_repo_list() {
+  _arch_compgen "$(pacman-conf --repo-list)"
+}
+
 _pacman() {
-  local common core cur database prev query remove sync upgrade o
+  local common core cur database files prev query remove sync upgrade o
   COMPREPLY=()
   _get_comp_words_by_ref cur prev
   database=('asdeps asexplicit')
   files=('list machinereadable owns search refresh regex' 'l o s x y')
-  query=('changelog check deps explicit file foreign groups info list owns
-          search unrequired upgrades' 'c e g i k l m o p s t u')
+  query=('changelog check deps explicit file foreign groups info list native owns
+          search unrequired upgrades' 'c e g i k l m n o p s t u')
   remove=('cascade dbonly nodeps assume-installed nosave print recursive unneeded' 'c n p s u')
   sync=('asdeps asexplicit clean dbonly downloadonly force groups ignore ignoregroup
          info list needed nodeps assume-installed print refresh recursive search sysupgrade'
@@ -119,7 +123,7 @@ _pacman() {
 
   if [[ $? != 0 ]]; then
     _arch_ptr2comp core
-  elif [[ ! $prev =~ ^-\w*[Vbhr] &&
+  elif [[ ! $prev =~ ^-[[:alnum:]_]*[Vbhr] &&
     ! $prev = --@(cachedir|color|config|dbpath|help|hookdir|gpgdir|logfile|root|version) ]]
   then
     [[ $cur = -* ]] && _arch_ptr2comp ${o#* } common ||
@@ -136,7 +140,7 @@ _pacman() {
           _pacman_pkg Qq;;
       S)
         { _arch_incomp 'g groups' && _pacman_pkg Sg; }      ||
-        { _arch_incomp 'l list'   && _pacman_pkg Sl sort; } ||
+        { _arch_incomp 'l list'   && _pacman_repo_list; } ||
           _pacman_pkg Slq;;
       U)
           _pacman_file;;

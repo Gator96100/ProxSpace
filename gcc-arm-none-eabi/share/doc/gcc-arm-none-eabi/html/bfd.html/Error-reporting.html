@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the BFD library.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -198,9 +198,28 @@ function may be overridden by the program.
 typedef void (*bfd_error_handler_type) (const char *, va_list);
 
 </pre></div>
+<a name="index-_005fbfd_005ferror_005fhandler"></a>
+<a name="g_t_005fbfd_005ferror_005fhandler"></a>
+<h4 class="subsubsection">2.2.2.1 <code>_bfd_error_handler</code></h4>
+<p><strong>Synopsis</strong>
+</p><div class="example">
+<pre class="example">void _bfd_error_handler (const char *fmt, ...) ATTRIBUTE_PRINTF_1;
+</pre></div>
+<p><strong>Description</strong><br>
+This is the default routine to handle BFD error messages.
+Like fprintf (stderr, ...), but also handles some extra format
+specifiers.
+</p>
+<p>%pA section name from section.  For group components, prints
+group name too.
+%pB file name from bfd.  For archive components, prints
+archive too.
+</p>
+<p>Beware: Only supports a maximum of 9 format arguments.
+</p>
 <a name="index-bfd_005fset_005ferror_005fhandler"></a>
 <a name="bfd_005fset_005ferror_005fhandler"></a>
-<h4 class="subsubsection">2.2.2.1 <code>bfd_set_error_handler</code></h4>
+<h4 class="subsubsection">2.2.2.2 <code>bfd_set_error_handler</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">bfd_error_handler_type bfd_set_error_handler (bfd_error_handler_type);
@@ -211,7 +230,7 @@ function.
 </p>
 <a name="index-bfd_005fset_005ferror_005fprogram_005fname"></a>
 <a name="bfd_005fset_005ferror_005fprogram_005fname"></a>
-<h4 class="subsubsection">2.2.2.2 <code>bfd_set_error_program_name</code></h4>
+<h4 class="subsubsection">2.2.2.3 <code>bfd_set_error_program_name</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">void bfd_set_error_program_name (const char *);

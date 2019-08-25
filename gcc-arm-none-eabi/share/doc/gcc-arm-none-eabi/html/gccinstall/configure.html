@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -454,7 +454,7 @@ but yielding a slightly slower compiler.
 libraries.
 </p>
 </dd>
-<dt><code><a name="with_002dgnu_002das"></a>--with-gnu-as</code></dt>
+<dt><code><a name="with-gnu-as"></a>--with-gnu-as</code></dt>
 <dd><p>Specify that the compiler should assume that the
 assembler it finds is the GNU assembler.  However, this does not modify
 the rules to find an assembler and will result in confusion if the
@@ -477,7 +477,7 @@ whether you use the GNU assembler.  On any other system,
 </li></ul>
 
 </dd>
-<dt><code><a name="with_002das"></a>--with-as=<var>pathname</var></code></dt>
+<dt><code><a name="with-as"></a>--with-as=<var>pathname</var></code></dt>
 <dd><p>Specify that the compiler should use the assembler pointed to by
 <var>pathname</var>, rather than the one found by the standard rules to find
 an assembler, which are:
@@ -510,7 +510,7 @@ assemblers installed and want to choose one that is not found by the
 above rules.
 </p>
 </dd>
-<dt><code><a name="with_002dgnu_002dld"></a>--with-gnu-ld</code></dt>
+<dt><code><a name="with-gnu-ld"></a>--with-gnu-ld</code></dt>
 <dd><p>Same as <a href="#with-gnu-as"><samp>--with-gnu-as</samp></a>
 but for the linker.
 </p>
@@ -524,31 +524,6 @@ but for the linker.
 <dd><p>Specify that stabs debugging
 information should be used instead of whatever format the host normally
 uses.  Normally GCC uses the same debug format as the host system.
-</p>
-<p>On MIPS based systems and on Alphas, you must specify whether you want
-GCC to create the normal ECOFF debugging format, or to use BSD-style
-stabs passed through the ECOFF symbol table.  The normal ECOFF debug
-format cannot fully handle languages other than C.  BSD stabs format can
-handle other languages, but it only works with the GNU debugger GDB.
-</p>
-<p>Normally, GCC uses the ECOFF debugging format by default; if you
-prefer BSD stabs, specify <samp>--with-stabs</samp> when you configure GCC.
-</p>
-<p>No matter which default you choose when you configure GCC, the user
-can use the <samp>-gcoff</samp> and <samp>-gstabs+</samp> options to specify explicitly
-the debug format for a particular compilation.
-</p>
-<p><samp>--with-stabs</samp> is meaningful on the ISC system on the 386, also, if
-<samp>--with-gas</samp> is used.  It selects use of stabs debugging
-information embedded in COFF output.  This kind of debugging information
-supports C++ well; ordinary COFF debugging information does not.
-</p>
-<p><samp>--with-stabs</samp> is also meaningful on 386 systems running SVR4.  It
-selects use of stabs debugging information embedded in ELF output.  The
-C++ compiler currently (2.6.0) does not support the DWARF debugging
-information normally used on 386 SVR4 platforms; stabs provide a
-workable alternative.  This requires gas and gdb, as the normal SVR4
-tools can not generate or interpret stabs.
 </p>
 </dd>
 <dt><code>--with-tls=<var>dialect</var></code></dt>
@@ -620,19 +595,33 @@ sysv, aix.
 <dt><code>--without-multilib-list</code></dt>
 <dd><p>Specify what multilibs to build.  <var>list</var> is a comma separated list of
 values, possibly consisting of a single value.  Currently only implemented
-for arm*-*-*, sh*-*-* and x86-64-*-linux*.  The accepted values and meaning
-for each target is given below.
+for aarch64*-*-*, arm*-*-*, sh*-*-* and x86-64-*-linux*.  The accepted
+alues and meaning for each target is given below.
 </p>
 <dl compact="compact">
+<dt><code>aarch64*-*-*</code></dt>
+<dd><p><var>list</var> is a comma separated list of <code>ilp32</code>, and <code>lp64</code>
+to enable ILP32 and LP64 run-time libraries, respectively.  If
+<var>list</var> is empty, then there will be no multilibs and only the
+default run-time library will be built.  If <var>list</var> is
+<code>default</code> or &ndash;with-multilib-list= is not specified, then the
+default set of libraries is selected based on the value of
+<samp>--target</samp>.
+</p>
+</dd>
 <dt><code>arm*-*-*</code></dt>
-<dd><p><var>list</var> is one of<code>default</code>, <code>aprofile</code> or <code>rmprofile</code>.
-Specifying <code>default</code> is equivalent to omitting this option, ie. only the
-default runtime library will be enabled.  Specifying <code>aprofile</code> or
-<code>rmprofile</code> builds multilibs for a combination of ISA, architecture,
-FPU available and floating-point ABI.
+<dd><p><var>list</var> is a comma separated list of <code>aprofile</code> and <code>rmprofile</code>
+to build multilibs for A or R and M architecture profiles respectively.  Note
+that, due to some limitation of the current multilib framework, using the
+combined <code>aprofile,rmprofile</code> multilibs selects in some cases a less
+optimal multilib than when using the multilib profile for the architecture
+targetted.  The special value <code>default</code> is also accepted and is equivalent
+to omitting the option, ie. only the default run-time library will be enabled.
 </p>
 <p>The table below gives the combination of ISAs, architectures, FPUs and
 floating-point ABIs for which multilibs are built for each accepted value.
+The union of these options is considered when specifying both <code>aprofile</code>
+and <code>rmprofile</code>.
 </p>
 <table>
 <tr><td width="15%">Option</td><td width="28%">aprofile</td><td width="30%">rmprofile</td></tr>
@@ -1201,14 +1190,17 @@ their runtime libraries should be built.  For a list of valid values for
 <pre class="smallexample">grep ^language= */config-lang.in
 </pre></div>
 <p>Currently, you can use any of the following:
-<code>all</code>, <code>ada</code>, <code>c</code>, <code>c++</code>, <code>fortran</code>,
+<code>all</code>, <code>default</code>, <code>ada</code>, <code>c</code>, <code>c++</code>, <code>fortran</code>,
 <code>go</code>, <code>jit</code>, <code>lto</code>, <code>objc</code>, <code>obj-c++</code>.
 Building the Ada compiler has special requirements, see below.
-If you do not pass this flag, or specify the option <code>all</code>, then all
+If you do not pass this flag, or specify the option <code>default</code>, then the
 default languages available in the <samp>gcc</samp> sub-tree will be configured.
 Ada, Go, Jit, and Objective-C++ are not default languages.  LTO is not a
 default language, but is built by default because <samp>--enable-lto</samp> is
-enabled by default.  The other languages are default languages.
+enabled by default.  The other languages are default languages.  If
+<code>all</code> is specified, then all available languages are built.  An
+exception is <code>jit</code> language, which requires
+<samp>--enable-host-shared</samp> to be included with <code>all</code>.
 </p>
 </dd>
 <dt><code>--enable-stage1-languages=<var>lang1</var>,<var>lang2</var>,&hellip;</code></dt>
@@ -1241,7 +1233,8 @@ not be built.
 </dd>
 <dt><code>--disable-libssp</code></dt>
 <dd><p>Specify that the run-time libraries for stack smashing protection
-should not be built.
+should not be built or linked against.  On many targets library support
+is provided by the C library instead.
 </p>
 </dd>
 <dt><code>--disable-libquadmath</code></dt>
@@ -1488,6 +1481,36 @@ When neither of these configure options are used, the default will be
 64-bit <code>long double</code> otherwise.
 </p>
 </dd>
+<dt><code>--with-long-double-format=ibm</code></dt>
+<dt><code>--with-long-double-format=ieee</code></dt>
+<dd><p>Specify whether <code>long double</code> uses the IBM extended double format
+or the IEEE 128-bit floating point format on PowerPC Linux systems.
+This configuration switch will only work on little endian PowerPC
+Linux systems and on big endian 64-bit systems where the default cpu
+is at least power7 (i.e. <samp>--with-cpu=power7</samp>,
+<samp>--with-cpu=power8</samp>, or <samp>--with-cpu=power9</samp> is used).
+</p>
+<p>If you use the <samp>--with-long-double-64</samp> configuration option,
+the <samp>--with-long-double-format=ibm</samp> and
+<samp>--with-long-double-format=ieee</samp> options are ignored.
+</p>
+<p>The default <code>long double</code> format is to use IBM extended double.
+Until all of the libraries are converted to use IEEE 128-bit floating
+point, it is not recommended to use
+<samp>--with-long-double-format=ieee</samp>.
+</p>
+<p>On little endian PowerPC Linux systems, if you explicitly set the
+<code>long double</code> type, it will build multilibs to allow you to
+select either <code>long double</code> format, unless you disable multilibs
+with the <code>--disable-multilib</code> option.  At present,
+<code>long double</code> multilibs are not built on big endian PowerPC Linux
+systems.  If you are building multilibs, you will need to configure
+the compiler using the <samp>--with-system-zlib</samp> option.
+</p>
+<p>If you do not set the <code>long double</code> type explicitly, no multilibs
+will be generated.
+</p>
+</dd>
 <dt><code>--enable-fdpic</code></dt>
 <dd><p>On SH Linux systems, generate ELF FDPIC code.
 </p>
@@ -1695,10 +1718,25 @@ explicitly specify the directory where they are installed.  The
 shorthand for
 <samp>--with-hsa-runtime-lib=<var>hsainstalldir</var>/lib</samp> and
 <samp>--with-hsa-runtime-include=<var>hsainstalldir</var>/include</samp>.
+</p>
+</dd>
+<dt><code>--enable-cet</code></dt>
+<dt><code>--disable-cet</code></dt>
+<dd><p>Enable building target run-time libraries with control-flow
+instrumentation, see <samp>-fcf-protection</samp> option.  When
+<code>--enable-cet</code> is specified target libraries are configured
+to add <samp>-fcf-protection</samp> and, if needed, other target
+specific options to a set of building options.
+</p>
+<p>The option is disabled by default.  When <code>--enable-cet=auto</code>
+is used, it is enabled on Linux/x86 if target binutils
+supports <code>Intel CET</code> instructions and disabled otherwise.
+In this case the target libraries are configured to get additional
+<samp>-fcf-protection</samp> option.
 </p></dd>
 </dl>
 
-<a name="Cross_002dCompiler_002dSpecific-Options"></a>
+<a name="Cross-Compiler-Specific-Options"></a>
 <h4 class="subheading">Cross-Compiler-Specific Options</h4>
 <p>The following options only apply to building cross compilers.
 </p>
@@ -1851,7 +1889,7 @@ scripts.
 overrides, you can pass a setting for <code>CONFIG_SITE</code> and set
 variables in the site file.
 </p>
-<a name="Objective_002dC_002dSpecific-Options"></a>
+<a name="Objective-C-Specific-Options"></a>
 <h4 class="subheading">Objective-C-Specific Options</h4>
 
 <p>The following options apply to the build of the Objective-C runtime library.

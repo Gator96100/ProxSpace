@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -109,6 +109,8 @@ with some exceptions, and possibly with some extensions.
 <a name="index-C11"></a>
 <a name="index-ISO-C1X"></a>
 <a name="index-C1X"></a>
+<a name="index-ISO-C17"></a>
+<a name="index-C17"></a>
 <a name="index-Technical-Corrigenda"></a>
 <a name="index-TC1"></a>
 <a name="index-Technical-Corrigendum-1"></a>
@@ -173,7 +175,11 @@ in 2011 as ISO/IEC 9899:2011.  (While in development, drafts of this
 standard version were referred to as <em>C1X</em>.)
 GCC has substantially complete support
 for this standard, enabled with <samp>-std=c11</samp> or
-<samp>-std=iso9899:2011</samp>.  
+<samp>-std=iso9899:2011</samp>.  A version with corrections integrated is
+known as <em>C17</em> and is supported with <samp>-std=c17</samp> or
+<samp>-std=iso9899:2017</samp>; the corrections are also applied with
+<samp>-std=c11</samp>, and the only difference between the options is the
+value of <code>__STDC_VERSION__</code>.
 </p>
 <p>By default, GCC provides some extensions to the C language that, on
 rare occasions conflict with the C standard.  See <a href="C-Extensions.html#C-Extensions">Extensions to the C Language Family</a>.  
@@ -269,24 +275,22 @@ warnings).
 14882:2011, and is referred to as C++11; before its publication it was
 commonly referred to as C++0x.  C++11 contains several changes to the
 C++ language, all of which have been implemented in GCC. For details
-see <a href="https://gcc.gnu.org/projects/cxx0x.html">https://gcc.gnu.org/projects/cxx0x.html</a>.
+see <a href="https://gcc.gnu.org/projects/cxx-status.html#cxx11">https://gcc.gnu.org/projects/cxx-status.html#cxx11</a>.
 To select this standard in GCC, use the option <samp>-std=c++11</samp>.
 </p>
 <p>Another revised ISO C++ standard was published in 2014 as ISO/IEC
 14882:2014, and is referred to as C++14; before its publication it was
 sometimes referred to as C++1y.  C++14 contains several further
 changes to the C++ language, all of which have been implemented in GCC.
-For details see <a href="https://gcc.gnu.org/projects/cxx1y.html">https://gcc.gnu.org/projects/cxx1y.html</a>.
+For details see <a href="https://gcc.gnu.org/projects/cxx-status.html#cxx14">https://gcc.gnu.org/projects/cxx-status.html#cxx14</a>.
 To select this standard in GCC, use the option <samp>-std=c++14</samp>.
 </p>
-<p>GCC also supports the C++ Concepts Technical Specification,
-ISO/IEC TS 19217:2015, which allows constraints to be defined for templates,
-allowing template arguments to be checked and for templates to be
-overloaded or specialized based on the constraints. Support for C++ Concepts
-is included in an experimental C++1z mode that corresponds to the next
-revision of the ISO C++ standard, expected to be published in 2017. To enable
-C++1z support in GCC, use the option <samp>-std=c++17</samp> or
-<samp>-std=c++1z</samp>.
+<p>The C++ language was further revised in 2017 and ISO/IEC 14882:2017 was
+published.  This is referred to as C++17, and before publication was
+often referred to as C++1z.  GCC supports all the changes in the new
+specification.  For further details see
+<a href="https://gcc.gnu.org/projects/cxx-status.html#cxx1z">https://gcc.gnu.org/projects/cxx-status.html#cxx1z</a>.  Use the option
+<samp>-std=c++17</samp> to select this variant of C++.
 </p>
 <p>More information about the C++ standards is available on the ISO C++
 committee&rsquo;s web site at <a href="http://www.open-std.org/jtc1/sc22/wg21/">http://www.open-std.org/jtc1/sc22/wg21/</a>.
@@ -304,7 +308,7 @@ select an extended version of the C++ language explicitly with
 <samp>-std=gnu++98</samp> (for C++98 with GNU extensions), or
 <samp>-std=gnu++11</samp> (for C++11 with GNU extensions), or
 <samp>-std=gnu++14</samp> (for C++14 with GNU extensions), or
-<samp>-std=gnu++1z</samp> (for C++1z with GNU extensions).  
+<samp>-std=gnu++17</samp> (for C++17 with GNU extensions).  
 </p>
 <p>The default, if
 no C++ language dialect options are given, is <samp>-std=gnu++14</samp>.

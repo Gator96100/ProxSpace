@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -323,6 +323,19 @@ associated with the bogus message.  It is usually used with &lsquo;<samp>xfail</
 to indicate that the message is a known problem for a particular set of
 targets.
 </p>
+</dd>
+<dt><code>{ dg-line <var>linenumvar</var> }</code></dt>
+<dd><p>This DejaGnu directive sets the variable <var>linenumvar</var> to the line number of
+the source line.  The variable <var>linenumvar</var> can then be used in subsequent
+<code>dg-error</code>, <code>dg-warning</code>, <code>dg-message</code> and <code>dg-bogus</code>
+directives.  For example:
+</p>
+<div class="smallexample">
+<pre class="smallexample">int a;   /* { dg-line first_def_a } */
+float a; /* { dg-error &quot;conflicting types of&quot; } */
+/* { dg-message &quot;previous declaration of&quot; &quot;&quot; { target *-*-* } first_def_a } */
+</pre></div>
+
 </dd>
 <dt><code>{ dg-excess-errors <var>comment</var> [{ target/xfail <var>selector</var> }] }</code></dt>
 <dd><p>This DejaGnu directive indicates that the test is expected to fail due

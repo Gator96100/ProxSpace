@@ -2,7 +2,7 @@
 #
 #   pkgbuild.sh - functions to extract information from PKGBUILD files
 #
-#   Copyright (c) 2014-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2009-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -80,6 +80,10 @@ extract_function_variable() {
 		printf -v attr_regex '^[[:space:]]* %s\+?=[^(]' "$2"
 	fi
 
+	# this function requires extglob - save current status to restore later
+	local shellopts=$(shopt -p extglob)
+	shopt -s extglob
+
 	while read -r; do
 		# strip leading whitespace and any usage of declare
 		decl=${REPLY##*([[:space:]])}
@@ -88,6 +92,8 @@ extract_function_variable() {
 		# entering this loop at all means we found a match, so notify the caller.
 		r=0
 	done < <(grep_function "$funcname" "$attr_regex")
+
+	eval "$shellopts"
 
 	return $r
 }
@@ -100,7 +106,11 @@ get_pkgbuild_attribute() {
 
 	local pkgname=$1 attrname=$2 isarray=$3 outputvar=$4
 
-	printf -v "$outputvar" %s ''
+	if (( isarray )); then
+		eval "$outputvar=()"
+	else
+		printf -v "$outputvar" %s ''
+	fi
 
 	if [[ $pkgname ]]; then
 		extract_global_variable "$attrname" "$isarray" "$outputvar"
@@ -108,6 +118,33 @@ get_pkgbuild_attribute() {
 	else
 		extract_global_variable "$attrname" "$isarray" "$outputvar"
 	fi
+}
+
+get_pkgbuild_all_split_attributes() {
+	local attrname=$1 outputvar=$2 all_list list
+
+	if extract_global_variable "$attrname" 1 list; then
+		all_list+=("${list[@]}")
+	fi
+	for a in "${arch[@]}"; do
+		if extract_global_variable "${attrname}_$a" 1 list; then
+			all_list+=("${list[@]}")
+		fi
+	done
+
+	for name in "${pkgname[@]}"; do
+		if extract_function_variable "package_$name" "$attrname" 1 list; then
+			all_list+=("${list[@]}")
+		fi
+
+		for a in "${arch[@]}"; do
+			if extract_function_variable "package_$name" "${attrname}_$a" 1 list; then
+				all_list+=("${list[@]}")
+			fi
+		done
+	done
+
+	[[ ${all_list[@]} ]] && array_build "$outputvar" all_list
 }
 
 ##
@@ -153,15 +190,13 @@ print_all_package_names() {
 	local version=$(get_full_version)
 	local architecture pkg opts a
 	for pkg in ${pkgname[@]}; do
-		get_pkgbuild_attribute "$pkg" 'arch' 1 architecture
-		get_pkgbuild_attribute "$pkg" 'options' 1 opts
-		for a in ${architecture[@]}; do
-			printf "%s-%s-%s\n" "$pkg" "$version" "$a"
-			if in_opt_array "debug" ${opts[@]} && in_opt_array "strip" ${opts[@]}; then
-				printf "%s-%s-%s-%s\n" "$pkg" "debug" "$version" "$a"
-			fi
-		done
+		architecture=$(get_pkg_arch $pkg)
+		printf "%s/%s-%s-%s%s\n" "$PKGDEST" "$pkg" "$version" "$architecture" "$PKGEXT"
 	done
+	if check_option "debug" "y" && check_option "strip" "y"; then
+		architecture=$(get_pkg_arch)
+		printf "%s/%s-%s-%s-%s%s\n" "$PKGDEST" "$pkgbase" "debug" "$version" "$architecture" "$PKGEXT"
+	fi
 }
 
 get_all_sources() {
@@ -192,4 +227,33 @@ get_all_sources_for_arch() {
 	fi
 
 	array_build "$1" "aggregate"
+}
+
+get_integlist() {
+	local integ
+	local integlist=()
+
+	for integ in "${known_hash_algos[@]}"; do
+		# check for e.g. "sha256sums"
+		local sumname="${integ}sums[@]"
+		if [[ -n ${!sumname} ]]; then
+			integlist+=("$integ")
+			continue
+		fi
+
+		# check for e.g. "sha256sums_x86_64"
+		for a in "${arch[@]}"; do
+			local sumname="${integ}sums_${a}[@]"
+			if [[ -n ${!sumname} ]]; then
+				integlist+=("$integ")
+				break
+			fi
+		done
+	done
+
+	if (( ${#integlist[@]} > 0 )); then
+		printf "%s\n" "${integlist[@]}"
+	else
+		printf "%s\n" "${INTEGRITY_CHECK[@]}"
+	fi
 }

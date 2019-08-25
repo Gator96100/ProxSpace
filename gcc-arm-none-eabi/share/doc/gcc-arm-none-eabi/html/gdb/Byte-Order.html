@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -102,6 +102,15 @@ executable.
 </dd>
 </dl>
 
+<p>If the <code>set endian auto</code> mode is in effect and no executable has
+been selected, then the endianness used is the last one chosen either
+by one of the <code>set endian big</code> and <code>set endian little</code>
+commands or by inferring from the last executable used.  If no
+endianness has been previously chosen, then the default for this mode
+is inferred from the target <small>GDB</small> has been built for, and is
+<code>little</code> if the name of the target CPU has an <code>el</code> suffix
+and <code>big</code> otherwise.
+</p>
 <p>Note that these commands merely adjust interpretation of symbolic
 data on the host, and that they have absolutely no effect on the
 target system.

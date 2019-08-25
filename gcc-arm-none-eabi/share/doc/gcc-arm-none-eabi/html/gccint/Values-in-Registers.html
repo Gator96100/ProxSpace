@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,29 +75,23 @@ Next: <a href="Leaf-Functions.html#Leaf-Functions" accesskey="n" rel="next">Leaf
 </div>
 <hr>
 <a name="How-Values-Fit-in-Registers"></a>
-<h4 class="subsection">17.7.3 How Values Fit in Registers</h4>
+<h4 class="subsection">18.7.3 How Values Fit in Registers</h4>
 
 <p>This section discusses the macros that describe which kinds of values
 (specifically, which machine modes) each register can hold, and how many
 consecutive registers are needed for a given mode.
 </p>
 <dl>
-<dt><a name="index-HARD_005fREGNO_005fNREGS"></a>Macro: <strong>HARD_REGNO_NREGS</strong> <em>(<var>regno</var>, <var>mode</var>)</em></dt>
-<dd><p>A C expression for the number of consecutive hard registers, starting
+<dt><a name="index-TARGET_005fHARD_005fREGNO_005fNREGS"></a>Target Hook: <em>unsigned int</em> <strong>TARGET_HARD_REGNO_NREGS</strong> <em>(unsigned int <var>regno</var>, machine_mode <var>mode</var>)</em></dt>
+<dd><p>This hook returns the number of consecutive hard registers, starting
 at register number <var>regno</var>, required to hold a value of mode
-<var>mode</var>.  This macro must never return zero, even if a register
-cannot hold the requested mode - indicate that with HARD_REGNO_MODE_OK
-and/or CANNOT_CHANGE_MODE_CLASS instead.
+<var>mode</var>.  This hook must never return zero, even if a register
+cannot hold the requested mode - indicate that with
+<code>TARGET_HARD_REGNO_MODE_OK</code> and/or
+<code>TARGET_CAN_CHANGE_MODE_CLASS</code> instead.
 </p>
-<p>On a machine where all registers are exactly one word, a suitable
-definition of this macro is
-</p>
-<div class="smallexample">
-<pre class="smallexample">#define HARD_REGNO_NREGS(REGNO, MODE)            \
-   ((GET_MODE_SIZE (MODE) + UNITS_PER_WORD - 1)  \
-    / UNITS_PER_WORD)
-</pre></div>
-</dd></dl>
+<p>The default definition returns the number of words in <var>mode</var>.
+</p></dd></dl>
 
 <dl>
 <dt><a name="index-HARD_005fREGNO_005fNREGS_005fHAS_005fPADDING"></a>Macro: <strong>HARD_REGNO_NREGS_HAS_PADDING</strong> <em>(<var>regno</var>, <var>mode</var>)</em></dt>
@@ -106,7 +100,7 @@ in memory, ends with padding that causes it to take up more space than
 in registers starting at register number <var>regno</var> (as determined by
 multiplying GCC&rsquo;s notion of the size of the register when containing
 this mode by the number of registers returned by
-<code>HARD_REGNO_NREGS</code>).  By default this is zero.
+<code>TARGET_HARD_REGNO_NREGS</code>).  By default this is zero.
 </p>
 <p>For example, if a floating-point value is stored in three 32-bit
 registers but takes up 128 bits in memory, then this would be
@@ -129,7 +123,7 @@ including any padding.  In the example above, the value would be four.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-REGMODE_005fNATURAL_005fSIZE"></a>Macro: <strong>REGMODE_NATURAL_SIZE</strong> <em>(<var>mode</var>)</em></dt>
+<dt><a name="index-REGMODE_005fNATURAL_005fSIZE-2"></a>Macro: <strong>REGMODE_NATURAL_SIZE</strong> <em>(<var>mode</var>)</em></dt>
 <dd><p>Define this macro if the natural size of registers that hold values
 of mode <var>mode</var> is not the word size.  It is a C expression that
 should give the natural size in bytes for the specified mode.  It is
@@ -139,22 +133,18 @@ floating-point registers is still 32-bit.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-HARD_005fREGNO_005fMODE_005fOK"></a>Macro: <strong>HARD_REGNO_MODE_OK</strong> <em>(<var>regno</var>, <var>mode</var>)</em></dt>
-<dd><p>A C expression that is nonzero if it is permissible to store a value
+<dt><a name="index-TARGET_005fHARD_005fREGNO_005fMODE_005fOK"></a>Target Hook: <em>bool</em> <strong>TARGET_HARD_REGNO_MODE_OK</strong> <em>(unsigned int <var>regno</var>, machine_mode <var>mode</var>)</em></dt>
+<dd><p>This hook returns true if it is permissible to store a value
 of mode <var>mode</var> in hard register number <var>regno</var> (or in several
-registers starting with that one).  For a machine where all registers
-are equivalent, a suitable definition is
+registers starting with that one).  The default definition returns true
+unconditionally.
 </p>
-<div class="smallexample">
-<pre class="smallexample">#define HARD_REGNO_MODE_OK(REGNO, MODE) 1
-</pre></div>
-
 <p>You need not include code to check for the numbers of fixed registers,
 because the allocation mechanism considers them to be always occupied.
 </p>
 <a name="index-register-pairs"></a>
 <p>On some machines, double-precision values must be kept in even/odd
-register pairs.  You can implement that by defining this macro to reject
+register pairs.  You can implement that by defining this hook to reject
 odd register numbers for such modes.
 </p>
 <p>The minimum requirement for a mode to be OK in a register is that the
@@ -164,11 +154,11 @@ value into the register and back out not alter it.
 </p>
 <p>Since the same instruction used to move <code>word_mode</code> will work for
 all narrower integer modes, it is not necessary on any machine for
-<code>HARD_REGNO_MODE_OK</code> to distinguish between these modes, provided
-you define patterns &lsquo;<samp>movhi</samp>&rsquo;, etc., to take advantage of this.  This
-is useful because of the interaction between <code>HARD_REGNO_MODE_OK</code>
-and <code>MODES_TIEABLE_P</code>; it is very desirable for all integer modes
-to be tieable.
+this hook to distinguish between these modes, provided you define
+patterns &lsquo;<samp>movhi</samp>&rsquo;, etc., to take advantage of this.  This is
+useful because of the interaction between <code>TARGET_HARD_REGNO_MODE_OK</code>
+and <code>TARGET_MODES_TIEABLE_P</code>; it is very desirable for all integer
+modes to be tieable.
 </p>
 <p>Many machines have special registers for floating point arithmetic.
 Often people assume that floating point machine modes are allowed only
@@ -181,16 +171,16 @@ registers.  Integer move instructions can be used to move the values.
 modes may not go in floating registers.  This is true if the floating
 registers normalize any value stored in them, because storing a
 non-floating value there would garble it.  In this case,
-<code>HARD_REGNO_MODE_OK</code> should reject fixed-point machine modes in
+<code>TARGET_HARD_REGNO_MODE_OK</code> should reject fixed-point machine modes in
 floating registers.  But if the floating registers do not automatically
 normalize, if you can store any bit pattern in one and retrieve it
 unchanged without a trap, then any machine mode may go in a floating
-register, so you can define this macro to say so.
+register, so you can define this hook to say so.
 </p>
 <p>The primary significance of special floating registers is rather that
 they are the registers acceptable in floating point arithmetic
 instructions.  However, this is of no concern to
-<code>HARD_REGNO_MODE_OK</code>.  You handle it by writing the proper
+<code>TARGET_HARD_REGNO_MODE_OK</code>.  You handle it by writing the proper
 constraints for those instructions.
 </p>
 <p>On some machines, the floating registers are especially slow to access,
@@ -213,20 +203,21 @@ handler.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-MODES_005fTIEABLE_005fP"></a>Macro: <strong>MODES_TIEABLE_P</strong> <em>(<var>mode1</var>, <var>mode2</var>)</em></dt>
-<dd><p>A C expression that is nonzero if a value of mode
-<var>mode1</var> is accessible in mode <var>mode2</var> without copying.
+<dt><a name="index-TARGET_005fMODES_005fTIEABLE_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_MODES_TIEABLE_P</strong> <em>(machine_mode <var>mode1</var>, machine_mode <var>mode2</var>)</em></dt>
+<dd><p>This hook returns true if a value of mode <var>mode1</var> is accessible
+in mode <var>mode2</var> without copying.
 </p>
-<p>If <code>HARD_REGNO_MODE_OK (<var>r</var>, <var>mode1</var>)</code> and
-<code>HARD_REGNO_MODE_OK (<var>r</var>, <var>mode2</var>)</code> are always the same for
-any <var>r</var>, then <code>MODES_TIEABLE_P (<var>mode1</var>, <var>mode2</var>)</code>
-should be nonzero.  If they differ for any <var>r</var>, you should define
-this macro to return zero unless some other mechanism ensures the
+<p>If <code>TARGET_HARD_REGNO_MODE_OK (<var>r</var>, <var>mode1</var>)</code> and
+<code>TARGET_HARD_REGNO_MODE_OK (<var>r</var>, <var>mode2</var>)</code> are always
+the same for any <var>r</var>, then
+<code>TARGET_MODES_TIEABLE_P (<var>mode1</var>, <var>mode2</var>)</code>
+should be true.  If they differ for any <var>r</var>, you should define
+this hook to return false unless some other mechanism ensures the
 accessibility of the value in a narrower mode.
 </p>
-<p>You should define this macro to return nonzero in as many cases as
+<p>You should define this hook to return true in as many cases as
 possible since doing so will allow GCC to perform better register
-allocation.
+allocation.  The default definition returns true unconditionally.
 </p></dd></dl>
 
 <dl>

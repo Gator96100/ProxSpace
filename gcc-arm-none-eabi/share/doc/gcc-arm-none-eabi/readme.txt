@@ -1,10 +1,10 @@
 GNU Tools for Arm Embedded Processors
-Version: 7
+Version: 8
 
 Table of Contents
 * Installing executables on Linux
 * Installing executables on Mac OS X
-* Installing executables on Windows 
+* Installing executables on Windows
 * Invoking GCC
 * Architecture options usage
 * C Libraries usage
@@ -240,11 +240,11 @@ Newlib-nano is different from newlib in addition to the libraries' name.
 Formatted input/output of floating-point number are implemented as weak symbol.
 If you want to use %f, you have to pull in the symbol by explicitly specifying
 "-u" command option.
-   
+
   -u _scanf_float
   -u _printf_float
 
-e.g. to output a float, the command line is like: 
+e.g. to output a float, the command line is like:
 $ arm-none-eabi-gcc --specs=nano.specs -u _printf_float $(OTHER_LINK_OPTIONS)
 
 For more about the difference and usage, please refer the README.nano in the

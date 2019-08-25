@@ -61,7 +61,7 @@ Next: <a href="memmove.html#memmove" accesskey="n" rel="next">memmove</a>, Previ
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">#include &lt;string.h&gt;
-char *memmem(const void *<var>s1</var>, size_t <var>l1</var>, const void *<var>s2</var>,
+void *memmem(const void *<var>s1</var>, size_t <var>l1</var>, const void *<var>s2</var>,
     size_t <var>l2</var>);
 
 </pre></div>
@@ -70,8 +70,8 @@ char *memmem(const void *<var>s1</var>, size_t <var>l1</var>, const void *<var>s
 <p>Locates the first occurrence in the memory region pointed to
 by <var>s1</var> with length <var>l1</var> of the sequence of bytes pointed
 to by <var>s2</var> of length <var>l2</var>.  If you already know the
-lengths of your haystack and needle, <code>memmem</code> can be much
-faster than <code>strstr</code>.
+lengths of your haystack and needle, <code>memmem</code> is much faster
+than <code>strstr</code>.
 </p>
 <br>
 <p><strong>Returns</strong><br>

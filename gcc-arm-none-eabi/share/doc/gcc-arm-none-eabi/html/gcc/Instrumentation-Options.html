@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -154,6 +154,11 @@ and code generation options.  For test coverage analysis, use the
 additional <samp>-ftest-coverage</samp> option.  You do not need to profile
 every source file in a program.
 
+</li><li> Compile the source files additionally with <samp>-fprofile-abs-path</samp>
+to create absolute path names in the <samp>.gcno</samp> files.  This allows
+<code>gcov</code> to find the correct sources in projects where compilations
+occur with different working directories.
+
 </li><li> Link your object files with <samp>-lgcov</samp> or <samp>-fprofile-arcs</samp>
 (the latter implies the former).
 
@@ -193,6 +198,14 @@ show program coverage.  Each source file&rsquo;s note file is called
 above for a description of <var>auxname</var> and instructions on how to
 generate test coverage data.  Coverage data matches the source files
 more closely if you do not optimize.
+</p>
+</dd>
+<dt><code>-fprofile-abs-path</code></dt>
+<dd><a name="index-fprofile_002dabs_002dpath"></a>
+<p>Automatically convert relative source file names to absolute path names
+in the <samp>.gcno</samp> files.  This allows <code>gcov</code> to find the correct
+sources in projects where compilations occur with different working
+directories.
 </p>
 </dd>
 <dt><code>-fprofile-dir=<var>path</var></code></dt>
@@ -264,6 +277,32 @@ and/or <samp>-fcheck-pointer-bounds</samp>.
 <p>Enable AddressSanitizer for Linux kernel.
 See <a href="https://github.com/google/kasan/wiki">https://github.com/google/kasan/wiki</a> for more details.
 The option cannot be combined with <samp>-fcheck-pointer-bounds</samp>.
+</p>
+</dd>
+<dt><code>-fsanitize=pointer-compare</code></dt>
+<dd><a name="index-fsanitize_003dpointer_002dcompare"></a>
+<p>Instrument comparison operation (&lt;, &lt;=, &gt;, &gt;=) with pointer operands.
+The option must be combined with either <samp>-fsanitize=kernel-address</samp> or
+<samp>-fsanitize=address</samp>
+The option cannot be combined with <samp>-fsanitize=thread</samp>
+and/or <samp>-fcheck-pointer-bounds</samp>.
+Note: By default the check is disabled at run time.  To enable it,
+add <code>detect_invalid_pointer_pairs=2</code> to the environment variable
+<code>ASAN_OPTIONS</code>. Using <code>detect_invalid_pointer_pairs=1</code> detects
+invalid operation only when both pointers are non-null.
+</p>
+</dd>
+<dt><code>-fsanitize=pointer-subtract</code></dt>
+<dd><a name="index-fsanitize_003dpointer_002dsubtract"></a>
+<p>Instrument subtraction with pointer operands.
+The option must be combined with either <samp>-fsanitize=kernel-address</samp> or
+<samp>-fsanitize=address</samp>
+The option cannot be combined with <samp>-fsanitize=thread</samp>
+and/or <samp>-fcheck-pointer-bounds</samp>.
+Note: By default the check is disabled at run time.  To enable it,
+add <code>detect_invalid_pointer_pairs=2</code> to the environment variable
+<code>ASAN_OPTIONS</code>. Using <code>detect_invalid_pointer_pairs=1</code> detects
+invalid operation only when both pointers are non-null.
 </p>
 </dd>
 <dt><code>-fsanitize=thread</code></dt>
@@ -462,6 +501,23 @@ accesses and some conversions between pointers to base and derived classes,
 to verify the referenced object has the correct dynamic type.
 </p>
 </dd>
+<dt><code>-fsanitize=pointer-overflow</code></dt>
+<dd><a name="index-fsanitize_003dpointer_002doverflow"></a>
+
+<p>This option enables instrumentation of pointer arithmetics.  If the pointer
+arithmetics overflows, a run-time error is issued.
+</p>
+</dd>
+<dt><code>-fsanitize=builtin</code></dt>
+<dd><a name="index-fsanitize_003dbuiltin"></a>
+
+<p>This option enables instrumentation of arguments to selected builtin
+functions.  If an invalid value is passed to such arguments, a run-time
+error is issued.  E.g.&nbsp;passing 0 as the argument to <code>__builtin_ctz</code>
+or <code>__builtin_clz</code> invokes undefined behavior and is diagnosed
+by this option.
+</p>
+</dd>
 </dl>
 
 <p>While <samp>-ftrapv</samp> causes traps for signed overflows to be emitted,
@@ -549,6 +605,21 @@ is usable even in freestanding environments.
 <dd><a name="index-fsanitize_002dcoverage_003dtrace_002dpc"></a>
 <p>Enable coverage-guided fuzzing code instrumentation.
 Inserts a call to <code>__sanitizer_cov_trace_pc</code> into every basic block.
+</p>
+</dd>
+<dt><code>-fsanitize-coverage=trace-cmp</code></dt>
+<dd><a name="index-fsanitize_002dcoverage_003dtrace_002dcmp"></a>
+<p>Enable dataflow guided fuzzing code instrumentation.
+Inserts a call to <code>__sanitizer_cov_trace_cmp1</code>,
+<code>__sanitizer_cov_trace_cmp2</code>, <code>__sanitizer_cov_trace_cmp4</code> or
+<code>__sanitizer_cov_trace_cmp8</code> for integral comparison with both operands
+variable or <code>__sanitizer_cov_trace_const_cmp1</code>,
+<code>__sanitizer_cov_trace_const_cmp2</code>,
+<code>__sanitizer_cov_trace_const_cmp4</code> or
+<code>__sanitizer_cov_trace_const_cmp8</code> for integral comparison with one
+operand constant, <code>__sanitizer_cov_trace_cmpf</code> or
+<code>__sanitizer_cov_trace_cmpd</code> for float or double comparisons and
+<code>__sanitizer_cov_trace_switch</code> for switch statements.
 </p>
 </dd>
 <dt><code>-fbounds-check</code></dt>
@@ -734,6 +805,37 @@ against <samp>libmpxwrappers</samp>.  See also <samp>-static-libmpxwrappers</sam
 Enabled by default.
 </p>
 </dd>
+<dt><code>-fcf-protection=<span class="roman">[</span>full<span class="roman">|</span>branch<span class="roman">|</span>return<span class="roman">|</span>none<span class="roman">]</span></code></dt>
+<dd><a name="index-fcf_002dprotection"></a>
+<p>Enable code instrumentation of control-flow transfers to increase
+program security by checking that target addresses of control-flow
+transfer instructions (such as indirect function call, function return,
+indirect jump) are valid.  This prevents diverting the flow of control
+to an unexpected target.  This is intended to protect against such
+threats as Return-oriented Programming (ROP), and similarly
+call/jmp-oriented programming (COP/JOP).
+</p>
+<p>The value <code>branch</code> tells the compiler to implement checking of
+validity of control-flow transfer at the point of indirect branch
+instructions, i.e. call/jmp instructions.  The value <code>return</code>
+implements checking of validity at the point of returning from a
+function.  The value <code>full</code> is an alias for specifying both
+<code>branch</code> and <code>return</code>. The value <code>none</code> turns off
+instrumentation.
+</p>
+<p>The macro <code>__CET__</code> is defined when <samp>-fcf-protection</samp> is
+used.  The first bit of <code>__CET__</code> is set to 1 for the value
+<code>branch</code> and the second bit of <code>__CET__</code> is set to 1 for
+the <code>return</code>.
+</p>
+<p>You can also use the <code>nocf_check</code> attribute to identify
+which functions and calls should be skipped from instrumentation
+(see <a href="Function-Attributes.html#Function-Attributes">Function Attributes</a>).
+</p>
+<p>Currently the x86 GNU/Linux target provides an implementation based
+on Intel Control-flow Enforcement Technology (CET).
+</p>
+</dd>
 <dt><code>-fstack-protector</code></dt>
 <dd><a name="index-fstack_002dprotector"></a>
 <p>Emit extra code to check for buffer overflows, such as stack smashing
@@ -784,7 +886,8 @@ target support in the compiler but comes with the following drawbacks:
 </p>
 <ol>
 <li> Modified allocation strategy for large objects: they are always
-allocated dynamically if their size exceeds a fixed threshold.
+allocated dynamically if their size exceeds a fixed threshold.  Note this
+may change the semantics of some code.
 
 </li><li> Fixed limit on the size of the static frame of functions: when it is
 topped by a particular function, stack checking is not reliable and
@@ -796,6 +899,26 @@ generic implementation, code performance is hampered.
 
 <p>Note that old-style stack checking is also the fallback method for
 &lsquo;<samp>specific</samp>&rsquo; if no target support has been added in the compiler.
+</p>
+<p>&lsquo;<samp>-fstack-check=</samp>&rsquo; is designed for Ada&rsquo;s needs to detect infinite recursion
+and stack overflows.  &lsquo;<samp>specific</samp>&rsquo; is an excellent choice when compiling
+Ada code.  It is not generally sufficient to protect against stack-clash
+attacks.  To protect against those you want &lsquo;<samp>-fstack-clash-protection</samp>&rsquo;.
+</p>
+</dd>
+<dt><code>-fstack-clash-protection</code></dt>
+<dd><a name="index-fstack_002dclash_002dprotection"></a>
+<p>Generate code to prevent stack clash style attacks.  When this option is
+enabled, the compiler will only allocate one page of stack space at a time
+and each page is accessed immediately after allocation.  Thus, it prevents
+allocations from jumping over any stack guard page provided by the
+operating system.
+</p>
+<p>Most targets do not fully support stack clash protection.  However, on
+those targets <samp>-fstack-clash-protection</samp> will protect dynamic stack
+allocations.  <samp>-fstack-clash-protection</samp> may also provide limited
+protection for static stack allocations if the target supports
+<samp>-fstack-check=specific</samp>.
 </p>
 </dd>
 <dt><code>-fstack-limit-register=<var>reg</var></code></dt>
@@ -975,6 +1098,35 @@ match is done on substrings: if the <var>sym</var> parameter is a substring
 of the function name, it is considered to be a match.  For C99 and C++
 extended identifiers, the function name must be given in UTF-8, not
 using universal character names.
+</p>
+</dd>
+<dt><code>-fpatchable-function-entry=<var>N</var>[,<var>M</var>]</code></dt>
+<dd><a name="index-fpatchable_002dfunction_002dentry"></a>
+<p>Generate <var>N</var> NOPs right at the beginning
+of each function, with the function entry point before the <var>M</var>th NOP.
+If <var>M</var> is omitted, it defaults to <code>0</code> so the
+function entry points to the address just at the first NOP.
+The NOP instructions reserve extra space which can be used to patch in
+any desired instrumentation at run time, provided that the code segment
+is writable.  The amount of space is controllable indirectly via
+the number of NOPs; the NOP instruction used corresponds to the instruction
+emitted by the internal GCC back-end interface <code>gen_nop</code>.  This behavior
+is target-specific and may also depend on the architecture variant and/or
+other compilation options.
+</p>
+<p>For run-time identification, the starting addresses of these areas,
+which correspond to their respective function entries minus <var>M</var>,
+are additionally collected in the <code>__patchable_function_entries</code>
+section of the resulting binary.
+</p>
+<p>Note that the value of <code>__attribute__ ((patchable_function_entry
+(N,M)))</code> takes precedence over command-line option
+<samp>-fpatchable-function-entry=N,M</samp>.  This can be used to increase
+the area size or to remove it completely on a single function.
+If <code>N=0</code>, no pad location is recorded.
+</p>
+<p>The NOP instructions are inserted at&mdash;and maybe before, depending on
+<var>M</var>&mdash;the function entry address, even before the prologue.
 </p>
 </dd>
 </dl>

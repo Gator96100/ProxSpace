@@ -9,32 +9,35 @@ ProxSpace comes with 3 different executables .bat files.
  - `autobuild.bat` runs a script (msys2/autobuild.sh) in x86 mode as well as in x64 mode at startup. The script will update all git repositories in the pm3 folder and then compile them and move a zip file with the just compiled firmware and client into the build folder. It is not designed for development, just for compiling.
 
 ## What's installed
-ProxSpace comes with already installed tools, but most of the required tools will be automatically downloaded. All tools will be contained within the ProxSpace folder which means ProxSpace can be moved into a different directory or even a different Windows machine without the need to reinstall anything.
+ProxSpace will automatically download and update to the latest required packages. All tools will be contained within the ProxSpace folder, which means ProxSpace can be moved into a different directory or even a different Windows machine without the need to reinstall anything.
 Following tools are already installed with the current ProxSpace version:
  - msys2
- - GNU Arm Embedded Toolchain 7-2018-q2
+ - GNU Arm Embedded Toolchain 8-2019-q3
  
- Following tools will be automatically download:
- - gcc
- - Qt5
- - readline
+ Following packages will be automatically download or updated:
  - git
- - perl
+ - make
+ - gcc
  - pkg-config
+ - readline
+ - Qt5
 
 ## Package management system
-MSYS2 features a package management system to provide easy installation of packages, Pacman. It brings many powerful features such as dependency resolution and simple complete system upgrades (excluding the GNU Arm Embedded Toolchain), as well as straight-forward package building. All installed packages can be updated with `pacman -Syuu`
+MSYS2 features a package management system to provide easy installation of packages, Pacman. It brings many powerful features such as dependency resolution and simple complete system upgrades (excluding the GNU Arm Embedded Toolchain), as well as straight-forward package building. All installed packages can be updated with `pacman -Syuu` For more details visit [the MSYS2 wiki](https://github.com/msys2/msys2/wiki)
 
-## Usage
- 1. Extract 'ProxSpace' to a location on drive without spaces. For example `C:\Proxspace` or `D:\projects\public\proxmark\proxspace` are ok whereas `C:\My Documents\My Projects\proxspace` is not.
- 2. Run `runme.bat` or `runme64.bat` depending on your Windows architecture.
- 3. Get the Proxmark III repository you wish to compile. This can be done with git. For example `git clone https://github.com/Proxmark/proxmark3.git`.
- 4. Go into the root directory of the repository you wish to compile. For example `cd proxmark3`.
- 5. To build the project type `make clean && make all`. 
- 6. In most cases the Proxmark III needs to be flashed with the just compiled firmware for details see **Firmware upgrading the Proxmark III**.
- 7. To run the Proxmark III client type `./client/proxmark3.exe COM1` where COM1 is the USB port of the Proxmark III.
- 8. Check your firmware revision on the Proxmark III with `hw ver`
- 9. For basic help type `help`. Or for help on a set of sub commands type the command followed by help. For example `hf mf help`.
+## Installation
+ 1. There are two methods of installing the ProxSpace environment.
+	* Downloading [the latest master](https://github.com/Gator96100/ProxSpace/archive/master.zip). This will upgrade the msys2 core packages and then will download and install every package required for compiling the Proxmark client and firmware.
+	* Downloading [the latest release](https://github.com/Gator96100/ProxSpace/releases). This ProxSpace environment is already setup and will only update outdated packages.
+ 2. Extract 'ProxSpace' to a location on drive without spaces. For example `C:\Proxspace` or `D:\projects\public\proxmark\proxspace` are ok whereas `C:\My Documents\My Projects\proxspace` is not.
+ 3. Run `runme.bat` or `runme64.bat` depending on your Windows architecture.
+ 4. Get the Proxmark III repository you wish to compile. This can be done with git. For example `git clone https://github.com/Proxmark/proxmark3.git`.
+ 5. Go into the root directory of the repository you wish to compile. For example `cd proxmark3`.
+ 6. To build the project type `make clean && make all`. 
+ 7. In most cases the Proxmark III needs to be flashed with the just compiled firmware for details see **Firmware upgrading the Proxmark III**.
+ 8. To run the Proxmark III client type `./client/proxmark3.exe COM1` where COM1 is the USB port of the Proxmark III.
+ 9. Check your firmware revision on the Proxmark III with `hw ver`
+ 10. For basic help type `help`. Or for help on a set of sub commands type the command followed by help. For example `hf mf help`.
  
 ## Firmware upgrading the Proxmark III
 Please note that more detail is available on the wiki: https://github.com/Proxmark/proxmark3/wiki

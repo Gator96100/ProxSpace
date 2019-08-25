@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Defining-Predicates.html#Defining-Predicates" accesskey="n" rel="
 </div>
 <hr>
 <a name="Machine_002dIndependent-Predicates-1"></a>
-<h4 class="subsection">16.7.1 Machine-Independent Predicates</h4>
+<h4 class="subsection">17.7.1 Machine-Independent Predicates</h4>
 <a name="index-machine_002dindependent-predicates"></a>
 <a name="index-generic-predicates"></a>
 
@@ -180,7 +180,7 @@ hardware&rsquo;s requirements explicitly.
 <dt><a name="index-push_005foperand"></a>Function: <strong>push_operand</strong></dt>
 <dd><p>This predicate allows a memory reference suitable for pushing a value
 onto the stack.  This will be a <code>MEM</code> which refers to
-<code>stack_pointer_rtx</code>, with a side-effect in its address expression
+<code>stack_pointer_rtx</code>, with a side effect in its address expression
 (see <a href="Incdec.html#Incdec">Incdec</a>); which one is determined by the
 <code>STACK_PUSH_CODE</code> macro (see <a href="Frame-Layout.html#Frame-Layout">Frame Layout</a>).
 </p></dd></dl>
@@ -189,7 +189,7 @@ onto the stack.  This will be a <code>MEM</code> which refers to
 <dt><a name="index-pop_005foperand"></a>Function: <strong>pop_operand</strong></dt>
 <dd><p>This predicate allows a memory reference suitable for popping a value
 off the stack.  Again, this will be a <code>MEM</code> referring to
-<code>stack_pointer_rtx</code>, with a side-effect in its address
+<code>stack_pointer_rtx</code>, with a side effect in its address
 expression.  However, this time <code>STACK_POP_CODE</code> is expected.
 </p></dd></dl>
 

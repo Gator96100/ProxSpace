@@ -2,7 +2,7 @@
 #
 #   git.sh - function for handling the download and "extraction" of Git sources
 #
-#   Copyright (c) 2015-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ download_git() {
 	local url=$(get_url "$netfile")
 	url=${url#git+}
 	url=${url%%#*}
+	url=${url%%\?*}
 
 	if [[ ! -d "$dir" ]] || dir_is_empty "$dir" ; then
 		msg2 "$(gettext "Cloning %s %s repo...")" "${repo}" "git"
@@ -64,16 +65,10 @@ download_git() {
 }
 
 extract_git() {
-	local netfile=$1
+	local netfile=$1 tagname
 
-	local fragment=${netfile#*#}
-	if [[ $fragment = "$netfile" ]]; then
-		unset fragment
-	fi
-
-	local repo=${netfile##*/}
-	repo=${repo%%#*}
-	repo=${repo%%.git*}
+	local fragment=$(get_uri_fragment "$netfile")
+	local repo=$(get_filename "$netfile")
 
 	local dir=$(get_filepath "$netfile")
 	[[ -z "$dir" ]] && dir="$SRCDEST/$(get_filename "$netfile")"
@@ -113,6 +108,15 @@ extract_git() {
 				plain "$(gettext "Aborting...")"
 				exit 1
 		esac
+	fi
+
+	if [[ ${fragment%%=*} = tag ]]; then
+		tagname="$(git tag -l --format='%(tag)' "$ref")"
+		if [[ -n $tagname && $tagname != $ref ]]; then
+			error "$(gettext "Failure while checking out version %s, the git tag has been forged")" "$ref"
+			plain "$(gettext "Aborting...")"
+			exit 1
+		fi
 	fi
 
 	if [[ $ref != "origin/HEAD" ]] || (( updating )) ; then

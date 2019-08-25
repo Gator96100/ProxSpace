@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="x86-transactional-memory-intrinsics.html#x86-transactional-memory
 </div>
 <hr>
 <a name="x86-Built_002din-Functions-1"></a>
-<h4 class="subsection">6.60.32 x86 Built-in Functions</h4>
+<h4 class="subsection">6.59.33 x86 Built-in Functions</h4>
 
 <p>These built-in functions are available for the x86-32 and x86-64 family
 of computers, depending on the command-line switches used.
@@ -120,22 +120,22 @@ __float128 __builtin_copysignq (__float128, __float128)
 <dl compact="compact">
 <dt><code>__float128 __builtin_infq (void)</code></dt>
 <dd><p>Similar to <code>__builtin_inf</code>, except the return type is <code>__float128</code>.
-<a name="index-_005f_005fbuiltin_005finfq-1"></a>
+<a name="index-_005f_005fbuiltin_005finfq"></a>
 </p>
 </dd>
 <dt><code>__float128 __builtin_huge_valq (void)</code></dt>
 <dd><p>Similar to <code>__builtin_huge_val</code>, except the return type is <code>__float128</code>.
-<a name="index-_005f_005fbuiltin_005fhuge_005fvalq-1"></a>
+<a name="index-_005f_005fbuiltin_005fhuge_005fvalq"></a>
 </p>
 </dd>
 <dt><code>__float128 __builtin_nanq (void)</code></dt>
 <dd><p>Similar to <code>__builtin_nan</code>, except the return type is <code>__float128</code>.
-<a name="index-_005f_005fbuiltin_005fnanq-1"></a>
+<a name="index-_005f_005fbuiltin_005fnanq"></a>
 </p>
 </dd>
 <dt><code>__float128 __builtin_nansq (void)</code></dt>
 <dd><p>Similar to <code>__builtin_nans</code>, except the return type is <code>__float128</code>.
-<a name="index-_005f_005fbuiltin_005fnansq-1"></a>
+<a name="index-_005f_005fbuiltin_005fnansq"></a>
 </p></dd>
 </dl>
 
@@ -152,7 +152,7 @@ barrier.
 check the target platform type.
 </p>
 <dl>
-<dt><a name="index-_005f_005fbuiltin_005fcpu_005finit-2"></a>Built-in Function: <em>void</em> <strong>__builtin_cpu_init</strong> <em>(void)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fcpu_005finit-1"></a>Built-in Function: <em>void</em> <strong>__builtin_cpu_init</strong> <em>(void)</em></dt>
 <dd><p>This function runs the CPU detection code to check the type of CPU and the
 features supported.  This built-in function needs to be invoked along with the built-in functions
 to check CPU type and features, <code>__builtin_cpu_is</code> and
@@ -1573,6 +1573,29 @@ They generate reads and writes to PKRU.
 </p><div class="smallexample">
 <pre class="smallexample">void __builtin_ia32_wrpkru (unsigned int)
 unsigned int __builtin_ia32_rdpkru ()
+</pre></div>
+
+<p>The following built-in functions are available when <samp>-mcet</samp> or
+<samp>-mshstk</samp> option is used.  They support shadow stack
+machine instructions from Intel Control-flow Enforcement Technology (CET).
+Each built-in function generates the  machine instruction that is part
+of the function&rsquo;s name.  These are the internal low-level functions.
+Normally the functions in <a href="x86-control_002dflow-protection-intrinsics.html#x86-control_002dflow-protection-intrinsics">x86 control-flow protection intrinsics</a>
+should be used instead.
+</p>
+<div class="smallexample">
+<pre class="smallexample">unsigned int __builtin_ia32_rdsspd (void)
+unsigned long long __builtin_ia32_rdsspq (void)
+void __builtin_ia32_incsspd (unsigned int)
+void __builtin_ia32_incsspq (unsigned long long)
+void __builtin_ia32_saveprevssp(void);
+void __builtin_ia32_rstorssp(void *);
+void __builtin_ia32_wrssd(unsigned int, void *);
+void __builtin_ia32_wrssq(unsigned long long, void *);
+void __builtin_ia32_wrussd(unsigned int, void *);
+void __builtin_ia32_wrussq(unsigned long long, void *);
+void __builtin_ia32_setssbsy(void);
+void __builtin_ia32_clrssbsy(void *);
 </pre></div>
 
 <hr>

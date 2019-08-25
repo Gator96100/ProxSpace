@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -143,6 +143,11 @@ Next: <a href="Blackfin-Options.html#Blackfin-Options" accesskey="n" rel="next">
 <br><var>mcu</var>&nbsp;= <code>atxmega16a4</code>, <code>atxmega16a4u</code>, <code>atxmega16c4</code>, <code>atxmega16d4</code>, <code>atxmega16e5</code>, <code>atxmega32a4</code>, <code>atxmega32a4u</code>, <code>atxmega32c3</code>, <code>atxmega32c4</code>, <code>atxmega32d3</code>, <code>atxmega32d4</code>, <code>atxmega32e5</code>, <code>atxmega8e5</code>.
 </p>
 </dd>
+<dt><code>avrxmega3</code></dt>
+<dd><p>&ldquo;XMEGA&rdquo; devices with up to 64&nbsp;KiB of combined program memory and RAM, and with program memory visible in the RAM address space.
+<br><var>mcu</var>&nbsp;= <code>attiny1614</code>, <code>attiny1616</code>, <code>attiny1617</code>, <code>attiny212</code>, <code>attiny214</code>, <code>attiny3214</code>, <code>attiny3216</code>, <code>attiny3217</code>, <code>attiny412</code>, <code>attiny414</code>, <code>attiny416</code>, <code>attiny417</code>, <code>attiny814</code>, <code>attiny816</code>, <code>attiny817</code>.
+</p>
+</dd>
 <dt><code>avrxmega4</code></dt>
 <dd><p>&ldquo;XMEGA&rdquo; devices with more than 64&nbsp;KiB and up to 128&nbsp;KiB of program memory.
 <br><var>mcu</var>&nbsp;= <code>atxmega64a3</code>, <code>atxmega64a3u</code>, <code>atxmega64a4u</code>, <code>atxmega64b1</code>, <code>atxmega64b3</code>, <code>atxmega64c3</code>, <code>atxmega64d3</code>, <code>atxmega64d4</code>.
@@ -215,6 +220,17 @@ integers. The default branch cost is 0.
 subroutines.  Code size is smaller.
 </p>
 </dd>
+<dt><code>-mgas-isr-prologues</code></dt>
+<dd><a name="index-mgas_002disr_002dprologues"></a>
+<p>Interrupt service routines (ISRs) may use the <code>__gcc_isr</code> pseudo
+instruction supported by GNU Binutils.
+If this option is on, the feature can still be disabled for individual
+ISRs by means of the <a href="AVR-Function-Attributes.html#AVR-Function-Attributes"><code>no_gccisr</code></a>
+function attribute.  This feature is activated per default
+if optimization is on (but not with <samp>-Og</samp>, see <a href="Optimize-Options.html#Optimize-Options">Optimize Options</a>),
+and if GNU Binutils support <a href="https://sourceware.org/PR21683">PR21683</a><!-- /@w -->.
+</p>
+</dd>
 <dt><code>-mint8</code></dt>
 <dd><a name="index-mint8"></a>
 <p>Assume <code>int</code> to be 8-bit integer.  This affects the sizes of all types: a
@@ -222,6 +238,13 @@ subroutines.  Code size is smaller.
 and <code>long long</code> is 4 bytes.  Please note that this option does not
 conform to the C standards, but it results in smaller code
 size.
+</p>
+</dd>
+<dt><code>-mmain-is-OS_task</code></dt>
+<dd><a name="index-mmain_002dis_002dOS_005ftask"></a>
+<p>Do not save registers in <code>main</code>.  The effect is the same like
+attaching attribute <a href="AVR-Function-Attributes.html#AVR-Function-Attributes"><code>OS_task</code></a>
+to <code>main</code>. It is activated per default if optimization is on.
 </p>
 </dd>
 <dt><code>-mn-flash=<var>num</var></code></dt>
@@ -257,6 +280,16 @@ section on <code>EIND</code> and linker stubs below.
 <dd><a name="index-mrmw"></a>
 <p>Assume that the device supports the Read-Modify-Write
 instructions <code>XCH</code>, <code>LAC</code>, <code>LAS</code> and <code>LAT</code>.
+</p>
+</dd>
+<dt><code>-mshort-calls</code></dt>
+<dd><a name="index-mshort_002dcalls"></a>
+
+<p>Assume that <code>RJMP</code> and <code>RCALL</code> can target the whole
+program memory.
+</p>
+<p>This option is used internally for multilib selection.  It is
+not an optimization option, and you don&rsquo;t need to set it by hand.
 </p>
 </dd>
 <dt><code>-msp8</code></dt>
@@ -509,10 +542,12 @@ Possible values are:
 </p>
 <p>respectively and
 </p>
-<p><code>100</code>, <code>102</code>, <code>104</code>,
+<p><code>100</code>,
+<code>102</code>, <code>103</code>, <code>104</code>,
 <code>105</code>, <code>106</code>, <code>107</code>
 </p>
-<p>for <var>mcu</var>=<code>avrtiny</code>, <code>avrxmega2</code>, <code>avrxmega4</code>,
+<p>for <var>mcu</var>=<code>avrtiny</code>,
+<code>avrxmega2</code>, <code>avrxmega3</code>, <code>avrxmega4</code>,
 <code>avrxmega5</code>, <code>avrxmega6</code>, <code>avrxmega7</code>, respectively.
 If <var>mcu</var> specifies a device, this built-in macro is set
 accordingly. For example, with <samp>-mmcu=atmega8</samp> the macro is
@@ -573,7 +608,7 @@ register-register moves.
 </dd>
 <dt><code>__AVR_HAVE_JMP_CALL__</code></dt>
 <dd><p>The device has the <code>JMP</code> and <code>CALL</code> instructions.
-This is the case for devices with at least 16&nbsp;KiB of program
+This is the case for devices with more than 8&nbsp;KiB of program
 memory.
 </p>
 </dd>
@@ -638,6 +673,23 @@ address as if addressed by an instruction to access RAM like <code>LD</code>
 or <code>STS</code>. This offset depends on the device architecture and has
 to be subtracted from the RAM address in order to get the
 respective I/O&nbsp;address.
+</p>
+</dd>
+<dt><code>__AVR_SHORT_CALLS__</code></dt>
+<dd><p>The <samp>-mshort-calls</samp> command line option is set.
+</p>
+</dd>
+<dt><code>__AVR_PM_BASE_ADDRESS__=<var>addr</var></code></dt>
+<dd><p>Some devices support reading from flash memory by means of <code>LD*</code>
+instructions.  The flash memory is seen in the data address space
+at an offset of <code>__AVR_PM_BASE_ADDRESS__</code>.  If this macro
+is not defined, this feature is not available.  If defined,
+the address space is linear and there is no need to put
+<code>.rodata</code> into RAM.  This is handled by the default linker
+description file, and is currently available for
+<code>avrtiny</code> and <code>avrxmega3</code>.  Even more convenient,
+there is no need to use address spaces like <code>__flash</code> or
+features like attribute <code>progmem</code> and <code>pgm_read_*</code>.
 </p>
 </dd>
 <dt><code>__WITH_AVRLIBC__</code></dt>

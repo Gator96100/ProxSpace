@@ -207,6 +207,10 @@
 #define __IEEE_BIG_ENDIAN
 #endif
 
+#ifdef __nvptx__
+#define __IEEE_LITTLE_ENDIAN
+#endif
+
 #if defined(_C4x) || defined(_C3x)
 #define __IEEE_BIG_ENDIAN
 #define _DOUBLE_IS_32BITS
@@ -446,6 +450,14 @@
 
 #ifdef __VISIUM__
 #define __IEEE_BIG_ENDIAN
+#endif
+
+#ifdef __AMDGCN__
+#define __IEEE_LITTLE_ENDIAN
+#endif
+
+#ifdef __CYGWIN__
+#define __OBSOLETE_MATH_DEFAULT 0
 #endif
 
 #ifndef __OBSOLETE_MATH_DEFAULT

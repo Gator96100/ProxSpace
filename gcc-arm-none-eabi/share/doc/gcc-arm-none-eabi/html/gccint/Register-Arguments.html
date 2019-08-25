@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Scalar-Return.html#Scalar-Return" accesskey="n" rel="next">Scalar
 </div>
 <hr>
 <a name="Passing-Arguments-in-Registers"></a>
-<h4 class="subsection">17.9.7 Passing Arguments in Registers</h4>
+<h4 class="subsection">18.9.7 Passing Arguments in Registers</h4>
 <a name="index-arguments-in-registers"></a>
 <a name="index-registers-arguments"></a>
 
@@ -314,26 +314,26 @@ used for arguments without any special help.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-FUNCTION_005fARG_005fOFFSET"></a>Macro: <strong>FUNCTION_ARG_OFFSET</strong> <em>(<var>mode</var>, <var>type</var>)</em></dt>
-<dd><p>If defined, a C expression that is the number of bytes to add to the
-offset of the argument passed in memory.  This is needed for the SPU,
-which passes <code>char</code> and <code>short</code> arguments in the preferred
-slot that is in the middle of the quad word instead of starting at the
-top.
+<dt><a name="index-TARGET_005fFUNCTION_005fARG_005fOFFSET"></a>Target Hook: <em>HOST_WIDE_INT</em> <strong>TARGET_FUNCTION_ARG_OFFSET</strong> <em>(machine_mode <var>mode</var>, const_tree <var>type</var>)</em></dt>
+<dd><p>This hook returns the number of bytes to add to the offset of an
+argument of type <var>type</var> and mode <var>mode</var> when passed in memory.
+This is needed for the SPU, which passes <code>char</code> and <code>short</code>
+arguments in the preferred slot that is in the middle of the quad word
+instead of starting at the top.  The default implementation returns 0.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-FUNCTION_005fARG_005fPADDING"></a>Macro: <strong>FUNCTION_ARG_PADDING</strong> <em>(<var>mode</var>, <var>type</var>)</em></dt>
-<dd><p>If defined, a C expression which determines whether, and in which direction,
-to pad out an argument with extra space.  The value should be of type
-<code>enum direction</code>: either <code>upward</code> to pad above the argument,
-<code>downward</code> to pad below, or <code>none</code> to inhibit padding.
+<dt><a name="index-TARGET_005fFUNCTION_005fARG_005fPADDING"></a>Target Hook: <em>pad_direction</em> <strong>TARGET_FUNCTION_ARG_PADDING</strong> <em>(machine_mode <var>mode</var>, const_tree <var>type</var>)</em></dt>
+<dd><p>This hook determines whether, and in which direction, to pad out
+an argument of mode <var>mode</var> and type <var>type</var>.  It returns
+<code>PAD_UPWARD</code> to insert padding above the argument, <code>PAD_DOWNWARD</code>
+to insert padding below the argument, or <code>PAD_NONE</code> to inhibit padding.
 </p>
-<p>The <em>amount</em> of padding is not controlled by this macro, but by the
-target hook <code>TARGET_FUNCTION_ARG_ROUND_BOUNDARY</code>.  It is
-always just enough to reach the next multiple of that boundary. 
+<p>The <em>amount</em> of padding is not controlled by this hook, but by
+<code>TARGET_FUNCTION_ARG_ROUND_BOUNDARY</code>.  It is always just enough
+to reach the next multiple of that boundary.
 </p>
-<p>This macro has a default definition which is right for most systems.
+<p>This hook has a default definition that is right for most systems.
 For little-endian machines, the default is to pad upward.  For
 big-endian machines, the default is to pad downward for an argument of
 constant size shorter than an <code>int</code>, and upward otherwise.
@@ -443,7 +443,7 @@ arguments to <code>va_arg</code>; the latter two are as in
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVALID_005fPOINTER_005fMODE"></a>Target Hook: <em>bool</em> <strong>TARGET_VALID_POINTER_MODE</strong> <em>(machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fVALID_005fPOINTER_005fMODE"></a>Target Hook: <em>bool</em> <strong>TARGET_VALID_POINTER_MODE</strong> <em>(scalar_int_mode <var>mode</var>)</em></dt>
 <dd><p>Define this to return nonzero if the port can handle pointers
 with machine mode <var>mode</var>.  The default version of this
 hook returns true for both <code>ptr_mode</code> and <code>Pmode</code>.
@@ -455,7 +455,7 @@ hook returns true for both <code>ptr_mode</code> and <code>Pmode</code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fSCALAR_005fMODE_005fSUPPORTED_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_SCALAR_MODE_SUPPORTED_P</strong> <em>(machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fSCALAR_005fMODE_005fSUPPORTED_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_SCALAR_MODE_SUPPORTED_P</strong> <em>(scalar_mode <var>mode</var>)</em></dt>
 <dd><p>Define this to return nonzero if the port is prepared to handle
 insns involving scalar mode <var>mode</var>.  For a scalar mode to be
 considered supported, all the basic arithmetic and comparisons
@@ -472,6 +472,21 @@ code in <samp>optabs.c</samp>.
 <dd><p>Define this to return nonzero if the port is prepared to handle
 insns involving vector mode <var>mode</var>.  At the very least, it
 must have move patterns for this mode.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fARRAY_005fMODE"></a>Target Hook: <em>opt_machine_mode</em> <strong>TARGET_ARRAY_MODE</strong> <em>(machine_mode <var>mode</var>, unsigned HOST_WIDE_INT <var>nelems</var>)</em></dt>
+<dd><p>Return the mode that GCC should use for an array that has
+<var>nelems</var> elements, with each element having mode <var>mode</var>.
+Return no mode if the target has no special requirements.  In the
+latter case, GCC looks for an integer mode of the appropriate size
+if available and uses BLKmode otherwise.  Usually the search for the
+integer mode is limited to <code>MAX_FIXED_MODE_SIZE</code>, but the
+<code>TARGET_ARRAY_MODE_SUPPORTED_P</code> hook allows a larger mode to be
+used in specific cases.
+</p>
+<p>The main use of this hook is to specify that an array of vectors should
+also have a vector mode.  The default implementation returns no mode.
 </p></dd></dl>
 
 <dl>
@@ -504,7 +519,7 @@ has operations like:
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLIBGCC_005fFLOATING_005fMODE_005fSUPPORTED_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_LIBGCC_FLOATING_MODE_SUPPORTED_P</strong> <em>(machine_mode <var>mode</var>)</em></dt>
+<dt><a name="index-TARGET_005fLIBGCC_005fFLOATING_005fMODE_005fSUPPORTED_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_LIBGCC_FLOATING_MODE_SUPPORTED_P</strong> <em>(scalar_float_mode <var>mode</var>)</em></dt>
 <dd><p>Define this to return nonzero if libgcc provides support for the 
 floating-point mode <var>mode</var>, which is known to pass 
 <code>TARGET_SCALAR_MODE_SUPPORTED_P</code>.  The default version of this 
@@ -513,22 +528,34 @@ hook returns true for all of <code>SFmode</code>, <code>DFmode</code>,
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fFLOATN_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_FLOATN_MODE</strong> <em>(int <var>n</var>, bool <var>extended</var>)</em></dt>
+<dt><a name="index-TARGET_005fFLOATN_005fMODE"></a>Target Hook: <em>opt_scalar_float_mode</em> <strong>TARGET_FLOATN_MODE</strong> <em>(int <var>n</var>, bool <var>extended</var>)</em></dt>
 <dd><p>Define this to return the machine mode to use for the type 
 <code>_Float<var>n</var></code>, if <var>extended</var> is false, or the type 
-<code>_Float<var>n</var>x</code>, if <var>extended</var> is true.  If such a type 
-is not supported, return <code>VOIDmode</code>.  The default version of this 
-hook returns <code>SFmode</code> for <code>_Float32</code>, <code>DFmode</code> for 
+<code>_Float<var>n</var>x</code>, if <var>extended</var> is true.  If such a type is not
+supported, return <code>opt_scalar_float_mode ()</code>.  The default version of
+this hook returns <code>SFmode</code> for <code>_Float32</code>, <code>DFmode</code> for
 <code>_Float64</code> and <code>_Float32x</code> and <code>TFmode</code> for 
 <code>_Float128</code>, if those modes exist and satisfy the requirements for 
 those types and pass <code>TARGET_SCALAR_MODE_SUPPORTED_P</code> and 
 <code>TARGET_LIBGCC_FLOATING_MODE_SUPPORTED_P</code>; for <code>_Float64x</code>, it 
 returns the first of <code>XFmode</code> and <code>TFmode</code> that exists and 
 satisfies the same requirements; for other types, it returns 
-<code>VOIDmode</code>.  The hook is only called for values of <var>n</var> and 
-<var>extended</var> that are valid according to ISO/IEC TS 18661-3:2015; that 
-is, <var>n</var> is one of 32, 64, 128, or, if <var>extended</var> is false, 16 or 
-greater than 128 and a multiple of 32.
+<code>opt_scalar_float_mode ()</code>.  The hook is only called for values
+of <var>n</var> and <var>extended</var> that are valid according to
+ISO/IEC TS 18661-3:2015; that is, <var>n</var> is one of 32, 64, 128, or,
+if <var>extended</var> is false, 16 or greater than 128 and a multiple of 32.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fFLOATN_005fBUILTIN_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_FLOATN_BUILTIN_P</strong> <em>(int <var>func</var>)</em></dt>
+<dd><p>Define this to return true if the <code>_Float<var>n</var></code> and
+<code>_Float<var>n</var>x</code> built-in functions should implicitly enable the
+built-in function without the <code>__builtin_</code> prefix in addition to the
+normal built-in function with the <code>__builtin_</code> prefix.  The default is
+to only enable built-in functions without the <code>__builtin_</code> prefix for
+the GNU C langauge.  In strict ANSI/ISO mode, the built-in function without
+the <code>__builtin_</code> prefix is not enabled.  The argument <code>FUNC</code> is the
+<code>enum built_in_function</code> id of the function to be enabled.
 </p></dd></dl>
 
 <dl>

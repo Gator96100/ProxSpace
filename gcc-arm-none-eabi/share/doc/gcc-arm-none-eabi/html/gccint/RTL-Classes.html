@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Accessors.html#Accessors" accesskey="n" rel="next">Accessors</a>,
 </div>
 <hr>
 <a name="RTL-Classes-and-Formats"></a>
-<h3 class="section">13.2 RTL Classes and Formats</h3>
+<h3 class="section">14.2 RTL Classes and Formats</h3>
 <a name="index-RTL-classes"></a>
 <a name="index-classes-of-RTX-codes"></a>
 <a name="index-RTX-codes_002c-classes-of"></a>
@@ -169,7 +169,7 @@ chain, such as <code>NOTE</code>, <code>BARRIER</code>, and <code>CODE_LABEL</co
 <p>For each expression code, <samp>rtl.def</samp> specifies the number of
 contained objects and their kinds using a sequence of characters
 called the <em>format</em> of the expression code.  For example,
-the format of <code>subreg</code> is &lsquo;<samp>ei</samp>&rsquo;.
+the format of <code>subreg</code> is &lsquo;<samp>ep</samp>&rsquo;.
 </p>
 <a name="index-RTL-format-characters"></a>
 <p>These are the most commonly used format characters:
@@ -226,6 +226,10 @@ An omitted vector is effectively the same as a vector of no elements.
 </dd>
 <dt><code>B</code></dt>
 <dd><p>&lsquo;<samp>B</samp>&rsquo; indicates a pointer to basic block structure.
+</p>
+</dd>
+<dt><code>p</code></dt>
+<dd><p>A polynomial integer.  At present this is used only for <code>SUBREG_BYTE</code>.
 </p>
 </dd>
 <dt><code>0</code></dt>

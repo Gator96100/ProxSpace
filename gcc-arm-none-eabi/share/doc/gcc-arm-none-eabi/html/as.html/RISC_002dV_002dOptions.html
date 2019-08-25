@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -95,7 +95,19 @@ Next: <a href="RISC_002dV_002dDirectives.html#RISC_002dV_002dDirectives" accessk
 <dd><p>Selects the ABI, which is either &quot;ilp32&quot; or &quot;lp64&quot;, optionally followed
 by &quot;f&quot;, &quot;d&quot;, or &quot;q&quot; to indicate single-precision, double-precision, or
 quad-precision floating-point calling convention, or none to indicate
-the soft-float calling convention.
+the soft-float calling convention.  Also, &quot;ilp32&quot; can optionally be followed
+by &quot;e&quot; to indicate the RVE ABI, which is always soft-float.
+</p>
+<a name="index-_002dmrelax-option_002c-RISC_002dV"></a>
+</dd>
+<dt><code>-mrelax</code></dt>
+<dd><p>Take advantage of linker relaxations to reduce the number of instructions
+required to materialize symbol addresses. (default)
+</p>
+<a name="index-_002dmno_002drelax-option_002c-RISC_002dV"></a>
+</dd>
+<dt><code>-mno-relax</code></dt>
+<dd><p>Don&rsquo;t do linker relaxations.
 </p>
 </dd>
 </dl>

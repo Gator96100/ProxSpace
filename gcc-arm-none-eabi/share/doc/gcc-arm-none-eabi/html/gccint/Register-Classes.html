@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Stack-and-Calling.html#Stack-and-Calling" accesskey="n" rel="next
 </div>
 <hr>
 <a name="Register-Classes-1"></a>
-<h3 class="section">17.8 Register Classes</h3>
+<h3 class="section">18.8 Register Classes</h3>
 <a name="index-register-class-definitions"></a>
 <a name="index-class-definitions_002c-register"></a>
 
@@ -133,7 +133,7 @@ in their union.
 certain class, all the registers used must belong to that class.
 Therefore, register classes cannot be used to enforce a requirement for
 a register pair to start with an even-numbered register.  The way to
-specify this requirement is with <code>HARD_REGNO_MODE_OK</code>.
+specify this requirement is with <code>TARGET_HARD_REGNO_MODE_OK</code>.
 </p>
 <p>Register classes used for input-operands of bitwise-and or shift
 instructions have a special requirement: each such class must have, for
@@ -479,7 +479,7 @@ in memory and the hard register number if it is in a register.
 </p>
 <p>Scratch operands in memory (constraint <code>&quot;=m&quot;</code> / <code>&quot;=&amp;m&quot;</code>) are
 currently not supported.  For the time being, you will have to continue
-to use <code>SECONDARY_MEMORY_NEEDED</code> for that purpose.
+to use <code>TARGET_SECONDARY_MEMORY_NEEDED</code> for that purpose.
 </p>
 <p><code>copy_cost</code> also uses this target hook to find out how values are
 copied.  If you want it to include some extra cost for the need to allocate
@@ -551,51 +551,60 @@ general registers.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-SECONDARY_005fMEMORY_005fNEEDED"></a>Macro: <strong>SECONDARY_MEMORY_NEEDED</strong> <em>(<var>class1</var>, <var>class2</var>, <var>m</var>)</em></dt>
+<dt><a name="index-TARGET_005fSECONDARY_005fMEMORY_005fNEEDED"></a>Target Hook: <em>bool</em> <strong>TARGET_SECONDARY_MEMORY_NEEDED</strong> <em>(machine_mode <var>mode</var>, reg_class_t <var>class1</var>, reg_class_t <var>class2</var>)</em></dt>
 <dd><p>Certain machines have the property that some registers cannot be copied
-to some other registers without using memory.  Define this macro on
-those machines to be a C expression that is nonzero if objects of mode
-<var>m</var> in registers of <var>class1</var> can only be copied to registers of
-class <var>class2</var> by storing a register of <var>class1</var> into memory
-and loading that memory location into a register of <var>class2</var>.
-</p>
-<p>Do not define this macro if its value would always be zero.
+to some other registers without using memory.  Define this hook on
+those machines to return true if objects of mode <var>m</var> in registers
+of <var>class1</var> can only be copied to registers of class <var>class2</var> by
+ storing a register of <var>class1</var> into memory and loading that memory
+location into a register of <var>class2</var>.  The default definition returns
+false for all inputs.
 </p></dd></dl>
 
 <dl>
 <dt><a name="index-SECONDARY_005fMEMORY_005fNEEDED_005fRTX"></a>Macro: <strong>SECONDARY_MEMORY_NEEDED_RTX</strong> <em>(<var>mode</var>)</em></dt>
-<dd><p>Normally when <code>SECONDARY_MEMORY_NEEDED</code> is defined, the compiler
+<dd><p>Normally when <code>TARGET_SECONDARY_MEMORY_NEEDED</code> is defined, the compiler
 allocates a stack slot for a memory location needed for register copies.
 If this macro is defined, the compiler instead uses the memory location
 defined by this macro.
 </p>
 <p>Do not define this macro if you do not define
-<code>SECONDARY_MEMORY_NEEDED</code>.
+<code>TARGET_SECONDARY_MEMORY_NEEDED</code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-SECONDARY_005fMEMORY_005fNEEDED_005fMODE"></a>Macro: <strong>SECONDARY_MEMORY_NEEDED_MODE</strong> <em>(<var>mode</var>)</em></dt>
-<dd><p>When the compiler needs a secondary memory location to copy between two
-registers of mode <var>mode</var>, it normally allocates sufficient memory to
-hold a quantity of <code>BITS_PER_WORD</code> bits and performs the store and
-load operations in a mode that many bits wide and whose class is the
-same as that of <var>mode</var>.
+<dt><a name="index-TARGET_005fSECONDARY_005fMEMORY_005fNEEDED_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_SECONDARY_MEMORY_NEEDED_MODE</strong> <em>(machine_mode <var>mode</var>)</em></dt>
+<dd><p>If <code>TARGET_SECONDARY_MEMORY_NEEDED</code> tells the compiler to use memory
+when moving between two particular registers of mode <var>mode</var>,
+this hook specifies the mode that the memory should have.
 </p>
-<p>This is right thing to do on most machines because it ensures that all
-bits of the register are copied and prevents accesses to the registers
-in a narrower mode, which some machines prohibit for floating-point
-registers.
+<p>The default depends on <code>TARGET_LRA_P</code>.  Without LRA, the default
+is to use a word-sized mode for integral modes that are smaller than a
+a word.  This is right thing to do on most machines because it ensures
+that all bits of the register are copied and prevents accesses to the
+registers in a narrower mode, which some machines prohibit for
+floating-point registers.
 </p>
 <p>However, this default behavior is not correct on some machines, such as
 the DEC Alpha, that store short integers in floating-point registers
 differently than in integer registers.  On those machines, the default
-widening will not work correctly and you must define this macro to
-suppress that widening in some cases.  See the file <samp>alpha.h</samp> for
+widening will not work correctly and you must define this hook to
+suppress that widening in some cases.  See the file <samp>alpha.c</samp> for
 details.
 </p>
-<p>Do not define this macro if you do not define
-<code>SECONDARY_MEMORY_NEEDED</code> or if widening <var>mode</var> to a mode that
-is <code>BITS_PER_WORD</code> bits wide is correct for your machine.
+<p>With LRA, the default is to use <var>mode</var> unmodified.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fSELECT_005fEARLY_005fREMAT_005fMODES"></a>Target Hook: <em>void</em> <strong>TARGET_SELECT_EARLY_REMAT_MODES</strong> <em>(sbitmap <var>modes</var>)</em></dt>
+<dd><p>On some targets, certain modes cannot be held in registers around a
+standard ABI call and are relatively expensive to spill to the stack.
+The early rematerialization pass can help in such cases by aggressively
+recomputing values after calls, so that they don&rsquo;t need to be spilled.
+</p>
+<p>This hook returns the set of such modes by setting the associated bits
+in <var>modes</var>.  The default implementation selects no modes, which has
+the effect of disabling the early rematerialization pass.
 </p></dd></dl>
 
 <dl>
@@ -620,10 +629,10 @@ pressure.
 <dd><p>A target hook returns the maximum number of consecutive registers
 of class <var>rclass</var> needed to hold a value of mode <var>mode</var>.
 </p>
-<p>This is closely related to the macro <code>HARD_REGNO_NREGS</code>.  In fact,
-the value returned by <code>TARGET_CLASS_MAX_NREGS (<var>rclass</var>,
+<p>This is closely related to the macro <code>TARGET_HARD_REGNO_NREGS</code>.
+In fact, the value returned by <code>TARGET_CLASS_MAX_NREGS (<var>rclass</var>,
 <var>mode</var>)</code> target hook should be the maximum value of
-<code>HARD_REGNO_NREGS (<var>regno</var>, <var>mode</var>)</code> for all <var>regno</var>
+<code>TARGET_HARD_REGNO_NREGS (<var>regno</var>, <var>mode</var>)</code> for all <var>regno</var>
 values in the class <var>rclass</var>.
 </p>
 <p>This target hook helps control the handling of multiple-word values
@@ -638,9 +647,9 @@ in words.
 <dd><p>A C expression for the maximum number of consecutive registers
 of class <var>class</var> needed to hold a value of mode <var>mode</var>.
 </p>
-<p>This is closely related to the macro <code>HARD_REGNO_NREGS</code>.  In fact,
+<p>This is closely related to the macro <code>TARGET_HARD_REGNO_NREGS</code>.  In fact,
 the value of the macro <code>CLASS_MAX_NREGS (<var>class</var>, <var>mode</var>)</code>
-should be the maximum value of <code>HARD_REGNO_NREGS (<var>regno</var>,
+should be the maximum value of <code>TARGET_HARD_REGNO_NREGS (<var>regno</var>,
 <var>mode</var>)</code> for all <var>regno</var> values in the class <var>class</var>.
 </p>
 <p>This macro helps control the handling of multiple-word values
@@ -648,25 +657,27 @@ in the reload pass.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-CANNOT_005fCHANGE_005fMODE_005fCLASS"></a>Macro: <strong>CANNOT_CHANGE_MODE_CLASS</strong> <em>(<var>from</var>, <var>to</var>, <var>class</var>)</em></dt>
-<dd><p>If defined, a C expression that returns nonzero for a <var>class</var> for which
-a change from mode <var>from</var> to mode <var>to</var> is invalid.
+<dt><a name="index-TARGET_005fCAN_005fCHANGE_005fMODE_005fCLASS"></a>Target Hook: <em>bool</em> <strong>TARGET_CAN_CHANGE_MODE_CLASS</strong> <em>(machine_mode <var>from</var>, machine_mode <var>to</var>, reg_class_t <var>rclass</var>)</em></dt>
+<dd><p>This hook returns true if it is possible to bitcast values held in
+registers of class <var>rclass</var> from mode <var>from</var> to mode <var>to</var>
+and if doing so preserves the low-order bits that are common to both modes.
+The result is only meaningful if <var>rclass</var> has registers that can hold
+both <code>from</code> and <code>to</code>.  The default implementation returns true.
 </p>
-<p>For example, loading 32-bit integer or floating-point objects into
-floating-point registers on Alpha extends them to 64 bits.
-Therefore loading a 64-bit object and then storing it as a 32-bit object
-does not store the low-order 32 bits, as would be the case for a normal
-register.  Therefore, <samp>alpha.h</samp> defines <code>CANNOT_CHANGE_MODE_CLASS</code>
-as below:
+<p>As an example of when such bitcasting is invalid, loading 32-bit integer or
+floating-point objects into floating-point registers on Alpha extends them
+to 64 bits.  Therefore loading a 64-bit object and then storing it as a
+32-bit object does not store the low-order 32 bits, as would be the case
+for a normal register.  Therefore, <samp>alpha.h</samp> defines
+<code>TARGET_CAN_CHANGE_MODE_CLASS</code> to return:
 </p>
 <div class="smallexample">
-<pre class="smallexample">#define CANNOT_CHANGE_MODE_CLASS(FROM, TO, CLASS) \
-  (GET_MODE_SIZE (FROM) != GET_MODE_SIZE (TO) \
-   ? reg_classes_intersect_p (FLOAT_REGS, (CLASS)) : 0)
+<pre class="smallexample">(GET_MODE_SIZE (from) == GET_MODE_SIZE (to)
+ || !reg_classes_intersect_p (FLOAT_REGS, rclass))
 </pre></div>
 
 <p>Even if storing from a register in mode <var>to</var> would be valid,
-if both <var>from</var> and <code>raw_reg_mode</code> for <var>class</var> are wider
+if both <var>from</var> and <code>raw_reg_mode</code> for <var>rclass</var> are wider
 than <code>word_mode</code>, then we must prevent <var>to</var> narrowing the
 mode.  This happens when the middle-end assumes that it can load
 or store pieces of an <var>N</var>-word pseudo, and that the pseudo will
@@ -674,8 +685,7 @@ eventually be allocated to <var>N</var> <code>word_mode</code> hard registers.
 Failure to prevent this kind of mode change will result in the
 entire <code>raw_reg_mode</code> being modified instead of the partial
 value that the middle-end intended.
-</p>
-</dd></dl>
+</p></dd></dl>
 
 <dl>
 <dt><a name="index-TARGET_005fIRA_005fCHANGE_005fPSEUDO_005fALLOCNO_005fCLASS"></a>Target Hook: <em>reg_class_t</em> <strong>TARGET_IRA_CHANGE_PSEUDO_ALLOCNO_CLASS</strong> <em>(int, <var>reg_class_t</var>, <var>reg_class_t</var>)</em></dt>
@@ -717,13 +727,16 @@ as SH, this hook can be used to avoid excessive spilling.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fLEGITIMIZE_005fADDRESS_005fDISPLACEMENT"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMIZE_ADDRESS_DISPLACEMENT</strong> <em>(rtx *<var>disp</var>, rtx *<var>offset</var>, machine_mode <var>mode</var>)</em></dt>
-<dd><p>A target hook which returns <code>true</code> if *<var>disp</var> is
-legitimezed to valid address displacement with subtracting *<var>offset</var>
-at memory mode <var>mode</var>.
-The default version of this target hook returns <code>false</code>.
-This hook will benefit machines with limited base plus displacement
-addressing.
+<dt><a name="index-TARGET_005fLEGITIMIZE_005fADDRESS_005fDISPLACEMENT"></a>Target Hook: <em>bool</em> <strong>TARGET_LEGITIMIZE_ADDRESS_DISPLACEMENT</strong> <em>(rtx *<var>offset1</var>, rtx *<var>offset2</var>, poly_int64 <var>orig_offset</var>, machine_mode <var>mode</var>)</em></dt>
+<dd><p>This hook tries to split address offset <var>orig_offset</var> into
+two parts: one that should be added to the base address to create
+a local anchor point, and an additional offset that can be applied
+to the anchor to address a value of mode <var>mode</var>.  The idea is that
+the local anchor could be shared by other accesses to nearby locations.
+</p>
+<p>The hook returns true if it succeeds, storing the offset of the
+anchor from the base in <var>offset1</var> and the offset of the final address
+from the anchor in <var>offset2</var>.  The default implementation returns false.
 </p></dd></dl>
 
 <dl>
@@ -737,7 +750,7 @@ addressing.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fCSTORE_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_CSTORE_MODE</strong> <em>(enum insn_code <var>icode</var>)</em></dt>
+<dt><a name="index-TARGET_005fCSTORE_005fMODE"></a>Target Hook: <em>scalar_int_mode</em> <strong>TARGET_CSTORE_MODE</strong> <em>(enum insn_code <var>icode</var>)</em></dt>
 <dd><p>This hook defines the machine mode to use for the boolean result of  conditional store patterns.  The ICODE argument is the instruction code  for the cstore being performed.  Not definiting this hook is the same  as accepting the mode encoded into operand 0 of the cstore expander  patterns.
 </p></dd></dl>
 

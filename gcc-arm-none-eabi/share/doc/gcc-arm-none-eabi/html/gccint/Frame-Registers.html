@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Elimination.html#Elimination" accesskey="n" rel="next">Eliminatio
 </div>
 <hr>
 <a name="Registers-That-Address-the-Stack-Frame"></a>
-<h4 class="subsection">17.9.4 Registers That Address the Stack Frame</h4>
+<h4 class="subsection">18.9.4 Registers That Address the Stack Frame</h4>
 
 <p>This discusses registers that address the stack frame.
 </p>
@@ -234,8 +234,6 @@ for backward compatibility in pre GCC 3.0 compiled code.
 is different than the internal representation for unwind column.
 Given a dwarf register, this macro should return the internal unwind
 column number to use instead.
-</p>
-<p>See the PowerPC&rsquo;s SPE target for an example.
 </p></dd></dl>
 
 <dl>
@@ -279,6 +277,14 @@ it will be defined to 1 when <code>REG_VALUE_IN_UNWIND_CONTEXT</code> is
 defined and 0 otherwise.
 </p>
 </dd></dl>
+
+<dl>
+<dt><a name="index-DWARF_005fLAZY_005fREGISTER_005fVALUE"></a>Macro: <strong>DWARF_LAZY_REGISTER_VALUE</strong> <em>(<var>regno</var>, <var>value</var>)</em></dt>
+<dd><p>Define this macro if the target has pseudo DWARF registers whose
+values need to be computed lazily on demand by the unwinder (such as when
+referenced in a CFA expression).  The macro returns true if <var>regno</var>
+is such a register and stores its value in &lsquo;<samp>*<var>value</var></samp>&rsquo; if so.
+</p></dd></dl>
 
 <hr>
 <div class="header">

@@ -1,4 +1,3 @@
-
 Contains code from project GNU Binutils (https://www.gnu.org/software/binutils/),
 GNU Debugger (https://www.gnu.org/software/gdb/) under the following license(s).
 

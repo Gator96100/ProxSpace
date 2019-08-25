@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -140,10 +140,12 @@ void __attribute__ ((interrupt(&quot;vector=hw3&quot;))) v9 ();
 
 </dd>
 <dt><code>long_call</code></dt>
+<dt><code>short_call</code></dt>
 <dt><code>near</code></dt>
 <dt><code>far</code></dt>
 <dd><a name="index-indirect-calls_002c-MIPS"></a>
 <a name="index-long_005fcall-function-attribute_002c-MIPS"></a>
+<a name="index-short_005fcall-function-attribute_002c-MIPS"></a>
 <a name="index-near-function-attribute_002c-MIPS"></a>
 <a name="index-far-function-attribute_002c-MIPS"></a>
 <p>These attributes specify how a particular function is called on MIPS.
@@ -151,8 +153,9 @@ The attributes override the <samp>-mlong-calls</samp> (see <a href="MIPS-Options
 command-line switch.  The <code>long_call</code> and <code>far</code> attributes are
 synonyms, and cause the compiler to always call
 the function by first loading its address into a register, and then using
-the contents of that register.  The <code>near</code> attribute has the opposite
-effect; it specifies that non-PIC calls should be made using the more
+the contents of that register.  The <code>short_call</code> and <code>near</code>
+attributes are synonyms, and have the opposite
+effect; they specify that non-PIC calls should be made using the more
 efficient <code>jal</code> instruction.
 </p>
 </dd>

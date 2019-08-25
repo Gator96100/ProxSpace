@@ -180,13 +180,13 @@ typedef _fpos64_t fpos64_t;
 #if __POSIX_VISIBLE
 char *	ctermid (char *);
 #endif
-#if __XSI_VISIBLE && __XSI_VISIBLE < 600
+#if __GNU_VISIBLE || (__XSI_VISIBLE && __XSI_VISIBLE < 600)
 char *	cuserid (char *);
 #endif
 FILE *	tmpfile (void);
 char *	tmpnam (char *);
 #if __BSD_VISIBLE || __XSI_VISIBLE || __POSIX_VISIBLE >= 200112
-char *	tempnam (const char *, const char *);
+char *	tempnam (const char *, const char *) __malloc_like __result_use_check;
 #endif
 int	fclose (FILE *);
 int	fflush (FILE *);

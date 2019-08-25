@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,7 +67,7 @@ Next: <a href="M68K_002dopcodes.html#M68K_002dopcodes" accesskey="n" rel="next">
 </div>
 <hr>
 <a name="g_t680x0-Machine-Directives"></a>
-<h4 class="subsection">9.23.5 680x0 Machine Directives</h4>
+<h4 class="subsection">9.21.5 680x0 Machine Directives</h4>
 
 <a name="index-M680x0-directives"></a>
 <a name="index-directives_002c-M680x0"></a>
@@ -100,7 +100,7 @@ aligns the output to an even byte boundary.
 </dd>
 <dt><code>.arch <var>name</var></code></dt>
 <dd><p>Select the target architecture and extension features.  Valid values
-for <var>name</var> are the same as for the <samp>-march</samp> command line
+for <var>name</var> are the same as for the <samp>-march</samp> command-line
 option.  This directive cannot be specified after
 any instructions have been assembled.  If it is given multiple times,
 or in conjunction with the <samp>-march</samp> option, all uses must be for
@@ -110,7 +110,7 @@ the same architecture and extension set.
 </dd>
 <dt><code>.cpu <var>name</var></code></dt>
 <dd><p>Select the target cpu.  Valid values
-for <var>name</var> are the same as for the <samp>-mcpu</samp> command line
+for <var>name</var> are the same as for the <samp>-mcpu</samp> command-line
 option.  This directive cannot be specified after
 any instructions have been assembled.  If it is given multiple times,
 or in conjunction with the <samp>-mopt</samp> option, all uses must be for

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -128,6 +128,34 @@ manual needs to be installed as info for this to work, or to be a
 chapter of this manual.
 </li></ul>
 
+<p>The <samp><var>machine</var>.h</samp> header is included very early in GCC&rsquo;s
+standard sequence of header files, while <samp><var>machine</var>-protos.h</samp>
+is included late in the sequence.  Thus <samp><var>machine</var>-protos.h</samp>
+can include declarations referencing types that are not defined when
+<samp><var>machine</var>.h</samp> is included, specifically including those from
+<samp>rtl.h</samp> and <samp>tree.h</samp>.  Since both RTL and tree types may not
+be available in every context where <samp><var>machine</var>-protos.h</samp> is
+included, in this file you should guard declarations using these types
+inside appropriate <code>#ifdef RTX_CODE</code> or <code>#ifdef TREE_CODE</code>
+conditional code segments.
+</p>
+<p>If the backend uses shared data structures that require <code>GTY</code> markers 
+for garbage collection (see <a href="Type-Information.html#Type-Information">Type Information</a>), you must declare those
+in <samp><var>machine</var>.h</samp> rather than <samp><var>machine</var>-protos.h</samp>.  
+Any definitions required for building libgcc must also go in
+<samp><var>machine</var>.h</samp>.
+</p>
+<p>GCC uses the macro <code>IN_TARGET_CODE</code> to distinguish between
+machine-specific <samp>.c</samp> and <samp>.cc</samp> files and
+machine-independent <samp>.c</samp> and <samp>.cc</samp> files.  Machine-specific
+files should use the directive:
+</p>
+<div class="example">
+<pre class="example">#define IN_TARGET_CODE 1
+</pre></div>
+
+<p>before including <code>config.h</code>.
+</p>
 <p>If the back end is added to the official GCC source repository, the
 following are also necessary:
 </p>

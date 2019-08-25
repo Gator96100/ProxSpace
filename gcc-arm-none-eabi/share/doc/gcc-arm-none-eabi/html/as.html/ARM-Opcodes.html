@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -114,6 +114,16 @@ out of range, or if it is not defined in the same file (and section) as
 the ADR instruction, then an error will be generated.  This instruction
 will not make use of the literal pool.
 </p>
+<p>If <var>label</var> is a thumb function symbol, and thumb interworking has
+been enabled via the <samp>-mthumb-interwork</samp> option then the bottom
+bit of the value stored into <var>register</var> will be set.  This allows
+the following sequence to work as expected:
+</p>
+<div class="smallexample">
+<pre class="smallexample">  adr     r0, thumb_function
+  blx     r0
+</pre></div>
+
 <a name="index-ADRL-reg_002c_003clabel_003e-pseudo-op_002c-ARM"></a>
 </dd>
 <dt><code>ADRL</code></dt>
@@ -130,6 +140,10 @@ its place, so that this instruction is always 8 bytes long.
 <p>If the label is out of range, or if it is not defined in the same file
 (and section) as the ADRL instruction, then an error will be generated.
 This instruction will not make use of the literal pool.
+</p>
+<p>If <var>label</var> is a thumb function symbol, and thumb interworking has
+been enabled via the <samp>-mthumb-interwork</samp> option then the bottom
+bit of the value stored into <var>register</var> will be set.
 </p>
 </dd>
 </dl>

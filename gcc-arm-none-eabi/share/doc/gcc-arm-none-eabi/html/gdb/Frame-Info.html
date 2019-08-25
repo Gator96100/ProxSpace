@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -26,7 +26,7 @@ developing GNU and promoting software freedom." -->
 <link href="Concept-Index.html#Concept-Index" rel="index" title="Concept Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Stack.html#Stack" rel="up" title="Stack">
-<link href="Frame-Filter-Management.html#Frame-Filter-Management" rel="next" title="Frame Filter Management">
+<link href="Frame-Apply.html#Frame-Apply" rel="next" title="Frame Apply">
 <link href="Selection.html#Selection" rel="prev" title="Selection">
 <style type="text/css">
 <!--
@@ -64,7 +64,7 @@ ul.no-bullet {list-style: none}
 <a name="Frame-Info"></a>
 <div class="header">
 <p>
-Next: <a href="Frame-Filter-Management.html#Frame-Filter-Management" accesskey="n" rel="next">Frame Filter Management</a>, Previous: <a href="Selection.html#Selection" accesskey="p" rel="prev">Selection</a>, Up: <a href="Stack.html#Stack" accesskey="u" rel="up">Stack</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Frame-Apply.html#Frame-Apply" accesskey="n" rel="next">Frame Apply</a>, Previous: <a href="Selection.html#Selection" accesskey="p" rel="prev">Selection</a>, Up: <a href="Stack.html#Stack" accesskey="u" rel="up">Stack</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="Information-About-a-Frame"></a>
@@ -106,33 +106,93 @@ something has gone wrong that has made the stack format fail to fit
 the usual conventions.
 </p>
 </dd>
-<dt><code>info frame <var>addr</var></code></dt>
-<dt><code>info f <var>addr</var></code></dt>
-<dd><p>Print a verbose description of the frame at address <var>addr</var>, without
-selecting that frame.  The selected frame remains unchanged by this
-command.  This requires the same kind of address (more than one for some
-architectures) that you specify in the <code>frame</code> command.
-See <a href="Selection.html#Selection">Selecting a Frame</a>.
+<dt><code>info frame <span class="roman">[</span> <var>frame-selection-spec</var> <span class="roman">]</span></code></dt>
+<dt><code>info f <span class="roman">[</span> <var>frame-selection-spec</var> <span class="roman">]</span></code></dt>
+<dd><p>Print a verbose description of the frame selected by
+<var>frame-selection-spec</var>.  The <var>frame-selection-spec</var> is the
+same as for the <code>frame</code> command (see <a href="Selection.html#Selection">Selecting
+a Frame</a>).  The selected frame remains unchanged by this command.
 </p>
 <a name="index-info-args"></a>
 </dd>
-<dt><code>info args</code></dt>
+<dt><code>info args [-q]</code></dt>
 <dd><p>Print the arguments of the selected frame, each on a separate line.
 </p>
+<p>The optional flag &lsquo;<samp>-q</samp>&rsquo;, which stands for &lsquo;<samp>quiet</samp>&rsquo;, disables
+printing header information and messages explaining why no argument
+have been printed.
+</p>
 </dd>
-<dt><code>info locals</code></dt>
+<dt><code>info args [-q] [-t <var>type_regexp</var>] [<var>regexp</var>]</code></dt>
+<dd><p>Like <kbd>info args</kbd>, but only print the arguments selected
+with the provided regexp(s).
+</p>
+<p>If <var>regexp</var> is provided, print only the arguments whose names
+match the regular expression <var>regexp</var>.
+</p>
+<p>If <var>type_regexp</var> is provided, print only the arguments whose
+types, as printed by the <code>whatis</code> command, match
+the regular expression <var>type_regexp</var>.
+If <var>type_regexp</var> contains space(s), it should be enclosed in
+quote characters.  If needed, use backslash to escape the meaning
+of special characters or quotes.
+</p>
+<p>If both <var>regexp</var> and <var>type_regexp</var> are provided, an argument
+is printed only if its name matches <var>regexp</var> and its type matches
+<var>type_regexp</var>.
+</p>
+</dd>
+<dt><code>info locals [-q]</code></dt>
 <dd><a name="index-info-locals"></a>
 <p>Print the local variables of the selected frame, each on a separate
 line.  These are all variables (declared either static or automatic)
 accessible at the point of execution of the selected frame.
 </p>
+<p>The optional flag &lsquo;<samp>-q</samp>&rsquo;, which stands for &lsquo;<samp>quiet</samp>&rsquo;, disables
+printing header information and messages explaining why no local variables
+have been printed.
+</p>
+</dd>
+<dt><code>info locals [-q] [-t <var>type_regexp</var>] [<var>regexp</var>]</code></dt>
+<dd><p>Like <kbd>info locals</kbd>, but only print the local variables selected
+with the provided regexp(s).
+</p>
+<p>If <var>regexp</var> is provided, print only the local variables whose names
+match the regular expression <var>regexp</var>.
+</p>
+<p>If <var>type_regexp</var> is provided, print only the local variables whose
+types, as printed by the <code>whatis</code> command, match
+the regular expression <var>type_regexp</var>.
+If <var>type_regexp</var> contains space(s), it should be enclosed in
+quote characters.  If needed, use backslash to escape the meaning
+of special characters or quotes.
+</p>
+<p>If both <var>regexp</var> and <var>type_regexp</var> are provided, a local variable
+is printed only if its name matches <var>regexp</var> and its type matches
+<var>type_regexp</var>.
+</p>
+<p>The command <kbd>info locals -q -t <var>type_regexp</var></kbd> can usefully be
+combined with the commands <kbd>frame apply</kbd> and <kbd>thread apply</kbd>.
+For example, your program might use Resource Acquisition Is
+Initialization types (RAII) such as <code>lock_something_t</code>: each
+local variable of type <code>lock_something_t</code> automatically places a
+lock that is destroyed when the variable goes out of scope.  You can
+then list all acquired locks in your program by doing
+</p><div class="smallexample">
+<pre class="smallexample">thread apply all -s frame apply all -s info locals -q -t lock_something_t
+</pre></div>
+<p>or the equivalent shorter form
+</p><div class="smallexample">
+<pre class="smallexample">tfaas i lo -q -t lock_something_t
+</pre></div>
+
 </dd>
 </dl>
 
 <hr>
 <div class="header">
 <p>
-Next: <a href="Frame-Filter-Management.html#Frame-Filter-Management" accesskey="n" rel="next">Frame Filter Management</a>, Previous: <a href="Selection.html#Selection" accesskey="p" rel="prev">Selection</a>, Up: <a href="Stack.html#Stack" accesskey="u" rel="up">Stack</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html#Concept-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Frame-Apply.html#Frame-Apply" accesskey="n" rel="next">Frame Apply</a>, Previous: <a href="Selection.html#Selection" accesskey="p" rel="prev">Selection</a>, Up: <a href="Stack.html#Stack" accesskey="u" rel="up">Stack</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html#Concept-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

@@ -18,10 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+# Expand to nothing if there are no matches
+shopt -s nullglob
 shopt -s extglob
 
 declare -r myname='paccache'
-declare -r myver='5.0.1'
+declare -r myver='1.0.0'
 
 declare -a cachedirs=() candidates=() cmdopts=() whitelist=() blacklist=()
 declare -i delete=0 dryrun=0 filecount=0 move=0 totalsaved=0 verbose=0
@@ -207,19 +209,6 @@ die() {
 	exit 1
 }
 
-get_cachedir_from_config() {
-	local key value
-
-	while IFS=$'= \t' read -r key value _; do
-		if [[ $key = CacheDir ]]; then
-			echo "$value"
-			return 0
-		fi
-	done <"$1"
-
-	return 1
-}
-
 # reads a list of files on stdin and prints out deletion candidates
 pkgfilter() {
 	# there's whitelist and blacklist parameters passed to this
@@ -355,7 +344,7 @@ summarize() {
 
 usage() {
 	cat <<EOF
-${myname} (pacman) v${myver}
+${myname} v${myver}
 
 A flexible pacman cache cleaning utility.
 
@@ -485,13 +474,9 @@ fi
 readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
 
 
-# setting default cachedir
+# setting default cachedirs
 if [[ -z $cachedirs ]]; then
-	if cachedir=$(get_cachedir_from_config "/etc/pacman.conf"); then
-		cachedirs=("$cachedir")
-	else
-		cachedirs=("${cachedirs[@]:-/var/cache/pacman/pkg}")
-	fi
+	cachedirs=($(pacman-conf CacheDir))
 fi
 
 # remaining args are a whitelist
@@ -521,7 +506,7 @@ for cachedir in "${cachedirs[@]}"; do
 	# note that these results are returned in an arbitrary order from awk, but
 	# they'll be resorted (in summarize) iff we have a verbosity level set.
 	IFS=$'\n' read -r -d '' -a cand < \
-		<(printf '%s\n' "$PWD"/*.pkg.tar?(.+([^.])) | pacsort --files |
+		<(printf '%s\n' "$PWD"/*.pkg.tar!(*.sig) | pacsort --files |
 			pkgfilter "$keep" "$scanarch" \
 				"${#whitelist[*]}" "${whitelist[@]}" \
 				"${#blacklist[*]}" "${blacklist[@]}")
@@ -550,6 +535,9 @@ unset candtemp
 
 # do this before we destroy anything
 totalsaved=$(stat -c %s "${candidates[@]}" | awk '{ sum += $1 } END { print sum }')
+
+# Exit immediately if a pipeline returns non-zero.
+set -o errexit
 
 # crush. kill. destroy.
 (( verbose )) && cmdopts+=(-v)

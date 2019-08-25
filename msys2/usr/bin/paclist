@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 declare -r myname='paclist'
-declare -r myver='5.0.1'
+declare -r myver='1.0.0'
 
 export TEXTDOMAIN='pacman'
 export TEXTDOMAINDIR='/usr/share/locale'
@@ -31,7 +31,7 @@ if ! type gettext &>/dev/null; then
 fi
 
 usage() {
-	printf "%s (pacman) v%s\n" "${myname}" "${myver}"
+	printf "%s v%s\n" "${myname}" "${myver}"
 	echo
 	printf "List all packages installed from a given repository\n" "${myname}"
 	echo

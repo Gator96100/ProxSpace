@@ -60,31 +60,14 @@ Next: <a href="Complex.html#Complex" accesskey="n" rel="next">Complex</a>, Previ
 
 <p>This chapter groups a wide variety of mathematical functions.  The
 corresponding definitions and declarations are in <samp>math.h</samp>.  
-Two definitions from <samp>math.h</samp> are of particular interest.  
+The definition of HUGE_VAL from <samp>math.h</samp> is of particular interest.
 </p>
 <ol>
 <li> The representation of infinity as a <code>double</code> is defined as
 <code>HUGE_VAL</code>; this number is returned on overflow by many functions.
 The macro <code>HUGE_VALF</code> is a corresponding value for <code>float</code>.
-
-</li><li> The structure <code>exception</code> is used when you write customized error
-handlers for the mathematical functions.  You can customize error
-handling for most of these functions by defining your own version of
-<code>matherr</code>; see the section on <code>matherr</code> for details.
 </li></ol>
 
-<a name="index-system-calls"></a>
-<a name="index-support-subroutines"></a>
-<a name="index-stubs"></a>
-<a name="index-OS-stubs"></a>
-<p>Since the error handling code calls <code>fputs</code>, the mathematical
-subroutines require stubs or minimal implementations for the same list
-of OS subroutines as <code>fputs</code>: <code>close</code>, <code>fstat</code>,
-<code>isatty</code>, <code>lseek</code>, <code>read</code>, <code>sbrk</code>, <code>write</code>.
-See <a href="http://www.gnu.org/software/libc/manual/html_node/syscalls.html#syscalls">System Calls</a> in <cite>The Red Hat newlib C Library</cite>,
-for a discussion and for sample minimal implementations of these support
-subroutines.
-</p>
 <p>Alternative declarations of the mathematical functions, which exploit
 specific machine capabilities to operate faster&mdash;but generally have
 less error checking and may reflect additional limitations on some
@@ -169,8 +152,6 @@ machines&mdash;are available when you include <samp>fastmath.h</samp> instead of
 <tr><td align="left" valign="top">&bull; <a href="lrint.html#lrint">lrint</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Round to integer
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="lround.html#lround">lround</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Round to integer, away from zero (lround, llround)
-</td></tr>
-<tr><td align="left" valign="top">&bull; <a href="matherr.html#matherr">matherr</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Modifiable math error handler
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="modf.html#modf">modf</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Split fractional and integer parts
 </td></tr>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -92,7 +92,7 @@ this command will still succeed (and do nothing).
 <h4 class="subheading">The <code>-stack-info-frame</code> Command</h4>
 <a name="index-_002dstack_002dinfo_002dframe"></a>
 
-<a name="Synopsis-37"></a>
+<a name="Synopsis-38"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -101,13 +101,13 @@ this command will still succeed (and do nothing).
 
 <p>Get info on the selected frame.
 </p>
-<a name="GDB-Command-36"></a>
+<a name="GDB-Command-37"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>info frame</samp>&rsquo; or &lsquo;<samp>frame</samp>&rsquo;
 (without arguments).
 </p>
-<a name="Example-35"></a>
+<a name="Example-36"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -115,7 +115,8 @@ this command will still succeed (and do nothing).
 -stack-info-frame
 ^done,frame={level=&quot;1&quot;,addr=&quot;0x0001076c&quot;,func=&quot;callee3&quot;,
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;17&quot;}
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;17&quot;,
+arch=&quot;i386:x86_64&quot;}
 (gdb)
 </pre></div>
 
@@ -123,7 +124,7 @@ fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot
 <h4 class="subheading">The <code>-stack-info-depth</code> Command</h4>
 <a name="index-_002dstack_002dinfo_002ddepth"></a>
 
-<a name="Synopsis-38"></a>
+<a name="Synopsis-39"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -133,12 +134,12 @@ fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot
 <p>Return the depth of the stack.  If the integer argument <var>max-depth</var>
 is specified, do not count beyond <var>max-depth</var> frames.
 </p>
-<a name="GDB-Command-37"></a>
+<a name="GDB-Command-38"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>There&rsquo;s no equivalent <small>GDB</small> command.
 </p>
-<a name="Example-36"></a>
+<a name="Example-37"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>For a stack with frame levels 0 through 11:
@@ -166,7 +167,7 @@ is specified, do not count beyond <var>max-depth</var> frames.
 <h4 class="subheading">The <code>-stack-list-arguments</code> Command</h4>
 <a name="index-_002dstack_002dlist_002darguments"></a>
 
-<a name="Synopsis-39"></a>
+<a name="Synopsis-40"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -197,14 +198,14 @@ are still displayed, however.
 <p>Use of this command to obtain arguments in a single frame is
 deprecated in favor of the &lsquo;<samp>-stack-list-variables</samp>&rsquo; command.
 </p>
-<a name="GDB-Command-38"></a>
+<a name="GDB-Command-39"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p><small>GDB</small> does not have an equivalent command.  <code>gdbtk</code> has a
 &lsquo;<samp>gdb_get_args</samp>&rsquo; command which partially overlaps with the
 functionality of &lsquo;<samp>-stack-list-arguments</samp>&rsquo;.
 </p>
-<a name="Example-37"></a>
+<a name="Example-38"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -214,19 +215,24 @@ functionality of &lsquo;<samp>-stack-list-arguments</samp>&rsquo;.
 stack=[
 frame={level=&quot;0&quot;,addr=&quot;0x00010734&quot;,func=&quot;callee4&quot;,
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;},
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;,
+arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;1&quot;,addr=&quot;0x0001076c&quot;,func=&quot;callee3&quot;,
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;17&quot;},
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;17&quot;,
+arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;2&quot;,addr=&quot;0x0001078c&quot;,func=&quot;callee2&quot;,
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;22&quot;},
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;22&quot;,
+arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;3&quot;,addr=&quot;0x000107b4&quot;,func=&quot;callee1&quot;,
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;27&quot;},
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;27&quot;,
+arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;4&quot;,addr=&quot;0x000107e0&quot;,func=&quot;main&quot;,
 file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,
-fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;32&quot;}]
+fullname=&quot;/home/foo/bar/devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;32&quot;,
+arch=&quot;i386:x86_64&quot;}]
 (gdb)
 -stack-list-arguments 0
 ^done,
@@ -268,7 +274,7 @@ args=[{name=&quot;intarg&quot;,value=&quot;2&quot;},
 <h4 class="subheading">The <code>-stack-list-frames</code> Command</h4>
 <a name="index-_002dstack_002dlist_002dframes"></a>
 
-<a name="Synopsis-40"></a>
+<a name="Synopsis-41"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -301,6 +307,9 @@ following info:
 <dd><p>The shared library where this function is defined.  This is only given
 if the frame&rsquo;s function is not known.
 </p></dd>
+<dt>&lsquo;<samp><var>arch</var></samp>&rsquo;</dt>
+<dd><p>Frame&rsquo;s architecture.
+</p></dd>
 </dl>
 
 <p>If invoked without arguments, this command prints a backtrace for the
@@ -313,12 +322,12 @@ actual number of frames, in which case only existing frames will be
 returned.  If the option <code>--no-frame-filters</code> is supplied, then
 Python frame filters will not be executed.
 </p>
-<a name="GDB-Command-39"></a>
+<a name="GDB-Command-40"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> commands are &lsquo;<samp>backtrace</samp>&rsquo; and &lsquo;<samp>where</samp>&rsquo;.
 </p>
-<a name="Example-38"></a>
+<a name="Example-39"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>Full stack backtrace:
@@ -328,29 +337,41 @@ Python frame filters will not be executed.
 -stack-list-frames
 ^done,stack=
 [frame={level=&quot;0&quot;,addr=&quot;0x0001076c&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;11&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;11&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;1&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;2&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;3&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;4&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;5&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;6&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;7&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;8&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;9&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;10&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;11&quot;,addr=&quot;0x00010738&quot;,func=&quot;main&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;4&quot;}]
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;4&quot;,
+  arch=&quot;i386:x86_64&quot;}]
 (gdb)
 </pre></div>
 
@@ -361,11 +382,14 @@ frame={level=&quot;11&quot;,addr=&quot;0x00010738&quot;,func=&quot;main&quot;,
 -stack-list-frames 3 5
 ^done,stack=
 [frame={level=&quot;3&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;4&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;},
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;},
 frame={level=&quot;5&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;}]
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;}]
 (gdb)
 </pre></div>
 
@@ -376,7 +400,8 @@ frame={level=&quot;5&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
 -stack-list-frames 3 3
 ^done,stack=
 [frame={level=&quot;3&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
-  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;}]
+  file=&quot;recursive2.c&quot;,fullname=&quot;/home/foo/bar/recursive2.c&quot;,line=&quot;14&quot;,
+  arch=&quot;i386:x86_64&quot;}]
 (gdb)
 </pre></div>
 
@@ -385,7 +410,7 @@ frame={level=&quot;5&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
 <h4 class="subheading">The <code>-stack-list-locals</code> Command</h4>
 <a name="index-_002dstack_002dlist_002dlocals"></a>
 <a name="g_t_002dstack_002dlist_002dlocals"></a>
-<a name="Synopsis-41"></a>
+<a name="Synopsis-42"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -410,12 +435,12 @@ variables are still displayed, however.
 <p>This command is deprecated in favor of the
 &lsquo;<samp>-stack-list-variables</samp>&rsquo; command.
 </p>
-<a name="GDB-Command-40"></a>
+<a name="GDB-Command-41"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>&lsquo;<samp>info locals</samp>&rsquo; in <small>GDB</small>, &lsquo;<samp>gdb_get_locals</samp>&rsquo; in <code>gdbtk</code>.
 </p>
-<a name="Example-39"></a>
+<a name="Example-40"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -436,7 +461,7 @@ variables are still displayed, however.
 <h4 class="subheading">The <code>-stack-list-variables</code> Command</h4>
 <a name="index-_002dstack_002dlist_002dvariables"></a>
 
-<a name="Synopsis-42"></a>
+<a name="Synopsis-43"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -455,7 +480,7 @@ supplied, then Python frame filters will not be executed.
 and arguments that are not available are not listed.  Partially
 available arguments and local variables are still displayed, however.
 </p>
-<a name="Example-40"></a>
+<a name="Example-41"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -470,7 +495,7 @@ available arguments and local variables are still displayed, however.
 <h4 class="subheading">The <code>-stack-select-frame</code> Command</h4>
 <a name="index-_002dstack_002dselect_002dframe"></a>
 
-<a name="Synopsis-43"></a>
+<a name="Synopsis-44"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -483,13 +508,13 @@ the stack.
 <p>This command in deprecated in favor of passing the &lsquo;<samp>--frame</samp>&rsquo;
 option to every command.
 </p>
-<a name="GDB-Command-41"></a>
+<a name="GDB-Command-42"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> commands are &lsquo;<samp>frame</samp>&rsquo;, &lsquo;<samp>up</samp>&rsquo;,
 &lsquo;<samp>down</samp>&rsquo;, &lsquo;<samp>select-frame</samp>&rsquo;, &lsquo;<samp>up-silent</samp>&rsquo;, and &lsquo;<samp>down-silent</samp>&rsquo;.
 </p>
-<a name="Example-41"></a>
+<a name="Example-42"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Storage-References.html#Storage-References" accesskey="n" rel="ne
 </div>
 <hr>
 <a name="Constant-expressions-1"></a>
-<h4 class="subsection">10.6.1 Constant expressions</h4>
+<h4 class="subsection">11.6.1 Constant expressions</h4>
 <a name="index-INTEGER_005fCST"></a>
 <a name="index-tree_005fint_005fcst_005flt"></a>
 <a name="index-tree_005fint_005fcst_005fequal"></a>
@@ -91,6 +91,7 @@ Next: <a href="Storage-References.html#Storage-References" accesskey="n" rel="ne
 <a name="index-COMPLEX_005fCST"></a>
 <a name="index-VECTOR_005fCST"></a>
 <a name="index-STRING_005fCST"></a>
+<a name="index-POLY_005fINT_005fCST"></a>
 <a name="index-TREE_005fSTRING_005fLENGTH"></a>
 <a name="index-TREE_005fSTRING_005fPOINTER"></a>
 
@@ -142,10 +143,77 @@ imaginary parts respectively.
 </p>
 </dd>
 <dt><code>VECTOR_CST</code></dt>
-<dd><p>These nodes are used to represent vector constants, whose parts are
-constant nodes.  Each individual constant node is either an integer or a
-double constant node.  The first operand is a <code>TREE_LIST</code> of the
-constant nodes and is accessed through <code>TREE_VECTOR_CST_ELTS</code>.
+<dd><p>These nodes are used to represent vector constants.  Each vector
+constant <var>v</var> is treated as a specific instance of an arbitrary-length
+sequence that itself contains &lsquo;<samp>VECTOR_CST_NPATTERNS (<var>v</var>)</samp>&rsquo;
+interleaved patterns.  Each pattern has the form:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{ <var>base0</var>, <var>base1</var>, <var>base1</var> + <var>step</var>, <var>base1</var> + <var>step</var> * 2, &hellip; }
+</pre></div>
+
+<p>The first three elements in each pattern are enough to determine the
+values of the other elements.  However, if all <var>step</var>s are zero,
+only the first two elements are needed.  If in addition each <var>base1</var>
+is equal to the corresponding <var>base0</var>, only the first element in
+each pattern is needed.  The number of encoded elements per pattern
+is given by &lsquo;<samp>VECTOR_CST_NELTS_PER_PATTERN (<var>v</var>)</samp>&rsquo;.
+</p>
+<p>For example, the constant:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{ 0, 1, 2, 6, 3, 8, 4, 10, 5, 12, 6, 14, 7, 16, 8, 18 }
+</pre></div>
+
+<p>is interpreted as an interleaving of the sequences:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{ 0, 2, 3, 4, 5, 6, 7, 8 }
+{ 1, 6, 8, 10, 12, 14, 16, 18 }
+</pre></div>
+
+<p>where the sequences are represented by the following patterns:
+</p>
+<div class="smallexample">
+<pre class="smallexample"><var>base0</var> == 0, <var>base1</var> == 2, <var>step</var> == 1
+<var>base0</var> == 1, <var>base1</var> == 6, <var>step</var> == 2
+</pre></div>
+
+<p>In this case:
+</p>
+<div class="smallexample">
+<pre class="smallexample">VECTOR_CST_NPATTERNS (<var>v</var>) == 2
+VECTOR_CST_NELTS_PER_PATTERN (<var>v</var>) == 3
+</pre></div>
+
+<p>The vector is therefore encoded using the first 6 elements
+(&lsquo;<samp>{ 0, 1, 2, 6, 3, 8 }</samp>&rsquo;), with the remaining 10 elements
+being implicit extensions of them.
+</p>
+<p>Sometimes this scheme can create two possible encodings of the same
+vector.  For example { 0, 1 } could be seen as two patterns with
+one element each or one pattern with two elements (<var>base0</var> and
+<var>base1</var>).  The canonical encoding is always the one with the
+fewest patterns or (if both encodings have the same number of
+petterns) the one with the fewest encoded elements.
+</p>
+<p>&lsquo;<samp>vector_cst_encoding_nelts (<var>v</var>)</samp>&rsquo; gives the total number of
+encoded elements in <var>v</var>, which is 6 in the example above.
+<code>VECTOR_CST_ENCODED_ELTS (<var>v</var>)</code> gives a pointer to the elements
+encoded in <var>v</var> and <code>VECTOR_CST_ENCODED_ELT (<var>v</var>, <var>i</var>)</code>
+accesses the value of encoded element <var>i</var>.
+</p>
+<p>&lsquo;<samp>VECTOR_CST_DUPLICATE_P (<var>v</var>)</samp>&rsquo; is true if <var>v</var> simply contains
+repeated instances of &lsquo;<samp>VECTOR_CST_NPATTERNS (<var>v</var>)</samp>&rsquo; values.  This is
+a shorthand for testing &lsquo;<samp>VECTOR_CST_NELTS_PER_PATTERN (<var>v</var>) == 1</samp>&rsquo;.
+</p>
+<p>&lsquo;<samp>VECTOR_CST_STEPPED_P (<var>v</var>)</samp>&rsquo; is true if at least one
+pattern in <var>v</var> has a nonzero step.  This is a shorthand for
+testing &lsquo;<samp>VECTOR_CST_NELTS_PER_PATTERN (<var>v</var>) == 3</samp>&rsquo;.
+</p>
+<p>The utility function <code>vector_cst_elt</code> gives the value of an
+arbitrary index as a <code>tree</code>.  <code>vector_cst_int_elt</code> gives
+the same value as a <code>wide_int</code>.
 </p>
 </dd>
 <dt><code>STRING_CST</code></dt>
@@ -166,6 +234,17 @@ of the <code>STRING_CST</code>.
 </p>
 <p>FIXME: The formats of string constants are not well-defined when the
 target system bytes are not the same width as host system bytes.
+</p>
+</dd>
+<dt><code>POLY_INT_CST</code></dt>
+<dd><p>These nodes represent invariants that depend on some target-specific
+runtime parameters.  They consist of <code>NUM_POLY_INT_COEFFS</code>
+coefficients, with the first coefficient being the constant term and
+the others being multipliers that are applied to the runtime parameters.
+</p>
+<p><code>POLY_INT_CST_ELT (<var>x</var>, <var>i</var>)</code> references coefficient number
+<var>i</var> of <code>POLY_INT_CST</code> node <var>x</var>.  Each coefficient is an
+<code>INTEGER_CST</code>.
 </p>
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -34,7 +34,7 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="C-Extensions.html#C-Extensions" rel="up" title="C Extensions">
 <link href="Target-Builtins.html#Target-Builtins" rel="next" title="Target Builtins">
-<link href="Cilk-Plus-Builtins.html#Cilk-Plus-Builtins" rel="prev" title="Cilk Plus Builtins">
+<link href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" rel="prev" title="Pointer Bounds Checker builtins">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
@@ -71,15 +71,17 @@ ul.no-bullet {list-style: none}
 <a name="Other-Builtins"></a>
 <div class="header">
 <p>
-Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Cilk-Plus-Builtins.html#Cilk-Plus-Builtins" accesskey="p" rel="prev">Cilk Plus Builtins</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" accesskey="p" rel="prev">Pointer Bounds Checker builtins</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="Other-Built_002din-Functions-Provided-by-GCC"></a>
-<h3 class="section">6.59 Other Built-in Functions Provided by GCC</h3>
+<h3 class="section">6.58 Other Built-in Functions Provided by GCC</h3>
 <a name="index-built_002din-functions-1"></a>
 <a name="index-_005f_005fbuiltin_005falloca"></a>
 <a name="index-_005f_005fbuiltin_005falloca_005fwith_005falign"></a>
+<a name="index-_005f_005fbuiltin_005falloca_005fwith_005falign_005fand_005fmax"></a>
 <a name="index-_005f_005fbuiltin_005fcall_005fwith_005fstatic_005fchain"></a>
+<a name="index-_005f_005fbuiltin_005fextend_005fpointer"></a>
 <a name="index-_005f_005fbuiltin_005ffpclassify"></a>
 <a name="index-_005f_005fbuiltin_005fisfinite"></a>
 <a name="index-_005f_005fbuiltin_005fisnormal"></a>
@@ -729,6 +731,17 @@ an extension.  See <a href="Variable-Length.html#Variable-Length">Variable Lengt
 </dd></dl>
 
 <dl>
+<dt><a name="index-_002a_005f_005fbuiltin_005falloca_005fwith_005falign_005fand_005fmax"></a>Built-in Function: <em>void</em> <strong>*__builtin_alloca_with_align_and_max</strong> <em>(size_t size, size_t alignment, size_t max_size)</em></dt>
+<dd><p>Similar to <code>__builtin_alloca_with_align</code> but takes an extra argument
+specifying an upper bound for <var>size</var> in case its value cannot be computed
+at compile time, for use by <samp>-fstack-usage</samp>, <samp>-Wstack-usage</samp>
+and <samp>-Walloca-larger-than</samp>.  <var>max_size</var> must be a constant integer
+expression, it has no effect on code generation and no attempt is made to
+check its compatibility with <var>size</var>.
+</p>
+</dd></dl>
+
+<dl>
 <dt><a name="index-_005f_005fbuiltin_005ftypes_005fcompatible_005fp"></a>Built-in Function: <em>int</em> <strong>__builtin_types_compatible_p</strong> <em>(<var>type1</var>, <var>type2</var>)</em></dt>
 <dd>
 <p>You can use the built-in function <code>__builtin_types_compatible_p</code> to
@@ -805,7 +818,7 @@ integer constant expression, is nonzero.  Otherwise it returns <var>exp2</var>.
 except that the expression returned has its type unaltered by promotion
 rules.  Also, the built-in function does not evaluate the expression
 that is not chosen.  For example, if <var>const_exp</var> evaluates to true,
-<var>exp2</var> is not evaluated even if it has side-effects.
+<var>exp2</var> is not evaluated even if it has side effects.
 </p>
 <p>This built-in function can return an lvalue if the chosen argument is an
 lvalue.
@@ -833,6 +846,66 @@ as <var>exp2</var>.
 unused expression (<var>exp1</var> or <var>exp2</var> depending on the value of
 <var>const_exp</var>) may still generate syntax errors.  This may change in
 future revisions.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005ftgmath"></a>Built-in Function: <em><var>type</var></em> <strong>__builtin_tgmath</strong> <em>(<var>functions</var>, <var>arguments</var>)</em></dt>
+<dd>
+<p>The built-in function <code>__builtin_tgmath</code>, available only for C
+and Objective-C, calls a function determined according to the rules of
+<code>&lt;tgmath.h&gt;</code> macros.  It is intended to be used in
+implementations of that header, so that expansions of macros from that
+header only expand each of their arguments once, to avoid problems
+when calls to such macros are nested inside the arguments of other
+calls to such macros; in addition, it results in better diagnostics
+for invalid calls to <code>&lt;tgmath.h&gt;</code> macros than implementations
+using other GNU C language features.  For example, the <code>pow</code>
+type-generic macro might be defined as:
+</p>
+<div class="smallexample">
+<pre class="smallexample">#define pow(a, b) __builtin_tgmath (powf, pow, powl, \
+                                    cpowf, cpow, cpowl, a, b)
+</pre></div>
+
+<p>The arguments to <code>__builtin_tgmath</code> are at least two pointers to
+functions, followed by the arguments to the type-generic macro (which
+will be passed as arguments to the selected function).  All the
+pointers to functions must be pointers to prototyped functions, none
+of which may have variable arguments, and all of which must have the
+same number of parameters; the number of parameters of the first
+function determines how many arguments to <code>__builtin_tgmath</code> are
+interpreted as function pointers, and how many as the arguments to the
+called function.
+</p>
+<p>The types of the specified functions must all be different, but
+related to each other in the same way as a set of functions that may
+be selected between by a macro in <code>&lt;tgmath.h&gt;</code>.  This means that
+the functions are parameterized by a floating-point type <var>t</var>,
+different for each such function.  The function return types may all
+be the same type, or they may be <var>t</var> for each function, or they
+may be the real type corresponding to <var>t</var> for each function (if
+some of the types <var>t</var> are complex).  Likewise, for each parameter
+position, the type of the parameter in that position may always be the
+same type, or may be <var>t</var> for each function (this case must apply
+for at least one parameter position), or may be the real type
+corresponding to <var>t</var> for each function.
+</p>
+<p>The standard rules for <code>&lt;tgmath.h&gt;</code> macros are used to find a
+common type <var>u</var> from the types of the arguments for parameters
+whose types vary between the functions; complex integer types (a GNU
+extension) are treated like <code>_Complex double</code> for this purpose
+(or <code>_Complex _Float64</code> if all the function return types are the
+same <code>_Float<var>n</var></code> or <code>_Float<var>n</var>x</code> type).
+If the function return types vary, or are all the same integer type,
+the function called is the one for which <var>t</var> is <var>u</var>, and it is
+an error if there is no such function.  If the function return types
+are all the same floating-point type, the type-generic macro is taken
+to be one of those from TS 18661 that rounds the result to a narrower
+type; if there is a function for which <var>t</var> is <var>u</var>, it is
+called, and otherwise the first function, if any, for which <var>t</var>
+has at least the range and precision of <var>u</var> is called, and it is
+an error if there is no such function.
 </p>
 </dd></dl>
 
@@ -1452,10 +1525,19 @@ are 32 bit.
 are 64 bit.
 </p></dd></dl>
 
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fextend_005fpointer-1"></a>Built-in Function: <em>Pmode</em> <strong>__builtin_extend_pointer</strong> <em>(void * x)</em></dt>
+<dd><p>On targets where the user visible pointer size is smaller than the size
+of an actual hardware address this function returns the extended user
+pointer.  Targets where this is true included ILP32 mode on x86_64 or
+Aarch64.  This function is mainly useful when writing inline assembly
+code.
+</p></dd></dl>
+
 <hr>
 <div class="header">
 <p>
-Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Cilk-Plus-Builtins.html#Cilk-Plus-Builtins" accesskey="p" rel="prev">Cilk Plus Builtins</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" accesskey="p" rel="prev">Pointer Bounds Checker builtins</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

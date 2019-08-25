@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -83,12 +83,13 @@ see <a href="Memory.html#addressable-memory-unit">addressable memory unit</a>.
 <h4 class="subheading">The <code>-data-disassemble</code> Command</h4>
 <a name="index-_002ddata_002ddisassemble"></a>
 
-<a name="Synopsis-60"></a>
+<a name="Synopsis-61"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
 <pre class="smallexample"> -data-disassemble
     [ -s <var>start-addr</var> -e <var>end-addr</var> ]
+  | [ -a <var>addr</var> ]
   | [ -f <var>filename</var> -l <var>linenum</var> [ -n <var>lines</var> ] ]
   -- <var>mode</var>
 </pre></div>
@@ -101,6 +102,12 @@ see <a href="Memory.html#addressable-memory-unit">addressable memory unit</a>.
 </p></dd>
 <dt>&lsquo;<samp><var>end-addr</var></samp>&rsquo;</dt>
 <dd><p>is the end address
+</p></dd>
+<dt>&lsquo;<samp><var>addr</var></samp>&rsquo;</dt>
+<dd><p>is an address anywhere within (or the name of) the function to
+disassemble.  If an address is specified, the whole function
+surrounding that address will be disassembled.  If a name is
+specified, the whole function with that name will be disassembled.
 </p></dd>
 <dt>&lsquo;<samp><var>filename</var></samp>&rsquo;</dt>
 <dd><p>is the name of the file to disassemble
@@ -208,12 +215,12 @@ present in the debug information.
 manipulated directly by <small>GDB/MI</small>, i.e., it is not possible to
 adjust its format.
 </p>
-<a name="GDB-Command-42"></a>
+<a name="GDB-Command-43"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>disassemble</samp>&rsquo;.
 </p>
-<a name="Example-48"></a>
+<a name="Example-49"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>Disassemble from the current value of <code>$pc</code> to <code>$pc + 20</code>:
@@ -295,7 +302,7 @@ inst=&quot;sethi  %hi(0x11800), %o2&quot;}]}]
 <h4 class="subheading">The <code>-data-evaluate-expression</code> Command</h4>
 <a name="index-_002ddata_002devaluate_002dexpression"></a>
 
-<a name="Synopsis-61"></a>
+<a name="Synopsis-62"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -306,14 +313,14 @@ inst=&quot;sethi  %hi(0x11800), %o2&quot;}]}]
 inferior function call.  The function call will execute synchronously.
 If the expression contains spaces, it must be enclosed in double quotes.
 </p>
-<a name="GDB-Command-43"></a>
+<a name="GDB-Command-44"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> commands are &lsquo;<samp>print</samp>&rsquo;, &lsquo;<samp>output</samp>&rsquo;, and
 &lsquo;<samp>call</samp>&rsquo;.  In <code>gdbtk</code> only, there&rsquo;s a corresponding
 &lsquo;<samp>gdb_eval</samp>&rsquo; command.
 </p>
-<a name="Example-49"></a>
+<a name="Example-50"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>In the following example, the numbers that precede the commands are the
@@ -341,7 +348,7 @@ output.
 <h4 class="subheading">The <code>-data-list-changed-registers</code> Command</h4>
 <a name="index-_002ddata_002dlist_002dchanged_002dregisters"></a>
 
-<a name="Synopsis-62"></a>
+<a name="Synopsis-63"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -350,13 +357,13 @@ output.
 
 <p>Display a list of the registers that have changed.
 </p>
-<a name="GDB-Command-44"></a>
+<a name="GDB-Command-45"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p><small>GDB</small> doesn&rsquo;t have a direct analog for this command; <code>gdbtk</code>
 has the corresponding command &lsquo;<samp>gdb_changed_register_list</samp>&rsquo;.
 </p>
-<a name="Example-50"></a>
+<a name="Example-51"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>On a PPC MBX board:
@@ -369,7 +376,7 @@ has the corresponding command &lsquo;<samp>gdb_changed_register_list</samp>&rsqu
 (gdb)
 *stopped,reason=&quot;breakpoint-hit&quot;,disp=&quot;keep&quot;,bkptno=&quot;1&quot;,frame={
 func=&quot;main&quot;,args=[],file=&quot;try.c&quot;,fullname=&quot;/home/foo/bar/try.c&quot;,
-line=&quot;5&quot;}
+line=&quot;5&quot;,arch=&quot;powerpc&quot;}
 (gdb)
 -data-list-changed-registers
 ^done,changed-registers=[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,
@@ -383,7 +390,7 @@ line=&quot;5&quot;}
 <h4 class="subheading">The <code>-data-list-register-names</code> Command</h4>
 <a name="index-_002ddata_002dlist_002dregister_002dnames"></a>
 
-<a name="Synopsis-63"></a>
+<a name="Synopsis-64"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -397,14 +404,14 @@ names of the registers corresponding to the arguments.  To ensure
 consistency between a register name and its number, the output list may
 include empty register names.
 </p>
-<a name="GDB-Command-45"></a>
+<a name="GDB-Command-46"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p><small>GDB</small> does not have a command which corresponds to
 &lsquo;<samp>-data-list-register-names</samp>&rsquo;.  In <code>gdbtk</code> there is a
 corresponding command &lsquo;<samp>gdb_regnames</samp>&rsquo;.
 </p>
-<a name="Example-51"></a>
+<a name="Example-52"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>For the PPC MBX board:
@@ -428,7 +435,7 @@ corresponding command &lsquo;<samp>gdb_regnames</samp>&rsquo;.
 <h4 class="subheading">The <code>-data-list-register-values</code> Command</h4>
 <a name="index-_002ddata_002dlist_002dregister_002dvalues"></a>
 
-<a name="Synopsis-64"></a>
+<a name="Synopsis-65"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -466,13 +473,13 @@ indicates that only the available registers are to be returned.
 </p></dd>
 </dl>
 
-<a name="GDB-Command-46"></a>
+<a name="GDB-Command-47"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> commands are &lsquo;<samp>info reg</samp>&rsquo;, &lsquo;<samp>info
 all-reg</samp>&rsquo;, and (in <code>gdbtk</code>) &lsquo;<samp>gdb_fetch_registers</samp>&rsquo;.
 </p>
-<a name="Example-52"></a>
+<a name="Example-53"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>For a PPC MBX board (note: line breaks are for readability only, they
@@ -531,7 +538,7 @@ don&rsquo;t appear in the actual output):
 
 <p>This command is deprecated, use <code>-data-read-memory-bytes</code> instead.
 </p>
-<a name="Synopsis-65"></a>
+<a name="Synopsis-66"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -591,13 +598,13 @@ in &lsquo;<samp>nr-bytes</samp>&rsquo; and the starting address used to read mem
 &lsquo;<samp>next-row</samp>&rsquo; and &lsquo;<samp>prev-row</samp>&rsquo;, &lsquo;<samp>next-page</samp>&rsquo; and
 &lsquo;<samp>prev-page</samp>&rsquo;.
 </p>
-<a name="GDB-Command-47"></a>
+<a name="GDB-Command-48"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>x</samp>&rsquo;.  <code>gdbtk</code> has
 &lsquo;<samp>gdb_get_mem</samp>&rsquo; memory read command.
 </p>
-<a name="Example-53"></a>
+<a name="Example-54"></a>
 <h4 class="subsubheading">Example</h4>
 
 <p>Read six bytes of memory starting at <code>bytes+6</code> but then offset by
@@ -654,7 +661,7 @@ next-page=&quot;0x000013c0&quot;,prev-page=&quot;0x00001380&quot;,memory=[
 <h4 class="subheading">The <code>-data-read-memory-bytes</code> Command</h4>
 <a name="index-_002ddata_002dread_002dmemory_002dbytes"></a>
 
-<a name="Synopsis-66"></a>
+<a name="Synopsis-67"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -727,12 +734,12 @@ the start address passed to <code>-data-read-memory-bytes</code>.
 
 
 
-<a name="GDB-Command-48"></a>
+<a name="GDB-Command-49"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>The corresponding <small>GDB</small> command is &lsquo;<samp>x</samp>&rsquo;.
 </p>
-<a name="Example-54"></a>
+<a name="Example-55"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">
@@ -749,7 +756,7 @@ the start address passed to <code>-data-read-memory-bytes</code>.
 <h4 class="subheading">The <code>-data-write-memory-bytes</code> Command</h4>
 <a name="index-_002ddata_002dwrite_002dmemory_002dbytes"></a>
 
-<a name="Synopsis-67"></a>
+<a name="Synopsis-68"></a>
 <h4 class="subsubheading">Synopsis</h4>
 
 <div class="smallexample">
@@ -780,12 +787,12 @@ written.  If <var>count</var> is greater than <var>contents</var>&rsquo; length,
 </dd>
 </dl>
 
-<a name="GDB-Command-49"></a>
+<a name="GDB-Command-50"></a>
 <h4 class="subsubheading"><small>GDB</small> Command</h4>
 
 <p>There&rsquo;s no corresponding <small>GDB</small> command.
 </p>
-<a name="Example-55"></a>
+<a name="Example-56"></a>
 <h4 class="subsubheading">Example</h4>
 
 <div class="smallexample">

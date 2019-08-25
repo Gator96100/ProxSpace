@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the BFD library.
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -173,9 +173,28 @@ Return TRUE on success and FALSE on failure.
 
 </pre></div>
 
+<a name="index-_005fbfd_005fgeneric_005flink_005fhide_005fsymbol"></a>
+<a name="g_t_005fbfd_005fgeneric_005flink_005fhide_005fsymbol"></a>
+<h4 class="subsubsection">2.17.3.7 <code>_bfd_generic_link_hide_symbol</code></h4>
+<p><strong>Synopsis</strong>
+</p><div class="example">
+<pre class="example">void _bfd_generic_link_hide_symbol
+   (bfd *output_bfd, struct bfd_link_info *info,
+    struct bfd_link_hash_entry *h);
+</pre></div>
+<p><strong>Description</strong><br>
+Hide symbol <var>h</var>.
+This is an internal function.  It should not be called from
+outside the BFD library.
+</p><div class="example">
+<pre class="example">#define bfd_link_hide_symbol(output_bfd, info, h) \
+       BFD_SEND (output_bfd, _bfd_link_hide_symbol, (output_bfd, info, h))
+
+</pre></div>
+
 <a name="index-bfd_005fgeneric_005fdefine_005fstart_005fstop"></a>
 <a name="bfd_005fgeneric_005fdefine_005fstart_005fstop"></a>
-<h4 class="subsubsection">2.17.3.7 <code>bfd_generic_define_start_stop</code></h4>
+<h4 class="subsubsection">2.17.3.8 <code>bfd_generic_define_start_stop</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">struct bfd_link_hash_entry *bfd_generic_define_start_stop
@@ -193,7 +212,7 @@ Return the symbol or NULL if no such undefined symbol exists.
 
 <a name="index-bfd_005ffind_005fversion_005ffor_005fsym"></a>
 <a name="bfd_005ffind_005fversion_005ffor_005fsym"></a>
-<h4 class="subsubsection">2.17.3.8 <code>bfd_find_version_for_sym</code></h4>
+<h4 class="subsubsection">2.17.3.9 <code>bfd_find_version_for_sym</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">struct bfd_elf_version_tree * bfd_find_version_for_sym
@@ -208,7 +227,7 @@ the output &lsquo;<samp>hide</samp>&rsquo; boolean parameter.
 </p>
 <a name="index-bfd_005fhide_005fsym_005fby_005fversion"></a>
 <a name="bfd_005fhide_005fsym_005fby_005fversion"></a>
-<h4 class="subsubsection">2.17.3.9 <code>bfd_hide_sym_by_version</code></h4>
+<h4 class="subsubsection">2.17.3.10 <code>bfd_hide_sym_by_version</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">bfd_boolean bfd_hide_sym_by_version
@@ -220,7 +239,7 @@ info for a given symbol.  Return TRUE if the symbol is hidden.
 </p>
 <a name="index-bfd_005flink_005fcheck_005frelocs"></a>
 <a name="bfd_005flink_005fcheck_005frelocs"></a>
-<h4 class="subsubsection">2.17.3.10 <code>bfd_link_check_relocs</code></h4>
+<h4 class="subsubsection">2.17.3.11 <code>bfd_link_check_relocs</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">bfd_boolean bfd_link_check_relocs
@@ -234,7 +253,7 @@ This is the external entry point to this code.
 </p>
 <a name="index-_005fbfd_005fgeneric_005flink_005fcheck_005frelocs"></a>
 <a name="g_t_005fbfd_005fgeneric_005flink_005fcheck_005frelocs"></a>
-<h4 class="subsubsection">2.17.3.11 <code>_bfd_generic_link_check_relocs</code></h4>
+<h4 class="subsubsection">2.17.3.12 <code>_bfd_generic_link_check_relocs</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">bfd_boolean _bfd_generic_link_check_relocs
@@ -248,7 +267,7 @@ outside the BFD library.
 </p>
 <a name="index-bfd_005fmerge_005fprivate_005fbfd_005fdata"></a>
 <a name="bfd_005fmerge_005fprivate_005fbfd_005fdata"></a>
-<h4 class="subsubsection">2.17.3.12 <code>bfd_merge_private_bfd_data</code></h4>
+<h4 class="subsubsection">2.17.3.13 <code>bfd_merge_private_bfd_data</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">bfd_boolean bfd_merge_private_bfd_data
@@ -271,7 +290,7 @@ Not enough memory exists to create private data for <var>obfd</var>.
 
 <a name="index-_005fbfd_005fgeneric_005fverify_005fendian_005fmatch"></a>
 <a name="g_t_005fbfd_005fgeneric_005fverify_005fendian_005fmatch"></a>
-<h4 class="subsubsection">2.17.3.13 <code>_bfd_generic_verify_endian_match</code></h4>
+<h4 class="subsubsection">2.17.3.14 <code>_bfd_generic_verify_endian_match</code></h4>
 <p><strong>Synopsis</strong>
 </p><div class="example">
 <pre class="example">bfd_boolean _bfd_generic_verify_endian_match

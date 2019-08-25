@@ -2,7 +2,7 @@
 #
 #   provides.sh - Check the 'provides' array conforms to requirements.
 #
-#   Copyright (c) 2014-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ LIBMAKEPKG_LINT_PKGBUILD_PROVIDES_SH=1
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
+source "$LIBRARY/lint_pkgbuild/pkgname.sh"
+source "$LIBRARY/lint_pkgbuild/pkgver.sh"
 source "$LIBRARY/util/message.sh"
 source "$LIBRARY/util/pkgbuild.sh"
 
@@ -31,32 +33,31 @@ lint_pkgbuild_functions+=('lint_provides')
 
 
 lint_provides() {
-	local a list name provides_list ret=0
+	local provides_list provide name ver ret=0
 
-	provides_list=("${provides[@]}")
-	for a in "${arch[@]}"; do
-		array_build list "provides_$a"
-		provides_list+=("${list[@]}")
-	done
+	get_pkgbuild_all_split_attributes provides provides_list
 
-	for name in "${pkgname[@]}"; do
-		if extract_function_variable "package_$name" provides 1 list; then
-			provides_list+=("${list[@]}")
-		fi
-
-		for a in "${arch[@]}"; do
-			if extract_function_variable "package_$name" "provides_$a" 1 list; then
-				provides_list+=("${list[@]}")
-			fi
-		done
-	done
+	# this function requires extglob - save current status to restore later
+	local shellopts=$(shopt -p extglob)
+	shopt -s extglob
 
 	for provide in "${provides_list[@]}"; do
 		if [[ $provide == *['<>']* ]]; then
 			error "$(gettext "%s array cannot contain comparison (< or >) operators.")" "provides"
 			ret=1
+			continue
+		fi
+		name=${provide%=*}
+		# remove optional epoch in version specifier
+		ver=${provide##$name=?(+([0-9]):)}
+		lint_one_pkgname provides "$name" || ret=1
+		if [[ $ver != $provide ]]; then
+			# remove optional pkgrel in version specifier
+			check_pkgver "${ver%-+([0-9])?(.+([0-9]))}" provides || ret=1
 		fi
 	done
+
+	eval "$shellopts"
 
 	return $ret
 }

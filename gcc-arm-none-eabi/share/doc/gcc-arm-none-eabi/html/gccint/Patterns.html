@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Example.html#Example" accesskey="n" rel="next">Example</a>, Previ
 </div>
 <hr>
 <a name="Everything-about-Instruction-Patterns"></a>
-<h3 class="section">16.2 Everything about Instruction Patterns</h3>
+<h3 class="section">17.2 Everything about Instruction Patterns</h3>
 <a name="index-patterns"></a>
 <a name="index-instruction-patterns"></a>
 
@@ -89,7 +89,7 @@ template or C code to generate the assembler output.
 <p>A <code>define_insn</code> is an RTL expression containing four or five operands:
 </p>
 <ol>
-<li> An optional name.  The presence of a name indicate that this instruction
+<li> An optional name.  The presence of a name indicates that this instruction
 pattern can perform a certain standard job for the RTL-generation
 pass of the compiler.  This pass knows certain names and will use
 the instruction patterns with those names, if the names are defined
@@ -138,9 +138,21 @@ individual insn, and only after the insn has matched the pattern&rsquo;s
 recognition template.  The insn&rsquo;s operands may be found in the vector
 <code>operands</code>.
 </p>
-<p>For an insn where the condition has once matched, it
-cannot later be used to control register allocation by excluding
-certain register or value combinations.
+<p>An instruction condition cannot become more restrictive as compilation
+progresses.  If the condition accepts a particular RTL instruction at
+one stage of compilation, it must continue to accept that instruction
+until the final pass.  For example, &lsquo;<samp>!reload_completed</samp>&rsquo; and
+&lsquo;<samp>can_create_pseudo_p ()</samp>&rsquo; are both invalid instruction conditions,
+because they are true during the earlier RTL passes and false during
+the later ones.  For the same reason, if a condition accepts an
+instruction before register allocation, it cannot later try to control
+register allocation by excluding certain register or value combinations.
+</p>
+<p>Although a condition cannot become more restrictive as compilation
+progresses, the condition for a nameless pattern <em>can</em> become
+more permissive.  For example, a nameless instruction can require
+&lsquo;<samp>reload_completed</samp>&rsquo; to be true, in which case it only matches
+after register allocation.
 </p>
 </li><li> The <em>output template</em> or <em>output statement</em>: This is either
 a string, or a fragment of C code which returns a string.

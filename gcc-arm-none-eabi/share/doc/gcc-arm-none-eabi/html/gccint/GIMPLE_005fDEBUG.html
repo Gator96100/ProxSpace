@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,13 +75,15 @@ Next: <a href="GIMPLE_005fEH_005fFILTER.html#GIMPLE_005fEH_005fFILTER" accesskey
 </div>
 <hr>
 <a name="GIMPLE_005fDEBUG-1"></a>
-<h4 class="subsection">11.8.7 <code>GIMPLE_DEBUG</code></h4>
+<h4 class="subsection">12.8.7 <code>GIMPLE_DEBUG</code></h4>
 <a name="index-GIMPLE_005fDEBUG"></a>
 <a name="index-GIMPLE_005fDEBUG_005fBIND"></a>
+<a name="index-GIMPLE_005fDEBUG_005fBEGIN_005fSTMT"></a>
+<a name="index-GIMPLE_005fDEBUG_005fINLINE_005fENTRY"></a>
 
 <dl>
 <dt><a name="index-_002agimple_005fbuild_005fdebug_005fbind"></a>GIMPLE function: <em>gdebug</em> <strong>*gimple_build_debug_bind</strong> <em>(tree var, tree value, gimple stmt)</em></dt>
-<dd><p>Build a <code>GIMPLE_DEBUG</code> statement with <code>GIMPLE_DEBUG_BIND</code> of
+<dd><p>Build a <code>GIMPLE_DEBUG</code> statement with <code>GIMPLE_DEBUG_BIND</code>
 <code>subcode</code>.  The effect of this statement is to tell debug
 information generation machinery that the value of user variable
 <code>var</code> is given by <code>value</code> at that point, and to remain with
@@ -157,6 +159,31 @@ that the variable becomes unbound.
 <dt><a name="index-gimple_005fdebug_005fbind_005fhas_005fvalue_005fp"></a>GIMPLE function: <em>bool</em> <strong>gimple_debug_bind_has_value_p</strong> <em>(gimple stmt)</em></dt>
 <dd><p>Return <code>TRUE</code> if <code>stmt</code> binds a user variable to a value,
 and <code>FALSE</code> if it unbinds the variable.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gimple_005fbuild_005fdebug_005fbegin_005fstmt"></a>GIMPLE function: <em>gimple</em> <strong>gimple_build_debug_begin_stmt</strong> <em>(tree block, location_t location)</em></dt>
+<dd><p>Build a <code>GIMPLE_DEBUG</code> statement with
+<code>GIMPLE_DEBUG_BEGIN_STMT</code> <code>subcode</code>.  The effect of this
+statement is to tell debug information generation machinery that the
+user statement at the given <code>location</code> and <code>block</code> starts at
+the point at which the statement is inserted.  The intent is that side
+effects (e.g. variable bindings) of all prior user statements are
+observable, and that none of the side effects of subsequent user
+statements are.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-gimple_005fbuild_005fdebug_005finline_005fentry"></a>GIMPLE function: <em>gimple</em> <strong>gimple_build_debug_inline_entry</strong> <em>(tree block, location_t location)</em></dt>
+<dd><p>Build a <code>GIMPLE_DEBUG</code> statement with
+<code>GIMPLE_DEBUG_INLINE_ENTRY</code> <code>subcode</code>.  The effect of this
+statement is to tell debug information generation machinery that a
+function call at <code>location</code> underwent inline substitution, that
+<code>block</code> is the enclosing lexical block created for the
+substitution, and that at the point of the program in which the stmt is
+inserted, all parameters for the inlined function are bound to the
+respective arguments, and none of the side effects of its stmts are
+observable.
 </p></dd></dl>
 
 <hr>

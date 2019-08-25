@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,25 +75,28 @@ Next: <a href="Plugin-API.html#Plugin-API" accesskey="n" rel="next">Plugin API</
 </div>
 <hr>
 <a name="Loading-Plugins"></a>
-<h3 class="section">23.1 Loading Plugins</h3>
+<h3 class="section">24.1 Loading Plugins</h3>
 
 <p>Plugins are supported on platforms that support <samp>-ldl
--rdynamic</samp>.  They are loaded by the compiler using <code>dlopen</code>
-and invoked at pre-determined locations in the compilation
-process.
+-rdynamic</samp> as well as Windows/MinGW. They are loaded by the compiler
+using <code>dlopen</code> or equivalent and invoked at pre-determined
+locations in the compilation process.
 </p>
 <p>Plugins are loaded with
 </p>
-<p><samp>-fplugin=/path/to/<var>name</var>.so</samp> <samp>-fplugin-arg-<var>name</var>-<var>key1</var>[=<var>value1</var>]</samp>
+<p><samp>-fplugin=/path/to/<var>name</var>.<var>ext</var></samp> <samp>-fplugin-arg-<var>name</var>-<var>key1</var>[=<var>value1</var>]</samp>
 </p>
-<p>The plugin arguments are parsed by GCC and passed to respective
+<p>Where <var>name</var> is the plugin name and <var>ext</var> is the platform-specific
+dynamic library extension. It should be <code>dll</code> on Windows/MinGW,
+<code>dylib</code> on Darwin/Mac OS X, and <code>so</code> on all other platforms.
+The plugin arguments are parsed by GCC and passed to respective
 plugins as key-value pairs. Multiple plugins can be invoked by
 specifying multiple <samp>-fplugin</samp> arguments.
 </p>
 <p>A plugin can be simply given by its short name (no dots or
 slashes). When simply passing <samp>-fplugin=<var>name</var></samp>, the plugin is
 loaded from the <samp>plugin</samp> directory, so <samp>-fplugin=<var>name</var></samp> is
-the same as <samp>-fplugin=`gcc -print-file-name=plugin`/<var>name</var>.so</samp>,
+the same as <samp>-fplugin=`gcc -print-file-name=plugin`/<var>name</var>.<var>ext</var></samp>,
 using backquote shell syntax to query the <samp>plugin</samp> directory.
 </p>
 

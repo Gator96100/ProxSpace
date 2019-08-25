@@ -2,7 +2,7 @@
 #
 #   strip.sh - Strip debugging symbols from binary files
 #
-#   Copyright (c) 2007-2016 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2007-2018 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -31,17 +31,30 @@ packaging_options+=('strip' 'debug')
 tidy_modify+=('tidy_strip')
 
 
+source_files() {
+	LANG=C readelf "$1" --debug-dump | \
+		awk '/DW_AT_name +:/{name=$8}/DW_AT_comp_dir +:/{{if (name !~ /^\//) {printf "%s/", $8}}{print name}}'
+}
+
 strip_file() {
 	local binary=$1; shift
 
 	case "$(file -bi "$binary")" in
 	*application/x-dosexec*)
 		if check_option "debug" "y"; then
-			
 			if [[ -f "$dbgdir/$binary.debug" ]]; then
 				return
 			fi
 
+			# copy source files to debug directory
+			local f t
+			while read -r t; do
+				f=${t/${dbgsrcdir}/"$srcdir"}
+				mkdir -p "${dbgsrc/"$dbgsrcdir"/}${t%/*}"
+				cp -- "$f" "${dbgsrc/"$dbgsrcdir"/}$t"
+			done < <(source_files "$binary")
+
+			# copy debug symbols to debug directory
 			mkdir -p "$dbgdir/${binary%/*}"
 			msg2 "Separating debug info from $binary into $dbgdir/$binary.debug"
 			# create a dbg file with proper debug info:
@@ -78,6 +91,7 @@ strip_file() {
 	strip $@ "$binary"
 }
 
+
 tidy_strip() {
 	if check_option "strip" "y"; then
 		msg2 "$(gettext "Stripping unneeded symbols from binaries and libraries...")"
@@ -86,8 +100,11 @@ tidy_strip() {
 		[[ -z ${STRIP_STATIC+x} ]] && STRIP_STATIC="-S"
 
 		if check_option "debug" "y"; then
-			dbgdir="$pkgdir-debug"
-			mkdir -p "$dbgdir"
+
+			dbgdir="$pkgdirbase/$pkgbase-debug"
+			dbgsrcdir="${DBGSRCDIR:-/usr/src/debug}"
+			dbgsrc="$pkgdirbase/$pkgbase-debug$dbgsrcdir"
+			mkdir -p "$dbgdir" "$dbgsrc"
 		fi
 
 		local binary strip_flags
@@ -175,6 +192,8 @@ tidy_strip() {
 					esac;;
 				*application/x-executable*) # Binaries
 					strip_flags="$STRIP_BINARIES";;
+				*application/x-pie-executable*)  # Relocatable binaries
+					strip_flags="$STRIP_SHARED";;
 				*)
 					continue ;;
 			esac

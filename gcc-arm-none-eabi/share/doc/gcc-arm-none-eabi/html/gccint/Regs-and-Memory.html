@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -75,7 +75,7 @@ Next: <a href="Arithmetic.html#Arithmetic" accesskey="n" rel="next">Arithmetic</
 </div>
 <hr>
 <a name="Registers-and-Memory"></a>
-<h3 class="section">13.8 Registers and Memory</h3>
+<h3 class="section">14.8 Registers and Memory</h3>
 <a name="index-RTL-register-expressions"></a>
 <a name="index-RTL-memory-expressions"></a>
 
@@ -161,11 +161,11 @@ value of <code>FIRST_PARM_OFFSET</code>.
 to immediately above the first variable on the stack.  Otherwise, it points
 to the first variable on the stack.
 </p>
-<a name="index-STARTING_005fFRAME_005fOFFSET-and-virtual-registers"></a>
+<a name="index-TARGET_005fSTARTING_005fFRAME_005fOFFSET-and-virtual-registers"></a>
 <a name="index-FRAME_005fPOINTER_005fREGNUM-and-virtual-registers"></a>
 <p><code>VIRTUAL_STACK_VARS_REGNUM</code> is replaced with the sum of the
 register given by <code>FRAME_POINTER_REGNUM</code> and the value
-<code>STARTING_FRAME_OFFSET</code>.
+<code>TARGET_STARTING_FRAME_OFFSET</code>.
 </p>
 <a name="index-VIRTUAL_005fSTACK_005fDYNAMIC_005fREGNUM"></a>
 </dd>
@@ -251,7 +251,7 @@ expression is called <em>paradoxical</em>.  The canonical test for this
 class of <code>subreg</code> is:
 </p>
 <div class="smallexample">
-<pre class="smallexample">GET_MODE_SIZE (<var>m1</var>) &gt; GET_MODE_SIZE (<var>m2</var>)
+<pre class="smallexample">paradoxical_subreg_p (<var>m1</var>, <var>m2</var>)
 </pre></div>
 
 <p>Paradoxical <code>subreg</code>s can be used as both lvalues and rvalues.
@@ -301,19 +301,32 @@ false.
 <dd><p>When <var>m1</var> is at least as narrow as <var>m2</var> the <code>subreg</code>
 expression is called <em>normal</em>.
 </p>
+<a name="index-REGMODE_005fNATURAL_005fSIZE"></a>
 <p>Normal <code>subreg</code>s restrict consideration to certain bits of
-<var>reg</var>.  There are two cases.  If <var>m1</var> is smaller than a word,
-the <code>subreg</code> refers to the least-significant part (or
-<em>lowpart</em>) of one word of <var>reg</var>.  If <var>m1</var> is word-sized or
-greater, the <code>subreg</code> refers to one or more complete words.
+<var>reg</var>.  For this purpose, <var>reg</var> is divided into
+individually-addressable blocks in which each block has:
 </p>
-<p>When used as an lvalue, <code>subreg</code> is a word-based accessor.
-Storing to a <code>subreg</code> modifies all the words of <var>reg</var> that
-overlap the <code>subreg</code>, but it leaves the other words of <var>reg</var>
+<div class="smallexample">
+<pre class="smallexample">REGMODE_NATURAL_SIZE (<var>m2</var>)
+</pre></div>
+
+<p>bytes.  Usually the value is <code>UNITS_PER_WORD</code>; that is,
+most targets usually treat each word of a register as being
+independently addressable.
+</p>
+<p>There are two types of normal <code>subreg</code>.  If <var>m1</var> is known
+to be no bigger than a block, the <code>subreg</code> refers to the
+least-significant part (or <em>lowpart</em>) of one block of <var>reg</var>.
+If <var>m1</var> is known to be larger than a block, the <code>subreg</code> refers
+to two or more complete blocks.
+</p>
+<p>When used as an lvalue, <code>subreg</code> is a block-based accessor.
+Storing to a <code>subreg</code> modifies all the blocks of <var>reg</var> that
+overlap the <code>subreg</code>, but it leaves the other blocks of <var>reg</var>
 alone.
 </p>
-<p>When storing to a normal <code>subreg</code> that is smaller than a word,
-the other bits of the referenced word are usually left in an undefined
+<p>When storing to a normal <code>subreg</code> that is smaller than a block,
+the other bits of the referenced block are usually left in an undefined
 state.  This laxity makes it easier to generate efficient code for
 such instructions.  To represent an instruction that preserves all the
 bits outside of those in the <code>subreg</code>, use <code>strict_low_part</code>
@@ -359,6 +372,13 @@ the runtime libraries care about <code>FLOAT_WORDS_BIG_ENDIAN</code>.
 <p>on a little-endian, &lsquo;<samp>UNITS_PER_WORD == 4</samp>&rsquo; target.  Both
 <code>subreg</code>s access the lower two bytes of register <var>x</var>.
 </p>
+<p>Note that the byte offset is a polynomial integer; it may not be a
+compile-time constant on targets with variable-sized modes.  However,
+the restrictions above mean that there are only a certain set of
+acceptable offsets for a given combination of <var>m1</var> and <var>m2</var>.
+The compiler can always tell which blocks a valid subreg occupies, and
+whether the subreg is a lowpart of a block.
+</p>
 </dd>
 </dl>
 
@@ -370,10 +390,11 @@ number of undefined bits.  For example:
 <pre class="smallexample">(subreg:PSI (reg:SI 0) 0)
 </pre></div>
 
+<a name="index-REGMODE_005fNATURAL_005fSIZE-1"></a>
 <p>accesses the whole of &lsquo;<samp>(reg:SI 0)</samp>&rsquo;, but the exact relationship
 between the <code>PSImode</code> value and the <code>SImode</code> value is not
-defined.  If we assume &lsquo;<samp>UNITS_PER_WORD &lt;= 4</samp>&rsquo;, then the following
-two <code>subreg</code>s:
+defined.  If we assume &lsquo;<samp>REGMODE_NATURAL_SIZE (DImode) &lt;= 4</samp>&rsquo;,
+then the following two <code>subreg</code>s:
 </p>
 <div class="smallexample">
 <pre class="smallexample">(subreg:PSI (reg:DI 0) 0)
@@ -384,7 +405,7 @@ two <code>subreg</code>s:
 &lsquo;<samp>(reg:DI 0)</samp>&rsquo;.  Both <code>subreg</code>s have an unknown number
 of undefined bits.
 </p>
-<p>If &lsquo;<samp>UNITS_PER_WORD &lt;= 2</samp>&rsquo; then these two <code>subreg</code>s:
+<p>If &lsquo;<samp>REGMODE_NATURAL_SIZE (PSImode) &lt;= 2</samp>&rsquo; then these two <code>subreg</code>s:
 </p>
 <div class="smallexample">
 <pre class="smallexample">(subreg:HI (reg:PSI 0) 0)
@@ -403,17 +424,26 @@ has an unknown number of undefined bits, so the assignment:
 <p>does not guarantee that &lsquo;<samp>(subreg:HI (reg:PSI 0) 0)</samp>&rsquo; has the
 value &lsquo;<samp>(reg:HI 4)</samp>&rsquo;.
 </p>
-<a name="index-CANNOT_005fCHANGE_005fMODE_005fCLASS-and-subreg-semantics"></a>
+<a name="index-TARGET_005fCAN_005fCHANGE_005fMODE_005fCLASS-and-subreg-semantics"></a>
 <p>The rules above apply to both pseudo <var>reg</var>s and hard <var>reg</var>s.
 If the semantics are not correct for particular combinations of
 <var>m1</var>, <var>m2</var> and hard <var>reg</var>, the target-specific code
 must ensure that those combinations are never used.  For example:
 </p>
 <div class="smallexample">
-<pre class="smallexample">CANNOT_CHANGE_MODE_CLASS (<var>m2</var>, <var>m1</var>, <var>class</var>)
+<pre class="smallexample">TARGET_CAN_CHANGE_MODE_CLASS (<var>m2</var>, <var>m1</var>, <var>class</var>)
 </pre></div>
 
-<p>must be true for every class <var>class</var> that includes <var>reg</var>.
+<p>must be false for every class <var>class</var> that includes <var>reg</var>.
+</p>
+<p>GCC must be able to determine at compile time whether a subreg is
+paradoxical, whether it occupies a whole number of blocks, or whether
+it is a lowpart of a block.  This means that certain combinations of
+variable-sized mode are not permitted.  For example, if <var>m2</var>
+holds <var>n</var> <code>SI</code> values, where <var>n</var> is greater than zero,
+it is not possible to form a <code>DI</code> <code>subreg</code> of it; such a
+<code>subreg</code> would be paradoxical when <var>n</var> is 1 but not when
+<var>n</var> is greater than 1.
 </p>
 <a name="index-SUBREG_005fREG"></a>
 <a name="index-SUBREG_005fBYTE"></a>

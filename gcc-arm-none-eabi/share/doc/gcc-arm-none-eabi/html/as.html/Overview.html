@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2018 Free Software Foundation, Inc.
+Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -96,6 +96,7 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
  [<b>-Z</b>] [<b>@<var>FILE</var></b>]
  [<b>&ndash;sectname-subst</b>] [<b>&ndash;size-check=[error|warning]</b>]
  [<b>&ndash;elf-stt-common=[no|yes]</b>]
+ [<b>&ndash;generate-missing-build-notes=[no|yes]</b>]
  [<b>&ndash;target-help</b>] [<var>target-options</var>]
  [<b>&ndash;</b>|<var>files</var> &hellip;]
 
@@ -141,6 +142,24 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
    [<b>&ndash;emulation=criself</b> | <b>&ndash;emulation=crisaout</b>]
    [<b>&ndash;march=v0_v10</b> | <b>&ndash;march=v10</b> | <b>&ndash;march=v32</b> | <b>&ndash;march=common_v10_v32</b>]
 
+<em>Target C-SKY options:</em>
+   [<b>-march=<var>arch</var></b>] [<b>-mcpu=<var>cpu</var></b>]
+   [<b>-EL</b>] [<b>-mlittle-endian</b>] [<b>-EB</b>] [<b>-mbig-endian</b>]
+   [<b>-fpic</b>] [<b>-pic</b>]
+   [<b>-mljump</b>] [<b>-mno-ljump</b>]
+   [<b>-force2bsr</b>] [<b>-mforce2bsr</b>] [<b>-no-force2bsr</b>] [<b>-mno-force2bsr</b>]
+   [<b>-jsri2bsr</b>] [<b>-mjsri2bsr</b>] [<b>-no-jsri2bsr </b>] [<b>-mno-jsri2bsr</b>]
+   [<b>-mnolrw </b>] [<b>-mno-lrw</b>]
+   [<b>-melrw</b>] [<b>-mno-elrw</b>]
+   [<b>-mlaf </b>] [<b>-mliterals-after-func</b>]
+   [<b>-mno-laf</b>] [<b>-mno-literals-after-func</b>]
+   [<b>-mlabr</b>] [<b>-mliterals-after-br</b>]
+   [<b>-mno-labr</b>] [<b>-mnoliterals-after-br</b>]
+   [<b>-mistack</b>] [<b>-mno-istack</b>]
+   [<b>-mhard-float</b>] [<b>-mmp</b>] [<b>-mcp</b>] [<b>-mcache</b>]
+   [<b>-msecurity</b>] [<b>-mtrust</b>]
+   [<b>-mdsp</b>] [<b>-medsp</b>] [<b>-mvdsp</b>]
+
 <em>Target D10V options:</em>
    [<b>-O</b>]
 
@@ -156,11 +175,6 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
 <em>Target i386 options:</em>
    [<b>&ndash;32</b>|<b>&ndash;x32</b>|<b>&ndash;64</b>] [<b>-n</b>]
    [<b>-march</b>=<var>CPU</var>[+<var>EXTENSION</var>&hellip;]] [<b>-mtune</b>=<var>CPU</var>]
-
-<em>Target i960 options:</em>
-   [<b>-ACA</b>|<b>-ACA_A</b>|<b>-ACB</b>|<b>-ACC</b>|<b>-AKA</b>|<b>-AKB</b>|
-    <b>-AKC</b>|<b>-AMC</b>]
-   [<b>-b</b>] [<b>-no-relax</b>]
 
 <em>Target IA-64 options:</em>
    [<b>-mconstant-gp</b>|<b>-mauto-pic</b>]
@@ -228,11 +242,18 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
    [<b>-mxpa</b>] [<b>-mno-xpa</b>]
    [<b>-mmt</b>] [<b>-mno-mt</b>]
    [<b>-mmcu</b>] [<b>-mno-mcu</b>]
+   [<b>-mcrc</b>] [<b>-mno-crc</b>]
+   [<b>-mginv</b>] [<b>-mno-ginv</b>]
+   [<b>-mloongson-mmi</b>] [<b>-mno-loongson-mmi</b>]
+   [<b>-mloongson-cam</b>] [<b>-mno-loongson-cam</b>]
+   [<b>-mloongson-ext</b>] [<b>-mno-loongson-ext</b>]
+   [<b>-mloongson-ext2</b>] [<b>-mno-loongson-ext2</b>]
    [<b>-minsn32</b>] [<b>-mno-insn32</b>]
    [<b>-mfix7000</b>] [<b>-mno-fix7000</b>]
    [<b>-mfix-rm7000</b>] [<b>-mno-fix-rm7000</b>]
    [<b>-mfix-vr4120</b>] [<b>-mno-fix-vr4120</b>]
    [<b>-mfix-vr4130</b>] [<b>-mno-fix-vr4130</b>]
+   [<b>-mfix-r5900</b>] [<b>-mno-fix-r5900</b>]
    [<b>-mdebug</b>] [<b>-no-mdebug</b>]
    [<b>-mpdr</b>] [<b>-mno-pdr</b>]
 
@@ -267,10 +288,10 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
 <em>Target PowerPC options:</em>
    [<b>-a32</b>|<b>-a64</b>]
    [<b>-mpwrx</b>|<b>-mpwr2</b>|<b>-mpwr</b>|<b>-m601</b>|<b>-mppc</b>|<b>-mppc32</b>|<b>-m603</b>|<b>-m604</b>|<b>-m403</b>|<b>-m405</b>|
-    <b>-m440</b>|<b>-m464</b>|<b>-m476</b>|<b>-m7400</b>|<b>-m7410</b>|<b>-m7450</b>|<b>-m7455</b>|<b>-m750cl</b>|<b>-mppc64</b>|
-    <b>-m620</b>|<b>-me500</b>|<b>-e500x2</b>|<b>-me500mc</b>|<b>-me500mc64</b>|<b>-me5500</b>|<b>-me6500</b>|<b>-mppc64bridge</b>|
-    <b>-mbooke</b>|<b>-mpower4</b>|<b>-mpwr4</b>|<b>-mpower5</b>|<b>-mpwr5</b>|<b>-mpwr5x</b>|<b>-mpower6</b>|<b>-mpwr6</b>|
-    <b>-mpower7</b>|<b>-mpwr7</b>|<b>-mpower8</b>|<b>-mpwr8</b>|<b>-mpower9</b>|<b>-mpwr9</b><b>-ma2</b>|
+    <b>-m440</b>|<b>-m464</b>|<b>-m476</b>|<b>-m7400</b>|<b>-m7410</b>|<b>-m7450</b>|<b>-m7455</b>|<b>-m750cl</b>|<b>-mgekko</b>|
+    <b>-mbroadway</b>|<b>-mppc64</b>|<b>-m620</b>|<b>-me500</b>|<b>-e500x2</b>|<b>-me500mc</b>|<b>-me500mc64</b>|<b>-me5500</b>|
+    <b>-me6500</b>|<b>-mppc64bridge</b>|<b>-mbooke</b>|<b>-mpower4</b>|<b>-mpwr4</b>|<b>-mpower5</b>|<b>-mpwr5</b>|<b>-mpwr5x</b>|
+    <b>-mpower6</b>|<b>-mpwr6</b>|<b>-mpower7</b>|<b>-mpwr7</b>|<b>-mpower8</b>|<b>-mpwr8</b>|<b>-mpower9</b>|<b>-mpwr9</b><b>-ma2</b>|
     <b>-mcell</b>|<b>-mspe</b>|<b>-mspe2</b>|<b>-mtitan</b>|<b>-me300</b>|<b>-mcom</b>]
    [<b>-many</b>] [<b>-maltivec</b>|<b>-mvsx</b>|<b>-mhtm</b>|<b>-mvle</b>]
    [<b>-mregnames</b>|<b>-mno-regnames</b>]
@@ -535,8 +556,17 @@ symbols with the <code>STT_COMMON</code> type.  The default can be controlled
 by a configure option <samp>--enable-elf-stt-common</samp>.
 </p>
 </dd>
+<dt><code>--generate-missing-build-notes=yes</code></dt>
+<dt><code>--generate-missing-build-notes=no</code></dt>
+<dd><p>These options control whether the ELF assembler should generate GNU Build
+attribute notes if none are present in the input sources.
+The default can be controlled by the <samp>--enable-generate-build-notes</samp>
+configure option.
+</p>
+
+</dd>
 <dt><code>--help</code></dt>
-<dd><p>Print a summary of the command line options and exit.
+<dd><p>Print a summary of the command-line options and exit.
 </p>
 </dd>
 <dt><code>--target-help</code></dt>
@@ -737,6 +767,12 @@ configured for the Blackfin processor family.
 
 <p>See the info pages for documentation of the CRIS-specific options.
 </p>
+
+<p>See <a href="C_002dSKY-Options.html#C_002dSKY-Options">C-SKY Options</a>, for the options available when as is
+configured for the C-SKY processor family.
+</p>
+
+
 <p>The following options are available when as is configured for
 a D10V processor.
 </p><dl compact="compact">
@@ -783,25 +819,6 @@ configured for an Epiphany processor.
 configured for an i386 processor.
 </p>
 
-
-<p>The following options are available when as is configured for the
-Intel 80960 processor.
-</p>
-<dl compact="compact">
-<dt><code>-ACA | -ACA_A | -ACB | -ACC | -AKA | -AKB | -AKC | -AMC</code></dt>
-<dd><p>Specify which variant of the 960 architecture is the target.
-</p>
-</dd>
-<dt><code>-b</code></dt>
-<dd><p>Add code to collect statistics about branches taken.
-</p>
-</dd>
-<dt><code>-no-relax</code></dt>
-<dd><p>Do not alter compare-and-branch instructions for long displacements;
-error if necessary.
-</p>
-</dd>
-</dl>
 
 <p>The following options are available when as is configured for the
 Ubicom IP2K series.
@@ -1129,6 +1146,15 @@ of an mfhi or mflo instruction occurs in the following two instructions.
 followed by a load instruction.
 </p>
 </dd>
+<dt><code>-mfix-r5900</code></dt>
+<dt><code>-mno-fix-r5900</code></dt>
+<dd><p>Do not attempt to schedule the preceding instruction into the delay slot
+of a branch instruction placed at the end of a short loop of six
+instructions or fewer and always schedule a <code>nop</code> instruction there
+instead.  The short loop bug under certain conditions causes loops to
+execute only once or twice, due to a hardware bug in the R5900 chip.
+</p>
+</dd>
 <dt><code>-mdebug</code></dt>
 <dt><code>-no-mdebug</code></dt>
 <dd><p>Cause stabs-style debugging output to go into an ECOFF-style .mdebug
@@ -1264,6 +1290,50 @@ This tells the assembler to accept MCU instructions.
 &lsquo;<samp>-mno-mcu</samp>&rsquo; turns off this option.
 </p>
 </dd>
+<dt><code>-mcrc</code></dt>
+<dt><code>-mno-crc</code></dt>
+<dd><p>Generate code for the MIPS cyclic redundancy check (CRC) Application
+Specific Extension.  This tells the assembler to accept CRC instructions.
+&lsquo;<samp>-mno-crc</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mginv</code></dt>
+<dt><code>-mno-ginv</code></dt>
+<dd><p>Generate code for the Global INValidate (GINV) Application Specific
+Extension.  This tells the assembler to accept GINV instructions.
+&lsquo;<samp>-mno-ginv</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-mmi</code></dt>
+<dt><code>-mno-loongson-mmi</code></dt>
+<dd><p>Generate code for the Loongson MultiMedia extensions Instructions (MMI)
+Application Specific Extension.  This tells the assembler to accept MMI
+instructions.
+&lsquo;<samp>-mno-loongson-mmi</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-cam</code></dt>
+<dt><code>-mno-loongson-cam</code></dt>
+<dd><p>Generate code for the Loongson Content Address Memory (CAM) instructions.
+This tells the assembler to accept Loongson CAM instructions.
+&lsquo;<samp>-mno-loongson-cam</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-ext</code></dt>
+<dt><code>-mno-loongson-ext</code></dt>
+<dd><p>Generate code for the Loongson EXTensions (EXT) instructions.
+This tells the assembler to accept Loongson EXT instructions.
+&lsquo;<samp>-mno-loongson-ext</samp>&rsquo; turns off this option.
+</p>
+</dd>
+<dt><code>-mloongson-ext2</code></dt>
+<dt><code>-mno-loongson-ext2</code></dt>
+<dd><p>Generate code for the Loongson EXTensions R2 (EXT2) instructions.
+This option implies &lsquo;<samp>-mloongson-ext</samp>&rsquo;.
+This tells the assembler to accept Loongson EXT2 instructions.
+&lsquo;<samp>-mno-loongson-ext2</samp>&rsquo; turns off this option.
+</p>
+</dd>
 <dt><code>-minsn32</code></dt>
 <dt><code>-mno-insn32</code></dt>
 <dd><p>Only use 32-bit instruction encodings when generating code for the
@@ -1351,13 +1421,13 @@ an MCore processor.
 <dt><code>-jsri2bsr</code></dt>
 <dt><code>-nojsri2bsr</code></dt>
 <dd><p>Enable or disable the JSRI to BSR transformation.  By default this is enabled.
-The command line option &lsquo;<samp>-nojsri2bsr</samp>&rsquo; can be used to disable it.
+The command-line option &lsquo;<samp>-nojsri2bsr</samp>&rsquo; can be used to disable it.
 </p>
 </dd>
 <dt><code>-sifilter</code></dt>
 <dt><code>-nosifilter</code></dt>
 <dd><p>Enable or disable the silicon filter behaviour.  By default this is disabled.
-The default can be overridden by the &lsquo;<samp>-sifilter</samp>&rsquo; command line option.
+The default can be overridden by the &lsquo;<samp>-sifilter</samp>&rsquo; command-line option.
 </p>
 </dd>
 <dt><code>-relax</code></dt>

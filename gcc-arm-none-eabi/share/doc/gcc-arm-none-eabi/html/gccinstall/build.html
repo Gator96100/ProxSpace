@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2017 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -303,6 +303,14 @@ must be used along with <code>bootstrap-debug-lean</code> and
 <code>bootstrap-debug-lib</code>.
 </p>
 </dd>
+<dt>&lsquo;<samp>bootstrap-cet</samp>&rsquo;</dt>
+<dd><p>This option enables Intel CET for host tools during bootstrapping.
+&lsquo;<samp>BUILD_CONFIG=bootstrap-cet</samp>&rsquo; is equivalent to adding
+<samp>-fcf-protection</samp> to &lsquo;<samp>BOOT_CFLAGS</samp>&rsquo;.  This option
+assumes that the host supports Intel CET (e.g. GNU assembler version
+2.30 or later).
+</p>
+</dd>
 <dt>&lsquo;<samp>bootstrap-time</samp>&rsquo;</dt>
 <dd><p>Arranges for the run time of each program started by the GCC driver,
 built in any stage, to be logged to <samp>time.log</samp>, in the top level of
@@ -435,8 +443,9 @@ bootstrap the compiler with profile feedback, use <code>make profiledbootstrap</
 <p>When &lsquo;<samp>make profiledbootstrap</samp>&rsquo; is run, it will first build a <code>stage1</code>
 compiler.  This compiler is used to build a <code>stageprofile</code> compiler
 instrumented to collect execution counts of instruction and branch
-probabilities.  Then runtime libraries are compiled with profile collected.
-Finally a <code>stagefeedback</code> compiler is built using the information collected.
+probabilities.  Training run is done by building <code>stagetrain</code>
+compiler.  Finally a <code>stagefeedback</code> compiler is built
+using the information collected.
 </p>
 <p>Unlike standard bootstrap, several additional restrictions apply.  The
 compiler used to build <code>stage1</code> needs to support a 64-bit integral type.

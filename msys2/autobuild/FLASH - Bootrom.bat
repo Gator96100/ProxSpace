@@ -40,7 +40,12 @@ echo                 ====================================
 echo                 FLASHING bootrom.elf, please wait...
 echo                 ====================================
 echo.
-flasher.exe com5 -b ..\firmware_win\bootrom\bootrom.elf
+
+if exist flasher.exe (
+    flasher.exe com5 -b ..\firmware_win\bootrom\bootrom.elf
+) else (
+    proxmark3.exe com5 --flash --unlock-bootloader --image ..\firmware_win\bootrom\bootrom.elf
+)
 
 pause.
 

@@ -26,7 +26,12 @@ echo                 ======================================
 echo                 FLASHING fullimage.elf, please wait...
 echo                 ======================================
 echo.
-flasher.exe com5 -b ..\firmware_win\fullimage.elf
+
+if exist flasher.exe (
+    flasher.exe com5 -b ..\firmware_win\fullimage.elf
+) else (
+    proxmark3.exe com5 --flash --unlock-bootloader --image ..\firmware_win\fullimage.elf
+)
 
 pause.
 

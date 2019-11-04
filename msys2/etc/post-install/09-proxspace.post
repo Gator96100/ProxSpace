@@ -1,25 +1,25 @@
 check_install () { 
 	pacman -Q $1 > /dev/null
 	if [ $? == 1 ]; then
-		pacman --noconfirm --force -S $1
+		pacman --noconfirm --overwrite='*' -S $1
 	fi
 }
 
 check_install_web () { 
 	pacman -Q $1 | grep $2 > /dev/null
 	if [ $? == 1 ]; then
-		pacman --noconfirm --force -U $3
+		pacman --noconfirm --overwrite='*' -U $3
 	fi
 }
 
 clean_86 () { 
 	rm -rf /mingw32/share/qt5/examples
-	pacman --noconfirm --force -Scc
+	pacman --noconfirm --overwrite='*' -Scc
 }
 
 clean_64 () { 
 	rm -rf /mingw64/share/qt5/examples
-	pacman --noconfirm --force -Scc
+	pacman --noconfirm --overwrite='*' -Scc
 }
 
 

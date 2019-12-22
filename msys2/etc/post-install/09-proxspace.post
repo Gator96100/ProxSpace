@@ -29,6 +29,7 @@ setup_proxspace ()
   if [ "$MSYSTEM" == "MINGW64" ]; then
 	check_install mingw-w64-x86_64-gcc
 	check_install mingw-w64-x86_64-readline
+	check_install mingw-w64-x86_64-libsndfile
 	check_install git
 	check_install make
 	check_install pkg-config
@@ -39,6 +40,7 @@ setup_proxspace ()
   if [ "$MSYSTEM" == "MINGW32" ]; then
 	check_install mingw-w64-i686-readline
 	check_install mingw-w64-i686-gcc
+	check_install mingw-w64-i686-libsndfile
 	check_install git
 	check_install make
 	check_install pkg-config

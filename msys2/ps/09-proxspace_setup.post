@@ -1,3 +1,10 @@
+PSVERSION="3.3"
+export LANG=en_US.UTF-8
+export PS1='\[\033]0;ProxSpace v$PSVERSION - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
+export PATH=/gcc-arm-none-eabi/bin:$PATH
+alias ls='ls -hF --color=auto' 
+
+
 check_install () { 
 	pacman -Q $1 > /dev/null
 	if [ $? == 1 ]; then
@@ -48,8 +55,6 @@ setup_proxspace ()
 	clean_86	
   fi
 }
-
-export LANG=en_US.UTF-8
 	
 if [ "$MAYBE_FIRST_START" = "false" ]; then
 	yes | pacman -Su

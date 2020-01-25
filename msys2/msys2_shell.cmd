@@ -22,7 +22,7 @@ del %WD%..\..\etc\passwd 2> nul
 del %WD%..\..\etc\group 2> nul
 %WD%touch /etc/passwd
 %WD%touch /etc/group
-%WD%bash /user_setup.sh
+%WD%bash /ps/user_setup.sh
 
 :checkparams
 rem Help option

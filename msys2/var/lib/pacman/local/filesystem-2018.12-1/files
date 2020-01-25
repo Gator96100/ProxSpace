@@ -29,7 +29,6 @@ etc/post-install/05-home-dir.post
 etc/post-install/06-windows-files.post
 etc/post-install/07-pacman-key.post
 etc/post-install/08-xml-catalog.post
-etc/post-install/09-proxspace.post
 etc/profile
 etc/profile.d/
 etc/profile.d/lang.sh

@@ -19,6 +19,3 @@ GROUP_MISSING=$( grep -Fq "$GROUP_SID" /etc/group )$?
 if [ $GROUP_MISSING != 0 ]; then
   echo $MKGROUP_CURRENT >> /etc/group
 fi
-
-
-

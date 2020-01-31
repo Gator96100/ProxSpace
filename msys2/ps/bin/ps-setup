@@ -5,13 +5,6 @@ check_install () {
 	fi
 }
 
-check_install_web () { 
-	pacman -Q $1 | grep $2 > /dev/null
-	if [ $? == 1 ]; then
-		pacman --noconfirm --overwrite='*' -U $3
-	fi
-}
-
 clean_86 () { 
 	rm -rf /mingw32/share/qt5/examples
 	pacman --noconfirm --overwrite='*' -Scc

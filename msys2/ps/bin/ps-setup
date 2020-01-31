@@ -1,0 +1,51 @@
+check_install () { 
+	pacman -Q $1 > /dev/null
+	if [ $? == 1 ]; then
+		pacman --noconfirm --overwrite='*' -S $1
+	fi
+}
+
+check_install_web () { 
+	pacman -Q $1 | grep $2 > /dev/null
+	if [ $? == 1 ]; then
+		pacman --noconfirm --overwrite='*' -U $3
+	fi
+}
+
+clean_86 () { 
+	rm -rf /mingw32/share/qt5/examples
+	pacman --noconfirm --overwrite='*' -Scc
+}
+
+clean_64 () { 
+	rm -rf /mingw64/share/qt5/examples
+	pacman --noconfirm --overwrite='*' -Scc
+}
+
+setup_proxspace ()
+{
+  if [ "$MSYSTEM" == "MINGW64" ]; then
+	check_install mingw-w64-x86_64-gcc
+	check_install mingw-w64-x86_64-readline
+	check_install mingw-w64-x86_64-libsndfile
+	check_install git
+	check_install make
+	check_install pkg-config
+	check_install mingw-w64-x86_64-qt5
+	clean_64
+	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed64.txt
+  fi
+  
+  if [ "$MSYSTEM" == "MINGW32" ]; then
+	check_install mingw-w64-i686-readline
+	check_install mingw-w64-i686-gcc
+	check_install mingw-w64-i686-libsndfile
+	check_install git
+	check_install make
+	check_install pkg-config
+	check_install mingw-w64-i686-qt5
+	clean_86	
+	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed32.txt
+  fi
+}
+setup_proxspace

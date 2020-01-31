@@ -1,66 +1,15 @@
-PSVERSION="3.3"
+export PSVERSION="3.3"
 export LANG=en_US.UTF-8
 export PS1='\[\033]0;ProxSpace v$PSVERSION - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
-export PATH=/gcc-arm-none-eabi/bin:$PATH
+export PATH=/gcc-arm-none-eabi/bin:/ps/bin:$PATH
 alias ls='ls -hF --color=auto' 
 
-
-check_install () { 
-	pacman -Q $1 > /dev/null
-	if [ $? == 1 ]; then
-		pacman --noconfirm --overwrite='*' -S $1
-	fi
-}
-
-check_install_web () { 
-	pacman -Q $1 | grep $2 > /dev/null
-	if [ $? == 1 ]; then
-		pacman --noconfirm --overwrite='*' -U $3
-	fi
-}
-
-clean_86 () { 
-	rm -rf /mingw32/share/qt5/examples
-	pacman --noconfirm --overwrite='*' -Scc
-}
-
-clean_64 () { 
-	rm -rf /mingw64/share/qt5/examples
-	pacman --noconfirm --overwrite='*' -Scc
-}
-
-
-
-setup_proxspace ()
-{ 
-  if [ "$MSYSTEM" == "MINGW64" ]; then
-	check_install mingw-w64-x86_64-gcc
-	check_install mingw-w64-x86_64-readline
-	check_install mingw-w64-x86_64-libsndfile
-	check_install git
-	check_install make
-	check_install pkg-config
-	check_install mingw-w64-x86_64-qt5
-	clean_64
-  fi
-  
-  if [ "$MSYSTEM" == "MINGW32" ]; then
-	check_install mingw-w64-i686-readline
-	check_install mingw-w64-i686-gcc
-	check_install mingw-w64-i686-libsndfile
-	check_install git
-	check_install make
-	check_install pkg-config
-	check_install mingw-w64-i686-qt5
-	clean_86	
-  fi
-}
-	
-if [ "$MAYBE_FIRST_START" = "false" ]; then
-	yes | pacman -Su
-	setup_proxspace
-	clear
-else
-	yes | pacman -Syuu
+if [ \( ! -f /ps/installed32.txt -a "$MSYSTEM" == "MINGW32" \) -o \( ! -f /ps/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
+	if [ "$MAYBE_FIRST_START" = "true" ]; then
+		yes | pacman -Syuu
+	else
+		yes | pacman -Su
+		ps-setup
+	fi	
 fi
-
+	

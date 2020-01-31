@@ -1,0 +1,3 @@
+for pkg in $(pacman -Q | cut -d' ' -f1); do
+    pacman --noconfirm --overwrite='*' -S $pkg
+done

@@ -1,0 +1,15 @@
+export PSVERSION="3.3"
+export LANG=en_US.UTF-8
+export PS1='\[\033]0;ProxSpace v$PSVERSION - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
+export PATH=/gcc-arm-none-eabi/bin:/ps/bin:$PATH
+alias ls='ls -hF --color=auto' 
+
+if [ \( ! -f /ps/installed32.txt -a "$MSYSTEM" == "MINGW32" \) -o \( ! -f /ps/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
+	if [ "$MAYBE_FIRST_START" = "true" ]; then
+		yes | pacman -Syuu
+	else
+		yes | pacman -Su
+		ps-setup
+	fi	
+fi
+	

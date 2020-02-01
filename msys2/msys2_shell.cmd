@@ -14,15 +14,6 @@ rem set MSYS=error_start:%WD%../../mingw64/bin/qtcreator.exe^|-debug^|^<process-
 rem To export full current PATH from environment into MSYS2 use '-use-full-path' parameter
 rem or uncomment next line
 rem set MSYS2_PATH_TYPE=inherit
-SET PATH=%WD%;%PATH%
-%~dp0\usr\bin\dash /usr/bin/rebaseall -p 2> nul
-rem /tmp is required for bash to work
-mkdir %WD%..\..\tmp 2> nul
-del %WD%..\..\etc\passwd 2> nul
-del %WD%..\..\etc\group 2> nul
-%WD%touch /etc/passwd
-%WD%touch /etc/group
-%WD%bash /user_setup.sh
 
 :checkparams
 rem Help option

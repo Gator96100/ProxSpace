@@ -1,0 +1,21 @@
+ps_print () { 
+	printf "%s\n" "$1" 2>&1 | tee -a ps-info.log
+}
+
+rm ps-info.log &> /dev/null
+ps_print "ProxSpace info:"
+ps_print "Version: $PSVERSION"
+ps_print "Arch: $MSYSTEM_CARCH"
+ps_print "OS: $(wmic OS get Caption,CSDVersion,OSArchitecture,Version | awk 'NR==2')"
+ps_print "CPU: $(wmic CPU get Name | awk 'NR==2')"
+ps_print "Ram: $(wmic COMPUTERSYSTEM get TotalPhysicalMemory | awk 'NR==2')"
+ps_print "Installed32: $(cat /ps/installed32.txt)"
+ps_print "Installed64: $(cat /ps/installed64.txt)"
+ps_print "OLDPWD: $OLDPWD"
+ps_print "Path: $PATH"
+ps_print "arm-none-eabi-gcc: $(arm-none-eabi-gcc -dumpversion)"
+ps_print "gcc: $(gcc -dumpversion)"
+ps_print "git: $(git --version)"
+ps_print "make: $(make -v)"
+ps_print "pkg-config: $(pkg-config --version)"
+ps_print "Qt: $(qmake --version)"

@@ -5,13 +5,6 @@ check_install () {
 	fi
 }
 
-check_install_web () { 
-	pacman -Q $1 | grep $2 > /dev/null
-	if [ $? == 1 ]; then
-		pacman --noconfirm --overwrite='*' -U $3
-	fi
-}
-
 clean_86 () { 
 	rm -rf /mingw32/share/qt5/examples
 	pacman --noconfirm --overwrite='*' -Scc
@@ -22,10 +15,8 @@ clean_64 () {
 	pacman --noconfirm --overwrite='*' -Scc
 }
 
-
-
 setup_proxspace ()
-{ 
+{
   if [ "$MSYSTEM" == "MINGW64" ]; then
 	check_install mingw-w64-x86_64-gcc
 	check_install mingw-w64-x86_64-readline
@@ -35,6 +26,7 @@ setup_proxspace ()
 	check_install pkg-config
 	check_install mingw-w64-x86_64-qt5
 	clean_64
+	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed64.txt
   fi
   
   if [ "$MSYSTEM" == "MINGW32" ]; then
@@ -46,16 +38,7 @@ setup_proxspace ()
 	check_install pkg-config
 	check_install mingw-w64-i686-qt5
 	clean_86	
+	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed32.txt
   fi
 }
-
-export LANG=en_US.UTF-8
-	
-if [ "$MAYBE_FIRST_START" = "false" ]; then
-	yes | pacman -Su
-	setup_proxspace
-	clear
-else
-	yes | pacman -Syuu
-fi
-
+setup_proxspace

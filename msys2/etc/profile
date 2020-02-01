@@ -177,6 +177,5 @@ if [ "$MAYBE_FIRST_START" = "true" ]; then
   echo "###################################################################"
   echo
   echo
-  sleep infinity
 fi
 unset MAYBE_FIRST_START

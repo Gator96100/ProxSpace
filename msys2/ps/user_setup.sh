@@ -1,4 +1,8 @@
 #!/bin/bash
+if ! (echo "$PWD" | grep -Eq  ^[a-zA-Z0-9\/\._\-]+$) ; then
+    echo "Error: Install path contains special characters!"
+	sleep infinity 
+fi
 
 MKPASSWD_CURRENT="$( mkpasswd -c )"
 MKGROUP_CURRENT="$( mkgroup -c )"
@@ -19,6 +23,3 @@ GROUP_MISSING=$( grep -Fq "$GROUP_SID" /etc/group )$?
 if [ $GROUP_MISSING != 0 ]; then
   echo $MKGROUP_CURRENT >> /etc/group
 fi
-
-
-

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): x86 Built-in Functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>x86 Built-in Functions (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): x86 Built-in Functions">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): x86 Built-in Functions">
+<meta name="description" content="x86 Built-in Functions (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="x86 Built-in Functions (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="x86-Built_002din-Functions"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Next: <a href="x86-transactional-memory-intrinsics.html#x86-transactional-memory
 </div>
 <hr>
 <a name="x86-Built_002din-Functions-1"></a>
-<h4 class="subsection">6.59.33 x86 Built-in Functions</h4>
+<h4 class="subsection">6.60.33 x86 Built-in Functions</h4>
 
 <p>These built-in functions are available for the x86-32 and x86-64 family
 of computers, depending on the command-line switches used.
@@ -166,6 +165,7 @@ and <code>__builtin_cpu_supports</code>, or in constructors on targets that
 don&rsquo;t support constructor priority.
 </p><div class="smallexample">
 <pre class="smallexample">
+
 static void (*resolve_memcpy (void)) (void)
 {
   // ifunc resolvers fire before constructors, explicitly call the init
@@ -190,12 +190,20 @@ is of type <var>cpuname</var>
 and returns <code>0</code> otherwise. The following CPU names can be detected:
 </p>
 <dl compact="compact">
+<dt>&lsquo;<samp>amd</samp>&rsquo;</dt>
+<dd><p>AMD CPU.
+</p>
+</dd>
 <dt>&lsquo;<samp>intel</samp>&rsquo;</dt>
 <dd><p>Intel CPU.
 </p>
 </dd>
 <dt>&lsquo;<samp>atom</samp>&rsquo;</dt>
 <dd><p>Intel Atom CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>slm</samp>&rsquo;</dt>
+<dd><p>Intel Silvermont CPU.
 </p>
 </dd>
 <dt>&lsquo;<samp>core2</samp>&rsquo;</dt>
@@ -218,8 +226,68 @@ and returns <code>0</code> otherwise. The following CPU names can be detected:
 <dd><p>Intel Core i7 Sandy Bridge CPU.
 </p>
 </dd>
-<dt>&lsquo;<samp>amd</samp>&rsquo;</dt>
-<dd><p>AMD CPU.
+<dt>&lsquo;<samp>ivybridge</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Ivy Bridge CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>haswell</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Haswell CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>broadwell</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Broadwell CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>skylake</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Skylake CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>skylake-avx512</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Skylake AVX512 CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>cannonlake</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Cannon Lake CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>icelake-client</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Ice Lake Client CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>icelake-server</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Ice Lake Server CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>cascadelake</samp>&rsquo;</dt>
+<dd><p>Intel Core i7 Cascadelake CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>bonnell</samp>&rsquo;</dt>
+<dd><p>Intel Atom Bonnell CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>silvermont</samp>&rsquo;</dt>
+<dd><p>Intel Atom Silvermont CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>goldmont</samp>&rsquo;</dt>
+<dd><p>Intel Atom Goldmont CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>goldmont-plus</samp>&rsquo;</dt>
+<dd><p>Intel Atom Goldmont Plus CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>tremont</samp>&rsquo;</dt>
+<dd><p>Intel Atom Tremont CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>knl</samp>&rsquo;</dt>
+<dd><p>Intel Knights Landing CPU.
+</p>
+</dd>
+<dt>&lsquo;<samp>knm</samp>&rsquo;</dt>
+<dd><p>Intel Knights Mill CPU.
 </p>
 </dd>
 <dt>&lsquo;<samp>amdfam10h</samp>&rsquo;</dt>
@@ -272,6 +340,10 @@ and returns <code>0</code> otherwise. The following CPU names can be detected:
 </dd>
 <dt>&lsquo;<samp>znver1</samp>&rsquo;</dt>
 <dd><p>AMD Family 17h Zen version 1.
+</p>
+</dd>
+<dt>&lsquo;<samp>znver2</samp>&rsquo;</dt>
+<dd><p>AMD Family 17h Zen version 2.
 </p></dd>
 </dl>
 
@@ -328,8 +400,80 @@ and returns <code>0</code> otherwise. The following features can be detected:
 <dt>&lsquo;<samp>avx2</samp>&rsquo;</dt>
 <dd><p>AVX2 instructions.
 </p></dd>
+<dt>&lsquo;<samp>sse4a</samp>&rsquo;</dt>
+<dd><p>SSE4A instructions.
+</p></dd>
+<dt>&lsquo;<samp>fma4</samp>&rsquo;</dt>
+<dd><p>FMA4 instructions.
+</p></dd>
+<dt>&lsquo;<samp>xop</samp>&rsquo;</dt>
+<dd><p>XOP instructions.
+</p></dd>
+<dt>&lsquo;<samp>fma</samp>&rsquo;</dt>
+<dd><p>FMA instructions.
+</p></dd>
 <dt>&lsquo;<samp>avx512f</samp>&rsquo;</dt>
 <dd><p>AVX512F instructions.
+</p></dd>
+<dt>&lsquo;<samp>bmi</samp>&rsquo;</dt>
+<dd><p>BMI instructions.
+</p></dd>
+<dt>&lsquo;<samp>bmi2</samp>&rsquo;</dt>
+<dd><p>BMI2 instructions.
+</p></dd>
+<dt>&lsquo;<samp>aes</samp>&rsquo;</dt>
+<dd><p>AES instructions.
+</p></dd>
+<dt>&lsquo;<samp>pclmul</samp>&rsquo;</dt>
+<dd><p>PCLMUL instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512vl</samp>&rsquo;</dt>
+<dd><p>AVX512VL instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512bw</samp>&rsquo;</dt>
+<dd><p>AVX512BW instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512dq</samp>&rsquo;</dt>
+<dd><p>AVX512DQ instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512cd</samp>&rsquo;</dt>
+<dd><p>AVX512CD instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512er</samp>&rsquo;</dt>
+<dd><p>AVX512ER instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512pf</samp>&rsquo;</dt>
+<dd><p>AVX512PF instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512vbmi</samp>&rsquo;</dt>
+<dd><p>AVX512VBMI instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512ifma</samp>&rsquo;</dt>
+<dd><p>AVX512IFMA instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx5124vnniw</samp>&rsquo;</dt>
+<dd><p>AVX5124VNNIW instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx5124fmaps</samp>&rsquo;</dt>
+<dd><p>AVX5124FMAPS instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512vpopcntdq</samp>&rsquo;</dt>
+<dd><p>AVX512VPOPCNTDQ instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512vbmi2</samp>&rsquo;</dt>
+<dd><p>AVX512VBMI2 instructions.
+</p></dd>
+<dt>&lsquo;<samp>gfni</samp>&rsquo;</dt>
+<dd><p>GFNI instructions.
+</p></dd>
+<dt>&lsquo;<samp>vpclmulqdq</samp>&rsquo;</dt>
+<dd><p>VPCLMULQDQ instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512vnni</samp>&rsquo;</dt>
+<dd><p>AVX512VNNI instructions.
+</p></dd>
+<dt>&lsquo;<samp>avx512bitalg</samp>&rsquo;</dt>
+<dd><p>AVX512BITALG instructions.
 </p></dd>
 </dl>
 
@@ -1247,6 +1391,15 @@ name.
 <pre class="smallexample">unsigned int __builtin_ia32_rdrand16_step (unsigned short *)
 unsigned int __builtin_ia32_rdrand32_step (unsigned int *)
 unsigned int __builtin_ia32_rdrand64_step (unsigned long long *)
+</pre></div>
+
+<p>The following built-in function is available when <samp>-mptwrite</samp> is
+used.  All of them generate the machine instruction that is part of the
+name.
+</p>
+<div class="smallexample">
+<pre class="smallexample">void __builtin_ia32_ptwrite32 (unsigned)
+void __builtin_ia32_ptwrite64 (unsigned long long)
 </pre></div>
 
 <p>The following built-in functions are available when <samp>-msse4a</samp> is used.

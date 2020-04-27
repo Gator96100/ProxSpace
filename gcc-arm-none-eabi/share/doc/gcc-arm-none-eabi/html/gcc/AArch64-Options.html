@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): AArch64 Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AArch64 Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): AArch64 Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): AArch64 Options">
+<meta name="description" content="AArch64 Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="AArch64 Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="AArch64-Options"></a>
 <div class="header">
 <p>
@@ -133,9 +132,11 @@ addresses and sizes of sections.  Programs can be statically linked only.
 </p>
 </dd>
 <dt><code>-mstrict-align</code></dt>
+<dt><code>-mno-strict-align</code></dt>
 <dd><a name="index-mstrict_002dalign"></a>
-<p>Avoid generating memory accesses that may not be aligned on a natural object
-boundary as described in the architecture specification.
+<a name="index-mno_002dstrict_002dalign"></a>
+<p>Avoid or allow generating memory accesses that may not be aligned on a natural
+object boundary as described in the architecture specification.
 </p>
 </dd>
 <dt><code>-momit-leaf-frame-pointer</code></dt>
@@ -144,6 +145,44 @@ boundary as described in the architecture specification.
 <a name="index-mno_002domit_002dleaf_002dframe_002dpointer"></a>
 <p>Omit or keep the frame pointer in leaf functions.  The former behavior is the
 default.
+</p>
+</dd>
+<dt><code>-mstack-protector-guard=<var>guard</var></code></dt>
+<dt><code>-mstack-protector-guard-reg=<var>reg</var></code></dt>
+<dt><code>-mstack-protector-guard-offset=<var>offset</var></code></dt>
+<dd><a name="index-mstack_002dprotector_002dguard"></a>
+<a name="index-mstack_002dprotector_002dguard_002dreg"></a>
+<a name="index-mstack_002dprotector_002dguard_002doffset"></a>
+<p>Generate stack protection code using canary at <var>guard</var>.  Supported
+locations are &lsquo;<samp>global</samp>&rsquo; for a global canary or &lsquo;<samp>sysreg</samp>&rsquo; for a
+canary in an appropriate system register.
+</p>
+<p>With the latter choice the options
+<samp>-mstack-protector-guard-reg=<var>reg</var></samp> and
+<samp>-mstack-protector-guard-offset=<var>offset</var></samp> furthermore specify
+which system register to use as base register for reading the canary,
+and from what offset from that base register. There is no default
+register or offset as this is entirely for use within the Linux
+kernel.
+</p>
+</dd>
+<dt><code>-mstack-protector-guard=<var>guard</var></code></dt>
+<dt><code>-mstack-protector-guard-reg=<var>reg</var></code></dt>
+<dt><code>-mstack-protector-guard-offset=<var>offset</var></code></dt>
+<dd><a name="index-mstack_002dprotector_002dguard-1"></a>
+<a name="index-mstack_002dprotector_002dguard_002dreg-1"></a>
+<a name="index-mstack_002dprotector_002dguard_002doffset-1"></a>
+<p>Generate stack protection code using canary at <var>guard</var>.  Supported
+locations are &lsquo;<samp>global</samp>&rsquo; for a global canary or &lsquo;<samp>sysreg</samp>&rsquo; for a
+canary in an appropriate system register.
+</p>
+<p>With the latter choice the options
+<samp>-mstack-protector-guard-reg=<var>reg</var></samp> and
+<samp>-mstack-protector-guard-offset=<var>offset</var></samp> furthermore specify
+which system register to use as base register for reading the canary,
+and from what offset from that base register. There is no default
+register or offset as this is entirely for use within the Linux
+kernel.
 </p>
 </dd>
 <dt><code>-mtls-dialect=desc</code></dt>
@@ -195,8 +234,8 @@ single precision and to 32 bits for double precision.
 </dd>
 <dt><code>-mlow-precision-sqrt</code></dt>
 <dt><code>-mno-low-precision-sqrt</code></dt>
-<dd><a name="index-_002dmlow_002dprecision_002dsqrt"></a>
-<a name="index-_002dmno_002dlow_002dprecision_002dsqrt"></a>
+<dd><a name="index-mlow_002dprecision_002dsqrt"></a>
+<a name="index-mno_002dlow_002dprecision_002dsqrt"></a>
 <p>Enable or disable the square root approximation.
 This option only has an effect if <samp>-ffast-math</samp> or
 <samp>-funsafe-math-optimizations</samp> is used as well.  Enabling this reduces
@@ -207,13 +246,22 @@ If enabled, it implies <samp>-mlow-precision-recip-sqrt</samp>.
 </dd>
 <dt><code>-mlow-precision-div</code></dt>
 <dt><code>-mno-low-precision-div</code></dt>
-<dd><a name="index-_002dmlow_002dprecision_002ddiv"></a>
-<a name="index-_002dmno_002dlow_002dprecision_002ddiv"></a>
+<dd><a name="index-mlow_002dprecision_002ddiv"></a>
+<a name="index-mno_002dlow_002dprecision_002ddiv"></a>
 <p>Enable or disable the division approximation.
 This option only has an effect if <samp>-ffast-math</samp> or
 <samp>-funsafe-math-optimizations</samp> is used as well.  Enabling this reduces
 precision of division results to about 16 bits for
 single precision and to 32 bits for double precision.
+</p>
+</dd>
+<dt><code>-mtrack-speculation</code></dt>
+<dt><code>-mno-track-speculation</code></dt>
+<dd><p>Enable or disable generation of additional code to track speculative
+execution through conditional branches.  The tracking state can then
+be used by the compiler when expanding calls to
+<code>__builtin_speculation_safe_copy</code> to permit a more efficient code
+sequence to be generated.
 </p>
 </dd>
 <dt><code>-march=<var>name</var></code></dt>
@@ -223,8 +271,11 @@ more feature modifiers.  This option has the form
 <samp>-march=<var>arch</var><span class="roman">{</span>+<span class="roman">[</span>no<span class="roman">]</span><var>feature</var><span class="roman">}*</span></samp>.
 </p>
 <p>The permissible values for <var>arch</var> are &lsquo;<samp>armv8-a</samp>&rsquo;,
-&lsquo;<samp>armv8.1-a</samp>&rsquo;, &lsquo;<samp>armv8.2-a</samp>&rsquo;, &lsquo;<samp>armv8.3-a</samp>&rsquo; or &lsquo;<samp>armv8.4-a</samp>&rsquo;
-or <var>native</var>.
+&lsquo;<samp>armv8.1-a</samp>&rsquo;, &lsquo;<samp>armv8.2-a</samp>&rsquo;, &lsquo;<samp>armv8.3-a</samp>&rsquo;, &lsquo;<samp>armv8.4-a</samp>&rsquo;,
+&lsquo;<samp>armv8.5-a</samp>&rsquo; or <var>native</var>.
+</p>
+<p>The value &lsquo;<samp>armv8.5-a</samp>&rsquo; implies &lsquo;<samp>armv8.4-a</samp>&rsquo; and enables compiler
+support for the ARMv8.5-A architecture extensions.
 </p>
 <p>The value &lsquo;<samp>armv8.4-a</samp>&rsquo; implies &lsquo;<samp>armv8.3-a</samp>&rsquo; and enables compiler
 support for the ARMv8.4-A architecture extensions.
@@ -262,18 +313,21 @@ processors implementing the target architecture.
 performance of the code.  Permissible values for this option are:
 &lsquo;<samp>generic</samp>&rsquo;, &lsquo;<samp>cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a55</samp>&rsquo;,
 &lsquo;<samp>cortex-a57</samp>&rsquo;, &lsquo;<samp>cortex-a72</samp>&rsquo;, &lsquo;<samp>cortex-a73</samp>&rsquo;, &lsquo;<samp>cortex-a75</samp>&rsquo;,
-&lsquo;<samp>exynos-m1</samp>&rsquo;, &lsquo;<samp>falkor</samp>&rsquo;, &lsquo;<samp>qdf24xx</samp>&rsquo;, &lsquo;<samp>saphira</samp>&rsquo;,
-&lsquo;<samp>xgene1</samp>&rsquo;, &lsquo;<samp>vulcan</samp>&rsquo;, &lsquo;<samp>thunderx</samp>&rsquo;,
-&lsquo;<samp>thunderxt88</samp>&rsquo;, &lsquo;<samp>thunderxt88p1</samp>&rsquo;, &lsquo;<samp>thunderxt81</samp>&rsquo;,
-&lsquo;<samp>thunderxt83</samp>&rsquo;, &lsquo;<samp>thunderx2t99</samp>&rsquo;, &lsquo;<samp>cortex-a57.cortex-a53</samp>&rsquo;,
-&lsquo;<samp>cortex-a72.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a35</samp>&rsquo;,
-&lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo;,
+&lsquo;<samp>cortex-a76</samp>&rsquo;, &lsquo;<samp>ares</samp>&rsquo;, &lsquo;<samp>exynos-m1</samp>&rsquo;, &lsquo;<samp>emag</samp>&rsquo;, &lsquo;<samp>falkor</samp>&rsquo;,
+&lsquo;<samp>neoverse-e1</samp>&rsquo;,&lsquo;<samp>neoverse-n1</samp>&rsquo;,&lsquo;<samp>qdf24xx</samp>&rsquo;, &lsquo;<samp>saphira</samp>&rsquo;,
+&lsquo;<samp>phecda</samp>&rsquo;, &lsquo;<samp>xgene1</samp>&rsquo;, &lsquo;<samp>vulcan</samp>&rsquo;, &lsquo;<samp>octeontx</samp>&rsquo;,
+&lsquo;<samp>octeontx81</samp>&rsquo;,  &lsquo;<samp>octeontx83</samp>&rsquo;, &lsquo;<samp>thunderx</samp>&rsquo;, &lsquo;<samp>thunderxt88</samp>&rsquo;,
+&lsquo;<samp>thunderxt88p1</samp>&rsquo;, &lsquo;<samp>thunderxt81</samp>&rsquo;, &lsquo;<samp>tsv110</samp>&rsquo;,
+&lsquo;<samp>thunderxt83</samp>&rsquo;, &lsquo;<samp>thunderx2t99</samp>&rsquo;,
+&lsquo;<samp>cortex-a57.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a72.cortex-a53</samp>&rsquo;,
+&lsquo;<samp>cortex-a73.cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;,
+&lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo;, &lsquo;<samp>cortex-a76.cortex-a55</samp>&rsquo;
 &lsquo;<samp>native</samp>&rsquo;.
 </p>
 <p>The values &lsquo;<samp>cortex-a57.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a72.cortex-a53</samp>&rsquo;,
 &lsquo;<samp>cortex-a73.cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;,
-&lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo; specify that GCC should tune for a
-big.LITTLE system.
+&lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo;, &lsquo;<samp>cortex-a76.cortex-a55</samp>&rsquo; specify that GCC
+should tune for a big.LITTLE system.
 </p>
 <p>Additionally on native AArch64 GNU/Linux systems the value
 &lsquo;<samp>native</samp>&rsquo; tunes performance to the host system.  This option has no effect
@@ -338,7 +392,23 @@ limits the maximum size of functions to 1MB.  This is enabled by default for
 Permissible values are &lsquo;<samp>none</samp>&rsquo;, which disables return address signing,
 &lsquo;<samp>non-leaf</samp>&rsquo;, which enables pointer signing for functions which are not leaf
 functions, and &lsquo;<samp>all</samp>&rsquo;, which enables pointer signing for all functions.  The
-default value is &lsquo;<samp>none</samp>&rsquo;.
+default value is &lsquo;<samp>none</samp>&rsquo;. This option has been deprecated by
+-mbranch-protection.
+</p>
+</dd>
+<dt><code>-mbranch-protection=<var>none</var>|<var>standard</var>|<var>pac-ret</var>[+<var>leaf</var>]|<var>bti</var></code></dt>
+<dd><a name="index-mbranch_002dprotection"></a>
+<p>Select the branch protection features to use.
+&lsquo;<samp>none</samp>&rsquo; is the default and turns off all types of branch protection.
+&lsquo;<samp>standard</samp>&rsquo; turns on all types of branch protection features.  If a feature
+has additional tuning options, then &lsquo;<samp>standard</samp>&rsquo; sets it to its standard
+level.
+&lsquo;<samp>pac-ret[+<var>leaf</var>]</samp>&rsquo; turns on return address signing to its standard
+level: signing functions that save the return address to memory (non-leaf
+functions will practically always do this) using the a-key.  The optional
+argument &lsquo;<samp>leaf</samp>&rsquo; can be used to extend the signing to include leaf
+functions.
+&lsquo;<samp>bti</samp>&rsquo; turns on branch target identification mechanism.
 </p>
 </dd>
 <dt><code>-msve-vector-bits=<var>bits</var></code></dt>
@@ -431,6 +501,36 @@ instructions. Use of this option with architectures prior to Armv8.2-A is not su
 <dt>&lsquo;<samp>sm4</samp>&rsquo;</dt>
 <dd><p>Enable the sm3 and sm4 crypto extension.  This also enables Advanced SIMD instructions.
 Use of this option with architectures prior to Armv8.2-A is not supported.
+</p></dd>
+<dt>&lsquo;<samp>profile</samp>&rsquo;</dt>
+<dd><p>Enable the Statistical Profiling extension.  This option is only to enable the
+extension at the assembler level and does not affect code generation.
+</p></dd>
+<dt>&lsquo;<samp>rng</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8.5-a Random Number instructions.  This option is only to
+enable the extension at the assembler level and does not affect code
+generation.
+</p></dd>
+<dt>&lsquo;<samp>memtag</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8.5-a Memory Tagging Extensions.  This option is only to
+enable the extension at the assembler level and does not affect code
+generation.
+</p></dd>
+<dt>&lsquo;<samp>sb</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8-a Speculation Barrier instruction.  This option is only to
+enable the extension at the assembler level and does not affect code
+generation.  This option is enabled by default for <samp>-march=armv8.5-a</samp>.
+</p></dd>
+<dt>&lsquo;<samp>ssbs</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8-a Speculative Store Bypass Safe instruction.  This option
+is only to enable the extension at the assembler level and does not affect code
+generation.  This option is enabled by default for <samp>-march=armv8.5-a</samp>.
+</p></dd>
+<dt>&lsquo;<samp>predres</samp>&rsquo;</dt>
+<dd><p>Enable the Armv8-a Execution and Data Prediction Restriction instructions.
+This option is only to enable the extension at the assembler level and does
+not affect code generation.  This option is enabled by default for
+<samp>-march=armv8.5-a</samp>.
 </p>
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,35 +19,35 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Object Size Checking</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Object Size Checking (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Object Size Checking">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Object Size Checking">
+<meta name="description" content="Object Size Checking (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Object Size Checking (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="C-Extensions.html#C-Extensions" rel="up" title="C Extensions">
-<link href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" rel="next" title="Pointer Bounds Checker builtins">
+<link href="Other-Builtins.html#Other-Builtins" rel="next" title="Other Builtins">
 <link href="x86-specific-memory-model-extensions-for-transactional-memory.html#x86-specific-memory-model-extensions-for-transactional-memory" rel="prev" title="x86 specific memory model extensions for transactional memory">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,15 +66,15 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Object-Size-Checking"></a>
 <div class="header">
 <p>
-Next: <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" accesskey="n" rel="next">Pointer Bounds Checker builtins</a>, Previous: <a href="x86-specific-memory-model-extensions-for-transactional-memory.html#x86-specific-memory-model-extensions-for-transactional-memory" accesskey="p" rel="prev">x86 specific memory model extensions for transactional memory</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Other-Builtins.html#Other-Builtins" accesskey="n" rel="next">Other Builtins</a>, Previous: <a href="x86-specific-memory-model-extensions-for-transactional-memory.html#x86-specific-memory-model-extensions-for-transactional-memory" accesskey="p" rel="prev">x86 specific memory model extensions for transactional memory</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="Object-Size-Checking-Built_002din-Functions"></a>
-<h3 class="section">6.56 Object Size Checking Built-in Functions</h3>
+<h3 class="section">6.58 Object Size Checking Built-in Functions</h3>
 <a name="index-_005f_005fbuiltin_005fobject_005fsize"></a>
 <a name="index-_005f_005fbuiltin_005f_005f_005fmemcpy_005fchk"></a>
 <a name="index-_005f_005fbuiltin_005f_005f_005fmempcpy_005fchk"></a>
@@ -109,7 +108,9 @@ a limited extent, they can be used without optimization as well.
 <dt><a name="index-_005f_005fbuiltin_005fobject_005fsize-1"></a>Built-in Function: <em>size_t</em> <strong>__builtin_object_size</strong> <em>(const void * <var>ptr</var>, int <var>type</var>)</em></dt>
 <dd><p>is a built-in construct that returns a constant number of bytes from
 <var>ptr</var> to the end of the object <var>ptr</var> pointer points to
-(if known at compile time).  <code>__builtin_object_size</code> never evaluates
+(if known at compile time).  To determine the sizes of dynamically allocated
+objects the function relies on the allocation functions called to obtain
+the storage to be declared with the <code>alloc_size</code> attribute (see <a href="Common-Function-Attributes.html#Common-Function-Attributes">Common Function Attributes</a>).  <code>__builtin_object_size</code> never evaluates
 its arguments for side effects.  If there are any side effects in them, it
 returns <code>(size_t) -1</code> for <var>type</var> 0 or 1 and <code>(size_t) 0</code>
 for <var>type</var> 2 or 3.  If there are multiple objects <var>ptr</var> can
@@ -218,7 +219,7 @@ is called and the <var>flag</var> argument passed to it.
 <hr>
 <div class="header">
 <p>
-Next: <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" accesskey="n" rel="next">Pointer Bounds Checker builtins</a>, Previous: <a href="x86-specific-memory-model-extensions-for-transactional-memory.html#x86-specific-memory-model-extensions-for-transactional-memory" accesskey="p" rel="prev">x86 specific memory model extensions for transactional memory</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Other-Builtins.html#Other-Builtins" accesskey="n" rel="next">Other Builtins</a>, Previous: <a href="x86-specific-memory-model-extensions-for-transactional-memory.html#x86-specific-memory-model-extensions-for-transactional-memory" accesskey="p" rel="prev">x86 specific memory model extensions for transactional memory</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

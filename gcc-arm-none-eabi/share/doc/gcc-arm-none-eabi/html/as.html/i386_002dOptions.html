@@ -11,16 +11,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using as: i386-Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>i386-Options (Using as)</title>
 
-<meta name="description" content="Using as: i386-Options">
-<meta name="keywords" content="Using as: i386-Options">
+<meta name="description" content="i386-Options (Using as)">
+<meta name="keywords" content="i386-Options (Using as)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="AS-Index.html#AS-Index" rel="index" title="AS Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,15 +58,15 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="i386_002dOptions"></a>
 <div class="header">
 <p>
 Next: <a href="i386_002dDirectives.html#i386_002dDirectives" accesskey="n" rel="next">i386-Directives</a>, Up: <a href="i386_002dDependent.html#i386_002dDependent" accesskey="u" rel="up">i386-Dependent</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="AS-Index.html#AS-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<a name="Options-10"></a>
-<h4 class="subsection">9.15.1 Options</h4>
+<a name="Options-11"></a>
+<h4 class="subsection">9.16.1 Options</h4>
 
 <a name="index-options-for-i386"></a>
 <a name="index-options-for-x86_002d64"></a>
@@ -211,6 +210,7 @@ accept various extension mnemonics.  For example,
 <code>clwb</code>,
 <code>movdiri</code>,
 <code>movdir64b</code>,
+<code>enqcmd</code>,
 <code>avx512f</code>,
 <code>avx512cd</code>,
 <code>avx512er</code>,
@@ -226,6 +226,7 @@ accept various extension mnemonics.  For example,
 <code>avx512_vbmi2</code>,
 <code>avx512_vnni</code>,
 <code>avx512_bitalg</code>,
+<code>avx512_bf16</code>,
 <code>noavx512f</code>,
 <code>noavx512cd</code>,
 <code>noavx512er</code>,
@@ -241,6 +242,9 @@ accept various extension mnemonics.  For example,
 <code>noavx512_vbmi2</code>,
 <code>noavx512_vnni</code>,
 <code>noavx512_bitalg</code>,
+<code>noavx512_vp2intersect</code>,
+<code>noavx512_bf16</code>,
+<code>noenqcmd</code>,
 <code>vmx</code>,
 <code>vmfunc</code>,
 <code>smx</code>,
@@ -330,6 +334,9 @@ AVX instructions with 128bit vector length, which is the default.
 <samp>-mavxscalar=<var>256</var></samp> will encode scalar AVX instructions
 with 256bit vector length.
 </p>
+<p>WARNING: Don&rsquo;t use this for production code - due to CPU errata the
+resulting code may not work on certain models.
+</p>
 <a name="index-_002dmvexwig_003d-option_002c-i386"></a>
 <a name="index-_002dmvexwig_003d-option_002c-x86_002d64"></a>
 </dd>
@@ -340,6 +347,9 @@ VEX instructions.  <samp>-mvexwig=<var>0</var></samp> will encode WIG VEX
 instructions with vex.w = 0, which is the default.
 <samp>-mvexwig=<var>1</var></samp> will encode WIG EVEX instructions with
 vex.w = 1.
+</p>
+<p>WARNING: Don&rsquo;t use this for production code - due to CPU errata the
+resulting code may not work on certain models.
 </p>
 <a name="index-_002dmevexlig_003d-option_002c-i386"></a>
 <a name="index-_002dmevexlig_003d-option_002c-x86_002d64"></a>
@@ -501,11 +511,23 @@ Intel64 ISA in 64-bit mode.  The default is to accept both.
 <dd><p>Optimize instruction encoding with smaller instruction size.  &lsquo;<samp>-O</samp>&rsquo;
 and &lsquo;<samp>-O1</samp>&rsquo; encode 64-bit register load instructions with 64-bit
 immediate as 32-bit register load instructions with 31-bit or 32-bits
-immediates and encode 64-bit register clearing instructions with 32-bit
-register clearing instructions.  &lsquo;<samp>-O2</samp>&rsquo; includes &lsquo;<samp>-O1</samp>&rsquo;
-optimization plus encodes 256-bit and 512-bit vector register clearing
-instructions with 128-bit vector register clearing instructions.
-&lsquo;<samp>-Os</samp>&rsquo; includes &lsquo;<samp>-O2</samp>&rsquo; optimization plus encodes 16-bit, 32-bit
+immediates, encode 64-bit register clearing instructions with 32-bit
+register clearing instructions, encode 256-bit/512-bit VEX/EVEX vector
+register clearing instructions with 128-bit VEX vector register
+clearing instructions, encode 128-bit/256-bit EVEX vector
+register load/store instructions with VEX vector register load/store
+instructions, and encode 128-bit/256-bit EVEX packed integer logical
+instructions with 128-bit/256-bit VEX packed integer logical.
+</p>
+<p>&lsquo;<samp>-O2</samp>&rsquo; includes &lsquo;<samp>-O1</samp>&rsquo; optimization plus encodes
+256-bit/512-bit EVEX vector register clearing instructions with 128-bit
+EVEX vector register clearing instructions.  In 64-bit mode VEX encoded
+instructions with commutative source operands will also have their
+source operands swapped if this allows using the 2-byte VEX prefix form
+instead of the 3-byte one.  Certain forms of AND as well as OR with the
+same (register) operand specified twice will also be changed to TEST.
+</p>
+<p>&lsquo;<samp>-Os</samp>&rsquo; includes &lsquo;<samp>-O2</samp>&rsquo; optimization plus encodes 16-bit, 32-bit
 and 64-bit register tests with immediate as 8-bit register test with
 immediate.  &lsquo;<samp>-O0</samp>&rsquo; turns off this optimization.
 </p>

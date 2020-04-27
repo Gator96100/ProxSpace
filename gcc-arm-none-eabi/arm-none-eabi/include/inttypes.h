@@ -22,7 +22,7 @@
 #include <stddef.h>
 
 #if __BSD_VISIBLE
-#include <sys/_locale.h>
+#include <xlocale.h>
 #endif
 
 #define __STRINGIFY(a) #a

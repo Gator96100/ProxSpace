@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Invoking Gcov</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Invoking Gcov (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Invoking Gcov">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Invoking Gcov">
+<meta name="description" content="Invoking Gcov (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Invoking Gcov (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Invoking-Gcov"></a>
 <div class="header">
 <p>
@@ -124,81 +123,147 @@ exit without doing any further processing.
 </p>
 </dd>
 <dt><code>-i</code></dt>
-<dt><code>--intermediate-format</code></dt>
-<dd><p>Output gcov file in an easy-to-parse intermediate text format that can
-be used by <code>lcov</code> or other tools. The output is a single
-<samp>.gcov</samp> file per <samp>.gcda</samp> file. No source code is required.
+<dt><code>--json-format</code></dt>
+<dd><p>Output gcov file in an easy-to-parse JSON intermediate format
+which does not require source code for generation.  The JSON
+file is compressed with gzip compression algorithm
+and the files have <samp>.gcov.json.gz</samp> extension.
 </p>
-<p>The format of the intermediate <samp>.gcov</samp> file is plain text with
-one entry per line
-</p>
-<div class="smallexample">
-<pre class="smallexample">version:<var>gcc_version</var>
-file:<var>source_file_name</var>
-function:<var>start_line_number</var>,<var>end_line_number</var>,<var>execution_count</var>,<var>function_name</var>
-lcount:<var>line number</var>,<var>execution_count</var>,<var>has_unexecuted_block</var>
-branch:<var>line_number</var>,<var>branch_coverage_type</var>
-
-Where the <var>branch_coverage_type</var> is
-   notexec (Branch not executed)
-   taken (Branch executed and taken)
-   nottaken (Branch executed, but not taken)
-</pre></div>
-
-<p>There can be multiple <var>file</var> entries in an intermediate gcov
-file. All entries following a <var>file</var> pertain to that source file
-until the next <var>file</var> entry.  If there are multiple functions that
-start on a single line, then corresponding lcount is repeated multiple
-times.
-</p>
-<p>Here is a sample when <samp>-i</samp> is used in conjunction with <samp>-b</samp> option:
+<p>Structure of the JSON is following:
 </p>
 <div class="smallexample">
-<pre class="smallexample">version: 8.1.0 20180103
-file:tmp.cpp
-function:7,7,0,_ZN3FooIcEC2Ev
-function:7,7,1,_ZN3FooIiEC2Ev
-function:8,8,0,_ZN3FooIcE3incEv
-function:8,8,2,_ZN3FooIiE3incEv
-function:18,37,1,main
-lcount:7,0,1
-lcount:7,1,0
-lcount:8,0,1
-lcount:8,2,0
-lcount:18,1,0
-lcount:21,1,0
-branch:21,taken
-branch:21,nottaken
-lcount:23,1,0
-branch:23,taken
-branch:23,nottaken
-lcount:24,1,0
-branch:24,taken
-branch:24,nottaken
-lcount:25,1,0
-lcount:27,11,0
-branch:27,taken
-branch:27,taken
-lcount:28,10,0
-lcount:30,1,1
-branch:30,nottaken
-branch:30,taken
-lcount:32,1,0
-branch:32,nottaken
-branch:32,taken
-lcount:33,0,1
-branch:33,notexec
-branch:33,notexec
-lcount:35,1,0
-branch:35,taken
-branch:35,nottaken
-lcount:36,1,0
+<pre class="smallexample">{
+  &quot;current_working_directory&quot;: <var>current_working_directory</var>,
+  &quot;data_file&quot;: <var>data_file</var>,
+  &quot;format_version&quot;: <var>format_version</var>,
+  &quot;gcc_version&quot;: <var>gcc_version</var>
+  &quot;files&quot;: [<var>file</var>]
+}
 </pre></div>
+
+<p>Fields of the root element have following semantics:
+</p>
+<ul>
+<li> <var>current_working_directory</var>: working directory where
+a compilation unit was compiled
+
+</li><li> <var>data_file</var>: name of the data file (GCDA)
+
+</li><li> <var>format_version</var>: semantic version of the format
+
+</li><li> <var>gcc_version</var>: version of the GCC compiler
+</li></ul>
+
+<p>Each <var>file</var> has the following form:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{
+  &quot;file&quot;: <var>file_name</var>,
+  &quot;functions&quot;: [<var>function</var>],
+  &quot;lines&quot;: [<var>line</var>]
+}
+</pre></div>
+
+<p>Fields of the <var>file</var> element have following semantics:
+</p>
+<ul>
+<li> <var>file_name</var>: name of the source file
+</li></ul>
+
+<p>Each <var>function</var> has the following form:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{
+  &quot;blocks&quot;: <var>blocks</var>,
+  &quot;blocks_executed&quot;: <var>blocks_executed</var>,
+  &quot;demangled_name&quot;: &quot;<var>demangled_name</var>,
+  &quot;end_column&quot;: <var>end_column</var>,
+  &quot;end_line&quot;: <var>end_line</var>,
+  &quot;execution_count&quot;: <var>execution_count</var>,
+  &quot;name&quot;: <var>name</var>,
+  &quot;start_column&quot;: <var>start_column</var>
+  &quot;start_line&quot;: <var>start_line</var>
+}
+</pre></div>
+
+<p>Fields of the <var>function</var> element have following semantics:
+</p>
+<ul>
+<li> <var>blocks</var>: number of blocks that are in the function
+
+</li><li> <var>blocks_executed</var>: number of executed blocks of the function
+
+</li><li> <var>demangled_name</var>: demangled name of the function
+
+</li><li> <var>end_column</var>: column in the source file where the function ends
+
+</li><li> <var>end_line</var>: line in the source file where the function ends
+
+</li><li> <var>execution_count</var>: number of executions of the function
+
+</li><li> <var>name</var>: name of the function
+
+</li><li> <var>start_column</var>: column in the source file where the function begins
+
+</li><li> <var>start_line</var>: line in the source file where the function begins
+</li></ul>
+
+<p>Note that line numbers and column numbers number from 1.  In the current
+implementation, <var>start_line</var> and <var>start_column</var> do not include
+any template parameters and the leading return type but that
+this is likely to be fixed in the future.
+</p>
+<p>Each <var>line</var> has the following form:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{
+  &quot;branches&quot;: [<var>branch</var>],
+  &quot;count&quot;: <var>count</var>,
+  &quot;line_number&quot;: <var>line_number</var>,
+  &quot;unexecuted_block&quot;: <var>unexecuted_block</var>
+  &quot;function_name&quot;: <var>function_name</var>,
+}
+</pre></div>
+
+<p>Branches are present only with <var>-b</var> option.
+Fields of the <var>line</var> element have following semantics:
+</p>
+<ul>
+<li> <var>count</var>: number of executions of the line
+
+</li><li> <var>line_number</var>: line number
+
+</li><li> <var>unexecuted_block</var>: flag whether the line contains an unexecuted block
+(not all statements on the line are executed)
+
+</li><li> <var>function_name</var>: a name of a function this <var>line</var> belongs to
+(for a line with an inlined statements can be not set)
+</li></ul>
+
+<p>Each <var>branch</var> has the following form:
+</p>
+<div class="smallexample">
+<pre class="smallexample">{
+  &quot;count&quot;: <var>count</var>,
+  &quot;fallthrough&quot;: <var>fallthrough</var>,
+  &quot;throw&quot;: <var>throw</var>
+}
+</pre></div>
+
+<p>Fields of the <var>branch</var> element have following semantics:
+</p>
+<ul>
+<li> <var>count</var>: number of executions of the branch
+
+</li><li> <var>fallthrough</var>: true when the branch is a fall through branch
+
+</li><li> <var>throw</var>: true when the branch is an exceptional branch
+</li></ul>
 
 </dd>
 <dt><code>-j</code></dt>
 <dt><code>--human-readable</code></dt>
-<dd><p>Write counts in human readable format (like 24k).
+<dd><p>Write counts in human readable format (like 24.6k).
 </p>
 </dd>
 <dt><code>-k</code></dt>
@@ -208,7 +273,6 @@ lcount:36,1,0
 non-exceptional lines and cyan for exceptional.  Same colors are used for
 basic blocks with <samp>-a</samp> option.
 </p>
-
 </dd>
 <dt><code>-l</code></dt>
 <dt><code>--long-file-names</code></dt>
@@ -255,6 +319,13 @@ components renamed to &lsquo;<samp>^</samp>&rsquo;.  This is useful if sourcefil
 different directories.
 </p>
 </dd>
+<dt><code>-q</code></dt>
+<dt><code>--use-hotness-colors</code></dt>
+<dd>
+<p>Emit perf-like colored output for hot lines.  Legend of the color scale
+is printed at the very beginning of the output file.
+</p>
+</dd>
 <dt><code>-r</code></dt>
 <dt><code>--relative-only</code></dt>
 <dd><p>Only output information about source files with a relative pathname
@@ -270,6 +341,11 @@ coverage files.  This option is useful when building in a separate
 directory, and the pathname to the source directory is not wanted when
 determining the output file names.  Note that this prefix detection is
 applied before determining whether the source file is absolute.
+</p>
+</dd>
+<dt><code>-t</code></dt>
+<dt><code>--stdout</code></dt>
+<dd><p>Output to standard output instead of output files.
 </p>
 </dd>
 <dt><code>-u</code></dt>
@@ -291,13 +367,15 @@ and exit without doing any further processing.
 </dd>
 <dt><code>-x</code></dt>
 <dt><code>--hash-filenames</code></dt>
-<dd><p>By default, gcov uses the full pathname of the source files to create
+<dd><p>When using <var>&ndash;preserve-paths</var>,
+gcov uses the full pathname of the source files to create
 an output filename.  This can lead to long filenames that can overflow
 filesystem limits.  This option creates names of the form
 <samp><var>source-file</var>##<var>md5</var>.gcov</samp>,
 where the <var>source-file</var> component is the final filename part and
 the <var>md5</var> component is calculated from the full mangled name that
-would have been used otherwise.
+would have been used otherwise.  The option is an alternative
+to the <var>&ndash;preserve-paths</var> on systems which have a filesystem limit.
 </p>
 </dd>
 </dl>
@@ -330,12 +408,12 @@ command line option.  The <var>execution_count</var> is &lsquo;<samp>-</samp>&rs
 containing no code.  Unexecuted lines are marked &lsquo;<samp>#####</samp>&rsquo; or
 &lsquo;<samp>=====</samp>&rsquo;, depending on whether they are reachable by
 non-exceptional paths or only exceptional paths such as C++ exception
-handlers, respectively. Given &lsquo;<samp>-a</samp>&rsquo; option, unexecuted blocks are
+handlers, respectively. Given the &lsquo;<samp>-a</samp>&rsquo; option, unexecuted blocks are
 marked &lsquo;<samp>$$$$$</samp>&rsquo; or &lsquo;<samp>%%%%%</samp>&rsquo;, depending on whether a basic block
 is reachable via non-exceptional or exceptional paths.
 Executed basic blocks having a statement with zero <var>execution_count</var>
-end with &lsquo;<samp>*</samp>&rsquo; character and are colored with magenta color with <samp>-k</samp>
-option.  The functionality is not supported in Ada.
+end with &lsquo;<samp>*</samp>&rsquo; character and are colored with magenta color with
+the <samp>-k</samp> option.  This functionality is not supported in Ada.
 </p>
 <p>Note that GCC can completely remove the bodies of functions that are
 not needed &ndash; for instance if they are inlined everywhere.  Such functions
@@ -369,8 +447,8 @@ are <em>exactly</em> 0% and 100% respectively.  Other values which would
 conventionally be rounded to 0% or 100% are instead printed as the
 nearest non-boundary value.
 </p>
-<p>When using <code>gcov</code>, you must first compile your program with two
-special GCC options: &lsquo;<samp>-fprofile-arcs -ftest-coverage</samp>&rsquo;.
+<p>When using <code>gcov</code>, you must first compile your program
+with a special GCC option &lsquo;<samp>--coverage</samp>&rsquo;.
 This tells the compiler to generate additional information needed by
 gcov (basically a flow graph of the program) and also includes
 additional code in the object files for generating the extra profiling
@@ -387,7 +465,7 @@ for each line.  For example, if your program is called <samp>tmp.cpp</samp>, thi
 is what you see when you use the basic <code>gcov</code> facility:
 </p>
 <div class="smallexample">
-<pre class="smallexample">$ g++ -fprofile-arcs -ftest-coverage tmp.cpp
+<pre class="smallexample">$ g++ --coverage tmp.cpp
 $ a.out
 $ gcov tmp.cpp -m
 File 'tmp.cpp'
@@ -400,6 +478,7 @@ Here is a sample:
 </p>
 <div class="smallexample">
 <pre class="smallexample">        -:    0:Source:tmp.cpp
+        -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno
         -:    0:Data:tmp.gcda
         -:    0:Runs:1
@@ -467,6 +546,7 @@ counts, and the output looks like this:
 </p>
 <div class="smallexample">
 <pre class="smallexample">        -:    0:Source:tmp.cpp
+        -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno
         -:    0:Data:tmp.gcda
         -:    0:Runs:1
@@ -554,6 +634,7 @@ As you can see, line 33 contains a basic block that was not executed.
 </p>
 <div class="smallexample">
 <pre class="smallexample">        -:    0:Source:tmp.cpp
+        -:    0:Working directory:/home/gcc/testcase
         -:    0:Graph:tmp.gcno
         -:    0:Data:tmp.gcda
         -:    0:Runs:1

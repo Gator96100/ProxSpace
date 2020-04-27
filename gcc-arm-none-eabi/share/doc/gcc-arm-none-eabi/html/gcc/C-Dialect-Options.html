@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): C Dialect Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>C Dialect Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): C Dialect Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): C Dialect Options">
+<meta name="description" content="C Dialect Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="C Dialect Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="C-Dialect-Options"></a>
 <div class="header">
 <p>
@@ -191,11 +190,16 @@ interfaces) and L (Analyzability).  The name &lsquo;<samp>c1x</samp>&rsquo; is d
 <dt>&lsquo;<samp>c18</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>iso9899:2017</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>iso9899:2018</samp>&rsquo;</dt>
-<dd><p>ISO C17, the 2017 revision of the ISO C standard (expected to be
-published in 2018).  This standard is
+<dd><p>ISO C17, the 2017 revision of the ISO C standard
+(published in 2018).  This standard is
 same as C11 except for corrections of defects (all of which are also
 applied with <samp>-std=c11</samp>) and a new value of
 <code>__STDC_VERSION__</code>, and so is supported to the same extent as C11.
+</p>
+</dd>
+<dt>&lsquo;<samp>c2x</samp>&rsquo;</dt>
+<dd><p>The next version of the ISO C standard, still under development.  The
+support for this version is experimental and incomplete.
 </p>
 </dd>
 <dt>&lsquo;<samp>gnu90</samp>&rsquo;</dt>
@@ -217,6 +221,12 @@ The name &lsquo;<samp>gnu1x</samp>&rsquo; is deprecated.
 <dt>&lsquo;<samp>gnu17</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>gnu18</samp>&rsquo;</dt>
 <dd><p>GNU dialect of ISO C17.  This is the default for C code.
+</p>
+</dd>
+<dt>&lsquo;<samp>gnu2x</samp>&rsquo;</dt>
+<dd><p>The next version of the ISO C standard, still under development, plus
+GNU extensions.  The support for this version is experimental and
+incomplete.
 </p>
 </dd>
 <dt>&lsquo;<samp>c++98</samp>&rsquo;</dt>
@@ -355,6 +365,7 @@ supported for C as this construct is allowed by C++.
 </dd>
 <dt><code>-fno-asm</code></dt>
 <dd><a name="index-fno_002dasm"></a>
+<a name="index-fasm"></a>
 <p>Do not recognize <code>asm</code>, <code>inline</code> or <code>typeof</code> as a
 keyword, so that code can use these words as identifiers.  You can use
 the keywords <code>__asm__</code>, <code>__inline__</code> and <code>__typeof__</code>
@@ -371,6 +382,7 @@ switch only affects the <code>asm</code> and <code>typeof</code> keywords, since
 <dt><code>-fno-builtin</code></dt>
 <dt><code>-fno-builtin-<var>function</var></code></dt>
 <dd><a name="index-fno_002dbuiltin"></a>
+<a name="index-fbuiltin"></a>
 <a name="index-built_002din-functions"></a>
 <p>Don&rsquo;t recognize built-in functions that do not begin with
 &lsquo;<samp>__builtin_</samp>&rsquo; as prefix.  See <a href="Other-Builtins.html#Other-Builtins">Other built-in
@@ -468,7 +480,7 @@ can be omitted, to use a target-specific default value.
 <p>Enable handling of OpenMP directives <code>#pragma omp</code> in C/C++ and
 <code>!$omp</code> in Fortran.  When <samp>-fopenmp</samp> is specified, the
 compiler generates parallel code according to the OpenMP Application
-Program Interface v4.5 <a href="http://www.openmp.org/">http://www.openmp.org/</a><!-- /@w -->.  This option
+Program Interface v4.5 <a href="https://www.openmp.org">https://www.openmp.org</a><!-- /@w -->.  This option
 implies <samp>-pthread</samp>, and thus is only supported on targets that
 have support for <samp>-pthread</samp>. <samp>-fopenmp</samp> implies
 <samp>-fopenmp-simd</samp>.

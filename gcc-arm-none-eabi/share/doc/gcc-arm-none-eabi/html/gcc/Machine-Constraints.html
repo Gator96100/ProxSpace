@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Machine Constraints</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Machine Constraints (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Machine Constraints">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Machine Constraints">
+<meta name="description" content="Machine Constraints (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Machine Constraints (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Machine-Constraints"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Previous: <a href="Modifiers.html#Modifiers" accesskey="p" rel="prev">Modifiers<
 </div>
 <hr>
 <a name="Constraints-for-Particular-Machines"></a>
-<h4 class="subsubsection">6.45.3.4 Constraints for Particular Machines</h4>
+<h4 class="subsubsection">6.47.3.4 Constraints for Particular Machines</h4>
 <a name="index-machine-specific-constraints"></a>
 <a name="index-constraints_002c-machine-specific"></a>
 
@@ -170,6 +169,129 @@ within 4GB of the instruction
 <dt><code>Ump</code></dt>
 <dd><p>A memory address suitable for a load/store pair instruction in SI, DI, SF and
 DF modes
+</p>
+</dd>
+</dl>
+
+
+</dd>
+<dt><em>AMD GCN &mdash;<samp>config/gcn/constraints.md</samp></em></dt>
+<dd><dl compact="compact">
+<dt><code>I</code></dt>
+<dd><p>Immediate integer in the range -16 to 64
+</p>
+</dd>
+<dt><code>J</code></dt>
+<dd><p>Immediate 16-bit signed integer
+</p>
+</dd>
+<dt><code>Kf</code></dt>
+<dd><p>Immediate constant -1
+</p>
+</dd>
+<dt><code>L</code></dt>
+<dd><p>Immediate 15-bit unsigned integer
+</p>
+</dd>
+<dt><code>A</code></dt>
+<dd><p>Immediate constant that can be inlined in an instruction encoding: integer
+-16..64, or float 0.0, +/-0.5, +/-1.0, +/-2.0,
++/-4.0, 1.0/(2.0*PI)
+</p>
+</dd>
+<dt><code>B</code></dt>
+<dd><p>Immediate 32-bit signed integer that can be attached to an instruction encoding
+</p>
+</dd>
+<dt><code>C</code></dt>
+<dd><p>Immediate 32-bit integer in range -16..4294967295 (i.e. 32-bit unsigned
+integer or &lsquo;<samp>A</samp>&rsquo; constraint)
+</p>
+</dd>
+<dt><code>DA</code></dt>
+<dd><p>Immediate 64-bit constant that can be split into two &lsquo;<samp>A</samp>&rsquo; constants
+</p>
+</dd>
+<dt><code>DB</code></dt>
+<dd><p>Immediate 64-bit constant that can be split into two &lsquo;<samp>B</samp>&rsquo; constants
+</p>
+</dd>
+<dt><code>U</code></dt>
+<dd><p>Any <code>unspec</code>
+</p>
+</dd>
+<dt><code>Y</code></dt>
+<dd><p>Any <code>symbol_ref</code> or <code>label_ref</code>
+</p>
+</dd>
+<dt><code>v</code></dt>
+<dd><p>VGPR register
+</p>
+</dd>
+<dt><code>Sg</code></dt>
+<dd><p>SGPR register
+</p>
+</dd>
+<dt><code>SD</code></dt>
+<dd><p>SGPR registers valid for instruction destinations, including VCC, M0 and EXEC
+</p>
+</dd>
+<dt><code>SS</code></dt>
+<dd><p>SGPR registers valid for instruction sources, including VCC, M0, EXEC and SCC
+</p>
+</dd>
+<dt><code>Sm</code></dt>
+<dd><p>SGPR registers valid as a source for scalar memory instructions (excludes M0
+and EXEC)
+</p>
+</dd>
+<dt><code>Sv</code></dt>
+<dd><p>SGPR registers valid as a source or destination for vector instructions
+(excludes EXEC)
+</p>
+</dd>
+<dt><code>ca</code></dt>
+<dd><p>All condition registers: SCC, VCCZ, EXECZ
+</p>
+</dd>
+<dt><code>cs</code></dt>
+<dd><p>Scalar condition register: SCC
+</p>
+</dd>
+<dt><code>cV</code></dt>
+<dd><p>Vector condition register: VCC, VCC_LO, VCC_HI
+</p>
+</dd>
+<dt><code>e</code></dt>
+<dd><p>EXEC register (EXEC_LO and EXEC_HI)
+</p>
+</dd>
+<dt><code>RB</code></dt>
+<dd><p>Memory operand with address space suitable for <code>buffer_*</code> instructions
+</p>
+</dd>
+<dt><code>RF</code></dt>
+<dd><p>Memory operand with address space suitable for <code>flat_*</code> instructions
+</p>
+</dd>
+<dt><code>RS</code></dt>
+<dd><p>Memory operand with address space suitable for <code>s_*</code> instructions
+</p>
+</dd>
+<dt><code>RL</code></dt>
+<dd><p>Memory operand with address space suitable for <code>ds_*</code> LDS instructions
+</p>
+</dd>
+<dt><code>RG</code></dt>
+<dd><p>Memory operand with address space suitable for <code>ds_*</code> GDS instructions
+</p>
+</dd>
+<dt><code>RD</code></dt>
+<dd><p>Memory operand with address space suitable for any <code>ds_*</code> instructions
+</p>
+</dd>
+<dt><code>RM</code></dt>
+<dd><p>Memory operand with address space suitable for <code>global_*</code> instructions
 </p>
 </dd>
 </dl>
@@ -607,6 +729,43 @@ use only with accumulator A1.
 <dd><p>Floating point constant that is legal for store immediate
 </p></dd>
 </dl>
+
+</dd>
+<dt><em>C-SKY&mdash;<samp>config/csky/constraints.md</samp></em></dt>
+<dd><dl compact="compact">
+<dt><code>a</code></dt>
+<dd><p>The mini registers r0 - r7.
+</p>
+</dd>
+<dt><code>b</code></dt>
+<dd><p>The low registers r0 - r15.
+</p>
+</dd>
+<dt><code>c</code></dt>
+<dd><p>C register.
+</p>
+</dd>
+<dt><code>y</code></dt>
+<dd><p>HI and LO registers.
+</p>
+</dd>
+<dt><code>l</code></dt>
+<dd><p>LO register.
+</p>
+</dd>
+<dt><code>h</code></dt>
+<dd><p>HI register.
+</p>
+</dd>
+<dt><code>v</code></dt>
+<dd><p>Vector registers.
+</p>
+</dd>
+<dt><code>z</code></dt>
+<dd><p>Stack pointer register (SP).
+</p></dd>
+</dl>
+
 
 </dd>
 <dt><em>Epiphany&mdash;<samp>config/epiphany/constraints.md</samp></em></dt>
@@ -1693,6 +1852,32 @@ instructions.
 </dl>
 
 </dd>
+<dt><em>OpenRISC&mdash;<samp>config/or1k/constraints.md</samp></em></dt>
+<dd><dl compact="compact">
+<dt><code>I</code></dt>
+<dd><p>Integer that is valid as an immediate operand in an
+instruction taking a signed 16-bit number. Range
+-32768 to 32767.
+</p>
+</dd>
+<dt><code>K</code></dt>
+<dd><p>Integer that is valid as an immediate operand in an
+instruction taking an unsigned 16-bit number. Range
+0 to 65535.
+</p>
+</dd>
+<dt><code>M</code></dt>
+<dd><p>Signed 16-bit constant shifted left 16 bits. (Used with <code>l.movhi</code>)
+</p>
+</dd>
+<dt><code>O</code></dt>
+<dd><p>Zero
+</p>
+
+</dd>
+</dl>
+
+</dd>
 <dt><em>PDP-11&mdash;<samp>config/pdp11/constraints.md</samp></em></dt>
 <dd><dl compact="compact">
 <dt><code>a</code></dt>
@@ -1705,12 +1890,22 @@ memory with a single instruction.
 16-bit multiply operations.
 </p>
 </dd>
+<dt><code>D</code></dt>
+<dd><p>A memory reference that is encoded within the opcode, but not
+auto-increment or auto-decrement.
+</p>
+</dd>
 <dt><code>f</code></dt>
 <dd><p>Any of the floating point registers (AC0 through AC5).
 </p>
 </dd>
 <dt><code>G</code></dt>
 <dd><p>Floating point constant 0.
+</p>
+</dd>
+<dt><code>h</code></dt>
+<dd><p>Floating point registers AC4 and AC5.  These cannot be loaded from/to
+memory with a single instruction.
 </p>
 </dd>
 <dt><code>I</code></dt>
@@ -1739,7 +1934,7 @@ memory with a single instruction.
 </p>
 </dd>
 <dt><code>O</code></dt>
-<dd><p>Integer constants -4 through -1 and 1 through 4; shifts by these
+<dd><p>Integer constants 0 through 3; shifts by these
 amounts are handled as multiple single-bit shifts rather than a single
 variable-length shift.
 </p>
@@ -1938,7 +2133,7 @@ were used or NO_REGS.
 </p>
 </dd>
 <dt><code>wF</code></dt>
-<dd><p>Memory operand suitable for power9 fusion load/stores.
+<dd><p>Memory operand suitable for power8 GPR load fusion
 </p>
 </dd>
 <dt><code>wG</code></dt>
@@ -1984,7 +2179,7 @@ instructions.
 </p>
 </dd>
 <dt><code>h</code></dt>
-<dd><p>&lsquo;<samp>MQ</samp>&rsquo;, &lsquo;<samp>CTR</samp>&rsquo;, or &lsquo;<samp>LINK</samp>&rsquo; register
+<dd><p>&lsquo;<samp>VRSAVE</samp>&rsquo;, &lsquo;<samp>CTR</samp>&rsquo;, or &lsquo;<samp>LINK</samp>&rsquo; register
 </p>
 </dd>
 <dt><code>c</code></dt>
@@ -3131,14 +3326,6 @@ instructions).
 </dd>
 <dt><code>Ts</code></dt>
 <dd><p>Address operand without segment register.
-</p>
-</dd>
-<dt><code>Ti</code></dt>
-<dd><p>MPX address operand without index.
-</p>
-</dd>
-<dt><code>Tb</code></dt>
-<dd><p>MPX address operand without base.
 </p>
 </dd>
 </dl>

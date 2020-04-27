@@ -1,15 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>LIBM: Math</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Math (LIBM)</title>
 
-<meta name="description" content="LIBM: Math">
-<meta name="keywords" content="LIBM: Math">
+<meta name="description" content="Math (LIBM)">
+<meta name="keywords" content="Math (LIBM)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Document-Index.html#Document-Index" rel="index" title="Document Index">
 <link href="Document-Index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -19,16 +19,16 @@
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -37,10 +37,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -48,7 +47,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Math"></a>
 <div class="header">
 <p>
@@ -60,14 +59,31 @@ Next: <a href="Complex.html#Complex" accesskey="n" rel="next">Complex</a>, Previ
 
 <p>This chapter groups a wide variety of mathematical functions.  The
 corresponding definitions and declarations are in <samp>math.h</samp>.  
-The definition of HUGE_VAL from <samp>math.h</samp> is of particular interest.
+Two definitions from <samp>math.h</samp> are of particular interest.  
 </p>
 <ol>
 <li> The representation of infinity as a <code>double</code> is defined as
 <code>HUGE_VAL</code>; this number is returned on overflow by many functions.
 The macro <code>HUGE_VALF</code> is a corresponding value for <code>float</code>.
+
+</li><li> The structure <code>exception</code> is used when you write customized error
+handlers for the mathematical functions.  You can customize error
+handling for most of these functions by defining your own version of
+<code>matherr</code>; see the section on <code>matherr</code> for details.
 </li></ol>
 
+<a name="index-system-calls"></a>
+<a name="index-support-subroutines"></a>
+<a name="index-stubs"></a>
+<a name="index-OS-stubs"></a>
+<p>Since the error handling code calls <code>fputs</code>, the mathematical
+subroutines require stubs or minimal implementations for the same list
+of OS subroutines as <code>fputs</code>: <code>close</code>, <code>fstat</code>,
+<code>isatty</code>, <code>lseek</code>, <code>read</code>, <code>sbrk</code>, <code>write</code>.
+See <a href="http://www.gnu.org/software/libc/manual/html_node/syscalls.html#syscalls">System Calls</a> in <cite>The Red Hat newlib C Library</cite>,
+for a discussion and for sample minimal implementations of these support
+subroutines.
+</p>
 <p>Alternative declarations of the mathematical functions, which exploit
 specific machine capabilities to operate faster&mdash;but generally have
 less error checking and may reflect additional limitations on some
@@ -152,6 +168,8 @@ machines&mdash;are available when you include <samp>fastmath.h</samp> instead of
 <tr><td align="left" valign="top">&bull; <a href="lrint.html#lrint">lrint</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Round to integer
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="lround.html#lround">lround</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Round to integer, away from zero (lround, llround)
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="matherr.html#matherr">matherr</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Modifiable math error handler
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="modf.html#modf">modf</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Split fractional and integer parts
 </td></tr>

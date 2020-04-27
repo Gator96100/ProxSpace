@@ -9,16 +9,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Binary Utilities: objdump</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>objdump (GNU Binary Utilities)</title>
 
-<meta name="description" content="GNU Binary Utilities: objdump">
-<meta name="keywords" content="GNU Binary Utilities: objdump">
+<meta name="description" content="objdump (GNU Binary Utilities)">
+<meta name="keywords" content="objdump (GNU Binary Utilities)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Binutils-Index.html#Binutils-Index" rel="index" title="Binutils Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -28,16 +28,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -46,10 +46,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -57,7 +56,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="objdump"></a>
 <div class="header">
 <p>
@@ -89,6 +88,7 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
         [<samp>-j</samp> <var>section</var>|<samp>--section=</samp><var>section</var>]
         [<samp>-l</samp>|<samp>--line-numbers</samp>]
         [<samp>-S</samp>|<samp>--source</samp>]
+        [<samp>--source-comment</samp>[=<var>text</var>]]
         [<samp>-m</samp> <var>machine</var>|<samp>--architecture=</samp><var>machine</var>]
         [<samp>-M</samp> <var>options</var>|<samp>--disassembler-options=</samp><var>options</var>]
         [<samp>-p</samp>|<samp>--private-headers</samp>]
@@ -98,6 +98,7 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
         [<samp>-s</samp>|<samp>--full-contents</samp>]
         [<samp>-W[lLiaprmfFsoRtUuTgAckK]</samp>|
          <samp>--dwarf</samp>[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]]
+        [<samp>--ctf=</samp><var>section</var>]
         [<samp>-G</samp>|<samp>--stabs</samp>]
         [<samp>-t</samp>|<samp>--syms</samp>]
         [<samp>-T</samp>|<samp>--dynamic-syms</samp>]
@@ -110,6 +111,9 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
         [<samp>--adjust-vma=</samp><var>offset</var>]
         [<samp>--dwarf-depth=<var>n</var></samp>]
         [<samp>--dwarf-start=<var>n</var></samp>]
+        [<samp>--ctf-parent=</samp><var>section</var>]
+        [<samp>--ctf-symbols=</samp><var>section</var>]
+        [<samp>--ctf-strings=</samp><var>section</var>]
         [<samp>--no-recurse-limit</samp>|<samp>--recurse-limit</samp>]
         [<samp>--special-syms</samp>]
         [<samp>--prefix=</samp><var>prefix</var>]
@@ -232,6 +236,10 @@ will stop at the end of the function, otherwise it will stop when the
 next symbol is encountered.  If there are no matches for <var>symbol</var>
 then nothing will be displayed.
 </p>
+<p>Note if the <samp>--dwarf=follow-links</samp> option has also been enabled
+then any symbol tables in linked debug info files will be read in and
+used when disassembling.
+</p>
 </dd>
 <dt><code>-D</code></dt>
 <dt><code>--disassemble-all</code></dt>
@@ -250,6 +258,10 @@ is stored in code sections.
 <p>If the target is an ARM architecture this switch also has the effect
 of forcing the disassembler to decode pieces of data found in code
 sections as if they were instructions.
+</p>
+<p>Note if the <samp>--dwarf=follow-links</samp> option has also been enabled
+then any symbol tables in linked debug info files will be read in and
+used when disassembling.
 </p>
 </dd>
 <dt><code>--prefix-addresses</code></dt>
@@ -443,7 +455,7 @@ Note: <code>intel-mnemonic</code> implies <code>intel</code> and
 <dt><code>addr16</code></dt>
 <dt><code>data32</code></dt>
 <dt><code>data16</code></dt>
-<dd><p>Specify the default address size and operand size.  These four options
+<dd><p>Specify the default address size and operand size.  These five options
 will be overridden if <code>x86-64</code>, <code>i386</code> or <code>i8086</code>
 appear later in the option string.
 </p>
@@ -624,6 +636,16 @@ non-empty sections are displayed.
 <samp>-d</samp>.
 </p>
 </dd>
+<dt><code>--source-comment[=<var>txt</var>]</code></dt>
+<dd><a name="index-source-disassembly-1"></a>
+<a name="index-disassembly_002c-with-source-1"></a>
+<p>Like the <samp>-S</samp> option, but all source code lines are displayed
+with a prefix of <var>txt</var>.  Typically <var>txt</var> will be a comment
+string which can be used to distinguish the assembler code from the
+source code.  If <var>txt</var> is not provided then a default string of
+<var>&ldquo;# &ldquo;</var> (hash followed by a space), will be used.
+</p>
+</dd>
 <dt><code>--prefix=<var>prefix</var></code></dt>
 <dd><a name="index-Add-prefix-to-absolute-paths"></a>
 <p>Specify <var>prefix</var> to add to the absolute paths when used with
@@ -706,8 +728,8 @@ output from this option can also be restricted by the use of the
 <dt><code>k</code></dt>
 <dt><code>=links</code></dt>
 <dd><p>Displays the contents of the &lsquo;<samp>.gnu_debuglink</samp>&rsquo; and/or
-&lsquo;<samp>.gnu_debugaltlink</samp>&rsquo; sections.  Also displays the link to a
-separate dwarf object file (dwo), if one is specified by the 
+&lsquo;<samp>.gnu_debugaltlink</samp>&rsquo; sections.  Also displays any links to
+separate dwarf object files (dwo), if they are specified by the 
 DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the
 &lsquo;<samp>.debug_info</samp>&rsquo; section.
 </p>
@@ -715,10 +737,9 @@ DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the
 <dt><code>K</code></dt>
 <dt><code>=follow-links</code></dt>
 <dd><p>Display the contents of any selected debug sections that are found in
-a linked, separate debug info file.  This can result in multiple
-versions of the same debug section being displayed if both the main
-file and the separate debug info file contain sections with the same
-name.
+linked, separate debug info file(s).  This can result in multiple
+versions of the same debug section being displayed if it exists in
+more than one file.
 </p>
 <p>In addition, when displaying DWARF attributes, if a form is found that
 references the separate debug info file, then the referenced contents
@@ -823,6 +844,21 @@ siblings and children of the specified DIE will be printed.
 </dd>
 <dt><code>--dwarf-check</code></dt>
 <dd><p>Enable additional checks for consistency of Dwarf information.
+</p>
+
+</dd>
+<dt><code>--ctf=<var>section</var></code></dt>
+<dd><a name="index-CTF"></a>
+<a name="index-Compact-Type-Format"></a>
+
+<p>Display the contents of the specified CTF section.  CTF sections themselves
+contain many subsections, all of which are displayed in order.
+</p>
+</dd>
+<dt><code>--ctf-parent=<var>section</var></code></dt>
+<dd>
+<p>Specify the name of another section from which the CTF file can inherit
+types.
 </p>
 </dd>
 <dt><code>-G</code></dt>

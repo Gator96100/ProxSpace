@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Link Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Link Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Link Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Link Options">
+<meta name="description" content="Link Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Link Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Link-Options"></a>
 <div class="header">
 <p>
@@ -104,6 +103,51 @@ to the linker.
 object file names should not be used as arguments.  See <a href="Overall-Options.html#Overall-Options">Overall Options</a>.
 </p>
 </dd>
+<dt><code>-flinker-output=<var>type</var></code></dt>
+<dd><a name="index-flinker_002doutput"></a>
+<p>This option controls the code generation of the link time optimizer.  By
+default the linker output is determined by the linker plugin automatically. For
+debugging the compiler and in the case of incremental linking to non-lto object
+file is desired, it may be useful to control the type manually.
+</p>
+<p>If <var>type</var> is &lsquo;<samp>exec</samp>&rsquo; the code generation is configured to produce static
+binary. In this case <samp>-fpic</samp> and <samp>-fpie</samp> are both disabled.
+</p>
+<p>If <var>type</var> is &lsquo;<samp>dyn</samp>&rsquo; the code generation is configured to produce shared
+library. In this case <samp>-fpic</samp> or <samp>-fPIC</samp> is preserved, but not
+enabled automatically.  This makes it possible to build shared libraries without
+position independent code on architectures this is possible, i.e. on x86.
+</p>
+<p>If <var>type</var> is &lsquo;<samp>pie</samp>&rsquo; the code generation is configured to produce
+<samp>-fpie</samp> executable. This result in similar optimizations as &lsquo;<samp>exec</samp>&rsquo;
+except that <samp>-fpie</samp> is not disabled if specified at compilation time.
+</p>
+<p>If <var>type</var> is &lsquo;<samp>rel</samp>&rsquo; the compiler assumes that incremental linking is
+done.  The sections containing intermediate code for link-time optimization are
+merged, pre-optimized, and output to the resulting object file. In addition, if
+<samp>-ffat-lto-objects</samp> is specified the binary code is produced for future
+non-lto linking. The object file produced by incremental linking will be smaller
+than a static library produced from the same object files.  At link-time the
+result of incremental linking will also load faster to compiler than a static
+library assuming that majority of objects in the library are used.
+</p>
+<p>Finally &lsquo;<samp>nolto-rel</samp>&rsquo; configure compiler to for incremental linking where
+code generation is forced, final binary is produced and the intermediate code
+for later link-time optimization is stripped. When multiple object files are
+linked together the resulting code will be optimized better than with link time
+optimizations disabled (for example, the cross-module inlining will happen),
+most of benefits of whole program optimizations are however lost. 
+</p>
+<p>During the incremental link (by <samp>-r</samp>) the linker plugin will default to
+<samp>rel</samp>. With current interfaces to GNU Binutils it is however not
+possible to link incrementally LTO objects and non-LTO objects into a single
+mixed object file.  In the case any of object files in incremental link cannot
+be used for link-time optimization the linker plugin will output warning and
+use &lsquo;<samp>nolto-rel</samp>&rsquo;. To maintain the whole program optimization it is
+recommended to link such objects into static library instead. Alternatively it
+is possible to use H.J. Lu&rsquo;s binutils with support for mixed objects.
+</p>
+</dd>
 <dt><code>-fuse-ld=bfd</code></dt>
 <dd><a name="index-fuse_002dld_003dbfd"></a>
 <p>Use the <code>bfd</code> linker instead of the default linker.
@@ -112,6 +156,11 @@ object file names should not be used as arguments.  See <a href="Overall-Options
 <dt><code>-fuse-ld=gold</code></dt>
 <dd><a name="index-fuse_002dld_003dgold"></a>
 <p>Use the <code>gold</code> linker instead of the default linker.
+</p>
+</dd>
+<dt><code>-fuse-ld=lld</code></dt>
+<dd><a name="index-fuse_002dld_003dlld"></a>
+<p>Use the LLVM <code>lld</code> linker instead of the default linker.
 </p>
 <a name="index-Libraries"></a>
 </dd>
@@ -122,27 +171,26 @@ object file names should not be used as arguments.  See <a href="Overall-Options
 alternative with the library as a separate argument is only for
 POSIX compliance and is not recommended.)
 </p>
+<p>The <samp>-l</samp> option is passed directly to the linker by GCC.  Refer
+to your linker documentation for exact details.  The general
+description below applies to the GNU linker.  
+</p>
+<p>The linker searches a standard list of directories for the library.
+The directories searched include several standard system directories
+plus any that you specify with <samp>-L</samp>.
+</p>
+<p>Static libraries are archives of object files, and have file names
+like <samp>lib<var>library</var>.a</samp>.  Some targets also support shared
+libraries, which typically have names like <samp>lib<var>library</var>.so</samp>.
+If both static and shared libraries are found, the linker gives
+preference to linking with the shared library unless the
+<samp>-static</samp> option is used.
+</p>
 <p>It makes a difference where in the command you write this option; the
 linker searches and processes libraries and object files in the order they
 are specified.  Thus, &lsquo;<samp>foo.o -lz bar.o</samp>&rsquo; searches library &lsquo;<samp>z</samp>&rsquo;
 after file <samp>foo.o</samp> but before <samp>bar.o</samp>.  If <samp>bar.o</samp> refers
 to functions in &lsquo;<samp>z</samp>&rsquo;, those functions may not be loaded.
-</p>
-<p>The linker searches a standard list of directories for the library,
-which is actually a file named <samp>lib<var>library</var>.a</samp>.  The linker
-then uses this file as if it had been specified precisely by name.
-</p>
-<p>The directories searched include several standard system directories
-plus any that you specify with <samp>-L</samp>.
-</p>
-<p>Normally the files found this way are library files&mdash;archive files
-whose members are object files.  The linker handles an archive file by
-scanning through it for members which define symbols that have so far
-been referenced but not defined.  But if the file that is found is an
-ordinary object file, it is linked in the usual fashion.  The only
-difference between using an <samp>-l</samp> option and specifying a file name
-is that <samp>-l</samp> surrounds <var>library</var> with &lsquo;<samp>lib</samp>&rsquo; and &lsquo;<samp>.a</samp>&rsquo;
-and searches several directories.
 </p>
 </dd>
 <dt><code>-lobjc</code></dt>
@@ -154,8 +202,8 @@ link an Objective-C or Objective-C++ program.
 <dt><code>-nostartfiles</code></dt>
 <dd><a name="index-nostartfiles"></a>
 <p>Do not use the standard system startup files when linking.
-The standard system libraries are used normally, unless <samp>-nostdlib</samp>
-or <samp>-nodefaultlibs</samp> is used.
+The standard system libraries are used normally, unless <samp>-nostdlib</samp>,
+<samp>-nolibc</samp>, or <samp>-nodefaultlibs</samp> is used.
 </p>
 </dd>
 <dt><code>-nodefaultlibs</code></dt>
@@ -172,6 +220,19 @@ is used.
 These entries are usually resolved by entries in
 libc.  These entry points should be supplied through some other
 mechanism when this option is specified.
+</p>
+</dd>
+<dt><code>-nolibc</code></dt>
+<dd><a name="index-nolibc"></a>
+<p>Do not use the C library or system libraries tightly coupled with it when
+linking.  Still link with the startup files, <samp>libgcc</samp> or toolchain
+provided language support libraries such as <samp>libgnat</samp>, <samp>libgfortran</samp>
+or <samp>libstdc++</samp> unless options preventing their inclusion are used as
+well.  This typically removes <samp>-lc</samp> from the link command line, as well
+as system libraries that normally go with it and become meaningless when
+absence of a C library is assumed, for example <samp>-lpthread</samp> or
+<samp>-lm</samp> in some configurations.  This is intended for bare-board
+targets when there is indeed no C library available.
 </p>
 </dd>
 <dt><code>-nostdlib</code></dt>
@@ -209,6 +270,16 @@ library subroutines.
 constructors are called; see <a href="http://gcc.gnu.org/onlinedocs/gccint/Collect2.html#Collect2"><code>collect2</code></a> in <cite>GNU Compiler Collection (GCC) Internals</cite>.)
 </p>
 </dd>
+<dt><code>-e <var>entry</var></code></dt>
+<dt><code>--entry=<var>entry</var></code></dt>
+<dd><a name="index-e"></a>
+<a name="index-entry"></a>
+
+<p>Specify that the program entry point is <var>entry</var>.  The argument is
+interpreted by the linker; the GNU linker accepts either a symbol name
+or an address.
+</p>
+</dd>
 <dt><code>-pie</code></dt>
 <dd><a name="index-pie"></a>
 <p>Produce a dynamically linked position independent executable on targets
@@ -239,6 +310,12 @@ GNU/Linux targets, most other Unix derivatives, and also on
 x86 Cygwin and MinGW targets.  On some targets this option also sets 
 flags for the preprocessor, so it should be used consistently for both
 compilation and linking.
+</p>
+</dd>
+<dt><code>-r</code></dt>
+<dd><a name="index-r"></a>
+<p>Produce a relocatable object as output.  This is also known as partial
+linking.
 </p>
 </dd>
 <dt><code>-rdynamic</code></dt>
@@ -349,29 +426,6 @@ option is not used, then this links against the shared version of
 <samp>libubsan</samp>.  The <samp>-static-libubsan</samp> option directs the GCC
 driver to link <samp>libubsan</samp> statically, without necessarily linking
 other libraries statically.
-</p>
-</dd>
-<dt><code>-static-libmpx</code></dt>
-<dd><a name="index-static_002dlibmpx"></a>
-<p>When the <samp>-fcheck-pointer bounds</samp> and <samp>-mmpx</samp> options are
-used to link a program, the GCC driver automatically links against
-<samp>libmpx</samp>.  If <samp>libmpx</samp> is available as a shared library,
-and the <samp>-static</samp> option is not used, then this links against
-the shared version of <samp>libmpx</samp>.  The <samp>-static-libmpx</samp>
-option directs the GCC driver to link <samp>libmpx</samp> statically,
-without necessarily linking other libraries statically.
-</p>
-</dd>
-<dt><code>-static-libmpxwrappers</code></dt>
-<dd><a name="index-static_002dlibmpxwrappers"></a>
-<p>When the <samp>-fcheck-pointer bounds</samp> and <samp>-mmpx</samp> options are used
-to link a program without also using <samp>-fno-chkp-use-wrappers</samp>, the
-GCC driver automatically links against <samp>libmpxwrappers</samp>.  If
-<samp>libmpxwrappers</samp> is available as a shared library, and the
-<samp>-static</samp> option is not used, then this links against the shared
-version of <samp>libmpxwrappers</samp>.  The <samp>-static-libmpxwrappers</samp>
-option directs the GCC driver to link <samp>libmpxwrappers</samp> statically,
-without necessarily linking other libraries statically.
 </p>
 </dd>
 <dt><code>-static-libstdc++</code></dt>

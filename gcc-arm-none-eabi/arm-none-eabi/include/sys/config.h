@@ -8,10 +8,6 @@
 #define MALLOC_ALIGNMENT 16
 #endif
 
-#ifdef __AMDGCN__
-#define __DYNAMIC_REENT__
-#endif
-
 /* exceptions first */
 #if defined(__H8500__) || defined(__W65__)
 #define __SMALL_BITFIELDS

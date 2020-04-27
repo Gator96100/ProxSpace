@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): MIPS-3D Built-in Functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MIPS-3D Built-in Functions (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): MIPS-3D Built-in Functions">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): MIPS-3D Built-in Functions">
+<meta name="description" content="MIPS-3D Built-in Functions (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="MIPS-3D Built-in Functions (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="MIPS_002d3D-Built_002din-Functions"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Previous: <a href="Paired_002dSingle-Built_002din-Functions.html#Paired_002dSing
 </div>
 <hr>
 <a name="MIPS_002d3D-Built_002din-Functions-1"></a>
-<h4 class="subsubsection">6.59.15.3 MIPS-3D Built-in Functions</h4>
+<h4 class="subsubsection">6.60.15.3 MIPS-3D Built-in Functions</h4>
 
 <p>The MIPS-3D Application-Specific Extension (ASE) includes additional
 paired-single instructions that are designed to improve the performance
@@ -203,8 +202,8 @@ of <code>movt.ps</code>.
 <code>bc1any2t</code>/<code>bc1any2f</code>).
 </p>
 <p>These functions compare <var>a</var> and <var>b</var> using <code>c.<var>cond</var>.ps</code>
-or <code>cabs.<var>cond</var>.ps</code>.  The <code>any</code> forms return true if either
-result is true and the <code>all</code> forms return true if both results are true.
+or <code>cabs.<var>cond</var>.ps</code>.  The <code>any</code> forms return <code>true</code> if either
+result is <code>true</code> and the <code>all</code> forms return <code>true</code> if both results are <code>true</code>.
 For example:
 </p>
 <div class="smallexample">
@@ -231,8 +230,8 @@ else
 </p>
 <p>These functions use <code>c.<var>cond</var>.ps</code> or <code>cabs.<var>cond</var>.ps</code>
 to compare <var>a</var> with <var>b</var> and to compare <var>c</var> with <var>d</var>.
-The <code>any</code> forms return true if any of the four results are true
-and the <code>all</code> forms return true if all four results are true.
+The <code>any</code> forms return <code>true</code> if any of the four results are <code>true</code>
+and the <code>all</code> forms return <code>true</code> if all four results are <code>true</code>.
 For example:
 </p>
 <div class="smallexample">

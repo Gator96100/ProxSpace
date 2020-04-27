@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Processor pipeline description</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Processor pipeline description (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Processor pipeline description">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Processor pipeline description">
+<meta name="description" content="Processor pipeline description (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Processor pipeline description (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Processor-pipeline-description"></a>
 <div class="header">
 <p>
@@ -310,7 +309,7 @@ the common part by the following construction
 <p><var>reservation-name</var> is a string giving name of <var>regexp</var>.
 Functional unit names and reservation names are in the same name
 space.  So the reservation names should be different from the
-functional unit names and can not be the reserved name &lsquo;<samp>nothing</samp>&rsquo;.
+functional unit names and cannot be the reserved name &lsquo;<samp>nothing</samp>&rsquo;.
 </p>
 <a name="index-define_005fbypass"></a>
 <a name="index-instruction-latency-time-2"></a>
@@ -376,7 +375,7 @@ separated by comma.  Currently pattern is one unit or units
 separated by white-spaces.
 </p>
 <p>The first construction (&lsquo;<samp>exclusion_set</samp>&rsquo;) means that each
-functional unit in the first string can not be reserved simultaneously
+functional unit in the first string cannot be reserved simultaneously
 with a unit whose name is in the second string and vice versa.  For
 example, the construction is useful for describing processors
 (e.g. some SPARC processors) with a fully pipelined floating point
@@ -384,7 +383,7 @@ functional unit which can execute simultaneously only single floating
 point insns or only double floating point insns.
 </p>
 <p>The second construction (&lsquo;<samp>presence_set</samp>&rsquo;) means that each
-functional unit in the first string can not be reserved unless at
+functional unit in the first string cannot be reserved unless at
 least one of pattern of units whose names are in the second string is
 reserved.  This is an asymmetric relation.  For example, it is useful
 for description that <acronym>VLIW</acronym> &lsquo;<samp>slot1</samp>&rsquo; is reserved after
@@ -439,7 +438,7 @@ can be described as:
 <pre class="smallexample">(absence_set &quot;slot0&quot; &quot;slot1, slot2&quot;)
 </pre></div>
 
-<p>Or &lsquo;<samp>slot2</samp>&rsquo; can not be reserved if &lsquo;<samp>slot0</samp>&rsquo; and unit &lsquo;<samp>b0</samp>&rsquo;
+<p>Or &lsquo;<samp>slot2</samp>&rsquo; cannot be reserved if &lsquo;<samp>slot0</samp>&rsquo; and unit &lsquo;<samp>b0</samp>&rsquo;
 are reserved or &lsquo;<samp>slot1</samp>&rsquo; and unit &lsquo;<samp>b1</samp>&rsquo; are reserved.  In
 this case we could write
 </p>
@@ -533,7 +532,7 @@ are issued into the second pipeline.  Integer division and
 multiplication insns can be executed only in the second integer
 pipeline and their results are ready correspondingly in 9 and 4
 cycles.  The integer division is not pipelined, i.e. the subsequent
-integer division insn can not be issued until the current division
+integer division insn cannot be issued until the current division
 insn finished.  Floating point insns are fully pipelined and their
 results are ready in 3 cycles.  Where the result of a floating point
 insn is used by an integer insn, an additional delay of one cycle is

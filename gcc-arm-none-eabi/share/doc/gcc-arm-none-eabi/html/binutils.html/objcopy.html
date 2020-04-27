@@ -9,16 +9,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Binary Utilities: objcopy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>objcopy (GNU Binary Utilities)</title>
 
-<meta name="description" content="GNU Binary Utilities: objcopy">
-<meta name="keywords" content="GNU Binary Utilities: objcopy">
+<meta name="description" content="objcopy (GNU Binary Utilities)">
+<meta name="keywords" content="objcopy (GNU Binary Utilities)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Binutils-Index.html#Binutils-Index" rel="index" title="Binutils Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -28,16 +28,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -46,10 +46,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -57,7 +56,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="objcopy"></a>
 <div class="header">
 <p>
@@ -108,6 +107,7 @@ Next: <a href="objdump.html#objdump" accesskey="n" rel="next">objdump</a>, Previ
         [<samp>--change-section-vma</samp> <var>sectionpattern</var>{=,+,-}<var>val</var>]
         [<samp>--change-warnings</samp>] [<samp>--no-change-warnings</samp>]
         [<samp>--set-section-flags</samp> <var>sectionpattern</var>=<var>flags</var>]
+        [<samp>--set-section-alignment</samp> <var>sectionpattern</var>=<var>align</var>]
         [<samp>--add-section</samp> <var>sectionname</var>=<var>filename</var>]
         [<samp>--dump-section</samp> <var>sectionname</var>=<var>filename</var>]
         [<samp>--update-section</samp> <var>sectionname</var>=<var>filename</var>]
@@ -151,6 +151,7 @@ Next: <a href="objdump.html#objdump" accesskey="n" rel="next">objdump</a>, Previ
         [<samp>--elf-stt-common=<var>val</var></samp>]
         [<samp>--merge-notes</samp>]
         [<samp>--no-merge-notes</samp>]
+        [<samp>--verilog-data-width=<var>val</var></samp>]
         [<samp>-v</samp>|<samp>--verbose</samp>]
         [<samp>-V</samp>|<samp>--version</samp>]
         [<samp>--help</samp>] [<samp>--info</samp>]
@@ -587,6 +588,12 @@ contents&ndash;just remove the section instead.  Not all flags are
 meaningful for all object file formats.
 </p>
 </dd>
+<dt><code>--set-section-alignment <var>sectionpattern</var>=<var>align</var></code></dt>
+<dd><p>Set the alignment for any sections matching <var>sectionpattern</var>.
+<var>align</var> specifies the alignment in bytes and must be a power of
+two, i.e. 1, 2, 4, 8&hellip;.
+</p>
+</dd>
 <dt><code>--add-section <var>sectionname</var>=<var>filename</var></code></dt>
 <dd><p>Add a new section named <var>sectionname</var> while copying the file.  The
 contents of the new section are taken from the file <var>filename</var>.  The
@@ -858,7 +865,7 @@ like this:
 <div class="smallexample">
 <pre class="smallexample"> objcopy --add-gnu-debuglink=foo.debug
 </pre></div>
- 
+
 <p>At debug time the debugger will attempt to look for the separate debug
 info file in a set of known locations.  The exact set of these
 locations varies depending upon the distribution being used, but it
@@ -978,8 +985,9 @@ for dlls.
 </p>
 </dd>
 <dt><code>--section-alignment <var>num</var></code></dt>
-<dd><p>Sets the section alignment.  Sections in memory will always begin at
-addresses which are a multiple of this number.  Defaults to 0x1000.
+<dd><p>Sets the section alignment field in the PE header.  Sections in memory
+will always begin at addresses which are a multiple of this number.
+Defaults to 0x1000.
 [This option is specific to PE targets.]
 </p>
 </dd>
@@ -1063,6 +1071,12 @@ SHT_NOTE type sections by removing duplicate notes.
 <dt><code>-V</code></dt>
 <dt><code>--version</code></dt>
 <dd><p>Show the version number of <code>objcopy</code>.
+</p>
+</dd>
+<dt><code>--verilog-data-width=<var>bytes</var></code></dt>
+<dd><p>For Verilog output, this options controls the number of bytes
+converted for each output data element.  The input target controls the
+endianness of the conversion.
 </p>
 </dd>
 <dt><code>-v</code></dt>

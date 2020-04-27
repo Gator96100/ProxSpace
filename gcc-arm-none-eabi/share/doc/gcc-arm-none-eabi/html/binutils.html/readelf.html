@@ -9,16 +9,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Binary Utilities: readelf</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>readelf (GNU Binary Utilities)</title>
 
-<meta name="description" content="GNU Binary Utilities: readelf">
-<meta name="keywords" content="GNU Binary Utilities: readelf">
+<meta name="description" content="readelf (GNU Binary Utilities)">
+<meta name="keywords" content="readelf (GNU Binary Utilities)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Binutils-Index.html#Binutils-Index" rel="index" title="Binutils Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -28,16 +28,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -46,10 +46,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -57,7 +56,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="readelf"></a>
 <div class="header">
 <p>
@@ -97,6 +96,10 @@ Next: <a href="elfedit.html#elfedit" accesskey="n" rel="next">elfedit</a>, Previ
          <samp>--debug-dump</samp>[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]]
         [<samp>--dwarf-depth=<var>n</var></samp>]
         [<samp>--dwarf-start=<var>n</var></samp>]
+        [<samp>--ctf=</samp><var>section</var>]
+        [<samp>--ctf-parent=</samp><var>section</var>]
+        [<samp>--ctf-symbols=</samp><var>section</var>]
+        [<samp>--ctf-strings=</samp><var>section</var>]
         [<samp>-I</samp>|<samp>--histogram</samp>]
         [<samp>-v</samp>|<samp>--version</samp>]
         [<samp>-W</samp>|<samp>--wide</samp>]
@@ -343,8 +346,8 @@ output from this option can also be restricted by the use of the
 <dt><code>k</code></dt>
 <dt><code>=links</code></dt>
 <dd><p>Displays the contents of the &lsquo;<samp>.gnu_debuglink</samp>&rsquo; and/or
-&lsquo;<samp>.gnu_debugaltlink</samp>&rsquo; sections.  Also displays the link to a
-separate dwarf object file (dwo), if one is specified by the 
+&lsquo;<samp>.gnu_debugaltlink</samp>&rsquo; sections.  Also displays any links to
+separate dwarf object files (dwo), if they are specified by the 
 DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the
 &lsquo;<samp>.debug_info</samp>&rsquo; section.
 </p>
@@ -352,10 +355,9 @@ DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the
 <dt><code>K</code></dt>
 <dt><code>=follow-links</code></dt>
 <dd><p>Display the contents of any selected debug sections that are found in
-a linked, separate debug info file.  This can result in multiple
-versions of the same debug section being displayed if both the main
-file and the separate debug info file contain sections with the same
-name.
+linked, separate debug info file(s).  This can result in multiple
+versions of the same debug section being displayed if it exists in
+more than one file.
 </p>
 <p>In addition, when displaying DWARF attributes, if a form is found that
 references the separate debug info file, then the referenced contents
@@ -457,6 +459,29 @@ siblings and children of the specified DIE will be printed.
 <p>This can be used in conjunction with <samp>--dwarf-depth</samp>.
 </p>
 
+
+</dd>
+<dt><code>--ctf=<var>section</var></code></dt>
+<dd><a name="index-CTF-1"></a>
+<a name="index-Compact-Type-Format-1"></a>
+
+<p>Display the contents of the specified CTF section.  CTF sections themselves
+contain many subsections, all of which are displayed in order.
+</p>
+</dd>
+<dt><code>--ctf-parent=<var>section</var></code></dt>
+<dd>
+<p>Specify the name of another section from which the CTF file can inherit
+types.
+</p></dd>
+<dt><code>--ctf-symbols=<var>section</var></code></dt>
+<dt><code>--ctf-strings=<var>section</var></code></dt>
+<dd><p>Specify the name of another section from which the CTF file can inherit
+strings and symbols.
+</p>
+<p>If either of <samp>--ctf-symbols</samp> or <samp>--ctf-strings</samp> is specified, the
+other must be specified as well.
+</p>
 </dd>
 <dt><code>-I</code></dt>
 <dt><code>--histogram</code></dt>

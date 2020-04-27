@@ -11,16 +11,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using as: AArch64 Extensions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AArch64 Extensions (Using as)</title>
 
-<meta name="description" content="Using as: AArch64 Extensions">
-<meta name="keywords" content="Using as: AArch64 Extensions">
+<meta name="description" content="AArch64 Extensions (Using as)">
+<meta name="keywords" content="AArch64 Extensions (Using as)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="AS-Index.html#AS-Index" rel="index" title="AS Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,7 +58,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="AArch64-Extensions"></a>
 <div class="header">
 <p>
@@ -116,6 +115,13 @@ automatically cause those extensions to be disabled.
 <tr><td width="12%"><code>rng</code></td><td width="17%">ARMv8.5-A</td><td width="17%">No</td><td width="54%">Enable ARMv8.5-A random number instructions.</td></tr>
 <tr><td width="12%"><code>ssbs</code></td><td width="17%">ARMv8-A</td><td width="17%">ARMv8.5-A or later</td><td width="54%">Enable Speculative Store Bypassing Safe state read and write.</td></tr>
 <tr><td width="12%"><code>memtag</code></td><td width="17%">ARMv8.5-A</td><td width="17%">No</td><td width="54%">Enable ARMv8.5-A Memory Tagging Extensions.</td></tr>
+<tr><td width="12%"><code>tme</code></td><td width="17%">ARMv8-A</td><td width="17%">No</td><td width="54%">Enable Transactional Memory Extensions.</td></tr>
+<tr><td width="12%"><code>sve2</code></td><td width="17%">ARMv8-A</td><td width="17%">No</td><td width="54%">Enable the SVE2 Extension.</td></tr>
+<tr><td width="12%"><code>sve2-bitperm</code></td><td width="17%">ARMv8-A</td><td width="17%">No</td><td width="54%">Enable SVE2 BITPERM Extension.</td></tr>
+<tr><td width="12%"><code>sve2-sm4</code></td><td width="17%">ARMv8-A</td><td width="17%">No</td><td width="54%">Enable SVE2 SM4 Extension.</td></tr>
+<tr><td width="12%"><code>sve2-aes</code></td><td width="17%">ARMv8-A</td><td width="17%">No</td><td width="54%">Enable SVE2 AES Extension.  This also enables the .Q-&gt;.B form of the
+ <code>pmullt</code> and <code>pmullb</code> instructions.</td></tr>
+<tr><td width="12%"><code>sve2-sha3</code></td><td width="17%">ARMv8-A</td><td width="17%">No</td><td width="54%">Enable SVE2 SHA3 Extension.</td></tr>
 </table>
 
 <hr>

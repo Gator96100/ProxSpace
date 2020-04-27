@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Effective-Target Keywords</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Effective-Target Keywords (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Effective-Target Keywords">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Effective-Target Keywords">
+<meta name="description" content="Effective-Target Keywords (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Effective-Target Keywords (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Effective_002dTarget-Keywords"></a>
 <div class="header">
 <p>
@@ -146,6 +145,14 @@ and pointers.
 <dd><p>Target has <code>int</code> and <code>long</code> with different sizes.
 </p>
 </dd>
+<dt><code>int_eq_float</code></dt>
+<dd><p>Target has <code>int</code> and <code>float</code> with the same size.
+</p>
+</dd>
+<dt><code>ptr_eq_long</code></dt>
+<dd><p>Target has pointers (<code>void *</code>) and <code>long</code> with the same size.
+</p>
+</dd>
 <dt><code>large_double</code></dt>
 <dd><p>Target supports <code>double</code> that is longer than <code>float</code>.
 </p>
@@ -158,8 +165,14 @@ and pointers.
 <dd><p>Target has pointers that are 32 bits or longer.
 </p>
 </dd>
+<dt><code>size20plus</code></dt>
+<dd><p>Target has a 20-bit or larger address space, so at least supports
+16-bit array and structure sizes.
+</p>
+</dd>
 <dt><code>size32plus</code></dt>
-<dd><p>Target supports array and structure sizes that are 32 bits or longer.
+<dd><p>Target has a 32-bit or larger address space, so at least supports
+24-bit array and structure sizes.
 </p>
 </dd>
 <dt><code>4byte_wchar_t</code></dt>
@@ -188,9 +201,13 @@ for any options added with <code>dg-add-options</code>.
 <dd><p>Target has runtime support for any options added with
 <code>dg-add-options</code> for any <code>_Float<var>n</var></code> or
 <code>_Float<var>n</var>x</code> type.
+</p>
+</dd>
+<dt><code>inf</code></dt>
+<dd><p>Target supports floating point infinite (<code>inf</code>) for type
+<code>double</code>.
 </p></dd>
 </dl>
-
 <a name="Fortran_002dspecific-attributes"></a>
 <h4 class="subsubsection">7.2.3.3 Fortran-specific attributes</h4>
 
@@ -225,6 +242,11 @@ for any options added with <code>dg-add-options</code>.
 vector alignment.
 </p>
 </dd>
+<dt><code>vect_avg_qi</code></dt>
+<dd><p>Target supports both signed and unsigned averaging operations on vectors
+of bytes.
+</p>
+</dd>
 <dt><code>vect_condition</code></dt>
 <dd><p>Target supports vector conditional operations.
 </p>
@@ -236,6 +258,12 @@ have different type from the value operands.
 </dd>
 <dt><code>vect_double</code></dt>
 <dd><p>Target supports hardware vectors of <code>double</code>.
+</p>
+</dd>
+<dt><code>vect_double_cond_arith</code></dt>
+<dd><p>Target supports conditional addition, subtraction, multiplication,
+division, minimum and maximum on vectors of <code>double</code>, via the
+<code>cond_</code> optabs.
 </p>
 </dd>
 <dt><code>vect_element_align_preferred</code></dt>
@@ -1067,6 +1095,10 @@ or <code>EM_SPARCV9</code> executables.
 overloads for <code>strchr</code> etc. functions.
 </p>
 </dd>
+<dt><code>d_runtime</code></dt>
+<dd><p>Target provides the D runtime.
+</p>
+</dd>
 <dt><code>dummy_wcsftime</code></dt>
 <dd><p>Target uses a dummy <code>wcsftime</code> function that always returns zero.
 </p>
@@ -1075,6 +1107,15 @@ overloads for <code>strchr</code> etc. functions.
 <dd><p>Target can truncate a file from a file descriptor, as used by
 <samp>libgfortran/io/unix.c:fd_truncate</samp>; i.e. <code>ftruncate</code> or
 <code>chsize</code>.
+</p>
+</dd>
+<dt><code>fenv</code></dt>
+<dd><p>Target provides <samp>fenv.h</samp> include file.
+</p>
+</dd>
+<dt><code>fenv_exceptions</code></dt>
+<dd><p>Target supports <samp>fenv.h</samp> with all the standard IEEE exceptions
+and floating-point exceptions are raised by arithmetic operations.
 </p>
 </dd>
 <dt><code>freestanding</code></dt>
@@ -1113,6 +1154,11 @@ those functions.
 </dd>
 <dt><code>newlib</code></dt>
 <dd><p>Target supports Newlib.
+</p>
+</dd>
+<dt><code>newlib_nano_io</code></dt>
+<dd><p>GCC was configured with <code>--enable-newlib-nano-formatted-io</code>, which reduces
+the code size of Newlib formatted I/O functions.
 </p>
 </dd>
 <dt><code>pow10</code></dt>
@@ -1201,6 +1247,10 @@ all targets.
 <dd><p>Target has packed layout of structure members by default.
 </p>
 </dd>
+<dt><code>exceptions</code></dt>
+<dd><p>Target supports exceptions.
+</p>
+</dd>
 <dt><code>fgraphite</code></dt>
 <dd><p>Target supports Graphite optimizations.
 </p>
@@ -1246,8 +1296,17 @@ all targets.
 <samp>-fno-delete-null-pointer-checks</samp> or hardwired into the target.
 </p>
 </dd>
+<dt><code>llvm_binutils</code></dt>
+<dd><p>Target is using an LLVM assembler and/or linker, instead of GNU Binutils.
+</p>
+</dd>
 <dt><code>lto</code></dt>
 <dd><p>Compiler has been configured to support link-time optimization (LTO).
+</p>
+</dd>
+<dt><code>lto_incremental</code></dt>
+<dd><p>Compiler and linker support link-time optimization relocatable linking
+with <samp>-r</samp> and <samp>-flto</samp> options.
 </p>
 </dd>
 <dt><code>naked_functions</code></dt>
@@ -1272,6 +1331,10 @@ all targets.
 <dd><p>Target does not generate PIC by default.
 </p>
 </dd>
+<dt><code>offload_gcn</code></dt>
+<dd><p>Target has been configured for OpenACC/OpenMP offloading on AMD GCN.
+</p>
+</dd>
 <dt><code>pie_enabled</code></dt>
 <dd><p>Target generates PIE by default.
 </p>
@@ -1290,6 +1353,12 @@ all targets.
 </dd>
 <dt><code>rdynamic</code></dt>
 <dd><p>Target supports <samp>-rdynamic</samp>.
+</p>
+</dd>
+<dt><code>scalar_all_fma</code></dt>
+<dd><p>Target supports all four fused multiply-add optabs for both <code>float</code>
+and <code>double</code>.  These optabs are: <code>fma_optab</code>, <code>fms_optab</code>,
+<code>fnma_optab</code> and <code>fnms_optab</code>.
 </p>
 </dd>
 <dt><code>section_anchors</code></dt>
@@ -1367,6 +1436,11 @@ or equal to the required vector alignment.
 </dd>
 <dt><code>fma4</code></dt>
 <dd><p>Target supports compiling <code>fma4</code> instructions.
+</p>
+</dd>
+<dt><code>mfentry</code></dt>
+<dd><p>Target supports the <code>-mfentry</code> option that alters the
+position of profiling calls such that they precede the prologue.
 </p>
 </dd>
 <dt><code>ms_hook_prologue</code></dt>

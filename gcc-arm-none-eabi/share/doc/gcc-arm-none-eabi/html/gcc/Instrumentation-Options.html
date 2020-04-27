@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Instrumentation Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Instrumentation Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Instrumentation Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Instrumentation Options">
+<meta name="description" content="Instrumentation Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Instrumentation Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Instrumentation-Options"></a>
 <div class="header">
 <p>
@@ -99,22 +98,21 @@ program analysis purposes.
 </p>
 <dl compact="compact">
 <dd><a name="index-prof"></a>
+<a name="index-gprof"></a>
 </dd>
 <dt><code>-p</code></dt>
+<dt><code>-pg</code></dt>
 <dd><a name="index-p"></a>
+<a name="index-pg"></a>
 <p>Generate extra code to write profile information suitable for the
-analysis program <code>prof</code>.  You must use this option when compiling
+analysis program <code>prof</code> (for <samp>-p</samp>) or <code>gprof</code>
+(for <samp>-pg</samp>).  You must use this option when compiling
 the source files you want data about, and you must also use it when
 linking.
 </p>
-<a name="index-gprof"></a>
-</dd>
-<dt><code>-pg</code></dt>
-<dd><a name="index-pg"></a>
-<p>Generate extra code to write profile information suitable for the
-analysis program <code>gprof</code>.  You must use this option when compiling
-the source files you want data about, and you must also use it when
-linking.
+<p>You can use the function attribute <code>no_instrument_function</code> to
+suppress profiling of individual functions when compiling with these options.
+See <a href="Common-Function-Attributes.html#Common-Function-Attributes">Common Function Attributes</a>.
 </p>
 </dd>
 <dt><code>-fprofile-arcs</code></dt>
@@ -218,7 +216,26 @@ and used by <samp>-fprofile-use</samp> and <samp>-fbranch-probabilities</samp>
 and its related options.  Both absolute and relative paths can be used.
 By default, GCC uses the current directory as <var>path</var>, thus the
 profile data file appears in the same directory as the object file.
+In order to prevent the file name clashing, if the object file name is
+not an absolute path, we mangle the absolute path of the
+<samp><var>sourcename</var>.gcda</samp> file and use it as the file name of a
+<samp>.gcda</samp> file.
 </p>
+<p>When an executable is run in a massive parallel environment, it is recommended
+to save profile to different folders.  That can be done with variables
+in <var>path</var> that are exported during run-time:
+</p>
+<dl compact="compact">
+<dt><code>%p</code></dt>
+<dd><p>process ID.
+</p>
+</dd>
+<dt><code>%q{VAR}</code></dt>
+<dd><p>value of environment variable <var>VAR</var>
+</p>
+</dd>
+</dl>
+
 </dd>
 <dt><code>-fprofile-generate</code></dt>
 <dt><code>-fprofile-generate=<var>path</var></code></dt>
@@ -229,7 +246,9 @@ profile useful for later recompilation with profile feedback based
 optimization.  You must use <samp>-fprofile-generate</samp> both when
 compiling and when linking your program.
 </p>
-<p>The following options are enabled: <samp>-fprofile-arcs</samp>, <samp>-fprofile-values</samp>, <samp>-fvpt</samp>.
+<p>The following options are enabled:
+<samp>-fprofile-arcs</samp>, <samp>-fprofile-values</samp>,
+<samp>-finline-functions</samp>, and <samp>-fipa-bit-cp</samp>.
 </p>
 <p>If <var>path</var> is specified, GCC looks at the <var>path</var> to find
 the profile feedback data files. See <samp>-fprofile-dir</samp>.
@@ -256,6 +275,26 @@ automatically selects &lsquo;<samp>prefer-atomic</samp>&rsquo; when <samp>-pthre
 is present in the command line.
 </p>
 </dd>
+<dt><code>-fprofile-filter-files=<var>regex</var></code></dt>
+<dd><a name="index-fprofile_002dfilter_002dfiles"></a>
+
+<p>Instrument only functions from files where names match
+any regular expression (separated by a semi-colon).
+</p>
+<p>For example, <samp>-fprofile-filter-files=main.c;module.*.c</samp> will instrument
+only <samp>main.c</samp> and all C files starting with &rsquo;module&rsquo;.
+</p>
+</dd>
+<dt><code>-fprofile-exclude-files=<var>regex</var></code></dt>
+<dd><a name="index-fprofile_002dexclude_002dfiles"></a>
+
+<p>Instrument only functions from files where names do not match
+all the regular expressions (separated by a semi-colon).
+</p>
+<p>For example, <samp>-fprofile-exclude-files=/usr/*</samp> will prevent instrumentation
+of all files that are located in <samp>/usr/</samp> folder.
+</p>
+</dd>
 <dt><code>-fsanitize=address</code></dt>
 <dd><a name="index-fsanitize_003daddress"></a>
 <p>Enable AddressSanitizer, a fast memory error detector.
@@ -268,15 +307,13 @@ more details.  The run-time behavior can be influenced using the
 the available options are shown at startup of the instrumented program.  See
 <a href="https://github.com/google/sanitizers/wiki/AddressSanitizerFlags#run-time-flags">https://github.com/google/sanitizers/wiki/AddressSanitizerFlags#run-time-flags</a>
 for a list of supported options.
-The option cannot be combined with <samp>-fsanitize=thread</samp>
-and/or <samp>-fcheck-pointer-bounds</samp>.
+The option cannot be combined with <samp>-fsanitize=thread</samp>.
 </p>
 </dd>
 <dt><code>-fsanitize=kernel-address</code></dt>
 <dd><a name="index-fsanitize_003dkernel_002daddress"></a>
 <p>Enable AddressSanitizer for Linux kernel.
 See <a href="https://github.com/google/kasan/wiki">https://github.com/google/kasan/wiki</a> for more details.
-The option cannot be combined with <samp>-fcheck-pointer-bounds</samp>.
 </p>
 </dd>
 <dt><code>-fsanitize=pointer-compare</code></dt>
@@ -284,8 +321,7 @@ The option cannot be combined with <samp>-fcheck-pointer-bounds</samp>.
 <p>Instrument comparison operation (&lt;, &lt;=, &gt;, &gt;=) with pointer operands.
 The option must be combined with either <samp>-fsanitize=kernel-address</samp> or
 <samp>-fsanitize=address</samp>
-The option cannot be combined with <samp>-fsanitize=thread</samp>
-and/or <samp>-fcheck-pointer-bounds</samp>.
+The option cannot be combined with <samp>-fsanitize=thread</samp>.
 Note: By default the check is disabled at run time.  To enable it,
 add <code>detect_invalid_pointer_pairs=2</code> to the environment variable
 <code>ASAN_OPTIONS</code>. Using <code>detect_invalid_pointer_pairs=1</code> detects
@@ -297,8 +333,7 @@ invalid operation only when both pointers are non-null.
 <p>Instrument subtraction with pointer operands.
 The option must be combined with either <samp>-fsanitize=kernel-address</samp> or
 <samp>-fsanitize=address</samp>
-The option cannot be combined with <samp>-fsanitize=thread</samp>
-and/or <samp>-fcheck-pointer-bounds</samp>.
+The option cannot be combined with <samp>-fsanitize=thread</samp>.
 Note: By default the check is disabled at run time.  To enable it,
 add <code>detect_invalid_pointer_pairs=2</code> to the environment variable
 <code>ASAN_OPTIONS</code>. Using <code>detect_invalid_pointer_pairs=1</code> detects
@@ -315,7 +350,7 @@ environment variable; see
 <a href="https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags">https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags</a> for a list of
 supported options.
 The option cannot be combined with <samp>-fsanitize=address</samp>,
-<samp>-fsanitize=leak</samp> and/or <samp>-fcheck-pointer-bounds</samp>.
+<samp>-fsanitize=leak</samp>.
 </p>
 <p>Note that sanitized atomic builtins cannot throw exceptions when
 operating on invalid memory addresses with non-call exceptions
@@ -418,7 +453,6 @@ a++;
 <p>This option enables instrumentation of array bounds.  Various out of bounds
 accesses are detected.  Flexible array members, flexible array member-like
 arrays, and initializers of variables with static storage are not instrumented.
-The option cannot be combined with <samp>-fcheck-pointer-bounds</samp>.
 </p>
 </dd>
 <dt><code>-fsanitize=bounds-strict</code></dt>
@@ -426,8 +460,7 @@ The option cannot be combined with <samp>-fcheck-pointer-bounds</samp>.
 <p>This option enables strict instrumentation of array bounds.  Most out of bounds
 accesses are detected, including flexible array members and flexible array
 member-like arrays.  Initializers of variables with static storage are not
-instrumented.  The option cannot be combined
-with <samp>-fcheck-pointer-bounds</samp>.
+instrumented.
 </p>
 </dd>
 <dt><code>-fsanitize=alignment</code></dt>
@@ -620,189 +653,6 @@ variable or <code>__sanitizer_cov_trace_const_cmp1</code>,
 operand constant, <code>__sanitizer_cov_trace_cmpf</code> or
 <code>__sanitizer_cov_trace_cmpd</code> for float or double comparisons and
 <code>__sanitizer_cov_trace_switch</code> for switch statements.
-</p>
-</dd>
-<dt><code>-fbounds-check</code></dt>
-<dd><a name="index-fbounds_002dcheck"></a>
-<p>For front ends that support it, generate additional code to check that
-indices used to access arrays are within the declared range.  This is
-currently only supported by the Fortran front end, where this option
-defaults to false.
-</p>
-</dd>
-<dt><code>-fcheck-pointer-bounds</code></dt>
-<dd><a name="index-fcheck_002dpointer_002dbounds"></a>
-<a name="index-fno_002dcheck_002dpointer_002dbounds"></a>
-<a name="index-Pointer-Bounds-Checker-options"></a>
-<p>Enable Pointer Bounds Checker instrumentation.  Each memory reference
-is instrumented with checks of the pointer used for memory access against
-bounds associated with that pointer.  
-</p>
-<p>Currently there
-is only an implementation for Intel MPX available, thus x86 GNU/Linux target
-and <samp>-mmpx</samp> are required to enable this feature.  
-MPX-based instrumentation requires
-a runtime library to enable MPX in hardware and handle bounds
-violation signals.  By default when <samp>-fcheck-pointer-bounds</samp>
-and <samp>-mmpx</samp> options are used to link a program, the GCC driver
-links against the <samp>libmpx</samp> and <samp>libmpxwrappers</samp> libraries.
-Bounds checking on calls to dynamic libraries requires a linker
-with <samp>-z bndplt</samp> support; if GCC was configured with a linker
-without support for this option (including the Gold linker and older
-versions of ld), a warning is given if you link with <samp>-mmpx</samp>
-without also specifying <samp>-static</samp>, since the overall effectiveness
-of the bounds checking protection is reduced.
-See also <samp>-static-libmpxwrappers</samp>.
-</p>
-<p>MPX-based instrumentation
-may be used for debugging and also may be included in production code
-to increase program security.  Depending on usage, you may
-have different requirements for the runtime library.  The current version
-of the MPX runtime library is more oriented for use as a debugging
-tool.  MPX runtime library usage implies <samp>-lpthread</samp>.  See
-also <samp>-static-libmpx</samp>.  The runtime library  behavior can be
-influenced using various <code>CHKP_RT_*</code> environment variables.  See
-<a href="https://gcc.gnu.org/wiki/Intel%20MPX%20support%20in%20the%20GCC%20compiler">https://gcc.gnu.org/wiki/Intel%20MPX%20support%20in%20the%20GCC%20compiler</a>
-for more details.
-</p>
-<p>Generated instrumentation may be controlled by various
-<samp>-fchkp-*</samp> options and by the <code>bnd_variable_size</code>
-structure field attribute (see <a href="Type-Attributes.html#Type-Attributes">Type Attributes</a>) and
-<code>bnd_legacy</code>, and <code>bnd_instrument</code> function attributes
-(see <a href="Function-Attributes.html#Function-Attributes">Function Attributes</a>).  GCC also provides a number of built-in
-functions for controlling the Pointer Bounds Checker.  See <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins">Pointer Bounds Checker builtins</a>, for more information.
-</p>
-</dd>
-<dt><code>-fchkp-check-incomplete-type</code></dt>
-<dd><a name="index-fchkp_002dcheck_002dincomplete_002dtype"></a>
-<a name="index-fno_002dchkp_002dcheck_002dincomplete_002dtype"></a>
-<p>Generate pointer bounds checks for variables with incomplete type.
-Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-narrow-bounds</code></dt>
-<dd><a name="index-fchkp_002dnarrow_002dbounds"></a>
-<a name="index-fno_002dchkp_002dnarrow_002dbounds"></a>
-<p>Controls bounds used by Pointer Bounds Checker for pointers to object
-fields.  If narrowing is enabled then field bounds are used.  Otherwise
-object bounds are used.  See also <samp>-fchkp-narrow-to-innermost-array</samp>
-and <samp>-fchkp-first-field-has-own-bounds</samp>.  Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-first-field-has-own-bounds</code></dt>
-<dd><a name="index-fchkp_002dfirst_002dfield_002dhas_002down_002dbounds"></a>
-<a name="index-fno_002dchkp_002dfirst_002dfield_002dhas_002down_002dbounds"></a>
-<p>Forces Pointer Bounds Checker to use narrowed bounds for the address of the
-first field in the structure.  By default a pointer to the first field has
-the same bounds as a pointer to the whole structure.
-</p>
-</dd>
-<dt><code>-fchkp-flexible-struct-trailing-arrays</code></dt>
-<dd><a name="index-fchkp_002dflexible_002dstruct_002dtrailing_002darrays"></a>
-<a name="index-fno_002dchkp_002dflexible_002dstruct_002dtrailing_002darrays"></a>
-<p>Forces Pointer Bounds Checker to treat all trailing arrays in structures as
-possibly flexible.  By default only array fields with zero length or that are
-marked with attribute bnd_variable_size are treated as flexible.
-</p>
-</dd>
-<dt><code>-fchkp-narrow-to-innermost-array</code></dt>
-<dd><a name="index-fchkp_002dnarrow_002dto_002dinnermost_002darray"></a>
-<a name="index-fno_002dchkp_002dnarrow_002dto_002dinnermost_002darray"></a>
-<p>Forces Pointer Bounds Checker to use bounds of the innermost arrays in
-case of nested static array access.  By default this option is disabled and
-bounds of the outermost array are used.
-</p>
-</dd>
-<dt><code>-fchkp-optimize</code></dt>
-<dd><a name="index-fchkp_002doptimize"></a>
-<a name="index-fno_002dchkp_002doptimize"></a>
-<p>Enables Pointer Bounds Checker optimizations.  Enabled by default at
-optimization levels <samp>-O</samp>, <samp>-O2</samp>, <samp>-O3</samp>.
-</p>
-</dd>
-<dt><code>-fchkp-use-fast-string-functions</code></dt>
-<dd><a name="index-fchkp_002duse_002dfast_002dstring_002dfunctions"></a>
-<a name="index-fno_002dchkp_002duse_002dfast_002dstring_002dfunctions"></a>
-<p>Enables use of <code>*_nobnd</code> versions of string functions (not copying bounds)
-by Pointer Bounds Checker.  Disabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-use-nochk-string-functions</code></dt>
-<dd><a name="index-fchkp_002duse_002dnochk_002dstring_002dfunctions"></a>
-<a name="index-fno_002dchkp_002duse_002dnochk_002dstring_002dfunctions"></a>
-<p>Enables use of <code>*_nochk</code> versions of string functions (not checking bounds)
-by Pointer Bounds Checker.  Disabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-use-static-bounds</code></dt>
-<dd><a name="index-fchkp_002duse_002dstatic_002dbounds"></a>
-<a name="index-fno_002dchkp_002duse_002dstatic_002dbounds"></a>
-<p>Allow Pointer Bounds Checker to generate static bounds holding
-bounds of static variables.  Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-use-static-const-bounds</code></dt>
-<dd><a name="index-fchkp_002duse_002dstatic_002dconst_002dbounds"></a>
-<a name="index-fno_002dchkp_002duse_002dstatic_002dconst_002dbounds"></a>
-<p>Use statically-initialized bounds for constant bounds instead of
-generating them each time they are required.  By default enabled when
-<samp>-fchkp-use-static-bounds</samp> is enabled.
-</p>
-</dd>
-<dt><code>-fchkp-treat-zero-dynamic-size-as-infinite</code></dt>
-<dd><a name="index-fchkp_002dtreat_002dzero_002ddynamic_002dsize_002das_002dinfinite"></a>
-<a name="index-fno_002dchkp_002dtreat_002dzero_002ddynamic_002dsize_002das_002dinfinite"></a>
-<p>With this option, objects with incomplete type whose
-dynamically-obtained size is zero are treated as having infinite size
-instead by Pointer Bounds
-Checker.  This option may be helpful if a program is linked with a library
-missing size information for some symbols.  Disabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-check-read</code></dt>
-<dd><a name="index-fchkp_002dcheck_002dread"></a>
-<a name="index-fno_002dchkp_002dcheck_002dread"></a>
-<p>Instructs Pointer Bounds Checker to generate checks for all read
-accesses to memory.  Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-check-write</code></dt>
-<dd><a name="index-fchkp_002dcheck_002dwrite"></a>
-<a name="index-fno_002dchkp_002dcheck_002dwrite"></a>
-<p>Instructs Pointer Bounds Checker to generate checks for all write
-accesses to memory.  Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-store-bounds</code></dt>
-<dd><a name="index-fchkp_002dstore_002dbounds"></a>
-<a name="index-fno_002dchkp_002dstore_002dbounds"></a>
-<p>Instructs Pointer Bounds Checker to generate bounds stores for
-pointer writes.  Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-instrument-calls</code></dt>
-<dd><a name="index-fchkp_002dinstrument_002dcalls"></a>
-<a name="index-fno_002dchkp_002dinstrument_002dcalls"></a>
-<p>Instructs Pointer Bounds Checker to pass pointer bounds to calls.
-Enabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-instrument-marked-only</code></dt>
-<dd><a name="index-fchkp_002dinstrument_002dmarked_002donly"></a>
-<a name="index-fno_002dchkp_002dinstrument_002dmarked_002donly"></a>
-<p>Instructs Pointer Bounds Checker to instrument only functions
-marked with the <code>bnd_instrument</code> attribute
-(see <a href="Function-Attributes.html#Function-Attributes">Function Attributes</a>).  Disabled by default.
-</p>
-</dd>
-<dt><code>-fchkp-use-wrappers</code></dt>
-<dd><a name="index-fchkp_002duse_002dwrappers"></a>
-<a name="index-fno_002dchkp_002duse_002dwrappers"></a>
-<p>Allows Pointer Bounds Checker to replace calls to built-in functions
-with calls to wrapper functions.  When <samp>-fchkp-use-wrappers</samp>
-is used to link a program, the GCC driver automatically links
-against <samp>libmpxwrappers</samp>.  See also <samp>-static-libmpxwrappers</samp>.
-Enabled by default.
 </p>
 </dd>
 <dt><code>-fcf-protection=<span class="roman">[</span>full<span class="roman">|</span>branch<span class="roman">|</span>return<span class="roman">|</span>none<span class="roman">]</span></code></dt>
@@ -1059,6 +909,7 @@ example, for the profiling functions listed above, high-priority
 interrupt routines, and any functions from which the profiling functions
 cannot safely be called (perhaps signal handlers, if the profiling
 routines generate output or allocate memory).
+See <a href="Common-Function-Attributes.html#Common-Function-Attributes">Common Function Attributes</a>.
 </p>
 </dd>
 <dt><code>-finstrument-functions-exclude-file-list=<var>file</var>,<var>file</var>,&hellip;</code></dt>

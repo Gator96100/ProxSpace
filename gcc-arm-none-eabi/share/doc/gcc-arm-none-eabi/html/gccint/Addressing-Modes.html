@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Addressing Modes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Addressing Modes (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Addressing Modes">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Addressing Modes">
+<meta name="description" content="Addressing Modes (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Addressing Modes (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Addressing-Modes"></a>
 <div class="header">
 <p>
@@ -415,7 +414,7 @@ misalignment value (<var>misalign</var>).
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fVECTOR_005fALIGNMENT"></a>Target Hook: <em>HOST_WIDE_INT</em> <strong>TARGET_VECTORIZE_PREFERRED_VECTOR_ALIGNMENT</strong> <em>(const_tree <var>type</var>)</em></dt>
+<dt><a name="index-TARGET_005fVECTORIZE_005fPREFERRED_005fVECTOR_005fALIGNMENT"></a>Target Hook: <em>poly_uint64</em> <strong>TARGET_VECTORIZE_PREFERRED_VECTOR_ALIGNMENT</strong> <em>(const_tree <var>type</var>)</em></dt>
 <dd><p>This hook returns the preferred alignment in bits for accesses to
 vectors of type <var>type</var> in vectorized code.  This might be less than
 or greater than the ABI-defined value returned by
@@ -607,7 +606,7 @@ to use it.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fGOACC_005fVALIDATE_005fDIMS"></a>Target Hook: <em>bool</em> <strong>TARGET_GOACC_VALIDATE_DIMS</strong> <em>(tree <var>decl</var>, int *<var>dims</var>, int <var>fn_level</var>)</em></dt>
+<dt><a name="index-TARGET_005fGOACC_005fVALIDATE_005fDIMS"></a>Target Hook: <em>bool</em> <strong>TARGET_GOACC_VALIDATE_DIMS</strong> <em>(tree <var>decl</var>, int *<var>dims</var>, int <var>fn_level</var>, unsigned <var>used</var>)</em></dt>
 <dd><p>This hook should check the launch dimensions provided for an OpenACC
 compute region, or routine.  Defaulted values are represented as -1
 and non-constant values as 0.  The <var>fn_level</var> is negative for the
@@ -645,6 +644,23 @@ instructions.  <var>call</var> is gimple statement containing the call to
 the function.  This hook removes statement <var>call</var> after the
 expanded sequence has been inserted.  This hook is also responsible
 for allocating any storage for reductions when necessary.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fPREFERRED_005fELSE_005fVALUE"></a>Target Hook: <em>tree</em> <strong>TARGET_PREFERRED_ELSE_VALUE</strong> <em>(unsigned <var>ifn</var>, tree <var>type</var>, unsigned <var>nops</var>, tree *<var>ops</var>)</em></dt>
+<dd><p>This hook returns the target&rsquo;s preferred final argument for a call
+to conditional internal function <var>ifn</var> (really of type
+<code>internal_fn</code>).  <var>type</var> specifies the return type of the
+function and <var>ops</var> are the operands to the conditional operation,
+of which there are <var>nops</var>.
+</p>
+<p>For example, if <var>ifn</var> is <code>IFN_COND_ADD</code>, the hook returns
+a value of type <var>type</var> that should be used when &lsquo;<samp><var>ops</var>[0]</samp>&rsquo;
+and &lsquo;<samp><var>ops</var>[1]</samp>&rsquo; are conditionally added together.
+</p>
+<p>This hook is only relevant if the target supports conditional patterns
+like <code>cond_add<var>m</var></code>.  The default implementation returns a zero
+constant of type <var>type</var>.
 </p></dd></dl>
 
 <hr>

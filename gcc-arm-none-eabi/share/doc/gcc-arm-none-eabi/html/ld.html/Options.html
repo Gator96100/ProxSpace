@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
-version 2.32.0.
+(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
+version 2.33.1.
 
 Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
@@ -12,16 +12,16 @@ or any later version published by the Free Software Foundation;
 with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License". -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>LD: Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Options (LD)</title>
 
-<meta name="description" content="LD: Options">
-<meta name="keywords" content="LD: Options">
+<meta name="description" content="Options (LD)">
+<meta name="keywords" content="Options (LD)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="LD-Index.html#LD-Index" rel="index" title="LD Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -31,16 +31,16 @@ section entitled "GNU Free Documentation License". -->
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -49,10 +49,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -60,7 +59,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Options"></a>
 <div class="header">
 <p>
@@ -380,7 +379,7 @@ first check whether there is a definition in the shared object
 in the filter object.  The shared object <var>name</var> need not exist.
 Thus the shared object <var>name</var> may be used to provide an alternative
 implementation of certain functions, perhaps for debugging or for
-machine specific performance.
+machine-specific performance.
 </p>
 <p>This option may be specified more than once.  The DT_AUXILIARY entries
 will be created in the order in which they appear on the command line.
@@ -587,27 +586,36 @@ scripts.
 </p>
 </li><li> How GNU properties are merged.
 
-<p>When linker merges input .note.gnu.property sections into one output
-.note.gnu.property section, some properties are removed or updated,
-which are reported in the link map as
+<p>When the linker merges input .note.gnu.property sections into one output
+.note.gnu.property section, some properties are removed or updated.
+These actions are reported in the link map.  For example:
 </p>
 <div class="smallexample">
 <pre class="smallexample">Removed property 0xc0000002 to merge foo.o (0x1) and bar.o (not found)
 </pre></div>
 
-<p>It indicates that property 0xc0000002 is removed from output when
+<p>This indicates that property 0xc0000002 is removed from output when
 merging properties in  <samp>foo.o</samp>, whose property 0xc0000002 value
 is 0x1, and <samp>bar.o</samp>, which doesn&rsquo;t have property 0xc0000002.
 </p>
 <div class="smallexample">
-<pre class="smallexample">Updated property 0xc0000002 (0x1) to merge foo.o (0x1) and bar.o (0x1)
+<pre class="smallexample">Updated property 0xc0010001 (0x1) to merge foo.o (0x1) and bar.o (0x1)
 </pre></div>
 
-<p>It indicates that property 0xc0010001 value is updated to 0x1 in output
+<p>This indicates that property 0xc0010001 value is updated to 0x1 in output
 when merging properties in  <samp>foo.o</samp>, whose 0xc0010001 property value
 is 0x1, and <samp>bar.o</samp>, whose 0xc0010001 property value is 0x1.
 </p></li></ul>
 
+<a name="index-link-map-discarded"></a>
+<a name="index-_002d_002dprint_002dmap_002ddiscarded"></a>
+<a name="index-_002d_002dno_002dprint_002dmap_002ddiscarded"></a>
+</dd>
+<dt><code>--print-map-discarded</code></dt>
+<dt><code>--no-print-map-discarded</code></dt>
+<dd><p>Print (or do not print) the list of discarded and garbage collected sections
+in the link map.  Enabled by default.
+</p>
 <a name="index-_002dn"></a>
 <a name="index-read_002donly-text"></a>
 <a name="index-NMAGIC"></a>
@@ -995,6 +1003,22 @@ to a locally defined function, foo, via its GOT slot.
 Supported for i386 and x86_64.
 </p>
 </dd>
+<dt>&lsquo;<samp>cet-report=none</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cet-report=warning</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>cet-report=error</samp>&rsquo;</dt>
+<dd><p>Specify how to report the missing GNU_PROPERTY_X86_FEATURE_1_IBT and
+GNU_PROPERTY_X86_FEATURE_1_SHSTK properties in input .note.gnu.property
+section.  <samp>cet-report=none</samp>, which is the default, will make the
+linker not report missing properties in input files.
+<samp>cet-report=warning</samp> will make the linker issue a warning for
+missing properties in input files.  <samp>cet-report=error</samp> will make
+the linker issue an error for missing properties in input files.
+Note that <samp>ibt</samp> will turn off the missing
+GNU_PROPERTY_X86_FEATURE_1_IBT property report and <samp>shstk</samp> will
+turn off the missing GNU_PROPERTY_X86_FEATURE_1_SHSTK property report.
+Supported for Linux/i386 and Linux/x86_64.
+</p>
+</dd>
 <dt>&lsquo;<samp>combreloc</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>nocombreloc</samp>&rsquo;</dt>
 <dd><p>Combine multiple dynamic relocation sections and sort to improve
@@ -1208,7 +1232,7 @@ the order that it is specified on the command line.  If a symbol in that
 archive is needed to resolve an undefined symbol referred to by an
 object in an archive that appears later on the command line, the linker
 would not be able to resolve that reference.  By grouping the archives,
-they all be searched repeatedly until all possible references are
+they will all be searched repeatedly until all possible references are
 resolved.
 </p>
 <p>Using this option has a significant performance cost.  It is best to use
@@ -1498,7 +1522,7 @@ entry point code that is capable of processing these relocations.
 </dd>
 <dt><code>--embedded-relocs</code></dt>
 <dd><p>This option is similar to the <samp>--emit-relocs</samp> option except
-that the relocs are stored in a target specific section.  This option
+that the relocs are stored in a target-specific section.  This option
 is only supported by the &lsquo;<samp>BFIN</samp>&rsquo;, &lsquo;<samp>CR16</samp>&rsquo; and <em>M68K</em>
 targets.
 </p>
@@ -1618,7 +1642,7 @@ parsable by tools.  Here is an example of an output:
 <a name="index-_002d_002dtarget_002dhelp"></a>
 </dd>
 <dt><code>--target-help</code></dt>
-<dd><p>Print a summary of all target specific options on the standard output and exit.
+<dd><p>Print a summary of all target-specific options on the standard output and exit.
 </p>
 <a name="index-_002dMap_003dmapfile"></a>
 </dd>
@@ -1813,7 +1837,7 @@ See <a href="M68HC11_002f68HC12.html#M68HC11_002f68HC12"><code>ld</code> and the
 See <a href="Nios-II.html#Nios-II"><code>ld</code> and the Altera Nios II</a>.
 See <a href="PowerPC-ELF32.html#PowerPC-ELF32"><code>ld</code> and PowerPC 32-bit ELF Support</a>.
 </p>
-<p>On some platforms the &lsquo;<samp>--relax</samp>&rsquo; option performs target specific,
+<p>On some platforms the &lsquo;<samp>--relax</samp>&rsquo; option performs target-specific,
 global optimizations that become possible when the linker resolves
 addressing in the program, such as relaxing address modes,
 synthesizing new instructions, selecting shorter version of current
@@ -1856,12 +1880,17 @@ line.  It overrides &lsquo;<samp>-s</samp>&rsquo; and &lsquo;<samp>-S</samp>&rsq
 <p>Add a directory to the runtime library search path.  This is used when
 linking an ELF executable with shared objects.  All <samp>-rpath</samp>
 arguments are concatenated and passed to the runtime linker, which uses
-them to locate shared objects at runtime.  The <samp>-rpath</samp> option is
-also used when locating shared objects which are needed by shared
-objects explicitly included in the link; see the description of the
-<samp>-rpath-link</samp> option.  If <samp>-rpath</samp> is not used when linking an
-ELF executable, the contents of the environment variable
-<code>LD_RUN_PATH</code> will be used if it is defined.
+them to locate shared objects at runtime.
+</p>
+<p>The <samp>-rpath</samp> option is also used when locating shared objects which
+are needed by shared objects explicitly included in the link; see the
+description of the <samp>-rpath-link</samp> option.  Searching <samp>-rpath</samp>
+in this way is only supported by native linkers and cross linkers which
+have been configured with the <samp>--with-sysroot</samp> option.
+</p>
+<p>If <samp>-rpath</samp> is not used when linking an ELF executable, the
+contents of the environment variable <code>LD_RUN_PATH</code> will be used if it
+is defined.
 </p>
 <p>The <samp>-rpath</samp> option may also be used on SunOS.  By default, on
 SunOS, the linker will form a runtime search path out of all the
@@ -3169,6 +3198,15 @@ equivalent <code>JALX</code> instructions as the associated relocation is
 calculated.  By default or if &lsquo;<samp>--no-ignore-branch-isa</samp>&rsquo; is used
 a check is made causing the loss of an ISA mode transition to produce
 an error.
+</p>
+<a name="index-_002d_002dcompact_002dbranches"></a>
+</dd>
+<dt><code>--compact-branches</code></dt>
+<dd><a name="index-_002d_002dno_002dcompact_002dbranches"></a>
+</dd>
+<dt><code>--compact-branches</code></dt>
+<dd><p>These options control the generation of compact instructions by the linker
+in the PLT entries for MIPS R6.
 </p>
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Top</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Top (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Top">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Top">
+<meta name="description" content="Top (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Top (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
@@ -36,16 +36,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -54,10 +54,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -65,7 +64,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <h1 class="settitle" align="center">GNU Compiler Collection (GCC) Internals</h1>
 
 
@@ -82,7 +81,7 @@ ul.no-bullet {list-style: none}
 
 <p>This file documents the internals of the GNU compilers.
 </p><br>
-<p>Copyright &copy; 1988-2018 Free Software Foundation, Inc.
+<p>Copyright &copy; 1988-2019 Free Software Foundation, Inc.
 </p>
 <p>Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -135,6 +134,7 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
 <li><a name="stoc-Plugins-1" href="#toc-Plugins-1">24 Plugins</a></li>
 <li><a name="stoc-Link-Time-Optimization" href="#toc-Link-Time-Optimization">25 Link Time Optimization</a></li>
 <li><a name="stoc-Match-and-Simplify-1" href="#toc-Match-and-Simplify-1">26 Match and Simplify</a></li>
+<li><a name="stoc-User-Experience-Guidelines-1" href="#toc-User-Experience-Guidelines-1">27 User Experience Guidelines</a></li>
 <li><a name="stoc-Funding-Free-Software" href="#toc-Funding-Free-Software">Funding Free Software</a></li>
 <li><a name="stoc-The-GNU-Project-and-GNU_002fLinux" href="#toc-The-GNU-Project-and-GNU_002fLinux">The GNU Project and GNU/Linux</a></li>
 <li><a name="stoc-GNU-General-Public-License" href="#toc-GNU-General-Public-License">GNU General Public License</a></li>
@@ -267,10 +267,9 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
         <li><a name="toc-Scan-a-particular-file" href="Final-Actions.html#Scan-a-particular-file">7.2.6.1 Scan a particular file</a></li>
         <li><a name="toc-Scan-the-assembly-output" href="Final-Actions.html#Scan-the-assembly-output">7.2.6.2 Scan the assembly output</a></li>
         <li><a name="toc-Scan-optimization-dump-files" href="Final-Actions.html#Scan-optimization-dump-files">7.2.6.3 Scan optimization dump files</a></li>
-        <li><a name="toc-Verify-that-an-output-files-exists-or-not" href="Final-Actions.html#Verify-that-an-output-files-exists-or-not">7.2.6.4 Verify that an output files exists or not</a></li>
-        <li><a name="toc-Check-for-LTO-tests" href="Final-Actions.html#Check-for-LTO-tests">7.2.6.5 Check for LTO tests</a></li>
-        <li><a name="toc-Checks-for-gcov-tests" href="Final-Actions.html#Checks-for-gcov-tests">7.2.6.6 Checks for <code>gcov</code> tests</a></li>
-        <li><a name="toc-Clean-up-generated-test-files" href="Final-Actions.html#Clean-up-generated-test-files">7.2.6.7 Clean up generated test files</a></li>
+        <li><a name="toc-Check-for-output-files" href="Final-Actions.html#Check-for-output-files">7.2.6.4 Check for output files</a></li>
+        <li><a name="toc-Checks-for-gcov-tests" href="Final-Actions.html#Checks-for-gcov-tests">7.2.6.5 Checks for <code>gcov</code> tests</a></li>
+        <li><a name="toc-Clean-up-generated-test-files" href="Final-Actions.html#Clean-up-generated-test-files">7.2.6.6 Clean up generated test files</a></li>
       </ul></li>
     </ul></li>
     <li><a name="toc-Ada-Language-Testsuites" href="Ada-Tests.html#Ada-Tests">7.3 Ada Language Testsuites</a></li>
@@ -587,6 +586,7 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
       <li><a name="toc-Code-Iterators-1" href="Code-Iterators.html#Code-Iterators">17.23.2 Code Iterators</a></li>
       <li><a name="toc-Int-Iterators-1" href="Int-Iterators.html#Int-Iterators">17.23.3 Int Iterators</a></li>
       <li><a name="toc-Subst-Iterators-1" href="Subst-Iterators.html#Subst-Iterators">17.23.4 Subst Iterators</a></li>
+      <li><a name="toc-Parameterized-Names-1" href="Parameterized-Names.html#Parameterized-Names">17.23.5 Parameterized Names</a></li>
     </ul></li>
   </ul></li>
   <li><a name="toc-Target-Description-Macros-and-Functions" href="Target-Macros.html#Target-Macros">18 Target Description Macros and Functions</a>
@@ -626,7 +626,7 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
       <li><a name="toc-Miscellaneous-register-hooks" href="Miscellaneous-Register-Hooks.html#Miscellaneous-Register-Hooks">18.9.16 Miscellaneous register hooks</a></li>
     </ul></li>
     <li><a name="toc-Implementing-the-Varargs-Macros" href="Varargs.html#Varargs">18.10 Implementing the Varargs Macros</a></li>
-    <li><a name="toc-Trampolines-for-Nested-Functions" href="Trampolines.html#Trampolines">18.11 Trampolines for Nested Functions</a></li>
+    <li><a name="toc-Support-for-Nested-Functions" href="Trampolines.html#Trampolines">18.11 Support for Nested Functions</a></li>
     <li><a name="toc-Implicit-Calls-to-Library-Routines" href="Library-Calls.html#Library-Calls">18.12 Implicit Calls to Library Routines</a></li>
     <li><a name="toc-Addressing-Modes-1" href="Addressing-Modes.html#Addressing-Modes">18.13 Addressing Modes</a></li>
     <li><a name="toc-Anchored-Addresses-1" href="Anchored-Addresses.html#Anchored-Addresses">18.14 Anchored Addresses</a></li>
@@ -668,8 +668,9 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
     <li><a name="toc-Defining-coprocessor-specifics-for-MIPS-targets_002e" href="MIPS-Coprocessors.html#MIPS-Coprocessors">18.26 Defining coprocessor specifics for MIPS targets.</a></li>
     <li><a name="toc-Parameters-for-Precompiled-Header-Validity-Checking" href="PCH-Target.html#PCH-Target">18.27 Parameters for Precompiled Header Validity Checking</a></li>
     <li><a name="toc-C_002b_002b-ABI-parameters" href="C_002b_002b-ABI.html#C_002b_002b-ABI">18.28 C++ ABI parameters</a></li>
-    <li><a name="toc-Adding-support-for-named-address-spaces" href="Named-Address-Spaces.html#Named-Address-Spaces">18.29 Adding support for named address spaces</a></li>
-    <li><a name="toc-Miscellaneous-Parameters" href="Misc.html#Misc">18.30 Miscellaneous Parameters</a></li>
+    <li><a name="toc-D-ABI-parameters" href="D-Language-and-ABI.html#D-Language-and-ABI">18.29 D ABI parameters</a></li>
+    <li><a name="toc-Adding-support-for-named-address-spaces" href="Named-Address-Spaces.html#Named-Address-Spaces">18.30 Adding support for named address spaces</a></li>
+    <li><a name="toc-Miscellaneous-Parameters" href="Misc.html#Misc">18.31 Miscellaneous Parameters</a></li>
   </ul></li>
   <li><a name="toc-Host-Configuration" href="Host-Config.html#Host-Config">19 Host Configuration</a>
   <ul class="no-bullet">
@@ -736,6 +737,30 @@ Texts being (a) (see below), and with the Back-Cover Texts being (b)
     <li><a name="toc-GIMPLE-API-1" href="GIMPLE-API.html#GIMPLE-API">26.1 GIMPLE API</a></li>
     <li><a name="toc-The-Language-1" href="The-Language.html#The-Language">26.2 The Language</a></li>
   </ul></li>
+  <li><a name="toc-User-Experience-Guidelines-1" href="User-Experience-Guidelines.html#User-Experience-Guidelines">27 User Experience Guidelines</a>
+  <ul class="no-bullet">
+    <li><a name="toc-Guidelines-for-Diagnostics-1" href="Guidelines-for-Diagnostics.html#Guidelines-for-Diagnostics">27.1 Guidelines for Diagnostics</a>
+    <ul class="no-bullet">
+      <li><a name="toc-Talk-in-terms-of-the-user_0027s-code" href="Guidelines-for-Diagnostics.html#Talk-in-terms-of-the-user_0027s-code">27.1.1 Talk in terms of the user&rsquo;s code</a></li>
+      <li><a name="toc-Diagnostics-are-actionable" href="Guidelines-for-Diagnostics.html#Diagnostics-are-actionable">27.1.2 Diagnostics are actionable</a></li>
+      <li><a name="toc-The-user_0027s-attention-is-important" href="Guidelines-for-Diagnostics.html#The-user_0027s-attention-is-important">27.1.3 The user&rsquo;s attention is important</a></li>
+      <li><a name="toc-Precision-of-Wording" href="Guidelines-for-Diagnostics.html#Precision-of-Wording">27.1.4 Precision of Wording</a></li>
+      <li><a name="toc-Try-the-diagnostic-on-real_002dworld-code" href="Guidelines-for-Diagnostics.html#Try-the-diagnostic-on-real_002dworld-code">27.1.5 Try the diagnostic on real-world code</a></li>
+      <li><a name="toc-Make-mismatches-clear" href="Guidelines-for-Diagnostics.html#Make-mismatches-clear">27.1.6 Make mismatches clear</a></li>
+      <li><a name="toc-Location-Information" href="Guidelines-for-Diagnostics.html#Location-Information">27.1.7 Location Information</a></li>
+      <li><a name="toc-Coding-Conventions" href="Guidelines-for-Diagnostics.html#Coding-Conventions">27.1.8 Coding Conventions</a></li>
+      <li><a name="toc-Group-logically_002drelated-diagnostics" href="Guidelines-for-Diagnostics.html#Group-logically_002drelated-diagnostics">27.1.9 Group logically-related diagnostics</a></li>
+      <li><a name="toc-Quoting" href="Guidelines-for-Diagnostics.html#Quoting">27.1.10 Quoting</a></li>
+      <li><a name="toc-Spelling-and-Terminology" href="Guidelines-for-Diagnostics.html#Spelling-and-Terminology">27.1.11 Spelling and Terminology</a></li>
+      <li><a name="toc-Fix_002dit-hints" href="Guidelines-for-Diagnostics.html#Fix_002dit-hints">27.1.12 Fix-it hints</a>
+      <ul class="no-bullet">
+        <li><a name="toc-Fix_002dit-hints-should-work" href="Guidelines-for-Diagnostics.html#Fix_002dit-hints-should-work">27.1.12.1 Fix-it hints should work</a></li>
+        <li><a name="toc-Express-deletion-in-terms-of-deletion_002c-not-replacement" href="Guidelines-for-Diagnostics.html#Express-deletion-in-terms-of-deletion_002c-not-replacement">27.1.12.2 Express deletion in terms of deletion, not replacement</a></li>
+        <li><a name="toc-Multiple-suggestions" href="Guidelines-for-Diagnostics.html#Multiple-suggestions">27.1.12.3 Multiple suggestions</a></li>
+      </ul></li>
+    </ul></li>
+    <li><a name="toc-Guidelines-for-Options-1" href="Guidelines-for-Options.html#Guidelines-for-Options">27.2 Guidelines for Options</a></li>
+  </ul></li>
   <li><a name="toc-Funding-Free-Software" href="Funding.html#Funding">Funding Free Software</a></li>
   <li><a name="toc-The-GNU-Project-and-GNU_002fLinux" href="GNU-Project.html#GNU-Project">The GNU Project and GNU/Linux</a></li>
   <li><a name="toc-GNU-General-Public-License" href="Copying.html#Copying">GNU General Public License</a></li>
@@ -763,8 +788,8 @@ Next: <a href="Contributing.html#Contributing" accesskey="n" rel="next">Contribu
 <p>This manual documents the internals of the GNU compilers, including
 how to port them to new targets and some information about how to
 write front ends for new languages.  It corresponds to the compilers
-(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
-version 8.3.1.  The use of the GNU compilers is documented in a
+(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
+version 9.2.1.  The use of the GNU compilers is documented in a
 separate manual.  See <a href="http://gcc.gnu.org/onlinedocs/gcc/index.html#Top">Introduction</a> in <cite>Using the GNU
 Compiler Collection (GCC)</cite>.
 </p>
@@ -833,13 +858,17 @@ implemented in GCC.
 <tr><td align="left" valign="top">&bull; <a href="LTO.html#LTO">LTO</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Using Link-Time Optimization.
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Match-and-Simplify.html#Match-and-Simplify">Match and Simplify</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to write expression simplification patterns for GIMPLE and GENERIC
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="User-Experience-Guidelines.html#User-Experience-Guidelines">User Experience Guidelines</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Guidelines for implementing diagnostics and options.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Funding.html#Funding">Funding</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to help assure funding for free software.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="GNU-Project.html#GNU-Project">GNU Project</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">The GNU Project and GNU/Linux.
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Copying.html#Copying">Copying</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">GNU General Public License says
                     how you can copy and share GCC.
 </td></tr>
@@ -848,6 +877,7 @@ implemented in GCC.
 <tr><td align="left" valign="top">&bull; <a href="Contributors.html#Contributors">Contributors</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">People who have contributed to GCC.
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Option-Index.html#Option-Index">Option Index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Index to command line options.
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Concept-Index.html#Concept-Index">Concept Index</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Index of concepts and symbol names.

@@ -11,16 +11,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using as: RISC-V-Formats</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>RISC-V-Formats (Using as)</title>
 
-<meta name="description" content="Using as: RISC-V-Formats">
-<meta name="keywords" content="Using as: RISC-V-Formats">
+<meta name="description" content="RISC-V-Formats (Using as)">
+<meta name="keywords" content="RISC-V-Formats (Using as)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="AS-Index.html#AS-Index" rel="index" title="AS Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,7 +58,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="RISC_002dV_002dFormats"></a>
 <div class="header">
 <p>
@@ -67,7 +66,7 @@ Next: <a href="RISC_002dV_002dATTRIBUTE.html#RISC_002dV_002dATTRIBUTE" accesskey
 </div>
 <hr>
 <a name="Instruction-Formats"></a>
-<h4 class="subsection">9.37.3 Instruction Formats</h4>
+<h4 class="subsection">9.38.3 Instruction Formats</h4>
 <a name="index-instruction-formats_002c-risc_002dv"></a>
 <a name="index-RISC_002dV-instruction-formats"></a>
 
@@ -192,7 +191,7 @@ only accept s0-s1, a0-a5, fs0-fs1 and fa0-fa5.</pre></td></tr>
 <dd><p>Opcode space for atomic memory operation instructions.
 </p>
 </dd>
-<dt><code>MISC_IMM</code></dt>
+<dt><code>MISC_MEM</code></dt>
 <dd><p>Opcode space for misc instructions.
 </p>
 </dd>
@@ -226,6 +225,7 @@ with the &lsquo;<samp>.insn</samp>&rsquo; pseudo directive:
 </pre>
 </dd>
 <dt><code>R type with 4 register operands: .insn r opcode, func3, func2, rd, rs1, rs2, rs3</code></dt>
+<dt><code>R4 type: .insn r4 opcode, func3, func2, rd, rs1, rs2, rs3</code></dt>
 <dd><pre class="verbatim">+-----+-------+-----+-----+-------+----+-------------+
 | rs3 | func2 | rs2 | rs1 | func3 | rd |      opcode |
 +-----+-------+-----+-----+-------+----+-------------+
@@ -248,10 +248,12 @@ with the &lsquo;<samp>.insn</samp>&rsquo; pseudo directive:
 </dd>
 <dt><code>SB type: .insn sb opcode, func3, rd, rs1, symbol</code></dt>
 <dt><code>SB type: .insn sb opcode, func3, rd, simm12(rs1)</code></dt>
-<dd><pre class="verbatim">+--------------+-----+-----+-------+-------------+-------------+
-| simm21[11:5] | rs2 | rs1 | func3 | simm12[4:0] |      opcode |
-+--------------+-----+-----+-------+-------------+-------------+
-31             25    20    15      12            7             0
+<dt><code>B type: .insn s opcode, func3, rd, rs1, symbol</code></dt>
+<dt><code>B type: .insn s opcode, func3, rd, simm12(rs1)</code></dt>
+<dd><pre class="verbatim">+------------+--------------+-----+-----+-------+-------------+-------------+--------+
+| simm12[12] | simm12[10:5] | rs2 | rs1 | func3 | simm12[4:1] | simm12[11]] | opcode |
++------------+--------------+-----+-----+-------+-------------+-------------+--------+
+31          30            25    20    15      12           7            0
 </pre>
 </dd>
 <dt><code>U type: .insn u opcode, rd, simm20</code></dt>
@@ -262,6 +264,7 @@ with the &lsquo;<samp>.insn</samp>&rsquo; pseudo directive:
 </pre>
 </dd>
 <dt><code>UJ type: .insn uj opcode, rd, symbol</code></dt>
+<dt><code>J type: .insn j opcode, rd, symbol</code></dt>
 <dd><pre class="verbatim">+------------+--------------+------------+---------------+----+-------------+
 | simm20[20] | simm20[10:1] | simm20[11] | simm20[19:12] | rd |      opcode |
 +------------+--------------+------------+---------------+----+-------------+

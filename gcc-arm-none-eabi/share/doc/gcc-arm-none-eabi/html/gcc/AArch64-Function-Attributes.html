@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,35 +19,35 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): AArch64 Function Attributes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AArch64 Function Attributes (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): AArch64 Function Attributes">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): AArch64 Function Attributes">
+<meta name="description" content="AArch64 Function Attributes (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="AArch64 Function Attributes (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Function-Attributes.html#Function-Attributes" rel="up" title="Function Attributes">
-<link href="ARC-Function-Attributes.html#ARC-Function-Attributes" rel="next" title="ARC Function Attributes">
+<link href="AMD-GCN-Function-Attributes.html#AMD-GCN-Function-Attributes" rel="next" title="AMD GCN Function Attributes">
 <link href="Common-Function-Attributes.html#Common-Function-Attributes" rel="prev" title="Common Function Attributes">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,15 +66,15 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="AArch64-Function-Attributes"></a>
 <div class="header">
 <p>
-Next: <a href="ARC-Function-Attributes.html#ARC-Function-Attributes" accesskey="n" rel="next">ARC Function Attributes</a>, Previous: <a href="Common-Function-Attributes.html#Common-Function-Attributes" accesskey="p" rel="prev">Common Function Attributes</a>, Up: <a href="Function-Attributes.html#Function-Attributes" accesskey="u" rel="up">Function Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="AMD-GCN-Function-Attributes.html#AMD-GCN-Function-Attributes" accesskey="n" rel="next">AMD GCN Function Attributes</a>, Previous: <a href="Common-Function-Attributes.html#Common-Function-Attributes" accesskey="p" rel="prev">Common Function Attributes</a>, Up: <a href="Function-Attributes.html#Function-Attributes" accesskey="u" rel="up">Function Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="AArch64-Function-Attributes-1"></a>
-<h4 class="subsection">6.31.2 AArch64 Function Attributes</h4>
+<h4 class="subsection">6.33.2 AArch64 Function Attributes</h4>
 
 <p>The following target-specific function attributes are available for the
 AArch64 target.  For the most part, these options mirror the behavior of
@@ -109,10 +108,13 @@ for the command line option <samp>-mcmodel=</samp>.
 </p>
 </dd>
 <dt><code>strict-align</code></dt>
+<dt><code>no-strict-align</code></dt>
 <dd><a name="index-strict_002dalign-function-attribute_002c-AArch64"></a>
-<p>Indicates that the compiler should not assume that unaligned memory references
-are handled by the system.  The behavior is the same as for the command-line
-option <samp>-mstrict-align</samp>.
+<p><code>strict-align</code> indicates that the compiler should not assume that unaligned
+memory references are handled by the system.  To allow the compiler to assume
+that aligned memory references are handled by the system, the inverse attribute
+<code>no-strict-align</code> can be specified.  The behavior is same as for the
+command-line option <samp>-mstrict-align</samp> and <samp>-mno-strict-align</samp>.
 </p>
 </dd>
 <dt><code>omit-leaf-frame-pointer</code></dt>
@@ -156,7 +158,16 @@ same as for the <samp>-mcpu=</samp> command-line option.
 <dd><a name="index-sign_002dreturn_002daddress-function-attribute_002c-AArch64"></a>
 <p>Select the function scope on which return address signing will be applied.  The
 behavior and permissible arguments are the same as for the command-line option
-<samp>-msign-return-address=</samp>.  The default value is <code>none</code>.
+<samp>-msign-return-address=</samp>.  The default value is <code>none</code>.  This
+attribute is deprecated.  The <code>branch-protection</code> attribute should
+be used instead.
+</p>
+</dd>
+<dt><code>branch-protection</code></dt>
+<dd><a name="index-branch_002dprotection-function-attribute_002c-AArch64"></a>
+<p>Select the function scope on which branch protection will be applied.  The
+behavior and permissible arguments are the same as for the command-line option
+<samp>-mbranch-protection=</samp>.  The default value is <code>none</code>.
 </p>
 </dd>
 </dl>
@@ -206,7 +217,7 @@ foo (int a)
 and <code>crypto</code> extensions and tunes it for <code>cortex-a53</code>.
 </p>
 <a name="Inlining-rules"></a>
-<h4 class="subsubsection">6.31.2.1 Inlining rules</h4>
+<h4 class="subsubsection">6.33.2.1 Inlining rules</h4>
 <p>Specifying target attributes on individual functions or performing link-time
 optimization across translation units compiled with different target options
 can affect function inlining rules:
@@ -234,7 +245,7 @@ architectural feature rules specified above.
 <hr>
 <div class="header">
 <p>
-Next: <a href="ARC-Function-Attributes.html#ARC-Function-Attributes" accesskey="n" rel="next">ARC Function Attributes</a>, Previous: <a href="Common-Function-Attributes.html#Common-Function-Attributes" accesskey="p" rel="prev">Common Function Attributes</a>, Up: <a href="Function-Attributes.html#Function-Attributes" accesskey="u" rel="up">Function Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="AMD-GCN-Function-Attributes.html#AMD-GCN-Function-Attributes" accesskey="n" rel="next">AMD GCN Function Attributes</a>, Previous: <a href="Common-Function-Attributes.html#Common-Function-Attributes" accesskey="p" rel="prev">Common Function Attributes</a>, Up: <a href="Function-Attributes.html#Function-Attributes" accesskey="u" rel="up">Function Attributes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

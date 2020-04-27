@@ -12,16 +12,16 @@ and with the Back-Cover Texts as in (a) below.
 (a) The FSF's Back-Cover Text is: "You are free to copy and modify
 this GNU Manual.  Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom." -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Debugging with GDB: Formatting Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Formatting Documentation (Debugging with GDB)</title>
 
-<meta name="description" content="Debugging with GDB: Formatting Documentation">
-<meta name="keywords" content="Debugging with GDB: Formatting Documentation">
+<meta name="description" content="Formatting Documentation (Debugging with GDB)">
+<meta name="keywords" content="Formatting Documentation (Debugging with GDB)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Concept-Index.html#Concept-Index" rel="index" title="Concept Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -31,16 +31,16 @@ developing GNU and promoting software freedom." -->
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -49,10 +49,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -60,7 +59,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Formatting-Documentation"></a>
 <div class="header">
 <p>
@@ -101,7 +100,7 @@ and TeX (or <code>texi2roff</code>) to typeset the printed version.
 </p>
 <p><small>GDB</small> includes an already formatted copy of the on-line Info
 version of this manual in the <samp>gdb</samp> subdirectory.  The main Info
-file is <samp>gdb-8.3.0.20190703-git/gdb/gdb.info</samp>, and it refers to
+file is <samp>gdb-8.3.0.20190709-git/gdb/gdb.info</samp>, and it refers to
 subordinate files matching &lsquo;<samp>gdb.info*</samp>&rsquo; in the same directory.  If
 necessary, you can print out these files, or read them with any editor;
 but they are easier to read using the <code>info</code> subsystem in <small>GNU</small>
@@ -113,8 +112,8 @@ Info formatting programs, such as <code>texinfo-format-buffer</code> or
 <code>makeinfo</code>.
 </p>
 <p>If you have <code>makeinfo</code> installed, and are in the top level
-<small>GDB</small> source directory (<samp>gdb-8.3.0.20190703-git</samp>, in the case of
-version 8.3.0.20190703-git), you can make the Info file by typing:
+<small>GDB</small> source directory (<samp>gdb-8.3.0.20190709-git</samp>, in the case of
+version 8.3.0.20190709-git), you can make the Info file by typing:
 </p>
 <div class="smallexample">
 <pre class="smallexample">cd gdb
@@ -143,7 +142,7 @@ directory.
 <p>If you have TeX and a <small>DVI</small> printer program installed, you can
 typeset and print this manual.  First switch to the <samp>gdb</samp>
 subdirectory of the main source directory (for example, to
-<samp>gdb-8.3.0.20190703-git/gdb</samp>) and type:
+<samp>gdb-8.3.0.20190709-git/gdb</samp>) and type:
 </p>
 <div class="smallexample">
 <pre class="smallexample">make gdb.dvi
@@ -157,7 +156,7 @@ subdirectory of the main source directory (for example, to
 
 <h3><a name="FOOT18" href="#DOCF18">(18)</a></h3>
 <p>In
-<samp>gdb-8.3.0.20190703-git/gdb/refcard.ps</samp> of the version 8.3.0.20190703-git
+<samp>gdb-8.3.0.20190709-git/gdb/refcard.ps</samp> of the version 8.3.0.20190709-git
 release.</p>
 </div>
 <hr>

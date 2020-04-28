@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): MN10300 Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MN10300 Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): MN10300 Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): MN10300 Options">
+<meta name="description" content="MN10300 Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="MN10300 Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="MN10300-Options"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Next: <a href="Moxie-Options.html#Moxie-Options" accesskey="n" rel="next">Moxie 
 </div>
 <hr>
 <a name="MN10300-Options-1"></a>
-<h4 class="subsection">3.18.28 MN10300 Options</h4>
+<h4 class="subsection">3.18.30 MN10300 Options</h4>
 <a name="index-MN10300-options"></a>
 
 <p>These <samp>-m</samp> options are defined for Matsushita MN10300 architectures:
@@ -115,7 +114,7 @@ is the default.
 </p>
 </dd>
 <dt><code>-mtune=<var>cpu-type</var></code></dt>
-<dd><a name="index-mtune-9"></a>
+<dd><a name="index-mtune-10"></a>
 <p>Use the timing characteristics of the indicated CPU type when
 scheduling instructions.  This does not change the targeted processor
 type.  The CPU type must be one of &lsquo;<samp>mn10300</samp>&rsquo;, &lsquo;<samp>am33</samp>&rsquo;,
@@ -152,8 +151,8 @@ instructions if the target is the &lsquo;<samp>AM33</samp>&rsquo; or later.  Thi
 default.  This option defines the preprocessor macro <code>__LIW__</code>.
 </p>
 </dd>
-<dt><code>-mnoliw</code></dt>
-<dd><a name="index-mnoliw"></a>
+<dt><code>-mno-liw</code></dt>
+<dd><a name="index-mno_002dliw"></a>
 <p>Do not allow the compiler to generate <em>Long Instruction Word</em>
 instructions.  This option defines the preprocessor macro
 <code>__NO_LIW__</code>.
@@ -166,8 +165,8 @@ instructions if the target is the &lsquo;<samp>AM33</samp>&rsquo; or later.  Thi
 default.  This option defines the preprocessor macro <code>__SETLB__</code>.
 </p>
 </dd>
-<dt><code>-mnosetlb</code></dt>
-<dd><a name="index-mnosetlb"></a>
+<dt><code>-mno-setlb</code></dt>
+<dd><a name="index-mno_002dsetlb"></a>
 <p>Do not allow the compiler to generate <em>SETLB</em> or <em>Lcc</em>
 instructions.  This option defines the preprocessor macro
 <code>__NO_SETLB__</code>.

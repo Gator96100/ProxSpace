@@ -37,7 +37,6 @@
 #pragma push_macro("char")
 #pragma push_macro("short")
 #pragma push_macro("__int20")
-#pragma push_macro("__int20__")
 #pragma push_macro("int")
 #pragma push_macro("long")
 #undef signed
@@ -46,14 +45,12 @@
 #undef short
 #undef int
 #undef __int20
-#undef __int20__
 #undef long
 #define signed +0
 #define unsigned +0
 #define char +0
 #define short +1
 #define __int20 +2
-#define __int20__ +2
 #define int +2
 #define long +4
 #if (__INTPTR_TYPE__ == 8 || __INTPTR_TYPE__ == 10)
@@ -192,7 +189,6 @@
 #pragma pop_macro("char")
 #pragma pop_macro("short")
 #pragma pop_macro("__int20")
-#pragma pop_macro("__int20__")
 #pragma pop_macro("int")
 #pragma pop_macro("long")
 

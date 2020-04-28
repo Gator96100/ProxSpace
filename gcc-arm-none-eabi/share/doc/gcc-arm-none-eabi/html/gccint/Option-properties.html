@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Option properties</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Option properties (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Option properties">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Option properties">
+<meta name="description" content="Option properties (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Option properties (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Option-properties"></a>
 <div class="header">
 <p>
@@ -125,7 +124,11 @@ property is used.
 <dd><p>The option will turn off another option <var>othername</var>, which is
 the option name with the leading &ldquo;-&rdquo; removed.  This chain action will
 propagate through the <code>Negative</code> property of the option to be
-turned off.
+turned off.  The driver will prune options, removing those that are
+turned off by some later option.  This pruning is not done for options
+with <code>Joined</code> or <code>JoinedOrMissing</code> properties, unless the
+options have either <code>RejectNegative</code> property or the <code>Negative</code>
+property mentions an option other than itself.
 </p>
 <p>As a consequence, if you have a group of mutually-exclusive
 options, their <code>Negative</code> properties should form a circular chain.
@@ -167,12 +170,45 @@ arguments.  The default is 1.
 </p>
 </dd>
 <dt><code>UInteger</code></dt>
-<dd><p>The option&rsquo;s argument is a non-negative integer.  The option parser
-will check and convert the argument before passing it to the relevant
-option handler.  <code>UInteger</code> should also be used on options like
-<code>-falign-loops</code> where both <code>-falign-loops</code> and
-<code>-falign-loops</code>=<var>n</var> are supported to make sure the saved
-options are given a full integer.
+<dd><p>The option&rsquo;s argument is a non-negative integer consisting of either
+decimal or hexadecimal digits interpreted as <code>int</code>.  Hexadecimal
+integers may optionally start with the <code>0x</code> or <code>0X</code> prefix.
+The option parser validates and converts the argument before passing
+it to the relevant option handler.  <code>UInteger</code> should also be used
+with options like <code>-falign-loops</code> where both <code>-falign-loops</code>
+and <code>-falign-loops</code>=<var>n</var> are supported to make sure the saved
+options are given a full integer.  Positive values of the argument in
+excess of <code>INT_MAX</code> wrap around zero.
+</p>
+</dd>
+<dt><code>Host_Wide_Int</code></dt>
+<dd><p>The option&rsquo;s argument is a non-negative integer consisting of either
+decimal or hexadecimal digits interpreted as the widest integer type
+on the host.  As with an <code>UInteger</code> argument, hexadecimal integers
+may optionally start with the <code>0x</code> or <code>0X</code> prefix.  The option
+parser validates and converts the argument before passing it to
+the relevant option handler.  <code>Host_Wide_Int</code> should be used with
+options that need to accept very large values.  Positive values of
+the argument in excess of <code>HOST_WIDE_INT_M1U</code> are assigned
+<code>HOST_WIDE_INT_M1U</code>.
+</p>
+</dd>
+<dt><code>IntegerRange(<var>n</var>, <var>m</var>)</code></dt>
+<dd><p>The options&rsquo;s arguments are integers of type <code>int</code>.  The option&rsquo;s
+parser validates that the value of an option integer argument is within
+the closed range [<var>n</var>, <var>m</var>].
+</p>
+</dd>
+<dt><code>ByteSize</code></dt>
+<dd><p>A property applicable only to <code>UInteger</code> or <code>Host_Wide_Int</code>
+arguments.  The option&rsquo;s integer argument is interpreted as if in infinite
+precision using saturation arithmetic in the corresponding type.  The argument
+may be followed by a &lsquo;<samp>byte-size</samp>&rsquo; suffix designating a multiple of bytes
+such as <code>kB</code> and <code>KiB</code> for kilobyte and kibibyte, respectively,
+<code>MB</code> and <code>MiB</code> for megabyte and mebibyte, <code>GB</code> and <code>GiB</code>
+for gigabyte and gigibyte, and so on.  <code>ByteSize</code> should be used for
+with options that take a very large argument representing a size in bytes,
+such as <samp>-Wlarger-than=</samp>.
 </p>
 </dd>
 <dt><code>ToLower</code></dt>
@@ -192,6 +228,21 @@ via <samp>-Wp,</samp>; new options should not have this property.
 <dd><p>The state of this option should be stored in variable <var>var</var>
 (actually a macro for <code>global_options.x_<var>var</var></code>).
 The way that the state is stored depends on the type of option:
+</p>
+</dd>
+<dt><code>Deprecated</code></dt>
+<dd><p>The option is deprecated and every usage of such option will
+result in a warning.
+</p>
+</dd>
+<dt><code>Var(<var>var</var>, <var>set</var>)</code></dt>
+<dd><p>The option controls an integer variable <var>var</var> and is active when
+<var>var</var> equals <var>set</var>.  The option parser will set <var>var</var> to
+<var>set</var> when the positive form of the option is used and <code>!<var>set</var></code>
+when the &ldquo;no-&rdquo; form is used.
+</p>
+<p><var>var</var> is declared in the same way as for the single-argument form
+described above.
 </p>
 <ul>
 <li> If the option uses the <code>Mask</code> or <code>InverseMask</code> properties,
@@ -223,16 +274,6 @@ and wasn&rsquo;t given.
 
 <p>The option-processing script will usually zero-initialize <var>var</var>.
 You can modify this behavior using <code>Init</code>.
-</p>
-</dd>
-<dt><code>Var(<var>var</var>, <var>set</var>)</code></dt>
-<dd><p>The option controls an integer variable <var>var</var> and is active when
-<var>var</var> equals <var>set</var>.  The option parser will set <var>var</var> to
-<var>set</var> when the positive form of the option is used and <code>!<var>set</var></code>
-when the &ldquo;no-&rdquo; form is used.
-</p>
-<p><var>var</var> is declared in the same way as for the single-argument form
-described above.
 </p>
 </dd>
 <dt><code>Init(<var>value</var>)</code></dt>

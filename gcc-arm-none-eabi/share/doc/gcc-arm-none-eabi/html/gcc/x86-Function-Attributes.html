@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): x86 Function Attributes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>x86 Function Attributes (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): x86 Function Attributes">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): x86 Function Attributes">
+<meta name="description" content="x86 Function Attributes (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="x86 Function Attributes (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="x86-Function-Attributes"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Next: <a href="Xstormy16-Function-Attributes.html#Xstormy16-Function-Attributes"
 </div>
 <hr>
 <a name="x86-Function-Attributes-1"></a>
-<h4 class="subsection">6.31.33 x86 Function Attributes</h4>
+<h4 class="subsection">6.33.35 x86 Function Attributes</h4>
 
 <p>These function attributes are supported by the x86 back end:
 </p>
@@ -221,7 +220,7 @@ caller-saved registers. That is, all registers are callee-saved. For
 example, this attribute can be used for a function called from an
 interrupt handler. The compiler generates proper function entry and
 exit sequences to save and restore any modified registers, except for
-the EFLAGS register.  Since GCC doesn&rsquo;t preserve MPX, SSE, MMX nor x87
+the EFLAGS register.  Since GCC doesn&rsquo;t preserve SSE, MMX nor x87
 states, the GCC option <samp>-mgeneral-regs-only</samp> should be used to
 compile functions with <code>no_caller_saved_registers</code> attribute.
 </p>
@@ -236,7 +235,7 @@ this attribute is present.  The <code>IRET</code> instruction, instead of the
 <code>RET</code> instruction, is used to return from interrupt handlers.  All
 registers, except for the EFLAGS register which is restored by the
 <code>IRET</code> instruction, are preserved by the compiler.  Since GCC
-doesn&rsquo;t preserve MPX, SSE, MMX nor x87 states, the GCC option
+doesn&rsquo;t preserve SSE, MMX nor x87 states, the GCC option
 <samp>-mgeneral-regs-only</samp> should be used to compile interrupt and
 exception handlers.
 </p>
@@ -439,6 +438,12 @@ allows specification of target-specific compilation options.
 <p>Enable/disable the generation of the BMI2 instructions.
 </p>
 </dd>
+<dt>&lsquo;<samp>cldemote</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>no-cldemote</samp>&rsquo;</dt>
+<dd><a name="index-target_0028_0022cldemote_0022_0029-function-attribute_002c-x86"></a>
+<p>Enable/disable the generation of the CLDEMOTE instructions.
+</p>
+</dd>
 <dt>&lsquo;<samp>clflushopt</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>no-clflushopt</samp>&rsquo;</dt>
 <dd><a name="index-target_0028_0022clflushopt_0022_0029-function-attribute_002c-x86"></a>
@@ -595,6 +600,12 @@ default function version.
 <p>Enable/disable the generation of the PREFETCHW instruction.
 </p>
 </dd>
+<dt>&lsquo;<samp>ptwrite</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>no-ptwrite</samp>&rsquo;</dt>
+<dd><a name="index-target_0028_0022ptwrite_0022_0029-function-attribute_002c-x86"></a>
+<p>Enable/disable the generation of the PTWRITE instructions.
+</p>
+</dd>
 <dt>&lsquo;<samp>rdpid</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>no-rdpid</samp>&rsquo;</dt>
 <dd><a name="index-target_0028_0022rdpid_0022_0029-function-attribute_002c-x86"></a>
@@ -708,6 +719,12 @@ and SSE4.2).
 <dt>&lsquo;<samp>no-vpclmulqdq</samp>&rsquo;</dt>
 <dd><a name="index-target_0028_0022vpclmulqdq_0022_0029-function-attribute_002c-x86"></a>
 <p>Enable/disable the generation of the VPCLMULQDQ instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>waitpkg</samp>&rsquo;</dt>
+<dt>&lsquo;<samp>no-waitpkg</samp>&rsquo;</dt>
+<dd><a name="index-target_0028_0022waitpkg_0022_0029-function-attribute_002c-x86"></a>
+<p>Enable/disable the generation of the WAITPKG instructions.
 </p>
 </dd>
 <dt>&lsquo;<samp>wbnoinvd</samp>&rsquo;</dt>
@@ -888,6 +905,37 @@ foo (void)
 }
 </pre></div>
 
+</dd>
+<dt>&lsquo;<samp>cf_check</samp>&rsquo;</dt>
+<dd><a name="index-cf_005fcheck-function-attribute_002c-x86"></a>
+
+<p>The <code>cf_check</code> attribute on a function is used to inform the
+compiler that ENDBR instruction should be placed at the function
+entry when <samp>-fcf-protection=branch</samp> is enabled.
+</p>
+</dd>
+<dt>&lsquo;<samp>indirect_return</samp>&rsquo;</dt>
+<dd><a name="index-indirect_005freturn-function-attribute_002c-x86"></a>
+
+<p>The <code>indirect_return</code> attribute can be applied to a function,
+as well as variable or type of function pointer to inform the
+compiler that the function may return via indirect branch.
+</p>
+</dd>
+<dt>&lsquo;<samp>fentry_name(&quot;<var>name</var>&quot;)</samp>&rsquo;</dt>
+<dd><a name="index-fentry_005fname-function-attribute_002c-x86"></a>
+<p>On x86 targets, the <code>fentry_name</code> attribute sets the function to
+call on function entry when function instrumentation is enabled
+with <samp>-pg -mfentry</samp>. When <var>name</var> is nop then a 5 byte
+nop sequence is generated.
+</p>
+</dd>
+<dt>&lsquo;<samp>fentry_section(&quot;<var>name</var>&quot;)</samp>&rsquo;</dt>
+<dd><a name="index-fentry_005fsection-function-attribute_002c-x86"></a>
+<p>On x86 targets, the <code>fentry_section</code> attribute sets the name
+of the section to record function entry instrumentation calls in when
+enabled with <samp>-pg -mrecord-mcount</samp>
+</p>
 </dd>
 </dl>
 

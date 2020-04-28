@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): AVR Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>AVR Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): AVR Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): AVR Options">
+<meta name="description" content="AVR Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="AVR Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="AVR-Options"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Next: <a href="Blackfin-Options.html#Blackfin-Options" accesskey="n" rel="next">
 </div>
 <hr>
 <a name="AVR-Options-1"></a>
-<h4 class="subsection">3.18.5 AVR Options</h4>
+<h4 class="subsection">3.18.6 AVR Options</h4>
 <a name="index-AVR-Options"></a>
 
 <p>These options are defined for AVR implementations:
@@ -104,7 +103,7 @@ Next: <a href="Blackfin-Options.html#Blackfin-Options" accesskey="n" rel="next">
 </p>
 </dd>
 <dt><code>avr3</code></dt>
-<dd><p>&ldquo;Classic&rdquo; devices with 16&nbsp;KiB up to 64&nbsp;KiB of  program memory.
+<dd><p>&ldquo;Classic&rdquo; devices with 16&nbsp;KiB up to 64&nbsp;KiB of program memory.
 <br><var>mcu</var>&nbsp;= <code>at43usb355</code>, <code>at76c711</code>.
 </p>
 </dd>
@@ -345,19 +344,21 @@ sbiw r26, const   ; X -= const
 </dd>
 <dt><code>-Waddr-space-convert</code></dt>
 <dd><a name="index-Waddr_002dspace_002dconvert"></a>
+<a name="index-Wno_002daddr_002dspace_002dconvert"></a>
 <p>Warn about conversions between address spaces in the case where the
 resulting address space is not contained in the incoming address space.
 </p>
 </dd>
 <dt><code>-Wmisspelled-isr</code></dt>
 <dd><a name="index-Wmisspelled_002disr"></a>
+<a name="index-Wno_002dmisspelled_002disr"></a>
 <p>Warn if the ISR is misspelled, i.e. without __vector prefix.
 Enabled by default.
 </p></dd>
 </dl>
 
 <a name="EIND-and-Devices-with-More-Than-128-Ki-Bytes-of-Flash"></a>
-<h4 class="subsubsection">3.18.5.1 <code>EIND</code> and Devices with More Than 128 Ki Bytes of Flash</h4>
+<h4 class="subsubsection">3.18.6.1 <code>EIND</code> and Devices with More Than 128 Ki Bytes of Flash</h4>
 <a name="index-EIND"></a>
 <p>Pointers in the implementation are 16&nbsp;bits wide.
 The address of a function or label is represented as word address so
@@ -480,7 +481,7 @@ Alternatively, <code>func_4</code> can be defined in the linker script.
 </p></li></ul>
 
 <a name="Handling-of-the-RAMPD_002c-RAMPX_002c-RAMPY-and-RAMPZ-Special-Function-Registers"></a>
-<h4 class="subsubsection">3.18.5.2 Handling of the <code>RAMPD</code>, <code>RAMPX</code>, <code>RAMPY</code> and <code>RAMPZ</code> Special Function Registers</h4>
+<h4 class="subsubsection">3.18.6.2 Handling of the <code>RAMPD</code>, <code>RAMPX</code>, <code>RAMPY</code> and <code>RAMPZ</code> Special Function Registers</h4>
 <a name="index-RAMPD"></a>
 <a name="index-RAMPX"></a>
 <a name="index-RAMPY"></a>
@@ -518,7 +519,7 @@ you must reset it to zero after the access.
 </li></ul>
 
 <a name="AVR-Built_002din-Macros"></a>
-<h4 class="subsubsection">3.18.5.3 AVR Built-in Macros</h4>
+<h4 class="subsubsection">3.18.6.3 AVR Built-in Macros</h4>
 
 <p>GCC defines several built-in macros so that the user code can test
 for the presence or absence of features.  Almost any of the following

@@ -11,16 +11,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using as: i386-Variations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>i386-Variations (Using as)</title>
 
-<meta name="description" content="Using as: i386-Variations">
-<meta name="keywords" content="Using as: i386-Variations">
+<meta name="description" content="i386-Variations (Using as)">
+<meta name="keywords" content="i386-Variations (Using as)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="AS-Index.html#AS-Index" rel="index" title="AS Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,7 +58,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="i386_002dVariations"></a>
 <div class="header">
 <p>
@@ -67,7 +66,7 @@ Next: <a href="i386_002dChars.html#i386_002dChars" accesskey="n" rel="next">i386
 </div>
 <hr>
 <a name="AT_0026T-Syntax-versus-Intel-Syntax"></a>
-<h4 class="subsubsection">9.15.3.1 AT&amp;T Syntax versus Intel Syntax</h4>
+<h4 class="subsubsection">9.16.3.1 AT&amp;T Syntax versus Intel Syntax</h4>
 
 <a name="index-i386-intel_005fsyntax-pseudo-op"></a>
 <a name="index-intel_005fsyntax-pseudo-op_002c-i386"></a>
@@ -134,11 +133,16 @@ instruction, do <em>not</em> have reversed order.  <a href="i386_002dBugs.html#i
 In AT&amp;T syntax the size of memory operands is determined from the last
 character of the instruction mnemonic.  Mnemonic suffixes of &lsquo;<samp>b</samp>&rsquo;,
 &lsquo;<samp>w</samp>&rsquo;, &lsquo;<samp>l</samp>&rsquo; and &lsquo;<samp>q</samp>&rsquo; specify byte (8-bit), word (16-bit), long
-(32-bit) and quadruple word (64-bit) memory references.  Intel syntax accomplishes
-this by prefixing memory operands (<em>not</em> the instruction mnemonics) with
-&lsquo;<samp>byte ptr</samp>&rsquo;, &lsquo;<samp>word ptr</samp>&rsquo;, &lsquo;<samp>dword ptr</samp>&rsquo; and &lsquo;<samp>qword ptr</samp>&rsquo;.  Thus,
-Intel &lsquo;<samp>mov al, byte ptr <var>foo</var></samp>&rsquo; is &lsquo;<samp>movb <var>foo</var>, %al</samp>&rsquo; in AT&amp;T
-syntax.
+(32-bit) and quadruple word (64-bit) memory references.  Mnemonic suffixes
+of &lsquo;<samp>x</samp>&rsquo;, &lsquo;<samp>y</samp>&rsquo; and &lsquo;<samp>z</samp>&rsquo; specify xmm (128-bit vector), ymm
+(256-bit vector) and zmm (512-bit vector) memory references, only when there&rsquo;s
+no other way to disambiguate an instruction.  Intel syntax accomplishes this by
+prefixing memory operands (<em>not</em> the instruction mnemonics) with
+&lsquo;<samp>byte ptr</samp>&rsquo;, &lsquo;<samp>word ptr</samp>&rsquo;, &lsquo;<samp>dword ptr</samp>&rsquo;, &lsquo;<samp>qword ptr</samp>&rsquo;,
+&lsquo;<samp>xmmword ptr</samp>&rsquo;, &lsquo;<samp>ymmword ptr</samp>&rsquo; and &lsquo;<samp>zmmword ptr</samp>&rsquo;.  Thus, Intel
+syntax &lsquo;<samp>mov al, byte ptr <var>foo</var></samp>&rsquo; is &lsquo;<samp>movb <var>foo</var>, %al</samp>&rsquo; in AT&amp;T
+syntax.  In Intel syntax, &lsquo;<samp>fword ptr</samp>&rsquo;, &lsquo;<samp>tbyte ptr</samp>&rsquo; and
+&lsquo;<samp>oword ptr</samp>&rsquo; specify 48-bit, 80-bit and 128-bit memory references.
 
 <p>In 64-bit code, &lsquo;<samp>movabs</samp>&rsquo; can be used to encode the &lsquo;<samp>mov</samp>&rsquo;
 instruction with the 64-bit displacement or immediate operand.

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Extended Asm</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Extended Asm (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Extended Asm">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Extended Asm">
+<meta name="description" content="Extended Asm (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Extended Asm (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Extended-Asm"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Next: <a href="Constraints.html#Constraints" accesskey="n" rel="next">Constraint
 </div>
 <hr>
 <a name="Extended-Asm-_002d-Assembler-Instructions-with-C-Expression-Operands"></a>
-<h4 class="subsection">6.45.2 Extended Asm - Assembler Instructions with C Expression Operands</h4>
+<h4 class="subsection">6.47.2 Extended Asm - Assembler Instructions with C Expression Operands</h4>
 <a name="index-extended-asm"></a>
 <a name="index-assembly-language-in-C_002c-extended"></a>
 
@@ -116,7 +115,8 @@ qualifier to disable certain optimizations. See <a href="#Volatile">Volatile</a>
 </dd>
 <dt><code>inline</code></dt>
 <dd><p>If you use the <code>inline</code> qualifier, then for inlining purposes the size
-of the asm is taken as the smallest size possible (see <a href="Size-of-an-asm.html#Size-of-an-asm">Size of an asm</a>).
+of the <code>asm</code> statement is taken as the smallest size possible
+(see <a href="Size-of-an-asm.html#Size-of-an-asm">Size of an asm</a>).
 </p>
 </dd>
 <dt><code>goto</code></dt>
@@ -198,7 +198,7 @@ printf(&quot;%d\n&quot;, dst);
 <p>This code copies <code>src</code> to <code>dst</code> and add 1 to <code>dst</code>.
 </p>
 <a name="Volatile"></a><a name="Volatile-1"></a>
-<h4 class="subsubsection">6.45.2.1 Volatile</h4>
+<h4 class="subsubsection">6.47.2.1 Volatile</h4>
 <a name="index-volatile-asm"></a>
 <a name="index-asm-volatile"></a>
 
@@ -237,7 +237,7 @@ possible.
 <p>The next example shows a case where the optimizers can recognize that the input 
 (<code>dwSomeValue</code>) never changes during the execution of the function and can 
 therefore move the <code>asm</code> outside the loop to produce more efficient code. 
-Again, using <code>volatile</code> disables this type of optimization.
+Again, using the <code>volatile</code> qualifier disables this type of optimization.
 </p>
 <div class="example">
 <pre class="example">void do_print(uint32_t dwSomeValue)
@@ -293,20 +293,21 @@ printf(&quot;msr: %llx\n&quot;, msr);
 earlier examples. They do not move it out of loops or omit it on the 
 assumption that the result from a previous call is still valid.
 </p>
-<p>Note that the compiler can move even volatile <code>asm</code> instructions relative 
+<p>Note that the compiler can move even <code>volatile asm</code> instructions relative
 to other code, including across jump instructions. For example, on many 
 targets there is a system register that controls the rounding mode of 
-floating-point operations. Setting it with a volatile <code>asm</code>, as in the 
-following PowerPC example, does not work reliably.
+floating-point operations. Setting it with a <code>volatile asm</code> statement,
+as in the following PowerPC example, does not work reliably.
 </p>
 <div class="example">
 <pre class="example">asm volatile(&quot;mtfsf 255, %0&quot; : : &quot;f&quot; (fpenv));
 sum = x + y;
 </pre></div>
 
-<p>The compiler may move the addition back before the volatile <code>asm</code>. To 
-make it work as expected, add an artificial dependency to the <code>asm</code> by 
-referencing a variable in the subsequent code, for example: 
+<p>The compiler may move the addition back before the <code>volatile asm</code>
+statement. To make it work as expected, add an artificial dependency to
+the <code>asm</code> by referencing a variable in the subsequent code, for
+example:
 </p>
 <div class="example">
 <pre class="example">asm volatile (&quot;mtfsf 255,%1&quot; : &quot;=X&quot; (sum) : &quot;f&quot; (fpenv));
@@ -315,12 +316,12 @@ sum = x + y;
 
 <p>Under certain circumstances, GCC may duplicate (or remove duplicates of) your 
 assembly code when optimizing. This can lead to unexpected duplicate symbol 
-errors during compilation if your asm code defines symbols or labels. 
+errors during compilation if your <code>asm</code> code defines symbols or labels. 
 Using &lsquo;<samp>%=</samp>&rsquo; 
 (see <a href="#AssemblerTemplate">AssemblerTemplate</a>) may help resolve this problem.
 </p>
 <a name="AssemblerTemplate"></a><a name="Assembler-Template"></a>
-<h4 class="subsubsection">6.45.2.2 Assembler Template</h4>
+<h4 class="subsubsection">6.47.2.2 Assembler Template</h4>
 <a name="index-asm-assembler-template"></a>
 
 <p>An assembler template is a literal string containing assembler instructions.
@@ -344,7 +345,7 @@ that some assembler dialects use semicolons to start a comment.
 <p>Do not expect a sequence of <code>asm</code> statements to remain perfectly 
 consecutive after compilation, even when you are using the <code>volatile</code> 
 qualifier. If certain instructions need to remain consecutive in the output, 
-put them in a single multi-instruction asm statement.
+put them in a single multi-instruction <code>asm</code> statement.
 </p>
 <p>Accessing data from C programs without using input/output operands (such as 
 by using global symbols directly from the assembler template) may not work as 
@@ -440,7 +441,7 @@ assembler template such as this:
 <p>There is no support for nesting dialect alternatives.
 </p>
 <a name="OutputOperands"></a><a name="Output-Operands"></a>
-<h4 class="subsubsection">6.45.2.3 Output Operands</h4>
+<h4 class="subsubsection">6.47.2.3 Output Operands</h4>
 <a name="index-asm-output-operands"></a>
 
 <p>An <code>asm</code> statement has zero or more output operands indicating the names
@@ -542,7 +543,8 @@ The code generated by GCC to access the memory address in <var>b</var> can conta
 registers which <em>might</em> be shared by <var>a</var>, and GCC considers those 
 registers to be inputs to the asm. As above, GCC assumes that such input
 registers are consumed before any outputs are written. This assumption may 
-result in incorrect behavior if the asm writes to <var>a</var> before using 
+result in incorrect behavior if the <code>asm</code> statement writes to <var>a</var>
+before using
 <var>b</var>. Combining the &lsquo;<samp>&amp;</samp>&rsquo; modifier with the register constraint on <var>a</var>
 ensures that modifying <var>a</var> does not affect the address referenced by 
 <var>b</var>. Otherwise, the location of <var>b</var> 
@@ -619,13 +621,13 @@ in a register, you can enable it to choose the best location
 for <code>d</code> by specifying both constraints.
 </p>
 <a name="FlagOutputOperands"></a><a name="Flag-Output-Operands"></a>
-<h4 class="subsubsection">6.45.2.4 Flag Output Operands</h4>
+<h4 class="subsubsection">6.47.2.4 Flag Output Operands</h4>
 <a name="index-asm-flag-output-operands"></a>
 
 <p>Some targets have a special register that holds the &ldquo;flags&rdquo; for the
 result of an operation or comparison.  Normally, the contents of that
-register are either unmodifed by the asm, or the asm is considered to
-clobber the contents.
+register are either unmodifed by the asm, or the <code>asm</code> statement is
+considered to clobber the contents.
 </p>
 <p>On some targets, a special form of output operand exists by which
 conditions in the flags register may be outputs of the asm.  The set of
@@ -712,7 +714,7 @@ conditions defined in the ISA manual for <code>j<var>cc</var></code> or
 </dl>
 
 <a name="InputOperands"></a><a name="Input-Operands"></a>
-<h4 class="subsubsection">6.45.2.5 Input Operands</h4>
+<h4 class="subsubsection">6.47.2.5 Input Operands</h4>
 <a name="index-asm-input-operands"></a>
 <a name="index-asm-expressions"></a>
 
@@ -822,7 +824,7 @@ the generated assembler code.
 </pre></div>
 
 <a name="Clobbers-and-Scratch-Registers"></a><a name="Clobbers-and-Scratch-Registers-1"></a>
-<h4 class="subsubsection">6.45.2.6 Clobbers and Scratch Registers</h4>
+<h4 class="subsubsection">6.47.2.6 Clobbers and Scratch Registers</h4>
 <a name="index-asm-clobbers"></a>
 <a name="index-asm-scratch-registers"></a>
 
@@ -846,6 +848,15 @@ operands get modified without also specifying them as output operands.
 <p>When the compiler selects which registers to use to represent input and output 
 operands, it does not use any of the clobbered registers. As a result, 
 clobbered registers are available for any use in the assembler code.
+</p>
+<p>Another restriction is that the clobber list should not contain the
+stack pointer register.  This is because the compiler requires the
+value of the stack pointer to be the same after an <code>asm</code>
+statement as it was on entry to the statement.  However, previous
+versions of GCC did not enforce this rule and allowed the stack
+pointer to appear in the list, with unclear semantics.  This behavior
+is deprecated and listing the stack pointer may become an error in
+future versions of GCC.
 </p>
 <p>Here is a realistic example for the VAX showing the use of clobbered 
 registers: 
@@ -1024,7 +1035,7 @@ dgemv_kernel_4x4 (long n, const double *ap, long lda,
 </pre></div>
 
 <a name="GotoLabels"></a><a name="Goto-Labels"></a>
-<h4 class="subsubsection">6.45.2.7 Goto Labels</h4>
+<h4 class="subsubsection">6.47.2.7 Goto Labels</h4>
 <a name="index-asm-goto-labels"></a>
 
 <p><code>asm goto</code> allows assembly code to jump to one or more C labels.  The
@@ -1093,7 +1104,7 @@ error:
 </pre></div>
 
 <a name="x86Operandmodifiers"></a><a name="x86-Operand-Modifiers"></a>
-<h4 class="subsubsection">6.45.2.8 x86 Operand Modifiers</h4>
+<h4 class="subsubsection">6.47.2.8 x86 Operand Modifiers</h4>
 
 <p>References to input, output, and goto operands in the assembler template
 of extended <code>asm</code> statements can use 
@@ -1123,41 +1134,51 @@ top:
 
    asm volatile goto (&quot;some assembler instructions here&quot;
    : /* No outputs. */
-   : &quot;q&quot; (iInt), &quot;X&quot; (sizeof(unsigned char) + 1)
+   : &quot;q&quot; (iInt), &quot;X&quot; (sizeof(unsigned char) + 1), &quot;i&quot; (42)
    : /* No clobbers. */
    : top);
 }
 </pre></div>
 
-<p>With no modifiers, this is what the output from the operands would be for the 
-&lsquo;<samp>att</samp>&rsquo; and &lsquo;<samp>intel</samp>&rsquo; dialects of assembler:
+<p>With no modifiers, this is what the output from the operands would be
+for the &lsquo;<samp>att</samp>&rsquo; and &lsquo;<samp>intel</samp>&rsquo; dialects of assembler:
 </p>
 <table>
 <thead><tr><th>Operand</th><th>&lsquo;<samp>att</samp>&rsquo;</th><th>&lsquo;<samp>intel</samp>&rsquo;</th></tr></thead>
 <tr><td><code>%0</code></td><td><code>%eax</code></td><td><code>eax</code></td></tr>
 <tr><td><code>%1</code></td><td><code>$2</code></td><td><code>2</code></td></tr>
-<tr><td><code>%2</code></td><td><code>$.L2</code></td><td><code>OFFSET FLAT:.L2</code></td></tr>
+<tr><td><code>%3</code></td><td><code>$.L3</code></td><td><code>OFFSET FLAT:.L3</code></td></tr>
 </table>
 
 <p>The table below shows the list of supported modifiers and their effects.
 </p>
 <table>
 <thead><tr><th>Modifier</th><th>Description</th><th>Operand</th><th>&lsquo;<samp>att</samp>&rsquo;</th><th>&lsquo;<samp>intel</samp>&rsquo;</th></tr></thead>
-<tr><td><code>z</code></td><td>Print the opcode suffix for the size of the current integer operand (one of <code>b</code>/<code>w</code>/<code>l</code>/<code>q</code>).</td><td><code>%z0</code></td><td><code>l</code></td><td></td></tr>
+<tr><td><code>a</code></td><td>Print an absolute memory reference.</td><td><code>%A0</code></td><td><code>*%rax</code></td><td><code>rax</code></td></tr>
 <tr><td><code>b</code></td><td>Print the QImode name of the register.</td><td><code>%b0</code></td><td><code>%al</code></td><td><code>al</code></td></tr>
-<tr><td><code>h</code></td><td>Print the QImode name for a &ldquo;high&rdquo; register.</td><td><code>%h0</code></td><td><code>%ah</code></td><td><code>ah</code></td></tr>
-<tr><td><code>w</code></td><td>Print the HImode name of the register.</td><td><code>%w0</code></td><td><code>%ax</code></td><td><code>ax</code></td></tr>
-<tr><td><code>k</code></td><td>Print the SImode name of the register.</td><td><code>%k0</code></td><td><code>%eax</code></td><td><code>eax</code></td></tr>
-<tr><td><code>q</code></td><td>Print the DImode name of the register.</td><td><code>%q0</code></td><td><code>%rax</code></td><td><code>rax</code></td></tr>
-<tr><td><code>l</code></td><td>Print the label name with no punctuation.</td><td><code>%l2</code></td><td><code>.L2</code></td><td><code>.L2</code></td></tr>
 <tr><td><code>c</code></td><td>Require a constant operand and print the constant expression with no punctuation.</td><td><code>%c1</code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><code>E</code></td><td>Print the address in Double Integer (DImode) mode (8 bytes) when the target is 64-bit.
+Otherwise mode is unspecified (VOIDmode).</td><td><code>%E1</code></td><td><code>%(rax)</code></td><td><code>[rax]</code></td></tr>
+<tr><td><code>h</code></td><td>Print the QImode name for a &ldquo;high&rdquo; register.</td><td><code>%h0</code></td><td><code>%ah</code></td><td><code>ah</code></td></tr>
+<tr><td><code>H</code></td><td>Add 8 bytes to an offsettable memory reference. Useful when accessing the
+high 8 bytes of SSE values. For a memref in (%rax), it generates</td><td><code>%H0</code></td><td><code>8(%rax)</code></td><td><code>8[rax]</code></td></tr>
+<tr><td><code>k</code></td><td>Print the SImode name of the register.</td><td><code>%k0</code></td><td><code>%eax</code></td><td><code>eax</code></td></tr>
+<tr><td><code>l</code></td><td>Print the label name with no punctuation.</td><td><code>%l3</code></td><td><code>.L3</code></td><td><code>.L3</code></td></tr>
+<tr><td><code>p</code></td><td>Print raw symbol name (without syntax-specific prefixes).</td><td><code>%p2</code></td><td><code>42</code></td><td><code>42</code></td></tr>
+<tr><td><code>P</code></td><td>If used for a function, print the PLT suffix and generate PIC code.
+For example, emit <code>foo@PLT</code> instead of &rsquo;foo&rsquo; for the function
+foo(). If used for a constant, drop all syntax-specific prefixes and
+issue the bare constant. See <code>p</code> above.</td></tr>
+<tr><td><code>q</code></td><td>Print the DImode name of the register.</td><td><code>%q0</code></td><td><code>%rax</code></td><td><code>rax</code></td></tr>
+<tr><td><code>w</code></td><td>Print the HImode name of the register.</td><td><code>%w0</code></td><td><code>%ax</code></td><td><code>ax</code></td></tr>
+<tr><td><code>z</code></td><td>Print the opcode suffix for the size of the current integer operand (one of <code>b</code>/<code>w</code>/<code>l</code>/<code>q</code>).</td><td><code>%z0</code></td><td><code>l</code></td><td></td></tr>
 </table>
 
 <p><code>V</code> is a special modifier which prints the name of the full integer
 register without <code>%</code>.
 </p>
 <a name="x86floatingpointasmoperands"></a><a name="x86-Floating_002dPoint-asm-Operands"></a>
-<h4 class="subsubsection">6.45.2.9 x86 Floating-Point <code>asm</code> Operands</h4>
+<h4 class="subsubsection">6.47.2.9 x86 Floating-Point <code>asm</code> Operands</h4>
 
 <p>On x86 targets, there are several rules on the usage of stack-like registers
 in the operands of an <code>asm</code>.  These rules apply only to the operands

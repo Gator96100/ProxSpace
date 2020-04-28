@@ -12,16 +12,16 @@ and with the Back-Cover Texts as in (a) below.
 (a) The FSF's Back-Cover Text is: "You are free to copy and modify
 this GNU Manual.  Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom." -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Debugging with GDB: GDB/MI</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>GDB/MI (Debugging with GDB)</title>
 
-<meta name="description" content="Debugging with GDB: GDB/MI">
-<meta name="keywords" content="Debugging with GDB: GDB/MI">
+<meta name="description" content="GDB/MI (Debugging with GDB)">
+<meta name="keywords" content="GDB/MI (Debugging with GDB)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Concept-Index.html#Concept-Index" rel="index" title="Concept Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -31,16 +31,16 @@ developing GNU and promoting software freedom." -->
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -49,10 +49,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -60,7 +59,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="GDB_002fMI"></a>
 <div class="header">
 <p>
@@ -69,6 +68,57 @@ Next: <a href="Annotations.html#Annotations" accesskey="n" rel="next">Annotation
 <hr>
 <a name="The-GDB_002fMI-Interface"></a>
 <h2 class="chapter">27 The <small>GDB/MI</small> Interface</h2>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-General-Design.html#GDB_002fMI-General-Design" accesskey="1">GDB/MI General Design</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Command-Syntax.html#GDB_002fMI-Command-Syntax" accesskey="2">GDB/MI Command Syntax</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Compatibility-with-CLI.html#GDB_002fMI-Compatibility-with-CLI" accesskey="3">GDB/MI Compatibility with CLI</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Development-and-Front-Ends.html#GDB_002fMI-Development-and-Front-Ends" accesskey="4">GDB/MI Development and Front Ends</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Output-Records.html#GDB_002fMI-Output-Records" accesskey="5">GDB/MI Output Records</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Simple-Examples.html#GDB_002fMI-Simple-Examples" accesskey="6">GDB/MI Simple Examples</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Command-Description-Format.html#GDB_002fMI-Command-Description-Format" accesskey="7">GDB/MI Command Description Format</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Breakpoint-Commands.html#GDB_002fMI-Breakpoint-Commands" accesskey="8">GDB/MI Breakpoint Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Catchpoint-Commands.html#GDB_002fMI-Catchpoint-Commands" accesskey="9">GDB/MI Catchpoint Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Program-Context.html#GDB_002fMI-Program-Context">GDB/MI Program Context</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Thread-Commands.html#GDB_002fMI-Thread-Commands">GDB/MI Thread Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Ada-Tasking-Commands.html#GDB_002fMI-Ada-Tasking-Commands">GDB/MI Ada Tasking Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Program-Execution.html#GDB_002fMI-Program-Execution">GDB/MI Program Execution</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Stack-Manipulation.html#GDB_002fMI-Stack-Manipulation">GDB/MI Stack Manipulation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Variable-Objects.html#GDB_002fMI-Variable-Objects">GDB/MI Variable Objects</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Data-Manipulation.html#GDB_002fMI-Data-Manipulation">GDB/MI Data Manipulation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Tracepoint-Commands.html#GDB_002fMI-Tracepoint-Commands">GDB/MI Tracepoint Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Symbol-Query.html#GDB_002fMI-Symbol-Query">GDB/MI Symbol Query</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-File-Commands.html#GDB_002fMI-File-Commands">GDB/MI File Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Target-Manipulation.html#GDB_002fMI-Target-Manipulation">GDB/MI Target Manipulation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-File-Transfer-Commands.html#GDB_002fMI-File-Transfer-Commands">GDB/MI File Transfer Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Ada-Exceptions-Commands.html#GDB_002fMI-Ada-Exceptions-Commands">GDB/MI Ada Exceptions Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Support-Commands.html#GDB_002fMI-Support-Commands">GDB/MI Support Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="GDB_002fMI-Miscellaneous-Commands.html#GDB_002fMI-Miscellaneous-Commands">GDB/MI Miscellaneous Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
 
 <a name="Function-and-Purpose"></a>
 <h3 class="unnumberedsec">Function and Purpose</h3>

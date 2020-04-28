@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Misc</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Misc (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Misc">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Misc">
+<meta name="description" content="Misc (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Misc (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Misc"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Previous: <a href="Named-Address-Spaces.html#Named-Address-Spaces" accesskey="p"
 </div>
 <hr>
 <a name="Miscellaneous-Parameters"></a>
-<h3 class="section">18.30 Miscellaneous Parameters</h3>
+<h3 class="section">18.31 Miscellaneous Parameters</h3>
 <a name="index-parameters_002c-miscellaneous"></a>
 
 <p>Here are several miscellaneous parameters.
@@ -316,6 +315,20 @@ extension.
 </p></dd></dl>
 
 <dl>
+<dt><a name="index-TARGET_005fSETJMP_005fPRESERVES_005fNONVOLATILE_005fREGS_005fP"></a>Target Hook: <em>bool</em> <strong>TARGET_SETJMP_PRESERVES_NONVOLATILE_REGS_P</strong> <em>(void)</em></dt>
+<dd><p>On some targets, it is assumed that the compiler will spill all pseudos
+  that are live across a call to <code>setjmp</code>, while other targets treat
+  <code>setjmp</code> calls as normal function calls.
+</p>  
+<p>This hook returns false if <code>setjmp</code> calls do not preserve all
+  non-volatile registers so that gcc that must spill all pseudos that are
+  live across <code>setjmp</code> calls.  Define this to return true if the
+  target does not need to spill all pseudos live across <code>setjmp</code> calls.
+  The default implementation conservatively assumes all pseudos must be
+  spilled across <code>setjmp</code> calls.
+</p></dd></dl>
+
+<dl>
 <dt><a name="index-STORE_005fFLAG_005fVALUE"></a>Macro: <strong>STORE_FLAG_VALUE</strong></dt>
 <dd><p>A C expression describing the value returned by a comparison operator
 with an integral mode and stored by a store-flag instruction
@@ -508,11 +521,10 @@ files <code>__STDC__</code> will always expand to 1.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-NO_005fIMPLICIT_005fEXTERN_005fC"></a>Macro: <strong>NO_IMPLICIT_EXTERN_C</strong></dt>
-<dd><p>Define this macro if the system header files support C++ as well as C.
-This macro inhibits the usual method of using system header files in
-C++, which is to pretend that the file&rsquo;s contents are enclosed in
-&lsquo;<samp>extern &quot;C&quot; {&hellip;}</samp>&rsquo;.
+<dt><a name="index-SYSTEM_005fIMPLICIT_005fEXTERN_005fC"></a>Macro: <strong>SYSTEM_IMPLICIT_EXTERN_C</strong></dt>
+<dd><p>Define this macro if the system header files do not support C++.
+This macro handles system header files by pretending that system
+header files are enclosed in &lsquo;<samp>extern &quot;C&quot; {&hellip;}</samp>&rsquo;.
 </p></dd></dl>
 
 <a name="index-_0023pragma"></a>
@@ -791,109 +803,6 @@ convenient, and have mode <var>mode</var> if that is convenient.
 <var>exp</var>&rsquo;s operands.  <var>ignore</var> is nonzero if the value is to be
 ignored.  This function should return the result of the call to the
 built-in function.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-TARGET_005fBUILTIN_005fCHKP_005fFUNCTION"></a>Target Hook: <em>tree</em> <strong>TARGET_BUILTIN_CHKP_FUNCTION</strong> <em>(unsigned <var>fcode</var>)</em></dt>
-<dd><p>This hook allows target to redefine built-in functions used by
-Pointer Bounds Checker for code instrumentation.  Hook should return
-fndecl of function implementing generic builtin whose code is
-passed in <var>fcode</var>.  Currently following built-in functions are
-obtained using this hook:
-</p><dl>
-<dt><a name="index-_005f_005fchkp_005fbndmk"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_bndmk</strong> <em>(const void *<var>lb</var>, size_t <var>size</var>)</em></dt>
-<dd><p>Function code - BUILT_IN_CHKP_BNDMK.  This built-in function is used
-by Pointer Bounds Checker to create bound values.  <var>lb</var> holds low
-bound of the resulting bounds.  <var>size</var> holds size of created bounds.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fbndstx"></a>Built-in Function: <em>void</em> <strong>__chkp_bndstx</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>, const void **<var>loc</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_BNDSTX</code>.  This built-in function is used
-by Pointer Bounds Checker to store bounds <var>b</var> for pointer <var>ptr</var>
-when <var>ptr</var> is stored by address <var>loc</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fbndldx"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_bndldx</strong> <em>(const void **<var>loc</var>, const void *<var>ptr</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_BNDLDX</code>.  This built-in function is used
-by Pointer Bounds Checker to get bounds of pointer <var>ptr</var> loaded by
-address <var>loc</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fbndcl"></a>Built-in Function: <em>void</em> <strong>__chkp_bndcl</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_BNDCL</code>.  This built-in function is used
-by Pointer Bounds Checker to perform check for pointer <var>ptr</var> against
-lower bound of bounds <var>b</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fbndcu"></a>Built-in Function: <em>void</em> <strong>__chkp_bndcu</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_BNDCU</code>.  This built-in function is used
-by Pointer Bounds Checker to perform check for pointer <var>ptr</var> against
-upper bound of bounds <var>b</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fbndret"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_bndret</strong> <em>(void *<var>ptr</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_BNDRET</code>.  This built-in function is used
-by Pointer Bounds Checker to obtain bounds returned by a call statement.
-<var>ptr</var> passed to built-in is <code>SSA_NAME</code> returned by the call.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fintersect"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_intersect</strong> <em>(__bounds_type <var>b1</var>, __bounds_type <var>b2</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_INTERSECT</code>.  This built-in function
-returns intersection of bounds <var>b1</var> and <var>b2</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fnarrow"></a>Built-in Function: <em>__bounds_type</em> <strong>__chkp_narrow</strong> <em>(const void *<var>ptr</var>, __bounds_type <var>b</var>, size_t <var>s</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_NARROW</code>.  This built-in function
-returns intersection of bounds <var>b</var> and
-[<var>ptr</var>, <var>ptr</var> + <var>s</var> - <code>1</code>].
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-_005f_005fchkp_005fsizeof"></a>Built-in Function: <em>size_t</em> <strong>__chkp_sizeof</strong> <em>(const void *<var>ptr</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_SIZEOF</code>.  This built-in function
-returns size of object referenced by <var>ptr</var>. <var>ptr</var> is always
-<code>ADDR_EXPR</code> of <code>VAR_DECL</code>.  This built-in is used by
-Pointer Bounds Checker when bounds of object cannot be computed statically
-(e.g. object has incomplete type).
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-void"></a>Built-in Function: <em>const</em> <strong>void</strong> <em>*__chkp_extract_lower (__bounds_type <var>b</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_EXTRACT_LOWER</code>.  This built-in function
-returns lower bound of bounds <var>b</var>.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-void-1"></a>Built-in Function: <em>const</em> <strong>void</strong> <em>*__chkp_extract_upper (__bounds_type <var>b</var>)</em></dt>
-<dd><p>Function code - <code>BUILT_IN_CHKP_EXTRACT_UPPER</code>.  This built-in function
-returns upper bound of bounds <var>b</var>.
-</p></dd></dl>
-</dd></dl>
-<dl>
-<dt><a name="index-TARGET_005fCHKP_005fBOUND_005fTYPE"></a>Target Hook: <em>tree</em> <strong>TARGET_CHKP_BOUND_TYPE</strong> <em>(void)</em></dt>
-<dd><p>Return type to be used for bounds
-</p></dd></dl>
-<dl>
-<dt><a name="index-TARGET_005fCHKP_005fBOUND_005fMODE"></a>Target Hook: <em>machine_mode</em> <strong>TARGET_CHKP_BOUND_MODE</strong> <em>(void)</em></dt>
-<dd><p>Return mode to be used for bounds.
-</p></dd></dl>
-<dl>
-<dt><a name="index-TARGET_005fCHKP_005fMAKE_005fBOUNDS_005fCONSTANT"></a>Target Hook: <em>tree</em> <strong>TARGET_CHKP_MAKE_BOUNDS_CONSTANT</strong> <em>(HOST_WIDE_INT <var>lb</var>, HOST_WIDE_INT <var>ub</var>)</em></dt>
-<dd><p>Return constant used to statically initialize constant bounds
-with specified lower bound <var>lb</var> and upper bounds <var>ub</var>.
-</p></dd></dl>
-<dl>
-<dt><a name="index-TARGET_005fCHKP_005fINITIALIZE_005fBOUNDS"></a>Target Hook: <em>int</em> <strong>TARGET_CHKP_INITIALIZE_BOUNDS</strong> <em>(tree <var>var</var>, tree <var>lb</var>, tree <var>ub</var>, tree *<var>stmts</var>)</em></dt>
-<dd><p>Generate a list of statements <var>stmts</var> to initialize pointer
-bounds variable <var>var</var> with bounds <var>lb</var> and <var>ub</var>.  Return
-the number of generated statements.
 </p></dd></dl>
 
 <dl>
@@ -1462,6 +1371,44 @@ constants that are represented as <code>CONST_WIDE_INT</code>.
 maintainer is familiar with.
 </p>
 </dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fHAVE_005fSPECULATION_005fSAFE_005fVALUE"></a>Target Hook: <em>bool</em> <strong>TARGET_HAVE_SPECULATION_SAFE_VALUE</strong> <em>(bool <var>active</var>)</em></dt>
+<dd><p>This hook is used to determine the level of target support for
+ <code>__builtin_speculation_safe_value</code>.  If called with an argument
+ of false, it returns true if the target has been modified to support
+ this builtin.  If called with an argument of true, it returns true
+ if the target requires active mitigation execution might be speculative.
+</p> 
+<p>The default implementation returns false if the target does not define
+ a pattern named <code>speculation_barrier</code>.  Else it returns true
+ for the first case and whether the pattern is enabled for the current
+ compilation for the second case.
+</p> 
+<p>For targets that have no processors that can execute instructions
+ speculatively an alternative implemenation of this hook is available:
+ simply redefine this hook to <code>speculation_safe_value_not_needed</code>
+ along with your other target hooks.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-TARGET_005fSPECULATION_005fSAFE_005fVALUE"></a>Target Hook: <em>rtx</em> <strong>TARGET_SPECULATION_SAFE_VALUE</strong> <em>(machine_mode <var>mode</var>, rtx <var>result</var>, rtx <var>val</var>, rtx <var>failval</var>)</em></dt>
+<dd><p>This target hook can be used to generate a target-specific code
+ sequence that implements the <code>__builtin_speculation_safe_value</code>
+ built-in function.  The function must always return <var>val</var> in
+ <var>result</var> in mode <var>mode</var> when the cpu is not executing
+ speculatively, but must never return that when speculating until it
+ is known that the speculation will not be unwound.  The hook supports
+ two primary mechanisms for implementing the requirements.  The first
+ is to emit a speculation barrier which forces the processor to wait
+ until all prior speculative operations have been resolved; the second
+ is to use a target-specific mechanism that can track the speculation
+ state and to return <var>failval</var> if it can determine that
+ speculation must be unwound at a later time.
+</p> 
+<p>The default implementation simply copies <var>val</var> to <var>result</var> and
+ emits a <code>speculation_barrier</code> instruction if that is defined.
+</p></dd></dl>
 
 <dl>
 <dt><a name="index-TARGET_005fRUN_005fTARGET_005fSELFTESTS"></a>Target Hook: <em>void</em> <strong>TARGET_RUN_TARGET_SELFTESTS</strong> <em>(void)</em></dt>

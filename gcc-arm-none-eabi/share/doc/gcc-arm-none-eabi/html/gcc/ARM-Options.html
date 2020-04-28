@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): ARM Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ARM Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): ARM Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): ARM Options">
+<meta name="description" content="ARM Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="ARM Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="ARM-Options"></a>
 <div class="header">
 <p>
@@ -75,7 +74,7 @@ Next: <a href="AVR-Options.html#AVR-Options" accesskey="n" rel="next">AVR Option
 </div>
 <hr>
 <a name="ARM-Options-1"></a>
-<h4 class="subsection">3.18.4 ARM Options</h4>
+<h4 class="subsection">3.18.5 ARM Options</h4>
 <a name="index-ARM-options"></a>
 
 <p>These &lsquo;<samp>-m</samp>&rsquo; options are defined for the ARM port:
@@ -115,6 +114,7 @@ configurations this option is meaningless.
 </dd>
 <dt><code>-mno-sched-prolog</code></dt>
 <dd><a name="index-mno_002dsched_002dprolog"></a>
+<a name="index-msched_002dprolog"></a>
 <p>Prevent the reordering of instructions in the function prologue, or the
 merging of those instruction with the instructions in the function&rsquo;s
 body.  This means that all functions start with a recognizable set
@@ -142,6 +142,13 @@ compile your entire program with the same ABI, and link with a
 compatible set of libraries.
 </p>
 </dd>
+<dt><code>-mgeneral-regs-only</code></dt>
+<dd><a name="index-mgeneral_002dregs_002donly-1"></a>
+<p>Generate code which uses only the general-purpose registers.  This will prevent
+the compiler from using floating-point and Advanced SIMD registers but will not
+impose any restrictions on the assembler.
+</p>
+</dd>
 <dt><code>-mlittle-endian</code></dt>
 <dd><a name="index-mlittle_002dendian-2"></a>
 <p>Generate code for a processor running in little-endian mode.  This is
@@ -165,7 +172,7 @@ the default is BE32.  BE32 format has been deprecated by ARM.
 </p>
 </dd>
 <dt><code>-march=<var>name</var><span class="roman">[</span>+extension&hellip;<span class="roman">]</span></code></dt>
-<dd><a name="index-march-1"></a>
+<dd><a name="index-march-2"></a>
 <p>This specifies the name of the target ARM architecture.  GCC uses this
 name to determine what kind of instructions it can emit when generating
 assembly code.  This option can be used in conjunction with or instead
@@ -179,6 +186,7 @@ of the <samp>-mcpu=</samp> option.
 &lsquo;<samp>armv7</samp>&rsquo;, &lsquo;<samp>armv7-a</samp>&rsquo;, &lsquo;<samp>armv7ve</samp>&rsquo;, 
 &lsquo;<samp>armv8-a</samp>&rsquo;, &lsquo;<samp>armv8.1-a</samp>&rsquo;, &lsquo;<samp>armv8.2-a</samp>&rsquo;, &lsquo;<samp>armv8.3-a</samp>&rsquo;,
 &lsquo;<samp>armv8.4-a</samp>&rsquo;,
+&lsquo;<samp>armv8.5-a</samp>&rsquo;,
 &lsquo;<samp>armv7-r</samp>&rsquo;,
 &lsquo;<samp>armv8-r</samp>&rsquo;,
 &lsquo;<samp>armv6-m</samp>&rsquo;, &lsquo;<samp>armv6s-m</samp>&rsquo;,
@@ -187,9 +195,7 @@ of the <samp>-mcpu=</samp> option.
 &lsquo;<samp>iwmmxt</samp>&rsquo; and &lsquo;<samp>iwmmxt2</samp>&rsquo;.
 </p>
 <p>Additionally, the following architectures, which lack support for the
-Thumb execution state, are recognized but support is deprecated:
-&lsquo;<samp>armv2</samp>&rsquo;, &lsquo;<samp>armv2a</samp>&rsquo;, &lsquo;<samp>armv3</samp>&rsquo;, &lsquo;<samp>armv3m</samp>&rsquo;,
-&lsquo;<samp>armv4</samp>&rsquo;, &lsquo;<samp>armv5</samp>&rsquo; and &lsquo;<samp>armv5e</samp>&rsquo;.
+Thumb execution state, are recognized but support is deprecated: &lsquo;<samp>armv4</samp>&rsquo;.
 </p>
 <p>Many of the architectures support extensions.  These can be added by
 appending &lsquo;<samp>+<var>extension</var></samp>&rsquo; to the architecture name.  Extension
@@ -217,7 +223,6 @@ variant for &lsquo;<samp>armv8-a</samp>&rsquo;.
 Architectures not mentioned do not support any extensions.
 </p>
 <dl compact="compact">
-<dt>&lsquo;<samp>armv5e</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>armv5te</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>armv6</samp>&rsquo;</dt>
 <dt>&lsquo;<samp>armv6j</samp>&rsquo;</dt>
@@ -402,6 +407,12 @@ the half-precision floating-point conversion operations.
 <dt>&lsquo;<samp>+nofp</samp>&rsquo;</dt>
 <dd><p>Disable the floating-point, Advanced SIMD and cryptographic instructions.
 </p></dd>
+<dt>&lsquo;<samp>+sb</samp>&rsquo;</dt>
+<dd><p>Speculation Barrier Instruction.
+</p></dd>
+<dt>&lsquo;<samp>+predres</samp>&rsquo;</dt>
+<dd><p>Execution and Data Prediction Restriction Instructions.
+</p></dd>
 </dl>
 
 </dd>
@@ -422,6 +433,14 @@ floating-point instructions.
 </dd>
 <dt>&lsquo;<samp>+nofp</samp>&rsquo;</dt>
 <dd><p>Disable the floating-point, Advanced SIMD and cryptographic instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>+sb</samp>&rsquo;</dt>
+<dd><p>Speculation Barrier Instruction.
+</p>
+</dd>
+<dt>&lsquo;<samp>+predres</samp>&rsquo;</dt>
+<dd><p>Execution and Data Prediction Restriction Instructions.
 </p></dd>
 </dl>
 
@@ -459,11 +478,56 @@ floating-point instructions.
 </dd>
 <dt>&lsquo;<samp>+nofp</samp>&rsquo;</dt>
 <dd><p>Disable the floating-point, Advanced SIMD and cryptographic instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>+sb</samp>&rsquo;</dt>
+<dd><p>Speculation Barrier Instruction.
+</p>
+</dd>
+<dt>&lsquo;<samp>+predres</samp>&rsquo;</dt>
+<dd><p>Execution and Data Prediction Restriction Instructions.
 </p></dd>
 </dl>
 
 </dd>
 <dt>&lsquo;<samp>armv8.4-a</samp>&rsquo;</dt>
+<dd><dl compact="compact">
+<dt>&lsquo;<samp>+fp16</samp>&rsquo;</dt>
+<dd><p>The half-precision floating-point data processing instructions.
+This also enables the Advanced SIMD and floating-point instructions as well
+as the Dot Product extension and the half-precision floating-point fmla
+extension.
+</p>
+</dd>
+<dt>&lsquo;<samp>+simd</samp>&rsquo;</dt>
+<dd><p>The ARMv8.3-A Advanced SIMD and floating-point instructions as well as the
+Dot Product extension.
+</p>
+</dd>
+<dt>&lsquo;<samp>+crypto</samp>&rsquo;</dt>
+<dd><p>The cryptographic instructions.  This also enables the Advanced SIMD and
+floating-point instructions as well as the Dot Product extension.
+</p>
+</dd>
+<dt>&lsquo;<samp>+nocrypto</samp>&rsquo;</dt>
+<dd><p>Disable the cryptographic extension.
+</p>
+</dd>
+<dt>&lsquo;<samp>+nofp</samp>&rsquo;</dt>
+<dd><p>Disable the floating-point, Advanced SIMD and cryptographic instructions.
+</p>
+</dd>
+<dt>&lsquo;<samp>+sb</samp>&rsquo;</dt>
+<dd><p>Speculation Barrier Instruction.
+</p>
+</dd>
+<dt>&lsquo;<samp>+predres</samp>&rsquo;</dt>
+<dd><p>Execution and Data Prediction Restriction Instructions.
+</p></dd>
+</dl>
+
+</dd>
+<dt>&lsquo;<samp>armv8.5-a</samp>&rsquo;</dt>
 <dd><dl compact="compact">
 <dt>&lsquo;<samp>+fp16</samp>&rsquo;</dt>
 <dd><p>The half-precision floating-point data processing instructions.
@@ -510,7 +574,7 @@ registers and the half-precision floating-point conversion operations.
 </p>
 </dd>
 <dt>&lsquo;<samp>+vfpv3-d16-fp16</samp>&rsquo;</dt>
-<dd><p>The VFPv3 floating-point instructions, with 16 double-precision
+<dd><p>The VFPv3 floating-point instructions with 16 double-precision
 registers and the half-precision floating-point conversion operations.
 </p>
 </dd>
@@ -604,58 +668,40 @@ is unsuccessful the option has no effect.
 </p>
 </dd>
 <dt><code>-mtune=<var>name</var></code></dt>
-<dd><a name="index-mtune-3"></a>
+<dd><a name="index-mtune-4"></a>
 <p>This option specifies the name of the target ARM processor for
 which GCC should tune the performance of the code.
 For some ARM implementations better performance can be obtained by using
 this option.
-Permissible names are: &lsquo;<samp>arm2</samp>&rsquo;, &lsquo;<samp>arm250</samp>&rsquo;,
-&lsquo;<samp>arm3</samp>&rsquo;, &lsquo;<samp>arm6</samp>&rsquo;, &lsquo;<samp>arm60</samp>&rsquo;, &lsquo;<samp>arm600</samp>&rsquo;, &lsquo;<samp>arm610</samp>&rsquo;,
-&lsquo;<samp>arm620</samp>&rsquo;, &lsquo;<samp>arm7</samp>&rsquo;, &lsquo;<samp>arm7m</samp>&rsquo;, &lsquo;<samp>arm7d</samp>&rsquo;, &lsquo;<samp>arm7dm</samp>&rsquo;,
-&lsquo;<samp>arm7di</samp>&rsquo;, &lsquo;<samp>arm7dmi</samp>&rsquo;, &lsquo;<samp>arm70</samp>&rsquo;, &lsquo;<samp>arm700</samp>&rsquo;,
-&lsquo;<samp>arm700i</samp>&rsquo;, &lsquo;<samp>arm710</samp>&rsquo;, &lsquo;<samp>arm710c</samp>&rsquo;, &lsquo;<samp>arm7100</samp>&rsquo;,
-&lsquo;<samp>arm720</samp>&rsquo;,
-&lsquo;<samp>arm7500</samp>&rsquo;, &lsquo;<samp>arm7500fe</samp>&rsquo;, &lsquo;<samp>arm7tdmi</samp>&rsquo;, &lsquo;<samp>arm7tdmi-s</samp>&rsquo;,
-&lsquo;<samp>arm710t</samp>&rsquo;, &lsquo;<samp>arm720t</samp>&rsquo;, &lsquo;<samp>arm740t</samp>&rsquo;,
-&lsquo;<samp>strongarm</samp>&rsquo;, &lsquo;<samp>strongarm110</samp>&rsquo;, &lsquo;<samp>strongarm1100</samp>&rsquo;,
-&lsquo;<samp>strongarm1110</samp>&rsquo;,
-&lsquo;<samp>arm8</samp>&rsquo;, &lsquo;<samp>arm810</samp>&rsquo;, &lsquo;<samp>arm9</samp>&rsquo;, &lsquo;<samp>arm9e</samp>&rsquo;, &lsquo;<samp>arm920</samp>&rsquo;,
-&lsquo;<samp>arm920t</samp>&rsquo;, &lsquo;<samp>arm922t</samp>&rsquo;, &lsquo;<samp>arm946e-s</samp>&rsquo;, &lsquo;<samp>arm966e-s</samp>&rsquo;,
-&lsquo;<samp>arm968e-s</samp>&rsquo;, &lsquo;<samp>arm926ej-s</samp>&rsquo;, &lsquo;<samp>arm940t</samp>&rsquo;, &lsquo;<samp>arm9tdmi</samp>&rsquo;,
-&lsquo;<samp>arm10tdmi</samp>&rsquo;, &lsquo;<samp>arm1020t</samp>&rsquo;, &lsquo;<samp>arm1026ej-s</samp>&rsquo;,
-&lsquo;<samp>arm10e</samp>&rsquo;, &lsquo;<samp>arm1020e</samp>&rsquo;, &lsquo;<samp>arm1022e</samp>&rsquo;,
+Permissible names are: &lsquo;<samp>arm7tdmi</samp>&rsquo;, &lsquo;<samp>arm7tdmi-s</samp>&rsquo;, &lsquo;<samp>arm710t</samp>&rsquo;,
+&lsquo;<samp>arm720t</samp>&rsquo;, &lsquo;<samp>arm740t</samp>&rsquo;, &lsquo;<samp>strongarm</samp>&rsquo;, &lsquo;<samp>strongarm110</samp>&rsquo;,
+&lsquo;<samp>strongarm1100</samp>&rsquo;, 0&lsquo;<samp>strongarm1110</samp>&rsquo;, &lsquo;<samp>arm8</samp>&rsquo;, &lsquo;<samp>arm810</samp>&rsquo;,
+&lsquo;<samp>arm9</samp>&rsquo;, &lsquo;<samp>arm9e</samp>&rsquo;, &lsquo;<samp>arm920</samp>&rsquo;, &lsquo;<samp>arm920t</samp>&rsquo;, &lsquo;<samp>arm922t</samp>&rsquo;,
+&lsquo;<samp>arm946e-s</samp>&rsquo;, &lsquo;<samp>arm966e-s</samp>&rsquo;, &lsquo;<samp>arm968e-s</samp>&rsquo;, &lsquo;<samp>arm926ej-s</samp>&rsquo;,
+&lsquo;<samp>arm940t</samp>&rsquo;, &lsquo;<samp>arm9tdmi</samp>&rsquo;, &lsquo;<samp>arm10tdmi</samp>&rsquo;, &lsquo;<samp>arm1020t</samp>&rsquo;,
+&lsquo;<samp>arm1026ej-s</samp>&rsquo;, &lsquo;<samp>arm10e</samp>&rsquo;, &lsquo;<samp>arm1020e</samp>&rsquo;, &lsquo;<samp>arm1022e</samp>&rsquo;,
 &lsquo;<samp>arm1136j-s</samp>&rsquo;, &lsquo;<samp>arm1136jf-s</samp>&rsquo;, &lsquo;<samp>mpcore</samp>&rsquo;, &lsquo;<samp>mpcorenovfp</samp>&rsquo;,
 &lsquo;<samp>arm1156t2-s</samp>&rsquo;, &lsquo;<samp>arm1156t2f-s</samp>&rsquo;, &lsquo;<samp>arm1176jz-s</samp>&rsquo;, &lsquo;<samp>arm1176jzf-s</samp>&rsquo;,
 &lsquo;<samp>generic-armv7-a</samp>&rsquo;, &lsquo;<samp>cortex-a5</samp>&rsquo;, &lsquo;<samp>cortex-a7</samp>&rsquo;, &lsquo;<samp>cortex-a8</samp>&rsquo;,
 &lsquo;<samp>cortex-a9</samp>&rsquo;, &lsquo;<samp>cortex-a12</samp>&rsquo;, &lsquo;<samp>cortex-a15</samp>&rsquo;, &lsquo;<samp>cortex-a17</samp>&rsquo;,
 &lsquo;<samp>cortex-a32</samp>&rsquo;, &lsquo;<samp>cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a55</samp>&rsquo;,
 &lsquo;<samp>cortex-a57</samp>&rsquo;, &lsquo;<samp>cortex-a72</samp>&rsquo;, &lsquo;<samp>cortex-a73</samp>&rsquo;, &lsquo;<samp>cortex-a75</samp>&rsquo;,
-&lsquo;<samp>cortex-r4</samp>&rsquo;, &lsquo;<samp>cortex-r4f</samp>&rsquo;, &lsquo;<samp>cortex-r5</samp>&rsquo;, &lsquo;<samp>cortex-r7</samp>&rsquo;,
-&lsquo;<samp>cortex-r8</samp>&rsquo;, &lsquo;<samp>cortex-r52</samp>&rsquo;,
-&lsquo;<samp>cortex-m33</samp>&rsquo;,
-&lsquo;<samp>cortex-m23</samp>&rsquo;,
-&lsquo;<samp>cortex-m7</samp>&rsquo;,
-&lsquo;<samp>cortex-m4</samp>&rsquo;,
-&lsquo;<samp>cortex-m3</samp>&rsquo;,
-&lsquo;<samp>cortex-m1</samp>&rsquo;,
-&lsquo;<samp>cortex-m0</samp>&rsquo;,
-&lsquo;<samp>cortex-m0plus</samp>&rsquo;,
-&lsquo;<samp>cortex-m1.small-multiply</samp>&rsquo;,
-&lsquo;<samp>cortex-m0.small-multiply</samp>&rsquo;,
-&lsquo;<samp>cortex-m0plus.small-multiply</samp>&rsquo;,
-&lsquo;<samp>exynos-m1</samp>&rsquo;,
-&lsquo;<samp>marvell-pj4</samp>&rsquo;,
-&lsquo;<samp>xscale</samp>&rsquo;, &lsquo;<samp>iwmmxt</samp>&rsquo;, &lsquo;<samp>iwmmxt2</samp>&rsquo;, &lsquo;<samp>ep9312</samp>&rsquo;,
-&lsquo;<samp>fa526</samp>&rsquo;, &lsquo;<samp>fa626</samp>&rsquo;,
-&lsquo;<samp>fa606te</samp>&rsquo;, &lsquo;<samp>fa626te</samp>&rsquo;, &lsquo;<samp>fmp626</samp>&rsquo;, &lsquo;<samp>fa726te</samp>&rsquo;,
-&lsquo;<samp>xgene1</samp>&rsquo;.
+&lsquo;<samp>cortex-a76</samp>&rsquo;, &lsquo;<samp>ares</samp>&rsquo;, &lsquo;<samp>cortex-r4</samp>&rsquo;, &lsquo;<samp>cortex-r4f</samp>&rsquo;,
+&lsquo;<samp>cortex-r5</samp>&rsquo;, &lsquo;<samp>cortex-r7</samp>&rsquo;, &lsquo;<samp>cortex-r8</samp>&rsquo;, &lsquo;<samp>cortex-r52</samp>&rsquo;,
+&lsquo;<samp>cortex-m0</samp>&rsquo;, &lsquo;<samp>cortex-m0plus</samp>&rsquo;, &lsquo;<samp>cortex-m1</samp>&rsquo;, &lsquo;<samp>cortex-m3</samp>&rsquo;,
+&lsquo;<samp>cortex-m4</samp>&rsquo;, &lsquo;<samp>cortex-m7</samp>&rsquo;, &lsquo;<samp>cortex-m23</samp>&rsquo;, &lsquo;<samp>cortex-m33</samp>&rsquo;,
+&lsquo;<samp>cortex-m1.small-multiply</samp>&rsquo;, &lsquo;<samp>cortex-m0.small-multiply</samp>&rsquo;,
+&lsquo;<samp>cortex-m0plus.small-multiply</samp>&rsquo;, &lsquo;<samp>exynos-m1</samp>&rsquo;, &lsquo;<samp>marvell-pj4</samp>&rsquo;,
+&lsquo;<samp>neoverse-n1</samp>&rsquo;, &lsquo;<samp>xscale</samp>&rsquo;, &lsquo;<samp>iwmmxt</samp>&rsquo;, &lsquo;<samp>iwmmxt2</samp>&rsquo;,
+&lsquo;<samp>ep9312</samp>&rsquo;, &lsquo;<samp>fa526</samp>&rsquo;, &lsquo;<samp>fa626</samp>&rsquo;, &lsquo;<samp>fa606te</samp>&rsquo;, &lsquo;<samp>fa626te</samp>&rsquo;,
+&lsquo;<samp>fmp626</samp>&rsquo;, &lsquo;<samp>fa726te</samp>&rsquo;, &lsquo;<samp>xgene1</samp>&rsquo;.
 </p>
 <p>Additionally, this option can specify that GCC should tune the performance
 of the code for a big.LITTLE system.  Permissible names are:
 &lsquo;<samp>cortex-a15.cortex-a7</samp>&rsquo;, &lsquo;<samp>cortex-a17.cortex-a7</samp>&rsquo;,
 &lsquo;<samp>cortex-a57.cortex-a53</samp>&rsquo;, &lsquo;<samp>cortex-a72.cortex-a53</samp>&rsquo;,
 &lsquo;<samp>cortex-a72.cortex-a35</samp>&rsquo;, &lsquo;<samp>cortex-a73.cortex-a53</samp>&rsquo;,
-&lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo;.
+&lsquo;<samp>cortex-a75.cortex-a55</samp>&rsquo;, &lsquo;<samp>cortex-a76.cortex-a55</samp>&rsquo;.
 </p>
 <p><samp>-mtune=generic-<var>arch</var></samp> specifies that GCC should tune the
 performance for a blend of processors within architecture <var>arch</var>.
@@ -989,7 +1035,7 @@ this option and always use the original scheme.
 <p>Only generate absolute relocations on word-sized values (i.e. R_ARM_ABS32).
 This is enabled by default on targets (uClinux, SymbianOS) where the runtime
 loader imposes this restriction, and when <samp>-fpic</samp> or <samp>-fPIC</samp>
-is specified.
+is specified. This option conflicts with <samp>-mslow-flash-data</samp>.
 </p>
 </dd>
 <dt><code>-mfix-cortex-m3-ldrd</code></dt>
@@ -1030,7 +1076,7 @@ to Neon is high.
 <p>Assume loading data from flash is slower than fetching instruction.
 Therefore literal load is minimized for better performance.
 This option is only supported when compiling for ARMv7 M-profile and
-off by default.
+off by default. It conflicts with <samp>-mword-relocations</samp>.
 </p>
 </dd>
 <dt><code>-masm-syntax-unified</code></dt>

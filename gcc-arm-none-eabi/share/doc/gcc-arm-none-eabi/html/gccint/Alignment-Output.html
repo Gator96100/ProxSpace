@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Alignment Output</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Alignment Output (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Alignment Output">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Alignment Output">
+<meta name="description" content="Alignment Output (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Alignment Output (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Alignment-Output"></a>
 <div class="header">
 <p>
@@ -95,13 +94,6 @@ selection in <var>align_jumps</var> in a <code>JUMP_ALIGN</code> implementation.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fASM_005fJUMP_005fALIGN_005fMAX_005fSKIP"></a>Target Hook: <em>int</em> <strong>TARGET_ASM_JUMP_ALIGN_MAX_SKIP</strong> <em>(rtx_insn *<var>label</var>)</em></dt>
-<dd><p>The maximum number of bytes to skip before <var>label</var> when applying
-<code>JUMP_ALIGN</code>.  This works only if
-<code>ASM_OUTPUT_MAX_SKIP_ALIGN</code> is defined.
-</p></dd></dl>
-
-<dl>
 <dt><a name="index-LABEL_005fALIGN_005fAFTER_005fBARRIER"></a>Macro: <strong>LABEL_ALIGN_AFTER_BARRIER</strong> <em>(<var>label</var>)</em></dt>
 <dd><p>The alignment (log base 2) to put in front of <var>label</var>, which follows
 a <code>BARRIER</code>.
@@ -109,13 +101,6 @@ a <code>BARRIER</code>.
 <p>This macro need not be defined if you don&rsquo;t want any special alignment
 to be done at such a time.  Most machine descriptions do not currently
 define the macro.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-TARGET_005fASM_005fLABEL_005fALIGN_005fAFTER_005fBARRIER_005fMAX_005fSKIP"></a>Target Hook: <em>int</em> <strong>TARGET_ASM_LABEL_ALIGN_AFTER_BARRIER_MAX_SKIP</strong> <em>(rtx_insn *<var>label</var>)</em></dt>
-<dd><p>The maximum number of bytes to skip before <var>label</var> when applying
-<code>LABEL_ALIGN_AFTER_BARRIER</code>.  This works only if
-<code>ASM_OUTPUT_MAX_SKIP_ALIGN</code> is defined.
 </p></dd></dl>
 
 <dl>
@@ -134,13 +119,6 @@ selection in <code>align_loops</code> in a <code>LOOP_ALIGN</code> implementatio
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-TARGET_005fASM_005fLOOP_005fALIGN_005fMAX_005fSKIP"></a>Target Hook: <em>int</em> <strong>TARGET_ASM_LOOP_ALIGN_MAX_SKIP</strong> <em>(rtx_insn *<var>label</var>)</em></dt>
-<dd><p>The maximum number of bytes to skip when applying <code>LOOP_ALIGN</code> to
-<var>label</var>.  This works only if <code>ASM_OUTPUT_MAX_SKIP_ALIGN</code> is
-defined.
-</p></dd></dl>
-
-<dl>
 <dt><a name="index-LABEL_005fALIGN"></a>Macro: <strong>LABEL_ALIGN</strong> <em>(<var>label</var>)</em></dt>
 <dd><p>The alignment (log base 2) to put in front of <var>label</var>.
 If <code>LABEL_ALIGN_AFTER_BARRIER</code> / <code>LOOP_ALIGN</code> specify a different alignment,
@@ -150,13 +128,6 @@ the maximum of the specified values is used.
 to set the variable <code>align_labels</code> in the target&rsquo;s
 <code>TARGET_OPTION_OVERRIDE</code>.  Otherwise, you should try to honor the user&rsquo;s
 selection in <code>align_labels</code> in a <code>LABEL_ALIGN</code> implementation.
-</p></dd></dl>
-
-<dl>
-<dt><a name="index-TARGET_005fASM_005fLABEL_005fALIGN_005fMAX_005fSKIP"></a>Target Hook: <em>int</em> <strong>TARGET_ASM_LABEL_ALIGN_MAX_SKIP</strong> <em>(rtx_insn *<var>label</var>)</em></dt>
-<dd><p>The maximum number of bytes to skip when applying <code>LABEL_ALIGN</code>
-to <var>label</var>.  This works only if <code>ASM_OUTPUT_MAX_SKIP_ALIGN</code>
-is defined.
 </p></dd></dl>
 
 <dl>

@@ -12,16 +12,16 @@ and with the Back-Cover Texts as in (a) below.
 (a) The FSF's Back-Cover Text is: "You are free to copy and modify
 this GNU Manual.  Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom." -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Debugging with GDB: Top</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Top (Debugging with GDB)</title>
 
-<meta name="description" content="Debugging with GDB: Top">
-<meta name="keywords" content="Debugging with GDB: Top">
+<meta name="description" content="Top (Debugging with GDB)">
+<meta name="keywords" content="Top (Debugging with GDB)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="#Top" rel="start" title="Top">
 <link href="Concept-Index.html#Concept-Index" rel="index" title="Concept Index">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ developing GNU and promoting software freedom." -->
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,7 +58,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <h1 class="settitle" align="center">Debugging with <small>GDB</small></h1>
 
 
@@ -74,8 +73,8 @@ ul.no-bullet {list-style: none}
 </p>
 <p>This is the Tenth Edition, of <cite>Debugging with
 <small>GDB</small>: the <small>GNU</small> Source-Level Debugger</cite> for <small>GDB</small>
-(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
-Version 8.3.0.20190703-git.
+(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
+Version 8.3.0.20190709-git.
 </p>
 <p>Copyright &copy; 1988-2019 Free Software Foundation, Inc.
 </p>
@@ -105,8 +104,8 @@ Next: <a href="Summary.html#Summary" accesskey="n" rel="next">Summary</a>, Previ
 <p>This file describes <small>GDB</small>, the <small>GNU</small> symbolic debugger.
 </p>
 <p>This is the Tenth Edition, for <small>GDB</small>
-(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
-Version 8.3.0.20190703-git.
+(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
+Version 8.3.0.20190709-git.
 </p>
 <p>Copyright (C) 1988-2019 Free Software Foundation, Inc.
 </p>
@@ -120,6 +119,7 @@ software in general.  We will miss him.
 <tr><td align="left" valign="top">&bull; <a href="Sample-Session.html#Sample-Session" accesskey="2">Sample Session</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">A sample <small>GDB</small> session
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Invocation.html#Invocation" accesskey="3">Invocation</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Getting in and out of <small>GDB</small>
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Commands.html#Commands" accesskey="4">Commands</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top"><small>GDB</small> commands
@@ -147,9 +147,11 @@ software in general.  We will miss him.
 <tr><td align="left" valign="top">&bull; <a href="Overlays.html#Overlays">Overlays</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Debugging programs that use overlays
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Languages.html#Languages">Languages</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Using <small>GDB</small> with different languages
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Symbols.html#Symbols">Symbols</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Examining the symbol table
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Altering.html#Altering">Altering</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Altering execution
@@ -181,9 +183,11 @@ software in general.  We will miss him.
 <tr><td align="left" valign="top">&bull; <a href="In_002dProcess-Agent.html#In_002dProcess-Agent">In-Process Agent</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">In-Process Agent
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="GDB-Bugs.html#GDB-Bugs">GDB Bugs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Reporting bugs in <small>GDB</small>
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Command-Line-Editing.html#Command-Line-Editing">Command Line Editing</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Command Line Editing
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="Using-History-Interactively.html#Using-History-Interactively">Using History Interactively</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Using History Interactively

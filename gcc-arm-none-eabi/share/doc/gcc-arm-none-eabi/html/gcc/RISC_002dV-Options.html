@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,35 +19,35 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): RISC-V Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>RISC-V Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): RISC-V Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): RISC-V Options">
+<meta name="description" content="RISC-V Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="RISC-V Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Submodel-Options.html#Submodel-Options" rel="up" title="Submodel Options">
 <link href="RL78-Options.html#RL78-Options" rel="next" title="RL78 Options">
-<link href="PowerPC-SPE-Options.html#PowerPC-SPE-Options" rel="prev" title="PowerPC SPE Options">
+<link href="PowerPC-Options.html#PowerPC-Options" rel="prev" title="PowerPC Options">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,15 +66,15 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="RISC_002dV-Options"></a>
 <div class="header">
 <p>
-Next: <a href="RL78-Options.html#RL78-Options" accesskey="n" rel="next">RL78 Options</a>, Previous: <a href="PowerPC-SPE-Options.html#PowerPC-SPE-Options" accesskey="p" rel="prev">PowerPC SPE Options</a>, Up: <a href="Submodel-Options.html#Submodel-Options" accesskey="u" rel="up">Submodel Options</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="RL78-Options.html#RL78-Options" accesskey="n" rel="next">RL78 Options</a>, Previous: <a href="PowerPC-Options.html#PowerPC-Options" accesskey="p" rel="prev">PowerPC Options</a>, Up: <a href="Submodel-Options.html#Submodel-Options" accesskey="u" rel="up">Submodel Options</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="RISC_002dV-Options-1"></a>
-<h4 class="subsection">3.18.38 RISC-V Options</h4>
+<h4 class="subsection">3.18.40 RISC-V Options</h4>
 <a name="index-RISC_002dV-Options"></a>
 
 <p>These command-line options are defined for RISC-V targets:
@@ -94,7 +93,7 @@ non-PIC.  The default is <samp>-mplt</samp>.
 </p>
 </dd>
 <dt><code>-mabi=<var>ABI-string</var></code></dt>
-<dd><a name="index-mabi-3"></a>
+<dd><a name="index-mabi-2"></a>
 <p>Specify integer and floating-point calling convention.  <var>ABI-string</var>
 contains two parts: the size of integer types and the registers used for
 floating-point types.  For example &lsquo;<samp>-march=rv64ifd -mabi=lp64d</samp>&rsquo; means that
@@ -112,7 +111,9 @@ conventions are: &lsquo;<samp>ilp32</samp>&rsquo;, &lsquo;<samp>ilp32f</samp>&rs
 &lsquo;<samp>lp64f</samp>&rsquo;, and &lsquo;<samp>lp64d</samp>&rsquo;.  Some calling conventions are impossible to
 implement on some ISAs: for example, &lsquo;<samp>-march=rv32if -mabi=ilp32d</samp>&rsquo; is
 invalid because the ABI requires 64-bit values be passed in F registers, but F
-registers are only 32 bits wide.
+registers are only 32 bits wide.  There is also the &lsquo;<samp>ilp32e</samp>&rsquo; ABI that can
+only be used with the &lsquo;<samp>rv32e</samp>&rsquo; architecture.  This ABI is not well
+specified at present, and is subject to change.
 </p>
 </dd>
 <dt><code>-mfdiv</code></dt>
@@ -125,22 +126,32 @@ is to use them if the specified architecture has these instructions.
 </dd>
 <dt><code>-mdiv</code></dt>
 <dt><code>-mno-div</code></dt>
-<dd><a name="index-mdiv-3"></a>
+<dd><a name="index-mdiv-4"></a>
 <p>Do or don&rsquo;t use hardware instructions for integer division.  This requires the
 M extension.  The default is to use them if the specified architecture has
 these instructions.
 </p>
 </dd>
 <dt><code>-march=<var>ISA-string</var></code></dt>
-<dd><a name="index-march-10"></a>
-<p>Generate code for given RISC-V ISA (e.g.&nbsp;&lsquo;<samp>rv64im</samp>&rsquo;).  ISA strings must be
-lower-case.  Examples include &lsquo;<samp>rv64i</samp>&rsquo;, &lsquo;<samp>rv32g</samp>&rsquo;, and &lsquo;<samp>rv32imaf</samp>&rsquo;.
+<dd><a name="index-march-12"></a>
+<p>Generate code for given RISC-V ISA (e.g. &lsquo;<samp>rv64im</samp>&rsquo;).  ISA strings must be
+lower-case.  Examples include &lsquo;<samp>rv64i</samp>&rsquo;, &lsquo;<samp>rv32g</samp>&rsquo;, &lsquo;<samp>rv32e</samp>&rsquo;, and
+&lsquo;<samp>rv32imaf</samp>&rsquo;.
 </p>
 </dd>
 <dt><code>-mtune=<var>processor-string</var></code></dt>
 <dd><a name="index-mtune-11"></a>
 <p>Optimize the output for the given processor, specified by microarchitecture
-name.
+name.  Permissible values for this option are: &lsquo;<samp>rocket</samp>&rsquo;,
+&lsquo;<samp>sifive-3-series</samp>&rsquo;, &lsquo;<samp>sifive-5-series</samp>&rsquo;, &lsquo;<samp>sifive-7-series</samp>&rsquo;,
+and &lsquo;<samp>size</samp>&rsquo;.
+</p>
+<p>When <samp>-mtune=</samp> is not specified, the default is &lsquo;<samp>rocket</samp>&rsquo;.
+</p>
+<p>The &lsquo;<samp>size</samp>&rsquo; choice is not intended for use by end-users.  This is used
+when <samp>-Os</samp> is specified.  It overrides the instruction cost info
+provided by <samp>-mtune=</samp>, but does not override the pipeline info.  This
+helps reduce code size while still giving good performance.
 </p>
 </dd>
 <dt><code>-mpreferred-stack-boundary=<var>num</var></code></dt>
@@ -170,7 +181,7 @@ epilogues.
 </dd>
 <dt><code>-mstrict-align</code></dt>
 <dt><code>-mno-strict-align</code></dt>
-<dd><a name="index-mstrict_002dalign-3"></a>
+<dd><a name="index-mstrict_002dalign-2"></a>
 <p>Do not or do generate unaligned memory accesses.  The default is set depending
 on whether the processor we are optimizing for supports fast unaligned access
 or not.
@@ -205,12 +216,17 @@ required to materialize symbol addresses. The default is to take advantage of
 linker relaxations.
 </p>
 </dd>
+<dt><code>-memit-attribute</code></dt>
+<dt><code>-mno-emit-attribute</code></dt>
+<dd><p>Emit (do not emit) RISC-V attribute to record extra information into ELF
+objects.  This feature requires at least binutils 2.32.
+</p></dd>
 </dl>
 
 <hr>
 <div class="header">
 <p>
-Next: <a href="RL78-Options.html#RL78-Options" accesskey="n" rel="next">RL78 Options</a>, Previous: <a href="PowerPC-SPE-Options.html#PowerPC-SPE-Options" accesskey="p" rel="prev">PowerPC SPE Options</a>, Up: <a href="Submodel-Options.html#Submodel-Options" accesskey="u" rel="up">Submodel Options</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="RL78-Options.html#RL78-Options" accesskey="n" rel="next">RL78 Options</a>, Previous: <a href="PowerPC-Options.html#PowerPC-Options" accesskey="p" rel="prev">PowerPC Options</a>, Up: <a href="Submodel-Options.html#Submodel-Options" accesskey="u" rel="up">Submodel Options</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

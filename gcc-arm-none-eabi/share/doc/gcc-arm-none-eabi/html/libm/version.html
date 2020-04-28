@@ -1,15 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>LIBM: version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>version (LIBM)</title>
 
-<meta name="description" content="LIBM: version">
-<meta name="keywords" content="LIBM: version">
+<meta name="description" content="version (LIBM)">
+<meta name="keywords" content="version (LIBM)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Document-Index.html#Document-Index" rel="index" title="Document Index">
 <link href="Document-Index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -19,16 +19,16 @@
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -37,10 +37,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -48,7 +47,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="version"></a>
 <div class="header">
 <p>
@@ -58,23 +57,40 @@ Next: <a href="acos.html#acos" accesskey="n" rel="next">acos</a>, Up: <a href="M
 <a name="Error-Handling"></a>
 <h3 class="section">1.1 Error Handling</h3>
 
-<p>There are two different versions of the math library routines: IEEE
-and POSIX.  The version may be selected at runtime by
+<p>There are four different versions of the math library routines: IEEE,
+POSIX, X/Open, or SVID.  The version may be selected at runtime by
 setting the global variable <code>_LIB_VERSION</code>, defined in
 <samp>math.h</samp>.  It may be set to one of the following constants defined
-in <samp>math.h</samp>: <code>_IEEE_</code> or <code>_POSIX_</code>.
-The <code>_LIB_VERSION</code> variable is not specific to any
+in <samp>math.h</samp>: <code>_IEEE_</code>, <code>_POSIX_</code>, <code>_XOPEN_</code>, or
+<code>_SVID_</code>.  The <code>_LIB_VERSION</code> variable is not specific to any
 thread, and changing it will affect all threads.
 </p>
-<p>The versions of the library differ only in the setting of <code>errno</code>.
+<p>The versions of the library differ only in how errors are handled.
 </p>
-<p>In IEEE mode, <code>errno</code> is never set.
+<p>In IEEE mode, the <code>matherr</code> function is never called, no warning
+messages are printed, and <code>errno</code> is never set.
 </p>
-<p>In POSIX mode, <code>errno</code> is set correctly.
+<p>In POSIX mode, <code>errno</code> is set correctly, but the <code>matherr</code>
+function is never called and no warning messages are printed.
 </p>
-<p>The library is set to IEEE mode by default.
+<p>In X/Open mode, <code>errno</code> is set correctly, and <code>matherr</code> is
+called, but warning message are not printed.
 </p>
-<p>The majority of the floating-point math functions are written
+<p>In SVID mode, functions which overflow return 3.40282346638528860e+38,
+the maximum single-precision floating-point value, rather than infinity.
+Also, <code>errno</code> is set correctly, <code>matherr</code> is called, and, if
+<code>matherr</code> returns 0, warning messages are printed for some errors.
+For example, by default &lsquo;<samp>log(-1.0)</samp>&rsquo; writes this message on standard
+error output:
+</p>
+<div class="example">
+<pre class="example">log: DOMAIN error
+</pre></div>
+
+<p>The library is set to X/Open mode by default.
+</p>
+<p>The aforementioned error reporting is the supported Newlib libm error
+handling method.  However, the majority of the functions are written
 so as to produce the floating-point exceptions (e.g. &quot;invalid&quot;,
 &quot;divide-by-zero&quot;) as required by the C and POSIX standards, for
 floating-point implementations that support them.  Newlib does not provide
@@ -96,6 +112,11 @@ know.)
 registered trademark of The IEEE.
 </p>
 
+<hr>
+<div class="header">
+<p>
+Next: <a href="acos.html#acos" accesskey="n" rel="next">acos</a>, Up: <a href="Math.html#Math" accesskey="u" rel="up">Math</a> &nbsp; [<a href="Document-Index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Document-Index.html#Document-Index" title="Index" rel="index">Index</a>]</p>
+</div>
 
 
 

@@ -11,16 +11,16 @@ with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License".
  -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using as: MIPS Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MIPS Options (Using as)</title>
 
-<meta name="description" content="Using as: MIPS Options">
-<meta name="keywords" content="Using as: MIPS Options">
+<meta name="description" content="MIPS Options (Using as)">
+<meta name="keywords" content="MIPS Options (Using as)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="AS-Index.html#AS-Index" rel="index" title="AS Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ section entitled "GNU Free Documentation License".
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,7 +58,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="MIPS-Options"></a>
 <div class="header">
 <p>
@@ -67,7 +66,7 @@ Next: <a href="MIPS-Macros.html#MIPS-Macros" accesskey="n" rel="next">MIPS Macro
 </div>
 <hr>
 <a name="Assembler-options"></a>
-<h4 class="subsection">9.26.1 Assembler options</h4>
+<h4 class="subsection">9.27.1 Assembler options</h4>
 
 <p>The MIPS configurations of <small>GNU</small> <code>as</code> support these
 special options:
@@ -372,6 +371,14 @@ deadlock.  The issue has been solved in later Loongson2F batches, but
 this fix has no side effect to them.
 </p>
 </dd>
+<dt><code>-mfix-loongson3-llsc</code></dt>
+<dt><code>-mno-fix-loongson3-llsc</code></dt>
+<dd><p>Insert &lsquo;<samp>sync</samp>&rsquo; before &lsquo;<samp>ll</samp>&rsquo; and &lsquo;<samp>lld</samp>&rsquo; to work around
+Loongson3 LLSC errata.  Without it, under extrame cases, the CPU might
+deadlock. The default can be controlled by the
+<samp>--enable-mips-fix-loongson3-llsc=[yes|no]</samp> configure option.
+</p>
+</dd>
 <dt><code>-mfix-vr4120</code></dt>
 <dt><code>-mno-fix-vr4120</code></dt>
 <dd><p>Insert nops to work around certain VR4120 errata.  This option is
@@ -514,6 +521,7 @@ p5600,
 sb1,
 sb1a,
 i6400,
+i6500,
 p6600,
 loongson2e,
 loongson2f,

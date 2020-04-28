@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,35 +19,35 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Other Builtins</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Other Builtins (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Other Builtins">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Other Builtins">
+<meta name="description" content="Other Builtins (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Other Builtins (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="C-Extensions.html#C-Extensions" rel="up" title="C Extensions">
 <link href="Target-Builtins.html#Target-Builtins" rel="next" title="Target Builtins">
-<link href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" rel="prev" title="Pointer Bounds Checker builtins">
+<link href="Object-Size-Checking.html#Object-Size-Checking" rel="prev" title="Object Size Checking">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,15 +66,15 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Other-Builtins"></a>
 <div class="header">
 <p>
-Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" accesskey="p" rel="prev">Pointer Bounds Checker builtins</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Object-Size-Checking.html#Object-Size-Checking" accesskey="p" rel="prev">Object Size Checking</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
 <a name="Other-Built_002din-Functions-Provided-by-GCC"></a>
-<h3 class="section">6.58 Other Built-in Functions Provided by GCC</h3>
+<h3 class="section">6.59 Other Built-in Functions Provided by GCC</h3>
 <a name="index-built_002din-functions-1"></a>
 <a name="index-_005f_005fbuiltin_005falloca"></a>
 <a name="index-_005f_005fbuiltin_005falloca_005fwith_005falign"></a>
@@ -83,6 +82,7 @@ Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Ta
 <a name="index-_005f_005fbuiltin_005fcall_005fwith_005fstatic_005fchain"></a>
 <a name="index-_005f_005fbuiltin_005fextend_005fpointer"></a>
 <a name="index-_005f_005fbuiltin_005ffpclassify"></a>
+<a name="index-_005f_005fbuiltin_005fhas_005fattribute"></a>
 <a name="index-_005f_005fbuiltin_005fisfinite"></a>
 <a name="index-_005f_005fbuiltin_005fisnormal"></a>
 <a name="index-_005f_005fbuiltin_005fisgreater"></a>
@@ -92,9 +92,11 @@ Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Ta
 <a name="index-_005f_005fbuiltin_005fislessequal"></a>
 <a name="index-_005f_005fbuiltin_005fislessgreater"></a>
 <a name="index-_005f_005fbuiltin_005fisunordered"></a>
+<a name="index-_005f_005fbuiltin_005fobject_005fsize-2"></a>
 <a name="index-_005f_005fbuiltin_005fpowi"></a>
 <a name="index-_005f_005fbuiltin_005fpowif"></a>
 <a name="index-_005f_005fbuiltin_005fpowil"></a>
+<a name="index-_005f_005fbuiltin_005fspeculation_005fsafe_005fvalue"></a>
 <a name="index-_005fExit"></a>
 <a name="index-_005fexit"></a>
 <a name="index-abort"></a>
@@ -440,6 +442,7 @@ Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Ta
 <a name="index-strncmp"></a>
 <a name="index-strncpy"></a>
 <a name="index-strndup"></a>
+<a name="index-strnlen"></a>
 <a name="index-strpbrk"></a>
 <a name="index-strrchr"></a>
 <a name="index-strspn"></a>
@@ -523,8 +526,8 @@ a particular case, a call to the library function is emitted.
 <code>significandl</code>, <code>significand</code>, <code>sincosf</code>,
 <code>sincosl</code>, <code>sincos</code>, <code>stpcpy</code>, <code>stpncpy</code>,
 <code>strcasecmp</code>, <code>strdup</code>, <code>strfmon</code>, <code>strncasecmp</code>,
-<code>strndup</code>, <code>toascii</code>, <code>y0f</code>, <code>y0l</code>, <code>y0</code>,
-<code>y1f</code>, <code>y1l</code>, <code>y1</code>, <code>ynf</code>, <code>ynl</code> and
+<code>strndup</code>, <code>strnlen</code>, <code>toascii</code>, <code>y0f</code>, <code>y0l</code>,
+<code>y0</code>, <code>y1f</code>, <code>y1l</code>, <code>y1</code>, <code>ynf</code>, <code>ynl</code> and
 <code>yn</code>
 may be handled as built-in functions.
 All these functions have corresponding versions
@@ -742,6 +745,137 @@ check its compatibility with <var>size</var>.
 </dd></dl>
 
 <dl>
+<dt><a name="index-_005f_005fbuiltin_005fhas_005fattribute-1"></a>Built-in Function: <em>bool</em> <strong>__builtin_has_attribute</strong> <em>(<var>type-or-expression</var>, <var>attribute</var>)</em></dt>
+<dd><p>The <code>__builtin_has_attribute</code> function evaluates to an integer constant
+expression equal to <code>true</code> if the symbol or type referenced by
+the <var>type-or-expression</var> argument has been declared with
+the <var>attribute</var> referenced by the second argument.  For
+an <var>type-or-expression</var> argument that does not reference a symbol,
+since attributes do not apply to expressions the built-in consider
+the type of the argument.  Neither argument is evaluated.
+The <var>type-or-expression</var> argument is subject to the same
+restrictions as the argument to <code>typeof</code> (see <a href="Typeof.html#Typeof">Typeof</a>).  The
+<var>attribute</var> argument is an attribute name optionally followed by
+a comma-separated list of arguments enclosed in parentheses.  Both forms
+of attribute names&mdash;with and without double leading and trailing
+underscores&mdash;are recognized.  See <a href="Attribute-Syntax.html#Attribute-Syntax">Attribute Syntax</a>, for details.
+When no attribute arguments are specified for an attribute that expects
+one or more arguments the function returns <code>true</code> if
+<var>type-or-expression</var> has been declared with the attribute regardless
+of the attribute argument values.  Arguments provided for an attribute
+that expects some are validated and matched up to the provided number.
+The function returns <code>true</code> if all provided arguments match.  For
+example, the first call to the function below evaluates to <code>true</code>
+because <code>x</code> is declared with the <code>aligned</code> attribute but
+the second call evaluates to <code>false</code> because <code>x</code> is declared
+<code>aligned (8)</code> and not <code>aligned (4)</code>.
+</p>
+<div class="smallexample">
+<pre class="smallexample">__attribute__ ((aligned (8))) int x;
+_Static_assert (__builtin_has_attribute (x, aligned), &quot;aligned&quot;);
+_Static_assert (!__builtin_has_attribute (x, aligned (4)), &quot;aligned (4)&quot;);
+</pre></div>
+
+<p>Due to a limitation the <code>__builtin_has_attribute</code> function returns
+<code>false</code> for the <code>mode</code> attribute even if the type or variable
+referenced by the <var>type-or-expression</var> argument was declared with one.
+The function is also not supported with labels, and in C with enumerators.
+</p>
+<p>Note that unlike the <code>__has_attribute</code> preprocessor operator which
+is suitable for use in <code>#if</code> preprocessing directives
+<code>__builtin_has_attribute</code> is an intrinsic function that is not
+recognized in such contexts.
+</p>
+</dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fspeculation_005fsafe_005fvalue-1"></a>Built-in Function: <em><var>type</var></em> <strong>__builtin_speculation_safe_value</strong> <em>(<var>type</var> val, <var>type</var> failval)</em></dt>
+<dd>
+<p>This built-in function can be used to help mitigate against unsafe
+speculative execution.  <var>type</var> may be any integral type or any
+pointer type.
+</p>
+<ol>
+<li> If the CPU is not speculatively executing the code, then <var>val</var>
+is returned.
+</li><li> If the CPU is executing speculatively then either:
+<ul>
+<li> The function may cause execution to pause until it is known that the
+code is no-longer being executed speculatively (in which case
+<var>val</var> can be returned, as above); or
+</li><li> The function may use target-dependent speculation tracking state to cause
+<var>failval</var> to be returned when it is known that speculative
+execution has incorrectly predicted a conditional branch operation.
+</li></ul>
+</li></ol>
+
+<p>The second argument, <var>failval</var>, is optional and defaults to zero
+if omitted.
+</p>
+<p>GCC defines the preprocessor macro
+<code>__HAVE_BUILTIN_SPECULATION_SAFE_VALUE</code> for targets that have been
+updated to support this builtin.
+</p>
+<p>The built-in function can be used where a variable appears to be used in a
+safe way, but the CPU, due to speculative execution may temporarily ignore
+the bounds checks.  Consider, for example, the following function:
+</p>
+<div class="smallexample">
+<pre class="smallexample">int array[500];
+int f (unsigned untrusted_index)
+{
+  if (untrusted_index &lt; 500)
+    return array[untrusted_index];
+  return 0;
+}
+</pre></div>
+
+<p>If the function is called repeatedly with <code>untrusted_index</code> less
+than the limit of 500, then a branch predictor will learn that the
+block of code that returns a value stored in <code>array</code> will be
+executed.  If the function is subsequently called with an
+out-of-range value it will still try to execute that block of code
+first until the CPU determines that the prediction was incorrect
+(the CPU will unwind any incorrect operations at that point).
+However, depending on how the result of the function is used, it might be
+possible to leave traces in the cache that can reveal what was stored
+at the out-of-bounds location.  The built-in function can be used to
+provide some protection against leaking data in this way by changing
+the code to:
+</p>
+<div class="smallexample">
+<pre class="smallexample">int array[500];
+int f (unsigned untrusted_index)
+{
+  if (untrusted_index &lt; 500)
+    return array[__builtin_speculation_safe_value (untrusted_index)];
+  return 0;
+}
+</pre></div>
+
+<p>The built-in function will either cause execution to stall until the
+conditional branch has been fully resolved, or it may permit
+speculative execution to continue, but using 0 instead of
+<code>untrusted_value</code> if that exceeds the limit.
+</p>
+<p>If accessing any memory location is potentially unsafe when speculative
+execution is incorrect, then the code can be rewritten as
+</p>
+<div class="smallexample">
+<pre class="smallexample">int array[500];
+int f (unsigned untrusted_index)
+{
+  if (untrusted_index &lt; 500)
+    return *__builtin_speculation_safe_value (&amp;array[untrusted_index], NULL);
+  return 0;
+}
+</pre></div>
+
+<p>which will cause a <code>NULL</code> pointer to be used for the unsafe case.
+</p>
+</dd></dl>
+
+<dl>
 <dt><a name="index-_005f_005fbuiltin_005ftypes_005fcompatible_005fp"></a>Built-in Function: <em>int</em> <strong>__builtin_types_compatible_p</strong> <em>(<var>type1</var>, <var>type2</var>)</em></dt>
 <dd>
 <p>You can use the built-in function <code>__builtin_types_compatible_p</code> to
@@ -817,7 +951,7 @@ integer constant expression, is nonzero.  Otherwise it returns <var>exp2</var>.
 <p>This built-in function is analogous to the &lsquo;<samp>? :</samp>&rsquo; operator in C,
 except that the expression returned has its type unaltered by promotion
 rules.  Also, the built-in function does not evaluate the expression
-that is not chosen.  For example, if <var>const_exp</var> evaluates to true,
+that is not chosen.  For example, if <var>const_exp</var> evaluates to <code>true</code>,
 <var>exp2</var> is not evaluated even if it has side effects.
 </p>
 <p>This built-in function can return an lvalue if the chosen argument is an
@@ -974,6 +1108,24 @@ optimization.
 </p></dd></dl>
 
 <dl>
+<dt><a name="index-_005f_005fbuiltin_005fis_005fconstant_005fevaluated"></a>Built-in Function: <em>bool</em> <strong>__builtin_is_constant_evaluated</strong> <em>(void)</em></dt>
+<dd><p>The <code>__builtin_is_constant_evaluated</code> function is available only
+in C++.  The built-in is intended to be used by implementations of
+the <code>std::is_constant_evaluated</code> C++ function.  Programs should make
+use of the latter function rather than invoking the built-in directly.
+</p>
+<p>The main use case of the built-in is to determine whether a <code>constexpr</code>
+function is being called in a <code>constexpr</code> context.  A call to
+the function evaluates to a core constant expression with the value
+<code>true</code> if and only if it occurs within the evaluation of an expression
+or conversion that is manifestly constant-evaluated as defined in the C++
+standard.  Manifestly constant-evaluated contexts include constant-expressions,
+the conditions of <code>constexpr if</code> statements, constraint-expressions, and
+initializers of variables usable in constant expressions.   For more details
+refer to the latest revision of the C++ standard.
+</p></dd></dl>
+
+<dl>
 <dt><a name="index-_005f_005fbuiltin_005fexpect"></a>Built-in Function: <em>long</em> <strong>__builtin_expect</strong> <em>(long <var>exp</var>, long <var>c</var>)</em></dt>
 <dd><a name="index-fprofile_002darcs-1"></a>
 <p>You may use <code>__builtin_expect</code> to provide the compiler with
@@ -1002,6 +1154,23 @@ expressions for <var>exp</var>, you should use constructions such as
 </pre></div>
 
 <p>when testing pointer or floating-point values.
+</p>
+<p>For the purposes of branch prediction optimizations, the probability that
+a <code>__builtin_expect</code> expression is <code>true</code> is controlled by GCC&rsquo;s
+<code>builtin-expect-probability</code> parameter, which defaults to 90%.  
+You can also use <code>__builtin_expect_with_probability</code> to explicitly 
+assign a probability value to individual expressions.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fexpect_005fwith_005fprobability"></a>Built-in Function: <em>long</em> <strong>__builtin_expect_with_probability</strong></dt>
+<dd><p>(long <var>exp</var>, long <var>c</var>, double <var>probability</var>)
+</p>
+<p>This function has the same semantics as <code>__builtin_expect</code>,
+but the caller provides the expected probability that <var>exp</var> == <var>c</var>.
+The last argument, <var>probability</var>, is a floating-point value in the
+range 0.0 to 1.0, inclusive.  The <var>probability</var> argument must be
+constant floating-point expression.
 </p></dd></dl>
 
 <dl>
@@ -1143,7 +1312,7 @@ void foo (void)
 </dd></dl>
 
 <dl>
-<dt><a name="index-_005f_005fbuiltin_005f_005f_005fclear_005fcache"></a>Built-in Function: <em>void</em> <strong>__builtin___clear_cache</strong> <em>(char *<var>begin</var>, char *<var>end</var>)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005f_005f_005fclear_005fcache"></a>Built-in Function: <em>void</em> <strong>__builtin___clear_cache</strong> <em>(void *<var>begin</var>, void *<var>end</var>)</em></dt>
 <dd><p>This function is used to flush the processor&rsquo;s instruction cache for
 the region of memory between <var>begin</var> inclusive and <var>end</var>
 exclusive.  Some targets require that the instruction cache be
@@ -1200,6 +1369,11 @@ and GCC does not issue a warning.
 </p></dd></dl>
 
 <dl>
+<dt><a name="index-_005f_005fbuiltin_005fobject_005fsize-3"></a>Built-in Function: <em>size_t</em> <strong>__builtin_object_size</strong> <em>(const void * <var>ptr</var>, int <var>type</var>)</em></dt>
+<dd><p>Returns the size of an object pointed to by <var>ptr</var>.  See <a href="Object-Size-Checking.html#Object-Size-Checking">Object Size Checking</a>, for a detailed description of the function.
+</p></dd></dl>
+
+<dl>
 <dt><a name="index-_005f_005fbuiltin_005fhuge_005fval"></a>Built-in Function: <em>double</em> <strong>__builtin_huge_val</strong> <em>(void)</em></dt>
 <dd><p>Returns a positive infinity, if supported by the floating-point format,
 else <code>DBL_MAX</code>.  This function is suitable for implementing the
@@ -1218,13 +1392,13 @@ type is <code>long double</code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>__builtin_huge_valf<var>n</var> (void)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fvalfn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_huge_valf<var>n</var></strong> <em>(void)</em></dt>
 <dd><p>Similar to <code>__builtin_huge_val</code>, except the return type is
 <code>_Float<var>n</var></code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-1"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>x __builtin_huge_valf<var>n</var>x (void)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fhuge_005fvalfnx"></a>Built-in Function: <em>_Float<var>n</var>x</em> <strong>__builtin_huge_valf<var>n</var>x</strong> <em>(void)</em></dt>
 <dd><p>Similar to <code>__builtin_huge_val</code>, except the return type is
 <code>_Float<var>n</var>x</code>.
 </p></dd></dl>
@@ -1275,13 +1449,13 @@ type is <code>long double</code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-2"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>__builtin_inff<var>n</var> (void)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005finffn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_inff<var>n</var></strong> <em>(void)</em></dt>
 <dd><p>Similar to <code>__builtin_inf</code>, except the return
 type is <code>_Float<var>n</var></code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-3"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>__builtin_inff<var>n</var>x (void)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005finffnx"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_inff<var>n</var>x</strong> <em>(void)</em></dt>
 <dd><p>Similar to <code>__builtin_inf</code>, except the return
 type is <code>_Float<var>n</var>x</code>.
 </p></dd></dl>
@@ -1340,13 +1514,13 @@ compile-time constant.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-4"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>__builtin_nanf<var>n</var> (const char *str)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fnanfn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_nanf<var>n</var></strong> <em>(const char *str)</em></dt>
 <dd><p>Similar to <code>__builtin_nan</code>, except the return type is
 <code>_Float<var>n</var></code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-5"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>x __builtin_nanf<var>n</var>x (const char *str)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fnanfnx"></a>Built-in Function: <em>_Float<var>n</var>x</em> <strong>__builtin_nanf<var>n</var>x</strong> <em>(const char *str)</em></dt>
 <dd><p>Similar to <code>__builtin_nan</code>, except the return type is
 <code>_Float<var>n</var>x</code>.
 </p></dd></dl>
@@ -1369,13 +1543,13 @@ to be a signaling NaN.  The <code>nans</code> function is proposed by
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-6"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>__builtin_nansf<var>n</var> (const char *str)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fnansfn"></a>Built-in Function: <em>_Float<var>n</var></em> <strong>__builtin_nansf<var>n</var></strong> <em>(const char *str)</em></dt>
 <dd><p>Similar to <code>__builtin_nans</code>, except the return type is
 <code>_Float<var>n</var></code>.
 </p></dd></dl>
 
 <dl>
-<dt><a name="index-n-7"></a>Built-in Function: <em>_Float</em> <strong><var>n</var></strong> <em>x __builtin_nansf<var>n</var>x (const char *str)</em></dt>
+<dt><a name="index-_005f_005fbuiltin_005fnansfnx"></a>Built-in Function: <em>_Float<var>n</var>x</em> <strong>__builtin_nansf<var>n</var>x</strong> <em>(const char *str)</em></dt>
 <dd><p>Similar to <code>__builtin_nans</code>, except the return type is
 <code>_Float<var>n</var>x</code>.
 </p></dd></dl>
@@ -1534,10 +1708,22 @@ Aarch64.  This function is mainly useful when writing inline assembly
 code.
 </p></dd></dl>
 
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fgoacc_005fparlevel_005fid"></a>Built-in Function: <em>int</em> <strong>__builtin_goacc_parlevel_id</strong> <em>(int x)</em></dt>
+<dd><p>Returns the openacc gang, worker or vector id depending on whether <var>x</var> is
+0, 1 or 2.
+</p></dd></dl>
+
+<dl>
+<dt><a name="index-_005f_005fbuiltin_005fgoacc_005fparlevel_005fsize"></a>Built-in Function: <em>int</em> <strong>__builtin_goacc_parlevel_size</strong> <em>(int x)</em></dt>
+<dd><p>Returns the openacc gang, worker or vector size depending on whether <var>x</var> is
+0, 1 or 2.
+</p></dd></dl>
+
 <hr>
 <div class="header">
 <p>
-Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Pointer-Bounds-Checker-builtins.html#Pointer-Bounds-Checker-builtins" accesskey="p" rel="prev">Pointer Bounds Checker builtins</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
+Next: <a href="Target-Builtins.html#Target-Builtins" accesskey="n" rel="next">Target Builtins</a>, Previous: <a href="Object-Size-Checking.html#Object-Size-Checking" accesskey="p" rel="prev">Object Size Checking</a>, Up: <a href="C-Extensions.html#C-Extensions" accesskey="u" rel="up">C Extensions</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Option-Index.html#Option-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 
 

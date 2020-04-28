@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Using the GNU Compiler Collection (GCC): Code Gen Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Code Gen Options (Using the GNU Compiler Collection (GCC))</title>
 
-<meta name="description" content="Using the GNU Compiler Collection (GCC): Code Gen Options">
-<meta name="keywords" content="Using the GNU Compiler Collection (GCC): Code Gen Options">
+<meta name="description" content="Code Gen Options (Using the GNU Compiler Collection (GCC))">
+<meta name="keywords" content="Code Gen Options (Using the GNU Compiler Collection (GCC))">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Code-Gen-Options"></a>
 <div class="header">
 <p>
@@ -131,6 +130,7 @@ local lifetime is likely to break with the stack reuse optimization.
 <p>Another example:
 </p><div class="smallexample">
 <pre class="smallexample">
+
    struct A
    {
        A(int k) : i(k), j(k) { }
@@ -258,6 +258,7 @@ unwinding from asynchronous events (such as debugger or garbage collector).
 </dd>
 <dt><code>-fno-gnu-unique</code></dt>
 <dd><a name="index-fno_002dgnu_002dunique"></a>
+<a name="index-fgnu_002dunique"></a>
 <p>On systems with recent GNU assembler and C library, the C++ compiler
 uses the <code>STB_GNU_UNIQUE</code> binding to make sure that definitions
 of template static data members and static local variables in inline
@@ -334,6 +335,7 @@ Use it to conform to a non-default application binary interface.
 </dd>
 <dt><code>-fno-common</code></dt>
 <dd><a name="index-fno_002dcommon"></a>
+<a name="index-fcommon"></a>
 <a name="index-tentative-definitions"></a>
 <p>In C code, this option controls the placement of global variables 
 defined without an initializer, known as <em>tentative definitions</em> 
@@ -352,7 +354,7 @@ C, and on some targets may carry a speed or code size penalty on
 variable references.
 </p>
 <p>The <samp>-fno-common</samp> option specifies that the compiler should instead
-place uninitialized global variables in the data section of the object file.
+place uninitialized global variables in the BSS section of the object file.
 This inhibits the merging of tentative definitions by the linker so
 you get a multiple-definition error if the same 
 variable is defined in more than one compilation unit.
@@ -364,6 +366,7 @@ variable definitions this way.
 </dd>
 <dt><code>-fno-ident</code></dt>
 <dd><a name="index-fno_002dident"></a>
+<a name="index-fident"></a>
 <p>Ignore the <code>#ident</code> directive.
 </p>
 </dd>
@@ -523,10 +526,10 @@ are defined to 2.
 <dt><code>-fPIE</code></dt>
 <dd><a name="index-fpie"></a>
 <a name="index-fPIE"></a>
-<p>These options are similar to <samp>-fpic</samp> and <samp>-fPIC</samp>, but
-generated position independent code can be only linked into executables.
-Usually these options are used when <samp>-pie</samp> GCC option is
-used during linking.
+<p>These options are similar to <samp>-fpic</samp> and <samp>-fPIC</samp>, but the
+generated position-independent code can be only linked into executables.
+Usually these options are used to compile code that will be linked using
+the <samp>-pie</samp> GCC option.
 </p>
 <p><samp>-fpie</samp> and <samp>-fPIE</samp> both define the macros
 <code>__pie__</code> and <code>__PIE__</code>.  The macros have the value 1
@@ -535,6 +538,7 @@ for <samp>-fpie</samp> and 2 for <samp>-fPIE</samp>.
 </dd>
 <dt><code>-fno-plt</code></dt>
 <dd><a name="index-fno_002dplt"></a>
+<a name="index-fplt"></a>
 <p>Do not use the PLT for external function calls in position-independent code.
 Instead, load the callee address at call sites from the GOT and branch to it.
 This leads to more efficient code by eliminating PLT stubs and exposing
@@ -553,6 +557,7 @@ functions that are marked to not use the PLT to use the GOT instead.
 </dd>
 <dt><code>-fno-jump-tables</code></dt>
 <dd><a name="index-fno_002djump_002dtables"></a>
+<a name="index-fjump_002dtables"></a>
 <p>Do not use jump tables for switch statements even where it would be
 more efficient than other code generation strategies.  This option is
 of use in conjunction with <samp>-fpic</samp> or <samp>-fPIC</samp> for

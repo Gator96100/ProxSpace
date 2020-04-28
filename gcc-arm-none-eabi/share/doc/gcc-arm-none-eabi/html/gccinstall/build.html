@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,8 +19,9 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Installing GCC</title>
 
 <meta name="description" content="Installing GCC">
@@ -28,20 +29,19 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -50,10 +50,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -61,7 +60,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <h1 class="settitle" align="center">Installing GCC</h1>
 
 
@@ -249,6 +248,13 @@ hosts that do not support the linker plugin.  Without the linker plugin
 static libraries are not compiled with link-time optimizations.  Since 
 the GCC middle end and back end are in <samp>libbackend.a</samp> this means
 that only the front end is actually LTO optimized.
+</p>
+</dd>
+<dt>&lsquo;<samp>bootstrap-lto-lean</samp>&rsquo;</dt>
+<dd><p>This option is similar to <code>bootstrap-lto</code>, but is intended for
+faster build by only using LTO in the final bootstrap stage.
+With &lsquo;<samp>make profiledbootstrap</samp>&rsquo; the LTO frontend
+is trained only on generator files.
 </p>
 </dd>
 <dt>&lsquo;<samp>bootstrap-debug</samp>&rsquo;</dt>
@@ -463,7 +469,8 @@ occurs it is recommended to clean before restarting. Otherwise
 the code quality may be much worse.
 </p>
 <hr />
-<p><p><a href="./index.html">Return to the GCC Installation page</a>
+<p>
+<p><a href="./index.html">Return to the GCC Installation page</a>
 </p>
 
 

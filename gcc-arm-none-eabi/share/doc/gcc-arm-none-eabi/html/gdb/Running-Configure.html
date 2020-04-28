@@ -12,16 +12,16 @@ and with the Back-Cover Texts as in (a) below.
 (a) The FSF's Back-Cover Text is: "You are free to copy and modify
 this GNU Manual.  Buying copies from GNU Press supports the FSF in
 developing GNU and promoting software freedom." -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>Debugging with GDB: Running Configure</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Running Configure (Debugging with GDB)</title>
 
-<meta name="description" content="Debugging with GDB: Running Configure">
-<meta name="keywords" content="Debugging with GDB: Running Configure">
+<meta name="description" content="Running Configure (Debugging with GDB)">
+<meta name="keywords" content="Running Configure (Debugging with GDB)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Concept-Index.html#Concept-Index" rel="index" title="Concept Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -31,16 +31,16 @@ developing GNU and promoting software freedom." -->
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -49,10 +49,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -60,7 +59,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Running-Configure"></a>
 <div class="header">
 <p>
@@ -78,35 +77,35 @@ build the <code>gdb</code> program.
 <small>GDB</small> in a single directory, whose name is usually composed by
 appending the version number to &lsquo;<samp>gdb</samp>&rsquo;.
 </p>
-<p>For example, the <small>GDB</small> version 8.3.0.20190703-git distribution is in the
-<samp>gdb-8.3.0.20190703-git</samp> directory.  That directory contains:
+<p>For example, the <small>GDB</small> version 8.3.0.20190709-git distribution is in the
+<samp>gdb-8.3.0.20190709-git</samp> directory.  That directory contains:
 </p>
 <dl compact="compact">
-<dt><code>gdb-8.3.0.20190703-git/configure <span class="roman">(and supporting files)</span></code></dt>
+<dt><code>gdb-8.3.0.20190709-git/configure <span class="roman">(and supporting files)</span></code></dt>
 <dd><p>script for configuring <small>GDB</small> and all its supporting libraries
 </p>
 </dd>
-<dt><code>gdb-8.3.0.20190703-git/gdb</code></dt>
+<dt><code>gdb-8.3.0.20190709-git/gdb</code></dt>
 <dd><p>the source specific to <small>GDB</small> itself
 </p>
 </dd>
-<dt><code>gdb-8.3.0.20190703-git/bfd</code></dt>
+<dt><code>gdb-8.3.0.20190709-git/bfd</code></dt>
 <dd><p>source for the Binary File Descriptor library
 </p>
 </dd>
-<dt><code>gdb-8.3.0.20190703-git/include</code></dt>
+<dt><code>gdb-8.3.0.20190709-git/include</code></dt>
 <dd><p><small>GNU</small> include files
 </p>
 </dd>
-<dt><code>gdb-8.3.0.20190703-git/libiberty</code></dt>
+<dt><code>gdb-8.3.0.20190709-git/libiberty</code></dt>
 <dd><p>source for the &lsquo;<samp>-liberty</samp>&rsquo; free software library
 </p>
 </dd>
-<dt><code>gdb-8.3.0.20190703-git/opcodes</code></dt>
+<dt><code>gdb-8.3.0.20190709-git/opcodes</code></dt>
 <dd><p>source for the library of opcode tables and disassemblers
 </p>
 </dd>
-<dt><code>gdb-8.3.0.20190703-git/readline</code></dt>
+<dt><code>gdb-8.3.0.20190709-git/readline</code></dt>
 <dd><p>source for the <small>GNU</small> command-line interface
 </p></dd>
 </dl>
@@ -115,7 +114,7 @@ appending the version number to &lsquo;<samp>gdb</samp>&rsquo;.
 </p>
 <p>The simplest way to configure and build <small>GDB</small> is to run <samp>configure</samp>
 from the <samp>gdb-<var>version-number</var></samp> source directory, which in
-this example is the <samp>gdb-8.3.0.20190703-git</samp> directory.
+this example is the <samp>gdb-8.3.0.20190709-git</samp> directory.
 </p>
 <p>First switch to the <samp>gdb-<var>version-number</var></samp> source directory
 if you are not already in it; then run <samp>configure</samp>.  Pass the
@@ -125,7 +124,7 @@ argument.
 <p>For example:
 </p>
 <div class="smallexample">
-<pre class="smallexample">cd gdb-8.3.0.20190703-git
+<pre class="smallexample">cd gdb-8.3.0.20190709-git
 ./configure
 make
 </pre></div>

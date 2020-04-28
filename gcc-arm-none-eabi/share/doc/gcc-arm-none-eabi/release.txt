@@ -1,27 +1,32 @@
 Release notes for
 *************************************************
-GNU Tools for Arm Embedded Processors 8
-                               - Q3 2019
+GNU Tools for Arm Embedded Processors 9
+                               - Q4 2019
 *************************************************
 
-This release includes the following items:
-* Bare metal EABI pre-built binaries for running on a Windows host
-* Bare metal EABI pre-built binaries for running on a Linux host
-* Bare metal EABI pre-built binaries for running on a Mac OS X host
-* Source code package (together with build scripts and instructions to setup
-  build environment), composed of:
+This release includes bare metal pre-built binaries for AArch32 EABI targets,
+which can be hosted on:
+* Windows 10 32/64 bits or later (with installer and alternative zip package)
+* Linux
+  - Ubuntu 14.04 or later AArch64 (tarball)
+  - Ubuntu 14.04 or later x86_64 (tarball)
+  - RHEL 7 64 bits (tarball)
+* Mac OS X 10.13 and newer 64 bits (tarball)
 
-  * gcc : gcc-8-branch revision 273027
-    svn://gcc.gnu.org/svn/gcc/branches/gcc-8-branch
+It also contains source code package (together with build scripts and
+instructions to setup build environment), which is composed of:
 
-  * binutils : 2.32 with mainline backports
-    git://sourceware.org/git/binutils-gdb.git commit 2ab3145b4fae077dccd8a93078eeaec038f7126d
+  * gcc : ^/branches/ARM/arm-9-branch
+    svn://gcc.gnu.org/svn/gcc/branches/ARM/arm-9-branch revision 277439
 
-  * newlib and newlib-nano :
-    git://sourceware.org/git/newlib-cygwin.git commit fff17ad73f6ae6b75ef293e17a837f23f6134753
+  * binutils : binutils-2_33-branch
+    git://sourceware.org/git/binutils-gdb.git commit 52f9b3adc0771944d2c988a91ba3a69820f3844a
 
-  * gdb : 8.3 without target sim support
-    git://sourceware.org/git/binutils-gdb.git commit 66263c8cdba32ef18ae0dfabde0867b9b850c441
+  * newlib and newlib-nano : newlib-3.1.0
+    git://sourceware.org/git/newlib-cygwin.git commit 572687310059534b2da9428ca19df992509c8a5d
+
+  * gdb : gdb-8.3-branch
+    git://sourceware.org/git/binutils-gdb.git commit e908e11a4f74ab6a06aef8c302a03b2a0dbc4d83
 
 Note that some or all of the following prerequisites are downloaded when
 building from source:
@@ -30,66 +35,72 @@ building from source:
     http://nsis.sourceforge.net/mediawiki/images/a/ad/EnvVarUpdate.7z
 
   * expat 2.1.1 :
-    http://jaist.dl.sourceforge.net/project/expat/expat/2.1.1/expat-2.1.1.tar.bz2
+    https://downloads.sourceforge.net/project/expat/expat/2.1.1/expat-2.1.1.tar.bz2
 
-  * gmp 6.1.0 : ftp://gcc.gnu.org/pub/gcc/infrastructure/gmp-6.1.0.tar.bz2
+  * gmp 6.1.0 :
+    https://gmplib.org/download/gmp/gmp-6.1.0.tar.bz2
 
-  * isl 0.15 : ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-0.15.tar.bz2
+  * isl 0.18 :
+    http://isl.gforge.inria.fr/isl-0.18.tar.xz
 
-  * libelf 0.8.13 : https://fossies.org/linux/misc/old/libelf-0.8.13.tar.gz
+  * libelf 0.8.13 :
+    https://fossies.org/linux/misc/old/libelf-0.8.13.tar.gz
 
-  * libiconv 1.14 :
-    http://ftp.gnu.org/gnu/libiconv/libiconv-1.14.tar.gz
+  * libiconv 1.15 :
+    https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 
-  * mpc 1.0.3 : ftp://gcc.gnu.org/pub/gcc/infrastructure/mpc-1.0.3.tar.gz
+  * mpc 1.0.3 :
+    ftp://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz
 
-  * mpfr 3.1.4 : ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-3.1.4.tar.bz2
+  * mpfr 3.1.4 :
+    http://www.mpfr.org/mpfr-3.1.4/mpfr-3.1.4.tar.bz2
 
-  * python 2.7.13 : https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi
+  * python 2.7.7 :
+    https://www.python.org/ftp/python/2.7.7/python-2.7.7.msi
 
   * zlib 1.2.8
-    http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz/download
-
-Minimum host requirements:
-* Windows 7 32/64 bits or later (with installer and alternative zip package)
-* Linux
-  - Ubuntu 14.04 64 bits or later (tarball)
-  - Ubuntu supported releases 32 bits and 64 bits (PPA)
-    https://www.ubuntu.com/info/release-end-of-life
-  - RHEL 7 64 bits (tarball)
-* Mac OS X 10.13 and newer 64 bits (tarball)
-
-Supported target OS:
-* Bare metal EABI only
+    http://www.zlib.net/fossils/zlib-1.2.8.tar.gz
 
 Features:
-* All GCC 8 features, plus latest mainline features
+* All GCC 9.2 features, plus latest mainline features
 
 Tests:
 * Targets
   + variety of Cortex-M0/M0+/M3/M4/M7/A9 boards
   + Qemu
   + Arm Fast Models
-* Hosts
-  + Windows 7 32/64 bits (with installer and alternative zip package)
-  + Linux 64 bits
-    - Ubuntu 14.04 and 16.04 (tarball and PPA)
-    - RHEL 7 (tarball)
-  + Mac OS X 10.13 (tarball)
 
-Important changes in 8-2019Q3 update release:
-* https://sourceware.org/bugzilla/show_bug.cgi?id=23699
-* https://bugs.launchpad.net/gcc-arm-embedded/+bug/1813553
-* https://bugs.launchpad.net/gcc-arm-embedded/+bug/1814397
-* Fix debug info loss for CMSE entry functions
-  (https://www.sourceware.org/ml/binutils/2019-07/msg00018.html)
+Important changes in 9-2019Q4 major release:
+* Windows package only tested on Windows 10.
 
+* Fixed https://sourceware.org/bugzilla/show_bug.cgi?id=24289
+  MEMORY regions can no longer use LENGTH and ORIGIN.
 
-Known Changes and Issues:
-* Thumb1 code size regression due to new register allocation:
-  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=59535
-* Multilib is now enabled with --with-multilib-list=rmprofile when building the
-  toolchain from source
+* Fixed https://community.arm.com/developer/tools-software/oss-platforms/f/gnu-toolchain-forum/13503/gcc-g-version-8-very-slow-to-compile
+  GCC 8 very slow to compile
+
+* Fixed https://sourceware.org/bugzilla/show_bug.cgi?id=25081
+  Discrepancy between VMA and LMA after ALIGN
+
+* Additional armv7-r multilib directory: thumb/v7-r+fp.sp
+
+* Added AArch64 Linux host package
+
 * Windows installer now accepts the following options when running in silent mode:
   - /P Adds the installation bin directory to the system PATH
   - /R Adds an InstallFolder registry entry for the install.
+
+Known issues:
+* Doing IPA on CMSE generates a linker error:
+The linker will error out when resulting object file contains a symbol for
+the clone function with the __acle_se prefix that has a non-local binding.
+  Issue occurs when compiling binaries for M-profile Secure Extensions where
+the compiler may decide to clone a function with the cmse_nonsecure_entry
+attribute.
+  Although cloning nonsecure entry functions is legal, as long as the clone
+is only used inside the secure application, the clone function itself should
+not be seen as a secure entry point and so it should not have the __acle_se
+prefix.
+  A possible work around for this is to add a 'noclone' attribute to
+functions with the 'cmse_nonsecure_entry'. This will prevent GCC from cloning
+such functions.

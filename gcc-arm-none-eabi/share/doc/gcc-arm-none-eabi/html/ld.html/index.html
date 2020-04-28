@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
-version 2.32.0.
+(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
+version 2.33.1.
 
 Copyright (C) 1991-2019 Free Software Foundation, Inc.
 
@@ -12,16 +12,16 @@ or any later version published by the Free Software Foundation;
 with no Invariant Sections, with no Front-Cover Texts, and with no
 Back-Cover Texts.  A copy of the license is included in the
 section entitled "GNU Free Documentation License". -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>LD: Top</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Top (LD)</title>
 
-<meta name="description" content="LD: Top">
-<meta name="keywords" content="LD: Top">
+<meta name="description" content="Top (LD)">
+<meta name="keywords" content="Top (LD)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="#Top" rel="start" title="Top">
 <link href="LD-Index.html#LD-Index" rel="index" title="LD Index">
 <link href="#SEC_Contents" rel="contents" title="Table of Contents">
@@ -30,16 +30,16 @@ section entitled "GNU Free Documentation License". -->
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -48,10 +48,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -59,7 +58,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 
 
 
@@ -209,8 +208,8 @@ Next: <a href="Overview.html#Overview" accesskey="n" rel="next">Overview</a>, Up
 <a name="LD"></a>
 <h1 class="top">LD</h1>
 <p>This file documents the <small>GNU</small> linker ld
-(GNU Tools for Arm Embedded Processors 8-2019-q3-update)
-version 2.32.0.
+(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
+version 2.33.1.
 </p>
 <p>This document is distributed under the terms of the GNU Free
 Documentation License version 1.3.  A copy of the license is included
@@ -228,6 +227,7 @@ in the section entitled &ldquo;GNU Free Documentation License&rdquo;.
 <tr><td align="left" valign="top">&bull; <a href="BFD.html#BFD" accesskey="5">BFD</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">BFD
 </td></tr>
 <tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
 </pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Reporting-Bugs.html#Reporting-Bugs" accesskey="6">Reporting Bugs</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Reporting Bugs
 </td></tr>
 <tr><td align="left" valign="top">&bull; <a href="MRI.html#MRI" accesskey="7">MRI</a>:</td><td>&nbsp;&nbsp;</td><td align="left" valign="top">MRI Compatible Script Files

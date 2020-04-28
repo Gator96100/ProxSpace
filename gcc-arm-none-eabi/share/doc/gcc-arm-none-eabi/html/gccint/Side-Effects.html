@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,16 +19,16 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: Side Effects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Side Effects (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: Side Effects">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: Side Effects">
+<meta name="description" content="Side Effects (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="Side Effects (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
@@ -38,16 +38,16 @@ You have freedom to copy and modify this GNU Manual, like GNU
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="Side-Effects"></a>
 <div class="header">
 <p>
@@ -115,7 +114,7 @@ given the value <var>x</var> and the rest of the register is not changed.
 <p>If <var>lval</var> is a <code>zero_extract</code>, then the referenced part of
 the bit-field (a memory or register reference) specified by the
 <code>zero_extract</code> is given the value <var>x</var> and the rest of the
-bit-field is not changed.  Note that <code>sign_extract</code> can not
+bit-field is not changed.  Note that <code>sign_extract</code> cannot
 appear in <var>lval</var>.
 </p>
 <p>If <var>lval</var> is <code>(cc0)</code>, it has no machine mode, and <var>x</var> may
@@ -257,6 +256,19 @@ a new one each time.  Otherwise, you may confuse CSE.
 clobbered by the insn.  In this case, using the same pseudo register in
 the clobber and elsewhere in the insn produces the expected results.
 </p>
+<a name="index-clobber_005fhigh"></a>
+</dd>
+<dt><code>(clobber_high <var>x</var>)</code></dt>
+<dd><p>Represents the storing or possible storing of an unpredictable,
+undescribed value into the upper parts of <var>x</var>. The mode of the expression
+represents the lower parts of the register which will not be overwritten.
+<code>reg</code> must be a reg expression.
+</p>
+<p>One place this is used is when calling into functions where the registers are
+preserved, but only up to a given number of bits.  For example when using
+Aarch64 SVE, calling a TLS descriptor will cause only the lower 128 bits of
+each of the vector registers to be preserved.
+</p>
 <a name="index-use"></a>
 </dd>
 <dt><code>(use <var>x</var>)</code></dt>
@@ -311,7 +323,8 @@ phase exits.
 brackets stand for a vector; the operand of <code>parallel</code> is a
 vector of expressions.  <var>x0</var>, <var>x1</var> and so on are individual
 side effect expressions&mdash;expressions of code <code>set</code>, <code>call</code>,
-<code>return</code>, <code>simple_return</code>, <code>clobber</code> or <code>use</code>.
+<code>return</code>, <code>simple_return</code>, <code>clobber</code> <code>use</code> or
+<code>clobber_high</code>.
 </p>
 <p>&ldquo;In parallel&rdquo; means that first all the values used in the individual
 side-effects are computed, and second all the actual side-effects are

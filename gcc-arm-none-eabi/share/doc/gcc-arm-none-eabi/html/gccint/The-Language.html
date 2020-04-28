@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1988-2018 Free Software Foundation, Inc.
+<!-- Copyright (C) 1988-2019 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -19,35 +19,35 @@ A GNU Manual
 You have freedom to copy and modify this GNU Manual, like GNU
      software.  Copies published by the Free Software Foundation raise
      funds for GNU development. -->
-<!-- Created by GNU Texinfo 5.2, http://www.gnu.org/software/texinfo/ -->
+<!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ -->
 <head>
-<title>GNU Compiler Collection (GCC) Internals: The Language</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>The Language (GNU Compiler Collection (GCC) Internals)</title>
 
-<meta name="description" content="GNU Compiler Collection (GCC) Internals: The Language">
-<meta name="keywords" content="GNU Compiler Collection (GCC) Internals: The Language">
+<meta name="description" content="The Language (GNU Compiler Collection (GCC) Internals)">
+<meta name="keywords" content="The Language (GNU Compiler Collection (GCC) Internals)">
 <meta name="resource-type" content="document">
 <meta name="distribution" content="global">
 <meta name="Generator" content="makeinfo">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="index.html#Top" rel="start" title="Top">
 <link href="Option-Index.html#Option-Index" rel="index" title="Option Index">
 <link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
 <link href="Match-and-Simplify.html#Match-and-Simplify" rel="up" title="Match and Simplify">
-<link href="Funding.html#Funding" rel="next" title="Funding">
+<link href="User-Experience-Guidelines.html#User-Experience-Guidelines" rel="next" title="User Experience Guidelines">
 <link href="GIMPLE-API.html#GIMPLE-API" rel="prev" title="GIMPLE API">
 <style type="text/css">
 <!--
 a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
 blockquote.smallquotation {font-size: smaller}
 div.display {margin-left: 3.2em}
 div.example {margin-left: 3.2em}
-div.indentedblock {margin-left: 3.2em}
 div.lisp {margin-left: 3.2em}
 div.smalldisplay {margin-left: 3.2em}
 div.smallexample {margin-left: 3.2em}
-div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
 div.smalllisp {margin-left: 3.2em}
-kbd {font-style:oblique}
+kbd {font-style: oblique}
 pre.display {font-family: inherit}
 pre.format {font-family: inherit}
 pre.menu-comment {font-family: serif}
@@ -56,10 +56,9 @@ pre.smalldisplay {font-family: inherit; font-size: smaller}
 pre.smallexample {font-size: smaller}
 pre.smallformat {font-family: inherit; font-size: smaller}
 pre.smalllisp {font-size: smaller}
-span.nocodebreak {white-space:nowrap}
-span.nolinebreak {white-space:nowrap}
-span.roman {font-family:serif; font-weight:normal}
-span.sansserif {font-family:sans-serif; font-weight:normal}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
 ul.no-bullet {list-style: none}
 -->
 </style>
@@ -67,7 +66,7 @@ ul.no-bullet {list-style: none}
 
 </head>
 
-<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+<body lang="en">
 <a name="The-Language"></a>
 <div class="header">
 <p>
@@ -250,7 +249,9 @@ come second in commutative expressions.
 </p>
 <p>The second supported flag is <code>s</code> which tells the code
 generator to fail the pattern if the expression marked with
-<code>s</code> does have more than one use.  For example in
+<code>s</code> does have more than one use and the simplification
+results in an expression with more than one operator.
+For example in
 </p>
 <div class="smallexample">
 <pre class="smallexample">(simplify
@@ -261,6 +262,14 @@ generator to fail the pattern if the expression marked with
 <p>this avoids the association if <code>(pointer_plus @0 @1)</code> is
 used outside of the matched expression and thus it would stay
 live and not trivially removed by dead code elimination.
+Now consider <code>((x + 3) + -3)</code> with the temporary
+holding <code>(x + 3)</code> used elsewhere.  This simplifies down
+to <code>x</code> which is desirable and thus flagging with <code>s</code>
+does not prevent the transform.  Now consider <code>((x + 3) + 1)</code>
+which simplifies to <code>(x + 4)</code>.  Despite being flagged with
+<code>s</code> the simplification will be performed.  The
+simplification of <code>((x + a) + 1)</code> to <code>(x + (a + 1))</code> will
+not performed in this case though.
 </p>
 <p>More features exist to avoid too much repetition.
 </p>

@@ -22,6 +22,10 @@ setup_proxspace ()
 	check_install mingw-w64-x86_64-readline
 	check_install mingw-w64-x86_64-libsndfile
 	check_install mingw-w64-x86_64-cmake
+	check_install mingw-w64-x86_64-lua
+	check_install mingw-w64-x86_64-bzip2
+	check_install mingw-w64-x86_64-python
+	check_install mingw-w64-x86_64-jansson
 	check_install git
 	check_install make
 	check_install pkg-config
@@ -35,6 +39,10 @@ setup_proxspace ()
 	check_install mingw-w64-i686-gcc
 	check_install mingw-w64-i686-libsndfile
 	check_install mingw-w64-i686-cmake
+	check_install mingw-w64-i686-lua
+	check_install mingw-w64-i686-bzip2
+	check_install mingw-w64-i686-python
+	check_install mingw-w64-i686-jansson
 	check_install git
 	check_install make
 	check_install pkg-config

@@ -3,9 +3,9 @@ pm3Dir=/pm3
 copyDir=/builds
 buildDir=/tmp
 
-pacman -Q zip 1> /dev/null
+pacman -Q p7zip 1> /dev/null
 if [[ $? != 0 ]]; then
-  pacman --noconfirm -S zip
+  pacman --noconfirm -S p7zip
 fi
 
 if [ "$MSYSTEM" == "MINGW32" ]; then
@@ -26,7 +26,7 @@ for i in $( ls -d */ ); do
   git pull
   hash=$(git rev-parse HEAD)
   date=$(date +%Y%m%d)
- if ! ls $copyDir/${i%%/}-$arch/*-$hash.zip 1> /dev/null 2>&1; then
+ if ! ls $copyDir/${i%%/}-$arch/*-$hash.7z 1> /dev/null 2>&1; then
     make clean
 	make all
 	if [ $? -eq 0 ]; then
@@ -47,7 +47,7 @@ for i in $( ls -d */ ); do
 	  cp $pm3Dir/${i%%/}/driver/proxmark3.inf "$buildDir/${i%%/}/Windows Driver"
 	  rm $buildDir/${i%%/}/win$arch/hardnested/{*.h,*.c}
 	  cd $buildDir/${i%%/}
-	  zip -r $copyDir/${i%%/}-$arch/${i%%/}-$arch-$date-$hash.zip ./*
+	  7z a -r -mx9 $copyDir/${i%%/}-$arch/${i%%/}-$arch-$date-$hash.7z ./*
 	  echo done
 	fi
   fi

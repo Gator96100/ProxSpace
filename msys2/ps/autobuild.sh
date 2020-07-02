@@ -28,7 +28,7 @@ for i in $( ls -d */ ); do
   date=$(date +%Y%m%d)
  if ! ls $copyDir/${i%%/}-$arch/*-$hash.7z 1> /dev/null 2>&1; then
     make clean
-	make all
+	make all -j$(nproc)
 	if [ $? -eq 0 ]; then
 	  rm -rf $buildDir/${i%%/}/*
 	  mkdir -p $copyDir/${i%%/}-$arch/

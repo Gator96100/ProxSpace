@@ -1,9 +1,4 @@
 #!/bin/bash
-if ! (echo "$PWD" | grep -Eq  ^[a-zA-Z0-9\/\._\-]+$) ; then
-    echo "Error: Install path contains special characters!"
-	sleep infinity 
-fi
-
 MKPASSWD_CURRENT="$( mkpasswd -c )"
 MKGROUP_CURRENT="$( mkgroup -c )"
 USER_SID="$( echo $MKPASSWD_CURRENT | gawk -F":" '{ print $5 }' )"

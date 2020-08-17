@@ -15,4 +15,5 @@ del %cd%\msys2\etc\passwd 2> nul
 del %cd%\msys2\etc\group 2> nul
 touch /etc/passwd
 touch /etc/group
+bash /ps/startup_checks.sh
 bash /ps/user_setup.sh

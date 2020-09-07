@@ -1,32 +1,34 @@
 Release notes for
-*************************************************
-GNU Tools for Arm Embedded Processors 9
-                               - Q4 2019
-*************************************************
+****************************************************
+GNU Arm Embedded Toolchain 2020-q2-update
+****************************************************
 
 This release includes bare metal pre-built binaries for AArch32 EABI targets,
 which can be hosted on:
-* Windows 10 32/64 bits or later (with installer and alternative zip package)
+* Windows 10 or later on 32/64-bit architecture
 * Linux
-  - Ubuntu 14.04 or later AArch64 (tarball)
-  - Ubuntu 14.04 or later x86_64 (tarball)
-  - RHEL 7 64 bits (tarball)
-* Mac OS X 10.13 and newer 64 bits (tarball)
+  - on AArch64 (RHEL 7, Ubuntu 14.04 or later)
+  - on x86_64 (RHEL 7, Ubuntu 16.04 or later)
+* Mac OS X 10.14 or later on 64-bit architecture
 
-It also contains source code package (together with build scripts and
-instructions to setup build environment), which is composed of:
+For Windows, the binaries are provided with an installer and as a zip file.
+For Linux, the binaries are provided as tarball files.
+For Mac OS X, the binaries are provided as tarball and pkg files.
 
-  * gcc : ^/branches/ARM/arm-9-branch
-    svn://gcc.gnu.org/svn/gcc/branches/ARM/arm-9-branch revision 277439
+The release also contains source code package (together with build scripts and
+instructions to setup the build environment), which is composed of:
 
-  * binutils : binutils-2_33-branch
-    git://sourceware.org/git/binutils-gdb.git commit 52f9b3adc0771944d2c988a91ba3a69820f3844a
+  * gcc : refs/vendors/ARM/heads/arm-9-branch
+    git://gcc.gnu.org/git/gcc.git commit 13861a80750d118fbdca6006ab175903bacbb7ec
 
-  * newlib and newlib-nano : newlib-3.1.0
-    git://sourceware.org/git/newlib-cygwin.git commit 572687310059534b2da9428ca19df992509c8a5d
+  * binutils : binutils-2_34-branch
+    git://sourceware.org/git/binutils-gdb.git commit f75c52135257ea05da151a508d99fbaee1bb9dc1
+
+  * newlib and newlib-nano : newlib-3.3.0
+    git://sourceware.org/git/newlib-cygwin.git commit 6d79e0a58866548f435527798fbd4a6849d05bc7
 
   * gdb : gdb-8.3-branch
-    git://sourceware.org/git/binutils-gdb.git commit e908e11a4f74ab6a06aef8c302a03b2a0dbc4d83
+    git://sourceware.org/git/binutils-gdb.git commit fc94da0a253e925166bbb1a429c190200dc5778d
 
 Note that some or all of the following prerequisites are downloaded when
 building from source:
@@ -58,37 +60,50 @@ building from source:
   * python 2.7.7 :
     https://www.python.org/ftp/python/2.7.7/python-2.7.7.msi
 
-  * zlib 1.2.8
+  * zlib 1.2.8 :
     http://www.zlib.net/fossils/zlib-1.2.8.tar.gz
 
 Features:
-* All GCC 9.2 features, plus latest mainline features
+* All GCC 9.3.1 features, plus latest mainline features
 
 Tests:
-* Targets
-  + variety of Cortex-M0/M0+/M3/M4/M7/A9 boards
+* Targets:
+  + Variety of Cortex-M0/M0+/M3/M4/M7/A9 boards
   + Qemu
   + Arm Fast Models
 
-Important changes in 9-2019Q4 major release:
-* Windows package only tested on Windows 10.
+Notable changes in 2020-q2-update release:
+* Bumped binutils to version 2.34.
 
-* Fixed https://sourceware.org/bugzilla/show_bug.cgi?id=24289
-  MEMORY regions can no longer use LENGTH and ORIGIN.
+* Bumped newlib to version 3.3.0.
 
-* Fixed https://community.arm.com/developer/tools-software/oss-platforms/f/gnu-toolchain-forum/13503/gcc-g-version-8-very-slow-to-compile
-  GCC 8 very slow to compile
+* Fixed https://bugs.launchpad.net/gcc-arm-embedded/+bug/1848002
+  Parallel builds fail on Windows due to bug in MinGW-w64 used to build binutils.
 
-* Fixed https://sourceware.org/bugzilla/show_bug.cgi?id=25081
-  Discrepancy between VMA and LMA after ALIGN
+* Fixed https://community.arm.com/developer/tools-software/tools/f/arm-compilers-forum/46294/macos-objdump-reading-section-bss-failed-because-memory-exhausted
+  objdump: Reading section .bss failed because: memory exhausted.
 
-* Additional armv7-r multilib directory: thumb/v7-r+fp.sp
+* Fixed https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93188
+  Fix rmprofile multilibs when architecture includes +mp or +sec.
 
-* Added AArch64 Linux host package
+* Fixed https://bugs.launchpad.net/gcc-arm-embedded/+bug/1415310
+  Extend the --skip_steps to enable skipping the target library strip step.
 
-* Windows installer now accepts the following options when running in silent mode:
-  - /P Adds the installation bin directory to the system PATH
-  - /R Adds an InstallFolder registry entry for the install.
+* Additional v7-a multilib directories:
+    thumb/v7-a+fp/softfp
+    thumb/v7-a+fp/hard
+    thumb/v7-a+simd/softfp
+    thumb/v7-a+simd/hard
+    thumb/v7-a/nofp
+
+* Additional v7ve multilib directories:
+    thumb/v7ve+simd/softfp
+    thumb/v7ve+simd/hard
+
+* Additional v8-a multilib directories:
+    thumb/v8-a/nofp
+    thumb/v8-a+simd/softfp
+    thumb/v8-a+simd/hard
 
 Known issues:
 * Doing IPA on CMSE generates a linker error:

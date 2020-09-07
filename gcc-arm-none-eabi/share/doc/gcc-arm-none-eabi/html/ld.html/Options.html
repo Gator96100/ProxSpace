@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
-version 2.33.1.
+(GNU Arm Embedded Toolchain 9-2020-q2-update)
+version 2.34.0.
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -1335,22 +1335,16 @@ libraries.
 <dd><p>When creating a shared library, bind references to global symbols to the
 definition within the shared library, if any.  Normally, it is possible
 for a program linked against a shared library to override the definition
-within the shared library.  This option can also be used with the
-<samp>--export-dynamic</samp> option, when creating a position independent
-executable, to bind references to global symbols to the definition within
-the executable.  This option is only meaningful on ELF platforms which
-support shared libraries and position independent executables.
+within the shared library.  This option is only meaningful on ELF
+platforms which support shared libraries.
 </p>
 <a name="index-_002dBsymbolic_002dfunctions"></a>
 </dd>
 <dt><code>-Bsymbolic-functions</code></dt>
 <dd><p>When creating a shared library, bind references to global function
 symbols to the definition within the shared library, if any.
-This option can also be used with the <samp>--export-dynamic</samp> option,
-when creating a position independent executable, to bind references
-to global function symbols to the definition within the executable.
 This option is only meaningful on ELF platforms which support shared
-libraries and position independent executables.
+libraries.
 </p>
 <a name="index-_002d_002ddynamic_002dlist_003ddynamic_002dlist_002dfile"></a>
 </dd>
@@ -2987,6 +2981,8 @@ of the PE file header:
 <dt><code>--high-entropy-va</code></dt>
 <dd><p>Image is compatible with 64-bit address space layout randomization
 (ASLR).
+This option also implies <samp>--dynamicbase</samp> and
+<samp>--enable-reloc-section</samp>.
 </p>
 <a name="index-_002d_002ddynamicbase"></a>
 </dd>
@@ -2994,6 +2990,7 @@ of the PE file header:
 <dd><p>The image base address may be relocated using address space layout
 randomization (ASLR).  This feature was introduced with MS Windows
 Vista for i386 PE targets.
+This option also implies <samp>--enable-reloc-section</samp>.
 </p>
 <a name="index-_002d_002dforceinteg"></a>
 </dd>
@@ -3044,6 +3041,12 @@ same sources are linked.  The option <samp>--no-insert-timestamp</samp>
 can be used to insert a zero value for the timestamp, this ensuring
 that binaries produced from identical sources will compare
 identically.
+</p>
+<a name="index-_002d_002denable_002dreloc_002dsection"></a>
+</dd>
+<dt><code>--enable-reloc-section</code></dt>
+<dd><p>Create the base relocation table, which is necessary if the image
+is loaded at a different image base than specified in the PE header.
 </p></dd>
 </dl>
 

@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -65,8 +65,8 @@ ul.no-bullet {list-style: none}
 Next: <a href="Bundle-directives.html#Bundle-directives" accesskey="n" rel="next">Bundle directives</a>, Previous: <a href="Asciz.html#Asciz" accesskey="p" rel="prev">Asciz</a>, Up: <a href="Pseudo-Ops.html#Pseudo-Ops" accesskey="u" rel="up">Pseudo Ops</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="AS-Index.html#AS-Index" title="Index" rel="index">Index</a>]</p>
 </div>
 <hr>
-<a name="g_t_002ebalign_005bwl_005d-abs_002dexpr_002c-abs_002dexpr_002c-abs_002dexpr"></a>
-<h3 class="section">7.7 <code>.balign[wl] <var>abs-expr</var>, <var>abs-expr</var>, <var>abs-expr</var></code></h3>
+<a name="g_t_002ebalign_005bwl_005d-_005babs_002dexpr_005b_002c-abs_002dexpr_005b_002c-abs_002dexpr_005d_005d_005d"></a>
+<h3 class="section">7.7 <code>.balign[wl] [<var>abs-expr</var>[, <var>abs-expr</var>[, <var>abs-expr</var>]]]</code></h3>
 
 <a name="index-padding-the-location-counter-given-number-of-bytes"></a>
 <a name="index-balign-directive"></a>
@@ -74,7 +74,8 @@ Next: <a href="Bundle-directives.html#Bundle-directives" accesskey="n" rel="next
 storage boundary.  The first expression (which must be absolute) is the
 alignment request in bytes.  For example &lsquo;<samp>.balign 8</samp>&rsquo; advances
 the location counter until it is a multiple of 8.  If the location counter
-is already a multiple of 8, no change is needed.
+is already a multiple of 8, no change is needed.  If the expression is omitted
+then a default value of 0 is used, effectively disabling alignment requirements.
 </p>
 <p>The second expression (also absolute) gives the fill value to be stored in the
 padding bytes.  It (and the comma) may be omitted.  If it is omitted, the

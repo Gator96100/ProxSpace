@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -85,6 +85,10 @@ automatically cause those extensions to be disabled.
 </p>
 <table>
 <thead><tr><th width="12%">Extension</th><th width="17%">Minimum Architecture</th><th width="17%">Enabled by default</th><th width="54%">Description</th></tr></thead>
+<tr><td width="12%"><code>i8mm</code></td><td width="17%">ARMv8.2-A</td><td width="17%">ARMv8.6-A or later</td><td width="54%">Enable Int8 Matrix Multiply extension.</td></tr>
+<tr><td width="12%"><code>f32mm</code></td><td width="17%">ARMv8.2-A</td><td width="17%">No</td><td width="54%">Enable F32 Matrix Multiply extension.</td></tr>
+<tr><td width="12%"><code>f64mm</code></td><td width="17%">ARMv8.2-A</td><td width="17%">No</td><td width="54%">Enable F64 Matrix Multiply extension.</td></tr>
+<tr><td width="12%"><code>bf16</code></td><td width="17%">ARMv8.2-A</td><td width="17%">ARMv8.6-A or later</td><td width="54%">Enable BFloat16 extension.</td></tr>
 <tr><td width="12%"><code>compnum</code></td><td width="17%">ARMv8.2-A</td><td width="17%">ARMv8.3-A or later</td><td width="54%">Enable the complex number SIMD extensions.  This implies
  <code>fp16</code> and <code>simd</code>.</td></tr>
 <tr><td width="12%"><code>crc</code></td><td width="17%">ARMv8-A</td><td width="17%">ARMv8.1-A or later</td><td width="54%">Enable CRC instructions.</td></tr>

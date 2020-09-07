@@ -175,6 +175,11 @@ are being produced.  This allows the use of new <samp>-Wno-</samp> options
 with old compilers, but if something goes wrong, the compiler
 warns that an unrecognized option is present.
 </p>
+<p>The effectiveness of some warnings depends on optimizations also being
+enabled. For example <samp>-Wsuggest-final-types</samp> is more effective
+with link-time optimization and <samp>-Wmaybe-uninitialized</samp> will not
+warn at all unless optimization is enabled.
+</p>
 <dl compact="compact">
 <dt><code>-Wpedantic</code></dt>
 <dt><code>-pedantic</code></dt>
@@ -2739,6 +2744,15 @@ For instance, warn about use of anonymous structures and unions,
 <code>_Atomic</code> type qualifier, <code>_Thread_local</code> storage-class specifier,
 <code>_Alignas</code> specifier, <code>Alignof</code> operator, <code>_Generic</code> keyword,
 and so on.  This option is independent of the standards mode.  Warnings are
+disabled in the expression that follows <code>__extension__</code>.
+</p>
+</dd>
+<dt><code>-Wc11-c2x-compat <span class="roman">(C and Objective-C only)</span></code></dt>
+<dd><a name="index-Wc11_002dc2x_002dcompat"></a>
+<a name="index-Wno_002dc11_002dc2x_002dcompat"></a>
+<p>Warn about features not present in ISO C11, but present in ISO C2X.
+For instance, warn about omitting the string in <code>_Static_assert</code>.
+This option is independent of the standards mode.  Warnings are
 disabled in the expression that follows <code>__extension__</code>.
 </p>
 </dd>

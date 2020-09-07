@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This file documents the GNU linker LD
-(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
-version 2.33.1.
+(GNU Arm Embedded Toolchain 9-2020-q2-update)
+version 2.34.0.
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -127,17 +127,20 @@ pattern in parentheses (e.g., <code>SORT_BY_NAME(.text*)</code>).  When the
 into ascending order by name before placing them in the output file.
 </p>
 <a name="index-SORT_005fBY_005fALIGNMENT"></a>
-<p><code>SORT_BY_ALIGNMENT</code> is very similar to <code>SORT_BY_NAME</code>. The
-difference is <code>SORT_BY_ALIGNMENT</code> will sort sections into
-descending order by alignment before placing them in the output file.
-Larger alignments are placed before smaller alignments in order to
-reduce the amount of padding necessary.
+<p><code>SORT_BY_ALIGNMENT</code> is similar to <code>SORT_BY_NAME</code>.
+<code>SORT_BY_ALIGNMENT</code> will sort sections into descending order of
+alignment before placing them in the output file.  Placing larger
+alignments before smaller alignments can reduce the amount of padding
+needed.
 </p>
 <a name="index-SORT_005fBY_005fINIT_005fPRIORITY"></a>
-<p><code>SORT_BY_INIT_PRIORITY</code> is very similar to <code>SORT_BY_NAME</code>. The
-difference is <code>SORT_BY_INIT_PRIORITY</code> will sort sections into
-ascending order by numerical value of the GCC init_priority attribute
-encoded in the section name before placing them in the output file.
+<p><code>SORT_BY_INIT_PRIORITY</code> is also similar to <code>SORT_BY_NAME</code>.
+<code>SORT_BY_INIT_PRIORITY</code> will sort sections into ascending
+numerical order of the GCC init_priority attribute encoded in the
+section name before placing them in the output file.  In
+<code>.init_array.NNNNN</code> and <code>.fini_array.NNNNN</code>, <code>NNNNN</code> is
+the init_priority.  In <code>.ctors.NNNNN</code> and <code>.dtors.NNNNN</code>,
+<code>NNNNN</code> is 65535 minus the init_priority.
 </p>
 <a name="index-SORT"></a>
 <p><code>SORT</code> is an alias for <code>SORT_BY_NAME</code>.

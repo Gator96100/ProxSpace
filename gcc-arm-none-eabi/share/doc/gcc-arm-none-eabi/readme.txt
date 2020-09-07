@@ -1,5 +1,6 @@
-GNU Tools for Arm Embedded Processors
-Version: 9
+GNU Arm Embedded Toolchain 2020-q2-update
+Pre-built GNU toolchain for Arm Cortex-A/R and Cortex-M processors
+GCC Version: 9.3.1
 
 Table of Contents
 * Installing executables on Linux
@@ -11,12 +12,14 @@ Table of Contents
 * Linker scripts & startup code
 * Samples
 * GDB Server for CMSIS-DAP based hardware debugger
+* Centos 6 / RHEL 6 (Red Hat Enterprise Linux) support
 
 * Installing executables on Linux *
 Unpack the tarball to the install directory, like this:
-$ cd $install_dir && tar xjf gcc-arm-none-eabi-*-yyyymmdd-linux.tar.bz2
 
-If you want to use gdb python build (arm-none-eabi-gdb-py), you'd
+    $ cd ${install_dir} && tar xjf gcc-arm-none-eabi-_version_-linux.tar.bz2
+
+If you want to use gdb python build (arm-none-eabi-gdb-py), then
 install python2.7.
 
 For some Ubuntu releases, the toolchain can also be installed via
@@ -24,10 +27,11 @@ Launchpad PPA at https://launchpad.net/~team-gcc-arm-embedded/+archive/ubuntu/pp
 
 * Installing executables on Mac OS X *
 Unpack the tarball to the install directory, like this:
-$ cd $install_dir && tar xjf gcc-arm-none-eabi-*-yyyymmdd-mac.tar.bz2
+
+    $ cd ${install_dir} && tar xjf gcc-arm-none-eabi-_version_-mac.tar.bz2
 
 * Installing executables on Windows *
-Run the installer (gcc-arm-none-eabi-*-yyyymmdd-win32.exe) and follow the
+Run the installer (gcc-arm-none-eabi-_version_-win32.exe) and follow the
 instructions. The installer can also be run on the command line. When run on
 the command-line, the following options can be set:
   - /S Run in silent mode
@@ -36,29 +40,32 @@ the command-line, the following options can be set:
 
 For example, to install the tools silently, amend users PATH and add registry
 entry:
-> gcc-arm-none-eabi-*-yyyymmdd-win32.exe /S /P /R
 
-The toolchain in windows zip package is a backup to windows installer for
-those who cannot run installer.  We need decompress the zip package
-in a proper place and then invoke it following instructions in next section.
+    > gcc-arm-none-eabi-_version_-win32.exe /S /P /R
 
-To use gdb python build (arm-none-eabi-gdb-py), you need install 32 bit
-python2.7 no matter 32 or 64 bit Windows. Please get the package from
+The toolchain in Windows zip package is a backup to Windows installer for
+those who cannot run the installer.  You must decompress the zip package
+and then invoke it following instructions in the next section.
+
+To use gdb python build (arm-none-eabi-gdb-py), you must install 32 bit
+python2.7 irrespective of 32 or 64 bit Windows.  Please get the package from
 https://www.python.org/download/.
 
 * Invoking GCC *
 On Linux and Mac OS X, either invoke with the complete path like this:
-$ $install_dir/gcc-arm-none-eabi-*/bin/arm-none-eabi-gcc
+
+    $ ${install_dir}/gcc-arm-none-eabi-*/bin/arm-none-eabi-gcc
 
 Or set path like this:
-$ export PATH=$PATH:$install_dir/gcc-arm-none-eabi-*/bin
-$ arm-none-eabi-gcc
+
+    $ export PATH=$PATH:${install_dir}/gcc-arm-none-eabi-*/bin
+    $ arm-none-eabi-gcc --version
 
 On Windows (although the above approaches also work), it can be more
 convenient to either have the installer register environment variables, or run
 INSTALL_DIR\bin\gccvar.bat to set environment variables for the current cmd.
 
-For windows zip package, after decompression we can invoke toolchain either with
+For Windows zip package, after decompression we can invoke the toolchain either with
 complete path like this:
 TOOLCHAIN_UNZIP_DIR\bin\arm-none-eabi-gcc
 or run TOOLCHAIN_UNZIP_DIR\bin\gccvar.bat to set environment variables for the
@@ -66,98 +73,85 @@ current cmd.
 
 * Architecture options usage *
 
-This toolchain is built and optimized for Cortex-A/R/M bare metal development.
-the following table shows how to invoke GCC/G++ with correct command line
+This toolchain is built and optimized for Cortex-A/R/M embedded development.
+This section describes how to invoke GCC/G++ with the correct command line
 options for variants of Cortex-A/R and Cortex-M architectures.
 
---------------------------------------------------------------------------
-| Arm core   | Command Line Options                       | multilib     |
-|------------|--------------------------------------------|--------------|
-| Cortex-M0+ | -mthumb -mcpu=cortex-m0plus                | thumb        |
-| Cortex-M0  | -mthumb -mcpu=cortex-m0                    | /v6-m        |
-| Cortex-M1  | -mthumb -mcpu=cortex-m1                    |              |
-|------------|--------------------------------------------|--------------|
-| Cortex-M3  | -mthumb -mcpu=cortex-m3                    | thumb        |
-|            |                                            | /v7-m        |
-|------------|--------------------------------------------|--------------|
-| Cortex-M4  | -mthumb -mcpu=cortex-m4                    | thumb        |
-| (No FP)    |                                            | /v7e-m       |
-|------------|--------------------------------------------|--------------|
-| Cortex-M4  | -mthumb -mcpu=cortex-m4 -mfloat-abi=softfp | thumb        |
-| (Soft FP)  |                                            | /v7e-m+fp    |
-|            |                                            | /softfp      |
-|------------|--------------------------------------------|--------------|
-| Cortex-M4  | -mthumb -mcpu=cortex-m4 -mfloat-abi=hard   | thumb        |
-| (Hard FP)  |                                            | /v7e-m+fp    |
-|            |                                            | /hard        |
-|------------|--------------------------------------------|--------------|
-| Cortex-M7  | -mthumb -mcpu=cortex-m7                    | thumb        |
-| (No FP)    |                                            | /v7e-m       |
-|            |                                            | /nofp        |
-|------------|--------------------------------------------|--------------|
-| Cortex-M7  | -mthumb -mcpu=cortex-m7 -mfloat-abi=softfp | thumb        |
-| (Soft FP)  |                                            | /v7e-m+dp    |
-|            |                                            | /softfp      |
-|------------|--------------------------------------------|--------------|
-| Cortex-M7  | -mthumb -mcpu=cortex-m7 -mfloat-abi=hard   | thumb        |
-| (Hard FP)  | -mfpu=fpv5-sp-d16                          | /v7e-m+dp    |
-|            |                                            | /hard        |
-|------------|--------------------------------------------|--------------|
-| Cortex-M23 | -mthumb -mcpu=cortex-m23                   | thumb        |
-|            |                                            | /v8-m.base   |
-|------------|--------------------------------------------|--------------|
-| Cortex-M33 | -mthumb -mcpu=cortex-m33                   | thumb        |
-|  (No FP)   |                                            | /v8-m.main   |
-|            |                                            | /nofp        |
-|------------|--------------------------------------------|--------------|
-| Cortex-M33 | -mthumb -mcpu-cortex-m33                   | thumb        |
-| (Soft FP)  | -mfloat-abi=softfp                         | /v8-m.main+fp|
-|            |                                            | /softfp      |
-|------------|--------------------------------------------|--------------|
-| Cortex-M33 | -mthumb -mcpu=cortex-m33                   | thumb        |
-| (Hard FP)  | -mfloat-abi=hard                           | /v8-m.main+fp|
-|            |                                            | /hard        |
-|------------|--------------------------------------------|--------------|
-| Cortex-R4  | [-mthumb] -mcpu=cortex-r?                  | thumb        |
-| Cortex-R5  |                                            | /v7          |
-| Cortex-R7  |                                            | /nofp        |
-| Cortex-R8  |                                            |              |
-| (No FP)    |                                            |              |
-|------------|--------------------------------------------|--------------|
-| Cortex-R5  | [-mthumb] -mcpu=cortex-r?                  | thumb        |
-| Cortex-R7  | -mfloat-abi=softfp                         | /v7+fp       |
-| Cortex-R8  |                                            | /softfp      |
-| (Soft FP)  |                                            |              |
-|------------|--------------------------------------------|--------------|
-| Cortex-R5  | [-mthumb] -mcpu=cortex-r?                  | thumb        |
-| Cortex-R7  | -mfloat-abi=hard                           | /v7+fp       |
-| Cortex-R8  |                                            | /hard        |
-| (Hard FP)  |                                            |              |
-|------------|--------------------------------------------|--------------|
-| Cortex-R52 | [-mthumb] -mcpu=cortex-r52                 | thumb        |
-| (No FP)    |                                            | /v7          |
-|            |                                            | /nofp        |
-|------------|--------------------------------------------|--------------|
-| Cortex-R52 | [-mthumb] -mcpu=cortex-r52                 | thumb        |
-| (Soft FP)  | -mfloat-abi=softfp                         | /v7+fp       |
-|            |                                            | /softfp      |
-|------------|--------------------------------------------|--------------|
-| Cortex-R52 | [-mthumb] -mcpu=cortex-r52                 | thumb        |
-| (Soft FP)  | -mfloat-abi=hard                           | /v7+fp       |
-|            |                                            | /hard        |
-|------------|--------------------------------------------|--------------|
-| Cortex-A*  | [-mthumb] -mcpu=cortex-a*                  | thumb        |
-| (No FP)    |                                            | /v7          |
-|            |                                            | /nofp        |
-|------------|--------------------------------------------|--------------|
-| Cortex-A*  | [-mthumb] -mcpu=cortex-a*                  | thumb        |
-| (Soft FP)  | -mfloat-abi=softfp                         | /v7+fp       |
-|            |                                            | /softfp      |
-|------------|--------------------------------------------|--------------|
-| Cortex-A*  | [-mthumb] -mcpu=cortex-a*                  | thumb        |
-| (Hard FP)  | -mfloat-abi=hard                           | /v7+fp       |
-|            |                                            | /hard        |
---------------------------------------------------------------------------
+    $ arm-none-eabi-gcc [-mthumb] -mcpu=CPU[+extension...] -mfloat-abi=ABI
+
+-mcpu:
+For the permissible CPU names and extensions, see the GCC online manual:
+https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/ARM-Options.html#index-mcpu-2
+Use the optional extension name with -mcpu to disable the extensions that are
+not present in your CPU implementation.
+
+By default, -mfpu=auto and this enables the compiler to automatically select
+the floating-pointing and Advanced SIMD instructions based on the -mcpu option
+and extension.
+
+-mfloat-abi:
+If floating-point or Advanced SIMD instructions are present, then use the
+-mfloat-abi option to control the floating-point ABI, or use -mfloat-abi=soft
+to disable floating-point and Advanced SIMD instructions.
+For the permissible values of -mfloat-abi, see the GCC online manual:
+https://gcc.gnu.org/onlinedocs/gcc-9.3.0/gcc/ARM-Options.html#index-mfloat-abi
+
+-mthumb:
+When using processors that can execute in Arm state and Thumb state, use -mthumb
+to generate code for Thumb state.
+
+Examples with no floating-point and Advanced SIMD instructions:
+    $ arm-none-eabi-gcc -mcpu=cortex-m7+nofp
+    $ arm-none-eabi-gcc -mcpu=cortex-r5+nofp -mthumb
+    $ arm-none-eabi-gcc -mcpu=cortex-a53+nofp -mthumb
+    $ arm-none-eabi-gcc -mcpu=cortex-a57 -mfloat-abi=soft -mthumb
+
+Examples with single-precision floating-point with soft-float ABI:
+    $ arm-none-eabi-gcc -mcpu=cortex-m7+nofp.dp -mfloat-abi=softfp
+    $ arm-none-eabi-gcc -mcpu=cortex-r5+nofp.dp -mfloat-abi=softfp -mthumb
+
+Examples with single-precision floating-point with hard-float ABI:
+    $ arm-none-eabi-gcc -mcpu=cortex-m7+nofp.dp -mfloat-abi=hard
+    $ arm-none-eabi-gcc -mcpu=cortex-r5+nofp.dp -mfloat-abi=hard -mthumb
+
+Examples with double-precision floating-point with soft-float ABI:
+    $ arm-none-eabi-gcc -mcpu=cortex-m7 -mfloat-abi=softfp
+    $ arm-none-eabi-gcc -mcpu=cortex-r5 -mfloat-abi=softfp -mthumb
+
+Examples with double-precision floating-point with hard-float ABI:
+    $ arm-none-eabi-gcc -mcpu=cortex-m7 -mfloat-abi=hard
+    $ arm-none-eabi-gcc -mcpu=cortex-r5 -mfloat-abi=hard -mthumb
+
+Example with floating-point and Advanced SIMD instructions with soft-float ABI:
+    $ arm-none-eabi-gcc -mcpu=cortex-a53 -mfloat-abi=softfp -mthumb
+
+Example with floating-point and Advanced SIMD instructions with hard-float ABI:
+    $ arm-none-eabi-gcc -mcpu=cortex-a53 -mfloat-abi=hard -mthumb
+
+* Available multilibs *
+
+Currently GNU Arm Embedded Toolchain 2020-q2-update offers both rmprofile and
+aprofile set of multilibs.
+
+How to list all multilibs supported by the toolchain:
+
+    $ arm-none-eabi-gcc --print-multi-lib
+
+How to check which multilib is selected by toolchain based on -mthumb, -mcpu,
+-mfpu and -mfloat-abi with --print-multi-dir command line option:
+
+    $ arm-none-eabi-gcc [-mthumb] -mcpu=CPU -mfpu=FPU -mfloat-abi=ABI --print-multi-dir
+
+For examples:
+
+    $ arm-none-eabi-gcc -mcpu=cortex-a55 -mfpu=auto -mfloat-abi=hard --print-multi-dir
+    thumb/v8-a+simd/hard
+
+    $ arm-none-eabi-gcc -mcpu=cortex-r5 -mfpu=auto -mfloat-abi=softfp --print-multi-dir
+    thumb/v7+fp/softfp
+
+    $ arm-none-eabi-gcc -mcpu=cortex-m0 -mfpu=auto -mfloat-abi=soft --print-multi-dir
+    thumb/v6-m/nofp
 
 * C Libraries usage *
 
@@ -165,26 +159,29 @@ This toolchain is released with two prebuilt C libraries based on newlib:
 one is the standard newlib and the other is newlib-nano for code size.
 To distinguish them, we rename the size optimized libraries as:
 
-  libc.a --> libc_nano.a
-  libg.a --> libg_nano.a
+    libc.a --> libc_nano.a
+    libg.a --> libg_nano.a
 
 To use newlib-nano, users should provide additional gcc compile and link time
 option:
- --specs=nano.specs
+
+    --specs=nano.specs
 
 At compile time, a 'newlib.h' header file especially configured for newlib-nano
 will be used if --specs=nano.specs is passed to the compiler.
 
-Nano.specs also handles two additional gcc libraries: libstdc++_nano.a and
+nano.specs also handles two additional gcc libraries: libstdc++_nano.a and
 libsupc++_nano.a, which are optimized for code size.
 
 For example:
-$ arm-none-eabi-gcc src.c --specs=nano.specs $(OTHER_OPTIONS)
 
-This option can also work together with other specs options like
---specs=rdimon.specs
+    $ arm-none-eabi-gcc src.c --specs=nano.specs ${OTHER_OPTIONS}
 
-Please note that --specs=nano.specs is a both a compiler and linker option.  Be
+This option can also work together with other specs options like:
+
+    --specs=rdimon.specs
+
+Please note that --specs=nano.specs is both a compiler and linker option. Be
 sure to include in both compiler and linker options if compiling and linking
 are separated.
 
@@ -195,11 +192,12 @@ Formatted input/output of floating-point number are implemented as weak symbol.
 If you want to use %f, you have to pull in the symbol by explicitly specifying
 "-u" command option.
 
-  -u _scanf_float
-  -u _printf_float
+    -u _scanf_float
+    -u _printf_float
 
 e.g. to output a float, the command line is like:
-$ arm-none-eabi-gcc --specs=nano.specs -u _printf_float $(OTHER_LINK_OPTIONS)
+
+    $ arm-none-eabi-gcc --specs=nano.specs -u _printf_float ${OTHER_LINK_OPTIONS}
 
 For more about the difference and usage, please refer the README.nano in the
 source package.
@@ -207,11 +205,13 @@ source package.
 Users can choose to use or not use semihosting by following instructions.
 ** semihosting
 If you need semihosting, linking like:
-$ arm-none-eabi-gcc --specs=rdimon.specs $(OTHER_LINK_OPTIONS)
+
+    $ arm-none-eabi-gcc --specs=rdimon.specs ${OTHER_LINK_OPTIONS}
 
 ** non-semihosting/retarget
 If you are using retarget, linking like:
-$ arm-none-eabi-gcc --specs=nosys.specs $(OTHER_LINK_OPTIONS)
+
+    $ arm-none-eabi-gcc --specs=nosys.specs ${OTHER_LINK_OPTIONS}
 
 * Linker scripts & startup code *
 
@@ -220,7 +220,8 @@ https://developer.arm.com/embedded/cmsis
 
 * Samples *
 Examples of all above usages are available at:
-$install_dir/gcc-arm-none-eabi-*/share/gcc-arm-none-eabi/samples
+
+    ${install_dir}/gcc-arm-none-eabi-*/share/gcc-arm-none-eabi/samples
 
 Read readme.txt under it for further information.
 
@@ -236,3 +237,37 @@ written in Python and under Apache License.
 For those who are using this toolchain and have board with CMSIS-DAP based
 debugger, the pyOCD is our recommended gdb server.  More information can be
 found at https://github.com/mbedmicro/pyOCD.
+
+* Centos 6 / RHEL 6 (Red Hat Enterprise Linux) support *
+GNU Arm Embedded Toolchain 2020-q2-update x86_64/Linux toolchain flavor will
+support Centos 7 / RHEL 7 onward as it supports host OSs with Glibc (The GNU C
+Library) 2.14 onward.
+For hosts with older Glibc version users must provide Glibc 2.14 as Linux
+shared library for example by using LD_LIBRARY_PATH search path environment
+variable.
+
+For host OSs without required Glibc version users will experience the following error:
+
+    $ arm-none-eabi-gcc --version
+    arm-none-eabi-gcc: /lib64/libc.so.6: version `GLIBC_2.14' not found (required by arm-none-eabi-gcc)
+
+Below example demonstrates how to custom build Glibc 2.14 and use it as Linux
+shared library with GNU Arm Embedded Toolchain.
+
+First, build Glibc 2.14 from sources to /opt/glibc-2.14:
+
+    $ cd /tmp
+    $ wget http://ftp.gnu.org/gnu/glibc/glibc-2.14.tar.gz
+    $ tar zxvf glibc-2.14.tar.gz
+    $ cd glibc-2.14
+    $ mkdir build
+    $ cd build
+    $ ../configure --prefix=/opt/glibc-2.14
+    $ make
+    $ sudo make install
+
+Second, add newly built Glibc to LD_LIBRARY_PATH environment variable and
+execute toolchain binary:
+
+    $ export LD_LIBRARY_PATH="/opt/glibc-2.14/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    $ arm-none-eabi-gcc --version

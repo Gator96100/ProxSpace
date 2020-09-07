@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -272,6 +272,8 @@ accept various extension mnemonics.  For example,
 <code>pconfig</code>,
 <code>waitpkg</code>,
 <code>cldemote</code>,
+<code>rdpru</code>,
+<code>mcommit</code>,
 <code>lwp</code>,
 <code>fma4</code>,
 <code>xop</code>,
@@ -464,6 +466,47 @@ R_X86_64_REX_GOTPCRELX, in 64-bit mode.
 relocations.  The default can be controlled by a configure option
 <samp>--enable-x86-relax-relocations</samp>.
 </p>
+<a name="index-_002dmalign_002dbranch_002dboundary_003d-option_002c-i386"></a>
+<a name="index-_002dmalign_002dbranch_002dboundary_003d-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-malign-branch-boundary=<var>NUM</var></code></dt>
+<dd><p>This option controls how the assembler should align branches with segment
+prefixes or NOP.  <var>NUM</var> must be a power of 2.  It should be 0 or
+no less than 16.  Branches will be aligned within <var>NUM</var> byte
+boundary.  <samp>-malign-branch-boundary=0</samp>, which is the default,
+doesn&rsquo;t align branches.
+</p>
+<a name="index-_002dmalign_002dbranch_003d-option_002c-i386"></a>
+<a name="index-_002dmalign_002dbranch_003d-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-malign-branch=<var>TYPE</var>[+<var>TYPE</var>...]</code></dt>
+<dd><p>This option specifies types of branches to align. <var>TYPE</var> is
+combination of &lsquo;<samp>jcc</samp>&rsquo;, which aligns conditional jumps,
+&lsquo;<samp>fused</samp>&rsquo;, which aligns fused conditional jumps, &lsquo;<samp>jmp</samp>&rsquo;,
+which aligns unconditional jumps, &lsquo;<samp>call</samp>&rsquo; which aligns calls,
+&lsquo;<samp>ret</samp>&rsquo;, which aligns rets, &lsquo;<samp>indirect</samp>&rsquo;, which aligns indirect
+jumps and calls.  The default is <samp>-malign-branch=jcc+fused+jmp</samp>.
+</p>
+<a name="index-_002dmalign_002dbranch_002dprefix_002dsize_003d-option_002c-i386"></a>
+<a name="index-_002dmalign_002dbranch_002dprefix_002dsize_003d-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-malign-branch-prefix-size=<var>NUM</var></code></dt>
+<dd><p>This option specifies the maximum number of prefixes on an instruction
+to align branches.  <var>NUM</var> should be between 0 and 5.  The default
+<var>NUM</var> is 5.
+</p>
+<a name="index-_002dmbranches_002dwithin_002d32B_002dboundaries-option_002c-i386"></a>
+<a name="index-_002dmbranches_002dwithin_002d32B_002dboundaries-option_002c-x86_002d64"></a>
+</dd>
+<dt><code>-mbranches-within-32B-boundaries</code></dt>
+<dd><p>This option aligns conditional jumps, fused conditional jumps and
+unconditional jumps within 32 byte boundary with up to 5 segment prefixes
+on an instruction.  It is equivalent to
+<samp>-malign-branch-boundary=32</samp>
+<samp>-malign-branch=jcc+fused+jmp</samp>
+<samp>-malign-branch-prefix-size=5</samp>.
+The default doesn&rsquo;t align branches.
+</p>
 <a name="index-_002dmx86_002dused_002dnote_003d-option_002c-i386"></a>
 <a name="index-_002dmx86_002dused_002dnote_003d-option_002c-x86_002d64"></a>
 </dd>
@@ -494,7 +537,8 @@ with 01, 10 and 11 RC bits, respectively.
 <dt><code>-mamd64</code></dt>
 <dt><code>-mintel64</code></dt>
 <dd><p>This option specifies that the assembler should accept only AMD64 or
-Intel64 ISA in 64-bit mode.  The default is to accept both.
+Intel64 ISA in 64-bit mode.  The default is to accept common, Intel64
+only and AMD64 ISAs.
 </p>
 <a name="index-_002dO0-option_002c-i386"></a>
 <a name="index-_002dO0-option_002c-x86_002d64"></a>

@@ -33,6 +33,9 @@
    very restricted storage.  */
 /* #undef _WANT_REENT_SMALL */
 
+/* Verify _REENT_CHECK macros allocate memory successfully. */
+#define _REENT_CHECK_VERIFY 1
+
 /* Multibyte supported */
 /* #undef _MB_CAPABLE */
 

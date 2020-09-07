@@ -78,10 +78,7 @@ its calculations on <code>floats</code>.
 <code>acos</code> and <code>acosf</code> return values in radians, in the range of 0 to pi.
 </p>
 <p>If <var>x</var> is not between -1 and 1, the returned value is NaN
-(not a number) the global variable <code>errno</code> is set to <code>EDOM</code>, and a
-<code>DOMAIN error</code> message is sent as standard error output.
-</p>
-<p>You can modify error handling for these functions using <code>matherr</code>.
+(not a number), and the global variable <code>errno</code> is set to <code>EDOM</code>.
 </p>
 <br>
 

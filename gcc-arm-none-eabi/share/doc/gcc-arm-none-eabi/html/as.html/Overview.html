@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -82,6 +82,7 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
  [<b>&ndash;debug-prefix-map</b> <var>old</var>=<var>new</var>]
  [<b>&ndash;defsym</b> <var>sym</var>=<var>val</var>] [<b>-f</b>] [<b>-g</b>] [<b>&ndash;gstabs</b>]
  [<b>&ndash;gstabs+</b>] [<b>&ndash;gdwarf-2</b>] [<b>&ndash;gdwarf-sections</b>]
+ [<b>&ndash;gdwarf-cie-version</b>=<var>VERSION</var>]
  [<b>&ndash;help</b>] [<b>-I</b> <var>dir</var>] [<b>-J</b>]
  [<b>-K</b>] [<b>-L</b>] [<b>&ndash;listing-lhs-width</b>=<var>NUM</var>]
  [<b>&ndash;listing-lhs-width2</b>=<var>NUM</var>] [<b>&ndash;listing-rhs-width</b>=<var>NUM</var>]
@@ -378,7 +379,15 @@ see <a href="Invoking.html#Invoking">Command-Line Options</a>.
  [<b>&ndash;[no-]trampolines</b>]
 
 <em>Target Z80 options:</em>
-  [<b>-z80</b>] [<b>-r800</b>]
+  [<b>-z80</b>]|[<b>-z180</b>]|[<b>-r800</b>]|[<b>-ez80</b>]|[<b>-ez80-adl</b>]
+  [<b>-local-prefix=</b><var>PREFIX</var>]
+  [<b>-colonless</b>]
+  [<b>-sdcc</b>]
+  [<b>-fp-s=</b><var>FORMAT</var>]
+  [<b>-fp-d=</b><var>FORMAT</var>]
+  [<b>-strict</b>]|[<b>-full</b>]
+  [<b>-with-inst=<var>INST</var>[,...]</b>] [<b>-Wnins <var>INST</var>[,...]</b>]
+  [<b>-without-inst=<var>INST</var>[,...]</b>] [<b>-Fins <var>INST</var>[,...]</b>]
   [<b> -ignore-undocumented-instructions</b>] [<b>-Wnud</b>]
   [<b> -ignore-unportable-instructions</b>] [<b>-Wnup</b>]
   [<b> -warn-undocumented-instructions</b>] [<b>-Wud</b>]
@@ -544,6 +553,12 @@ will have its dwarf line number information placed into a section called
 <var>.debug_line.text.func</var>.  If the code section is just called <var>.text</var>
 then debug line section will still be called just <var>.debug_line</var> without any
 suffix.
+</p>
+</dd>
+<dt><code>--gdwarf-cie-version=<var>version</var></code></dt>
+<dd><p>Control which version of DWARF Common Information Entries (CIEs) are produced.
+When this flag is not specificed the default is version 1, though some targets
+can modify this default.  Other possible values for <var>version</var> are 3 or 4.
 </p>
 </dd>
 <dt><code>--size-check=error</code></dt>
@@ -1502,7 +1517,8 @@ Architecture (esa) or the z/Architecture mode (zarch).
 &lsquo;<samp>arch3</samp>&rsquo;), &lsquo;<samp>g6</samp>&rsquo;, &lsquo;<samp>z900</samp>&rsquo; (or &lsquo;<samp>arch5</samp>&rsquo;), &lsquo;<samp>z990</samp>&rsquo; (or
 &lsquo;<samp>arch6</samp>&rsquo;), &lsquo;<samp>z9-109</samp>&rsquo;, &lsquo;<samp>z9-ec</samp>&rsquo; (or &lsquo;<samp>arch7</samp>&rsquo;), &lsquo;<samp>z10</samp>&rsquo; (or
 &lsquo;<samp>arch8</samp>&rsquo;), &lsquo;<samp>z196</samp>&rsquo; (or &lsquo;<samp>arch9</samp>&rsquo;), &lsquo;<samp>zEC12</samp>&rsquo; (or &lsquo;<samp>arch10</samp>&rsquo;),
-&lsquo;<samp>z13</samp>&rsquo; (or &lsquo;<samp>arch11</samp>&rsquo;), or &lsquo;<samp>z14</samp>&rsquo; (or &lsquo;<samp>arch12</samp>&rsquo;).
+&lsquo;<samp>z13</samp>&rsquo; (or &lsquo;<samp>arch11</samp>&rsquo;), &lsquo;<samp>z14</samp>&rsquo; (or &lsquo;<samp>arch12</samp>&rsquo;), or &lsquo;<samp>z15</samp>&rsquo;
+(or &lsquo;<samp>arch13</samp>&rsquo;).
 </p></dd>
 <dt><code>-mregnames</code></dt>
 <dt><code>-mno-regnames</code></dt>
@@ -1539,40 +1555,9 @@ for an Xtensa processor.
 
 
 
-<p>The following options are available when as is configured for
-a Z80 family processor.
-</p><dl compact="compact">
-<dt><code>-z80</code></dt>
-<dd><p>Assemble for Z80 processor.
-</p></dd>
-<dt><code>-r800</code></dt>
-<dd><p>Assemble for R800 processor.
-</p></dd>
-<dt><code>-ignore-undocumented-instructions</code></dt>
-<dt><code>-Wnud</code></dt>
-<dd><p>Assemble undocumented Z80 instructions that also work on R800 without warning.
-</p></dd>
-<dt><code>-ignore-unportable-instructions</code></dt>
-<dt><code>-Wnup</code></dt>
-<dd><p>Assemble all undocumented Z80 instructions without warning.
-</p></dd>
-<dt><code>-warn-undocumented-instructions</code></dt>
-<dt><code>-Wud</code></dt>
-<dd><p>Issue a warning for undocumented Z80 instructions that also work on R800.
-</p></dd>
-<dt><code>-warn-unportable-instructions</code></dt>
-<dt><code>-Wup</code></dt>
-<dd><p>Issue a warning for undocumented Z80 instructions that do not work on R800.
-</p></dd>
-<dt><code>-forbid-undocumented-instructions</code></dt>
-<dt><code>-Fud</code></dt>
-<dd><p>Treat all undocumented instructions as errors.
-</p></dd>
-<dt><code>-forbid-unportable-instructions</code></dt>
-<dt><code>-Fup</code></dt>
-<dd><p>Treat undocumented Z80 instructions that do not work on R800 as errors.
-</p></dd>
-</dl>
+<p>See <a href="Z80-Options.html#Z80-Options">Z80 Options</a>, for the options available when as is configured
+for an Z80 processor.
+</p>
 
 
 <table class="menu" border="0" cellspacing="0">

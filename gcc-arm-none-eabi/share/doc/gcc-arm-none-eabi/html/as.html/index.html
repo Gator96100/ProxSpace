@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -178,11 +178,11 @@ ul.no-bullet {list-style: none}
   <ul class="no-bullet">
     <li><a name="toc-_002eabort" href="Abort.html#Abort">7.1 <code>.abort</code></a></li>
     <li><a name="toc-_002eABORT-_0028COFF_0029" href="ABORT-_0028COFF_0029.html#ABORT-_0028COFF_0029">7.2 <code>.ABORT</code> (COFF)</a></li>
-    <li><a name="toc-_002ealign-abs_002dexpr_002c-abs_002dexpr_002c-abs_002dexpr" href="Align.html#Align">7.3 <code>.align <var>abs-expr</var>, <var>abs-expr</var>, <var>abs-expr</var></code></a></li>
+    <li><a name="toc-_002ealign-_005babs_002dexpr_005b_002c-abs_002dexpr_005b_002c-abs_002dexpr_005d_005d_005d" href="Align.html#Align">7.3 <code>.align [<var>abs-expr</var>[, <var>abs-expr</var>[, <var>abs-expr</var>]]]</code></a></li>
     <li><a name="toc-_002ealtmacro" href="Altmacro.html#Altmacro">7.4 <code>.altmacro</code></a></li>
     <li><a name="toc-_002eascii-_0022string_0022_2026" href="Ascii.html#Ascii">7.5 <code>.ascii &quot;<var>string</var>&quot;</code>&hellip;</a></li>
     <li><a name="toc-_002easciz-_0022string_0022_2026" href="Asciz.html#Asciz">7.6 <code>.asciz &quot;<var>string</var>&quot;</code>&hellip;</a></li>
-    <li><a name="toc-_002ebalign_005bwl_005d-abs_002dexpr_002c-abs_002dexpr_002c-abs_002dexpr" href="Balign.html#Balign">7.7 <code>.balign[wl] <var>abs-expr</var>, <var>abs-expr</var>, <var>abs-expr</var></code></a></li>
+    <li><a name="toc-_002ebalign_005bwl_005d-_005babs_002dexpr_005b_002c-abs_002dexpr_005b_002c-abs_002dexpr_005d_005d_005d" href="Balign.html#Balign">7.7 <code>.balign[wl] [<var>abs-expr</var>[, <var>abs-expr</var>[, <var>abs-expr</var>]]]</code></a></li>
     <li><a name="toc-Bundle-directives-1" href="Bundle-directives.html#Bundle-directives">7.8 Bundle directives</a>
     <ul class="no-bullet">
       <li><a name="toc-_002ebundle_005falign_005fmode-abs_002dexpr" href="Bundle-directives.html#g_t_002ebundle_005falign_005fmode-abs_002dexpr">7.8.1 <code>.bundle_align_mode <var>abs-expr</var></code></a></li>
@@ -275,7 +275,7 @@ ul.no-bullet {list-style: none}
     <li><a name="toc-_002eocta-bignums" href="Octa.html#Octa">7.66 <code>.octa <var>bignums</var></code></a></li>
     <li><a name="toc-_002eoffset-loc" href="Offset.html#Offset">7.67 <code>.offset <var>loc</var></code></a></li>
     <li><a name="toc-_002eorg-new_002dlc-_002c-fill" href="Org.html#Org">7.68 <code>.org <var>new-lc</var> , <var>fill</var></code></a></li>
-    <li><a name="toc-_002ep2align_005bwl_005d-abs_002dexpr_002c-abs_002dexpr_002c-abs_002dexpr" href="P2align.html#P2align">7.69 <code>.p2align[wl] <var>abs-expr</var>, <var>abs-expr</var>, <var>abs-expr</var></code></a></li>
+    <li><a name="toc-_002ep2align_005bwl_005d-_005babs_002dexpr_005b_002c-abs_002dexpr_005b_002c-abs_002dexpr_005d_005d_005d" href="P2align.html#P2align">7.69 <code>.p2align[wl] [<var>abs-expr</var>[, <var>abs-expr</var>[, <var>abs-expr</var>]]]</code></a></li>
     <li><a name="toc-_002epopsection" href="PopSection.html#PopSection">7.70 <code>.popsection</code></a></li>
     <li><a name="toc-_002eprevious" href="Previous.html#Previous">7.71 <code>.previous</code></a></li>
     <li><a name="toc-_002eprint-string" href="Print.html#Print">7.72 <code>.print <var>string</var></code></a></li>
@@ -328,6 +328,7 @@ ul.no-bullet {list-style: none}
       <li><a name="toc-MIPS-Attributes" href="GNU-Object-Attributes.html#MIPS-Attributes">8.1.2 MIPS Attributes</a></li>
       <li><a name="toc-PowerPC-Attributes" href="GNU-Object-Attributes.html#PowerPC-Attributes">8.1.3 PowerPC Attributes</a></li>
       <li><a name="toc-IBM-z-Systems-Attributes" href="GNU-Object-Attributes.html#IBM-z-Systems-Attributes">8.1.4 IBM z Systems Attributes</a></li>
+      <li><a name="toc-MSP430-Attributes" href="GNU-Object-Attributes.html#MSP430-Attributes">8.1.5 MSP430 Attributes</a></li>
     </ul></li>
     <li><a name="toc-Defining-New-Object-Attributes-1" href="Defining-New-Object-Attributes.html#Defining-New-Object-Attributes">8.2 Defining New Object Attributes</a></li>
   </ul></li>
@@ -1008,12 +1009,13 @@ ul.no-bullet {list-style: none}
     </ul></li>
     <li><a name="toc-Z80-Dependent-Features" href="Z80_002dDependent.html#Z80_002dDependent">9.56 Z80 Dependent Features</a>
     <ul class="no-bullet">
-      <li><a name="toc-Options-30" href="Z80-Options.html#Z80-Options">9.56.1 Options</a></li>
+      <li><a name="toc-Command_002dline-Options-3" href="Z80-Options.html#Z80-Options">9.56.1 Command-line Options</a></li>
       <li><a name="toc-Syntax-35" href="Z80-Syntax.html#Z80-Syntax">9.56.2 Syntax</a>
       <ul class="no-bullet">
         <li><a name="toc-Special-Characters-42" href="Z80_002dChars.html#Z80_002dChars">9.56.2.1 Special Characters</a></li>
         <li><a name="toc-Register-Names-22" href="Z80_002dRegs.html#Z80_002dRegs">9.56.2.2 Register Names</a></li>
         <li><a name="toc-Case-Sensitivity" href="Z80_002dCase.html#Z80_002dCase">9.56.2.3 Case Sensitivity</a></li>
+        <li><a name="toc-Labels-2" href="Z80_002dLabels.html#Z80_002dLabels">9.56.2.4 Labels</a></li>
       </ul></li>
       <li><a name="toc-Floating-Point-19" href="Z80-Floating-Point.html#Z80-Floating-Point">9.56.3 Floating Point</a></li>
       <li><a name="toc-Z80-Assembler-Directives" href="Z80-Directives.html#Z80-Directives">9.56.4 Z80 Assembler Directives</a></li>
@@ -1021,7 +1023,7 @@ ul.no-bullet {list-style: none}
     </ul></li>
     <li><a name="toc-Z8000-Dependent-Features" href="Z8000_002dDependent.html#Z8000_002dDependent">9.57 Z8000 Dependent Features</a>
     <ul class="no-bullet">
-      <li><a name="toc-Options-31" href="Z8000-Options.html#Z8000-Options">9.57.1 Options</a></li>
+      <li><a name="toc-Options-30" href="Z8000-Options.html#Z8000-Options">9.57.1 Options</a></li>
       <li><a name="toc-Syntax-36" href="Z8000-Syntax.html#Z8000-Syntax">9.57.2 Syntax</a>
       <ul class="no-bullet">
         <li><a name="toc-Special-Characters-43" href="Z8000_002dChars.html#Z8000_002dChars">9.57.2.1 Special Characters</a></li>
@@ -1054,8 +1056,8 @@ Next: <a href="Overview.html#Overview" accesskey="n" rel="next">Overview</a>, Up
 <h1 class="top">Using as</h1>
 
 <p>This file is a user guide to the <small>GNU</small> assembler <code>as</code>
-(GNU Tools for Arm Embedded Processors 9-2019-q4-major)
-version 2.33.1.
+(GNU Arm Embedded Toolchain 9-2020-q2-update)
+version 2.34.0.
 </p>
 <p>This document is distributed under the terms of the GNU Free
 Documentation License.  A copy of the license is included in the

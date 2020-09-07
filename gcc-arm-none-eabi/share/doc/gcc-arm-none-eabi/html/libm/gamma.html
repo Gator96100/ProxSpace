@@ -127,15 +127,13 @@ Normally, the computed result is returned.
 and <code>errno</code> is set to <code>EDOM</code>.  If the result overflows, <code>gamma</code>
 returns <code>HUGE_VAL</code> and <code>errno</code> is set to <code>ERANGE</code>.
 </p>
-<p>You can modify this error treatment using <code>matherr</code>.
-</p>
 <br>
 <p><strong>Portability</strong><br>
 Neither <code>gamma</code> nor <code>gammaf</code> is ANSI C.  It is better not to use either
 of these; use <code>lgamma</code> or <code>tgamma</code> instead.<br>
 <code>lgamma</code>, <code>lgammaf</code>, <code>tgamma</code>, and <code>tgammaf</code> are nominally C standard
-in terms of the base return values, although the <code>matherr</code> error-handling
-is not standard, nor is the <var>signgam</var> global for <code>lgamma</code>.
+in terms of the base return values, although the <var>signgam</var> global for
+<code>lgamma</code> is not standard.
 </p>
 <br>
 <hr>

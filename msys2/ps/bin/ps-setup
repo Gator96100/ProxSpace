@@ -5,11 +5,6 @@ check_install () {
 	fi
 }
 
-clean_86 () { 
-	rm -rf /mingw32/share/qt5/examples
-	pacman --noconfirm --overwrite='*' -Scc
-}
-
 clean_64 () { 
 	rm -rf /mingw64/share/qt5/examples
 	pacman --noconfirm --overwrite='*' -Scc
@@ -32,23 +27,6 @@ setup_proxspace ()
 	check_install mingw-w64-x86_64-qt5
 	clean_64
 	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed64.txt
-  fi
-  
-  if [ "$MSYSTEM" == "MINGW32" ]; then
-	check_install mingw-w64-i686-readline
-	check_install mingw-w64-i686-gcc
-	check_install mingw-w64-i686-libsndfile
-	check_install mingw-w64-i686-cmake
-	check_install mingw-w64-i686-lua
-	check_install mingw-w64-i686-bzip2
-	check_install mingw-w64-i686-python
-	check_install mingw-w64-i686-jansson
-	check_install git
-	check_install make
-	check_install pkg-config
-	check_install mingw-w64-i686-qt5
-	clean_86	
-	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed32.txt
   fi
 }
 setup_proxspace

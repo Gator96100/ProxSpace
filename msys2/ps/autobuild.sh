@@ -2,20 +2,12 @@
 pm3Dir=/pm3
 copyDir=/builds
 buildDir=/tmp
+mingwDir=/mingw64
+arch=64
 
 pacman -Q p7zip 1> /dev/null
 if [[ $? != 0 ]]; then
   pacman --noconfirm -S p7zip
-fi
-
-if [ "$MSYSTEM" == "MINGW32" ]; then
-  mingwDir=/mingw32
-  arch=32
-fi
-
-if [ "$MSYSTEM" == "MINGW64" ]; then
-  mingwDir=/mingw64
-  arch=64
 fi
 
 cd $pm3Dir

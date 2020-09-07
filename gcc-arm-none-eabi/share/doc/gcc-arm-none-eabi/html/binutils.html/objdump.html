@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -112,13 +112,12 @@ Next: <a href="ranlib.html#ranlib" accesskey="n" rel="next">ranlib</a>, Previous
         [<samp>--dwarf-depth=<var>n</var></samp>]
         [<samp>--dwarf-start=<var>n</var></samp>]
         [<samp>--ctf-parent=</samp><var>section</var>]
-        [<samp>--ctf-symbols=</samp><var>section</var>]
-        [<samp>--ctf-strings=</samp><var>section</var>]
         [<samp>--no-recurse-limit</samp>|<samp>--recurse-limit</samp>]
         [<samp>--special-syms</samp>]
         [<samp>--prefix=</samp><var>prefix</var>]
         [<samp>--prefix-strip=</samp><var>level</var>]
         [<samp>--insn-width=</samp><var>width</var>]
+        [<samp>--visualize-jumps[=color|=extended-color|=off]</samp>
         [<samp>-V</samp>|<samp>--version</samp>]
         [<samp>-H</samp>|<samp>--help</samp>]
         <var>objfile</var>&hellip;
@@ -675,6 +674,18 @@ This is the default when <samp>--prefix-addresses</samp> is used.
 instructions.
 </p>
 </dd>
+<dt><code>--visualize-jumps[=color|=extended-color|=off]</code></dt>
+<dd><p>Visualize jumps that stay inside a function by drawing ASCII art between
+the start and target addresses.  The optional <samp>=color</samp> argument
+adds color to the output using simple terminal colors.  Alternatively
+the <samp>=extended-color</samp> argument will add color using 8bit
+colors, but these might not work on all terminals.
+</p>
+<p>If it is necessary to disable the <samp>visualize-jumps</samp> option
+after it has previously been enabled then use
+<samp>visualize-jumps=off</samp>.
+</p>
+</dd>
 <dt><code>-W[lLiaprmfFsoRtUuTgAckK]</code></dt>
 <dt><code>--dwarf[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]</code></dt>
 <dd>
@@ -857,8 +868,9 @@ contain many subsections, all of which are displayed in order.
 </dd>
 <dt><code>--ctf-parent=<var>section</var></code></dt>
 <dd>
-<p>Specify the name of another section from which the CTF file can inherit
-types.
+<p>Specify the name of another section from which the CTF dictionary can inherit
+types.  (If none is specified, we assume the CTF dictionary inherits types
+from the default-named member of the archive contained within this section.)
 </p>
 </dd>
 <dt><code>-G</code></dt>

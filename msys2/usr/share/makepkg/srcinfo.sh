@@ -2,7 +2,7 @@
 #
 #   srcinfo.sh - functions for writing .SRCINFO files
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ LIBMAKEPKG_SRCINFO_SH=1
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 source "$LIBRARY/util/pkgbuild.sh"
+source "$LIBRARY/util/schema.sh"
 
 srcinfo_open_section() {
 	printf '%s = %s\n' "$1" "$2"
@@ -63,7 +64,7 @@ srcinfo_write_section_details() {
 	local attr package_arch a
 	local multivalued_arch_attrs=(source provides conflicts depends replaces
 	                              optdepends makedepends checkdepends
-	                              {md5,sha{1,224,256,384,512}}sums)
+	                              "${known_hash_algos[@]/%/sums}")
 
 	for attr in "${singlevalued[@]}"; do
 		pkgbuild_extract_to_srcinfo "$1" "$attr" 0
@@ -89,7 +90,7 @@ srcinfo_write_global() {
 	local multivalued=(arch groups license checkdepends makedepends
 	                   depends optdepends provides conflicts replaces
 	                   noextract options backup
-	                   source validpgpkeys {md5,sha{1,224,256,384,512}}sums)
+	                   source validpgpkeys "${known_hash_algos[@]/%/sums}")
 
 	srcinfo_open_section 'pkgbase' "${pkgbase:-$pkgname}"
 	srcinfo_write_section_details ''

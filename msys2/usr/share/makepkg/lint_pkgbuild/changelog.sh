@@ -2,7 +2,7 @@
 #
 #   changelog.sh - Check the files in the 'changelog' array exist.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -32,11 +32,15 @@ lint_pkgbuild_functions+=('lint_changelog')
 
 
 lint_changelog() {
-	local name file changelog_list
+	local file changelog_list
 
 	changelog_list=("${changelog[@]}")
-	for name in "${pkgname[@]}"; do
-		if extract_function_variable "package_$name" changelog 0 file; then
+	# set pkgname the same way we do for running package(), this way we get
+	# the right value in extract_function_variable
+	local pkgname_backup=(${pkgname[@]})
+	local pkgname
+	for pkgname in "${pkgname_backup[@]}"; do
+		if extract_function_variable "package_$pkgname" changelog 0 file; then
 			changelog_list+=("$file")
 		fi
 	done

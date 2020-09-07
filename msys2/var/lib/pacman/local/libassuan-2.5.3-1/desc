@@ -14,19 +14,19 @@ A IPC library used by some GnuPG related software
 https://gnupg.org/related_software/libassuan
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1550646200
+1550641999
 
 %INSTALLDATE%
-1558699099
+1599157254
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-156672
+149504
 
 %REASON%
 1

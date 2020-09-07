@@ -14,19 +14,22 @@ The Cygwin rebase distribution contains four utilities, rebase, rebaseall, pefla
 https://www.cygwin.com/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1532685902
+1532678371
 
 %INSTALLDATE%
-1558699105
+1599157260
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-1011712
+916480
+
+%REASON%
+1
 
 %GROUPS%
 base

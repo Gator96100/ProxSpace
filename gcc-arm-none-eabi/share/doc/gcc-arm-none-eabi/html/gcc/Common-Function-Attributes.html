@@ -342,7 +342,7 @@ the same type as the target function.  As a result of the <code>copy</code>
 attribute the alias also shares the same attributes as the target.
 </p>
 <div class="smallexample">
-<pre class="smallexample">#define StrongAlias(TagetFunc, AliasDecl)   \
+<pre class="smallexample">#define StrongAlias(TargetFunc, AliasDecl)  \
   extern __typeof__ (TargetFunc) AliasDecl  \
     __attribute__ ((alias (#TargetFunc), copy (TargetFunc)));
 

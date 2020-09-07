@@ -2,7 +2,7 @@
 #
 #   zipman.sh - Compress man and info pages
 #
-#   Copyright (c) 2011-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -35,12 +35,12 @@ tidy_zipman() {
 		msg2 "$(gettext "Compressing man and info pages...")"
 		local file files inode link
 		while read -rd ' ' inode; do
-			read file
-			find ${MAN_DIRS[@]} -type l 2>/dev/null |
-			while read -r link ; do
+			IFS= read -r file
+			find "${MAN_DIRS[@]}" -type l -print0 2>/dev/null |
+			while IFS= read -rd '' link ; do
 				if [[ "${file}" -ef "${link}" ]] ; then
 					rm -f "$link" "${link}.gz"
-					if [[ ${file%/*} = ${link%/*} ]]; then
+					if [[ ${file%/*} = "${link%/*}" ]]; then
 						ln -s -- "${file##*/}.gz" "${link}.gz"
 					else
 						ln -s -- "/${file}.gz" "${link}.gz"
@@ -55,7 +55,7 @@ tidy_zipman() {
 				ln "${files[$inode]}.gz" "${file}.gz"
 				chmod 644 "${file}.gz"
 			fi
-		done < <(find ${MAN_DIRS[@]} -type f \! -name "*.gz" \! -name "*.bz2" \
+		done < <(find "${MAN_DIRS[@]}" -type f \! -name "*.gz" \! -name "*.bz2" \
 			-exec stat -c '%i %n' '{}' + 2>/dev/null)
 	fi
 }

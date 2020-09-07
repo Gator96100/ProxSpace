@@ -6,17 +6,17 @@ _chrpath()
     _init_completion || return
 
     case $prev in
-        -v|--version|-h|--help)
+        --version|--help|-!(-*)[vh])
             return
             ;;
-        -r|--replace)
+        --replace|-!(-*)r)
             _filedir -d
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         return
     fi
 

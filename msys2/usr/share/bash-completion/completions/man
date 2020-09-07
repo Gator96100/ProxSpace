@@ -10,29 +10,29 @@ _man()
     local mansect="@([0-9lnp]|[0-9][px]|3?(gl|pm))"
 
     case $prev in
-        -C|--config-file)
+        --config-file|-!(-*)C)
             _filedir conf
             return
             ;;
-        -l|--local-file)
+        --local-file|-!(-*)l)
             _filedir "$manext"
             return
             ;;
-        -M|--manpath)
+        --manpath|-!(-*)M)
             _filedir -d
             return
             ;;
-        -P|--pager)
+        --pager|-!(-*)P)
             compopt -o filenames
-            COMPREPLY=( $( compgen -c -- "$cur" ) )
+            COMPREPLY=( $(compgen -c -- "$cur") )
             return
             ;;
-        -p|--preprocessor)
-            COMPREPLY=( $( compgen -W 'e p t g r v' -- "$cur" ) )
+        --preprocessor|-!(-*)p)
+            COMPREPLY=( $(compgen -W 'e p t g r v' -- "$cur") )
             return
             ;;
-        -L|--locale|-m|--systems|-e|--extension|-r|--prompt|-R|--recode|\
-        -E|--encoding)
+        --locale|--systems|--extension|--prompt|--recode|--encoding|\
+        -!(-*)[LmerRE])
             return
             ;;
     esac
@@ -40,7 +40,8 @@ _man()
     $split && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" -h )' -- "$cur" ) )
+        local opts=$(_parse_help "$1" -h)
+        COMPREPLY=( $(compgen -W '${opts:-$(_parse_usage "$1")}' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
@@ -51,7 +52,7 @@ _man()
         return
     fi
 
-    local manpath=$( manpath 2>/dev/null || command man -w 2>/dev/null )
+    local manpath=$(manpath 2>/dev/null || command man -w 2>/dev/null)
     [[ -z $manpath ]] && manpath="/usr/share/man:/usr/local/share/man"
 
     # determine manual section to search
@@ -67,13 +68,16 @@ _man()
         manpath="${manpath//://*man$sect/ } ${manpath//://*cat$sect/ }"
     fi
 
+    local IFS=$' \t\n' reset=$(shopt -p failglob); shopt -u failglob
     # redirect stderr for when path doesn't exist
-    COMPREPLY=( $( eval command ls "$manpath" 2>/dev/null ) )
+    COMPREPLY=( $(eval command ls "$manpath" 2>/dev/null) )
+    $reset
+
     # weed out directory path names and paths to man pages
     COMPREPLY=( ${COMPREPLY[@]##*/?(:)} )
     # strip suffix from man pages
     COMPREPLY=( ${COMPREPLY[@]%$comprsuffix} )
-    COMPREPLY=( $( compgen -W '${COMPREPLY[@]%.*}' -- "${cur//\\\\/}" ) )
+    COMPREPLY=( $(compgen -W '${COMPREPLY[@]%.*}' -- "${cur//\\\\/}") )
 
     if [[ "$prev" != $mansect ]]; then
         # File based completion for the rest, prepending ./ if needed

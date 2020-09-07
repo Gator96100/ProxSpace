@@ -2,7 +2,7 @@
 #
 #   strip.sh - Strip debugging symbols from binary files
 #
-#   Copyright (c) 2007-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2007-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ tidy_modify+=('tidy_strip')
 
 source_files() {
 	LANG=C readelf "$1" --debug-dump | \
-		awk '/DW_AT_name +:/{name=$8}/DW_AT_comp_dir +:/{{if (name !~ /^\//) {printf "%s/", $8}}{print name}}'
+		awk '/DW_AT_name +:/{name=$8}/DW_AT_comp_dir +:/{{if (name == "<artificial>") next}{if (name !~ /^[<\/]/) {printf "%s/", $8}}{print name}}'
 }
 
 strip_file() {
@@ -47,11 +47,14 @@ strip_file() {
 			fi
 
 			# copy source files to debug directory
-			local f t
-			while read -r t; do
-				f=${t/${dbgsrcdir}/"$srcdir"}
-				mkdir -p "${dbgsrc/"$dbgsrcdir"/}${t%/*}"
-				cp -- "$f" "${dbgsrc/"$dbgsrcdir"/}$t"
+			local file dest t
+			while IFS= read -r t; do
+				file=${t/${dbgsrcdir}/"$srcdir"}
+				dest="${dbgsrc/"$dbgsrcdir"/}$t"
+				if ! [[ -f $dest ]]; then
+					mkdir -p "${dest%/*}"
+					cp -- "$file" "$dest"
+				fi
 			done < <(source_files "$binary")
 
 			# copy debug symbols to debug directory
@@ -77,13 +80,13 @@ strip_file() {
 			# it's pointing), and its contents pass the CRC32 check
 
 			# create any needed hardlinks
-			while read -rd '' file ; do
+			while IFS= read -rd '' file ; do
 				if [[ "${binary}" -ef "${file}" && ! -f "$dbgdir/${file}.debug" ]]; then
 					mkdir -p "$dbgdir/${file%/*}"
 					ln "$dbgdir/${binary}.debug" "$dbgdir/${file}.debug"
 				fi
 			done < <(find . -type f -perm -u+w -print0 2>/dev/null)
-			
+
 		fi
 		;;
 	esac
@@ -114,7 +117,7 @@ tidy_strip() {
 		find * -type f ! -name '*.dll.a' ! -name '*.lib' \
 			-a \( -name '*.a' -o -name '*.dll' -o -name '*.exe' -o -name '*.so' -o -name '*.so.*' -o -name '*.oct' -o -name '*.cmxs' \) -print0 \
 			-o -type f -executable ! -name '*.dll' ! -name '*.exe' ! -name '*.so' ! -name '*.so.[0-9]*' ! -name '*.oct' ! -name '*.cmxs' ! -name '*.a' ! -name '*.la' ! -name '*.lib' ! -name '*.exe.manifest' ! -name '*.exe.config' ! -name '*.dll.config' ! -name '*.mdb' ! -name '*-config' ! -name '*.csh' ! -name '*.sh' ! -name '*.pl' ! -name '*.pm' ! -name '*.py' ! -name '*.rb' ! -name '*.tcl' -print0 | \
-		while read -d $'\0' binary
+		while IFS= read -d $'\0' binary
 		do
 			# Skip thin archives from stripping
 			case "${binary##*/}" in
@@ -149,7 +152,7 @@ tidy_strip() {
 				%PAR\.pm%)  continue ;;
 				Caml1999X0[0-9][0-9])  continue ;;
 			esac
-			
+
 			# Mono assemblies must not be stripped, but remove .mdb debug symbols,
 			# and make them non-executable so they're not launched by MS .NET
 			if LC_ALL=C file -b "${binary}" 2>&1 | grep -q "Mono/\.Net assembly"
@@ -158,7 +161,7 @@ tidy_strip() {
 				rm -f "${binary}.mdb"
 				continue
 			fi
-			
+
 			# check for .exe from non-automake Makefile which install(1) didn't fix
 			# strip(1) used to take care of this, but not anymore
 			case ${CHOST} in
@@ -175,8 +178,8 @@ tidy_strip() {
 				;;
 			esac
 			chmod 0755 "${binary}";
-			
-			case "$(file -bi "$binary")" in
+
+			case "$(file -S -bi "$binary")" in
 				*application/x-dosexec*) # Windows executables and dlls
 					strip_flags="$STRIP_SHARED";;
 				*application/x-sharedlib*)  # Libraries (.so)

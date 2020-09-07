@@ -13,7 +13,7 @@
  */
 
 /*
-Copyright 2009-2019 Free Software Foundation, Inc.
+Copyright 2009-2020 Free Software Foundation, Inc.
 Contributed by the AriC and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
@@ -93,5 +93,6 @@ int main (int argc, char *argv[])
       }
 
   mpfr_clears (VARS, (mpfr_ptr) 0);
+  mpfr_free_cache ();
   return 0;
 }

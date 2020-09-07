@@ -22,7 +22,7 @@
 trap finaloutput INT
 
 declare -r myname='rankmirrors'
-declare -r myver='1.0.0'
+declare -r myver='1.3.0'
 
 usage() {
 	echo "${myname} v${myver}"
@@ -34,13 +34,14 @@ usage() {
 	echo "Usage: ${myname} [options] MIRRORFILE | URL"
 	echo
 	echo "Options:"
-	echo "  --version      show program's version number and exit"
-	echo "  -h, --help     show this help message and exit"
-	echo "  -n NUM         number of servers to output, 0 for all"
-	echo "  -t, --times    only output mirrors and their response times"
-	echo "  -u, --url      test a specific URL"
-	echo "  -v, --verbose  be verbose in output"
-	echo "  -r, --repo     specify a repository name instead of guessing"
+	echo "  --version           show program's version number and exit"
+	echo "  -h, --help          show this help message and exit"
+	echo "  -n NUM              number of servers to output, 0 for all"
+	echo "  -m, --max-time NUM  specify a ranking operation timeout, can be decimal number"
+	echo "  -t, --times         only output mirrors and their response times"
+	echo "  -u, --url           test a specific URL"
+	echo "  -v, --verbose       be verbose in output"
+	echo "  -r, --repo          specify a repository name instead of guessing"
 	exit 0
 }
 
@@ -61,7 +62,7 @@ err() {
 # gettime fetchurl (e.g gettime http://foo.com/core/os/i686/core.db.tar.gz)
 # returns the fetching time, or timeout, or unreachable
 gettime() {
-	IFS=' ' output=( $(curl -s -m 10 -w "%{time_total} %{http_code}" "$1" -o/dev/null) )
+	IFS=' ' output=( $(curl -s -m $MAX_TIME -w "%{time_total} %{http_code}" "$1" -o/dev/null) )
 	(( $? == 28 )) && echo timeout && return
 	(( ${output[1]} >= 400 || ! ${output[1]} )) && echo unreachable && return
 	echo "${output[0]}"
@@ -128,6 +129,10 @@ while [[ $1 ]]; do
 		case "${1:2}" in
 			help) usage ;;
 			version) version ;;
+			max-time)
+				[[ $2 ]] || err "Must specify number.";
+				MAX_TIME="$2"
+				shift 2;;
 			times) TIMESONLY=1 ; shift ;;
 			verbose) VERBOSE=1 ; shift ;;
 			url)
@@ -153,6 +158,10 @@ while [[ $1 ]]; do
 			for ((i=1 ; i<${#1}; i++)); do
 				case ${1:$i:1} in
 					h) usage ;;
+					m)
+						[[ $2 ]] || err "Must specify number.";
+						MAX_TIME="$2"
+						snum=2;;
 					t) TIMESONLY=1 ;;
 					v) VERBOSE=1 ;;
 					u)
@@ -185,6 +194,7 @@ done
 
 # Some sanity checks
 [[ $NUM ]] || NUM=0
+[[ $MAX_TIME ]] || MAX_TIME=10
 [[ $FILE && $CHECKURL ]] && err "Cannot specify a URL and mirrorfile."
 [[ $FILE || $CHECKURL || $STDIN ]] || err "Must specify URL, mirrorfile, or stdin."
 

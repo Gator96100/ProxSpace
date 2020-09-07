@@ -6,22 +6,22 @@ _xmlwf()
     _init_completion || return
 
     case $prev in
-        -d)
+        -*d)
             _filedir -d
             return
             ;;
-        -e)
-            COMPREPLY=( $( compgen -W 'US-ASCII UTF-8 UTF-16 ISO-8859-1' \
-                -- "$cur" ) )
+        -*e)
+            COMPREPLY=( $(compgen -W 'US-ASCII UTF-8 UTF-16 ISO-8859-1' \
+                -- "$cur") )
             return
             ;;
-        -v)
+        -*v)
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_usage "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_usage "$1")' -- "$cur") )
         return
     fi
 

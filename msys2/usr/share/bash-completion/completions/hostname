@@ -6,17 +6,17 @@ _hostname()
     _init_completion || return
 
     case $prev in
-        -h|--help|-V|--version)
+        --help|--version|-!(-*)[hV])
             return
             ;;
-        -F|--file)
+        --file|-!(-*)F)
             _filedir
             return
             ;;
     esac
 
     [[ $cur == -* ]] && \
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
 } &&
 complete -F _hostname hostname
 

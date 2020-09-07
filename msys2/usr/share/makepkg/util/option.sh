@@ -2,7 +2,7 @@
 #
 #   option.sh - functions to test if build/packaging options are enabled
 #
-#   Copyright (c) 2009-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2009-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -49,6 +49,30 @@ in_opt_array() {
 
 
 ##
+#  usage : check_opt_array( $option, $expected_val, $haystack )
+# return : 0   - matches expected
+#          1   - does not match expected
+#          127 - not found
+##
+check_opt_array() {
+	local option=$1 expected=$2; shift 2
+
+	in_opt_array "$option" "$@"
+	case $? in
+		0) # assert enabled
+			[[ $expected = y ]]
+			return ;;
+		1) # assert disabled
+			[[ $expected = n ]]
+			return ;;
+	esac
+
+	# not found
+	return 127
+}
+
+
+##
 # Checks to see if options are present in makepkg.conf or PKGBUILD;
 # PKGBUILD options always take precedence.
 #
@@ -58,29 +82,7 @@ in_opt_array() {
 #          127 - not found
 ##
 check_option() {
-	in_opt_array "$1" ${options[@]}
-	case $? in
-		0) # assert enabled
-			[[ $2 = y ]]
-			return ;;
-		1) # assert disabled
-			[[ $2 = n ]]
-			return
-	esac
-
-	# fall back to makepkg.conf options
-	in_opt_array "$1" ${OPTIONS[@]}
-	case $? in
-		0) # assert enabled
-			[[ $2 = y ]]
-			return ;;
-		1) # assert disabled
-			[[ $2 = n ]]
-			return
-	esac
-
-	# not found
-	return 127
+	check_opt_array "$@" "${OPTIONS[@]}" "${options[@]}"
 }
 
 
@@ -93,19 +95,9 @@ check_option() {
 #          127 - not found
 ##
 check_buildenv() {
-	in_opt_array "$1" ${BUILDENV[@]}
-	case $? in
-		0) # assert enabled
-			[[ $2 = "y" ]]
-			return ;;
-		1) # assert disabled
-			[[ $2 = "n" ]]
-			return ;;
-	esac
-
-	# not found
-	return 127
+	check_opt_array "$@" "${BUILDENV[@]}"
 }
+
 
 ##
 # Checks to see if options are present in BUILDENV or PKGBUILD;
@@ -117,26 +109,5 @@ check_buildenv() {
 #          127 - not found
 ##
 check_buildoption() {
-	in_opt_array "$1" ${options[@]}
-	case $? in
-		0) # assert enabled
-			[[ $2 = y ]]
-			return ;;
-		1) # assert disabled
-			[[ $2 = n ]]
-			return
-	esac
-
-	in_opt_array "$1" ${BUILDENV[@]}
-	case $? in
-		0) # assert enabled
-			[[ $2 = y ]]
-			return ;;
-		1) # assert disabled
-			[[ $2 = n ]]
-			return
-	esac
-
-	# not found
-	return 127
+	check_opt_array "$@" "${BUILDENV[@]}" "${options[@]}"
 }

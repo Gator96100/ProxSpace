@@ -80,10 +80,6 @@ macros defined in math.h:
 </pre></div>
 <p>To use the functions instead, just undefine the macros first.
 </p>
-<p>You can use the (non-ANSI) function <code>matherr</code> to specify error
-handling for these functions, indirectly through the respective <code>log</code>
-function. 
-</p>
 <br>
 <p><strong>Returns</strong><br>
 The <code>log2</code> functions return
@@ -92,8 +88,7 @@ on success.
 When <var>x</var> is zero, the
 returned value is <code>-HUGE_VAL</code> and <code>errno</code> is set to <code>ERANGE</code>.
 When <var>x</var> is negative, the returned value is NaN (not a number) and
-<code>errno</code> is set to <code>EDOM</code>.  You can control the error behavior via
-<code>matherr</code>.
+<code>errno</code> is set to <code>EDOM</code>.
 </p>
 <br>
 <p><strong>Portability</strong><br>

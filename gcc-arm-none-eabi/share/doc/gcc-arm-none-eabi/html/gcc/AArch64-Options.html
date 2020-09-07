@@ -264,6 +264,20 @@ be used by the compiler when expanding calls to
 sequence to be generated.
 </p>
 </dd>
+<dt><code>-moutline-atomics</code></dt>
+<dt><code>-mno-outline-atomics</code></dt>
+<dd><p>Enable or disable calls to out-of-line helpers to implement atomic operations.
+These helpers will, at runtime, determine if the LSE instructions from
+ARMv8.1-A can be used; if not, they will use the load/store-exclusive
+instructions that are present in the base ARMv8.0 ISA.
+</p>
+<p>This option is only applicable when compiling for the base ARMv8.0
+instruction set.  If using a later revision, e.g. <samp>-march=armv8.1-a</samp>
+or <samp>-march=armv8-a+lse</samp>, the ARMv8.1-Atomics instructions will be
+used directly.  The same applies when using <samp>-mcpu=</samp> when the
+selected cpu supports the &lsquo;<samp>lse</samp>&rsquo; feature.
+</p>
+</dd>
 <dt><code>-march=<var>name</var></code></dt>
 <dd><a name="index-march"></a>
 <p>Specify the name of the target architecture and, optionally, one or

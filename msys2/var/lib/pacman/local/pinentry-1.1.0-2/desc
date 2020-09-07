@@ -14,19 +14,19 @@ A collection of simple PIN or passphrase entry dialogs which utilize the Assuan 
 https://gnupg.org/related_software/pinentry/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1529988085
+1529987917
 
 %INSTALLDATE%
-1558699100
+1599157255
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-171008
+165888
 
 %REASON%
 1

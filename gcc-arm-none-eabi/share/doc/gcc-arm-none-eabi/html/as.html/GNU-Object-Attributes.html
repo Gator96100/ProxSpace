@@ -2,7 +2,7 @@
 <html>
 <!-- This file documents the GNU Assembler "as".
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -158,6 +158,22 @@ direct use of odd-numbered single-precision floating-point registers.
 <li> 0 for files not affected by the vector ABI.
 </li><li> 1 for files using software vector ABI.
 </li><li> 2 for files using hardware vector ABI.
+</li></ul>
+</dd>
+</dl>
+
+<a name="MSP430-Attributes"></a>
+<h4 class="subsection">8.1.5 MSP430 Attributes</h4>
+
+<dl compact="compact">
+<dt><span class="roman">Tag_GNU_MSP430_Data_Region (4)</span></dt>
+<dd><p>The data region used by this object file.  The value will be:
+</p>
+<ul>
+<li> 0 for files not using the large memory model.
+</li><li> 1 for files which have been compiled with the condition that all
+data is in the lower memory region, i.e. below address 0x10000.
+</li><li> 2 for files which allow data to be placed in the full 20-bit memory range.
 </li></ul>
 </dd>
 </dl>

@@ -14,19 +14,19 @@ Compression library implementing the deflate compression method found in gzip an
 http://www.zlib.net/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1485320643
+1485320558
 
 %INSTALLDATE%
-1558699069
+1599157246
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-93184
+89088
 
 %REASON%
 1

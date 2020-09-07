@@ -2,7 +2,7 @@
 #
 #   verify_signature.sh - functions for checking PGP signatures
 #
-#   Copyright (c) 2011-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -49,8 +49,8 @@ check_pgpsigs() {
 	for netfile in "${all_sources[@]}"; do
 		proto="$(get_protocol "$netfile")"
 
-		if [[ $proto = git* ]]; then
-			verify_git_signature "$netfile" "$statusfile" || continue
+		if declare -f verify_${proto}_signature > /dev/null; then
+			verify_${proto}_signature "$netfile" "$statusfile" || continue
 		else
 			verify_file_signature "$netfile" "$statusfile" || continue
 		fi
@@ -112,7 +112,7 @@ check_pgpsigs() {
 
 	if (( warnings )); then
 		warning "$(gettext "Warnings have occurred while verifying the signatures.")"
-		plain "$(gettext "Please make sure you really trust them.")"
+		plainerr "$(gettext "Please make sure you really trust them.")"
 	fi
 }
 
@@ -137,7 +137,7 @@ verify_file_signature() {
 	for ext in "" gz bz2 xz lrz lzo Z; do
 		if sourcefile="$(get_filepath "${file%.*}${ext:+.$ext}")"; then
 			found=1
-			break;
+			break
 		fi
 	done
 	if (( ! found )); then
@@ -263,7 +263,8 @@ source_has_signatures() {
 		proto="$(get_protocol "$netfile")"
 		query=$(get_uri_query "$netfile")
 
-		if [[ ${netfile%%::*} = *.@(sig?(n)|asc) || ( $proto = git* && $query = signed ) ]]; then
+		if [[ ${netfile%%::*} = *.@(sig?(n)|asc) ]] || \
+				( declare -f verify_${proto}_signature > /dev/null && [[ $query = signed ]] ); then
 			return 0
 		fi
 	done

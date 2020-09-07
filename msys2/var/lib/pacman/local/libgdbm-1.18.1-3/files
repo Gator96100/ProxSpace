@@ -1,0 +1,6 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-gdbm-6.dll
+usr/bin/msys-gdbm_compat-4.dll
+

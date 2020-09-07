@@ -11,19 +11,22 @@ Get entries from Name Service Switch libraries
 https://www.gnu.org/software/libc/libc.html
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1485922523
+1485923869
 
 %INSTALLDATE%
-1558699098
+1599157253
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-25600
+24576
+
+%REASON%
+1
 
 %GROUPS%
 base

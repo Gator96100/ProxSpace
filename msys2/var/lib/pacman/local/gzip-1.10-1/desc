@@ -14,19 +14,22 @@ GNU compression utility
 https://www.gnu.org/software/gzip/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1547616349
+1547616118
 
 %INSTALLDATE%
-1558699087
+1599157248
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
 166912
+
+%REASON%
+1
 
 %GROUPS%
 base

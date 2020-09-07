@@ -1,9 +1,12 @@
 prefix=/usr
-compatdir=/etc/bash_completion.d
-completionsdir=${prefix}/share/bash-completion/completions
-helpersdir=${prefix}/share/bash-completion/helpers
+datadir=/usr/share
+sysconfdir=/etc
+
+compatdir=${sysconfdir}/bash_completion.d
+completionsdir=${datadir}/bash-completion/completions
+helpersdir=${datadir}/bash-completion/helpers
 
 Name: bash-completion
 Description: programmable completion for the bash shell
 URL: https://github.com/scop/bash-completion
-Version: 2.8
+Version: 2.10

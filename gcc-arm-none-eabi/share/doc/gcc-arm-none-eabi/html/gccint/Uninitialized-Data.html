@@ -171,11 +171,11 @@ as the number of bits.
 
 <dl>
 <dt><a name="index-ASM_005fOUTPUT_005fALIGNED_005fDECL_005fLOCAL"></a>Macro: <strong>ASM_OUTPUT_ALIGNED_DECL_LOCAL</strong> <em>(<var>stream</var>, <var>decl</var>, <var>name</var>, <var>size</var>, <var>alignment</var>)</em></dt>
-<dd><p>Like <code>ASM_OUTPUT_ALIGNED_DECL</code> except that <var>decl</var> of the
+<dd><p>Like <code>ASM_OUTPUT_ALIGNED_LOCAL</code> except that <var>decl</var> of the
 variable to be output, if there is one, or <code>NULL_TREE</code> if there
 is no corresponding variable.  If you define this macro, GCC will use it
-in place of both <code>ASM_OUTPUT_DECL</code> and
-<code>ASM_OUTPUT_ALIGNED_DECL</code>.  Define this macro when you need to see
+in place of both <code>ASM_OUTPUT_LOCAL</code> and
+<code>ASM_OUTPUT_ALIGNED_LOCAL</code>.  Define this macro when you need to see
 the variable&rsquo;s decl in order to chose what to output.
 </p></dd></dl>
 

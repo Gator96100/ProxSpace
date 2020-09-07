@@ -6,70 +6,91 @@ _reportbug()
     _init_completion -s || return
 
     case $prev in
-        -f|--filename|-i|--include|--mta|-o|--output|-A|--attach)
+        --class|--header|--pseudo-header|--mirror|--list-cc|--subject|\
+        --http_proxy|--proxy|--email|--realname|--smtpuser|--smtppasswd|\
+        --replyto|--reply-to|--justification|--package-version|--body|\
+        --body-file|--timeout|--max-attachment-size|--envelope-from|\
+        -!(-*)[CHPsjV])
+            return
+            ;;
+        --filename|--include|--mta|--output|--attach|-[fioA])
             _filedir
             return
             ;;
-        -B|--bts)
-            COMPREPLY=( $( compgen -W "debian guug kde mandrake help" -- \
-                "$cur" ) )
+        --keyid|-!(-*)K)
+            COMPREPLY=( $(compgen -W '$(IFS=: ; \
+                gpg --list-keys --with-colons 2>/dev/null \
+                | while read -ra row ; do
+                    [[ "${row[0]}" == [ps]ub && ${row[11]} == *s* ]] && \
+                        printf "%s\n" "${row[4]}"
+                done)' -- "$cur") )
             return
             ;;
-        -e|--editor|--mua)
+        --bts|-!(-*)B)
+            COMPREPLY=( $(compgen -W "debian guug kde mandrake help" -- \
+                "$cur") )
+            return
+            ;;
+        --editor|--mua|--mbox-reader-cmd|-!(-*)e)
             words=( words[0] "$cur" )
             cword=1
             _command
             return
             ;;
         --mode)
-            COMPREPLY=( $( compgen -W "novice standard expert" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "novice standard expert" -- "$cur") )
             return
             ;;
-        -S|--severity)
-            COMPREPLY=( $( compgen -W "grave serious important normal minor
-                wishlist" -- "$cur" ) )
+        --severity|-!(-*)S)
+            COMPREPLY=( $(compgen -W "grave serious important normal minor
+                wishlist" -- "$cur") )
             return
             ;;
-        -u|--ui|--interface)
-            COMPREPLY=( $( compgen -W "newt text gnome" -- "$cur" ) )
+        --ui|--interface|-!(-*)u)
+            COMPREPLY=( $(compgen -W "newt text gnome" -- "$cur") )
             return
             ;;
-        -t|--type)
-            COMPREPLY=( $( compgen -W "gnats debbugs" -- "$cur" ) )
+        --type|-!(-*)t)
+            COMPREPLY=( $(compgen -W "gnats debbugs" -- "$cur") )
             return
             ;;
-        -T|--tag)
-            COMPREPLY=( $( compgen -W "none woody potato sarge sarge-ignore
+        --tag|-!(-*)T)
+            COMPREPLY=( $(compgen -W "none woody potato sarge sarge-ignore
                 etch etch-ignore lenny lenny-ignore sid experimental confirmed
                 d-i fixed fixed-in-experimental fixed-upstream help l10n
                 moreinfo patch pending security unreproducible upstream wontfix
-                ipv6 lfs" -- "$cur" ) )
+                ipv6 lfs" -- "$cur") )
             return
             ;;
         --from-buildd)
-            COMPREPLY=( $( compgen -S "_" -W '$( apt-cache dumpavail | \
-                command grep "^Source: $cur" | sort -u | cut -f2 -d" " )' ))
+            COMPREPLY=( $(compgen -S "_" -W '$(apt-cache dumpavail | \
+                command grep "^Source: $cur" | sort -u | cut -f2 -d" ")') )
             return
             ;;
-        *)
+        --smtphost)
+            _known_hosts_real -- "$cur"
+            return
+            ;;
+        --draftpath)
+            _filedir -d
+            return
             ;;
     esac
 
     $split && return
 
-    COMPREPLY=( $( compgen -W '$( _parse_help "$1" )
-                       wnpp boot-floppies kernel bugs.debian.org
-                       cdimage.debian.org general installation-reports
-                       listarchives lists.debian.org mirrors nm.debian.org
-                       press project qa.debian.org release-notes
-                       security.debian.org tech-ctte upgrade-reports
-                       www.debian.org' -- "$cur" )
-                $( apt-cache pkgnames -- "$cur" 2>/dev/null ) )
-    if [[ $COMPREPLY == -*= ]]; then
-        compopt -o nospace
-    else
-        _filedir
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
+        [[ $COMPREPLY == -*= ]] && compopt -o nospace
+        return
     fi
+
+    COMPREPLY=( $(compgen -W 'wnpp boot-floppies kernel bugs.debian.org
+        cdimage.debian.org general installation-reports listarchives
+        lists.debian.org mirrors nm.debian.org press project qa.debian.org
+        release-notes security.debian.org tech-ctte upgrade-reports
+        www.debian.org $(apt-cache pkgnames 2>/dev/null)' -- "$cur") )
+    _filedir
 } &&
 complete -F _reportbug reportbug
 

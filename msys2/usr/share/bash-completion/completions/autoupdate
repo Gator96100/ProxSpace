@@ -6,10 +6,10 @@ _autoscan()
     _init_completion -s || return
 
     case "$prev" in
-        --help|-h|--version|-V)
+        --help|--version|-!(-*)[hV])
             return
             ;;
-        --prepend-include|-B|--include|-I)
+        --prepend-include|--include|-!(-*)[BI])
             _filedir -d
             return
             ;;
@@ -18,12 +18,12 @@ _autoscan()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
 
-    if [[ $1 == autoupdate ]] ; then
+    if [[ $1 == *autoupdate ]]; then
         _filedir '@(ac|in)'
     else
         _filedir -d

@@ -6,8 +6,12 @@ _chage()
     _init_completion -s || return
 
     case $prev in
-        -d|--lastday|-E|--expiredate|-h|--help|-I|--inactive|-m|--mindays|\
-        -M|--maxdays|-W|--warndays)
+        --lastday|--expiredate|--help|--inactive|--mindays|--maxdays|\
+        --warndays|-!(-*)[dEhImMW])
+            return
+            ;;
+        --root|-!(-*)R)
+            _filedir -d
             return
             ;;
     esac
@@ -15,11 +19,11 @@ _chage()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         return
     fi
 
-    COMPREPLY=( $( compgen -u -- "$cur" ) )
+    COMPREPLY=( $(compgen -u -- "$cur") )
 } &&
 complete -F _chage chage
 

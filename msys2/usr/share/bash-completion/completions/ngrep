@@ -10,15 +10,16 @@ _ngrep()
             return
             ;;
         -I|-O)
-            _filedir pcap
+            _filedir 'pcap?(ng)'
             return
             ;;
         -d)
             _available_interfaces -a
+            COMPREPLY+=( $(compgen -W 'any' -- "$cur") )
             return
             ;;
         -W)
-            COMPREPLY=( $( compgen -W 'normal byline single none' -- "$cur" ) )
+            COMPREPLY=( $(compgen -W 'normal byline single none' -- "$cur") )
             return
             ;;
         -F)
@@ -28,7 +29,7 @@ _ngrep()
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" -h )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1" -h)' -- "$cur") )
         return
     fi
 } &&

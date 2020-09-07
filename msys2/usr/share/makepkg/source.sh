@@ -2,7 +2,7 @@
 #
 #   source.sh - functions for downloading and extracting sources
 #
-#   Copyright (c) 2015-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -59,26 +59,11 @@ download_sources() {
 		pushd "$SRCDEST" &>/dev/null
 
 		local proto=$(get_protocol "$netfile")
-		case "$proto" in
-			local)
-				download_local "$netfile"
-				;;
-			bzr*)
-				(( get_vcs )) && download_bzr "$netfile"
-				;;
-			git*)
-				(( get_vcs )) && download_git "$netfile"
-				;;
-			hg*)
-				(( get_vcs )) && download_hg "$netfile"
-				;;
-			svn*)
-				(( get_vcs )) && download_svn "$netfile"
-				;;
-			*)
-				download_file "$netfile"
-				;;
-		esac
+		if declare -f download_$proto > /dev/null; then
+			download_$proto "$netfile"
+		else
+			download_file "$netfile"
+		fi
 
 		popd &>/dev/null
 	done
@@ -90,24 +75,11 @@ extract_sources() {
 
 	get_all_sources_for_arch 'all_sources'
 	for netfile in "${all_sources[@]}"; do
-		local file=$(get_filename "$netfile")
 		local proto=$(get_protocol "$netfile")
-		case "$proto" in
-			bzr*)
-				extract_bzr "$netfile"
-				;;
-			git*)
-				extract_git "$netfile"
-				;;
-			hg*)
-				extract_hg "$netfile"
-				;;
-			svn*)
-				extract_svn "$netfile"
-				;;
-			*)
-				extract_file "$file"
-				;;
-		esac
+		if declare -f extract_$proto > /dev/null; then
+			extract_$proto "$netfile"
+		else
+			extract_file "$netfile"
+		fi
 	done
 }

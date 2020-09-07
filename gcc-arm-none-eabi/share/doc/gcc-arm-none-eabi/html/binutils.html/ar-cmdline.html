@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- Copyright (C) 1991-2019 Free Software Foundation, Inc.
+<!-- Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3
@@ -67,7 +67,7 @@ Next: <a href="ar-scripts.html#ar-scripts" accesskey="n" rel="next">ar scripts</
 <h3 class="section">1.1 Controlling <code>ar</code> on the Command Line</h3>
 
 <div class="smallexample">
-<pre class="smallexample">ar [<samp>-X32_64</samp>] [<samp>-</samp>]<var>p</var>[<var>mod</var>] [<samp>--plugin</samp> <var>name</var>] [<samp>--target</samp> <var>bfdname</var>] [<var>relpos</var>] [<var>count</var>] <var>archive</var> [<var>member</var>&hellip;]
+<pre class="smallexample">ar [<samp>-X32_64</samp>] [<samp>-</samp>]<var>p</var>[<var>mod</var>] [<samp>--plugin</samp> <var>name</var>] [<samp>--target</samp> <var>bfdname</var>] [<samp>--output</samp> <var>dirname</var>] [<var>relpos</var>] [<var>count</var>] <var>archive</var> [<var>member</var>&hellip;]
 </pre></div>
 
 <a name="index-Unix-compatibility_002c-ar"></a>
@@ -204,7 +204,12 @@ use the &lsquo;<samp>v</samp>&rsquo; modifier with this operation, to request th
 <p>If you do not specify a <var>member</var>, all files in the archive
 are extracted.
 </p>
-<p>Files cannot be extracted from a thin archive.
+<p>Files cannot be extracted from a thin archive, and there are
+restrictions on extracting from archives created with <samp>P</samp>: The
+paths must not be absolute, may not contain <code>..</code>, and any
+subdirectories in the paths must exist.  If it is desired to avoid
+these restrictions then used the <samp>--output</samp> option to specify
+an output directory.
 </p></dd>
 </dl>
 
@@ -289,12 +294,20 @@ option.
 </p>
 </dd>
 <dt>&lsquo;<samp>P</samp>&rsquo;</dt>
-<dd><p>Use the full path name when matching names in the archive.  <small>GNU</small>
-<code>ar</code> can not create an archive with a full path name (such archives
-are not POSIX compliant), but other archive creators can.  This option
-will cause <small>GNU</small> <code>ar</code> to match file names using a complete path
-name, which can be convenient when extracting a single file from an
-archive created by another tool.
+<dd><p>Use the full path name when matching or storing names in the archive.
+Archives created with full path names are not POSIX compliant, and
+thus may not work with tools other than up to date <small>GNU</small> tools.
+Modifying such archives with <small>GNU</small> <code>ar</code> without using
+<samp>P</samp> will remove the full path names unless the archive is a
+thin archive.  Note that <samp>P</samp> may be useful when adding files to
+a thin archive since <samp>r</samp> without <samp>P</samp> ignores the path
+when choosing which element to replace.  Thus
+</p><div class="smallexample">
+<pre class="smallexample">ar rcST archive.a subdir/file1 subdir/file2 file1
+</pre></div>
+<p>will result in the first <code>subdir/file1</code> being replaced with
+<code>file1</code> from the current directory.  Adding <samp>P</samp> will
+prevent this replacement.
 </p>
 </dd>
 <dt>&lsquo;<samp>s</samp>&rsquo;</dt>
@@ -369,7 +382,7 @@ and then exits.
 </p>
 </dd>
 <dt>&lsquo;<samp>-X32_64</samp>&rsquo;</dt>
-<dd><p><code>ar</code> ignores an initial option spelt &lsquo;<samp>-X32_64</samp>&rsquo;, for
+<dd><p><code>ar</code> ignores an initial option spelled &lsquo;<samp>-X32_64</samp>&rsquo;, for
 compatibility with AIX.  The behaviour produced by this option is the
 default for <small>GNU</small> <code>ar</code>.  <code>ar</code> does not support any
 of the other &lsquo;<samp>-X</samp>&rsquo; options; in particular, it does not support
@@ -406,7 +419,18 @@ sufficient to just copy the newest one.
 specifies that the archive members are in an object code format
 different from your system&rsquo;s default format.  See
 See <a href="Target-Selection.html#Target-Selection">Target Selection</a>, for more information.
-</p></dd>
+</p>
+</dd>
+<dt>&lsquo;<samp>--output <var>dirname</var></samp>&rsquo;</dt>
+<dd><p>The <samp>--output</samp> option can be used to specify a path to a
+directory into which archive members should be extracted.  If this
+option is not specified then the current directory will be used.
+</p>
+<p>Note - although the presence of this option does imply a <samp>x</samp> 
+extraction operation that option must still be included on the command
+line.
+</p>
+</dd>
 </dl>
 
 

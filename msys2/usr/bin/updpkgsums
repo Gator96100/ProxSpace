@@ -20,7 +20,12 @@
 shopt -s extglob
 
 declare -r myname='updpkgsums'
-declare -r myver='1.0.0'
+declare -r myver='1.3.0'
+
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+
+# Import libmakepkg
+source "$LIBRARY"/util/schema.sh
 
 usage() {
 	printf "%s v%s\n" "${myname}" "${myver}"
@@ -92,9 +97,10 @@ export BUILDDIR=$(mktemp -d  "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
 newbuildfile=$(mktemp "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
 
 trap "rm -rf '$BUILDDIR' '$newbuildfile'" EXIT
+sumtypes=$(IFS='|'; echo "${known_hash_algos[*]}")
 newsums=$(MINGW_PACKAGE_PREFIX=mingw-w64-i686 makepkg -g -p "$buildfile" "${MAKEPKG_OPTS[@]}") || die 'Failed to generate new checksums'
-awk -v newsums="$newsums" '
-	/^[[:blank:]]*(md|sha)[[:digit:]]+sums(_[^=]+)?=/,/\)[[:blank:]]*(#.*)?$/ {
+awk -v sumtypes="$sumtypes" -v newsums="$newsums" '
+	$0 ~"^[[:blank:]]*(" sumtypes ")sums(_[^=]+)?=", $0 ~ "\\)[[:blank:]]*(#.*)?$" {
 		if (!w) {
 			print newsums
 			w++

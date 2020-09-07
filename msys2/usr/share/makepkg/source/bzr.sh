@@ -2,7 +2,7 @@
 #
 #   bzr.sh - function for handling the download and "extraction" of Bazaar sources
 #
-#   Copyright (c) 2015-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@ source "$LIBRARY/util/pkgbuild.sh"
 
 
 download_bzr() {
+	# abort early if parent says not to fetch
+	if declare -p get_vcs > /dev/null 2>&1; then
+		(( get_vcs )) || return
+	fi
+
 	local netfile=$1
 
 	local url=$(get_url "$netfile")
@@ -47,7 +52,7 @@ download_bzr() {
 		msg2 "$(gettext "Branching %s...")" "${displaylocation}"
 		if ! bzr branch "$url" "$dir" --no-tree --use-existing-dir; then
 			error "$(gettext "Failure while branching %s")" "${displaylocation}"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	elif (( ! HOLDVER )); then
@@ -78,7 +83,7 @@ extract_bzr() {
 				;;
 			*)
 				error "$(gettext "Unrecognized reference: %s")" "${fragment}"
-				plain "$(gettext "Aborting...")"
+				plainerr "$(gettext "Aborting...")"
 				exit 1
 		esac
 	fi
@@ -93,12 +98,12 @@ extract_bzr() {
 		cd_safe "${dir##*/}"
 		if ! (bzr pull "$dir" -q --overwrite -r "$rev" && bzr clean-tree -q --detritus --force); then
 			error "$(gettext "Failure while updating working copy of %s %s repo")" "${repo}" "bzr"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	elif ! bzr checkout "$dir" -r "$rev"; then
 		error "$(gettext "Failure while creating working copy of %s %s repo")" "${repo}" "bzr"
-		plain "$(gettext "Aborting...")"
+		plainerr "$(gettext "Aborting...")"
 		exit 1
 	fi
 

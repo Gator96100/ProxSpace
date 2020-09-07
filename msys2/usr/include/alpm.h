@@ -1,7 +1,7 @@
 /*
  * alpm.h
  *
- *  Copyright (c) 2006-2018 Pacman Development Team <pacman-dev@archlinux.org>
+ *  Copyright (c) 2006-2020 Pacman Development Team <pacman-dev@archlinux.org>
  *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
  *  Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
  *  Copyright (c) 2005 by Christian Hamar <krics@linuxforum.hu>
@@ -104,9 +104,6 @@ typedef enum _alpm_errno_t {
 	/* Signatures */
 	ALPM_ERR_SIG_MISSING,
 	ALPM_ERR_SIG_INVALID,
-	/* Deltas */
-	ALPM_ERR_DLT_INVALID,
-	ALPM_ERR_DLT_PATCHFAILED,
 	/* Dependencies */
 	ALPM_ERR_UNSATISFIED_DEPS,
 	ALPM_ERR_CONFLICTING_DEPS,
@@ -118,7 +115,9 @@ typedef enum _alpm_errno_t {
 	ALPM_ERR_LIBARCHIVE,
 	ALPM_ERR_LIBCURL,
 	ALPM_ERR_EXTERNAL_DOWNLOAD,
-	ALPM_ERR_GPGME
+	ALPM_ERR_GPGME,
+	/* Missing compile-time features */
+	ALPM_ERR_MISSING_CAPABILITY_SIGNATURES
 } alpm_errno_t;
 
 /** Returns the current error code from the handle. */
@@ -271,22 +270,6 @@ typedef struct _alpm_group_t {
 	alpm_list_t *packages;
 } alpm_group_t;
 
-/** Package upgrade delta */
-typedef struct _alpm_delta_t {
-	/** filename of the delta patch */
-	char *delta;
-	/** md5sum of the delta file */
-	char *delta_md5;
-	/** filename of the 'before' file */
-	char *from;
-	/** filename of the 'after' file */
-	char *to;
-	/** filesize of the delta file */
-	off_t delta_size;
-	/** download filesize of the delta file */
-	off_t download_size;
-} alpm_delta_t;
-
 /** File in a package */
 typedef struct _alpm_file_t {
 	char *name;
@@ -403,21 +386,6 @@ typedef enum _alpm_event_type_t {
 	ALPM_EVENT_LOAD_START,
 	/** Target package is finished loading. */
 	ALPM_EVENT_LOAD_DONE,
-	/** Target delta's integrity will be checked. */
-	ALPM_EVENT_DELTA_INTEGRITY_START,
-	/** Target delta's integrity was checked. */
-	ALPM_EVENT_DELTA_INTEGRITY_DONE,
-	/** Deltas will be applied to packages. */
-	ALPM_EVENT_DELTA_PATCHES_START,
-	/** Deltas were applied to packages. */
-	ALPM_EVENT_DELTA_PATCHES_DONE,
-	/** Delta patch will be applied to target package; See
-	 * alpm_event_delta_patch_t for arguments.. */
-	ALPM_EVENT_DELTA_PATCH_START,
-	/** Delta patch was applied to target package. */
-	ALPM_EVENT_DELTA_PATCH_DONE,
-	/** Delta patch failed to apply to target package. */
-	ALPM_EVENT_DELTA_PATCH_FAILED,
 	/** Scriptlet has printed information; See alpm_event_scriptlet_info_t for
 	 * arguments. */
 	ALPM_EVENT_SCRIPTLET_INFO,
@@ -507,13 +475,6 @@ typedef struct _alpm_event_optdep_removal_t {
 	alpm_depend_t *optdep;
 } alpm_event_optdep_removal_t;
 
-typedef struct _alpm_event_delta_patch_t {
-	/** Type of event. */
-	alpm_event_type_t type;
-	/** Delta info */
-	alpm_delta_t *delta;
-} alpm_event_delta_patch_t;
-
 typedef struct _alpm_event_scriptlet_info_t {
 	/** Type of event. */
 	alpm_event_type_t type;
@@ -587,7 +548,6 @@ typedef union _alpm_event_t {
 	alpm_event_any_t any;
 	alpm_event_package_operation_t package_operation;
 	alpm_event_optdep_removal_t optdep_removal;
-	alpm_event_delta_patch_t delta_patch;
 	alpm_event_scriptlet_info_t scriptlet_info;
 	alpm_event_database_missing_t database_missing;
 	alpm_event_pkgdownload_t pkgdownload;
@@ -913,9 +873,6 @@ const char *alpm_option_get_arch(alpm_handle_t *handle);
 /** Sets the targeted architecture. */
 int alpm_option_set_arch(alpm_handle_t *handle, const char *arch);
 
-double alpm_option_get_deltaratio(alpm_handle_t *handle);
-int alpm_option_set_deltaratio(alpm_handle_t *handle, double ratio);
-
 int alpm_option_get_checkspace(alpm_handle_t *handle);
 int alpm_option_set_checkspace(alpm_handle_t *handle, int checkspace);
 
@@ -1044,7 +1001,7 @@ alpm_list_t *alpm_db_get_groupcache(alpm_db_t *db);
  */
 alpm_list_t *alpm_db_search(alpm_db_t *db, const alpm_list_t *needles);
 
-typedef enum _alpm_db_usage_ {
+typedef enum _alpm_db_usage_t {
 	ALPM_DB_USAGE_SYNC = 1,
 	ALPM_DB_USAGE_SEARCH = (1 << 1),
 	ALPM_DB_USAGE_INSTALL = (1 << 2),
@@ -1292,12 +1249,6 @@ alpm_list_t *alpm_pkg_get_conflicts(alpm_pkg_t *pkg);
  */
 alpm_list_t *alpm_pkg_get_provides(alpm_pkg_t *pkg);
 
-/** Returns the list of available deltas for pkg.
- * @param pkg a pointer to package
- * @return a reference to an internal list of strings.
- */
-alpm_list_t *alpm_pkg_get_deltas(alpm_pkg_t *pkg);
-
 /** Returns the list of packages to be replaced by pkg.
  * @param pkg a pointer to package
  * @return a reference to an internal list of alpm_depend_t structures.
@@ -1395,8 +1346,6 @@ int alpm_pkg_has_scriptlet(alpm_pkg_t *pkg);
  */
 off_t alpm_pkg_download_size(alpm_pkg_t *newpkg);
 
-alpm_list_t *alpm_pkg_unused_deltas(alpm_pkg_t *pkg);
-
 /** Set install reason for a package in the local database.
  * The provided package object must be from the local database or this method
  * will fail. The write to the local database is performed immediately.
@@ -1450,7 +1399,7 @@ alpm_list_t *alpm_find_group_pkgs(alpm_list_t *dbs, const char *name);
  * Sync
  */
 
-alpm_pkg_t *alpm_sync_newversion(alpm_pkg_t *pkg, alpm_list_t *dbs_sync);
+alpm_pkg_t *alpm_sync_get_new_version(alpm_pkg_t *pkg, alpm_list_t *dbs_sync);
 
 /** @addtogroup alpm_api_trans Transaction Functions
  * Functions to manipulate libalpm transactions
@@ -1461,8 +1410,7 @@ alpm_pkg_t *alpm_sync_newversion(alpm_pkg_t *pkg, alpm_list_t *dbs_sync);
 typedef enum _alpm_transflag_t {
 	/** Ignore dependency checks. */
 	ALPM_TRANS_FLAG_NODEPS = 1,
-	/** Ignore file conflicts and overwrite files. */
-	ALPM_TRANS_FLAG_FORCE = (1 << 1),
+	/* (1 << 1) flag can go here */
 	/** Delete files even if they are tagged as backup. */
 	ALPM_TRANS_FLAG_NOSAVE = (1 << 2),
 	/** Ignore version numbers when checking dependencies. */

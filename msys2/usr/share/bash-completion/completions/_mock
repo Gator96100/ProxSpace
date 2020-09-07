@@ -13,12 +13,12 @@ _mock()
 
     for i in "${words[@]}" ; do
         [[ $count -eq $cword ]] && break
-        if [[ "$i" == --configdir ]] ; then
+        if [[ "$i" == --configdir ]]; then
             cfgdir="${words[((count+1))]}"
-        elif [[ "$i" == --configdir=* ]] ; then
+        elif [[ "$i" == --configdir=* ]]; then
             cfgdir=${i/*=/}
         fi
-        count=$((++count))
+        (( count++ ))
     done
 
     case $prev in
@@ -27,7 +27,7 @@ _mock()
             return
             ;;
         -r|--root)
-            COMPREPLY=( $( compgen -W "$( command ls $cfgdir )" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "$(command ls $cfgdir)" -- "$cur") )
             COMPREPLY=( ${COMPREPLY[@]/%.cfg/} )
             return
             ;;
@@ -44,21 +44,21 @@ _mock()
             # (e.g. ix86 chroot builds in x86_64 mock host)
             # This would actually depend on what the target root
             # can be used to build for...
-            COMPREPLY=( $( compgen -W "$( command rpm --showrc | \
-                command sed -ne 's/^\s*compatible\s\s*archs\s*:\s*\(.*\)/\1/i p' )" \
-                -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "$(command rpm --showrc | \
+                command sed -ne 's/^\s*compatible\s\s*archs\s*:\s*\(.*\)/\1/i p')" \
+                -- "$cur") )
             return
             ;;
         --enable-plugin|--disable-plugin)
-            COMPREPLY=( $( compgen -W "$plugins" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "$plugins" -- "$cur") )
             return
             ;;
     esac
 
     $split && return
 
-    if [[ "$cur" == -* ]] ; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
     else
         _filedir '@(?(no)src.r|s)pm'

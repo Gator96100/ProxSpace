@@ -30,6 +30,11 @@ typedef unsigned __Long __ULong;
 #include <sys/types.h>
 #endif
 
+#ifndef __machine_flock_t_defined
+#include <sys/lock.h>
+typedef _LOCK_RECURSIVE_T _flock_t;
+#endif
+
 #ifndef __Long
 #define __Long __int32_t
 typedef __uint32_t __ULong;
@@ -493,10 +498,10 @@ extern const struct __sFILE_fake __sf_fake_stderr;
 
 #endif /* _REENT_GLOBAL_STDIO_STREAMS */
 
-/* Only add assert() calls if we are specified to debug.  */
-#ifdef _REENT_CHECK_DEBUG
+/* Specify how to handle reent_check malloc failures. */
+#ifdef _REENT_CHECK_VERIFY
 #include <assert.h>
-#define __reent_assert(x) assert(x)
+#define __reent_assert(x) ((x) ? (void)0 : __assert_func(__FILE__, __LINE__, (char *)0, "REENT malloc succeeded"))
 #else
 #define __reent_assert(x) ((void)0)
 #endif

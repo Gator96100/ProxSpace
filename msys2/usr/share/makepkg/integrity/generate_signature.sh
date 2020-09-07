@@ -2,7 +2,7 @@
 #
 #   generate_signature.sh - functions for generating PGP signatures
 #
-#   Copyright (c) 2008-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2008-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,24 +29,26 @@ create_signature() {
 	local ret=0
 	local filename="$1"
 
-	local SIGNWITHKEY=""
+	local SIGNWITHKEY=()
 	if [[ -n $GPGKEY ]]; then
-		SIGNWITHKEY="-u ${GPGKEY}"
+		SIGNWITHKEY=(-u "${GPGKEY}")
 	fi
 
-	gpg --detach-sign --use-agent ${SIGNWITHKEY} --no-armor "$filename" &>/dev/null || ret=$?
+	gpg --detach-sign --use-agent "${SIGNWITHKEY[@]}" --no-armor "$filename" &>/dev/null || ret=$?
 
 
 	if (( ! ret )); then
 		msg2 "$(gettext "Created signature file %s.")" "${filename##*/}.sig"
 	else
-		warning "$(gettext "Failed to sign package file.")"
+		warning "$(gettext "Failed to sign package file %s.")" "${filename##*/}"
 	fi
 
 	return $ret
 }
 
 create_package_signatures() {
+	local ret=0
+
 	if [[ $SIGNPKG != 'y' ]]; then
 		return 0
 	fi
@@ -59,7 +61,7 @@ create_package_signatures() {
 		pkgarch=$(get_pkg_arch $pkg)
 		pkg_file="$PKGDEST/${pkg}-${fullver}-${pkgarch}${PKGEXT}"
 
-		create_signature "$pkg_file"
+		create_signature "$pkg_file" || ret=$?
 	done
 
 	# check if debug package needs a signature
@@ -68,7 +70,9 @@ create_package_signatures() {
 		pkgarch=$(get_pkg_arch)
 		pkg_file="$PKGDEST/${pkg}-${fullver}-${pkgarch}${PKGEXT}"
 		if [[ -f $pkg_file ]]; then
-			create_signature "$pkg_file"
+			create_signature "$pkg_file" || ret=$?
 		fi
 	fi
+
+	return $ret
 }

@@ -6,14 +6,14 @@ _mii_tool()
     _init_completion -s || return
 
     case $prev in
-        -F|--force)
-            COMPREPLY=( $( compgen -W '100baseTx-FD 100baseTx-HD 10baseT-FD
-                10baseT-HD' -- "$cur" ) )
+        --force|-!(-*)F)
+            COMPREPLY=( $(compgen -W '100baseTx-FD 100baseTx-HD 10baseT-FD
+                10baseT-HD' -- "$cur") )
             return
             ;;
-        -A|--advertise)
-            COMPREPLY=( $( compgen -W '100baseT4 100baseTx-FD 100baseTx-HD
-                10baseT-FD 10baseT-HD' -- "$cur" ) )
+        --advertise|-!(-*)A)
+            COMPREPLY=( $(compgen -W '100baseT4 100baseTx-FD 100baseTx-HD
+                10baseT-FD 10baseT-HD' -- "$cur") )
             return
             ;;
     esac
@@ -21,7 +21,7 @@ _mii_tool()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
     else
         _available_interfaces -a

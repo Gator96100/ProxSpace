@@ -41,9 +41,9 @@ _pacman_keyids() {
 }
 
 _pacman_key() {
-  local o cur opts prev wantfiles
-  COMPREPLY=()
-  _get_comp_words_by_ref cur prev
+  local o opts wantfiles
+  local cur prev words cword
+  _init_completion || return
   opts=('add config delete edit-key export finger gpgdir
          help import import-trustdb init keyserver list-keys list-sigs
          lsign-key nocolor populate recv-keys refresh-keys updatedb
@@ -71,10 +71,13 @@ _pacman_key() {
 }
 
 _makepkg() {
-  local cur opts prev
-  COMPREPLY=()
-  _get_comp_words_by_ref cur prev
-  if [[ $cur = -* && ! $prev =~ ^-(-(config|help|key|version)$|[[:alnum:]_]*[Vhp]) ]]; then
+  compopt +o default
+  local opts
+  local cur prev words cword
+  _init_completion || return
+  if [[ $prev = @(-p|--config) ]]; then
+    compopt -o default
+  elif [[ ! $prev =~ ^-(-(config|help|key|version)$|[[:alnum:]_]*[Vh]) ]]; then
     opts=('allsource asdeps check clean cleanbuild config force geninteg help
            holdver ignorearch install key log needed noarchive nobuild nocheck
            nocolor noconfirm nodeps noextract noprepare noprogressbar nosign
@@ -101,18 +104,19 @@ _pacman_repo_list() {
 }
 
 _pacman() {
-  local common core cur database files prev query remove sync upgrade o
-  COMPREPLY=()
-  _get_comp_words_by_ref cur prev
+  compopt -o default
+  local common core database files query remove sync upgrade o
+  local cur prev words cword
+  _init_completion || return
   database=('asdeps asexplicit')
-  files=('list machinereadable owns search refresh regex' 'l o s x y')
+  files=('list machinereadable refresh regex' 'l x y')
   query=('changelog check deps explicit file foreign groups info list native owns
           search unrequired upgrades' 'c e g i k l m n o p s t u')
   remove=('cascade dbonly nodeps assume-installed nosave print recursive unneeded' 'c n p s u')
-  sync=('asdeps asexplicit clean dbonly downloadonly force groups ignore ignoregroup
+  sync=('asdeps asexplicit clean dbonly downloadonly groups ignore ignoregroup
          info list needed nodeps assume-installed print refresh recursive search sysupgrade'
         'c g i l p s u w y')
-  upgrade=('asdeps asexplicit force needed nodeps assume-installed print recursive' 'p')
+  upgrade=('asdeps asexplicit needed nodeps assume-installed print recursive' 'p')
   common=('arch cachedir color config confirm dbpath debug gpgdir help hookdir logfile
            noconfirm noprogressbar noscriptlet quiet root verbose' 'b d h q r v')
   core=('database files help query remove sync upgrade version' 'D F Q R S U V h')
@@ -131,16 +135,19 @@ _pacman() {
       D|R)
           _pacman_pkg Qq;;
       F)
-          _arch_incomp 'l list'   && _pacman_pkg Slq;
-          ;;
+        { _arch_incomp 'l list'   && _pacman_pkg Slq ; }       ||
+          compopt +o default;;
       Q)
         { _arch_incomp 'g groups' && _pacman_pkg Qg sort; }    ||
         { _arch_incomp 'p file'   && _pacman_file; }           ||
-          _arch_incomp 'o owns'   || _arch_incomp 'u upgrades' ||
+        { _arch_incomp 's search' && compopt +o default; }     ||
+        { _arch_incomp 'u upgrades' && compopt +o default; }   ||
+          _arch_incomp 'o owns'   ||
           _pacman_pkg Qq;;
       S)
         { _arch_incomp 'g groups' && _pacman_pkg Sg; }      ||
         { _arch_incomp 'l list'   && _pacman_repo_list; } ||
+        { _arch_incomp 's search' && compopt +o default; }  ||
           _pacman_pkg Slq;;
       U)
           _pacman_file;;
@@ -153,8 +160,8 @@ _pacman_file() {
   compopt -o filenames; _filedir 'pkg.tar*'
 }
 
-complete -F _pacman -o default pacman
-complete -F _makepkg -o default makepkg
+complete -F _pacman pacman
+complete -F _makepkg makepkg
 complete -F _pacman_key -o default pacman-key
 
 # ex:et ts=2 sw=2 ft=sh

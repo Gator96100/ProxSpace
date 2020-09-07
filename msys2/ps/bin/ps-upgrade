@@ -1,3 +1,2 @@
 rm /ps/installed64.txt &> /dev/null
-rm /ps/installed32.txt &> /dev/null
 yes | pacman -Syuu

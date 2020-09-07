@@ -2,7 +2,7 @@
 #
 #   optdepends.sh - Check the 'optdepends' array conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ LIBMAKEPKG_LINT_PKGBUILD_OPTDEPENDS_SH=1
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
+source "$LIBRARY/lint_pkgbuild/fullpkgver.sh"
+source "$LIBRARY/lint_pkgbuild/pkgname.sh"
 source "$LIBRARY/util/message.sh"
 source "$LIBRARY/util/pkgbuild.sh"
 
@@ -41,12 +43,10 @@ lint_optdepends() {
 
 	for optdepend in "${optdepends_list[@]%%:[[:space:]]*}"; do
 		name=${optdepend%%@(<|>|=|>=|<=)*}
-		# remove optional epoch in version specifier
-		ver=${optdepend##$name@(<|>|=|>=|<=)?(+([0-9]):)}
 		lint_one_pkgname optdepends "$name" || ret=1
-		if [[ $ver != $optdepend ]]; then
-			# remove optional pkgrel in version specifier
-			check_pkgver "${ver%-+([0-9])?(.+([0-9]))}" optdepends || ret=1
+		if [[ $name != "$optdepend" ]]; then
+			ver=${optdepend##$name@(<|>|=|>=|<=)}
+			check_fullpkgver "$ver" optdepends || ret=1
 		fi
 	done
 

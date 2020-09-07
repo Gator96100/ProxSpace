@@ -2,7 +2,7 @@
 #
 #   hg.sh - function for handling the download and "extraction" of Mercurial sources
 #
-#   Copyright (c) 2015-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@ source "$LIBRARY/util/pkgbuild.sh"
 
 
 download_hg() {
+	# abort early if parent says not to fetch
+	if declare -p get_vcs > /dev/null 2>&1; then
+		(( get_vcs )) || return
+	fi
+
 	local netfile=$1
 
 	local dir=$(get_filepath "$netfile")
@@ -44,7 +49,7 @@ download_hg() {
 		msg2 "$(gettext "Cloning %s %s repo...")" "${repo}" "hg"
 		if ! hg clone -U "$url" "$dir"; then
 			error "$(gettext "Failure while downloading %s %s repo")" "${repo}" "hg"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	elif (( ! HOLDVER )); then
@@ -74,7 +79,11 @@ extract_hg() {
 	msg2 "$(gettext "Creating working copy of %s %s repo...")" "${repo}" "hg"
 	pushd "$srcdir" &>/dev/null
 
-	local ref=tip
+	local ref=default
+	# Is the repository configured to checkout some ref other than 'default'?
+	if hg identify -r @ "$dir" >/dev/null 2>&1; then
+		ref=@
+	fi
 	if [[ -n $fragment ]]; then
 		case ${fragment%%=*} in
 			branch|revision|tag)
@@ -82,7 +91,7 @@ extract_hg() {
 				;;
 			*)
 				error "$(gettext "Unrecognized reference: %s")" "${fragment}"
-				plain "$(gettext "Aborting...")"
+				plainerr "$(gettext "Aborting...")"
 				exit 1
 		esac
 	fi
@@ -91,12 +100,12 @@ extract_hg() {
 		cd_safe "${dir##*/}"
 		if ! (hg pull && hg update -C -r "$ref"); then
 			error "$(gettext "Failure while updating working copy of %s %s repo")" "${repo}" "hg"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	elif ! hg clone -u "$ref" "$dir" "${dir##*/}"; then
 		error "$(gettext "Failure while creating working copy of %s %s repo")" "${repo}" "hg"
-		plain "$(gettext "Aborting...")"
+		plainerr "$(gettext "Aborting...")"
 		exit 1
 	fi
 

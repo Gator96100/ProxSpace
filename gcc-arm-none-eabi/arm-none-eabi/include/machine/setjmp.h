@@ -2,7 +2,10 @@
 _BEGIN_STD_C
 
 #if defined(__or1k__) || defined(__or1knd__)
-#define _JBLEN 31 /* 32 GPRs - r0 */
+/*
+ * r1, r2, r9, r14, r16 .. r30, SR.
+ */
+#define _JBLEN 13
 #define _JBTYPE unsigned long
 #endif
 
@@ -235,7 +238,7 @@ _BEGIN_STD_C
 #endif
 
 #ifdef __moxie__
-#define _JBLEN 16
+#define _JBLEN 10
 #endif
 
 #ifdef __CRX__
@@ -347,6 +350,11 @@ _BEGIN_STD_C
 #ifdef __NIOS2__
 #define _JBLEN 40
 #define _JBTYPE unsigned long
+#endif
+
+#ifdef __PRU__
+#define _JBLEN 48
+#define _JBTYPE unsigned int
 #endif
 
 #ifdef __RX__

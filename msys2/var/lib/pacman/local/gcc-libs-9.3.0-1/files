@@ -1,0 +1,17 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-atomic-1.dll
+usr/bin/msys-gcc_s-seh-1.dll
+usr/bin/msys-gfortran-5.dll
+usr/bin/msys-gomp-1.dll
+usr/bin/msys-quadmath-0.dll
+usr/bin/msys-stdc++-6.dll
+usr/share/
+usr/share/info/
+usr/share/info/libgomp.info.gz
+usr/share/info/libquadmath.info.gz
+usr/share/licenses/
+usr/share/licenses/gcc-libs/
+usr/share/licenses/gcc-libs/RUNTIME.LIBRARY.EXCEPTION
+

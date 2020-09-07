@@ -14,19 +14,22 @@ Utility for monitoring a program's use of system resources
 https://www.gnu.org/directory/time.html
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1532686696
+1532679224
 
 %INSTALLDATE%
-1558699105
+1599157260
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-36864
+35840
+
+%REASON%
+1
 
 %GROUPS%
 base

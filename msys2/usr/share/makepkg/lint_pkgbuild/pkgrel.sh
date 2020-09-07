@@ -2,7 +2,7 @@
 #
 #   pkgrel.sh - Check the 'pkgrel' variable conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,14 +29,19 @@ source "$LIBRARY/util/message.sh"
 lint_pkgbuild_functions+=('lint_pkgrel')
 
 
-lint_pkgrel() {
-	if [[ -z $pkgrel ]]; then
-		error "$(gettext "%s is not allowed to be empty.")" "pkgrel"
+check_pkgrel() {
+	local rel=$1 type=$2
+	if [[ -z $rel ]]; then
+		error "$(gettext "%s is not allowed to be empty.")" "pkgrel${type:+ in $type}"
 		return 1
 	fi
 
-	if [[ $pkgrel != +([0-9])?(.+([0-9])) ]]; then
-		error "$(gettext "%s must be a decimal, not %s.")" "pkgrel" "$pkgrel"
+	if [[ $rel != +([0-9])?(.+([0-9])) ]]; then
+		error "$(gettext "%s must be of the form 'integer[.integer]', not %s.")" "pkgrel${type:+ in $type}" "$rel"
 		return 1
 	fi
+}
+
+lint_pkgrel() {
+	check_pkgrel "$pkgrel"
 }

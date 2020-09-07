@@ -13,3 +13,304 @@ File: dir,	Node: Top	This is the top of the INFO tree
   to select it.
 
 * Menu:
+
+Basics
+* Bash: (bash).                 The GNU Bourne-Again SHell.
+* Common options: (inetutils)Common options.
+                                Common options.
+* Inetutils: (inetutils).       GNU networking utilities.
+* Coreutils: (coreutils).       Core GNU (file, text, shell) utilities.
+* Date input formats: (coreutils)Date input formats.
+* File permissions: (coreutils)File permissions.
+                                Access modes.
+* Finding files: (find).        Operating on files matching certain criteria.
+* Time: (time).                 time
+
+C++ libraries
+* autosprintf: (autosprintf).   Support for printf format strings in C++.
+
+Compression
+* Gzip: (gzip).                 General (de)compression of files (lzw).
+
+Development
+* libffi: (libffi).             Portable foreign function interface library.
+
+Encryption
+* Nettle: (nettle).             A low-level cryptographic library.
+
+GNU Gettext Utilities
+* autopoint: (gettext)autopoint Invocation.
+                                Copy gettext infrastructure.
+* envsubst: (gettext)envsubst Invocation.
+                                Expand environment variables.
+* gettextize: (gettext)gettextize Invocation.
+                                Prepare a package for gettext.
+* gettext: (gettext).           GNU gettext utilities.
+* ISO3166: (gettext)Country Codes.
+                                ISO 3166 country codes.
+* ISO639: (gettext)Language Codes.
+                                ISO 639 language codes.
+* msgattrib: (gettext)msgattrib Invocation.
+                                Select part of a PO file.
+* msgcat: (gettext)msgcat Invocation.
+                                Combine several PO files.
+* msgcmp: (gettext)msgcmp Invocation.
+                                Compare a PO file and template.
+* msgcomm: (gettext)msgcomm Invocation.
+                                Match two PO files.
+* msgconv: (gettext)msgconv Invocation.
+                                Convert PO file to encoding.
+* msgen: (gettext)msgen Invocation.
+                                Create an English PO file.
+* msgexec: (gettext)msgexec Invocation.
+                                Process a PO file.
+* msgfilter: (gettext)msgfilter Invocation.
+                                Pipe a PO file through a filter.
+* msgfmt: (gettext)msgfmt Invocation.
+                                Make MO files out of PO files.
+* msggrep: (gettext)msggrep Invocation.
+                                Select part of a PO file.
+* msginit: (gettext)msginit Invocation.
+                                Create a fresh PO file.
+* msgmerge: (gettext)msgmerge Invocation.
+                                Update a PO file from template.
+* msgunfmt: (gettext)msgunfmt Invocation.
+                                Uncompile MO file into PO file.
+* msguniq: (gettext)msguniq Invocation.
+                                Unify duplicates for PO file.
+* ngettext: (gettext)ngettext Invocation.
+                                Translate a message with plural.
+* xgettext: (gettext)xgettext Invocation.
+                                Extract strings into a PO file.
+
+GNU Libraries
+* Assuan: (assuan).             An IPC library for non-persistent servers.
+* GPGME: (gpgme).               Adding support for cryptography to your 
+                                  program.
+* libgcrypt: (gcrypt).          Cryptographic function library.
+* libgomp: (libgomp).           GNU Offloading and Multi Processing Runtime 
+                                  Library.
+* libquadmath: (libquadmath).   GCC Quad-Precision Math Library
+
+GNU libraries
+* gmp: (gmp).                   GNU Multiple Precision Arithmetic Library.
+* libksba: (ksba).              An X.509 Library.
+
+GNU organization
+* Maintaining Findutils: (find-maint).
+                                Maintaining GNU findutils
+
+GNU Utilities
+* dirmngr: (gnupg).             X.509 CRL and OCSP server.
+* dirmngr-client: (gnupg).      X.509 CRL and OCSP client.
+* gpg-agent: (gnupg).           The secret key daemon.
+* gpg2: (gnupg).                OpenPGP encryption and signing tool.
+* gpgsm: (gnupg).               S/MIME encryption and signing tool.
+* pinentry: (pinentry).         Securely ask for a passphrase or PIN.
+
+Individual utilities
+* Gawk Work Flow: (gawkworkflow)Overview.       Participating in 'gawk' 
+                                                  development.
+* arch: (coreutils)arch invocation.             Print machine hardware name.
+* awk: (gawk)Invoking Gawk.                     Text scanning and processing.
+* b2sum: (coreutils)b2sum invocation.           Print or check BLAKE2 digests.
+* base32: (coreutils)base32 invocation.         Base32 encode/decode data.
+* base64: (coreutils)base64 invocation.         Base64 encode/decode data.
+* basename: (coreutils)basename invocation.     Strip directory and suffix.
+* basenc: (coreutils)basenc invocation.         Encoding/decoding of data.
+* cat: (coreutils)cat invocation.               Concatenate and write files.
+* chcon: (coreutils)chcon invocation.           Change SELinux CTX of files.
+* chgrp: (coreutils)chgrp invocation.           Change file groups.
+* chmod: (coreutils)chmod invocation.           Change access permissions.
+* chown: (coreutils)chown invocation.           Change file owners and groups.
+* chroot: (coreutils)chroot invocation.         Specify the root directory.
+* cksum: (coreutils)cksum invocation.           Print POSIX CRC checksum.
+* comm: (coreutils)comm invocation.             Compare sorted files by line.
+* cp: (coreutils)cp invocation.                 Copy files.
+* csplit: (coreutils)csplit invocation.         Split by context.
+* cut: (coreutils)cut invocation.               Print selected parts of lines.
+* date: (coreutils)date invocation.             Print/set system date and time.
+* dd: (coreutils)dd invocation.                 Copy and convert a file.
+* df: (coreutils)df invocation.                 Report file system disk usage.
+* dir: (coreutils)dir invocation.               List directories briefly.
+* dircolors: (coreutils)dircolors invocation.   Color setup for ls.
+* dirname: (coreutils)dirname invocation.       Strip last file name component.
+* dnsdomainname: (inetutils)dnsdomainname invocation.
+                                                Show DNS domain name.
+* du: (coreutils)du invocation.                 Report on disk usage.
+* echo: (coreutils)echo invocation.             Print a line of text.
+* env: (coreutils)env invocation.               Modify the environment.
+* expand: (coreutils)expand invocation.         Convert tabs to spaces.
+* expr: (coreutils)expr invocation.             Evaluate expressions.
+* factor: (coreutils)factor invocation.         Print prime factors
+* false: (coreutils)false invocation.           Do nothing, unsuccessfully.
+* find: (find)Invoking find.                    Finding and acting on files.
+* fmt: (coreutils)fmt invocation.               Reformat paragraph text.
+* fold: (coreutils)fold invocation.             Wrap long input lines.
+* ftp: (inetutils)ftp invocation.               FTP client.
+* ftpd: (inetutils)ftpd invocation.             FTP Daemon.
+* groups: (coreutils)groups invocation.         Print group names a user is in.
+* gunzip: (gzip)Overview.                       Decompression.
+* gzexe: (gzip)Overview.                        Compress executables.
+* head: (coreutils)head invocation.             Output the first part of files.
+* hostid: (coreutils)hostid invocation.         Print numeric host identifier.
+* hostname: (inetutils)hostname invocation.     Show or set system host name.
+* id: (coreutils)id invocation.                 Print user identity.
+* inetd: (inetutils)inetd invocation.           Internet super-server.
+* install: (coreutils)install invocation.       Copy files and set attributes.
+* join: (coreutils)join invocation.             Join lines on a common field.
+* kill: (coreutils)kill invocation.             Send a signal to processes.
+* link: (coreutils)link invocation.             Make hard links between files.
+* ln: (coreutils)ln invocation.                 Make links between files.
+* locate: (find)Invoking locate.                Finding files in a database.
+* logger: (inetutils)logger invocation.         Send messages to the system 
+                                                  log.
+* logname: (coreutils)logname invocation.       Print current login name.
+* ls: (coreutils)ls invocation.                 List directory contents.
+* md5sum: (coreutils)md5sum invocation.         Print or check MD5 digests.
+* mkdir: (coreutils)mkdir invocation.           Create directories.
+* mkfifo: (coreutils)mkfifo invocation.         Create FIFOs (named pipes).
+* mknod: (coreutils)mknod invocation.           Create special files.
+* mktemp: (coreutils)mktemp invocation.         Create temporary files.
+* mv: (coreutils)mv invocation.                 Rename files.
+* nice: (coreutils)nice invocation.             Modify niceness.
+* nl: (coreutils)nl invocation.                 Number lines and write files.
+* nohup: (coreutils)nohup invocation.           Immunize to hangups.
+* nproc: (coreutils)nproc invocation.           Print the number of processors.
+* numfmt: (coreutils)numfmt invocation.         Reformat numbers.
+* od: (coreutils)od invocation.                 Dump files in octal, etc.
+* paste: (coreutils)paste invocation.           Merge lines of files.
+* pathchk: (coreutils)pathchk invocation.       Check file name portability.
+* ping: (inetutils)ping invocation.             Packets to network hosts.
+* ping6: (inetutils)ping6 invocation.           Packets to IPv6 network hosts.
+* pr: (coreutils)pr invocation.                 Paginate or columnate files.
+* printenv: (coreutils)printenv invocation.     Print environment variables.
+* printf: (coreutils)printf invocation.         Format and print data.
+* ptx: (coreutils)ptx invocation.               Produce permuted indexes.
+* pwd: (coreutils)pwd invocation.               Print working directory.
+* rcp: (inetutils)rcp invocation.               Remote copy
+* readlink: (coreutils)readlink invocation.     Print referent of a symlink.
+* realpath: (coreutils)realpath invocation.     Print resolved file names.
+* rexec: (inetutils)rexec invocation.           Remote execution client.
+* rexecd: (inetutils)rexecd invocation.         Remote execution server.
+* rlogin: (inetutils)rlogin invocation.         Remote login.
+* rlogind: (inetutils)rlogind invocation.       Remote login server.
+* rm: (coreutils)rm invocation.                 Remove files.
+* rmdir: (coreutils)rmdir invocation.           Remove empty directories.
+* rsh: (inetutils)rsh invocation.               Remote shell.
+* rshd: (inetutils)rshd invocation.             Remote shell server.
+* runcon: (coreutils)runcon invocation.         Run in specified SELinux CTX.
+* seq: (coreutils)seq invocation.               Print numeric sequences
+* sha1sum: (coreutils)sha1sum invocation.       Print or check SHA-1 digests.
+* sha2: (coreutils)sha2 utilities.              Print or check SHA-2 digests.
+* shred: (coreutils)shred invocation.           Remove files more securely.
+* shuf: (coreutils)shuf invocation.             Shuffling text files.
+* sleep: (coreutils)sleep invocation.           Delay for a specified time.
+* sort: (coreutils)sort invocation.             Sort text files.
+* split: (coreutils)split invocation.           Split into pieces.
+* stat: (coreutils)stat invocation.             Report file(system) status.
+* stdbuf: (coreutils)stdbuf invocation.         Modify stdio buffering.
+* stty: (coreutils)stty invocation.             Print/change terminal settings.
+* sum: (coreutils)sum invocation.               Print traditional checksum.
+* sync: (coreutils)sync invocation.             Synchronize memory to disk.
+* syslogd: (inetutils)syslogd invocation.       Syslog server.
+* tac: (coreutils)tac invocation.               Reverse files.
+* tail: (coreutils)tail invocation.             Output the last part of files.
+* talk: (inetutils)talk invocation.             Talk client.
+* talkd: (inetutils)talkd invocation.           Talk server.
+* tee: (coreutils)tee invocation.               Redirect to multiple files.
+* telnet: (inetutils)telnet invocation.         User interface to TELNET.
+* telnetd: (inetutils)telnetd invocation.       Telnet server.
+* test: (coreutils)test invocation.             File/string tests.
+* tftp: (inetutils)tftp invocation.             TFTP client.
+* tftpd: (inetutils)tftpd invocation.           TFTP server.
+* timeout: (coreutils)timeout invocation.       Run with time limit.
+* touch: (coreutils)touch invocation.           Change file timestamps.
+* tr: (coreutils)tr invocation.                 Translate characters.
+* traceroute: (inetutils)traceroute invocation. Trace the route to a host.
+* true: (coreutils)true invocation.             Do nothing, successfully.
+* truncate: (coreutils)truncate invocation.     Shrink/extend size of a file.
+* tsort: (coreutils)tsort invocation.           Topological sort.
+* tty: (coreutils)tty invocation.               Print terminal name.
+* uname: (coreutils)uname invocation.           Print system information.
+* unexpand: (coreutils)unexpand invocation.     Convert spaces to tabs.
+* uniq: (coreutils)uniq invocation.             Uniquify files.
+* unlink: (coreutils)unlink invocation.         Removal via unlink(2).
+* updatedb: (find)Invoking updatedb.            Building the locate database.
+* uptime: (coreutils)uptime invocation.         Print uptime and load.
+* users: (coreutils)users invocation.           Print current user names.
+* uucpd: (inetutils)uucpd invocation.           Unix to Unix Copy.
+* vdir: (coreutils)vdir invocation.             List directories verbosely.
+* wc: (coreutils)wc invocation.                 Line, word, and byte counts.
+* who: (coreutils)who invocation.               Print who is logged in.
+* whoami: (coreutils)whoami invocation.         Print effective user ID.
+* whois: (inetutils)whois invocation.           Whois user interface.
+* xargs: (find)Invoking xargs.                  Operating on many files.
+* yes: (coreutils)yes invocation.               Print a string indefinitely.
+* zcat: (gzip)Overview.                         Decompression to stdout.
+* zdiff: (gzip)Overview.                        Compare compressed files.
+* zforce: (gzip)Overview.                       Force .gz extension on files.
+* zgrep: (gzip)Overview.                        Search compressed files.
+* zmore: (gzip)Overview.                        Decompression output by pages.
+
+Libraries
+* History: (history).           The GNU history library API.
+* RLuserman: (rluserman).       The GNU readline library User's Manual.
+* Readline: (readline).         The GNU readline library API.
+
+Localization
+* idn2: (libidn2)Invoking idn2. Internationalized Domain Name (IDNA2008/TR46) 
+                                  conversion.
+
+Network applications
+* Wget: (wget).                 Non-interactive network downloader.
+* awkinet: (gawkinet).          TCP/IP Internetworking With 'gawk'.
+
+Programming & development tools
+* GDBM: (gdbm).                 The GNU database manager.
+* gdbm_dump: (gdbm) gdbm_dump.  Dump the GDBM database into a flat file.
+* gdbm_load: (gdbm) gdbm_load.  Load the database from a flat file.
+* gdbmtool: (gdbm) gdbmtool.    Examine and modify a GDBM database.
+
+Software development
+* GNU libunistring: (libunistring).
+                                Unicode string library.
+
+Software libraries
+* GnuTLS: (gnutls).             GNU Transport Layer Security Library.
+* GnuTLS-Guile: (gnutls-guile). GNU Transport Layer Security Library. Guile 
+                                  bindings.
+* libidn2: (libidn2).           Internationalized domain names (IDNA2008/TR46) 
+                                  processing.
+* libtasn1: (libtasn1).         Library for Abstract Syntax Notation One 
+                                  (ASN.1).
+* mpfr: (mpfr).                 Multiple Precision Floating-Point Reliable 
+                                  Library.
+
+System Administration
+* certtool: (gnutls)certtool Invocation.
+                                Manipulate certificates and keys.
+* gnutls-cli: (gnutls)gnutls-cli Invocation.
+                                GnuTLS test client.
+* gnutls-cli-debug: (gnutls)gnutls-cli-debug Invocation.
+                                GnuTLS debug client.
+* gnutls-serv: (gnutls)gnutls-serv Invocation.
+                                GnuTLS test server.
+* psktool: (gnutls)psktool Invocation.
+                                Simple TLS-Pre-Shared-Keys manager.
+* srptool: (gnutls)srptool Invocation.
+                                Simple SRP password tool.
+
+System administration
+* Which: (which).               Show full path of commands.
+
+Texinfo documentation system
+* info stand-alone: (info-stnd).
+                                Read Info documents without Emacs.
+
+Text creation and manipulation
+* Gawk: (gawk).                 A text scanning and processing language.
+* Gawk Work Flow: (gawkworkflow).
+                                Participating in 'gawk' development.
+* grep: (grep).                 Print lines matching a pattern.
+* sed: (sed).                   Stream EDitor.  

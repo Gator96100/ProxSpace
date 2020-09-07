@@ -1,5 +1,5 @@
-/* Script for ld -Ur: link w/out relocation, do create constructors */
-/* Copyright (C) 2014-2019 Free Software Foundation, Inc.
+/* Script for -Ur */
+/* Copyright (C) 2014-2020 Free Software Foundation, Inc.
    Copying and distribution of this script, with or without modification,
    are permitted in any medium without royalty provided the copyright
    notice and this notice are preserved.  */
@@ -70,7 +70,7 @@ SECTIONS
   .text         0 :
   {
     *(.text .stub)
-    /* .gnu.warning sections are handled specially by elf32.em.  */
+    /* .gnu.warning sections are handled specially by elf.em.  */
     *(.gnu.warning)
   }
   .fini         0 :
@@ -80,7 +80,10 @@ SECTIONS
   .rodata       0 : { *(.rodata) }
   .rodata1      0 : { *(.rodata1) }
   .ARM.extab 0 : { *(.ARM.extab) }
-  .ARM.exidx 0 : { *(.ARM.exidx) }
+  .ARM.exidx 0 :
+    {
+      *(.ARM.exidx)
+    }
   .eh_frame_hdr 0 : { *(.eh_frame_hdr) }
   .eh_frame     0 : ONLY_IF_RO { KEEP (*(.eh_frame)) }
   .gcc_except_table 0 : ONLY_IF_RO { *(.gcc_except_table) }

@@ -6,42 +6,42 @@ _patch()
     _init_completion -s || return
 
     case $prev in
-        -p|--strip|-D|--ifdef|-B|--prefix|-Y|--basename-prefix|-z|--suffix|\
-        -g|--get)
+        --strip|--ifdef|--prefix|--basename-prefix|--suffix|--get|\
+        -!(-*)[pDBYzg])
             return
             ;;
-        -F|--fuzz)
-            COMPREPLY=( $( compgen -W '{0..3}' -- "$cur" ) )
+        --fuzz|-!(-*)F)
+            COMPREPLY=( $(compgen -W '{0..3}' -- "$cur") )
             return
             ;;
-        -i|--input)
+        --input|-!(-*)i)
             _filedir '@(?(d)patch|dif?(f))'
             return
             ;;
-        -o|--output|-r|--reject-file)
+        --output|--reject-file|-!(-*)[or])
             [[ ! $cur || $cur == - ]] && COMPREPLY=( - )
             _filedir
             return
             ;;
         --quoting-style)
-            COMPREPLY=( $( compgen -W 'literal shell shell-always c escape' \
-                -- "$cur" ) )
+            COMPREPLY=( $(compgen -W 'literal shell shell-always c escape' \
+                -- "$cur") )
             return
             ;;
-        -V|--version-control)
-            COMPREPLY=( $( compgen -W 'simple numbered existing' -- "$cur" ) )
+        --version-control|-!(-*)V)
+            COMPREPLY=( $(compgen -W 'simple numbered existing' -- "$cur") )
             return
             ;;
-        -d|--directory)
+        --directory|-!(-*)d)
             _filedir -d
             return
             ;;
         --reject-format)
-            COMPREPLY=( $( compgen -W 'context unified' -- "$cur" ) )
+            COMPREPLY=( $(compgen -W 'context unified' -- "$cur") )
             return
             ;;
         --read-only)
-            COMPREPLY=( $( compgen -W 'ignore warn fail' -- "$cur" ) )
+            COMPREPLY=( $(compgen -W 'ignore warn fail' -- "$cur") )
             return
             ;;
     esac
@@ -49,7 +49,7 @@ _patch()
     $split && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi

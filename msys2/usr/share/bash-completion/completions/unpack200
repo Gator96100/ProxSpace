@@ -6,15 +6,15 @@ _unpack200()
     _init_completion -s || return
 
     case $prev in
-        '-?'|-h|--help|-V|--version|-J)
+        --help|--version|-!(-*)[?hVJ])
             return
             ;;
-        -H|--deflate-hint)
-            COMPREPLY=( $( compgen -W 'true false keep' -- "$cur" ) )
+        --deflate-hint|-!(-*)H)
+            COMPREPLY=( $(compgen -W 'true false keep' -- "$cur") )
             return
             ;;
-        -l|--log-file)
-            COMPREPLY=( $( compgen -W '-' -- "$cur" ) )
+        --log-file|-!(-*)l)
+            COMPREPLY=( $(compgen -W '-' -- "$cur") )
             _filedir log
             return
             ;;
@@ -32,9 +32,9 @@ _unpack200()
     done
 
     if ! $pack ; then
-        if [[ "$cur" == -* ]] ; then
-            COMPREPLY=( $( compgen -W '--deflate-hint= --remove-pack-file
-                --verbose --quiet --log-file= --help --version' -- "$cur" ) )
+        if [[ "$cur" == -* ]]; then
+            COMPREPLY=( $(compgen -W '--deflate-hint= --remove-pack-file
+                --verbose --quiet --log-file= --help --version' -- "$cur") )
             [[ $COMPREPLY == *= ]] && compopt -o nospace
         else
             _filedir 'pack?(.gz)'

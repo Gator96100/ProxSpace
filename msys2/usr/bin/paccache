@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-# pacache - flexible pacman cache cleaning
+# paccache - flexible pacman cache cleaning
 #
 # Copyright (C) 2011 Dave Reisner <dreisner@archlinux.org>
 #
@@ -23,186 +23,21 @@ shopt -s nullglob
 shopt -s extglob
 
 declare -r myname='paccache'
-declare -r myver='1.0.0'
+declare -r myver='1.3.0'
+
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 declare -a cachedirs=() candidates=() cmdopts=() whitelist=() blacklist=()
 declare -i delete=0 dryrun=0 filecount=0 move=0 totalsaved=0 verbose=0
+declare -i min_atime=0 min_mtime=0
 declare    delim=$'\n' keep=3 movedir= scanarch=
 
 QUIET=0
 USE_COLOR='y'
 
-plain() {
-	(( QUIET )) && return
-	local mesg=$1; shift
-	printf "${BOLD}    ${mesg}${ALL_OFF}\n" "$@" >&1
-}
-
-msg() {
-	(( QUIET )) && return
-	local mesg=$1; shift
-	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&1
-}
-
-msg2() {
-	(( QUIET )) && return
-	local mesg=$1; shift
-	printf "${BLUE}  ->${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&1
-}
-
-ask() {
-	local mesg=$1; shift
-	printf "${BLUE}::${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}" "$@" >&1
-}
-
-warning() {
-	local mesg=$1; shift
-	printf "${YELLOW}==> $(gettext "WARNING:")${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
-}
-
-error() {
-	local mesg=$1; shift
-	printf "${RED}==> $(gettext "ERROR:")${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
-}
-
-# getopt-like parser
-parseopts() {
-	local opt= optarg= i= shortopts=$1
-	local -a longopts=() unused_argv=()
-
-	shift
-	while [[ $1 && $1 != '--' ]]; do
-		longopts+=("$1")
-		shift
-	done
-	shift
-
-	longoptmatch() {
-		local o longmatch=()
-		for o in "${longopts[@]}"; do
-			if [[ ${o%:} = "$1" ]]; then
-				longmatch=("$o")
-				break
-			fi
-			[[ ${o%:} = "$1"* ]] && longmatch+=("$o")
-		done
-
-		case ${#longmatch[*]} in
-			1)
-				# success, override with opt and return arg req (0 == none, 1 == required)
-				opt=${longmatch%:}
-				if [[ $longmatch = *: ]]; then
-					return 1
-				else
-					return 0
-				fi ;;
-			0)
-				# fail, no match found
-				return 255 ;;
-			*)
-				# fail, ambiguous match
-				printf "paccache: $(gettext "option '%s' is ambiguous; possibilities:")" "--$1"
-				printf " '%s'" "${longmatch[@]%:}"
-				printf '\n'
-				return 254 ;;
-		esac >&2
-	}
-
-	while (( $# )); do
-		case $1 in
-			--) # explicit end of options
-				shift
-				break
-				;;
-			-[!-]*) # short option
-				for (( i = 1; i < ${#1}; i++ )); do
-					opt=${1:i:1}
-
-					# option doesn't exist
-					if [[ $shortopts != *$opt* ]]; then
-						printf "paccache: $(gettext "invalid option") -- '%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-					fi
-
-					OPTRET+=("-$opt")
-					# option requires optarg
-					if [[ $shortopts = *$opt:* ]]; then
-						# if we're not at the end of the option chunk, the rest is the optarg
-						if (( i < ${#1} - 1 )); then
-							OPTRET+=("${1:i+1}")
-							break
-						# if we're at the end, grab the the next positional, if it exists
-						elif (( i == ${#1} - 1 )) && [[ $2 ]]; then
-							OPTRET+=("$2")
-							shift
-							break
-						# parse failure
-						else
-							printf "paccache: $(gettext "option requires an argument") -- '%s'\n" "$opt" >&2
-							OPTRET=(--)
-							return 1
-						fi
-					fi
-				done
-				;;
-			--?*=*|--?*) # long option
-				IFS='=' read -r opt optarg <<< "${1#--}"
-				longoptmatch "$opt"
-				case $? in
-					0)
-						# parse failure
-						if [[ $optarg ]]; then
-							printf "paccache: $(gettext "option '%s' does not allow an argument")\n" "--$opt" >&2
-							OPTRET=(--)
-							return 1
-						# --longopt
-						else
-							OPTRET+=("--$opt")
-						fi
-						;;
-					1)
-						# --longopt=optarg
-						if [[ $optarg ]]; then
-							OPTRET+=("--$opt" "$optarg")
-						# --longopt optarg
-						elif [[ $2 ]]; then
-							OPTRET+=("--$opt" "$2" )
-							shift
-						# parse failure
-						else
-							printf "paccache: $(gettext "option '%s' requires an argument")\n" "--$opt" >&2
-							OPTRET=(--)
-							return 1
-						fi
-						;;
-					254)
-						# ambiguous option -- error was reported for us by longoptmatch()
-						OPTRET=(--)
-						return 1
-						;;
-					255)
-						# parse failure
-						printf "paccache: $(gettext "invalid option") '--%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-						;;
-				esac
-				;;
-			*) # non-option arg encountered, add it as a parameter
-				unused_argv+=("$1")
-				;;
-		esac
-		shift
-	done
-
-	# add end-of-opt terminator and any leftover positional parameters
-	OPTRET+=('--' "${unused_argv[@]}" "$@")
-	unset longoptmatch
-
-	return 0
-}
-
+# Import libmakepkg
+source "$LIBRARY"/util/message.sh
+source "$LIBRARY"/util/parseopts.sh
 
 die() {
 	error "$@"
@@ -214,13 +49,23 @@ pkgfilter() {
 	# there's whitelist and blacklist parameters passed to this
 	# script after the block of awk.
 
-	awk -v keep="$1" -v scanarch="$2" '
+	awk -v keep="$1" -v scanarch="$2" -v min_atime="$3" -v min_mtime="$4" '
 	function basename(str) {
 		sub(".*/", "", str);
 		return str;
 	}
 
-	function parse_filename(filename,     parts, count, i, pkgname, arch) {
+	function parse_filename(filename,
+	                        atime, mtime, parts, count, i, pkgname, arch) {
+
+		if (0 + min_atime + min_mtime != 0) {
+			# atime and mtime are in the first two columns and the
+			# separator is a single space
+			split(filename, parts, " ")
+			atime = parts[1]
+			mtime = parts[2]
+			filename = substr(filename, length(atime) + length(mtime) + 3)
+		}
 
 		count = split(basename(filename), parts, "-")
 
@@ -238,8 +83,12 @@ pkgfilter() {
 
 		if ("" == packages[pkgname,arch]) {
 			packages[pkgname,arch] = filename
+			atimes[pkgname,arch] = atime
+			mtimes[pkgname,arch] = mtime
 		} else {
 			packages[pkgname,arch] = packages[pkgname,arch] SUBSEP filename
+			atimes[pkgname,arch] = atimes[pkgname,arch] SUBSEP atime
+			mtimes[pkgname,arch] = mtimes[pkgname,arch] SUBSEP mtime
 		}
 	}
 
@@ -270,12 +119,19 @@ pkgfilter() {
 			# enforce architecture match if specified
 			if (!scanarch || scanarch == idx[2]) {
 				count = split(packages[idx[1], idx[2]], pkgs, SUBSEP)
+				split(atimes[idx[1], idx[2]], atime, SUBSEP)
+				split(mtimes[idx[1], idx[2]], mtime, SUBSEP)
 				for(i = 1; i <= count - keep; i++) {
-					print pkgs[i]
+					# If checking file age, potentially keep more candidates
+					if ((0 + min_atime == 0 || (strtonum(atime[i]) < 0 + min_atime)) &&
+					    (0 + min_mtime == 0 || (strtonum(mtime[i]) < 0 + min_mtime)) \
+					    ) {
+						print pkgs[i]
+					}
 				}
 			}
 		}
-	}' "${@:3}"
+	}' "${@:5}"
 }
 
 size_to_human() {
@@ -356,6 +212,12 @@ Usage: ${myname} <operation> [options] [targets...]
     -r, --remove          remove candidate packages.
 
   Options:
+    --min-atime <time>
+    --min-mtime <time>    keep packages with an atime/mtime that is not older
+                          than the time given, even if this means keeping more
+                          than specified through the '--keep' option. Accepts
+                          arguments according to 'info "Date input formats"',
+                          e.g. '30 days ago'.
     -a, --arch <arch>     scan for "arch" (default: all architectures).
     -c, --cachedir <dir>  scan "dir" for packages. can be used more than once.
                           (default: read from /etc/pacman.conf).
@@ -381,8 +243,9 @@ version() {
 }
 
 OPT_SHORT=':a:c:dfhi:k:m:qrsuVvz'
-OPT_LONG=('arch:' 'cachedir:' 'dryrun' 'force' 'help' 'ignore:' 'keep:' 'move'
-          'nocolor' 'quiet' 'remove' 'uninstalled' 'version' 'verbose' 'null')
+OPT_LONG=('arch:' 'cachedir:' 'dryrun' 'force' 'help' 'ignore:' 'keep:' 'move:'
+          'nocolor' 'quiet' 'remove' 'uninstalled' 'version' 'verbose' 'null'
+          'min-atime:' 'min-mtime:')
 
 if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
 	exit 1
@@ -392,6 +255,18 @@ unset OPT_SHORT OPT_LONG OPTRET
 
 while :; do
 	case $1 in
+		--min-atime)
+			min_atime=$(date -d "$2" +%s)
+			if (( $? )); then
+				die "argument to option --min-atime must be of the form described by 'info \"Date input formats\" '."
+			fi
+			shift ;;
+		--min-mtime)
+			min_mtime=$(date -d "$2" +%s)
+			if (( $? )); then
+				die "argument to option --min-mtime must be of the form described by 'info \"Date input formats\" '."
+			fi
+			shift ;;
 		-a|--arch)
 			scanarch=$2
 			shift ;;
@@ -452,27 +327,11 @@ while :; do
 done
 
 # check if messages are to be printed using color
-unset ALL_OFF BOLD BLUE GREEN RED YELLOW
-if [[ -t 2 && ! $USE_COLOR = "n" ]]; then
-	# prefer terminal safe colored and bold text when tput is supported
-	if tput setaf 0 &>/dev/null; then
-		ALL_OFF="$(tput sgr0)"
-		BOLD="$(tput bold)"
-		BLUE="${BOLD}$(tput setaf 4)"
-		GREEN="${BOLD}$(tput setaf 2)"
-		RED="${BOLD}$(tput setaf 1)"
-		YELLOW="${BOLD}$(tput setaf 3)"
-	else
-		ALL_OFF="\e[1;0m"
-		BOLD="\e[1;1m"
-		BLUE="${BOLD}\e[1;34m"
-		GREEN="${BOLD}\e[1;32m"
-		RED="${BOLD}\e[1;31m"
-		YELLOW="${BOLD}\e[1;33m"
-	fi
+if [[ -t 2 && $USE_COLOR != "n" ]]; then
+	colorize
+else
+	unset ALL_OFF BOLD BLUE GREEN RED YELLOW
 fi
-readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
-
 
 # setting default cachedirs
 if [[ -z $cachedirs ]]; then
@@ -506,8 +365,14 @@ for cachedir in "${cachedirs[@]}"; do
 	# note that these results are returned in an arbitrary order from awk, but
 	# they'll be resorted (in summarize) iff we have a verbosity level set.
 	IFS=$'\n' read -r -d '' -a cand < \
-		<(printf '%s\n' "$PWD"/*.pkg.tar!(*.sig) | pacsort --files |
-			pkgfilter "$keep" "$scanarch" \
+		<(	if (( min_atime || min_mtime )); then
+				find "$PWD" -name '*.pkg.tar*.sig' -prune -o \( -name '*.pkg.tar*' -printf '%A@ %T@ %p\n' \) |
+				pacsort --files --key 3 --separator ' '
+			else
+				printf '%s\n' "$PWD"/*.pkg.tar!(*.sig) |
+				pacsort --files
+			fi |
+			pkgfilter "$keep" "$scanarch" "$min_atime" "$min_mtime" \
 				"${#whitelist[*]}" "${whitelist[@]}" \
 				"${#blacklist[*]}" "${blacklist[@]}")
 

@@ -1,9 +1,0 @@
-%FILES%
-usr/
-usr/bin/
-usr/bin/msys-archive-13.dll
-usr/share/
-usr/share/licenses/
-usr/share/licenses/libarchive/
-usr/share/licenses/libarchive/COPYING
-

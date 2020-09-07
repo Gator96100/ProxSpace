@@ -2,7 +2,7 @@
 #
 #   arch.sh - Check the 'arch' array conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -33,8 +33,13 @@ lint_pkgbuild_functions+=('lint_arch')
 lint_arch() {
 	local a name list ret=0
 
-	if [[ $arch == 'any' ]]; then
-		return 0
+	if in_array "any" "${arch[@]}"; then
+		if (( ${#arch[@]} == 1 )); then
+			return 0;
+		else
+			error "$(gettext "Can not use '%s' architecture with other architectures")" "any"
+			return 1;
+		fi
 	fi
 
 	for a in "${arch[@]}"; do

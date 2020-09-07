@@ -11,19 +11,22 @@ A utility to show the full path of commands
 http://www.xs4all.nl/~carlo17/which
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1437376571
+1437376459
 
 %INSTALLDATE%
-1558699101
+1599157255
 
 %PACKAGER%
 Alexpux <alexpux@jmail.com>
 
 %SIZE%
 33792
+
+%REASON%
+1
 
 %GROUPS%
 base

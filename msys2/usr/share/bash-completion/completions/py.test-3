@@ -1,33 +1,33 @@
-# bash completion for py.test(1)                           -*- shell-script -*-
+# bash completion for pytest(1)                            -*- shell-script -*-
 
-_py_test()
+_pytest()
 {
     local cur prev words cword split
     _init_completion -s || return
 
     case $prev in
-        -h|--help|-k|-m|--maxfail|-r|--report|--junit-prefix|--doctest-glob|-p)
+        --help|--maxfail|--report|--junit-prefix|--doctest-glob|-!(-*)[hkmrp])
             return
             ;;
         --import-mode)
-            COMPREPLY=( $( compgen -W "prepend append" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "prepend append" -- "$cur") )
             return
             ;;
         --capture)
-            COMPREPLY=( $( compgen -W "fd sys no" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "fd sys no" -- "$cur") )
             return
             ;;
         --tb)
-            COMPREPLY=( $( compgen -W "auto long short line native no" \
-                                   -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "auto long short line native no" \
+                                  -- "$cur") )
             return
             ;;
         --color)
-            COMPREPLY=( $( compgen -W "yes no auto" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "yes no auto" -- "$cur") )
             return
             ;;
         --pastebin)
-            COMPREPLY=( $( compgen -W "failed all" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "failed all" -- "$cur") )
             return
             ;;
         --junit-xml)
@@ -42,16 +42,31 @@ _py_test()
             _filedir
             return
             ;;
-        --confcutdir|--basetemp)
+        --confcutdir|--basetemp|--rsyncdir)
             _filedir -d
             return
             ;;
         --assert)
-            COMPREPLY=( $( compgen -W "plain reinterp rewrite" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "plain reinterp rewrite" -- "$cur") )
             return
             ;;
         --genscript)
             _filedir py
+            return
+            ;;
+        --pythonwarnings|-!(-*)W)
+            _xfunc python _python_warning_actions
+            return
+            ;;
+        --numprocesses|-!(-*)n)
+            COMPREPLY=( $(compgen -W "{1..$(_ncpus)} auto" -- "$cur") )
+            return
+            ;;
+        --dist)
+            local modes=$("$1" --dist=nonexistent-distmode 2>&1 | \
+                command sed -e 's/[^[:space:][:alnum:]-]\{1,\}//g' \
+                           -ne 's/.*choose from //p')
+            COMPREPLY=( $(compgen -W '$modes' -- "$cur") )
             return
             ;;
     esac
@@ -59,13 +74,13 @@ _py_test()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
 
     _filedir py
 } &&
-complete -F _py_test py.test py.test-2 py.test-3
+complete -F _pytest pytest pytest-2 pytest-3 py.test py.test-2 py.test-3
 
 # ex: filetype=sh

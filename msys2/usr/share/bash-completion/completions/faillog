@@ -6,11 +6,11 @@ _faillog()
     _init_completion -s || return
 
     case $prev in
-        -h|--help|-l|--lock-time|-m|--maximum|-t|--time)
+        --help|--lock-time|--maximum|--time|-!(-*)[hlmt])
             return
             ;;
-        -u|--user)
-            COMPREPLY=( $( compgen -u -- "$cur" ) )
+        --user|-!(-*)u)
+            COMPREPLY=( $(compgen -u -- "$cur") )
             return
             ;;
     esac
@@ -18,7 +18,7 @@ _faillog()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
     fi
 } &&

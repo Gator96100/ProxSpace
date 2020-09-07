@@ -9,7 +9,7 @@ _groupadd()
     #       with -g/--gid
 
     case $prev in
-        -g|--gid|-K|--key|-p|--password)
+        --gid|--key|--password|-!(-*)[gKp])
             return
             ;;
     esac
@@ -17,7 +17,7 @@ _groupadd()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
     fi
 } &&

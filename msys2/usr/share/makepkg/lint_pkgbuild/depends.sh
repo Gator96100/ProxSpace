@@ -2,7 +2,7 @@
 #
 #   depends.sh - Check the 'depends' array conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ LIBMAKEPKG_LINT_PKGBUILD_DEPENDS_SH=1
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
+source "$LIBRARY/lint_pkgbuild/fullpkgver.sh"
 source "$LIBRARY/lint_pkgbuild/pkgname.sh"
-source "$LIBRARY/lint_pkgbuild/pkgver.sh"
 source "$LIBRARY/util/message.sh"
 source "$LIBRARY/util/pkgbuild.sh"
 
@@ -43,13 +43,13 @@ lint_depends() {
 
 	for depend in "${depends_list[@]}"; do
 		name=${depend%%@(<|>|=|>=|<=)*}
-		# remove optional epoch in version specifier
-		ver=${depend##$name@(<|>|=|>=|<=)?(+([0-9]):)}
 		lint_one_pkgname depends "$name" || ret=1
-		# Don't validate empty version because of https://bugs.archlinux.org/task/58776
-		if [[ $ver != $depend && -n $ver ]]; then
-			# remove optional pkgrel in version specifier
-			check_pkgver "${ver%-+([0-9])?(.+([0-9]))}" depends || ret=1
+		if [[ $name != "$depend" ]]; then
+			ver=${depend##$name@(<|>|=|>=|<=)}
+			# Don't validate empty version because of https://bugs.archlinux.org/task/58776
+			if [[ -n $ver ]]; then
+				check_fullpkgver "$ver" depends || ret=1
+			fi
 		fi
 	done
 

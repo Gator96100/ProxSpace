@@ -14,19 +14,22 @@ Official tftp server
 https://www.kernel.org/pub/software/network/tftp/tftp-hpa/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1556608860
+1556610732
 
 %INSTALLDATE%
-1558699098
+1599157253
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
 37888
+
+%REASON%
+1
 
 %GROUPS%
 base

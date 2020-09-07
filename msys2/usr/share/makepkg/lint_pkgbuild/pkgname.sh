@@ -2,7 +2,7 @@
 #
 #   pkgname.sh - Check the 'pkgname' variable conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -44,6 +44,10 @@ lint_one_pkgname() {
 	if [[ ${name:0:1} = "." ]]; then
 		error "$(gettext "%s is not allowed to start with a dot.")" "$type"
 		ret=1
+	fi
+	if [[ $name = *[![:ascii:]]* ]]; then
+		error "$(gettext "%s may only contain ascii characters.")" "$type"
+		return 1
 	fi
 	if [[ $name = *[^[:alnum:]+_.@-]* ]]; then
 		error "$(gettext "%s contains invalid characters: '%s'")" \

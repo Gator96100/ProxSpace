@@ -1,6 +1,6 @@
 # inplace --- load and invoke the inplace extension.
 # 
-# Copyright (C) 2013, 2017 the Free Software Foundation, Inc.
+# Copyright (C) 2013, 2017, 2019 the Free Software Foundation, Inc.
 # 
 # This file is part of GAWK, the GNU implementation of the
 # AWK Programming Language.
@@ -25,16 +25,21 @@
 # Revised for namespaces
 # Arnold Robbins, arnold@skeeve.com
 # July 2017
+# June 2019, add backwards compatibility
 
 @load "inplace"
 
 # Please set inplace::suffix to make a backup copy.  For example, you may
 # want to set inplace::suffix to .bak on the command line or in a BEGIN rule.
 
+# Before there were namespaces in gawk, this extension used
+# INPLACE_SUFFIX as the variable for making backup copies. We allow this
+# too, so that any code that used the previous version continues to work.
+
 # By default, each filename on the command line will be edited inplace.
-# But you can selectively disable this by adding an inplace=0 argument
+# But you can selectively disable this by adding an inplace::enable=0 argument
 # prior to files that you do not want to process this way.  You can then
-# reenable it later on the commandline by putting inplace=1 before files
+# reenable it later on the commandline by putting inplace::enable=1 before files
 # that you wish to be subject to inplace editing.
 
 # N.B. We call inplace::end() in the BEGINFILE and END rules so that any
@@ -47,15 +52,16 @@ BEGIN {
 }
 
 BEGINFILE {
+    sfx = (suffix ? suffix : awk::INPLACE_SUFFIX)
     if (filename != "")
-        end(filename, suffix)
+        end(filename, sfx)
     if (enable)
-        begin(filename = FILENAME, suffix)
+        begin(filename = FILENAME, sfx)
     else
         filename = ""
 }
 
 END {
     if (filename != "")
-        end(filename, suffix)
+        end(filename, (suffix ? suffix : awk::INPLACE_SUFFIX))
 }

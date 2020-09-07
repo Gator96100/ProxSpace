@@ -4,7 +4,7 @@
 #                Based on apt-key, from Debian
 #   Generated from pacman-key.sh.in; do not edit by hand.
 #
-#   Copyright (c) 2010-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2010-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,12 +24,14 @@
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver="5.1.3"
+declare -r myver="5.2.2"
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
-# Import parseopts.sh
+# Import libmakepkg
+source "$LIBRARY"/util/message.sh
 source "$LIBRARY"/util/parseopts.sh
+source "$LIBRARY"/utils_fixed_path.sh
 
 # Options
 ADD=0
@@ -50,76 +52,6 @@ REFRESH=0
 UPDATEDB=0
 USE_COLOR='y'
 VERIFY=0
-
-plain() {
-	(( QUIET )) && return
-	local mesg=$1; shift
-	printf "${BOLD}    ${mesg}${ALL_OFF}\n" "$@" >&1
-}
-
-msg() {
-	(( QUIET )) && return
-	local mesg=$1; shift
-	printf "${GREEN}==>${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&1
-}
-
-msg2() {
-	(( QUIET )) && return
-	local mesg=$1; shift
-	printf "${BLUE}  ->${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&1
-}
-
-ask() {
-	local mesg=$1; shift
-	printf "${BLUE}::${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}" "$@" >&1
-}
-
-warning() {
-	local mesg=$1; shift
-	printf "${YELLOW}==> $(gettext "WARNING:")${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
-}
-
-error() {
-	local mesg=$1; shift
-	printf "${RED}==> $(gettext "ERROR:")${ALL_OFF}${BOLD} ${mesg}${ALL_OFF}\n" "$@" >&2
-}
-
-
-if [[ -n "$MSYSTEM" ]]; then
-  readonly -a UTILS_NAME=('bsdtar'
-                          'bzip2'
-                          'bzr'
-                          'cat'
-                          'ccache'
-                          'distcc'
-                          'git'
-                          'gpg'
-                          'gzip'
-                          'hg'
-                          'lzip'
-                          'lzop'
-                          'openssl'
-                          'svn'
-                          'tput'
-                          'uncompress'
-                          'upx'
-                          'xargs'
-                          'xz'
-                         )
-
-  for wrapper in ${UTILS_NAME[@]}; do
-    eval "
-    ${wrapper}"'() {
-      local UTILS_PATH="/usr/bin/"
-      if ! type -p ${UTILS_PATH}${FUNCNAME[0]} >/dev/null; then
-        error "$(gettext "Cannot find the %s binary required for makepkg.")" "${UTILS_PATH}${FUNCNAME[0]}"
-        exit 1
-      fi
-      ${UTILS_PATH}${FUNCNAME[0]} "$@"
-    }'
-  done
-fi
-
 
 usage() {
 	printf "pacman-key (pacman) %s\n" ${myver}
@@ -160,8 +92,9 @@ usage() {
 
 version() {
 	printf "pacman-key (pacman) %s\n" "${myver}"
+	printf -- "Copyright (c) 2010-2020 Pacman Development Team <pacman-dev@archlinux.org>.\n"
+	printf '\n'
 	printf -- "$(gettext "\
-Copyright (c) 2010-2018 Pacman Development Team <pacman-dev@archlinux.org>.\n\
 This is free software; see the source for copying conditions.\n\
 There is NO WARRANTY, to the extent permitted by law.\n")"
 }
@@ -215,7 +148,7 @@ generate_master_key() {
 	"${GPG_PACMAN[@]}" --gen-key --batch <<EOF
 %echo Generating pacman keyring master key...
 Key-Type: RSA
-Key-Length: 2048
+Key-Length: 4096
 Key-Usage: sign
 Name-Real: Pacman Keyring Master Key
 Name-Email: pacman@localhost
@@ -237,7 +170,7 @@ add_gpg_conf_option() {
 	local conffile=$1; shift
 	# looking for the option 'bare', only leading spaces or # chars allowed,
 	# followed by at least one space and any other text or the end of line.
-	if ! grep -q "^[[:space:]#]*$1\([[:space:]].*\)*$" "$conffile" &>/dev/null; then
+	if ! grep -q "^[[:space:]#]*$*\([[:space:]].*\)*$" "$conffile" &>/dev/null; then
 		printf '%s\n' "$*" >> "$conffile"
 	fi
 }
@@ -277,6 +210,12 @@ initialize() {
 	add_gpg_conf_option "$conffile" 'no-permission-warning'
 	add_gpg_conf_option "$conffile" 'lock-never'
 	add_gpg_conf_option "$conffile" 'keyserver-options' 'timeout=10'
+	add_gpg_conf_option "$conffile" 'keyserver-options' 'import-clean'
+
+	local gpg_ver=$(gpg --version | awk '{print $3; exit}')
+	if (( $(vercmp "$gpg_ver" 2.2.17) >= 0 )); then
+		add_gpg_conf_option "$conffile" 'keyserver-options' 'no-self-sigs-only'
+	fi
 
 	# gpg-agent.conf
 	agent_conffile="${PACMAN_KEYRING_DIR}/gpg-agent.conf"
@@ -523,25 +462,34 @@ lsign_keys() {
 }
 
 receive_keys() {
-	local name id keyids
+	local ret=0 name id keyids emails
 
 	# if the key is not a hex ID, do a lookup
 	for name; do
 		if [[ $name = ?(0x)+([0-9a-fA-F]) ]]; then
 			keyids+=("$name")
-		else
-			if id=$(key_lookup_from_name "$name"); then
-				keyids+=("$id")
-			fi
+		elif [[ $name = *@*.* ]]; then
+			emails+=("$name")
+		elif id=$(key_lookup_from_name "$name"); then
+			keyids+=("$id")
 		fi
 	done
 
-	(( ${#keyids[*]} > 0 )) || exit 1
+	(( ${#keyids[*]}+${#emails[*]} > 0 )) || exit 1
 
-	if ! "${GPG_PACMAN[@]}" --recv-keys "${keyids[@]}" ; then
-		error "$(gettext "Remote key not fetched correctly from keyserver.")"
-		exit 1
+	if (( ${#emails[*]} > 0 )) && \
+	   ! "${GPG_PACMAN[@]}" --auto-key-locate clear,nodefault,wkd,keyserver \
+	                        --locate-key "${emails[@]}" ; then
+		error "$(gettext "Remote key not fetched correctly from WKD or keyserver.")"
+		ret=1
 	fi
+
+	if (( ${#keyids[*]} > 0 )) && ! "${GPG_PACMAN[@]}" --recv-keys "${keyids[@]}" ; then
+		error "$(gettext "Remote key not fetched correctly from keyserver.")"
+		ret=1
+	fi
+
+	exit $ret
 }
 
 refresh_keys() {
@@ -553,18 +501,25 @@ refresh_keys() {
 }
 
 verify_sig() {
-	local ret=0
-	for sig; do
-		msg "Checking %s..." "$sig"
-		if grep -q 'BEGIN PGP SIGNATURE' "$sig"; then
-			error "$(gettext "Cannot use armored signatures for packages: %s")" "$sig"
-			return 1
-		fi
-		if ! "${GPG_PACMAN[@]}" --status-fd 1 --verify "$sig" | grep -qE '^\[GNUPG:\] TRUST_(FULLY|ULTIMATE).*$'; then
-			error "$(gettext "The signature identified by %s could not be verified.")" "$sig"
-			ret=1
-		fi
-	done
+	local ret=0 sig=$1 file=$2
+	if [[  -z $file && -f ${sig%.*} ]]; then
+		file=${sig%.*}
+	fi
+	if [[ -n $file ]]; then
+		local files=("$sig" "$file")
+		msg "Checking %s... (detached)" "$sig"
+	else
+		local files=("$sig")
+		msg "Checking %s... (embedded)" "$sig"
+	fi
+	if grep -q 'BEGIN PGP SIGNATURE' "$sig"; then
+		error "$(gettext "Cannot use armored signatures for packages: %s")" "$sig"
+		exit 1
+	fi
+	if ! "${GPG_PACMAN[@]}" --status-fd 1 --verify "${files[@]}" | grep -qE '^\[GNUPG:\] TRUST_(FULLY|ULTIMATE).*$'; then
+		error "$(gettext "The signature identified by %s could not be verified.")" "$sig"
+		ret=1
+	fi
 	exit $ret
 }
 
@@ -593,14 +548,14 @@ OPT_LONG=('add' 'config:' 'delete' 'edit-key' 'export' 'finger' 'gpgdir:'
           'lsign-key' 'nocolor' 'populate' 'recv-keys' 'refresh-keys' 'updatedb'
           'verify' 'version')
 if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
-	exit 1 # E_INVALID_OPTION;
+	exit 1 # E_INVALID_OPTION
 fi
 set -- "${OPTRET[@]}"
 unset OPT_SHORT OPT_LONG OPTRET
 
 if [[ $1 == "--" ]]; then
-	usage;
-	exit 0;
+	usage
+	exit 0
 fi
 
 while (( $# )); do
@@ -635,27 +590,11 @@ while (( $# )); do
 done
 
 # check if messages are to be printed using color
-unset ALL_OFF BOLD BLUE GREEN RED YELLOW
-if [[ -t 2 && ! $USE_COLOR = "n" ]]; then
-	# prefer terminal safe colored and bold text when tput is supported
-	if tput setaf 0 &>/dev/null; then
-		ALL_OFF="$(tput sgr0)"
-		BOLD="$(tput bold)"
-		BLUE="${BOLD}$(tput setaf 4)"
-		GREEN="${BOLD}$(tput setaf 2)"
-		RED="${BOLD}$(tput setaf 1)"
-		YELLOW="${BOLD}$(tput setaf 3)"
-	else
-		ALL_OFF="\e[1;0m"
-		BOLD="\e[1;1m"
-		BLUE="${BOLD}\e[1;34m"
-		GREEN="${BOLD}\e[1;32m"
-		RED="${BOLD}\e[1;31m"
-		YELLOW="${BOLD}\e[1;33m"
-	fi
+if [[ -t 2 && $USE_COLOR != "n" ]]; then
+	colorize
+else
+	unset ALL_OFF BOLD BLUE GREEN RED YELLOW
 fi
-readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
-
 
 if ! type -p gpg >/dev/null; then
 	error "$(gettext "Cannot find the %s binary required for all %s operations.")" "gpg" "pacman-key"

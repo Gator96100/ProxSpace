@@ -2,7 +2,7 @@
 #
 #   conflicts.sh - Check the 'conflicts' array conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@ LIBMAKEPKG_LINT_PKGBUILD_CONFLICTS_SH=1
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
+source "$LIBRARY/lint_pkgbuild/fullpkgver.sh"
 source "$LIBRARY/lint_pkgbuild/pkgname.sh"
-source "$LIBRARY/lint_pkgbuild/pkgver.sh"
 source "$LIBRARY/util/message.sh"
 source "$LIBRARY/util/pkgbuild.sh"
 
@@ -43,12 +43,10 @@ lint_conflicts() {
 
 	for conflict in "${conflicts_list[@]}"; do
 		name=${conflict%%@(<|>|=|>=|<=)*}
-		# remove optional epoch in version specifier
-		ver=${conflict##$name@(<|>|=|>=|<=)?(+([0-9]):)}
 		lint_one_pkgname conflicts "$name" || ret=1
-		if [[ $ver != $conflict ]]; then
-			# remove optional pkgrel in version specifier
-			check_pkgver "${ver%-+([0-9])?(.+([0-9]))}" conflicts || ret=1
+		if [[ $name != "$conflict" ]]; then
+			ver=${conflict##$name@(<|>|=|>=|<=)}
+			check_fullpkgver "$ver" conflicts || ret=1
 		fi
 	done
 

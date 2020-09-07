@@ -6,19 +6,19 @@ _jpegoptim()
     _init_completion -s || return
 
     case $prev in
-        -h|--help|-V|--version)
+        --help|--version|-!(-*)[hV]*)
             return
             ;;
-        -d|--dest)
+        --dest|-!(-*)d)
             _filedir -d
             return
             ;;
-        -m|--max|-T|--threshold)
-            COMPREPLY=( $( compgen -W '{0..100}' -- "$cur" ) )
+        --max|--threshold|-!(-*)[mT])
+            COMPREPLY=( $(compgen -W '{0..100}' -- "$cur") )
             return
             ;;
-        -S|--size)
-            COMPREPLY=( $( compgen -W '{1..99}%' -- "$cur" ) )
+        --size|-!(-*)S)
+            COMPREPLY=( $(compgen -W '{1..99}%' -- "$cur") )
             return
             ;;
     esac
@@ -26,7 +26,7 @@ _jpegoptim()
     $split && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi

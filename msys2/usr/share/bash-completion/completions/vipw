@@ -6,16 +6,16 @@ _vipw()
     _init_completion || return
 
     case $prev in
-        -h|--help)
+        --help|-!(-*)h)
             return
             ;;
-        -R|--root)
+        --root|-!(-*)R)
             _filedir -d
             return
             ;;
     esac
 
-    COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+    COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
 } &&
 complete -F _vipw vipw vigr
 

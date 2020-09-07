@@ -1,31 +1,36 @@
 # mysql(1) completion                                      -*- shell-script -*-
 
+_mysql_character_sets()
+{
+    local IFS=$' \t\n' reset=$(shopt -p failglob); shopt -u failglob
+    local -a charsets=( /usr/share/m{ariadb,ysql}/charsets/*.xml )
+    $reset
+    charsets=( "${charsets[@]##*/}" )
+    charsets=( "${charsets[@]%%?(Index|\*).xml}" utf8 )
+    COMPREPLY+=( $(compgen -W '${charsets[@]}' -- "$cur") )
+}
+
 _mysql()
 {
     local cur prev words cword split
     _init_completion -s || return
 
     case $prev in
-        -u|--user)
-            COMPREPLY=( $( compgen -u -- "$cur" ) )
+        --user|-!(-*)u)
+            COMPREPLY=( $(compgen -u -- "$cur") )
             return
             ;;
-        -D|--database)
-            COMPREPLY=( $( compgen -W "$(mysqlshow 2>/dev/null | command sed -ne '2d' -e 's/^|.\([^|]*\)|.*/\1/p')" -- "$cur" ) )
+        --database|-!(-*)D)
+            COMPREPLY=( $(compgen -W "$(mysqlshow 2>/dev/null | command sed -ne '2d' -e 's/^|.\([^|]*\)|.*/\1/p')" -- "$cur") )
             return
             ;;
 
-        -h|--host)
+        --host|-!(-*)h)
             _known_hosts_real -- "$cur"
             return
             ;;
         --default-character-set)
-            local IFS=$' \t\n' reset=$( shopt -p failglob ); shopt -u failglob
-            local -a charsets=( /usr/share/m{ariadb,ysql}/charsets/*.xml )
-            $reset
-            charsets=( "${charsets[@]##*/}" )
-            charsets=( "${charsets[@]%%?(Index|\*).xml}" utf8 )
-            COMPREPLY=( $( compgen -W '${charsets[@]}' -- "$cur" ) )
+            _mysql_character_sets
             return
             ;;
 
@@ -33,38 +38,45 @@ _mysql()
             _filedir -d
             return
             ;;
-        -S|--socket)
+        --socket|-!(-*)S)
             _filedir sock
             return
             ;;
         --protocol)
-            COMPREPLY=( $( compgen -W 'tcp socket pipe memory' -- "$cur" ) )
+            COMPREPLY=( $(compgen -W 'tcp socket pipe memory' -- "$cur") )
             return
             ;;
         --defaults-file|--defaults-extra-file|--tee)
             _filedir
             return
             ;;
-        --default-character-set|-P|--port|--set-variable|\
-        --ssl-ca|--ssl-cert|--ssl-cipher|--ssl-key|\
-        --connect_timeout|--max_allowed_packet|--prompt|\
-        --net_buffer_length|--select_limit|--max_join_size|\
-        --server-arg|--debug|--delimiter|--execute|-e|--pager)
-            # Argument required but no completions available
+        --ssl-ca|--ssl-cert)
+            _filedir '@(pem|cer|c?(e)rt)'
             return
             ;;
-        '-?'|-I|--help|-V|--version)
-            # All other options are noop with these
+        --ssl-key)
+            _filedir '@(pem|key)'
+            return
+            ;;
+        --port|--set-variable|--ssl-cipher|--connect_timeout|\
+        --max_allowed_packet|--prompt|--net_buffer_length|--select_limit|\
+        --max_join_size|--server-arg|--debug|--delimiter|--execute|--pager|\
+        -!(-*)[Pe])
+            return
+            ;;
+        --help|--version|-!(-*)[?IV])
             return
             ;;
     esac
+
+    $split && return
 
     case $cur in
         --*)
             local help=$(_parse_help "$1")
             help+=" --skip-comments --skip-ssl"
 
-            COMPREPLY=( $( compgen -W "$help" -- "$cur" ) )
+            COMPREPLY=( $(compgen -W "$help" -- "$cur") )
             [[ $COMPREPLY == *= ]] && compopt -o nospace
             return
             ;;
@@ -77,9 +89,9 @@ _mysql()
             ;;
     esac
 
-    COMPREPLY=( $( compgen -W \
+    COMPREPLY=( $(compgen -W \
         "$(mysqlshow 2>/dev/null | command sed -ne '2d' -e 's/^|.\([^|]*\)|.*/\1/p')" \
-        -- "$cur" ) )
+        -- "$cur") )
 } &&
 complete -F _mysql mysql
 

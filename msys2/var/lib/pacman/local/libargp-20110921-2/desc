@@ -14,19 +14,22 @@ Interface for parsing command-line arguments
 https://www.gnu.org/software/libc/libc.html
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1538485720
+1538484763
 
 %INSTALLDATE%
-1558699098
+1599157253
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-87040
+44032
+
+%REASON%
+1
 
 %GROUPS%
 base

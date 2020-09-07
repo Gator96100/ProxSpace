@@ -2,7 +2,7 @@
 #
 #   pkgbuild.sh - functions to extract information from PKGBUILD files
 #
-#   Copyright (c) 2009-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2009-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 [[ -n "$LIBMAKEPKG_UTIL_PKGBUILD_SH" ]] && return
 LIBMAKEPKG_UTIL_PKGBUILD_SH=1
 
+source "$LIBRARY/util/schema.sh"
+
 
 have_function() {
 	declare -f "$1" >/dev/null
@@ -36,7 +38,7 @@ array_build() {
 	# it's an error to try to copy a value which doesn't exist.
 	declare -p "$2" &>/dev/null || return 1
 
-	# Build an array of the indicies of the source array.
+	# Build an array of the indices of the source array.
 	eval "keys=(\"\${!$2[@]}\")"
 
 	# Clear the destination array
@@ -60,7 +62,7 @@ extract_global_variable() {
 
 	if (( isarray )); then
 		array_build ref "$attr"
-		[[ ${ref[@]} ]] && array_build "$outputvar" "$attr"
+		(( ${#ref[@]} )) && array_build "$outputvar" "$attr"
 	else
 		[[ ${!attr} ]] && printf -v "$outputvar" %s "${!attr}"
 	fi
@@ -96,6 +98,15 @@ extract_function_variable() {
 	eval "$shellopts"
 
 	return $r
+}
+
+exists_function_variable() {
+	# $1: function name
+	# $2: variable name
+
+	local funcname=$1 attr=$2 out
+	extract_function_variable "$funcname" "$attr" 0 out ||
+		extract_function_variable "$funcname" "$attr" 1 out
 }
 
 get_pkgbuild_attribute() {
@@ -144,7 +155,7 @@ get_pkgbuild_all_split_attributes() {
 		done
 	done
 
-	[[ ${all_list[@]} ]] && array_build "$outputvar" all_list
+	(( ${#all_list[@]} )) && array_build "$outputvar" all_list
 }
 
 ##

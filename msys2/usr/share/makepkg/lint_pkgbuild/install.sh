@@ -2,7 +2,7 @@
 #
 #   install.sh - Check the files in the 'install' array exist.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -32,11 +32,15 @@ lint_pkgbuild_functions+=('lint_install')
 
 
 lint_install() {
-	local list file name install_list ret=0
+	local list file install_list ret=0
 
 	install_list=("${install[@]}")
-	for name in "${pkgname[@]}"; do
-		extract_function_variable "package_$name" install 0 file
+	# set pkgname the same way we do for running package(), this way we get
+	# the right value in extract_function_variable
+	local pkgname_backup=(${pkgname[@]})
+	local pkgname
+	for pkgname in "${pkgname_backup[@]}"; do
+		extract_function_variable "package_$pkgname" install 0 file
 		install_list+=("$file")
 	done
 

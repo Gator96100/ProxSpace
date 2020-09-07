@@ -14,19 +14,19 @@ Encryption/Decryption utility and library
 https://cygwin.com/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1532686626
+1532680008
 
 %INSTALLDATE%
-1558699087
+1599157248
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-41984
+38912
 
 %REASON%
 1

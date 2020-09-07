@@ -10,7 +10,7 @@ _strace()
     for (( i=1; i <= cword; i++ )); do
         case ${words[$i]} in
             -o|-e|-p)
-                i=$((i+1))
+                (( i++ ))
                 continue
                 ;;
             -*)
@@ -26,7 +26,7 @@ _strace()
     else
 
         case $prev in
-            -e)
+            -*e)
                 if [[ "$cur" == *=* ]]; then
                     prev=${cur/=*/}
                     cur=${cur/*=/}
@@ -41,9 +41,9 @@ _strace()
                                 [[ $define == "#define" && \
                                     $syscall =~ ^__NR_(.+) ]] && \
                                     syscalls[${BASH_REMATCH[1]}]=1
-                            done 2>/dev/null < /usr/include/asm/unistd.h
+                            done 2>/dev/null </usr/include/asm/unistd.h
                             if [[ ! $syscalls ]]; then
-                                local unistd arch=$( command uname -m )
+                                local unistd arch=$(command uname -m)
                                 if [[ "$arch" == *86 ]]; then
                                     unistd=/usr/include/asm/unistd_32.h
                                 else
@@ -53,46 +53,44 @@ _strace()
                                     [[ $define == "#define" && \
                                         $syscall =~ ^__NR_(.+) ]] && \
                                         syscalls[${BASH_REMATCH[1]}]=1
-                                done 2>/dev/null < $unistd
+                                done 2>/dev/null <$unistd
                             fi
 
-                            COMPREPLY=( $( compgen -W '${!syscalls[@]} file
+                            COMPREPLY=( $(compgen -W '${!syscalls[@]} file
                                 process network signal ipc desc all none' \
-                                    -- "$cur" ) )
+                                    -- "$cur") )
                             return
                             ;;
                     esac
                 else
                     compopt -o nospace
-                    COMPREPLY=( $( compgen -S"=" -W 'trace abbrev verbose raw
-                        signal read write' -- "$cur" ) )
+                    COMPREPLY=( $(compgen -S"=" -W 'trace abbrev verbose raw
+                        signal read write' -- "$cur") )
                 fi
                 return
                 ;;
-            -o)
+            -*o)
                 _filedir
                 return
                 ;;
-            -p)
+            -*p)
                 _pids
                 return
                 ;;
-            -S)
-                COMPREPLY=( $( compgen -W 'time calls name nothing' \
-                    -- "$cur" ) )
+            -*S)
+                COMPREPLY=( $(compgen -W 'time calls name nothing' -- "$cur") )
                 return
                 ;;
-            -u)
+            -*u)
                 _allowed_users
                 return
                 ;;
         esac
 
         if [[ "$cur" == -* ]]; then
-            COMPREPLY=( $( compgen -W '-c -d -f -ff -F --help -i -q -r -t -tt
-                -ttt -T -v -V -x -xx -a -e -o -O -p -s -S -u -E' -- "$cur" ) )
+            COMPREPLY=( $(compgen -W '$(_parse_help "$1" -h)' -- "$cur") )
         else
-            COMPREPLY=( $( compgen -c -- "$cur" ) )
+            COMPREPLY=( $(compgen -c -- "$cur") )
         fi
     fi
 } &&

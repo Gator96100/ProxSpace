@@ -2,45 +2,49 @@
 
 _sudo()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword split
+    _init_completion -s || return
 
     local i mode=normal
     [[ $1 == *sudoedit ]] && mode=edit
 
     [[ $mode == normal ]] &&
-    for (( i=1; i <= COMP_CWORD; i++ )); do
-        if [[ ${COMP_WORDS[i]} != -* ]]; then
+    for (( i=1; i <= cword; i++ )); do
+        if [[ ${words[i]} != -* ]]; then
             local PATH=$PATH:/sbin:/usr/sbin:/usr/local/sbin
-            local root_command=${COMP_WORDS[i]}
+            local root_command=${words[i]}
             _command_offset $i
             return
         fi
-        if [[ ${COMP_WORDS[i]} == -e ]]; then
+        if [[ ${words[i]} == -@(!(-*)e*|-edit) ]]; then
             mode=edit
             break
         fi
-        [[ ${COMP_WORDS[i]} == -[uUgCp] ]] && ((i++))
+        [[ ${words[i]} == \
+            -@(user|other-user|group|close-from|prompt|!(-*)[uUgCp]) ]] \
+            && ((i++))
     done
 
     case "$prev" in
-        -u|-U)
-            COMPREPLY=( $( compgen -u -- "$cur" ) )
+        --user|--other-user|-!(-*)[uU])
+            COMPREPLY=( $(compgen -u -- "$cur") )
             return
             ;;
-        -g)
-            COMPREPLY=( $( compgen -g -- "$cur" ) )
+        --group|-!(-*)g)
+            COMPREPLY=( $(compgen -g -- "$cur") )
             return
             ;;
-        -C|-p)
-            # argument required but no completions available
+        --close-from|--prompt|-!(-*)[Cp])
             return
             ;;
     esac
 
+    $split && return
+
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '-A -b -C -E -e -g -H -h -i -K -k -L -l -ll
-            -n -P -p -S -s -U -u -V -v' -- "$cur" ) )
+        local opts=$(_parse_help "$1")
+        COMPREPLY=( $(compgen -W '${opts:-$(_parse_usage "$1")}' -- "$cur") )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
     if [[ $mode == edit ]]; then

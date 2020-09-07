@@ -5,15 +5,24 @@ _ssh_copy_id()
     local cur prev words cword
     _init_completion || return
 
+    _xfunc ssh _ssh_suboption_check "$1" && return
+
     case $prev in
         -i)
-            _filedir pub
+            _xfunc ssh _ssh_identityfile pub
+            return
+            ;;
+        -p)
+            return
+            ;;
+        -o)
+            _xfunc ssh _ssh_options
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_usage "$1" --help )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_usage "$1" --help)' -- "$cur") )
     else
         _known_hosts_real -a -- "$cur"
     fi

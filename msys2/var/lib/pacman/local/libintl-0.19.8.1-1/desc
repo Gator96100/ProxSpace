@@ -14,19 +14,19 @@ GNU Internationalization runtime library
 https://www.gnu.org/software/gettext/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1496393846
+1496228176
 
 %INSTALLDATE%
-1558699047
+1599157239
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-46080
+44032
 
 %REASON%
 1

@@ -6,7 +6,7 @@ _crontab()
     _init_completion || return
 
     case $prev in
-        -u)
+        -*u)
             _allowed_users
             return
             ;;
@@ -36,12 +36,12 @@ _crontab()
     done
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '${!opts[@]}' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '${!opts[@]}' -- "$cur") )
         return
     fi
 
     # do filenames only if we did not have -l, -r, or -e
-    [[ "${words[@]}" == *\ -[lre]* ]] || _filedir
+    [[ "${words[*]}" == *\ -[lre]* ]] || _filedir
 } &&
 complete -F _crontab crontab
 

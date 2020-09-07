@@ -2,7 +2,7 @@
 #
 #   generate_checksum.sh - functions for generating source checksums
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 source "$LIBRARY/util/message.sh"
 source "$LIBRARY/util/pkgbuild.sh"
+source "$LIBRARY/util/schema.sh"
 
 generate_one_checksum() {
 	local integ=$1 arch=$2 sources numsrc indentsz idx
@@ -52,7 +53,7 @@ generate_one_checksum() {
 		proto="$(get_protocol "$netfile")"
 
 		case $proto in
-			bzr*|git*|hg*|svn*)
+			bzr|git|hg|svn)
 				sum="SKIP"
 				;;
 			*)
@@ -78,7 +79,7 @@ generate_one_checksum() {
 }
 
 generate_checksums() {
-	msg "$(gettext "Generating checksums for source files...")"
+	msg "$(gettext "Generating checksums for source files...")" >&2
 
 	local integlist
 	if (( $# == 0 )); then

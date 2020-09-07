@@ -6,17 +6,19 @@ _xmms()
     _init_completion -s || return
 
     case $prev in
-        -h|--help|-v|--version)
+        --help|--version|-!(-*)[hv])
             return
             ;;
-        -S|--toggle-shuffle|-R|--toggle-repeat|-A|--toggle-advance)
-            COMPREPLY=( $( compgen -W 'on off' -- "$cur" ) )
+        --toggle-shuffle|--toggle-repeat|--toggle-advance|-!(-*)[SRA])
+            COMPREPLY=( $(compgen -W 'on off' -- "$cur") )
             return
             ;;
     esac
 
+    $split && return
+
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
     else
         _filedir '@(mp[23]|ogg|wav|pls|m3u|xm|mod|s[3t]m|it|mtm|ult|flac)'
     fi

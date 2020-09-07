@@ -2,7 +2,7 @@
 #
 #   epoch.sh - Check the 'epoch' variable conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,9 +29,15 @@ source "$LIBRARY/util/message.sh"
 lint_pkgbuild_functions+=('lint_epoch')
 
 
-lint_epoch() {
+check_epoch() {
+	local epoch=$1 type=$2
+
 	if [[ $epoch != *([[:digit:]]) ]]; then
-		error "$(gettext "%s must be an integer, not %s.")" "epoch" "$epoch"
+		error "$(gettext "%s must be an integer, not %s.")" "epoch${type:+ in $type}" "$epoch"
 		return 1
 	fi
+}
+
+lint_epoch() {
+	check_epoch "$epoch"
 }

@@ -3,7 +3,7 @@
  */
 
 /*
- * Copyright (C) 2012-2018 the Free Software Foundation, Inc.
+ * Copyright (C) 2012-2019 the Free Software Foundation, Inc.
  *
  * This file is part of GAWK, the GNU implementation of the
  * AWK Programming Language.
@@ -296,7 +296,7 @@ typedef struct awk_two_way_processor {
 	awk_const struct awk_two_way_processor *awk_const next;  /* for use by gawk */
 } awk_two_way_processor_t;
 
-#define gawk_api_major_version 2
+#define gawk_api_major_version 3
 #define gawk_api_minor_version 0
 
 /* Current version of the API. */
@@ -458,6 +458,9 @@ typedef void *awk_ext_id_t;	/* opaque type for extension id */
 /*
  * The API into gawk. Lots of functions here. We hope that they are
  * logically organized.
+ *
+ * !!! If you make any changes to this structure, please remember to bump !!!
+ * !!! gawk_api_major_version and/or gawk_api_minor_version.              !!!
  */
 typedef struct gawk_api {
 	/* First, data fields. */
@@ -543,7 +546,7 @@ typedef struct gawk_api {
 	 * behave in the same way.
 	 *
 	 * For a function parameter, the return is false if the argument
-	 * count is out of range, or if the actual paramater does not match
+	 * count is out of range, or if the actual parameter does not match
 	 * what is specified in wanted. In that case,  result->val_type
 	 * will hold the actual type of what was passed.
 	 *
@@ -582,8 +585,8 @@ typedef struct gawk_api {
 	/* Functions to handle parameters passed to the extension. */
 
 	/*
-	 * Get the count'th paramater, zero-based.
-	 * Returns false if count is out of range, or if actual paramater
+	 * Get the count'th parameter, zero-based.
+	 * Returns false if count is out of range, or if actual parameter
 	 * does not match what is specified in wanted. In that case,
 	 * result->val_type is as described above.
 	 */

@@ -2,17 +2,18 @@
 
 # List APT binary packages
 _apt_cache_packages() {
-    apt-cache --no-generate pkgnames "$cur" 2> /dev/null
+    apt-cache --no-generate pkgnames "$cur" 2>/dev/null
 }
 
 # List APT source packages
 _apt_cache_sources() {
-    apt-cache dumpavail | command grep "^Source: $1" | cut -f2 -d" " | sort -u
+    compgen -W "$(apt-cache dumpavail | \
+        awk '$1 == "Source:" { print $2 }' | sort -u)" -- "$1"
 }
 
 # List APT source packages
 _apt_cache_src_packages() {
-    compgen -W '$( _apt_cache_sources "$cur" )' -- "$cur"
+    compgen -W '$(_apt_cache_sources "$cur")' -- "$cur"
 }
 
 _apt_cache()
@@ -37,11 +38,11 @@ _apt_cache()
             ;;
 
         showsrc)
-            COMPREPLY=( $( _apt_cache_sources "$cur" ) )
+            COMPREPLY=( $(_apt_cache_sources "$cur") )
             ;;
 
         *)
-            COMPREPLY=( $( _apt_cache_packages ) )
+            COMPREPLY=( $(_apt_cache_packages) )
             ;;
 
         esac
@@ -50,7 +51,7 @@ _apt_cache()
 
 
     case $prev in
-        -c|-p|-s|--config-file|--pkg-cache|--src-cache)
+        --config-file|--pkg-cache|--src-cache|-!(-*)[cps])
             _filedir
             return
             ;;
@@ -63,16 +64,16 @@ _apt_cache()
 
     if [[ "$cur" == -* ]]; then
 
-        COMPREPLY=( $( compgen -W '-h -v -p -s -q -i -f -a -g -c -o --help
+        COMPREPLY=( $(compgen -W '-h -v -p -s -q -i -f -a -g -c -o --help
                 --version --pkg-cache --src-cache --quiet --important --full
                 --all-versions --no-all-versions --generate --no-generate
                 --names-only --all-names --recurse --config-file --option
-                --installed' -- "$cur" ) )
+                --installed' -- "$cur") )
     else
 
-        COMPREPLY=( $( compgen -W 'add gencaches show showpkg showsrc stats
+        COMPREPLY=( $(compgen -W 'add gencaches show showpkg showsrc stats
                 dump dumpavail unmet search search depends rdepends pkgnames
-                dotty xvcg policy madison' -- "$cur" ) )
+                dotty xvcg policy madison' -- "$cur") )
 
     fi
 

@@ -6,26 +6,26 @@ _ntpdate()
     _init_completion || return
 
     case $prev in
-        -k)
+        -*k)
             _filedir
             return
             ;;
-        -U)
-            COMPREPLY=( $( compgen -u -- "$cur" ) )
+        -*U)
+            COMPREPLY=( $(compgen -u -- "$cur") )
             return
             ;;
-        -p)
-            COMPREPLY=( $( compgen -W '{1..8}' -- "$cur" ) )
+        -*p)
+            COMPREPLY=( $(compgen -W '{1..8}' -- "$cur") )
             return
             ;;
 
-        -a|-e|-o|-t)
+        -*[aeot])
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_usage "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_usage "$1")' -- "$cur") )
     else
         _known_hosts_real -- "$cur"
     fi

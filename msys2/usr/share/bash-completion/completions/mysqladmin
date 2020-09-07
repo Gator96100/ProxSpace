@@ -6,11 +6,11 @@ _mysqladmin()
     _init_completion -s || return
 
     case $prev in
-        -u|--user)
-            COMPREPLY=( $( compgen -u -- "$cur" ) )
+        --user|-!(-*)u)
+            COMPREPLY=( $(compgen -u -- "$cur") )
             return
             ;;
-        -h|--host)
+        --host|-!(-*)h)
             _known_hosts_real -- "$cur"
             return
             ;;
@@ -18,7 +18,11 @@ _mysqladmin()
             _filedir -d
             return
             ;;
-        -S|--socket)
+        --default-character-set)
+            _xfunc mysql _mysql_character_sets
+            return
+            ;;
+        --socket|-!(-*)S)
             _filedir sock
             return
             ;;
@@ -26,26 +30,31 @@ _mysqladmin()
             _filedir
             return
             ;;
-        -c|--count|--default-character-set|-P|--port|-O|--set-variable|\
-        -i|--sleep|--ssl-ca|--ssl-cert|--ssl-cipher|--ssl-key|-w|--wait|\
-        --connect_timeout|--shutdown_timeout)
-            # Argument required but no completions available
+        --ssl-ca|--ssl-cert)
+            _filedir '@(pem|cer|c?(e)rt)'
             return
             ;;
-        '-?'|--help|-V|--version)
-            # All other options are noop with these
+        --ssl-key)
+            _filedir '@(pem|key)'
+            return
+            ;;
+        --count|--port|--set-variable|--sleep|--ssl-cipher|--wait|\
+        --connect_timeout|--shutdown_timeout|-!(-*)[cPOiw])
+            return
+            ;;
+        --help|--version|-!(-*)[?V])
             return
             ;;
     esac
 
     $split && return
 
-    COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+    COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
 
-    COMPREPLY+=( $( compgen -W 'create debug drop extended-status flush-hosts
+    COMPREPLY+=( $(compgen -W 'create debug drop extended-status flush-hosts
         flush-logs flush-status flush-tables flush-threads flush-privileges
         kill password old-password ping processlist reload refresh shutdown
-        status start-slave stop-slave variables version' -- "$cur" ) )
+        status start-slave stop-slave variables version' -- "$cur") )
 
     [[ $COMPREPLY == *= ]] && compopt -o nospace
 } &&

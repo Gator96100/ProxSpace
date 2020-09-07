@@ -545,9 +545,10 @@ pkd:0:1024:B665B1435F4C2 .... FF26ABB:
     actual key used for descryption.  <fpr2> is the fingerprint of the
     primary key.  <otrust> is the letter with the ownertrust; this is
     in general a 'u' which stands for ultimately trusted.
-*** DECRYPTION_INFO <mdc_method> <sym_algo>
+*** DECRYPTION_INFO <mdc_method> <sym_algo> [<aead_algo>]
     Print information about the symmetric encryption algorithm and the
     MDC method.  This will be emitted even if the decryption fails.
+    For an AEAD algorithm AEAD_ALGO is not 0.
 
 *** DECRYPTION_FAILED
     The symmetric decryption failed - one reason could be a wrong
@@ -634,7 +635,10 @@ pkd:0:1024:B665B1435F4C2 .... FF26ABB:
     This indicates the length of the plaintext that is about to be
     written.  Note that if the plaintext packet has partial length
     encoding it is not possible to know the length ahead of time.  In
-    that case, this status tag does not appear.
+    that case, this status tag does not appear.  The length is only
+    exact for binary formats; other formats ('t', 'u') may do post
+    processing like line ending conversion so that the actual number
+    of bytes written may be differ.
 
 *** ATTRIBUTE <arguments>
     The list or arguments are:
@@ -725,7 +729,7 @@ pkd:0:1024:B665B1435F4C2 .... FF26ABB:
     Issued if no senders are usable.
 
 *** KEY_CONSIDERED <fpr> <flags>
-    Issued to explian the lookup of a key.  FPR is the hexified
+    Issued to explain the lookup of a key.  FPR is the hexified
     fingerprint of the primary key.  The bit values for FLAGS are:
 
     - 1 :: The key has not been selected.
@@ -1043,10 +1047,14 @@ pkd:0:1024:B665B1435F4C2 .... FF26ABB:
     numerical error code and an underscore; e.g.: "151011327_EOF".
 *** WARNING <location> <error code> [<text>]
     This is a generic warning status message, it might be followed by
-    error location specific data. <error code> and <location>
-    should not contain spaces.  The error code is a either a string
-    commencing with a letter or such a string prefixed with a
-    numerical error code and an underscore; e.g.: "151011327_EOF".
+    error location specific data. <location> and <error code> may not
+    contain spaces.  The <location> may be used to indicate a class of
+    warnings.  The error code is a either a string commencing with a
+    letter or such a string prefixed with a numerical error code and
+    an underscore; e.g.: "151011327_EOF".
+*** NOTE <location> <error code> [<text>]
+    This is a generic info status message the same syntax as for
+    WARNING messages is used.
 *** SUCCESS [<location>]
     Positive confirmation that an operation succeeded.  It is used
     similar to ISO-C's EXIT_SUCCESS.  <location> is optional but if
@@ -1131,6 +1139,38 @@ pkd:0:1024:B665B1435F4C2 .... FF26ABB:
 *** BEGIN_STREAM, END_STREAM
     Used to issued by the experimental pipemode.
 
+** Inter-component codes
+   Status codes are also used between the components of the GnuPG
+   system via the Assuan S lines.  Some of them are documented here:
+
+*** PUBKEY_INFO <n> <ubid>
+    The type of the public key in the following D-lines or
+    communicated via a pipe.  <n> is the value of =enum pubkey_types=
+    and <ubid> the Unique Blob ID (UBID) which is the fingerprint of
+    the primary key truncated to 20 octets and formatted in hex.  Note
+    that the keyboxd SEARCH command can be used to lookup the public
+    key using the <ubid> prefixed with a caret (^).
+
+*** KEYPAIRINFO <grip> <keyref> [<usage>] [<keytime>]
+
+    This status is emitted by scdaemon and gpg-agent to convey brief
+    information about keypairs stored on tokens.  <grip> is the
+    hexified keygrip of the key or, if no key is stored, an "X".
+    <keyref> is the ID of a card's key; for example "OPENPGP.2" for
+    the second key slot of an OpenPGP card.  <usage> is optional and
+    returns technically possible key usages, this is a string of
+    single letters describing the usage ('c' for certify, 'e' for
+    encryption, 's' for signing, 'a' for authentication). A '-' can be
+    used to tell that usage flags are not conveyed.  <keytime> is used
+    by OpenPGP cards for the stored key creation time.  A '-' means no
+    info available.  The format is the usual ISO string are a number
+    with the seconds since Epoch.
+*** MANUFACTURER <n> [<string>]
+
+    This status returns the Manufactorer ID as the unsigned number N.
+    For OpenPGP this is weel defined; for other cards this is 0.  The
+    name of the manufacturer is also given as <string>; spaces are not
+    escaped.  For PKCS#15 cards <string> is TokenInfo.manufactorerID.
 
 * Format of the --attribute-fd output
 
@@ -1566,6 +1606,7 @@ Description of some debug flags:
    | ecc/*   | 11 | ECC (set your own capabilities) |
    | ecc/e   | 12 | ECC (encrypt only)              |
    | keygrip | 13 | Existing key                    |
+   | cardkey | 14 | Existing key from card          |
 
    If one of the "foo/*" names are used a "keygen.flags" prompt needs
    to be answered as well.  Instead of toggling the predefined flags,

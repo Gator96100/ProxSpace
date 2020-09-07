@@ -2,7 +2,7 @@
 #
 #   variable.sh - Check that variables are or are not arrays as appropriate
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,25 +25,17 @@ LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 source "$LIBRARY/util/message.sh"
 source "$LIBRARY/util/pkgbuild.sh"
+source "$LIBRARY/util/schema.sh"
 
 lint_pkgbuild_functions+=('lint_variable')
 
 
 lint_variable() {
-	# TODO: refactor - similar arrays are used elsewhere
-	local array=(arch backup checkdepends groups license noextract options
-	             validpgpkeys)
-	local arch_array=(conflicts depends makedepends md5sums optdepends provides
-	                  replaces sha1sums sha224sums sha256sums sha384sums sha512sums
-			  source)
-	local string=(changelog epoch install pkgdesc pkgrel pkgver url)
-
-	local i a v pkg keys out bad ret=0
+	local i a pkg out bad ret=0
 
 	# global variables
-	for i in ${array[@]} ${arch_array[@]}; do
-		eval "keys=(\"\${!$i[@]}\")"
-		if (( ${#keys[*]} > 0 )); then
+	for i in ${pkgbuild_schema_arrays[@]}; do
+		if declare -p $i > /dev/null 2>&1; then
 			if ! is_array $i; then
 				error "$(gettext "%s should be an array")" "$i"
 				ret=1
@@ -54,21 +46,18 @@ lint_variable() {
 	for a in ${arch[@]}; do
 		[[ $a == "any" ]] && continue
 
-		for i in ${arch_array[@]}; do
-			v="${i}_${a}"
-			eval "keys=(\"\${!${v}[@]}\")"
-			if (( ${#keys[*]} > 0 )); then
-				if ! is_array $v; then
-					error "$(gettext "%s_%s should be an array")" "$i" "$a"
+		for i in ${pkgbuild_schema_arch_arrays[@]}; do
+			if declare -p "${i}_${a}" > /dev/null 2>&1; then
+				if ! is_array ${i}_${a}; then
+					error "$(gettext "%s should be an array")" "${i}_${a}"
 					ret=1
 				fi
 			fi
 		done
 	done
 
-	for i in ${string[@]}; do
-		eval "keys=(\"\${!$i[@]}\")"
-		if (( ${#keys[*]} > 0 )); then
+	for i in ${pkgbuild_schema_strings[@]}; do
+		if declare -p "$i" > /dev/null 2>&1; then
 			if is_array $i; then
 				error "$(gettext "%s should not be an array")" "$i"
 				ret=1
@@ -78,7 +67,7 @@ lint_variable() {
 
 	# package function variables
 	for pkg in ${pkgname[@]}; do
-		for i in ${array[@]} ${arch_array[@]}; do
+		for i in ${pkgbuild_schema_arrays[@]}; do
 			if extract_function_variable "package_$pkg" $i 0 out; then
 				error "$(gettext "%s should be an array")" "$i"
 				ret=1
@@ -88,15 +77,15 @@ lint_variable() {
 		for a in ${arch[@]}; do
 			[[ $a == "any" ]] && continue
 
-			for i in ${arch_array[@]}; do
+			for i in ${pkgbuild_schema_arch_arrays[@]}; do
 				if extract_function_variable "package_$pkg" "${i}_${a}" 0 out; then
-					error "$(gettext "%s_%s should be an array")" "$i" "$a"
+					error "$(gettext "%s should be an array")" "${i}_${a}"
 					ret=1
 				fi
 			done
 		done
 
-		for i in ${string[@]}; do
+		for i in ${pkgbuild_schema_strings[@]}; do
 			if extract_function_variable "package_$pkg" $i 1 out; then
 				error "$(gettext "%s should not be an array")" "$i"
 				ret=1

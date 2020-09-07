@@ -3,41 +3,45 @@
 _nc()
 {
     local cur prev words cword
-    _init_completion || return
+    _init_completion -n : || return
 
     case $prev in
-        -h|-I|-i|-O|-P|-p|-V|-w)
+        -*[hIiMmOPpqVWw])
             return
             ;;
-        -s)
-            _ip_addresses
+        -*s)
+            if [[ "${words[*]}" == *-6* ]]; then
+                _ip_addresses -6
+                __ltrim_colon_completions "$cur"
+            else
+                _ip_addresses
+            fi
             return
             ;;
-        -T)
-            COMPREPLY=( $( compgen -W 'critical inetcontrol lowdelay netcontrol
-                throughput reliability ef af{11..43} cs{0..7}' -- "$cur" ) )
+        -*T)
+            COMPREPLY=( $(compgen -W 'critical inetcontrol lowcost lowdelay
+                netcontrol throughput reliability ef af{11..43} cs{0..7}' \
+                -- "$cur") )
             return
             ;;
-        -X)
-            COMPREPLY=( $( compgen -W '4 5 connect' -- "$cur" ) )
+        -*X)
+            COMPREPLY=( $(compgen -W '4 5 connect' -- "$cur") )
             return
             ;;
-        -x)
+        -*x)
             _known_hosts_real -- "$cur"
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" -h )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1" -h)' -- "$cur") )
         return
     fi
 
     # Complete 1st non-option arg only
-    local i
-    for (( i=1; i < cword; i++ )); do
-        [[ ${words[i]} != -* && ${words[i-1]} != -[IiOPpsTVwXx] ]] && return
-    done
+    local args; _count_args "" "-*[IiMmOPpqsTVWwXx]"
+    [[ $args -eq 1 ]] || return
 
     _known_hosts_real -- "$cur"
 } &&

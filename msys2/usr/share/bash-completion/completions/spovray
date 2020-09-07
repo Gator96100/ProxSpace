@@ -21,14 +21,14 @@ _povray()
             ;;
         [-+]O*)
             # guess what output file type user may want
-            case $( ( IFS=$'\n'; command grep '^[-+]F' <<<"${words[*]}" ) ) in
+            case $(IFS=$'\n'; command grep '^[-+]F' <<<"${words[*]}") in
                 [-+]FN) oext=png ;;
                 [-+]FP) oext=ppm ;;
                 [-+]F[CT]) oext=tga ;;
                 *) oext=$defoext ;;
             esac
             # complete filename corresponding to previously specified +I
-            COMPREPLY=( $( ( IFS=$'\n'; command grep '^[-+]I' <<<"${words[*]}" ) ) )
+            COMPREPLY=( $(IFS=$'\n'; command grep '^[-+]I' <<<"${words[*]}") )
             COMPREPLY=( ${COMPREPLY[@]#[-+]I} )
             COMPREPLY=( ${COMPREPLY[@]/%.pov/.$oext} )
             cur="${povcur#[-+]O}" # to confuse _filedir
@@ -44,7 +44,7 @@ _povray()
             COMPREPLY=( $(command sed -e 's/^[[:space:]]*\[\('"$cur"'[^]]*\]\).*$/\1/' \
                 -e 't' -e 'd' -- "$pfx") )
             # to prevent [bar] expand to nothing.  can be done more easily?
-            COMPREPLY=( "${COMPREPLY[@]/#/$pfx[}" )
+            COMPREPLY=( "${COMPREPLY[@]/#/${pfx}[}" )
             return
             ;;
         *)

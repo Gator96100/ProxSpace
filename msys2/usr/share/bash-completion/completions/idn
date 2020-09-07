@@ -6,18 +6,18 @@ _idn()
     _init_completion -s || return
 
     case $prev in
-        -h|--help|-V|--version)
+        --help|--version|-!(-*)[hV])
             return
             ;;
-        -p|--profile)
-            COMPREPLY=( $( compgen -W 'Nameprep iSCSI Nodeprep Resourceprep
-                trace SASLprep' -- "$cur" ) )
+        --profile|-!(-*)p)
+            COMPREPLY=( $(compgen -W 'Nameprep iSCSI Nodeprep Resourceprep
+                trace SASLprep' -- "$cur") )
             return
             ;;
     esac
 
     if ! $split && [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
     fi
 } &&

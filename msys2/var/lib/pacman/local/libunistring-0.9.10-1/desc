@@ -14,19 +14,19 @@ Library for manipulating Unicode strings and C strings.
 https://www.gnu.org/software/libunistring/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1530003272
+1530004479
 
 %INSTALLDATE%
-1558699094
+1599157251
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-2315264
+2272256
 
 %REASON%
 1

@@ -6,23 +6,23 @@ _medusa()
     _init_completion || return
 
     case $prev in
-        -h)
+        -*h)
             _known_hosts_real -- "$cur"
             return
             ;;
-        -H|-U|-P|-C|-O)
+        -*[HUPCO])
             _filedir
             return
             ;;
-        -M)
-            COMPREPLY=( $( compgen -W "$($1 -d | awk '/^ +\+/ {print $2}' \
-                | command sed -e 's/\.mod$//')" ) )
+        -*M)
+            COMPREPLY=( $(compgen -W "$($1 -d | awk '/^ +\+/ {print $2}' \
+                | command sed -e 's/\.mod$//')") )
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
     fi
 } &&
 complete -F _medusa medusa

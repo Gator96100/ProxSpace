@@ -6,10 +6,10 @@ _pwgen()
     _init_completion -s || return
 
     case $prev in
-        -N|--num-passwords|-h|--help)
+        --num-passwords|--help|-!(-*)[Nh])
             return
             ;;
-        -H|--sha1)
+        --sha1|-!(-*)H)
             _filedir
             return
             ;;
@@ -18,7 +18,7 @@ _pwgen()
     $split && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi

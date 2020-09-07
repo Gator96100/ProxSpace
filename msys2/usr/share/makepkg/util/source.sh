@@ -2,7 +2,7 @@
 #
 #   source.sh - functions to extract information from source URLs
 #
-#   Copyright (c) 2010-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2010-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -41,10 +41,12 @@ get_protocol() {
 	if [[ $1 = *://* ]]; then
 		# strip leading filename
 		local proto="${1#*::}"
-		printf "%s\n" "${proto%%://*}"
+		proto="${proto%%://*}"
+		# strip proto+uri://
+		printf "%s\n" "${proto%%+*}"
 	elif [[ $1 = *lp:* ]]; then
 		local proto="${1#*::}"
-		printf "%s\n" "${proto%%lp:*}"
+		printf "%s\n" "${proto%%+lp:*}"
 	else
 		printf "%s\n" local
 	fi
@@ -63,15 +65,15 @@ get_filename() {
 	local proto=$(get_protocol "$netfile")
 
 	case $proto in
-		bzr*|git*|hg*|svn*)
+		bzr|git|hg|svn)
 			filename=${netfile%%#*}
 			filename=${filename%%\?*}
 			filename=${filename%/}
 			filename=${filename##*/}
-			if [[ $proto = bzr* ]]; then
+			if [[ $proto = bzr ]]; then
 				filename=${filename#*lp:}
 			fi
-			if [[ $proto = git* ]]; then
+			if [[ $proto = git ]]; then
 				filename=${filename%%.git*}
 			fi
 			;;
@@ -89,7 +91,7 @@ get_filepath() {
 	local proto="$(get_protocol "$1")"
 
 	case $proto in
-		bzr*|git*|hg*|svn*)
+		bzr|git|hg|svn)
 			if [[ -d "$startdir/$file" ]]; then
 				file="$startdir/$file"
 			elif [[ -d "$SRCDEST/$file" ]]; then
@@ -154,7 +156,7 @@ get_downloadclient() {
 	# if we didn't find an agent, return an error
 	if [[ -z $agent ]]; then
 		error "$(gettext "Unknown download protocol: %s")" "$proto"
-		plain "$(gettext "Aborting...")"
+		plainerr "$(gettext "Aborting...")"
 		exit 1 # $E_CONFIG_ERROR
 	fi
 
@@ -163,7 +165,7 @@ get_downloadclient() {
 	if [[ ! -x $program ]]; then
 		local baseprog="${program##*/}"
 		error "$(gettext "The download program %s is not installed.")" "$baseprog"
-		plain "$(gettext "Aborting...")"
+		plainerr "$(gettext "Aborting...")"
 		exit 1 # $E_MISSING_PROGRAM
 	fi
 

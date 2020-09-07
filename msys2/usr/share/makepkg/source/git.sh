@@ -2,7 +2,7 @@
 #
 #   git.sh - function for handling the download and "extraction" of Git sources
 #
-#   Copyright (c) 2015-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@ source "$LIBRARY/util/pkgbuild.sh"
 
 
 download_git() {
+	# abort early if parent says not to fetch
+	if declare -p get_vcs > /dev/null 2>&1; then
+		(( get_vcs )) || return
+	fi
+
 	local netfile=$1
 
 	local dir=$(get_filepath "$netfile")
@@ -45,7 +50,7 @@ download_git() {
 		msg2 "$(gettext "Cloning %s %s repo...")" "${repo}" "git"
 		if ! git clone --mirror "$url" "$dir"; then
 			error "$(gettext "Failure while downloading %s %s repo")" "${repo}" "git"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	elif (( ! HOLDVER )); then
@@ -53,7 +58,7 @@ download_git() {
 		# Make sure we are fetching the right repo
 		if [[ "$url" != "$(git config --get remote.origin.url)" ]] ; then
 			error "$(gettext "%s is not a clone of %s")" "$dir" "$url"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 		msg2 "$(gettext "Updating %s %s repo...")" "${repo}" "git"
@@ -82,13 +87,13 @@ extract_git() {
 		cd_safe "${dir##*/}"
 		if ! git fetch; then
 			error "$(gettext "Failure while updating working copy of %s %s repo")" "${repo}" "git"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 		cd_safe "$srcdir"
-	elif ! git clone "$dir" "${dir##*/}"; then
+	elif ! git clone -s "$dir" "${dir##*/}"; then
 		error "$(gettext "Failure while creating working copy of %s %s repo")" "${repo}" "git"
-		plain "$(gettext "Aborting...")"
+		plainerr "$(gettext "Aborting...")"
 		exit 1
 	fi
 
@@ -105,24 +110,24 @@ extract_git() {
 				;;
 			*)
 				error "$(gettext "Unrecognized reference: %s")" "${fragment}"
-				plain "$(gettext "Aborting...")"
+				plainerr "$(gettext "Aborting...")"
 				exit 1
 		esac
 	fi
 
 	if [[ ${fragment%%=*} = tag ]]; then
 		tagname="$(git tag -l --format='%(tag)' "$ref")"
-		if [[ -n $tagname && $tagname != $ref ]]; then
+		if [[ -n $tagname && $tagname != "$ref" ]]; then
 			error "$(gettext "Failure while checking out version %s, the git tag has been forged")" "$ref"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	fi
 
 	if [[ $ref != "origin/HEAD" ]] || (( updating )) ; then
-		if ! git checkout --force --no-track -B makepkg $ref; then
+		if ! git checkout --force --no-track -B makepkg "$ref" --; then
 			error "$(gettext "Failure while creating working copy of %s %s repo")" "${repo}" "git"
-			plain "$(gettext "Aborting...")"
+			plainerr "$(gettext "Aborting...")"
 			exit 1
 		fi
 	fi

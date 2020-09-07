@@ -5,12 +5,12 @@ _pylint()
     local cur prev words cword split
     _init_completion -s || return
 
-    local python=python; [[ $1 == *3* ]] && python=python3
+    local python=python; [[ ${1##*/} == *3* ]] && python=python3
 
     case $prev in
-        --version|-h|--help|--long-help|--help-msg|--init-hook|--ignore|-e|\
-        --enable|-d|--disable|--evaluation|--max-line-length|\
-        --max-module-lines|--indent-string|--min-similarity-lines|--max-args|\
+        --version|--help|--long-help|--help-msg|--init-hook|--ignore|--enable|\
+        --evaluation|--max-line-length|--max-module-lines|\
+        --indent-string|--min-similarity-lines|--max-args|\
         --ignored-argument-names|--max-locals|--max-returns|--max-branchs|\
         --max-statements|--max-parents|--max-attributes|--min-public-methods|\
         --max-public-methods|--required-attributes|--bad-functions|\
@@ -20,17 +20,22 @@ _pylint()
         --additional-builtins|--notes|--ignored-classes|--generated-members|\
         --overgeneral-exceptions|--ignore-iface-methods|\
         --defining-attr-methods|--valid-classmethod-first-arg|\
-        --valid-metaclass-classmethod-first-arg)
+        --valid-metaclass-classmethod-first-arg|-!(-*)[he])
+            return
+            ;;
+        --disable|-!(-*)d)
+            COMPREPLY=( $(compgen -W 'all' -- "$cur") )
             return
             ;;
         --rcfile)
             _filedir
             return
             ;;
-        --persistent|-i|--include-ids|-s|--symbols|--files-output|-r|\
-        --reports|--comment|--ignore-comments|--ignore-docstrings|\
-        --ignore-imports|--init-import|--ignore-mixin-members|--zope)
-            COMPREPLY=( $( compgen -W 'yes no' -- "$cur" ) )
+        --persistent|--include-ids|--symbols|--files-output|--reports|\
+        --comment|--ignore-comments|--ignore-docstrings|--ignore-imports|\
+        --init-import|--ignore-mixin-members|--zope|--suggestion-mode|\
+        -!(-*)[isr])
+            COMPREPLY=( $(compgen -W 'yes no' -- "$cur") )
             return
             ;;
         --load-plugins|--deprecated-modules)
@@ -40,9 +45,20 @@ _pylint()
             [[ ${#COMPREPLY[@]} -eq 1 ]] && COMPREPLY=( ${COMPREPLY/#/$prefix} )
             return
             ;;
-        -f|--format)
-            COMPREPLY=( $( compgen -W 'text parseable colorized msvs html' \
-                -- "$cur" ) )
+        --jobs|-!(-*)j)
+            COMPREPLY=( $(compgen -W "{1..$(_ncpus)}" -- "$cur") )
+            return
+            ;;
+        --confidence)
+            local prefix=; [[ $cur == *,* ]] && prefix="${cur%,*},"
+            COMPREPLY=( $(compgen -W "HIGH INFERENCE INFERENCE_FAILURE
+                UNDEFINED" -- "${cur##*,}") )
+            [[ ${#COMPREPLY[@]} -eq 1 ]] && COMPREPLY=( ${COMPREPLY/#/$prefix} )
+            return
+            ;;
+        --format|-!(-*)f)
+            COMPREPLY=( $(compgen -W 'text parseable colorized json msvs' \
+                -- "$cur") )
             return
             ;;
         --import-graph|--ext-import-graph|--int-import-graph)
@@ -54,13 +70,13 @@ _pylint()
     $split && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=( $( compgen -W \
-            '$( _parse_help "$1" --long-help )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W \
+            '$(_parse_help "$1" --long-help)' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
 
-    _xfunc python _python_modules $python
+    [[ $cur == @(.|*/)* ]] || _xfunc python _python_modules $python
     _filedir py
 } &&
 complete -F _pylint pylint pylint-2 pylint-3

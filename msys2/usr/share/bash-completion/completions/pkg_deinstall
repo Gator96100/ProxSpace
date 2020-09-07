@@ -1,6 +1,4 @@
-# bash completion for FreeBSD package management tools     -*- shell-script -*-
-
-[[ $OSTYPE == *freebsd* ]] || return 1
+# bash completion for *BSD package management tools        -*- shell-script -*-
 
 _pkg_delete()
 {
@@ -11,7 +9,7 @@ _pkg_delete()
 
     [[ "$prev" == -o || "$prev" == -p || "$prev" == -W ]] && return
 
-    COMPREPLY=( $( compgen -d -- "$pkgdir$cur" ) )
+    COMPREPLY=( $(compgen -d -- "$pkgdir$cur") )
     COMPREPLY=( ${COMPREPLY[@]#$pkgdir} )
 
 } &&

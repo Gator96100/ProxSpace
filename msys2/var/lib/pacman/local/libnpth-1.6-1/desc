@@ -14,13 +14,13 @@ New portable threads library
 https://gnupg.org/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1533712569
+1533712407
 
 %INSTALLDATE%
-1558699099
+1599157255
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>

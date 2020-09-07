@@ -6,30 +6,30 @@ _bind()
     _init_completion || return
 
     case $prev in
-        -l|-p|-P|-s|-S|-v|-V|-r|-x|-X)
+        -*[lpPsSvVrxX])
             return
             ;;
-        -m)
-            COMPREPLY=( $( compgen -W "emacs emacs-standard emacs-meta
-                emacs-ctlx vi vi-move vi-command vi-insert" -- "$cur" ) )
+        -*m)
+            COMPREPLY=( $(compgen -W "emacs emacs-standard emacs-meta
+                emacs-ctlx vi vi-move vi-command vi-insert" -- "$cur") )
             return
             ;;
-        -f)
+        -*f)
             _filedir
             return
             ;;
-        -q|-u)
-            COMPREPLY=( $( compgen -W '$( "$1" -l )' -- "$cur" ) )
+        -*[qu])
+            COMPREPLY=( $(compgen -W '$("$1" -l)' -- "$cur") )
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_usage "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_usage "$1")' -- "$cur") )
         return
     fi
 
-    COMPREPLY=( $( compgen -A binding -- "$cur" ) )
+    COMPREPLY=( $(compgen -A binding -- "$cur") )
 } &&
 complete -F _bind bind
 

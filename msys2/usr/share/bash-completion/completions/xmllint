@@ -10,7 +10,7 @@ _xmllint()
             _filedir
             return
             ;;
-        --path|--dtdvalidfpi|--maxmem|--encode|--pattern)
+        --path|--dtdvalidfpi|--maxmem|--pattern|--xpath)
             # argument required but no completions available
             return
             ;;
@@ -30,10 +30,18 @@ _xmllint()
             _filedir 'sch?(.gz)'
             return
             ;;
+        --encode)
+            _xfunc iconv _iconv_charsets
+            return
+            ;;
+        --pretty)
+            COMPREPLY=( $(compgen -W '{0..2}' -- "$cur") )
+            return
+            ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         COMPREPLY=( "${COMPREPLY[@]%:}" )
         return
     fi

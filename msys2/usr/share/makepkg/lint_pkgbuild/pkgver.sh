@@ -2,7 +2,7 @@
 #
 #   pkgver.sh - Check the 'pkgver' variable conforms to requirements.
 #
-#   Copyright (c) 2014-2018 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -41,13 +41,13 @@ check_pkgver() {
 		error "$(gettext "%s is not allowed to contain colons, forward slashes, hyphens or whitespace.")" "pkgver${type:+ in $type}"
 		return 1
 	fi
+
+	if [[ $ver = *[![:ascii:]]* ]]; then
+		error "$(gettext "%s may only contain ascii characters.")" "pkgver${type:+ in $type}"
+		return 1
+	fi
 }
 
 lint_pkgver() {
-	if (( PKGVERFUNC )); then
-		# defer check to after getting version from pkgver function
-		return 0
-	fi
-
 	check_pkgver "$pkgver"
 }

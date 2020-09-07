@@ -1,18 +1,13 @@
 " Vim syntax file
-" Language:     PKGBUILD
-" Maintainer:   Alessio 'mOLOk' Bolognino <themolok at gmail.com>
-" Last Change:  2007/05/08
-" Version Info: PKGBUILD-0.2 (colorphobic)
+" Language:         Arch Linux package build description file
+" Original Author:  Alessio 'mOLOk' Bolognino <themolok at gmail.com>
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-	syntax clear
-elseif exists("b:current_syntax")
-	finish
+" quit when a syntax file was already loaded
+if exists('b:current_syntax')
+  finish
 endif
 
-let b:main_syntax = "sh"
+let b:main_syntax = 'sh'
 let b:is_bash = 1
 runtime! syntax/sh.vim
 
@@ -69,11 +64,12 @@ syn match pbUrlGroup /^url=.*/ contains=pbValidUrl,pb_k_url,pbIllegalUrl,shDoubl
 " license
 syn keyword pb_k_license license contained
 " echo $(pacman -Ql licenses | grep '/usr/share/licenses/common/' | cut -d'/' -f6 | sort -u)
-syn keyword pbLicense  AGPL AGPL3 Apache APACHE Artistic2.0 CCPL CDDL CPL EPL FDL FDL1.2 FDL1.3 GPL GPL2 GPL3 LGPL LGPL2.1 LGPL3 LPPL MPL PerlArtistic PHP PSF RUBY W3C ZPL contained
-" special cases from https://wiki.archlinux.org/index.php/Arch_Packaging_Standards
+syn keyword pbLicense  AGPL AGPL3 Apache APACHE Artistic2.0 Boost CCPL CDDL CPL EPL FDL FDL1.2 FDL1.3 GPL GPL2 GPL3 LGPL LGPL2.1 LGPL3 LPPL MPL MPL2 PerlArtistic PHP PSF RUBY Unlicense W3C ZPL contained
+" special cases from https://wiki.archlinux.org/index.php/PKGBUILD#license
 syn keyword pbLicenseSpecial  BSD MIT ZLIB Python contained
 syn match pbLicenseCustom /custom\(:[[:alnum:]]*\)*/ contained
-syn match pbIllegalLicense /[^='"() ]/ contained contains=pbLicenseCustom,pbLicenseSpecial,pbLicense
+syn keyword pbLicenseUnknown unknown contained
+syn match pbIllegalLicense /[^='"() ]/ contained contains=pbLicenseUnknown,pbLicenseCustom,pbLicenseSpecial,pbLicense
 syn region pbLicenseGroup start=/^license=(/ end=/)/ contains=pb_k_license,pbLicenseCustom,pbLicenseSpecial,pbLicense,pbIllegalLicense
 
 " backup
@@ -176,6 +172,17 @@ hi def link pbSha1Quotes Keyword
 hi def link pbSha1Hash Error
 hi def link pbValidSha1sums  Number
 
+" sha224sums
+syn keyword pb_k_sha224sums sha224sums contained
+syn match pbIllegalsha224sums /[^='"()\/ ]/ contained contains=pbValidsha224sums
+syn match pbValidsha224sums /\x\{64\}/ contained
+syn region pbsha224sumsGroup start=/^sha224sums/ end=/)/ contains=pb_k_sha224sums,pbsha224Quotes,pbsha224Hash,pbIllegalsha224sums keepend
+syn match pbsha224Quotes /'.*'\|".*"/ contained contains=pbsha224Hash,pbIllegalsha224sums
+syn match pbsha224Hash /\x\+/ contained contains=pbValidsha224sums
+hi def link pbsha224Quotes Keyword
+hi def link pbsha224Hash Error
+hi def link pbValidsha224sums  Number
+
 " sha256sums
 syn keyword pb_k_sha256sums sha256sums contained
 syn match pbIllegalSha256sums /[^='"()\/ ]/ contained contains=pbValidSha256sums
@@ -209,6 +216,22 @@ hi def link pbSha512Quotes Keyword
 hi def link pbSha512Hash Error
 hi def link pbValidSha512sums  Number
 
+" b2sums
+syn keyword pb_k_b2sums b2sums contained
+syn match pbIllegalB2sums /[^='"()\/ ]/ contained contains=pbValidB2sums
+syn match pbValidB2sums /\x\{128\}/ contained
+syn region pbB2sumsGroup start=/^b2sums/ end=/)/ contains=pb_k_b2sums,pbB2Quotes,pbB2Hash,pbIllegalB2sums keepend
+syn match pbB2Quotes /'.*'\|".*"/ contained contains=pbB2Hash,pbIllegalB2sums
+syn match pbB2Hash /\x\+/ contained contains=pbValidB2sums
+hi def link pbB2Quotes Keyword
+hi def link pbB2Hash Error
+hi def link pbValidB2sums  Number
+
+" validpgpkeys
+syn keyword pb_k_validpgpkeys validpgpkeys contained
+syn match pbValidPGPKeys /\([[:alnum:]]\)*/ contained
+syn region pbValidPGPKeysGroup start=/^validpgpkeys=(/ end=/)/ contains=pb_k_validpgpkeys,pbValidPGPKeys,shDoubleQuote,shSingleQuote
+
 " options
 syn keyword pb_k_options options contained
 syn match pbOptions /\(no\)\?\(strip\|docs\|libtool\|emptydirs\|zipman\|purge\|distcc\|color\|ccache\|check\|sign\|makeflags\|buildflags\)/ contained
@@ -228,10 +251,10 @@ syn match      pbMaintainerGroup /Maintainer.*/ contains=pbMaintainer contained
 
 syn match pbDate /[0-9]\{4}\/[0-9]\{2}\/[0-9]\{2}/ contained
 
-syn cluster    pbCommentGroup	contains=pbTodo,pb_k_maintainer,pbMaintainerGroup,pbDate
-syn keyword    pbTodo	contained	COMBAK FIXME TODO XXX
-syn match      pbComment	"^#.*$"	contains=@pbCommentGroup
-syn match      pbComment	"[^0-9]#.*$"	contains=@pbCommentGroup
+syn cluster    pbCommentGroup   contains=pbTodo,pb_k_maintainer,pbMaintainerGroup,pbDate
+syn keyword    pbTodo   contained       COMBAK FIXME TODO XXX
+syn match      pbComment        "^#.*$" contains=@pbCommentGroup
+syn match      pbComment        "[^0-9]#.*$"    contains=@pbCommentGroup
 
 " quotes are handled by sh.vim
 
@@ -285,11 +308,16 @@ hi def link pb_k_changelog pbKeywords
 hi def link pb_k_source pbKeywords
 hi def link pbIllegalSource Error
 
+hi def link pb_k_validpgpkeys pbKeywords
+
 hi def link pb_k_md5sums pbKeywords
 hi def link pbIllegalMd5sums Error
 
 hi def link pb_k_sha1sums pbKeywords
 hi def link pbIllegalSha1sums Error
+
+hi def link pb_k_sha224sums pbKeywords
+hi def link pbIllegalSha224sums Error
 
 hi def link pb_k_sha256sums pbKeywords
 hi def link pbIllegalSha256sums Error
@@ -313,8 +341,4 @@ hi def link pbKeywords Keyword
 
 hi def link pbDate Special
 
-"syntax include @SHELL syntax/sh.vim
-"syntax region BUILD start=/^build()/ end=/^}/ contains=@SHELL
-"let b:current_syntax = "PKGBUILD"
-
-" vim: ft=vim
+"let b:current_syntax = 'PKGBUILD'

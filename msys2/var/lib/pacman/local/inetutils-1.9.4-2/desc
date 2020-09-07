@@ -14,19 +14,22 @@ A collection of common network programs.
 https://www.gnu.org/software/inetutils/
 
 %ARCH%
-i686
+x86_64
 
 %BUILDDATE%
-1556610239
+1556608263
 
 %INSTALLDATE%
-1558699098
+1599157253
 
 %PACKAGER%
 Alexey Pavlov <alexpux@gmail.com>
 
 %SIZE%
-573440
+568320
+
+%REASON%
+1
 
 %GROUPS%
 base

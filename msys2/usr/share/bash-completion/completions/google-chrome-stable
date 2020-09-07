@@ -1,0 +1,50 @@
+# chromium-browser completion                              -*- shell-script -*-
+
+_chromium_browser()
+{
+    local cur prev words cword split
+    _init_completion -s -n : || return
+
+    case $prev in
+        --help|--app|--proxy-pac-url|-h)
+            return
+            ;;
+        --user-data-dir)
+            _filedir -d
+            return
+            ;;
+        --proxy-server)
+            case $cur in
+                *://*)
+                    local prefix="${cur%%://*}://"
+                    _known_hosts_real -- "${cur#*://}"
+                    COMPREPLY=( "${COMPREPLY[@]/#/$prefix}" )
+                    __ltrim_colon_completions "$cur"
+                    ;;
+                *)
+                    compopt -o nospace
+                    COMPREPLY=( $(compgen -S :// -W 'http socks socks4 socks5' -- "$cur") )
+                    ;;
+            esac
+            return
+            ;;
+        --password-store)
+            COMPREPLY=( $(compgen -W 'basic gnome kwallet' -- "$cur") )
+            return
+            ;;
+    esac
+
+    $split && return
+
+    if [[ $cur == -* ]]; then
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
+        return
+    fi
+
+    _filedir "@(?([mxs])htm?(l)|pdf)"
+} &&
+complete -F _chromium_browser chromium-browser google-chrome \
+    google-chrome-stable chromium chrome
+
+# ex: filetype=sh

@@ -9,7 +9,7 @@ _groupmod()
     #       with -g/--gid
 
     case $prev in
-        -g|--gid|-h|--help|-n|--new-name|-p|--password)
+        --gid|--help|--new-name|--password|-!(-*)[ghnp])
             return
             ;;
     esac
@@ -17,12 +17,12 @@ _groupmod()
     $split && return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '$( _parse_help "$1" )' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
         [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
 
-    COMPREPLY=( $( compgen -g -- "$cur" ) )
+    COMPREPLY=( $(compgen -g -- "$cur") )
 } &&
 complete -F _groupmod groupmod
 

@@ -15,7 +15,7 @@ _growisofs()
             return
             ;;
         /?(r)dev/*)
-            if [[ $cur == =* ]] ; then
+            if [[ $cur == =* ]]; then
                 # e.g. /dev/dvd=foo.iso, /dev/dvdrw=/dev/zero
                 cur="${cur#=}"
                 _filedir
@@ -26,9 +26,9 @@ _growisofs()
 
     if [[ "$cur" == -* ]]; then
         # TODO: mkisofs options
-        COMPREPLY=( $( compgen -W '-dvd-compat -overburn -speed= -Z -M' \
-            -- "$cur" ) )
-        [[ ${COMPREPLY[@]} == *= ]] && compopt -o nospace
+        COMPREPLY=( $(compgen -W '-dvd-compat -overburn -speed= -Z -M' \
+            -- "$cur") )
+        [[ $COMPREPLY == *= ]] && compopt -o nospace
         return
     fi
 

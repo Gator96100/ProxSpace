@@ -222,7 +222,6 @@ The bytes in the generated array has the following meaning:
 
 import sys
 import os.path
-import time
 import hashlib
 import locale
 
@@ -358,7 +357,7 @@ def join_suffixes(dafsa):
   nodemap = {frozenset((b'',)): None}
 
   def join(node):
-    """Returns a macthing node. A new node is created if no matching node
+    """Returns a matching node. A new node is created if no matching node
     exists. The graph is accessed in dfs order.
     """
     suffixes = frozenset(to_words(node))
@@ -566,7 +565,7 @@ def parse_psl(infile, utf_mode, codecs):
       if section == 0:
         if b'===BEGIN ICANN DOMAINS===' in line:
           section = PSL_FLAG_ICANN
-        elif section == 0 and b'===BEGIN PRIVATE DOMAINS===' in line:
+        elif b'===BEGIN PRIVATE DOMAINS===' in line:
           section = PSL_FLAG_PRIVATE
       elif section == PSL_FLAG_ICANN and b'===END ICANN DOMAINS===' in line:
         section = 0

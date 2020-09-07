@@ -2,22 +2,22 @@
 
 _screen_sessions()
 {
-    local sessions=( $( command screen -ls | command sed -ne \
-        's|^\t\{1,\}\([0-9]\{1,\}\.[^\t]\{1,\}\).*'"$1"'.*$|\1|p' ) )
+    local sessions=( $(command screen -ls | command sed -ne \
+        's|^\t\{1,\}\([0-9]\{1,\}\.[^\t]\{1,\}\).*'"$1"'.*$|\1|p') )
     if [[ $cur == +([0-9])?(.*) ]]; then
         # Complete sessions including pid prefixes
-        COMPREPLY=( $( compgen -W '${sessions[@]}' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '${sessions[@]}' -- "$cur") )
     else
         # Create unique completions, dropping pids where possible
         local -A res
         local i tmp
-        for i in ${sessions[@]}; do
+        for i in "${sessions[@]}"; do
             res[${i/#+([0-9])./}]+=" $i"
         done
-        for i in ${!res[@]}; do
+        for i in "${!res[@]}"; do
             [[ ${res[$i]} == \ *\ * ]] && tmp+=" ${res[$i]}" || tmp+=" $i"
         done
-        COMPREPLY=( $( compgen -W '$tmp' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$tmp' -- "$cur") )
     fi
 } &&
 _screen()
@@ -25,9 +25,37 @@ _screen()
     local cur prev words cword
     _init_completion || return
 
+    if ((cword == 1)); then
+        if [[ $cur == /dev* ]]; then
+            COMPREPLY=( $(compgen -W "$(shopt -s nullglob; printf '%s\n' \
+                /dev/serial/by-id/* /dev/ttyUSB* /dev/ttyACM* 2>/dev/null)" \
+                -- "$cur") )
+            return
+        fi
+        if [[ $cur == //* ]]; then
+            COMPREPLY=( $(compgen -W '//telnet' -- "$cur") )
+            return
+        fi
+    fi
+
+    case ${words[1]} in
+        /dev*)
+            if ((cword == 2)); then
+                COMPREPLY=( $(compgen -W '110 300 600 1200 2400 4800 9600 \
+                14400 19200 38400 57600 115200 128000 256000' -- "$cur") )
+                # TODO more, comma separated options
+            fi
+            return
+            ;;
+        //telnet)
+            ((cword == 2)) && _known_hosts_real -- "$cur"
+            return
+            ;;
+    esac
+
     if ((cword > 2)); then
         case ${words[cword-2]} in
-            -[dD])
+            -*[dD])
                 _screen_sessions
                 return
                 ;;
@@ -37,7 +65,7 @@ _screen()
     local i
     for (( i=1; i <= cword; i++ )); do
         case ${words[i]} in
-            -r|-R|-d|-D|-x|-s|-c|-T|-e|-h|-p|-S|-t)
+            -*[rRdDxscTehpSt])
                 (( i++ ))
                 continue
                 ;;
@@ -51,26 +79,26 @@ _screen()
     done
 
     case $prev in
-        -[rR])
+        -*[rR])
             # list detached
             _screen_sessions 'Detached'
             return
             ;;
-        -[dD])
+        -*[dD])
             # list attached
             _screen_sessions 'Attached'
             return
             ;;
-        -x)
+        -*x)
             # list both
             _screen_sessions
             return
             ;;
-        -s)
+        -*s)
             _shells
             return
             ;;
-        -c)
+        -*c)
             _filedir
             return
             ;;
@@ -78,15 +106,13 @@ _screen()
             _terms
             return
             ;;
-        -e|-h|-p|-S|-t)
+        -*[ehpSt])
             return
             ;;
     esac
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '-a -A -c -d -D -e -f -fn -fa -h -i -ln -list
-            -L -m -O -p -q -r -R -s -S -t -T -U -v -wipe -x -X --help
-            --version' -- "$cur" ) )
+        COMPREPLY=( $(compgen -W '$(_parse_help "$1")' -- "$cur") )
     fi
 } &&
 complete -F _screen screen

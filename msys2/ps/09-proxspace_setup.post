@@ -9,16 +9,7 @@ if [ \( ! -f /ps/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 		yes | pacman -Syuu
 	else
 		if [ -z "$PSSKIPRANKING" ]; then
-			if [ ! -f  /etc/pacman.d/mirrorlist.msys.backup ]; then
-				echo "Ranking msys mirrors"
-				cp /etc/pacman.d/mirrorlist.msys /etc/pacman.d/mirrorlist.msys.backup
-				rankmirrors -v --repo msys /etc/pacman.d/mirrorlist.msys.backup | tee /etc/pacman.d/mirrorlist.msys
-			fi
-			if [ ! -f  /etc/pacman.d/mirrorlist.mingw64.backup ]; then
-				echo "Ranking mingw64 mirrors"
-				cp /etc/pacman.d/mirrorlist.mingw64 /etc/pacman.d/mirrorlist.mingw64.backup
-				rankmirrors -v --repo mingw64 /etc/pacman.d/mirrorlist.mingw64.backup  | tee /etc/pacman.d/mirrorlist.mingw64
-			fi
+			ps-rankmirrors
 		fi
 		
 		yes | pacman -Su

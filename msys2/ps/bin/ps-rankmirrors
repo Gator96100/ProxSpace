@@ -1,0 +1,12 @@
+if [ ! -f  /etc/pacman.d/mirrorlist.msys.backup ]; then
+	cp /etc/pacman.d/mirrorlist.msys /etc/pacman.d/mirrorlist.msys.backup	
+fi
+if [ ! -f  /etc/pacman.d/mirrorlist.mingw64.backup ]; then
+	cp /etc/pacman.d/mirrorlist.mingw64 /etc/pacman.d/mirrorlist.mingw64.backup
+fi
+
+echo "Ranking msys mirrors"
+rankmirrors -v --repo msys /etc/pacman.d/mirrorlist.msys.backup | tee /etc/pacman.d/mirrorlist.msys
+echo "Ranking mingw64 mirrors"
+rankmirrors -v --repo mingw64 /etc/pacman.d/mirrorlist.mingw64.backup  | tee /etc/pacman.d/mirrorlist.mingw64
+		

@@ -1,31 +1,18 @@
 check_install () { 
+	echo "Installing: $1"
 	pacman -Q $1 > /dev/null
 	if [ $? == 1 ]; then
 		pacman --noconfirm --overwrite='*' -S $1
 	fi
 }
 
-clean_64 () { 
-	rm -rf /mingw64/share/qt5/examples
-	pacman --noconfirm --overwrite='*' -Scc
-}
-
 setup_proxspace ()
 {
-  if [ "$MSYSTEM" == "MINGW64" ]; then
-	check_install mingw-w64-x86_64-gcc
-	check_install mingw-w64-x86_64-readline
-	check_install mingw-w64-x86_64-libsndfile
-	check_install mingw-w64-x86_64-cmake
-	check_install mingw-w64-x86_64-lua
-	check_install mingw-w64-x86_64-bzip2
-	check_install mingw-w64-x86_64-python
-	check_install mingw-w64-x86_64-jansson
-	check_install git
-	check_install make
-	check_install pkg-config
-	check_install mingw-w64-x86_64-qt5
-	clean_64
+  if [ "$MSYSTEM" == "MINGW64" ]; then	
+	for pkg in $(grep "^[^#;]" /ps/packages.txt); do
+		check_install $pkg
+	done
+
 	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed64.txt
   fi
 }

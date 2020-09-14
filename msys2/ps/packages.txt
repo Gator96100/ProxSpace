@@ -1,0 +1,27 @@
+##############################
+#         General            #
+##############################
+git
+make
+pkg-config
+cmake
+##############################
+#         Proxmark3          #
+##############################
+mingw-w64-x86_64-gcc
+mingw-w64-x86_64-readline
+mingw-w64-x86_64-libsndfile
+mingw-w64-x86_64-lua
+mingw-w64-x86_64-bzip2
+mingw-w64-x86_64-python
+mingw-w64-x86_64-jansson
+mingw-w64-x86_64-qt5
+##############################
+#         ChameleonMini      #
+##############################
+#mingw-w64-x86_64-dfu-programmer
+#mingw-w64-x86_64-avrdude
+#mingw-w64-x86_64-avr-binutils
+#mingw-w64-x86_64-avr-gcc
+#mingw-w64-x86_64-avr-gdb
+#mingw-w64-x86_64-avr-libc

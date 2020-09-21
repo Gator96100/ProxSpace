@@ -1,11 +1,11 @@
-# Proxmark III develoment environment for Windows
+# Proxmark III development environment for Windows
 ProxSpace is a collection of tools that are required to compile the firmware and client of the Proxmark III. At its core ProxSpace uses msys2. MSYS2 is a software distro and building platform for Windows, it provides a bash shell, Autotools, revision control systems and the like for building native Windows applications using MinGW-w64 toolchains. ProxSpace uses the GNU Arm Embedded Toolchain for compiling the Proxmark III firmware.
 
 ## Files
 ProxSpace comes with 3 different executables .bat files. 
 
  - `runme.bat` will start ProxSpace in x86 mode.
- - `runme64.bat`will start ProxSpace in x64 mode.
+ - `runme64.bat` will start ProxSpace in x64 mode.
  - `autobuild.bat` runs a script (msys2/autobuild.sh) in x86 mode as well as in x64 mode at startup. The script will update all git repositories in the pm3 folder and then compile them and move a zip file with the just compiled firmware and client into the build folder. It is not designed for development, just for compiling.
 
 ## What's installed
@@ -30,7 +30,7 @@ MSYS2 features a package management system to provide easy installation of packa
  1. There are two methods of installing the ProxSpace environment.
 	* Downloading [the latest master](https://github.com/Gator96100/ProxSpace/archive/master.zip). This will upgrade the msys2 core packages and then will download and install every package required for compiling the Proxmark client and firmware.
 	* Downloading [the latest release](https://github.com/Gator96100/ProxSpace/releases). This ProxSpace environment has the required packages cached and will only install and update outdated packages.
- 2. Extract 'ProxSpace' to a location on drive without spaces. For example `C:\Proxspace` or `D:\projects\public\proxmark\proxspace` are ok whereas `C:\My Documents\My Projects\proxspace` is not.
+ 2. Extract 'ProxSpace' to a location on drive without spaces. For example `C:\Proxspace` or `D:\projects\public\proxmark\proxspace` are ok, whereas `C:\My Documents\My Projects\proxspace` is not.
  3. Run `runme.bat` or `runme64.bat` depending on your Windows architecture.
  4. Get the Proxmark III repository you wish to compile. This can be done with git. For example `git clone https://github.com/Proxmark/proxmark3.git`.
  5. Go into the root directory of the repository you wish to compile. For example `cd proxmark3`.

@@ -12,16 +12,22 @@ ProxSpace comes with 3 different executables .bat files.
 ProxSpace will automatically download and update to the latest required packages. All tools will be contained within the ProxSpace folder, however **once ProxSpace is setup the ProxSpace folder must not be moved**. If you wish to have ProxSpace in a different directory, you need to reinstall it.
 
 Following tools are already installed with the current ProxSpace version:
- - msys2
- - GNU Arm Embedded Toolchain 8-2019-q3
+ - msys2-x86_64-20200903
+ - GNU Arm Embedded Toolchain 9-2020-q2
  
  Following packages will be automatically download or updated:
  - git
  - make
+ - cmake
  - gcc
- - pkg-config
- - readline
  - Qt5
+ - readline
+ - pkg-config
+ - libsndfile
+ - lua
+ - bzip2
+ - python
+ - jansson
 
 ## Package management system
 MSYS2 features a package management system to provide easy installation of packages, Pacman. It brings many powerful features such as dependency resolution and simple complete system upgrades (excluding the GNU Arm Embedded Toolchain), as well as straight-forward package building. All installed packages can be updated with `pacman -Syuu` For more details visit [the MSYS2 wiki](https://github.com/msys2/msys2/wiki)

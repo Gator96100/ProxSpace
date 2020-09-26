@@ -2,6 +2,7 @@ rm /ps/installed64.txt &> /dev/null
 git clone https://github.com/Gator96100/ProxSpace.git /ps-upgrade
 mv /ps-upgrade/msys2/ps/bin/ps-upgrade /ps-upgrade/msys2/ps/bin/ps-upgrade.new
 if [ "$#" -ne 0 ]; then
+	cd /ps-upgrade
     git checkout $@
 fi
 shopt -s extglob 

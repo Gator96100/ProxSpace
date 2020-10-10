@@ -13,9 +13,9 @@ ProxSpace will automatically download and update to the latest required packages
 
 Following tools are already installed with the current ProxSpace version:
  - msys2-x86_64-20200903
- - GNU Arm Embedded Toolchain 9-2020-q2
  
  Following packages will be automatically download or updated:
+ - arm-none-eabi-gcc
  - git
  - make
  - cmake

@@ -17,6 +17,7 @@ mingw-w64-x86_64-bzip2
 mingw-w64-x86_64-python
 mingw-w64-x86_64-jansson
 mingw-w64-x86_64-qt5
+mingw-w64-x86_64-gdb
 ##############################
 #         ChameleonMini      #
 ##############################

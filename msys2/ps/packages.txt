@@ -5,6 +5,7 @@ git
 make
 pkg-config
 mingw-w64-x86_64-cmake
+procps
 ##############################
 #         Proxmark3          #
 ##############################

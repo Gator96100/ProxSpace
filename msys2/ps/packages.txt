@@ -11,6 +11,8 @@ procps
 ##############################
 mingw-w64-x86_64-gcc
 mingw-w64-x86_64-arm-none-eabi-gcc
+mingw-w64-x86_64-arm-none-eabi-gdb
+mingw-w64-x86_64-arm-none-eabi-binutils
 mingw-w64-x86_64-readline
 mingw-w64-x86_64-libsndfile
 mingw-w64-x86_64-lua
@@ -19,6 +21,7 @@ mingw-w64-x86_64-python
 mingw-w64-x86_64-jansson
 mingw-w64-x86_64-qt5
 mingw-w64-x86_64-gdb
+mingw-w64-x86_64-openocd
 ##############################
 #         ChameleonMini      #
 ##############################

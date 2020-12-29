@@ -10,15 +10,18 @@ ProxSpace comes with 2 different executables .bat files.
 ## What's installed
 ProxSpace will automatically download and update to the latest required packages. All tools will be contained within the ProxSpace folder, however **once ProxSpace is setup the ProxSpace folder must not be moved**. If you wish to have ProxSpace in a different directory, you need to reinstall it.
 
-Following tools are already installed with the current ProxSpace version:
+ProxSpace is based on:
  - msys2-x86_64-20200903
  
  Following packages will be automatically download or updated:
  - arm-none-eabi-gcc
+ - arm-none-eabi-gdb
+ - openocd
  - git
  - make
  - cmake
  - gcc
+ - gdb
  - Qt5
  - readline
  - pkg-config

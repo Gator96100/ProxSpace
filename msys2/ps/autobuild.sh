@@ -19,6 +19,7 @@ function copy_shell {
 			"/usr/bin/uname.exe"
 			"/usr/bin/awk.exe"
 			"/usr/bin/grep.exe"
+			"/usr/bin/sleep.exe"
 			)
 	mkdir -p "$dstDir/client/libs/shell"
 	for dep in ${DEPLIST[*]}; do

@@ -3,51 +3,131 @@ pm3Dir=/pm3
 copyDir=/builds
 buildDir=/tmp
 mingwDir=/mingw64
-arch=64
-jobs=$(nproc)
 
-pacman -Q p7zip 1> /dev/null
-if [[ $? != 0 ]]; then
-  pacman --noconfirm -S p7zip
-fi
-
-cd $pm3Dir
-for i in $( ls -d */ ); do
-  echo Processing: ${i%%/}-$arch
-  cd $pm3Dir/${i%%/}
-  git fetch
-  git pull
-  hash=$(git rev-parse HEAD)
-  date=$(date +%Y%m%d)
- if ! ls $copyDir/${i%%/}-$arch/*-$hash.7z 1> /dev/null 2>&1; then
- 
-	if [ ! -f "rdv40.txt" ]; then
-		jobs=1
+function check_requirements {
+	pacman -Q p7zip 1> /dev/null
+	if [[ $? != 0 ]]; then
+		pacman --noconfirm -S p7zip
 	fi
- 
-    make clean
-	make all -j$jobs
+}
+
+function copy_shell {
+	DEPLIST=(	
+			"/usr/bin/bash.exe"
+			"/usr/bin/dirname.exe"
+			"/usr/bin/basename.exe"
+			"/usr/bin/uname.exe"
+			"/usr/bin/awk.exe"
+			"/usr/bin/grep.exe"
+			)
+	mkdir -p "$dstDir/client/libs/shell"
+	for dep in ${DEPLIST[*]}; do
+		ldd $dep | grep "=> /usr" | awk '{print $3}' | xargs -I '{}' cp -v '{}' "$dstDir/client/libs/shell"
+		cp $dep "$dstDir/client/libs/shell"
+	done
 	
-	if [ $? -eq 0 ]; then
-	  rm -rf $buildDir/${i%%/}/*
-	  mkdir -p $copyDir/${i%%/}-$arch/
-	  mkdir -p $buildDir/${i%%/}/win$arch/platforms
-	  mkdir -p $buildDir/${i%%/}/firmware_win/bootrom
-	  mkdir -p "$buildDir/${i%%/}/firmware_win/JTAG Only"
-	  mkdir -p "$buildDir/${i%%/}/Windows Driver"
+	#tmp dir required for bash
+	mkdir -p "$dstDir/client/tmp"
+}
 
-	  ldd $pm3Dir/${i%%/}/client/proxmark3.exe | grep "=> /mingw" | awk '{print $3}' | xargs -I '{}' cp -v '{}' $buildDir/${i%%/}/win$arch
-	  cp -r /ps/autobuild/* $buildDir/${i%%/}/win$arch
-	  cp -r $pm3Dir/${i%%/}/client/{proxmark3.exe,flasher.exe,*.dic,lualibs,scripts,pyscripts,luascripts,lualibs,hardnested,dictionaries,resources} $buildDir/${i%%/}/win$arch
-	  cp $mingwDir/share/qt5/plugins/platforms/qwindows.dll $buildDir/${i%%/}/win$arch/platforms
-	  cp $pm3Dir/${i%%/}/armsrc/obj/{fullimage.elf,fullimage.s19} $buildDir/${i%%/}/firmware_win
-	  cp $pm3Dir/${i%%/}/bootrom/obj/{bootrom.elf,bootrom.s19} $buildDir/${i%%/}/firmware_win/bootrom
-	  cp $pm3Dir/${i%%/}/recovery/{bootrom.bin,fullimage.bin,proxmark3_recovery.bin} "$buildDir/${i%%/}/firmware_win/JTAG Only"
-	  cp $pm3Dir/${i%%/}/driver/proxmark3.inf "$buildDir/${i%%/}/Windows Driver"
-	  rm $buildDir/${i%%/}/win$arch/hardnested/{*.h,*.c}
-	  cd $buildDir/${i%%/}
-	  7z a -r -mx9 $copyDir/${i%%/}-$arch/${i%%/}-$arch-$date-$hash.7z ./*
-	  echo done
+function copy_common {
+	rm -rf "$dstDir"
+	mkdir -p "$copyDir/$buildName/"
+	mkdir -p "$dstDir/client"
+	mkdir -p "$dstDir/client/libs"
+	mkdir -p "$dstDir/recovery"
+	mkdir -p "$dstDir/Windows Driver (not required for Windows 10)"
+
+	#Copy required libraries to client/libs
+	ldd "$srcDir/client/proxmark3.exe" | grep "=> /mingw" | awk '{print $3}' | xargs -I '{}' cp -v '{}' "$dstDir/client/libs"
+	#Copy qt5 platform dll
+	cp "$mingwDir/share/qt5/plugins/platforms/qwindows.dll" "$dstDir/client/libs"
+	#Copy firmware
+	cp "$srcDir/armsrc/obj/fullimage.elf" "$dstDir/client"
+	cp "$srcDir/bootrom/obj/bootrom.elf" "$dstDir/client"
+	#Copy recovery
+	cp $srcDir/recovery/{bootrom.bin,fullimage.bin,proxmark3_recovery.bin} "$dstDir/recovery"
+	#Copy driver
+	cp "$srcDir/driver/proxmark3.inf" "$dstDir/Windows Driver (not required for Windows 10)"
+}
+
+function check_for_updates {
+	git fetch
+	git pull --ff-only
+	hash=$(git rev-parse HEAD)
+	
+	if ls $copyDir/$buildName/*-$hash.7z 1> /dev/null 2>&1; then
+		return 1 #build exist
+	else
+		return 0 #build doesn't exist
 	fi
-  fi
-done
+}
+
+function zip_folder {
+	date=$(date +%Y%m%d)
+	7z a -r -mx9 $copyDir/$buildName/$buildName-$date-$hash.7z $dstDir/*
+}
+
+function build_rrg {
+	make clean
+	#Running python scripts outside ProxSpace is a bad idea  
+	make SKIPPYTHON=1 -j
+	if [ $? -eq 0 ]; then
+		copy_common
+		copy_shell
+		
+		#Copy contents of the autobuild folder 
+		cp -r /ps/autobuild/rrg/* "$dstDir"
+		
+		#Copy the client and additional files
+		cp -r $srcDir/client/{proxmark3.exe,lualibs,luascripts,dictionaries,resources} "$dstDir/client"
+		
+		#Copy the pm3 scripts
+		cp -r $srcDir/{pm3,pm3-flash,pm3-flash-all,pm3-flash-bootrom,pm3-flash-fullimage} "$dstDir/client"
+		
+		zip_folder
+	fi
+}
+
+function build_official {
+	make clean
+	make
+	if [ $? -eq 0 ]; then
+		copy_common
+		
+		#Copy contents of the autobuild folder 
+		cp -r /ps/autobuild/official/* "$dstDir"
+		
+		#Copy the client and additional files
+		cp -r $srcDir/client/{proxmark3.exe,flasher.exe,*.dic,lualibs,scripts,hardnested} "$dstDir/client"
+		
+		#Remove accidentally copied .h/.c files from hardnested folder
+		rm $dstDir/client/hardnested/{*.h,*.c}
+		
+		zip_folder
+	fi
+}
+
+
+function loop_folders {
+	for i in $( ls -d */ ); do
+		buildName=${i%%/}
+		srcDir=$pm3Dir/$buildName
+		dstDir=$buildDir/$buildName
+		echo Processing: $srcDir
+		cd $srcDir
+		
+		if check_for_updates; then
+			#Build rrg
+			if [ -f "rdv40.txt" ]; then
+				build_rrg
+			else
+				build_official
+			fi
+		fi
+	done
+}
+check_requirements
+cd $pm3Dir
+loop_folders
+

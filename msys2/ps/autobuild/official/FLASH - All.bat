@@ -8,11 +8,12 @@ echo.
 echo   ==========================================================================
 echo   ©¦!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! O__O !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!©¦
 echo   ©¦======================================================================©¦
-echo   ©¦FULLIMAGE FLASHER BATCH FILE                                          ©¦
+echo   ©¦BOOTROM + FULLIMAGE FLASHER BATCH FILE                                ©¦
 echo   ©¦                                                                      ©¦
 echo   ©¦you will need to have this batch in \win32 folder                     ©¦
-echo   ©¦you will need to have flasher.exe in \win32 folder                    ©¦
+echo   ©¦you will need to have bootrom.elf in \firmware_win\bootrom folder     ©¦
 echo   ©¦you will need to have fullimage.elf in \firmware_win folder           ©¦
+echo   ©¦you will need to have flasher.exe in \win32 folder                    ©¦
 echo   ©¦                                                                      ©¦
 echo   ©¦                                                                      ©¦
 echo   ©¦IF YOU HAVE THOSE REQUISITES HIT ANY BUTTON TO CONTINUE !             ©¦
@@ -22,16 +23,13 @@ pause.
 
 cls
 echo.                
-echo                 ======================================
-echo                 FLASHING fullimage.elf, please wait...
-echo                 ======================================
+echo             ====================================================
+echo             FLASHING bootrom.elf + fullimage.elf, please wait...
+echo             ====================================================
 echo.
 
-if exist flasher.exe (
-    flasher.exe com5 -b ..\firmware_win\fullimage.elf
-) else (
-    proxmark3.exe com5 --flash --unlock-bootloader --image ..\firmware_win\fullimage.elf
-)
+call client\setup.bat
+client\flasher.exe com5 -b client\bootrom.elf client\fullimage.elf
 
 pause.
 
@@ -64,3 +62,4 @@ pause.
 cls
 MODE CON COLS=130 LINES=36
 cmd.exe
+

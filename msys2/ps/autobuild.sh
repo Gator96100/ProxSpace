@@ -80,7 +80,7 @@ function build_rrg {
 		cp -r /ps/autobuild/rrg/* "$dstDir"
 		
 		#Copy the client and additional files
-		cp -r $srcDir/client/{proxmark3.exe,lualibs,luascripts,dictionaries,resources} "$dstDir/client"
+		cp -r $srcDir/client/{proxmark3.exe,lualibs,luascripts,cmdscripts,dictionaries,resources} "$dstDir/client"
 		
 		#Copy the pm3 scripts
 		cp -r $srcDir/{pm3,pm3-flash,pm3-flash-all,pm3-flash-bootrom,pm3-flash-fullimage} "$dstDir/client"

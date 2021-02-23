@@ -5,7 +5,7 @@ ProxSpace is a collection of tools that are required to compile the firmware and
 ProxSpace comes with 2 different executables .bat files. 
 
  - `runme64.bat` will start ProxSpace in x64 mode.
- - `autobuild.bat` runs a script (msys2/autobuild.sh) in x86 mode as well as in x64 mode at startup. The script will update all git repositories in the pm3 folder and then compile them and move a zip file with the just compiled firmware and client into the build folder. It is not designed for development, just for compiling.
+ - `autobuild.bat` runs a script (msys2/autobuild.sh) in x64 mode at startup. The script will update all git repositories in the pm3 folder and then compile them and move a zip file with the just compiled firmware and client into the build folder. It is not designed for development, just for compiling.
 
 ## What's installed
 ProxSpace will automatically download and update to the latest required packages. All tools will be contained within the ProxSpace folder, however **once ProxSpace is setup the ProxSpace folder must not be moved**. If you wish to have ProxSpace in a different directory, you need to reinstall it.

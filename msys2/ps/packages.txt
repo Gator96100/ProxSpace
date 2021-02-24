@@ -18,6 +18,8 @@ mingw-w64-x86_64-libsndfile
 mingw-w64-x86_64-lua
 mingw-w64-x86_64-bzip2
 mingw-w64-x86_64-python
+mingw-w64-x86_64-python-pip
+mingw-w64-x86_64-python-setuptools
 mingw-w64-x86_64-jansson
 mingw-w64-x86_64-qt5
 mingw-w64-x86_64-gdb

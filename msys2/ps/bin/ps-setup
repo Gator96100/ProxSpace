@@ -12,7 +12,9 @@ setup_proxspace ()
 	for pkg in $(grep "^[^#;]" /ps/packages.txt); do
 		check_install $pkg
 	done
-
+	
+	python3 -m pip install ansicolors sslcrypto
+	
 	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed64.txt
   fi
 }

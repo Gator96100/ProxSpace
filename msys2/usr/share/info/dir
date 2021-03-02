@@ -35,6 +35,9 @@ Compression
 Development
 * libffi: (libffi).             Portable foreign function interface library.
 
+Editors
+* nano: (nano).                 Small and friendly text editor.
+
 Encryption
 * Nettle: (nettle).             A low-level cryptographic library.
 

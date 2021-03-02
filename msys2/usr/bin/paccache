@@ -23,7 +23,7 @@ shopt -s nullglob
 shopt -s extglob
 
 declare -r myname='paccache'
-declare -r myver='1.3.0'
+declare -r myver='1.4.0'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
@@ -399,7 +399,8 @@ candidates=("${candtemp[@]}")
 unset candtemp
 
 # do this before we destroy anything
-totalsaved=$(stat -c %s "${candidates[@]}" | awk '{ sum += $1 } END { print sum }')
+totalsaved=$(printf '%s\0' "${candidates[@]}" | xargs -0 stat -c %s |
+		awk '{ sum += $1 } END { print sum }')
 
 # Exit immediately if a pipeline returns non-zero.
 set -o errexit

@@ -328,6 +328,9 @@ hi def link pbIllegalSha384sums Error
 hi def link pb_k_sha512sums pbKeywords
 hi def link pbIllegalSha512sums Error
 
+hi def link pb_k_b2sums pbKeywords
+hi def link pbIllegalb2sums Error
+
 hi def link pb_k_options pbKeywords
 hi def link pbOptionsDeprec Todo
 hi def link pbIllegalOption Error

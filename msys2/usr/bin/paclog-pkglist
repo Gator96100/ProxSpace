@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 declare -r myname='paclog-pkglist'
-declare -r myver='1.3.0'
+declare -r myver='1.4.0'
 
 export TEXTDOMAIN='pacman'
 export TEXTDOMAINDIR='/usr/share/locale'

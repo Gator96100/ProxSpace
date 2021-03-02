@@ -1,0 +1,10 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-icudata68.dll
+usr/bin/msys-icui18n68.dll
+usr/bin/msys-icuio68.dll
+usr/bin/msys-icutest68.dll
+usr/bin/msys-icutu68.dll
+usr/bin/msys-icuuc68.dll
+

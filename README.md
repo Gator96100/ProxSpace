@@ -11,7 +11,7 @@ ProxSpace comes with 2 different executables .bat files.
 ProxSpace will automatically download and update to the latest required packages. All tools will be contained within the ProxSpace folder, however **once ProxSpace is setup the ProxSpace folder must not be moved**. If you wish to have ProxSpace in a different directory, you need to reinstall it.
 
 ProxSpace is based on:
- - msys2-x86_64-20200903
+ - msys2-x86_64-20210215
  
  Following packages will be automatically download or updated:
  - arm-none-eabi-gcc

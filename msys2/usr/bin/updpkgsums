@@ -20,7 +20,7 @@
 shopt -s extglob
 
 declare -r myname='updpkgsums'
-declare -r myver='1.3.0'
+declare -r myver='1.4.0'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 

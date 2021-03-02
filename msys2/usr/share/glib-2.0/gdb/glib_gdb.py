@@ -9,7 +9,7 @@ def read_global_var (symname):
     return gdb.selected_frame().read_var(symname)
 
 def g_quark_to_string (quark):
-    if quark == None:
+    if quark is None:
         return None
     quark = long(quark)
     if quark == 0:
@@ -86,11 +86,27 @@ class GHashPrinter:
     "Prints a GHashTable"
 
     class _iterator:
+        class _pointer_array:
+            def __init__(self, ptr, big_items):
+                self._big_items = big_items
+                self._gpointer_type = gdb.lookup_type("gpointer")
+                item_type = self._gpointer_type if self._big_items else gdb.lookup_type("guint")
+
+                self._items = ptr.cast(item_type.pointer())
+
+            def __getitem__(self, item):
+                item = self._items[item]
+
+                if not self._big_items:
+                    item = item.cast(self._gpointer_type)
+
+                return item
+
         def __init__(self, ht, keys_are_strings):
             self.ht = ht
             if ht != 0:
-                self.keys = ht["keys"]
-                self.values = ht["values"]
+                self.keys = self._pointer_array(ht["keys"], ht["have_big_keys"])
+                self.values = self._pointer_array(ht["values"], ht["have_big_values"])
                 self.hashes = ht["hashes"]
                 self.size = ht["size"]
             self.pos = 0
@@ -108,7 +124,6 @@ class GHashPrinter:
                 self.value = None
                 return v
             while long(self.pos) < long(self.size):
-                self.pos = self.pos + 1
                 if long (self.hashes[self.pos]) >= 2:
                     key = self.keys[self.pos]
                     val = self.values[self.pos]
@@ -119,8 +134,12 @@ class GHashPrinter:
                     # Queue value for next result
                     self.value = ('[%dv]'% (self.pos), val)
 
-                    # Return key
-                    return ('[%dk]'% (self.pos), key)
+                    # Increment pos and return key
+                    key = ('[%dk]'% (self.pos), key)
+                    self.pos += 1
+                    return key
+
+                self.pos += 1
             raise StopIteration
 
         __next__ = next
@@ -171,7 +190,7 @@ def pretty_printer_lookup (val):
     return None
 
 def register (obj):
-    if obj == None:
+    if obj is None:
         obj = gdb
 
     obj.pretty_printers.append(pretty_printer_lookup)

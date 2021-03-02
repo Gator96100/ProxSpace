@@ -3,7 +3,7 @@
 # Interact with the user via stderr and stdin.
 
 PKGVERSION='(tzcode) '
-TZVERSION=unknown
+TZVERSION=2020f-dirty
 REPORT_BUGS_TO=tz@iana.org
 
 # Contributed by Paul Eggert.  This file is in the public domain.

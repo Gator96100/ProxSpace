@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+FILENAME=$(basename -- "$0")
+if [ -f "$FILENAME" ]; then
+    ./$FILENAME
+else 
+    echo "The $FILENAME script does not exist in the current directory. Make sure you are in the Proxmark source directory."
+fi

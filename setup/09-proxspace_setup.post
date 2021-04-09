@@ -17,7 +17,7 @@ if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 			ps-rankmirrors
 		fi
 		
-		yes | pacman -Su
+		yes | pacman -Suy
 		ps-setup
 	fi	
 fi

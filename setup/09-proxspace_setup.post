@@ -11,6 +11,9 @@ fi
 
 if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 	if [ "$MAYBE_FIRST_START" = "true" ]; then
+		if [ -f "/usr/bin/update-ca-trust" ]; then 
+			sh /usr/bin/update-ca-trust
+		fi
 		yes | pacman -Syuu
 	else	
 		if [ -z "$PSSKIPRANKING" ]; then

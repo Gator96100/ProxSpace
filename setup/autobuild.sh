@@ -78,7 +78,7 @@ function build_rrg {
 		copy_shell
 		
 		#Copy contents of the autobuild folder 
-		cp -r /ps/autobuild/rrg/* "$dstDir"
+		cp -r /setup/autobuild/rrg/* "$dstDir"
 		
 		#Copy the client and additional files
 		cp -r $srcDir/client/{proxmark3.exe,lualibs,luascripts,cmdscripts,dictionaries,resources} "$dstDir/client"
@@ -97,7 +97,7 @@ function build_official {
 		copy_common
 		
 		#Copy contents of the autobuild folder 
-		cp -r /ps/autobuild/official/* "$dstDir"
+		cp -r /setup/autobuild/official/* "$dstDir"
 		
 		#Copy the client and additional files
 		cp -r $srcDir/client/{proxmark3.exe,flasher.exe,*.dic,lualibs,scripts,hardnested} "$dstDir/client"

@@ -1,16 +1,16 @@
 rm /ps/installed64.txt &> /dev/null
 git clone https://github.com/Gator96100/ProxSpace.git /ps-upgrade
-mv /ps-upgrade/msys2/ps/bin/ps-upgrade /ps-upgrade/msys2/ps/bin/ps-upgrade.new
+mv /ps-upgrade/msys2/setup/bin/ps-upgrade /ps-upgrade/msys2/setup/bin/ps-upgrade.new
 if [ "$#" -ne 0 ]; then
 	cd /ps-upgrade
     git checkout $@
 fi
 shopt -s extglob 
-cd /ps
+cd /setup
 rm -rf -- !(bin)
-cd /ps/bin
+cd /setup/bin
 rm -rf -- !(ps-upgrade)
-cp -R /ps-upgrade/msys2/ps /
+cp -R /ps-upgrade/msys2/setup /
 rm -rf /ps-upgrade
 yes | pacman -Syuu
 echo "Please restart ProxSpace"

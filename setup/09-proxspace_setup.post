@@ -1,15 +1,15 @@
-export PSVERSION="3.8"
+export PSVERSION="3.9"
 export LANG=en_US.UTF-8
 export PS1='\[\033]0;ProxSpace v$PSVERSION - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
-export PATH=/ps/bin:$PATH
+export PATH=/setup/bin:$PATH
 alias ls='ls -hF --color=auto' 
 
-if [ -f /ps/bin/ps-upgrade.new ]; then
-    rm /ps/bin/ps-upgrade
-	mv /ps/bin/ps-upgrade.new /ps/bin/ps-upgrade
+if [ -f /setup/bin/ps-upgrade.new ]; then
+    rm /setup/bin/ps-upgrade
+	mv /setup/bin/ps-upgrade.new /setup/bin/ps-upgrade
 fi
 
-if [ \( ! -f /ps/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
+if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 	if [ "$MAYBE_FIRST_START" = "true" ]; then
 		yes | pacman -Syuu
 	else

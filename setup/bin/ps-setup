@@ -9,7 +9,7 @@ check_install () {
 setup_proxspace ()
 {
   if [ "$MSYSTEM" == "MINGW64" ]; then	
-	for pkg in $(grep "^[^#;]" /ps/packages.txt); do
+	for pkg in $(grep "^[^#;]" /setup/packages.txt); do
 		check_install $pkg
 	done
 	
@@ -17,7 +17,7 @@ setup_proxspace ()
 	
 	yes | pacman -Sc
 	
-	echo $(date '+%Y-%m-%d %H:%M:%S') > /ps/installed64.txt
+	echo $(date '+%Y-%m-%d %H:%M:%S') > /setup/installed64.txt
   fi
 }
 setup_proxspace

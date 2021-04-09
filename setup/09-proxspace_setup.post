@@ -12,7 +12,7 @@ fi
 if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 	if [ "$MAYBE_FIRST_START" = "true" ]; then
 		yes | pacman -Syuu
-	else
+	else	
 		if [ -z "$PSSKIPRANKING" ]; then
 			ps-rankmirrors
 		fi

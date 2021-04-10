@@ -10,7 +10,11 @@ echo %cd%\setup /setup ntfs noacl 0 0 >>%cd%\msys2/etc/fstab
 echo %cd%\pm3 /pm3 ntfs noacl 0 0 >>%cd%\msys2/etc/fstab
 
 dash /usr/bin/rebaseall -p 2> nul
+
 mkdir %cd%\msys2\tmp 2> nul
+mkdir %cd%\msys2\etc 2> nul
+mkdir %cd%\msys2\otp 2> nul
+
 del %cd%\msys2\etc\passwd 2> nul
 del %cd%\msys2\etc\group 2> nul
 touch /etc/passwd

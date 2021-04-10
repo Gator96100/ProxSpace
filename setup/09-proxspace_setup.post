@@ -17,6 +17,7 @@ if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 			sh /usr/bin/update-ca-trust
 		fi
 		rm /var/lib/pacman/sync/*
+		sed -i 's/#XferCommand = \/usr\/bin\/wget --passive-ftp -c -O %o %u/XferCommand = \/usr\/bin\/wget --passive-ftp --tries=3 --timeout=5 -c -O %o %u/g' /etc/pacman.conf
 		yes | pacman -Syuu
 	else
 		if [ -z "$PSSKIPRANKING" ]; then

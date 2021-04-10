@@ -9,6 +9,7 @@ echo none / cygdrive binary,posix=0,noacl,user 0 0 >>%cd%\msys2/etc/fstab
 echo %cd%\setup /setup ntfs noacl 0 0 >>%cd%\msys2/etc/fstab
 echo %cd%\pm3 /pm3 ntfs noacl 0 0 >>%cd%\msys2/etc/fstab
 
+del %cd%\msys2\var\lib\pacman\sync\* 2> nul
 mkdir %cd%\msys2\tmp 2> nul
 mkdir %cd%\msys2\dev 2> nul
 mkdir %cd%\msys2\otp 2> nul

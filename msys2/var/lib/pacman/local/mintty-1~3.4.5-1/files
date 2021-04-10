@@ -27,6 +27,8 @@ usr/share/icons/hicolor/64x64/apps/mintty.png
 usr/share/licenses/
 usr/share/licenses/mintty/
 usr/share/licenses/mintty/LICENSE
+usr/share/licenses/mintty/LICENSE.bundling
+usr/share/licenses/mintty/LICENSE.GPL
 usr/share/licenses/mintty/LICENSE.Oxygen
 usr/share/licenses/mintty/LICENSE.PuTTY
 usr/share/man/

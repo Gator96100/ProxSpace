@@ -4,6 +4,8 @@ export PS1='\[\033]0;ProxSpace v$PSVERSION - $MSYSTEM:\w\007\033[32m\]pm3 \[\033
 export PATH=/setup/bin:$PATH
 alias ls='ls -hF --color=auto' 
 
+
+
 if [ -f /setup/bin/ps-upgrade.new ]; then
     rm /setup/bin/ps-upgrade
 	mv /setup/bin/ps-upgrade.new /setup/bin/ps-upgrade
@@ -15,7 +17,7 @@ if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 			sh /usr/bin/update-ca-trust
 		fi
 		yes | pacman -Syuu
-	else	
+	else
 		if [ -z "$PSSKIPRANKING" ]; then
 			ps-rankmirrors
 		fi

@@ -16,6 +16,7 @@ if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
 		if [ -f "/usr/bin/update-ca-trust" ]; then 
 			sh /usr/bin/update-ca-trust
 		fi
+		rm /var/lib/pacman/sync/*
 		yes | pacman -Syuu
 	else
 		if [ -z "$PSSKIPRANKING" ]; then

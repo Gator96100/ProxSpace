@@ -1,5 +1,5 @@
 @echo off
-SET PATH=%cd%\msys2\usr\bin;%PATH%
+SET "PATH=%cd%\msys2\usr\bin;%PATH%"
 copy /Y %cd%\setup\*.post %cd%\msys2\etc\post-install\ >NUL
 copy /Y %cd%\setup\*.conf %cd%\msys2\etc\ >NUL
 

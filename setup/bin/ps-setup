@@ -8,9 +8,7 @@ check_install () {
 
 setup_proxspace ()
 {
-  if [ "$MSYSTEM" == "MINGW64" ]; then	
-	sed -i 's/#XferCommand = \/usr\/bin\/wget --passive-ftp -c -O %o %u/XferCommand = \/usr\/bin\/wget --passive-ftp --tries=3 --timeout=5 -c -O %o %u/g' /etc/pacman.conf
-  
+  if [ "$MSYSTEM" == "MINGW64" ]; then	  
 	for pkg in $(grep "^[^#;]" /setup/packages.txt); do
 		check_install $pkg
 	done

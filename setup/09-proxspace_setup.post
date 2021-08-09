@@ -2,6 +2,7 @@ export PSVERSION="3.10"
 export LANG=en_US.UTF-8
 export PS1='\[\033]0;ProxSpace v$PSVERSION - $MSYSTEM:\w\007\033[32m\]pm3 \[\033[33m\]\w\[\033[0m\]$ '
 export PATH=/setup/bin:$PATH
+export PYTHONHOME=/mingw64
 alias ls='ls -hF --color=auto' 
 
 

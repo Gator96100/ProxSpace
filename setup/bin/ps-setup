@@ -1,7 +1,7 @@
 check_install () { 
 	echo "Installing: $1"
-	pacman -Q $1 > /dev/null
-	if [ $? == 1 ]; then
+	pacman -Q $1 &> /dev/null
+	if [ $? == 1 ] || [ -n "$PSREINSTALL" ]; then
 		pacman --noconfirm --overwrite='*' -S $1
 	fi
 }
@@ -19,7 +19,9 @@ setup_proxspace ()
 	
 	yes | pacman -Sc
 	
-	echo $(date '+%Y-%m-%d %H:%M:%S') > /setup/installed64.txt
+	echo "export PSINSTALLDATE=\"$(date '+%Y-%m-%d %H:%M:%S')\"" > /setup/installed
+	echo "export PSINSTALLPATH=\"$OLDPWD\"" >> /setup/installed
+	
   fi
 }
 setup_proxspace

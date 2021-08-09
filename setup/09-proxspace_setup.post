@@ -11,20 +11,30 @@ if [ -f /setup/bin/ps-upgrade.new ]; then
 	mv /setup/bin/ps-upgrade.new /setup/bin/ps-upgrade
 fi
 
-if [ \( ! -f /setup/installed64.txt -a "$MSYSTEM" == "MINGW64" \) ]; then
-	if [ "$MAYBE_FIRST_START" = "true" ]; then
-		if [ -f "/usr/bin/update-ca-trust" ]; then 
-			sh /usr/bin/update-ca-trust
-		fi
-		rm /var/lib/pacman/sync/*
-		yes | pacman -Syuu
-		exit
-	else
-		if [ -z "$PSSKIPRANKING" ]; then
-			ps-rankmirrors
-		fi
+if [ "$MSYSTEM" == "MINGW64" ]; then
+	if [ -f /setup/installed ]; then
+		source /setup/installed
 		
-		yes | pacman -Suy
-		ps-setup
-	fi	
+		if [ "$PSINSTALLPATH" != "$OLDPWD" ]; then
+			export PSREINSTALL=1
+			ps-setup
+			unset PSREINSTALL
+		fi	
+	else
+		if [ "$MAYBE_FIRST_START" = "true" ]; then
+			if [ -f "/usr/bin/update-ca-trust" ]; then 
+				sh /usr/bin/update-ca-trust
+			fi
+			rm /var/lib/pacman/sync/*
+			yes | pacman -Syuu
+			exit
+		else
+			if [ -z "$PSSKIPRANKING" ]; then
+				ps-rankmirrors
+			fi
+		
+			yes | pacman -Suy
+			ps-setup
+		fi	
+	fi
 fi

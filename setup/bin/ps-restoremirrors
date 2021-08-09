@@ -1,0 +1,6 @@
+if [ -f  /etc/pacman.d/mirrorlist.msys.backup ]; then
+	mv /etc/pacman.d/mirrorlist.msys.backup	/etc/pacman.d/mirrorlist.msys
+fi
+if [ -f  /etc/pacman.d/mirrorlist.mingw64.backup ]; then
+	mv /etc/pacman.d/mirrorlist.mingw64.backup /etc/pacman.d/mirrorlist.mingw64
+fi

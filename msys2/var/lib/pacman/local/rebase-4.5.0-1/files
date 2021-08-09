@@ -1,0 +1,16 @@
+%FILES%
+autorebase.bat
+usr/
+usr/bin/
+usr/bin/peflags.exe
+usr/bin/peflagsall
+usr/bin/rebase.exe
+usr/bin/rebaseall
+usr/share/
+usr/share/doc/
+usr/share/doc/rebase/
+usr/share/doc/rebase/COPYING
+usr/share/doc/rebase/NEWS
+usr/share/doc/rebase/README
+usr/share/doc/rebase/Todo
+

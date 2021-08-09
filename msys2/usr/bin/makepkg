@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #
 #   makepkg - make packages compatible for use with pacman
-#   Generated from makepkg.sh.in; do not edit by hand.
 #
-#   Copyright (c) 2006-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
 #   Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
 #   Copyright (c) 2006 by Miklos Vajna <vmiklos@frugalware.org>
@@ -41,7 +40,7 @@ unset CDPATH
 # Ensure GREP_OPTIONS doesn't screw with our grep calls
 unset GREP_OPTIONS
 
-declare -r makepkg_version='5.2.2'
+declare -r makepkg_version='6.0.0'
 declare -r confdir='/etc'
 declare -r BUILDSCRIPT='PKGBUILD'
 declare -r startdir="$(pwd -P)"
@@ -187,13 +186,15 @@ update_pkgver() {
 	fi
 
 	if [[ -n $newpkgver && $newpkgver != "$pkgver" ]]; then
-		if [[ -f $BUILDFILE && -w $BUILDFILE ]]; then
-			if ! /usr/bin/sed  --follow-symlinks -i "s:^pkgver=[^ ]*:pkgver=$newpkgver:" "$BUILDFILE"; then
+		if [[ -w $BUILDFILE ]]; then
+			mapfile -t buildfile < "$BUILDFILE"
+			buildfile=("${buildfile[@]/#pkgver=*([^ ])/pkgver=$newpkgver}")
+			buildfile=("${buildfile[@]/#pkgrel=*([^ ])/pkgrel=1}")
+			if ! printf '%s\n' "${buildfile[@]}" > "$BUILDFILE"; then
 				error "$(gettext "Failed to update %s from %s to %s")" \
 						"pkgver" "$pkgver" "$newpkgver"
 				exit $E_PKGBUILD_ERROR
 			fi
-			/usr/bin/sed  --follow-symlinks -i "s:^pkgrel=[^ ]*:pkgrel=1:" "$BUILDFILE"
 			source_safe "$BUILDFILE"
 			local fullver=$(get_full_version)
 			msg "$(gettext "Updated version: %s")" "$pkgbase $fullver"
@@ -212,11 +213,19 @@ missing_source_file() {
 }
 
 run_pacman() {
-	local cmd
+	local cmd cmdescape
 	if [[ $1 = -@(T|Q)*([[:alpha:]]) ]]; then
 		cmd=("$PACMAN_PATH" "$@")
 	else
 		cmd=("$PACMAN_PATH" "${PACMAN_OPTS[@]}" "$@")
+		cmdescape="$(printf '%q ' "${cmd[@]}")"
+		if (( ${#PACMAN_AUTH[@]} )); then
+			if in_array '%c' "${PACMAN_AUTH[@]}"; then
+				cmd=("${PACMAN_AUTH[@]/\%c/$cmdescape}")
+			else
+				cmd=("${PACMAN_AUTH[@]}" "${cmd[@]}")
+			fi
+		fi
 		local lockfile="$(pacman-conf DBPath)/db.lck"
 		while [[ -f $lockfile ]]; do
 			local timer=0
@@ -509,9 +518,10 @@ find_libdepends() {
 
 
 find_libprovides() {
-	local p libprovides missing
+	local p versioned_provides libprovides missing
 	for p in "${provides[@]}"; do
 		missing=0
+		versioned_provides=()
 		case "$p" in
 			*.dll)
 				mapfile -t filename < <(find "$pkgdir" -type f -name $p)
@@ -529,20 +539,21 @@ find_libprovides() {
 							;;
 						esac
 
-						libprovides+=("${p}=${soarch}")
+						versioned_provides+=("${p}=${soarch}")
 					done
 				else
-					libprovides+=("$p")
 					missing=1
 				fi
-				;;
-			*)
-				libprovides+=("$p")
 				;;
 		esac
 
 		if (( missing )); then
 			warning "$(gettext "Cannot find library listed in %s: %s")" "'provides'" "$p"
+		fi
+		if (( ${#versioned_provides[@]} > 0 )); then
+			libprovides+=("${versioned_provides[@]}")
+		else
+			libprovides+=("$p")
 		fi
 	done
 
@@ -603,7 +614,7 @@ write_pkginfo() {
 }
 
 write_buildinfo() {
-	write_kv_pair "format" "1"
+	write_kv_pair "format" "2"
 
 	write_kv_pair "pkgname" "$pkgname"
 	write_kv_pair "pkgbase" "$pkgbase"
@@ -620,6 +631,9 @@ write_buildinfo() {
 	write_kv_pair "packager" "${PACKAGER}"
 	write_kv_pair "builddate" "${SOURCE_DATE_EPOCH}"
 	write_kv_pair "builddir"  "${BUILDDIR}"
+	write_kv_pair "startdir"  "${startdir}"
+	write_kv_pair "buildtool" "${BUILDTOOL:-makepkg}"
+	write_kv_pair "buildtoolver" "${BUILDTOOLVER:-$makepkg_version}"
 	write_kv_pair "buildenv" "${BUILDENV[@]}"
 	write_kv_pair "options" "${OPTIONS[@]}"
 
@@ -838,6 +852,7 @@ install_package() {
 }
 
 check_build_status() {
+	local fullver pkgarch allpkgbuilt somepkgbuilt
 	if (( ! SPLITPKG )); then
 		fullver=$(get_full_version)
 		pkgarch=$(get_pkg_arch)
@@ -880,7 +895,6 @@ check_build_status() {
 				exit $E_ALREADY_BUILT
 			fi
 		fi
-		unset allpkgbuilt somepkgbuilt
 	fi
 }
 
@@ -986,7 +1000,7 @@ usage() {
 
 version() {
 	printf "makepkg (pacman) %s\n" "$makepkg_version"
-	printf -- "Copyright (c) 2006-2020 Pacman Development Team <pacman-dev@archlinux.org>.\n"
+	printf -- "Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>.\n"
 	printf -- "Copyright (C) 2002-2006 Judd Vinet <jvinet@zeroflux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
@@ -1166,8 +1180,8 @@ unset "${known_hash_algos[@]/%/sums}"
 unset -f pkgver prepare build check package "${!package_@}"
 unset "${!makedepends_@}" "${!depends_@}" "${!source_@}" "${!checkdepends_@}"
 unset "${!optdepends_@}" "${!conflicts_@}" "${!provides_@}" "${!replaces_@}"
-unset "${!md5sums_@}" "${!sha1sums_@}" "${!sha224sums_@}" "${!sha256sums_@}"
-unset "${!sha384sums_@}" "${!sha512sums_@}" "${!b2sums_@}"
+unset "${!cksums_@}" "${!md5sums_@}" "${!sha1sums_@}" "${!sha224sums_@}"
+unset "${!sha256sums_@}" "${!sha384sums_@}" "${!sha512sums_@}" "${!b2sums_@}"
 
 BUILDFILE=${BUILDFILE:-$BUILDSCRIPT}
 if [[ ! -f $BUILDFILE ]]; then
@@ -1308,7 +1322,7 @@ if (( SOURCEONLY )); then
 
 	if [[ $SIGNPKG = 'y' ]]; then
 		msg "$(gettext "Signing package...")"
-		create_signature "$SRCPKGDEST/${pkgbase}-${fullver}${SRCEXT}"
+		create_signature "$SRCPKGDEST/${pkgbase}-$(get_full_version)${SRCEXT}"
 	fi
 
 	msg "$(gettext "Source package created: %s")" "$pkgbase ($(date +%c))"

@@ -2,7 +2,7 @@
 #
 #   schema.sh - declare specific groups of pkgbuild variables
 #
-#   Copyright (c) 2015-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 source "$LIBRARY/util/util.sh"
 
 
-known_hash_algos=({md5,sha{1,224,256,384,512},b2})
+known_hash_algos=({ck,md5,sha{1,224,256,384,512},b2})
 
 pkgbuild_schema_arrays=(arch backup checkdepends conflicts depends groups
                         license makedepends noextract optdepends options

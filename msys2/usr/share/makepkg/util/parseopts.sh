@@ -2,7 +2,7 @@
 #
 #   parseopts.sh - getopt_long-like parser
 #
-#   Copyright (c) 2012-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2012-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,16 +18,23 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # A getopt_long-like parser which portably supports longopts and
-# shortopts with some GNU extensions. It does not allow for options
-# with optional arguments. For both short and long opts, options
-# requiring an argument should be suffixed with a colon. After the
-# first argument containing the short opts, any number of valid long
-# opts may be be passed. The end of the options delimiter must then be
-# added, followed by the user arguments to the calling program.
+# shortopts with some GNU extensions. For both short and long opts,
+# options requiring an argument should be suffixed with a colon, and
+# options with optional arguments should be suffixed with a question
+# mark. After the first argument containing the short opts, any number
+# of valid long opts may be be passed. The end of the options delimiter
+# must then be added, followed by the user arguments to the calling
+# program.
+#
+# Options with optional arguments will be returned as "--longopt=optarg"
+# for longopts, or "-o=optarg" for shortopts. This isn't actually a valid
+# way to pass an optional argument with a shortopt on the command line,
+# but is done by parseopts to enable the caller script to split the option
+# and its optarg easily.
 #
 # Recommended Usage:
-#   OPT_SHORT='fb:z'
-#   OPT_LONG=('foo' 'bar:' 'baz')
+#   OPT_SHORT='fb:zq?'
+#   OPT_LONG=('foo' 'bar:' 'baz' 'qux?')
 #   if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
 #     exit 1
 #   fi
@@ -49,29 +56,30 @@ parseopts() {
 	longoptmatch() {
 		local o longmatch=()
 		for o in "${longopts[@]}"; do
-			if [[ ${o%:} = "$1" ]]; then
+			if [[ ${o%[:?]} = "$1" ]]; then
 				longmatch=("$o")
 				break
 			fi
-			[[ ${o%:} = "$1"* ]] && longmatch+=("$o")
+			[[ ${o%[:?]} = "$1"* ]] && longmatch+=("$o")
 		done
 
 		case ${#longmatch[*]} in
 			1)
-				# success, override with opt and return arg req (0 == none, 1 == required)
-				opt=${longmatch%:}
-				if [[ $longmatch = *: ]]; then
-					return 1
-				else
-					return 0
-				fi ;;
+				# success, override with opt and return arg req (0 == none, 1 == required, 2 == optional)
+				opt=${longmatch%[:?]}
+				case $longmatch in
+					*:)  return 1 ;;
+					*\?) return 2 ;;
+					*)   return 0 ;;
+				esac
+				;;
 			0)
 				# fail, no match found
 				return 255 ;;
 			*)
 				# fail, ambiguous match
 				printf "${0##*/}: $(gettext "option '%s' is ambiguous; possibilities:")" "--$1"
-				printf " '%s'" "${longmatch[@]%:}"
+				printf " '%s'" "${longmatch[@]%[:?]}"
 				printf '\n'
 				return 254 ;;
 		esac >&2
@@ -87,32 +95,47 @@ parseopts() {
 				for (( i = 1; i < ${#1}; i++ )); do
 					opt=${1:i:1}
 
-					# option doesn't exist
-					if [[ $shortopts != *$opt* ]]; then
-						printf "${0##*/}: $(gettext "invalid option") -- '%s'\n" "$opt" >&2
-						OPTRET=(--)
-						return 1
-					fi
-
-					OPTRET+=("-$opt")
-					# option requires optarg
-					if [[ $shortopts = *$opt:* ]]; then
-						# if we're not at the end of the option chunk, the rest is the optarg
-						if (( i < ${#1} - 1 )); then
-							OPTRET+=("${1:i+1}")
-							break
-						# if we're at the end, grab the the next positional, if it exists
-						elif (( i == ${#1} - 1 )) && [[ $2 ]]; then
-							OPTRET+=("$2")
-							shift
-							break
-						# parse failure
-						else
-							printf "${0##*/}: $(gettext "option requires an argument") -- '%s'\n" "$opt" >&2
+					case $shortopts in
+						# option requires optarg
+						*$opt:*)
+							# if we're not at the end of the option chunk, the rest is the optarg
+							if (( i < ${#1} - 1 )); then
+								OPTRET+=("-$opt" "${1:i+1}")
+								break
+							# if we're at the end, grab the the next positional, if it exists
+							elif (( i == ${#1} - 1 && $# > 1 )); then
+								OPTRET+=("-$opt" "$2")
+								shift
+								break
+							# parse failure
+							else
+								printf "${0##*/}: $(gettext "option requires an argument") -- '%s'\n" "$opt" >&2
+								OPTRET=(--)
+								return 1
+							fi
+							;;
+						# option's optarg is optional
+						*$opt\?*)
+							# if we're not at the end of the option chunk, the rest is the optarg
+							if (( i < ${#1} - 1 )); then
+								OPTRET+=("-$opt=${1:i+1}")
+								break
+							# option has no optarg
+							else
+								OPTRET+=("-$opt")
+							fi
+							;;
+						# option has no optarg
+						*$opt*)
+							OPTRET+=("-$opt")
+							;;
+						# option doesn't exist
+						*)
+							printf "${0##*/}: $(gettext "invalid option") -- '%s'\n" "$opt" >&2
 							OPTRET=(--)
 							return 1
-						fi
-					fi
+							;;
+					esac
 				done
 				;;
 			--?*=*|--?*) # long option
@@ -121,7 +144,7 @@ parseopts() {
 				case $? in
 					0)
 						# parse failure
-						if [[ $optarg ]]; then
+						if [[ $1 = *=* ]]; then
 							printf "${0##*/}: $(gettext "option '%s' does not allow an argument")\n" "--$opt" >&2
 							OPTRET=(--)
 							return 1
@@ -132,10 +155,10 @@ parseopts() {
 						;;
 					1)
 						# --longopt=optarg
-						if [[ $optarg ]]; then
+						if [[ $1 = *=* ]]; then
 							OPTRET+=("--$opt" "$optarg")
 						# --longopt optarg
-						elif [[ $2 ]]; then
+						elif (( $# > 1 )); then
 							OPTRET+=("--$opt" "$2" )
 							shift
 						# parse failure
@@ -143,6 +166,15 @@ parseopts() {
 							printf "${0##*/}: $(gettext "option '%s' requires an argument")\n" "--$opt" >&2
 							OPTRET=(--)
 							return 1
+						fi
+						;;
+					2)
+						# --longopt=optarg
+						if [[ $1 = *=* ]]; then
+							OPTRET+=("--$opt=$optarg")
+						# --longopt
+						else
+							OPTRET+=("--$opt")
 						fi
 						;;
 					254)

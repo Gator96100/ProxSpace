@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.4 -->
-<!-- CreationDate: Wed Dec  2 11:30:13 2020 -->
+<!-- CreationDate: Tue Jun 15 10:02:28 2021 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -327,10 +327,11 @@ greater than 0. The default value is <b>8</b>.</p>
 <p style="margin-left:11%;"><b>&minus;U</b>,
 <b>&minus;&minus;quickblank</b></p>
 
-<p style="margin-left:22%;">Do quick status-bar blanking:
-status-bar messages will disappear after 1 keystroke instead
-of 25. Note that option <b>&minus;c</b>
-(<b>&minus;&minus;constantshow</b>) overrides this.</p>
+<p style="margin-left:22%;">Make status-bar messages
+disappear after 1 keystroke instead of after 20. Note that
+options <b>&minus;c</b> (<b>&minus;&minus;constantshow</b>)
+and <b>&minus;_</b> (<b>&minus;&minus;minibar</b>) override
+this.</p>
 
 <p style="margin-left:11%;"><b>&minus;V</b>,
 <b>&minus;&minus;version</b></p>
@@ -587,6 +588,30 @@ hard-wrapping (breaking long lines), <b>R</b> when recording
 a macro, and <b>S</b> when soft-wrapping. When the buffer is
 modified, a star (<b>*</b>) is shown after the filename in
 the center of the title bar.</p>
+
+<p style="margin-left:11%;"><b>&minus;_</b>,
+<b>&minus;&minus;minibar</b></p>
+
+<p style="margin-left:22%;">Suppress the title bar and
+instead show information about the current buffer at the
+bottom of the screen, in the space for the status bar. In
+this &quot;minibar&quot; the file name is shown on the left,
+followed by an asterisk if the buffer has been modified. On
+the right are displayed the current line and column number,
+the code of the character under the cursor (in Unicode
+format: U+xxxx), the same flags as are shown by
+<b>&minus;&minus;stateflags</b>, and a percentage that
+expresses how far the cursor is into the file (linewise).
+When a file is loaded or saved, and also when switching
+between buffers, the number of lines in the buffer is
+displayed after the file name. This number is cleared upon
+the next keystroke, or replaced with an [i/n] counter when
+multiple buffers are open. The line plus column numbers and
+the character code are displayed only when
+<b>&minus;&minus;constantshow</b> is used, and can be
+toggled on and off with <b>M-C</b>. The state flags are
+displayed only when <b>&minus;&minus;stateflags</b> is
+used.</p>
 
 <p style="margin-left:11%;"><b>&minus;!</b>,
 <b>&minus;&minus;magic</b></p>

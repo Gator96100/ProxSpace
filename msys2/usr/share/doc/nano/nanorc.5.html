@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.22.4 -->
-<!-- CreationDate: Wed Dec  2 11:33:23 2020 -->
+<!-- CreationDate: Tue Jun 15 10:05:46 2021 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -222,10 +222,10 @@ screen if the screen is resized. The default value is
 <p style="margin-left:11%;"><b>set functioncolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for the function descriptions in the two help lines
-at the bottom of the screen. See <b>set titlecolor</b> for
-more details.</p>
+<p style="margin-left:15%;">Use this color combination for
+the concise function descriptions in the two help lines at
+the bottom of the screen. See <b>set titlecolor</b> for more
+details.</p>
 
 <p style="margin-left:11%;"><b>set guidestripe</b>
 <i>number</i></p>
@@ -256,9 +256,9 @@ half-screen instead of per line.</p>
 <p style="margin-left:11%;"><b>set keycolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for the shortcut key combos in the two help lines at
-the bottom of the screen. See <b>set titlecolor</b> for more
+<p style="margin-left:15%;">Use this color combination for
+the shortcut key combos in the two help lines at the bottom
+of the screen. See <b>set titlecolor</b> for more
 details.</p>
 
 <p style="margin-left:11%;"><b>set linenumbers</b></p>
@@ -289,11 +289,34 @@ include blank characters. The opening set must come before
 the closing set, and the two sets must be in the same order.
 The default value is &quot;<b>(&lt;[{)&gt;]}</b>&quot;.</p>
 
-<p style="margin-left:11%;"><b>set morespace</b></p>
+<p style="margin-left:11%;"><b>set minibar</b></p>
 
-<p style="margin-left:15%;">Deprecated option since it has
-become the default setting. When needed, use <b>unset
-emptyline</b> instead.</p>
+<p style="margin-left:15%;">Suppress the title bar and
+instead show information about the current buffer at the
+bottom of the screen, in the space for the status bar. In
+this &quot;minibar&quot; the file name is shown on the left,
+followed by an asterisk if the buffer has been modified. On
+the right are displayed the current line and column number,
+the code of the character under the cursor (in Unicode
+format: U+xxxx), the same flags as are shown by <b>set
+stateflags</b>, and a percentage that expresses how far the
+cursor is into the file (linewise). When a file is loaded or
+saved, and also when switching between buffers, the number
+of lines in the buffer is displayed after the file name.
+This number is cleared upon the next keystroke, or replaced
+with an [i/n] counter when multiple buffers are open. The
+line plus column numbers and the character code are
+displayed only when <b>set constantshow</b> is used, and can
+be toggled on and off with <b>M-C</b>. The state flags are
+displayed only when <b>set stateflags</b> is used.</p>
+
+<p style="margin-left:11%;"><b>set minicolor</b>
+[<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
+
+<p style="margin-left:15%;">Use this color combination for
+the minibar. (When this option is not specified, the colors
+of the title bar are used.) See <b>set titlecolor</b> for
+more details.</p>
 
 <p style="margin-left:11%;"><b>set mouse</b></p>
 
@@ -326,10 +349,6 @@ help lines at the bottom of the screen.</p>
 newline when a text does not end with one. (This can cause
 you to save non-POSIX text files.)</p>
 
-<p style="margin-left:11%;"><b>set nopauses</b></p>
-
-<p style="margin-left:15%;">Obsolete option. Ignored.</p>
-
 <p style="margin-left:11%;"><b>set nowrap</b></p>
 
 <p style="margin-left:15%;">Deprecated option since it has
@@ -339,8 +358,8 @@ breaklonglines</b> instead.</p>
 <p style="margin-left:11%;"><b>set numbercolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for line numbers. See <b>set titlecolor</b> for more
+<p style="margin-left:15%;">Use this color combination for
+line numbers. See <b>set titlecolor</b> for more
 details.</p>
 
 <p style="margin-left:11%;"><b>set operatingdir</b>
@@ -363,6 +382,14 @@ remembered for the 200 most-recently edited files.</p>
 <p style="margin-left:15%;">Preserve the XON and XOFF keys
 (<b>^Q</b> and <b>^S</b>).</p>
 
+<p style="margin-left:11%;"><b>set promptcolor</b>
+[<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
+
+<p style="margin-left:15%;">Use this color combination for
+the prompt bar. (When this option is not specified, the
+colors of the title bar are used.) See <b>set titlecolor</b>
+for more details.</p>
+
 <p style="margin-left:11%;"><b>set punct
 &quot;</b><i>characters</i><b>&quot;</b></p>
 
@@ -375,9 +402,10 @@ punctuation, optionally followed by closing brackets (see
 
 <p style="margin-left:11%;"><b>set quickblank</b></p>
 
-<p style="margin-left:15%;">Do quick status-bar blanking:
-status-bar messages will disappear after 1 keystroke instead
-of 25. The option <b>constantshow</b> overrides this.</p>
+<p style="margin-left:15%;">Make status-bar messages
+disappear after 1 keystroke instead of after 20. Note that
+options <b>constantshow</b> and <b>minibar</b> override
+this.</p>
 
 <p style="margin-left:11%;"><b>set quotestr
 &quot;</b><i>regex</i><b>&quot;</b></p>
@@ -422,17 +450,17 @@ deprecated.)</p>
 <p style="margin-left:11%;"><b>set scrollercolor</b>
 <i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for the indicator alias &quot;scrollbar&quot;. (On
-terminal emulators that link to a libvte older than version
-0.55, using a background color here does not work
-correctly.) See <b>set titlecolor</b> for more details.</p>
+<p style="margin-left:15%;">Use this color combination for
+the indicator alias &quot;scrollbar&quot;. (On terminal
+emulators that link to a libvte older than version 0.55,
+using a background color here does not work correctly.) See
+<b>set titlecolor</b> for more details.</p>
 
 <p style="margin-left:11%;"><b>set selectedcolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for selected text. See <b>set titlecolor</b> for more
+<p style="margin-left:15%;">Use this color combination for
+selected text. See <b>set titlecolor</b> for more
 details.</p>
 
 <p style="margin-left:11%;"><b>set showcursor</b></p>
@@ -449,12 +477,6 @@ non-whitespace characters on a line, the cursor will jump to
 that beginning (either forwards or backwards). If the cursor
 is already at that position, it will jump to the true
 beginning of the line.</p>
-
-<p style="margin-left:11%;"><b>set smooth</b></p>
-
-<p style="margin-left:15%;">Deprecated option since it has
-become the default setting. When needed, use <b>unset
-jumpyscrolling</b> instead.</p>
 
 <p style="margin-left:11%;"><b>set softwrap</b></p>
 
@@ -473,6 +495,14 @@ do spell checking and correcting, instead of using the
 built-in corrector that calls <b>hunspell</b>(1) or
 <b>spell</b>(1).</p>
 
+<p style="margin-left:11%;"><b>set spotlightcolor</b>
+[<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
+
+<p style="margin-left:15%;">Use this color combination for
+highlighting a search match. The default value is
+<b>black,lightyellow</b>. See <b>set titlecolor</b> for
+valid color names.</p>
+
 <p style="margin-left:11%;"><b>set stateflags</b></p>
 
 <p style="margin-left:15%;">Use the top-right corner of the
@@ -486,16 +516,16 @@ the center of the title bar.</p>
 <p style="margin-left:11%;"><b>set statuscolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for the status bar. See <b>set titlecolor</b> for
-more details.</p>
+<p style="margin-left:15%;">Use this color combination for
+the status bar. See <b>set titlecolor</b> for more
+details.</p>
 
 <p style="margin-left:11%;"><b>set stripecolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for the vertical guiding stripe. See <b>set
-titlecolor</b> for more details.</p>
+<p style="margin-left:15%;">Use this color combination for
+the vertical guiding stripe. See <b>set titlecolor</b> for
+more details.</p>
 
 <p style="margin-left:11%;"><b>set suspendable</b></p>
 
@@ -517,15 +547,16 @@ spaces.</p>
 <p style="margin-left:11%;"><b>set titlecolor</b>
 [<b>bold,</b>][<b>italic,</b>]<i>fgcolor</i><b>,</b><i>bgcolor</i></p>
 
-<p style="margin-left:15%;">Specify the color combination
-to use for the title bar. Valid names for the foreground and
-background colors are: <b>red</b>, <b>green</b>,
-<b>blue</b>, <b>magenta</b>, <b>yellow</b>, <b>cyan</b>,
-<b>white</b>, and <b>black</b>. Each of these eight names
-may be prefixed with the word <b>light</b> to get a brighter
-version of that color. On terminal emulators that can do at
-least 256 colors, other valid (but unprefixable) color names
-are: <b>pink</b>, <b>purple</b>, <b>mauve</b>,
+<p style="margin-left:15%;">Use this color combination for
+the title bar. Valid names for the foreground and background
+colors are: <b>red</b>, <b>green</b>, <b>blue</b>,
+<b>magenta</b>, <b>yellow</b>, <b>cyan</b>, <b>white</b>,
+and <b>black</b>. Each of these eight names may be prefixed
+with the word <b>light</b> to get a brighter version of that
+color. The word <b>grey</b> or <b>gray</b> may be used as a
+synonym for <b>lightblack</b>. On terminal emulators that
+can do at least 256 colors, other valid (but unprefixable)
+color names are: <b>pink</b>, <b>purple</b>, <b>mauve</b>,
 <b>lagoon</b>, <b>mint</b>, <b>lime</b>, <b>peach</b>,
 <b>orange</b>, <b>latte</b>, and <b>normal</b> -- where
 <b>normal</b> means the default foreground or background
@@ -1407,10 +1438,11 @@ line is the beginning of a paragraph.</p>
 will cut the whole line or just from the current cursor
 position to the end of the line.</p>
 
-<p style="margin-left:15%;"><b>nowrap</b></p>
+<p style="margin-left:15%;"><b>breaklonglines</b></p>
 
 <p style="margin-left:18%;">Toggles whether long lines will
-be hard-wrapped to the next line.</p>
+be hard-wrapped to the next line. (The old name of this
+function, &rsquo;nowrap&rsquo;, is deprecated.)</p>
 
 <p style="margin-left:15%;"><b>tabstospaces</b></p>
 

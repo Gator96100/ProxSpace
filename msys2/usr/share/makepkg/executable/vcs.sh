@@ -2,7 +2,7 @@
 #
 #   vcs.sh - Confirm presence of binaries for VCS operations
 #
-#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ executable_vcs() {
 		local proto=$(get_protocol "$netfile")
 
 		case $proto in
-			bzr*|git*|hg*|svn*)
+			bzr*|fossil*|git*|hg*|svn*)
 				if ! type -p ${proto%%+*} > /dev/null; then
 					local client
 					client=$(get_vcsclient "$proto") || exit $?

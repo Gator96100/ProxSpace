@@ -2,7 +2,7 @@
 #
 #   srcinfo.sh - functions for writing .SRCINFO files
 #
-#   Copyright (c) 2014-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ srcinfo_open_section() {
 	printf '%s = %s\n' "$1" "$2"
 }
 
-srcinfo_close_section() {
+srcinfo_separate_section() {
 	echo
 }
 
@@ -94,7 +94,6 @@ srcinfo_write_global() {
 
 	srcinfo_open_section 'pkgbase' "${pkgbase:-$pkgname}"
 	srcinfo_write_section_details ''
-	srcinfo_close_section
 }
 
 srcinfo_write_package() {
@@ -104,7 +103,6 @@ srcinfo_write_package() {
 
 	srcinfo_open_section 'pkgname' "$1"
 	srcinfo_write_section_details "$1"
-	srcinfo_close_section
 }
 
 write_srcinfo_header() {
@@ -118,6 +116,7 @@ write_srcinfo_content() {
 	srcinfo_write_global
 
 	for pkg in "${pkgname[@]}"; do
+		srcinfo_separate_section
 		srcinfo_write_package "$pkg"
 	done
 }

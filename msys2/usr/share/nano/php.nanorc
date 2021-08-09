@@ -5,7 +5,7 @@ magic "PHP script"
 comment "//"
 
 # PHP markings.
-color brightgreen "(<\?(php)?|\?>)"
+color brightgreen "(<\?(php|=)?|\?>)"
 
 # Function names.
 color white "\<[A-Za-z_][A-Za-z_0-9]*\("
@@ -28,7 +28,7 @@ color magenta "\<(break|continue|goto|return)\>"
 color brightyellow ""(\.|[^"])*"" "'(\.|[^'])*'"
 
 # Comments.
-color brightblue "(^|[[:space:]]+)//.*"
+color brightblue "(^|[[:blank:]]+)//.*"
 color brightblue start="/\*" end="\*/"
 
 # Trailing whitespace.

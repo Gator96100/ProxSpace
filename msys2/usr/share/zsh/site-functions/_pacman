@@ -1,4 +1,4 @@
-#compdef pacman pacman.static=pacman pacman-key makepkg
+#compdef pacman pacman.static=pacman pacman-conf pacman-key makepkg
 
 # copy this file to /usr/share/zsh/site-functions/_pacman
 
@@ -496,6 +496,96 @@ _pacman_zsh_comp() {
 	esac
 }
 
+_pacman_conf_general_directives=(
+	'RootDir'
+	'DBPath'
+	'CacheDir'
+	'HookDir'
+	'GPGDir'
+	'LogFile'
+	'HoldPkg'
+	'IgnorePkg'
+	'NoUpgrade'
+	'NoExtract'
+	'Architecture'
+	'XferCommand'
+	'UseSyslog'
+	'Color'
+	'CheckSpace'
+	'VerbosePkgLists'
+	'DisableDownloadTimeout'
+	'NoProgressBar'
+	'ParallelDownloads'
+	'CleanMethod'
+	'SigLevel'
+	'LocalFileSigLevel'
+	'RemoteFileSigLevel'
+)
+
+_pacman_conf_repo_directives=(
+	'Server'
+	'SigLevel'
+	'Usage'
+)
+
+_pacman_conf_completions_repositories() {
+	local -a repositories
+	# If the user specified an alternate config, use those repos
+	repositories=($(pacman-conf ${(kv)opt_args[(I)-c|--config]} --repo-list ))
+	typeset -U repositories
+	compadd "$@" -a repositories
+}
+
+_pacman_conf_directive() {
+	# Directives use a case-insensitive matcher-list
+	local casematch="m:{[:lower:][:upper:]}={[:upper:][:lower:]}"
+
+	if [[ -n ${opt_args[(I)-r|--repo]} ]]; then
+		compadd -M "$casematch" "$@" -a _pacman_conf_repo_directives
+	else
+		if [[ $words[$CURRENT] == [iI][lL]* ]]; then
+			compadd -M "$casematch" "$@" ILoveCandy # Secret completion!
+		else
+			compadd -M "$casematch" "$@" -a _pacman_conf_general_directives
+		fi
+	fi
+}
+
+_pacman_conf_commands=(
+	{-l,--repo-list}'[List configured repositories]:*: :->repo_list'
+	{-h,--help}'[Output systax and command line options]:*: :->complete'
+	{-V,--version}'[Display version and exit]:*: :->complete'
+)
+
+_pacman_conf_options=(
+	'(-r --repo)'{-r,--repo=}'[Query options for a specific repository]:package repo:_pacman_conf_completions_repositories'
+	'(-v --verbose)'{-v,--verbose}'[Always show directive names]'
+)
+
+_pacman_conf_options_common=(
+	'*'{-c,--config=}'[Specify an alternate configuration file]: :_files'
+	'*'{-R,--rootdir=}'[Specify an alternate insallation root]: :_files'
+)
+
+_pacman_conf() {
+	_arguments -s : \
+		"$_pacman_conf_commands[@]" \
+		"$_pacman_conf_options_common[@]" \
+		"$_pacman_conf_options[@]" \
+		'*:pacman directive:_pacman_conf_directive'
+
+	case $state in
+		repo_list)
+			_arguments -s \
+				'(-l --repo-list)'{-l,--repo-list} \
+				"$_pacman_conf_options_common[@]"
+			;;
+		*)
+			_message "no more arguments"
+			;;
+	esac
+}
+
 _key_shortopts=(
 	'-h[show help]'
 	'-a[Add the specified keys (empty for stdin)]: :_files'
@@ -703,6 +793,9 @@ _pacman_comp() {
 	case "$service" in
 		makepkg)
 			_makepkg "$@"
+			;;
+		pacman-conf)
+			_pacman_conf "$@"
 			;;
 		pacman-key)
 			_pacman_key "$@"

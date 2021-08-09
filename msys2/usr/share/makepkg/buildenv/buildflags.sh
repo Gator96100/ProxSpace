@@ -2,7 +2,7 @@
 #
 #   buildflags.sh - Clear user-specified buildflags if requested
 #
-#   Copyright (c) 2011-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -30,6 +30,6 @@ buildenv_functions+=('buildenv_buildflags')
 
 buildenv_buildflags() {
 	if check_option "buildflags" "n"; then
-		unset CPPFLAGS CFLAGS DEBUG_CFLAGS CXXFLAGS DEBUG_CXXFLAGS LDFLAGS RUSTFLAGS DEBUG_RUSTFLAGS
+		unset CC CXX CPPFLAGS CFLAGS DEBUG_CFLAGS CXXFLAGS DEBUG_CXXFLAGS LDFLAGS RUSTFLAGS DEBUG_RUSTFLAGS
 	fi
 }

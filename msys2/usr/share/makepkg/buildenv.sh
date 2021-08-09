@@ -3,7 +3,7 @@
 #   buildenv.sh - functions for altering the build environment before
 #   compilation
 #
-#   Copyright (c) 2015-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -36,5 +36,5 @@ prepare_buildenv() {
 	done
 
 	# ensure all necessary build variables are exported
-	export CPPFLAGS CFLAGS CXXFLAGS LDFLAGS RUSTFLAGS MAKEFLAGS CHOST
+	export CC CXX CPPFLAGS CFLAGS CXXFLAGS LDFLAGS RUSTFLAGS MAKEFLAGS CHOST
 }

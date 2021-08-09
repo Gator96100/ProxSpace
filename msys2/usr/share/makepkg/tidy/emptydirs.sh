@@ -2,7 +2,7 @@
 #
 #   emptydirs.sh - Remove empty directories from the package
 #
-#   Copyright (c) 2013-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2013-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ tidy_remove+=('tidy_emptydirs')
 tidy_emptydirs() {
 	if check_option "emptydirs" "n"; then
 		msg2 "$(gettext "Removing empty directories...")"
-		# we are unable to use '-empty' as it is non-POSIX and not support by all find variants
+		# we are unable to use '-empty' as it is non-POSIX and not supported by all find variants
 		find . -depth -type d -exec rmdir '{}' \; 2>/dev/null
 	fi
 }

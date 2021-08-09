@@ -315,5 +315,5 @@ Text creation and manipulation
 * Gawk: (gawk).                 A text scanning and processing language.
 * Gawk Work Flow: (gawkworkflow).
                                 Participating in 'gawk' development.
-* grep: (grep).                 Print lines matching a pattern.
+* grep: (grep).                 Print lines that match patterns.
 * sed: (sed).                   Stream EDitor.  

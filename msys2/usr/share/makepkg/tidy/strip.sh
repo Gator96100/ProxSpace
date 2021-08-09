@@ -2,7 +2,7 @@
 #
 #   strip.sh - Strip debugging symbols from binary files
 #
-#   Copyright (c) 2007-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2007-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -32,8 +32,8 @@ tidy_modify+=('tidy_strip')
 
 
 source_files() {
-	LANG=C readelf "$1" --debug-dump | \
-		awk '/DW_AT_name +:/{name=$8}/DW_AT_comp_dir +:/{{if (name == "<artificial>") next}{if (name !~ /^[<\/]/) {printf "%s/", $8}}{print name}}'
+	LANG=C readelf "$1" --debug-dump 2>/dev/null | \
+		awk '/DW_AT_name +:/{name=$NF}/DW_AT_comp_dir +:/{{if (name == "<artificial>") next}{if (name !~ /^[<\/]/) {printf "%s/", $NF}}{print name}}'
 }
 
 strip_file() {
@@ -64,7 +64,10 @@ strip_file() {
 			objcopy --only-keep-debug "$binary" "$dbgdir/$binary.debug"
 
 			msg2 "Creating a debuginfo link to $dbgdir/$binary.debug in $binary"
-			objcopy --add-gnu-debuglink="$dbgdir/${binary#/}.debug" "$binary"
+			local tempfile=$(mktemp "$binary.XXXXXX")
+			objcopy --add-gnu-debuglink="$dbgdir/${binary#/}.debug" "$binary" "$tempfile"
+			cat "$tempfile" > "$binary"
+			rm "$tempfile"
 
 			msg2 "Separating (again) debug info from $binary into $dbgdir/$binary.debug"
 			objcopy --only-keep-debug "$binary" "$dbgdir/$binary.debug"
@@ -75,7 +78,10 @@ strip_file() {
 			# strip debug-info from the original file
 			objcopy --strip-debug "$binary"
 			msg2 "Creating (again) a debuginfo link to $dbgdir/$binary.debug in $binary"
-			objcopy --add-gnu-debuglink="$dbgdir/${binary#/}.debug" "$binary"
+			tempfile=$(mktemp "$binary.XXXXXX")
+			objcopy --add-gnu-debuglink="$dbgdir/${binary#/}.debug" "$binary" "$tempfile"
+			cat "$tempfile" > "$binary"
+			rm "$tempfile"
 			# This way dbg file gets a .gnu_debuglink section (doesn't matter where
 			# it's pointing), and its contents pass the CRC32 check
 
@@ -91,7 +97,21 @@ strip_file() {
 		;;
 	esac
 
-	strip $@ "$binary"
+	local tempfile=$(mktemp "$binary.XXXXXX")
+	if strip "$@" "$binary" -o "$tempfile"; then
+		cat "$tempfile" > "$binary"
+	fi
+	rm -f "$tempfile"
+}
+
+strip_lto() {
+	local binary=$1;
+
+	local tempfile=$(mktemp "$binary.XXXXXX")
+	if strip -R .gnu.lto_* -R .gnu.debuglto_* -N __gnu_lto_v1 "$binary" -o "$tempfile"; then
+		cat "$tempfile" > "$binary"
+	fi
+	rm -f "$tempfile"
 }
 
 
@@ -119,6 +139,7 @@ tidy_strip() {
 			-o -type f -executable ! -name '*.dll' ! -name '*.exe' ! -name '*.so' ! -name '*.so.[0-9]*' ! -name '*.oct' ! -name '*.cmxs' ! -name '*.a' ! -name '*.la' ! -name '*.lib' ! -name '*.exe.manifest' ! -name '*.exe.config' ! -name '*.dll.config' ! -name '*.mdb' ! -name '*-config' ! -name '*.csh' ! -name '*.sh' ! -name '*.pl' ! -name '*.pm' ! -name '*.py' ! -name '*.rb' ! -name '*.tcl' -print0 | \
 		while IFS= read -d $'\0' binary
 		do
+			local STRIPLTO=0
 			# Skip thin archives from stripping
 			case "${binary##*/}" in
 				*.a)
@@ -184,23 +205,23 @@ tidy_strip() {
 					strip_flags="$STRIP_SHARED";;
 				*application/x-sharedlib*)  # Libraries (.so)
 					strip_flags="$STRIP_SHARED";;
-				*application/x-archive*)    # Libraries (.a)
-					strip_flags="$STRIP_STATIC";;
-				*application/x-object*)
-					case "$binary" in
-						*.ko)                   # Kernel module
-							strip_flags="$STRIP_SHARED";;
-						*)
-							continue;;
-					esac;;
-				*application/x-executable*) # Binaries
+				*Type:*'EXEC (Executable file)'*) # Binaries
 					strip_flags="$STRIP_BINARIES";;
-				*application/x-pie-executable*)  # Relocatable binaries
-					strip_flags="$STRIP_SHARED";;
+				*Type:*'REL (Relocatable file)'*) # Libraries (.a) or objects
+					if ar t "$binary" &>/dev/null; then # Libraries (.a)
+						strip_flags="$STRIP_STATIC"
+						STRIPLTO=1
+					elif [[ $binary = *'.ko' ]]; then # Kernel module
+						strip_flags="$STRIP_SHARED"
+					else
+						continue
+					fi
+					;;
 				*)
 					continue ;;
 			esac
 			strip_file "$binary" ${strip_flags}
+			(( STRIPLTO )) && strip_lto "$binary"
 		done
 	fi
 }

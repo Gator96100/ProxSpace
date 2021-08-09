@@ -2,7 +2,7 @@
 #
 #   verify_signature.sh - functions for checking PGP signatures
 #
-#   Copyright (c) 2011-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -134,7 +134,7 @@ verify_file_signature() {
 	fi
 
 	found=0
-	for ext in "" gz bz2 xz lrz lzo Z; do
+	for ext in "" gz bz2 xz lrz lzo Z zst; do
 		if sourcefile="$(get_filepath "${file%.*}${ext:+.$ext}")"; then
 			found=1
 			break
@@ -152,6 +152,7 @@ verify_file_signature() {
 		xz)  decompress="xz -c -d" ;;
 		lrz) decompress="lrzip -q -d" ;;
 		lzo) decompress="lzop -c -d -q" ;;
+		zst) decompress="zstd -d -q -f" ;;
 		Z)   decompress="uncompress -c -f" ;;
 		"")  decompress="cat" ;;
 	esac

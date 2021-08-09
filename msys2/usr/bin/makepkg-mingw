@@ -61,13 +61,20 @@ else
 fi
 
 readonly ALL_OFF BOLD BLUE GREEN RED YELLOW
-MINGW_INSTALLS="${MINGW_INSTALLS,,}"
-MINGW_INSTALLS="${MINGW_INSTALLS:-mingw64 mingw32}"
-MINGW_INSTALLS_ALLOWED=('mingw32' 'mingw64' 'clang32' 'clang64')
 
-for _mingw in ${MINGW_INSTALLS}; do
-  if [[ ! " ${MINGW_INSTALLS_ALLOWED[*]} " = *" ${_mingw} "* ]]; then
-    print_error "Requested mingw installation '${_mingw}' unknown, possible values: ${MINGW_INSTALLS_ALLOWED[*]}"
+# For backwards compatibility
+if [[ -z "${MINGW_ARCH}" ]] && [[ -n "${MINGW_INSTALLS}" ]]; then
+  plain "MINGW_INSTALLS is deprecated, use MINGW_ARCH instead"
+  MINGW_ARCH="${MINGW_INSTALLS}";
+fi
+
+MINGW_ARCH="${MINGW_ARCH,,}"
+MINGW_ARCH="${MINGW_ARCH:-mingw64 mingw32}"
+MINGW_ARCH_ALLOWED=('mingw32' 'mingw64' 'clang32' 'clang64' 'clangarm64' 'ucrt64')
+
+for _mingw in ${MINGW_ARCH}; do
+  if [[ ! " ${MINGW_ARCH_ALLOWED[*]} " = *" ${_mingw} "* ]]; then
+    print_error "MINGW_ARCH: '${_mingw}' unknown, possible values: ${MINGW_ARCH_ALLOWED[*]}"
     exit 1
   fi
 done
@@ -79,7 +86,7 @@ for _arg in "$@"; do
   fi
 done
 
-for _mingw in ${MINGW_INSTALLS}; do
+for _mingw in ${MINGW_ARCH}; do
   case ${_mingw} in
     mingw32)
       _msystem=MINGW32
@@ -101,16 +108,26 @@ for _mingw in ${MINGW_INSTALLS}; do
       _compiler="/${_mingw}/bin/clang.exe"
       _toolchain="mingw-w64-clang-x86_64-clang"
     ;;
+    clangarm64)
+      _msystem=CLANGARM64
+      _compiler="/${_mingw}/bin/clang.exe"
+      _toolchain="mingw-w64-clang-aarch64-clang"
+    ;;
+    ucrt64)
+      _msystem=UCRT64
+      _compiler="/${_mingw}/bin/gcc.exe"
+      _toolchain="mingw-w64-ucrt-x86_64-gcc"
+    ;;
   esac
 
   if [ ! -f "${_compiler}" ]; then
     print_warning "You don't have the required toolchain installed for ${_mingw}."
-    print_warning "To install it run: 'pacman -S -${_toolchain}'"
+    print_warning "To install it run: 'pacman -S ${_toolchain}'"
   fi
 
   MSYSTEM="${_msystem}" \
   CHERE_INVOKING=1 \
-    bash -leo pipefail -c "/usr/bin/makepkg --config /etc/makepkg_${_mingw}.conf \"\$@\"" bash "$@"
+    bash -leo pipefail -c "/usr/bin/makepkg --config /etc/makepkg_mingw.conf \"\$@\"" bash "$@"
 
 done
 

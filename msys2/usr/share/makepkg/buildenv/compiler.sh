@@ -4,7 +4,7 @@
 #   ccache - Cache compilations and reuse them to save time on repetitions
 #   distcc - Distribute compilation of C and C++ across machines
 #
-#   Copyright (c) 2007-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2007-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -44,7 +44,9 @@ buildenv_ccache() {
 buildenv_distcc() {
 	if check_buildoption "distcc" "y"; then
 		if (( using_ccache )); then
-			export CCACHE_PREFIX="${CCACHE_PREFIX:+$CCACHE_PREFIX }distcc"
+			if [[ " $CCACHE_PREFIX " != *" distcc "* ]]; then
+				export CCACHE_PREFIX="${CCACHE_PREFIX:+$CCACHE_PREFIX }distcc"
+			fi
 			export CCACHE_BASEDIR="$srcdir"
 		elif [[ -d /usr/lib/distcc/bin ]]; then
 			export PATH="/usr/lib/distcc/bin:$PATH"

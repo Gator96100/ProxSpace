@@ -2,7 +2,7 @@
 #
 #   compress.sh - functions to compress archives in a uniform manner
 #
-#   Copyright (c) 2017-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2017-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ LIBMAKEPKG_UTIL_COMPRESS_SH=1
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 source "$LIBRARY/util/message.sh"
+source "$LIBRARY/util/pkgbuild.sh"
 
 
 # Wrapper around many stream compression formats, for use in the middle of a
@@ -31,20 +32,49 @@ source "$LIBRARY/util/message.sh"
 compress_as() {
 	# $1: final archive filename extension for compression type detection
 
-	local ext=".tar${1##*.tar}"
+	local cmd ext=${1#${1%.tar*}}
+
+	if ! get_compression_command "$ext" cmd; then
+		warning "$(gettext "'%s' is not a valid archive extension.")" "${ext:-${1##*/}}"
+		cat
+	else
+		"${cmd[@]}"
+	fi
+}
+
+# Retrieve the compression command for an archive extension, or cat for .tar,
+# and save it to an existing array name. If the extension cannot be found,
+# clear the array and return failure.
+get_compression_command() {
+	local extarray ext=$1 outputvar=$2
+	local resolvecmd=() fallback=()
 
 	case "$ext" in
-		*.tar.gz)  ${COMPRESSGZ[@]:-gzip -c -f -n} ;;
-		*.tar.bz2) ${COMPRESSBZ2[@]:-bzip2 -c -f} ;;
-		*.tar.xz)  ${COMPRESSXZ[@]:-xz -c -z -} ;;
-		*.tar.zst) ${COMPRESSZST[@]:-zstd -c -z -q -} ;;
-		*.tar.lrz) ${COMPRESSLRZ[@]:-lrzip -q} ;;
-		*.tar.lzo) ${COMPRESSLZO[@]:-lzop -q} ;;
-		*.tar.Z)   ${COMPRESSZ[@]:-compress -c -f} ;;
-		*.tar.lz4) ${COMPRESSLZ4[@]:-lz4 -q} ;;
-		*.tar.lz)  ${COMPRESSLZ[@]:-lzip -c -f} ;;
-		*.tar)     cat ;;
-		*) warning "$(gettext "'%s' is not a valid archive extension.")" \
-			"$ext"; cat ;;
+		*.tar.gz)  fallback=(gzip -c -f -n) ;;
+		*.tar.bz2) fallback=(bzip2 -c -f) ;;
+		*.tar.xz)  fallback=(xz -c -z -) ;;
+		*.tar.zst) fallback=(zstd -c -z -q -) ;;
+		*.tar.lrz) fallback=(lrzip -q) ;;
+		*.tar.lzo) fallback=(lzop -q) ;;
+		*.tar.Z)   fallback=(compress -c -f) ;;
+		*.tar.lz4) fallback=(lz4 -q) ;;
+		*.tar.lz)  fallback=(lzip -c -f) ;;
+		*.tar)     fallback=(cat) ;;
+		# do not respect unknown COMPRESS* env vars
+		*)        array_build "$outputvar" resolvecmd; return 1 ;;
 	esac
+
+	ext=${ext#*.tar.}
+	# empty the variable for plain tar archives so we fallback to cat
+	ext=${ext#*.tar}
+
+	if [[ -n $ext ]]; then
+		extarray="COMPRESS${ext^^}[@]"
+		resolvecmd=("${!extarray}")
+	fi
+	if (( ${#resolvecmd[@]} == 0 )); then
+		resolvecmd=("${fallback[@]}")
+	fi
+
+	array_build "$outputvar" resolvecmd
 }

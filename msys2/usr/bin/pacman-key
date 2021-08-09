@@ -2,9 +2,8 @@
 #
 #   pacman-key - manages pacman's keyring
 #                Based on apt-key, from Debian
-#   Generated from pacman-key.sh.in; do not edit by hand.
 #
-#   Copyright (c) 2010-2020 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2010-2021 Pacman Development Team <pacman-dev@archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,7 +23,7 @@
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver="5.2.2"
+declare -r myver="6.0.0"
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
@@ -52,6 +51,7 @@ REFRESH=0
 UPDATEDB=0
 USE_COLOR='y'
 VERIFY=0
+VERBOSE=0
 
 usage() {
 	printf "pacman-key (pacman) %s\n" ${myver}
@@ -78,6 +78,7 @@ usage() {
 	printf -- "$(gettext "  --populate                Reload the default keys from the (given) keyrings\n\
                             in '%s'")\n" "/usr/share/pacman/keyrings"
 	printf -- "$(gettext "  --refresh-keys            Update specified or all keys from a keyserver")\n"
+	printf -- "$(gettext "  --verbose                 Show extra information")\n"
 	echo
 	printf -- "$(gettext "Options:")\n"
 	printf -- "$(gettext "  --config <file>           Use an alternate config file (instead of\n\
@@ -92,7 +93,7 @@ usage() {
 
 version() {
 	printf "pacman-key (pacman) %s\n" "${myver}"
-	printf -- "Copyright (c) 2010-2020 Pacman Development Team <pacman-dev@archlinux.org>.\n"
+	printf -- "Copyright (c) 2010-2021 Pacman Development Team <pacman-dev@archlinux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\
@@ -145,6 +146,8 @@ key_lookup_from_name() {
 
 generate_master_key() {
 	# Generate the master key, which will be in both pubring and secring
+	msg "$(gettext "Generating pacman master key. This may take some time.")"
+
 	"${GPG_PACMAN[@]}" --gen-key --batch <<EOF
 %echo Generating pacman keyring master key...
 Key-Type: RSA
@@ -187,6 +190,31 @@ check_keyids_exist() {
 	if (( ret )); then
 		exit 1
 	fi
+}
+
+key_is_lsigned() {
+	secret_key=$("${GPG_PACMAN[@]}" --with-colons --list-secret-key | awk -F : 'NR==1 {print $5}')
+	while IFS=: read -r type valid _ _ sign_key _; do
+		if [[ $type != "sig" || $valid != "!" ]]; then
+			continue
+		fi
+		if [[ "$sign_key" == "$secret_key" ]]; then
+			return 0
+		fi
+	done < <("${GPG_PACMAN[@]}" --with-colons --check-signatures "$1")
+	return 1
+}
+
+key_is_revoked() {
+	while IFS=: read -r type _ _ _ _ _ _ _ _ _ _ flags _; do
+		if [[ $type != "pub" ]]; then
+			continue
+		fi
+		if [[ $flags == *"D"* ]]; then
+			return 0
+		fi
+	done < <("${GPG_PACMAN[@]}" --with-colons --list-key "$1")
+	return 1
 }
 
 initialize() {
@@ -246,7 +274,7 @@ check_keyring() {
 		fi
 	fi
 
-	if (( LSIGNKEY )); then
+	if (( LSIGNKEY || POPULATE )); then
 		if [[ $(secret_keys_available) -lt 1 ]]; then
 			error "$(gettext "There is no secret key available to sign with.")"
 			msg "$(gettext "Use '%s' to generate a default secret key.")" "pacman-key --init"
@@ -333,11 +361,21 @@ populate_keyring() {
 	done
 
 	if (( ${#revoked_ids[@]} > 0 )); then
+		local key_count=0
 		msg "$(gettext "Disabling revoked keys in keyring...")"
 		for key_id in "${!revoked_ids[@]}"; do
-			msg2 "$(gettext "Disabling key %s...")" "${key_id}"
+			if key_is_revoked "$key_id" ; then
+				continue
+			fi
+			if (( VERBOSE )); then
+				msg2 "$(gettext "Disabling key %s...")" "${key_id}"
+			fi
 			printf 'disable\nquit\n' | LANG=C "${GPG_PACMAN[@]}" --command-fd 0 --quiet --batch --edit-key "${key_id}" 2>/dev/null
+			key_count=$((key_count+1))
 		done
+		if (( key_count )); then
+			msg2 "$(gettext "Disabled %s keys.")" "${key_count}"
+		fi
 	fi
 }
 
@@ -446,18 +484,28 @@ lsign_keys() {
 	check_keyids_exist
 
 	local ret=0
+	local key_count=0
 	for key_id in "$@"; do
-		msg2 "$(gettext "Locally signing key %s...")" "${key_id}"
+		if key_is_lsigned "$key_id" ; then
+			continue
+		fi
+		if (( VERBOSE )); then
+			msg2 "$(gettext "Locally signing key %s...")" "${key_id}"
+		fi
 		# we cannot use --yes here as gpg would still ask for confirmation if a key has more than one uid
 		printf 'y\ny\n' | LANG=C "${GPG_PACMAN[@]}" --command-fd 0 --quiet --batch --lsign-key "${key_id}" 2>/dev/null
 		if (( PIPESTATUS[1] )); then
 			error "$(gettext "%s could not be locally signed.")" "${key_id}"
 			ret=1
 		fi
+		key_count=$((key_count+1))
 	done
 
 	if (( ret )); then
 		exit 1
+	fi
+	if (( key_count )); then
+		msg2 "$(gettext "Locally signed %s keys.")" "${key_count}"
 	fi
 }
 
@@ -493,11 +541,36 @@ receive_keys() {
 }
 
 refresh_keys() {
+	local ret=0 ids masterkey emails
+
 	check_keyids_exist "$@"
-	if ! "${GPG_PACMAN[@]}" --refresh-keys "$@" ; then
-		error "$(gettext "A specified local key could not be updated from a keyserver.")"
-		exit 1
-	fi
+
+	# don't try to refresh the user's local masterkey
+	masterkey="$("${GPG_PACMAN[@]}" --list-keys --with-colons pacman@localhost |
+		awk -F: '$1 == "pub" { print $5 }')"
+
+	mapfile -t ids < \
+		<("${GPG_PACMAN[@]}" --list-keys --with-colons "$@" |
+			awk -F: '$1 == "pub" { print $5 }' | grep -vx "$masterkey")
+
+	for id in "${ids[@]}"; do
+		mapfile -t emails < \
+			<("${GPG_PACMAN[@]}" --list-keys --list-options show-only-fpr-mbox "$id" |
+				awk '{print $2 }')
+
+		# first try looking up the key in a WKD (only works by email address)
+		for email in "${emails[@]}"; do
+			"${GPG_PACMAN[@]}" --locate-external-keys "$email" && break
+		done
+
+		# if no key was found, fall back to using the keyservers (with the key fingerprint instead)
+		if (( $? )) &&  ! "${GPG_PACMAN[@]}" --refresh-keys "$id"; then
+			error "$(gettext "Could not update key: %s")" "$id"
+			ret=1
+		fi
+	done
+
+	exit $ret
 }
 
 verify_sig() {
@@ -546,7 +619,7 @@ OPT_SHORT="adefhlruvV"
 OPT_LONG=('add' 'config:' 'delete' 'edit-key' 'export' 'finger' 'gpgdir:'
           'help' 'import' 'import-trustdb' 'init' 'keyserver:' 'list-keys' 'list-sigs'
           'lsign-key' 'nocolor' 'populate' 'recv-keys' 'refresh-keys' 'updatedb'
-          'verify' 'version')
+          'verbose' 'verify' 'version')
 if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
 	exit 1 # E_INVALID_OPTION
 fi
@@ -579,6 +652,7 @@ while (( $# )); do
 		-r|--recv-keys)   RECEIVE=1 UPDATEDB=1 ;;
 		--refresh-keys)   REFRESH=1 ;;
 		-u|--updatedb)    UPDATEDB=1 ;;
+		--verbose)        VERBOSE=1 ;;
 		-v|--verify)      VERIFY=1 ;;
 
 		-h|--help)        usage; exit 0 ;;

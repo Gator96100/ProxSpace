@@ -44,8 +44,7 @@
 ## Do case-sensitive searches by default.
 # set casesensitive
 
-## Constantly display the cursor position in the status bar.  Note that
-## this overrides "quickblank".
+## Constantly display the cursor position in the status bar or minibar.
 # set constantshow
 
 ## Use cut-from-cursor-to-end-of-line by default.
@@ -84,6 +83,9 @@
 ## come before the latter set, and both must be in the same order.
 # set matchbrackets "(<[{)>]}"
 
+## Suppress title bar and show file name and editor state at the bottom.
+# set minibar
+
 ## Enable mouse support, if available for your system.  When enabled,
 ## mouse clicks can be used to place the cursor, set the mark (with a
 ## double click), and execute shortcuts.  The mouse will work in the X
@@ -121,8 +123,7 @@
 ## sentences.
 # set punct "!.?"
 
-## Do quick status-bar blanking.  Status-bar messages will disappear after
-## 1 keystroke instead of 26.  Note that "constantshow" overrides this.
+## Make status-bar messages disappear after 1 keystroke instead of after 20.
 # set quickblank
 
 ## The regular expression that matches quoting characters in email
@@ -200,11 +201,14 @@
 ## of a single character, and without affecting the cutbuffer).
 # set zap
 
-## Paint the interface elements of nano.  These are examples;
-## by default there are no colors, except for errorcolor.
+
+## Paint the interface elements of nano.  These are examples; there are
+## no colors by default, except for errorcolor and spotlightcolor.
 # set titlecolor bold,lightwhite,blue
+# set promptcolor lightwhite,lightblack
 # set statuscolor bold,lightwhite,green
 # set errorcolor bold,lightwhite,red
+# set spotlightcolor black,lime
 # set selectedcolor lightwhite,magenta
 # set stripecolor ,yellow
 # set scrollercolor cyan
@@ -214,8 +218,10 @@
 
 ## In root's .nanorc you might want to use:
 # set titlecolor bold,lightwhite,magenta
+# set promptcolor black,yellow
 # set statuscolor bold,lightwhite,magenta
 # set errorcolor bold,lightwhite,red
+# set spotlightcolor black,orange
 # set selectedcolor lightwhite,cyan
 # set stripecolor ,yellow
 # set scrollercolor magenta
@@ -259,6 +265,12 @@
 ## <Ctrl+Backspace> delete the word to the left of the cursor with:
 # bind ^H chopwordleft main
 
+## For quickly uppercasing or lowercasing the word under the cursor.
+## (These effectively do a Ctrl+Right followed by a Shift+Ctrl+Left,
+## and then pipe the selected text through a sed command.)
+#bind Sh-M-U "Oc[1;6D|sed 's/.*/\U&/'" main
+#bind Sh-M-L "Oc[1;6D|sed 's/.*/\L&/'" main
+
 ## If you would like nano to have keybindings that are more "usual",
 ## such as ^O for Open, ^F for Find, ^H for Help, and ^Q for Quit,
 ## then uncomment these:
@@ -273,11 +285,11 @@
 #bind ^B wherewas all
 #bind ^D findprevious all
 #bind ^R replace main
-#bind M-X flipnewbuffer all
-#bind ^X cut all
+#bind ^X cut main
 #bind ^C copy main
 #bind ^V paste all
 #bind ^P location main
+#bind ^E execute main
 #bind ^A mark main
 #unbind ^K main
 #unbind ^U all
@@ -287,9 +299,10 @@
 #unbind M-T main
 #bind ^T gotoline main
 #bind ^T gotodir browser
-#bind ^Y speller main
+#bind ^T cutrestoffile execute
+#bind ^L linter execute
 #bind M-U undo main
 #bind M-R redo main
-#bind ^U undo main
-#bind ^E redo main
+#bind ^Z undo main
+#bind ^Y redo main
 #set multibuffer

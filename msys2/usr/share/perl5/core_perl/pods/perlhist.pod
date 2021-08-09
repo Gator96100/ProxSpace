@@ -34,7 +34,8 @@ Chris C<BinGOs> Williams, Zefram, Ævar Arnfjörð Bjarmason, Stevan
 Little, Dave Rolsky, Max Maischein, Abigail, Jesse Luehrs, Tony Cook,
 Dominic Hargreaves, Aaron Crane, Aristotle Pagaltzis, Matthew Horsfall,
 Peter Martini, Sawyer X, Chad 'Exodist' Granum, Renee Bäcker, Eric Herman,
-John SJ Anderson, Karen Etheridge, Zak B. Elep, and Tom Hukins.
+John SJ Anderson, Karen Etheridge, Zak B. Elep, Tom Hukins, and Richard
+Leach.
 
 =head2 PUMPKIN?
 
@@ -65,8 +66,8 @@ the strings?).
 =head1 THE RECORDS
 
  Pump-  Release         Date            Notes
- king                                   (by no means
-                                         comprehensive,
+ kin                                    (by no means
+ Holder                                  comprehensive,
                                          see Changes*
                                          for details)
  ======================================================================
@@ -694,6 +695,16 @@ the strings?).
  Sawyer X  5.32.0-RC0   2020-May-30     The 5.32 maintenance track
  Sawyer X  5.32.0-RC1   2020-Jun-07
  Sawyer X  5.32.0       2020-Jun-20
+ Steve     5.32.1-RC1   2021-Jan-09
+ Steve     5.32.1       2021-Jan-23
+
+ Sawyer X  5.33.0       2020-Jul-17     The 5.33 development track
+ Ether     5.33.1       2020-Aug-20
+ Sawyer X  5.33.2       2020-Sep-20
+ Steve     5.33.3       2020-Oct-20
+ Tom H     5.33.4       2020-Nov-20
+ Max M     5.33.5       2020-Dec-20
+ Richard L 5.33.6       2021-Jan-20
 
 =head2 SELECTED RELEASE SIZES
 

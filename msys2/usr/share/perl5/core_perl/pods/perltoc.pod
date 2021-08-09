@@ -4445,6 +4445,42 @@ Perturbance, New Default Hash Function, Alternative Hash Functions
 
 =back
 
+=head2 perlsecpolicy - Perl security report handling policy
+
+=over 4
+
+=item DESCRIPTION
+
+=item REPORTING SECURITY ISSUES IN PERL
+
+=item WHAT ARE SECURITY ISSUES
+
+=over 4
+
+=item Software covered by the Perl security team
+
+=item Bugs that may qualify as security issues in Perl
+
+=item Bugs that do not qualify as security issues in Perl
+
+=item Bugs that require special categorization
+
+=back
+
+=item HOW WE DEAL WITH SECURITY ISSUES
+
+=over 4
+
+=item Perl's vulnerability remediation workflow
+
+=item Publicly known and zero-day security issues
+
+=item Vulnerability credit and bounties
+
+=back
+
+=back
+
 =head2 perlmod - Perl modules (packages and symbol tables)
 
 =over 4
@@ -7680,6 +7716,40 @@ experimental, deprecated, discouraged, removed
 
 =back
 
+=head2 perlgov - Perl Rules of Governance
+
+=over 4
+
+=item PREAMBLE
+
+=item Mandate
+
+=item Definitions
+
+"Core Team", "Steering Council", "Vote Administrator"
+
+=over 4
+
+=item The Core Team
+
+=item The Steering Council
+
+=item The Vote Administrator
+
+=back
+
+=item Core Team Members
+
+Abhijit Menon-Sen (inactive), Andy Dougherty, Chad Granum, Chris 'BinGOs'
+Williams, Craig Berry, Dagfinn Ilmari Mannsåker, Dave Mitchell, David
+Golden, H. Merijn Brand, Hugo van der Sanden, James E Keenan, Jan Dubois
+(inactive), Jesse Vincent (inactive), Karen Etheridge, Karl Williamson,
+Leon Timmermans, Matthew Horsfall, Max Maischein, Nicholas Clark, Nicolas
+R, Paul "LeoNerd" Evans, Philippe "BooK" Bruhat, Ricardo Signes, Sawyer X,
+Steve Hay, Stuart Mackintosh, Todd Rinaldo, Tony Cook
+
+=back
+
 =head2 perlgit - Detailed information about git and the Perl repository
 
 =over 4
@@ -7876,91 +7946,13 @@ B<-i>, B<-V>
 
 =back
 
-=head2 perldelta - what is new for perl v5.32.0
+=head2 perldelta - what is new for perl v5.32.1
 
 =over 4
 
 =item DESCRIPTION
 
-=item Core Enhancements
-
-=over 4
-
-=item The isa Operator
-
-=item Unicode 13.0 is supported
-
-=item Chained comparisons capability
-
-=item New Unicode properties C<Identifier_Status> and C<Identifier_Type>
-supported
-
-=item It is now possible to write C<qr/\p{Name=...}/>, or
-C<qr!\p{na=/(SMILING|GRINNING) FACE/}!>
-
-=item Improvement of C<POSIX::mblen()>, C<mbtowc>, and C<wctomb>
-
-=item Alpha assertions are no longer experimental
-
-=item Script runs are no longer experimental
-
-=item Feature checks are now faster
-
-=item Perl is now developed on GitHub
-
-=item Compiled patterns can now be dumped before optimization
-
-=back
-
-=item Security
-
-=over 4
-
-=item [CVE-2020-10543] Buffer overflow caused by a crafted regular
-expression
-
-=item [CVE-2020-10878] Integer overflow via malformed bytecode produced by
-a crafted regular expression
-
-=item [CVE-2020-12723] Buffer overflow caused by a crafted regular
-expression
-
-=item Additional Note
-
-=back
-
 =item Incompatible Changes
-
-=over 4
-
-=item Certain pattern matching features are now prohibited in compiling
-Unicode property value wildcard subpatterns
-
-=item Unused functions C<POSIX::mbstowcs> and C<POSIX::wcstombs> are
-removed
-
-=item A bug fix for C<(?[...])> may have caused some patterns to no
-longer compile
-
-=item C<\p{I<user-defined>}> properties now always override official
-Unicode ones
-
-=item Modifiable variables are no longer permitted in constants
-
-=item Use of L<C<vec>|perlfunc/vec EXPR,OFFSET,BITS> on strings with code
-points above 0xFF is forbidden
-
-=item Use of code points over 0xFF in string bitwise operators
-
-=item C<Sys::Hostname::hostname()> does not accept arguments
-
-=item Plain "0" string now treated as a number for range operator
-
-=item C<\K> now disallowed in look-ahead and look-behind assertions
-
-=back
-
-=item Performance Enhancements
 
 =item Modules and Pragmata
 
@@ -7968,17 +7960,15 @@ points above 0xFF is forbidden
 
 =item Updated Modules and Pragmata
 
-=item Removed Modules and Pragmata
-
 =back
 
 =item Documentation
 
 =over 4
 
-=item Changes to Existing Documentation
+=item New Documentation
 
-C<caller>, C<__FILE__>, C<__LINE__>, C<return>, C<open>
+=item Changes to Existing Documentation
 
 =back
 
@@ -7986,31 +7976,11 @@ C<caller>, C<__FILE__>, C<__LINE__>, C<return>, C<open>
 
 =over 4
 
-=item New Diagnostics
-
 =item Changes to Existing Diagnostics
 
 =back
 
-=item Utility Changes
-
-=over 4
-
-=item L<perlbug>
-
-The bug tracker homepage URL now points to GitHub
-
-=item L<streamzip>
-
-=back
-
 =item Configuration and Compilation
-
-=over 4
-
-=item F<Configure>
-
-=back
 
 =item Testing
 
@@ -8018,21 +7988,13 @@ The bug tracker homepage URL now points to GitHub
 
 =over 4
 
-=item Discontinued Platforms
-
-Windows CE
-
 =item Platform-Specific Notes
 
-Linux, NetBSD 8.0, Windows, Solaris, VMS, z/OS
+MacOS (Darwin), Minix
 
 =back
 
-=item Internal Changes
-
 =item Selected Bug Fixes
-
-=item Obituary
 
 =item Acknowledgements
 
@@ -8044,7 +8006,67 @@ Linux, NetBSD 8.0, Windows, Solaris, VMS, z/OS
 
 =back
 
-=head2 perl5320delta, perldelta - what is new for perl v5.32.0
+=head2 perl5321delta, perldelta - what is new for perl v5.32.1
+
+=over 4
+
+=item DESCRIPTION
+
+=item Incompatible Changes
+
+=item Modules and Pragmata
+
+=over 4
+
+=item Updated Modules and Pragmata
+
+=back
+
+=item Documentation
+
+=over 4
+
+=item New Documentation
+
+=item Changes to Existing Documentation
+
+=back
+
+=item Diagnostics
+
+=over 4
+
+=item Changes to Existing Diagnostics
+
+=back
+
+=item Configuration and Compilation
+
+=item Testing
+
+=item Platform Support
+
+=over 4
+
+=item Platform-Specific Notes
+
+MacOS (Darwin), Minix
+
+=back
+
+=item Selected Bug Fixes
+
+=item Acknowledgements
+
+=item Reporting Bugs
+
+=item Give Thanks
+
+=item SEE ALSO
+
+=back
+
+=head2 perl5320delta - what is new for perl v5.32.0
 
 =over 4
 

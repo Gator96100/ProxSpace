@@ -21,7 +21,7 @@ mingw-w64-x86_64-python
 mingw-w64-x86_64-python-pip
 mingw-w64-x86_64-python-setuptools
 mingw-w64-x86_64-jansson
-mingw-w64-x86_64-qt5
+mingw-w64-x86_64-qt5-base
 mingw-w64-x86_64-gdb
 mingw-w64-x86_64-openocd
 mingw-w64-x86_64-opencl-icd-git

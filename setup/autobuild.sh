@@ -120,7 +120,7 @@ function loop_folders {
 		
 		if check_for_updates; then
 			#Build rrg
-			if [ -f "rdv40.txt" ]; then
+			if [ -f "pm3" ]; then
 				build_rrg
 			else
 				build_official

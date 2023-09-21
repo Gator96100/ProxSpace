@@ -30,7 +30,7 @@ if [ "$MSYSTEM" == "MINGW64" ]; then
 			yes | pacman -Syuu
 			exit
 		else
-			if [ -z "$PSSKIPRANKING" ]; then
+			if [ -n "$PSRANKING" ]; then
 				ps-rankmirrors
 			fi
 		

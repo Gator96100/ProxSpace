@@ -1,0 +1,34 @@
+#compdef paccache
+
+# TODO: Valid targets and --ignore values are package names in the cache. This
+# is not the same as package names installed or available in sync. How do we
+# generate this list?
+
+declare -a args
+args=(
+	# Exlusive group
+	+ '(operations)'
+	{--dryrun,-d}'[perform a dry run, only finding candidate packages]'
+	{--move,-m}'[move candidate packages to "dir"]:directory:_files -/'
+	{--remove,-r}'[remove candidate packages]'
+
+	+ options
+	'(--arch -a)'{--arch=,-a+}'[scan for "arch" (default: all architectures)]:architecture: '
+	'(--cachedir -c)'{--cachedir=,-c+}'[scan "dir" for packages. can be used more than once]:directory:_files -/'
+	'(--force -f)'{--force,-f}'[apply force to mv(1) and rm(1) operations]'
+	'(--ignore -i)'{--ignore=,-i+}'[ignore "pkgs", comma-separated, alternatively - for stdin]:pkgs: '
+	'(--keep -k)'{--keep=,-k+}'[keep "num" of each package in the cache (default: 3)]:number: '
+	'--min-atime[keep packages with an atime that is not older]:time: '
+	'--min-mtime[keep packages with an mtime that is not older]:time: '
+	'--nocolor[do not colorize output]'
+	'(--null -z)'{--null,-z}'[use null delimiters for candidate names (only with -v and -vv)]'
+	'(--quiet -q)'{--quiet,-q}'[[minimize output]'
+	'(--uninstalled -u)'{--uninstalled,-u}'[target uninstalled packages]'
+	'(-)'{--help,-h}'[display help message and exit]'
+	'(-)'{--version,-V}'[display version information and exit]'
+	'*'{--verbose,-v}'[increase verbosity. specify up to 3 times]'
+
+	'*:targets: '
+)
+
+_arguments $args

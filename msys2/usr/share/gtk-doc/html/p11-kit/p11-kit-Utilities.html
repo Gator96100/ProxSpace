@@ -133,7 +133,7 @@ The string is owned by the p11-kit library and is only valid on the same
 thread that the failed function executed on.</p>
 <div class="refsect3">
 <a name="p11-kit-message.returns"></a><h4>Returns</h4>
-<p> The last failure message, or <code class="literal">NULL</code>.</p>
+<p> The last failure message, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p>
 </div>
 </div>
 <hr>
@@ -154,10 +154,10 @@ string. The result is owned by the caller.</p>
 2
 3
 4</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="n">CK_INFO</span> <span class="n">info</span><span class="p">;</span>
-<span class="kt">char</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
-   <span class="p">...</span>
-<span class="n">description</span> <span class="o">=</span> <span class="n">p11_kit_space_strdup</span> <span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">,</span> <span class="k">sizeof</span> <span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">));</span></pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="n">CK_INFO</span><span class="w"> </span><span class="n">info</span><span class="p">;</span>
+<span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">description</span><span class="p">;</span>
+<span class="w">   </span><span class="p">...</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p11_kit_space_strdup</span><span class="w"> </span><span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">));</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -187,7 +187,7 @@ string. The result is owned by the caller.</p>
 </div>
 <div class="refsect3">
 <a name="p11-kit-space-strdup.returns"></a><h4>Returns</h4>
-<p> The newly allocated string, or <code class="literal">NULL</code> if memory could not be allocated.</p>
+<p> The newly allocated string, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if memory could not be allocated.</p>
 </div>
 </div>
 <hr>
@@ -209,10 +209,10 @@ The string will never be longer than this buffer.</p>
 2
 3
 4</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="n">CK_INFO</span> <span class="n">info</span><span class="p">;</span>
-<span class="kt">size_t</span> <span class="n">length</span><span class="p">;</span>
-   <span class="p">...</span>
-<span class="n">length</span> <span class="o">=</span> <span class="n">p11_kit_space_strlen</span> <span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">,</span> <span class="k">sizeof</span> <span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">));</span></pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="n">CK_INFO</span><span class="w"> </span><span class="n">info</span><span class="p">;</span>
+<span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="p">;</span>
+<span class="w">   </span><span class="p">...</span>
+<span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p11_kit_space_strlen</span><span class="w"> </span><span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="n">info</span><span class="o">-&gt;</span><span class="n">libraryDescription</span><span class="p">));</span></pre></td>
       </tr>
     </tbody>
   </table>

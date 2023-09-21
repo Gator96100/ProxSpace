@@ -1,0 +1,64 @@
+'\" t
+.\"     Title: pldd
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "PLDD" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+pldd \- List dynamic shared objects loaded into a process
+.SH "SYNOPSIS"
+.HP \w'\fBpldd\fR\ 'u
+\fBpldd\fR \fIPID\fR
+.HP \w'\fBpldd\fR\ 'u
+\fBpldd\fR \-? | \-\-usage | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-?, \-\-help                 Give this help list
+      \-\-usage                Give a short usage message
+  \-V, \-\-version              Print program version
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+\fBpldd\fR
+prints the shared libraries (DLLs) loaded by the process with the given PID\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

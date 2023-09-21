@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Text and Binary modes</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="next" href="using-filemodes.html" title="File permissions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Text and Binary modes</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="using-filemodes.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-textbinary"></a>Text and Binary modes</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="textbin-issue"></a>The Issue</h3></div></div></div><p>On a UNIX system, when an application reads from a file it gets
+exactly what's in the file on disk and the converse is true for writing.
+The situation is different in the DOS/Windows world where a file can
+be opened in one of two modes, binary or text.  In the binary mode the
+system behaves exactly as in UNIX.  However on writing in text mode, a
+NL (\n, ^J) is transformed into the sequence CR (\r, ^M) NL.
+</p><p>This can wreak havoc with the seek/fseek calls since the number
+of bytes actually in the file may differ from that seen by the
+application.</p><p>The mode can be specified explicitly as explained in the Programming
+section below.  In an ideal DOS/Windows world, all programs using lines as
+records (such as <span class="command"><strong>bash</strong></span>, <span class="command"><strong>make</strong></span>,
+<span class="command"><strong>sed</strong></span> ...) would open files (and change the mode of their
+standard input and output) as text.  All other programs (such as
+<span class="command"><strong>cat</strong></span>, <span class="command"><strong>cmp</strong></span>, <span class="command"><strong>tr</strong></span> ...)
+would use binary mode.  In practice with Cygwin, programs that deal
+explicitly with object files specify binary mode (this is the case of
+<span class="command"><strong>od</strong></span>, which is helpful to diagnose CR problems).  Most
+other programs (such as <span class="command"><strong>sed</strong></span>, <span class="command"><strong>cmp</strong></span>,
+<span class="command"><strong>tr</strong></span>) use the default mode.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="textbin-default"></a>The default Cygwin behavior</h3></div></div></div><p>The Cygwin system gives us some flexibility in deciding how files 
+are to be opened when the mode is not specified explicitly. 
+The rules are evolving, this section gives the design goals.</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem"><p>If the filename is specified as a POSIX path and it appears to
+reside on a file system that is mounted (i.e.  if its pathname starts
+with a directory displayed by <span class="command"><strong>mount</strong></span>), then the
+default is specified by the mount flag.  If the file is a symbolic link,
+the mode of the target file system applies.</p></li><li class="listitem"><p>If the file is specified via a MS-DOS pathname (i.e., it contains a
+backslash or a colon), the default is binary.
+</p></li><li class="listitem"><p>Pipes, sockets and non-file devices are opened in binary mode.
+For pipes opened through the pipe() system call you can use the setmode()
+function (see <a class="xref" href="using-textbinary.html#textbin-devel" title="Programming">the section called &#8220;Programming&#8221;</a> to switch to textmode.
+For pipes opened through popen(), you can simply specify text or binary
+mode just like in calls to fopen().</p></li><li class="listitem"><p>Sockets and other non-file devices are always opened in binary mode.
+</p></li><li class="listitem"><p> When redirecting, the Cygwin shells uses rules (a-d).
+Non-Cygwin shells always pipe and redirect with binary mode. With
+non-Cygwin shells the commands <span class="command"><strong> cat filename | program </strong></span>
+and <span class="command"><strong> program &lt; filename </strong></span> are not equivalent when
+<code class="filename">filename</code> is on a text-mounted partition. </p><p>The programs <span class="command"><strong>u2d</strong></span> and <span class="command"><strong>d2u</strong></span> can
+be used to add or remove CR's from a file.  <span class="command"><strong>u2d</strong></span> add's CR's before a NL.
+<span class="command"><strong>d2u</strong></span> removes CR's.  Use the --help option to these commands
+for more information.
+</p></li></ol></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="textbin-question"></a>Binary or text?</h3></div></div></div><p>UNIX programs that have been written for maximum portability
+will know the difference between text and binary files and act
+appropriately under Cygwin.  Most programs included in the official
+Cygwin distributions should work well in the default mode. </p><p>Binmode is the best choice usually since it's faster and
+easier to handle, unless you want to exchange files with native Win32
+applications.  It makes most sense to keep the Cygwin distribution
+and your Cygwin home directory in binmode and generate text files in
+binmode (with UNIX LF lineendings).  Most Windows applications can
+handle binmode files just fine.  A notable exception is the mini-editor
+<span class="command"><strong>Notepad</strong></span>, which handles UNIX lineendings incorrectly
+and only produces output files with DOS CRLF lineendings.</p><p>You can convert files between CRLF and LF lineendings by using
+certain tools in the Cygwin distribution like <span class="command"><strong>dos2unix</strong></span> and
+<span class="command"><strong>unix2dos</strong></span> from the dos2unix package.  You can also specify
+a directory in the mount table to be mounted in textmode so you can use
+that directory for exchange purposes.</p><p>As application programmer you can decide on a file by file base,
+or you can specify default open modes depending on the purpose for which
+the application open files.  See the next section for a description of
+your choices.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="textbin-devel"></a>Programming</h3></div></div></div><p>In the <code class="function">open()</code> function call, binary mode can be
+specified with the flag <code class="literal">O_BINARY</code> and text mode with
+<code class="literal">O_TEXT</code>. These symbols are defined in
+<code class="filename">fcntl.h</code>.</p><p>The <code class="function">mkstemp()</code> and <code class="function">mkstemps()</code>
+calls force binary mode.  Use <code class="function">mkostemp()</code> or
+<code class="function">mkostemps()</code> with the same flags
+as <code class="function">open()</code> for more control on temporary files.</p><p>In the <code class="function">fopen()</code> and <code class="function">popen()</code>
+function calls, binary mode can be specified by adding a <code class="literal">b</code>
+to the mode string. Text mode is specified by adding a <code class="literal">t</code>
+to the mode string.</p><p>The mode of a file can be changed by the call
+<code class="function">setmode(fd,mode)</code> where <code class="literal">fd</code> is a file
+descriptor (an integer) and <code class="literal">mode</code> is
+<code class="literal">O_BINARY</code> or <code class="literal">O_TEXT</code>. The function
+returns <code class="literal">O_BINARY</code> or <code class="literal">O_TEXT</code> depending
+on the mode before the call, and <code class="literal">EOF</code> on error.</p><p>There's also a convenient way to set the default open modes used
+in an application by just linking against various object files provided
+by Cygwin.  For instance, if you want to make sure that all files are
+always opened in binary mode by an application, regardless of the mode
+of the underlying mount point, just add the file
+<code class="filename">/lib/binmode.o</code> to the link stage of the application
+in your project, like this:</p><pre class="screen">
+  $ gcc my_tiny_app.c /lib/binmode.o -o my_tiny_app
+</pre><p>Even simpler:</p><pre class="screen">
+  $ gcc my_tiny_app.c -lbinmode -o my_tiny_app
+</pre><p>This adds code which sets the default open mode for all files
+opened by <span class="command"><strong>my_tiny_app</strong></span> to binary for reading and
+writing.</p><p>Cygwin provides the following libraries and object files to set the
+default open mode just by linking an application against them:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><pre class="screen">
+/lib/libautomode.a      -  Open files for reading in textmode,
+/lib/automode.o            open files for writing in binary mode
+</pre></li><li class="listitem" style="list-style-type: disc"><pre class="screen">
+/lib/libbinmode.a       -  Open files for reading and writing in binary mode
+/lib/binmode.o
+</pre></li><li class="listitem" style="list-style-type: disc"><pre class="screen">
+/lib/libtextmode.a      -  Open files for reading and writing in textmode
+/lib/textmode.o
+</pre></li><li class="listitem" style="list-style-type: disc"><pre class="screen">
+/lib/libtextreadmode.a  -  Open files for reading in textmode,
+/lib/textreadmode.o        keep default behaviour for writing.
+</pre></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="using.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="using-filemodes.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;3.&#160;Using Cygwin&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;File permissions</td></tr></table></div></body></html>

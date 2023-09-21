@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>mount</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="mkpasswd.html" title="mkpasswd"><link rel="next" href="passwd.html" title="passwd"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">mount</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="mkpasswd.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="passwd.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="mount"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>mount &#8212; Display information about mounted filesystems, or mount a filesystem</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">mount</code>  [-f] [-o  <em class="replaceable"><code>MOUNT_OPTION,</code></em>... ]  
+	  <em class="replaceable"><code>WIN32PATH</code></em>
+	  <em class="replaceable"><code>POSIXPATH</code></em>
+	 </p></div><div class="cmdsynopsis"><p><code class="command">mount</code>   -a </p></div><div class="cmdsynopsis"><p><code class="command">mount</code>   <em class="replaceable"><code>POSIXPATH</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">mount</code>  [-m]</p></div><div class="cmdsynopsis"><p><code class="command">mount</code>    -c <em class="replaceable"><code>POSIXPATH</code></em>  |   -p  </p></div><div class="cmdsynopsis"><p><code class="command">mount</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="mount-options"></a><h2>Options</h2><pre class="screen">
+  -a, --all                     mount all filesystems mentioned in fstab
+  -c, --change-cygdrive-prefix  change the cygdrive path prefix to &lt;posixpath&gt;
+  -f, --force                   force mount, don't warn about missing mount
+                                point directories
+  -h, --help                    output usage information and exit
+  -m, --mount-entries           write fstab entries to replicate mount points
+                                and cygdrive prefixes
+  -o, --options X[,X...]        specify mount options
+  -p, --show-cygdrive-prefix    show user and/or system cygdrive path prefix
+  -V, --version                 output version information and exit
+</pre></div><div class="refsect1"><a name="mount-desc"></a><h2>Description</h2><p>The <span class="command"><strong>mount</strong></span> program is used to map your drives and
+      shares onto Cygwin's simulated POSIX directory tree, much like as is done
+      by mount commands on typical UNIX systems. However, in contrast to mount
+      points given in <code class="filename">/etc/fstab</code>, mount points created or
+      changed with <span class="command"><strong>mount</strong></span> are not persistent. They disappear
+      immediately after the last process of the current user exited. Please see
+      <a class="xref" href="using.html#mount-table" title="The Cygwin Mount Table">the section called &#8220;The Cygwin Mount Table&#8221;</a> for more information on the concepts behind
+      the Cygwin POSIX file system and strategies for using mounts. To remove
+      mounts temporarily, use <span class="command"><strong>umount</strong></span></p><div class="refsect2"><a name="utils-mount"></a><h3>Using mount</h3><p>If you just type <span class="command"><strong>mount</strong></span> with no parameters, it
+        will display the current mount table for you.</p><div class="example"><a name="utils-mount-ex"></a><p class="title"><b>Example&#160;3.9.&#160;Displaying the current set of mount points</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>mount</code></strong>
+C:/cygwin/bin on /usr/bin type ntfs (binary)
+C:/cygwin/lib on /usr/lib type ntfs (binary)
+C:/cygwin on / type ntfs (binary)
+C: on /mnt/c type ntfs (binary,user,noumount)
+D: on /mnt/d type fat (binary,user,noumount)
+</pre></div></div><br class="example-break"><p>In this example, c:/cygwin is the POSIX root and the D drive is
+        mapped to <code class="filename">/mnt/d</code>. Note that in this case, the root
+        mount is a system-wide mount point that is visible to all users running
+        Cygwin programs, whereas the <code class="filename">/mnt/d</code> mount is only
+        visible to the current user.</p><p>The <span class="command"><strong>mount</strong></span> utility is also the mechanism for
+        adding new mounts to the mount table in memory. The following example
+        demonstrates how to mount the directory
+        <code class="filename">//pollux/home/joe/data</code> to
+        <code class="filename">/data</code> for the duration of the current session. </p><div class="example"><a name="utils-mount-add-ex"></a><p class="title"><b>Example&#160;3.10.&#160;Adding mount points</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>ls /data</code></strong>
+ls: /data: No such file or directory
+<code class="prompt">$</code> <strong class="userinput"><code>mount //pollux/home/joe/data /data</code></strong>
+mount: warning - /data does not exist!
+<code class="prompt">$</code> <strong class="userinput"><code>mount</code></strong>
+//pollux/home/joe/data on /data type smbfs (binary)
+C:/cygwin/bin on /usr/bin type ntfs (binary)
+C:/cygwin/lib on /usr/lib type ntfs (binary)
+C:/cygwin on / type ntfs (binary)
+C: on /c type ntfs (binary,user,noumount)
+D: on /d type fat (binary,user,noumount)
+</pre></div></div><br class="example-break"><p>A given POSIX path may only exist once in the mount table. Attempts
+        to replace the mount will fail with a busy error. The
+        <code class="literal">-f</code> (force) option causes the old mount to be
+        silently replaced with the new one, provided the old mount point was a
+        user mount point. It's not valid to replace system-wide mount points.
+        Additionally, the <code class="literal">-f</code> option will silence warnings
+        about the non-existence of directories at the Win32 path
+        location.</p><p> The <code class="literal">-o</code> option is the method via which various
+        options about the mount point may be recorded. The following options
+        are available (note that most of the options are duplicates of other
+        mount flags):</p><pre class="screen">
+  acl        - Use the filesystem's access control lists (ACLs) to
+               implement real POSIX permissions (default).
+  binary     - Files default to binary mode (default).
+  bind       - Allows to remount part of the file hierarchy somewhere else.
+               Different from other mount calls, the first argument
+               specifies an absolute POSIX path, rather than a Win32 path.
+               This POSIX path is remounted to the POSIX path specified as
+               the second parameter.  The conversion to a Win32 path is done
+               within Cygwin immediately at the time of the call.  Note that
+               symlinks are ignored while performing this path conversion.
+  cygexec    - Treat all files below mount point as cygwin executables.
+  dos        - Always convert leading spaces and trailing dots and spaces to
+               characters in the UNICODE private use area.  This allows to use
+               broken filesystems which only allow DOS filenames, even if they
+               are not recognized as such by Cygwin.
+  exec       - Treat all files below mount point as executable.
+  ihash      - Always fake inode numbers rather than using the ones returned
+               by the filesystem.  This allows to use broken filesystems which
+               don't return unambiguous inode numbers, even if they are not
+               recognized as such by Cygwin.
+  noacl      - Ignore ACLs and fake POSIX permissions.
+  nosuid     - No suid files are allowed (currently unimplemented)
+  notexec    - Treat all files below mount point as not executable.
+  override   - Override immutable mount points.
+  posix=0    - Switch off case sensitivity for paths under this mount point.
+  posix=1    - Switch on case sensitivity for paths under this mount point
+               (default).
+  sparse     - Switch on support for sparse files.  This option only makes
+               sense on NTFS and then only if you really need sparse files.
+  text       - Files default to CRLF text mode line endings.
+</pre><p>For a more complete description of the mount options and the
+        <code class="filename">/etc/fstab</code> file, see <a class="xref" href="using.html#mount-table" title="The Cygwin Mount Table">the section called &#8220;The Cygwin Mount Table&#8221;</a>.</p><p>Note that all mount points added with <span class="command"><strong>mount</strong></span> are
+        user mount points. System mount points can only be specified in the
+        <code class="filename">/etc/fstab</code> file.</p><p>If you added mount points to <code class="filename">/etc/fstab</code> or
+        your <code class="filename">/etc/fstab.d/&lt;username&gt;</code> file, you can
+        add these mount points to your current user session using the
+        <code class="literal">-a/--all</code> option, or by specifing the posix path
+        alone on the command line. As an example, consider you added a mount
+        point with the POSIX path <code class="filename">/my/mount</code>. You can add
+        this mount point with either one of the following two commands to your
+        current user session.</p><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>mount /my/mount</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>mount -a</code></strong>
+</pre><p>The first command just adds the <code class="filename">/my/mount</code>
+        mount point to your current session, the <span class="command"><strong>mount -a</strong></span>
+        adds all new mount points to your user session.</p><p>If you change a mount point to point to another native path, or if
+        you changed the flags of a mount point, you have to
+        <span class="command"><strong>umount</strong></span> the mount point first, before you can add it
+        again. Please note that all such added mount points are added as user
+        mount points, and that the rule that system mount points can't be
+        removed or replaced in a running session still applies.</p><p>To bind a POSIX path to another POSIX path, use the
+        <code class="literal">bind</code> mount flag.</p><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>mount -o bind /var /usr/var</code></strong>
+</pre><p>This command makes the file hirarchy under
+        <code class="filename">/var</code> additionally available under
+        <code class="filename">/usr/var</code>.</p><p> The <code class="literal">-m</code> option causes the
+        <span class="command"><strong>mount</strong></span> utility to output the current mount table in a
+        series of fstab entries. You can save this output as a backup when
+        experimenting with the mount table. Copy the output to
+        <code class="filename">/etc/fstab</code> to restore the old state. It also makes
+        moving your settings to a different machine much easier.</p></div><div class="refsect2"><a name="utils-cygdrive"></a><h3>Cygdrive mount points</h3><p>Whenever Cygwin cannot use any of the existing mounts to convert
+        from a particular Win32 path to a POSIX one, Cygwin will, instead,
+        convert to a POSIX path using a default mount point:
+        <code class="filename">/cygdrive</code>. For example, if Cygwin accesses
+        <code class="filename">z:\foo</code> and the z drive is not currently in the
+        mount table, then <code class="filename">z:\</code> will be accessible as
+        <code class="filename">/cygdrive/z</code>. The <span class="command"><strong>mount</strong></span> utility
+        can be used to change this default automount prefix through the use of
+        the "--change-cygdrive-prefix" option. In the following example, we
+        will set the automount prefix to <code class="filename">/mnt</code>:</p><div class="example"><a name="utils-cygdrive-ex"></a><p class="title"><b>Example&#160;3.11.&#160;Changing the default prefix</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>mount --change-cygdrive-prefix /mnt</code></strong>
+</pre></div></div><br class="example-break"><p>Note that the cygdrive prefix can be set both per-user and
+        system-wide, and that as with all mounts, a user-specific mount takes
+        precedence over the system-wide setting. The <span class="command"><strong>mount</strong></span>
+        utility creates system-wide mounts by default if you do not specify a
+        type. You can always see the user and system cygdrive prefixes with the
+        <code class="literal">-p</code> option. Using the <code class="literal">--options</code>
+        flag with <code class="literal">--change-cygdrive-prefix</code> makes all new
+        automounted filesystems default to this set of options. For instance
+        (using the short form of the command line flags)</p><div class="example"><a name="utils-cygdrive-ex2"></a><p class="title"><b>Example&#160;3.12.&#160;Changing the default prefix with specific mount options</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>mount -c /mnt -o binary,noacl</code></strong>
+</pre></div></div><br class="example-break"></div><div class="refsect2"><a name="utils-limitations"></a><h3>Limitations</h3><p>Limitations: there is a hard-coded limit of 64 mount points.
+        Also, although you can mount to pathnames that do not start with "/",
+	there is no way to make use of such mount points.</p><p>Normally the POSIX mount point in Cygwin is an existing empty
+        directory, as in standard UNIX. If this is the case, or if there is a
+        place-holder for the mount point (such as a file, a symbolic link
+        pointing anywhere, or a non-empty directory), you will get the expected
+        behavior. Files present in a mount point directory before the mount
+        become invisible to Cygwin programs. </p><p>It is sometimes desirable to mount to a non-existent directory, for
+        example to avoid cluttering the root directory with names such as
+        <code class="filename">a</code>, <code class="filename">b</code>, <code class="filename">c</code>
+        pointing to disks. Although <span class="command"><strong>mount</strong></span> will give you a
+        warning, most everything will work properly when you refer to the mount
+        point explicitly. Some strange effects can occur however. For example
+        if your current working directory is <code class="filename">/dir</code>, say,
+        and <code class="filename">/dir/mtpt</code> is a mount point, then
+        <code class="filename">mtpt</code> will not show up in an <span class="command"><strong>ls</strong></span>
+        or <span class="command"><strong>echo *</strong></span> command and <span class="command"><strong>find .</strong></span> will
+        not find <code class="filename">mtpt</code>. </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="mkpasswd.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="passwd.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">mkpasswd&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;passwd</td></tr></table></div></body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Using Cygwin effectively with Windows</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="umount.html" title="umount"><link rel="next" href="programming.html" title="Chapter&#160;4.&#160;Programming with Cygwin"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Using Cygwin effectively with Windows</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="umount.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="programming.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-effectively"></a>Using Cygwin effectively with Windows</h2></div></div></div><p>
+Cygwin is not a full operating system, and so must rely on Windows for
+accomplishing some tasks. For example, Cygwin provides a POSIX view
+of the Windows filesystem, but does not provide filesystem drivers of 
+its own. Therefore part of using Cygwin effectively is learning to use
+Windows effectively. 
+Many Windows utilities provide a good way to interact with Cygwin's 
+predominately command-line environment. For example, 
+<span class="command"><strong>ipconfig.exe</strong></span> provides information about network 
+configuration, and <span class="command"><strong>net.exe</strong></span> views and configures
+network file and printer resources.  Most of these tools
+support the <code class="literal">/?</code> switch to display usage information. 
+</p><p>
+Unfortunately, no standard set of tools included with all versions of 
+Windows exists.  Generally, the younger the Windows version, the more
+complete are the on-board tools.  Additionally, many independent
+sites such as 
+<a class="ulink" href="http://download.com" target="_top">download.com</a>, 
+<a class="ulink" href="http://simtel.net" target="_top">simtel.net</a>, 
+and Microsoft's own
+<a class="ulink" href="http://technet.microsoft.com/en-us/sysinternals/default.aspx" target="_top">Sysinternals</a>
+provide quite useful command-line utilities, as far as they are not
+already provided by Cygwin.  A few Windows tools, such as 
+<span class="command"><strong>find.exe</strong></span>, <span class="command"><strong>link.exe</strong></span> and
+<span class="command"><strong>sort.exe</strong></span>, may conflict with the Cygwin versions
+make sure that you use the full path (<span class="command"><strong>/usr/bin/find</strong></span>)
+or that your Cygwin <code class="literal">bin</code> directory comes first in your
+<code class="envar">PATH</code>.
+</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="using-pathnames-effectively"></a>Pathnames</h3></div></div></div><p>
+Windows programs do not understand POSIX pathnames, so any arguments 
+that reference the filesystem must be in Windows (or DOS) format or 
+translated.  Cygwin provides the <span class="command"><strong>cygpath</strong></span> utility for 
+converting between Windows and POSIX paths. A complete description of its 
+options and examples of its usage are in <a class="xref" href="cygpath.html" title="cygpath"><span class="refentrytitle">cygpath</span>(1)</a>, 
+including a shell script for starting Windows Explorer in any directory. 
+The same format works for most Windows programs, for example 
+</p><pre class="screen">
+<code class="literal">notepad.exe "$(cygpath -aw "Desktop/Phone Numbers.txt")"</code>
+</pre><p>
+A few programs require a Windows-style, semicolon-delimited path list, 
+which <span class="command"><strong>cygpath</strong></span> can translate from a POSIX path with the
+<code class="literal">-p</code> option. For example, a Java compilation from 
+<span class="command"><strong>bash</strong></span> might look like this: 
+</p><pre class="screen">
+<code class="literal">javac -cp "$(cygpath -pw "$CLASSPATH")" hello.java</code>
+</pre><p>
+Since using quoting and subshells is somewhat awkward, it is often 
+preferable to use <span class="command"><strong>cygpath</strong></span> in shell scripts.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="using-net"></a>Cygwin and Windows Networking</h3></div></div></div><p>
+Many popular Cygwin packages, such as <code class="systemitem">ncftp</code>, 
+<code class="systemitem">lynx</code>, and <code class="systemitem">wget</code>, require a 
+network connection.  Since Cygwin relies on Windows for connectivity, 
+if one of these tools is not working as expected you may need to 
+troubleshoot using Windows tools. The first test is to see if you
+can reach the URL's host with <span class="command"><strong>ping.exe</strong></span>, one of the 
+few utilities included with every Windows version since Windows 95.
+If you chose to install the <code class="systemitem">inetutils</code> package, 
+you may have both
+Windows and Cygwin versions of utilities such as <span class="command"><strong>ftp</strong></span>
+and <span class="command"><strong>telnet</strong></span>. If you are having problems using one
+of these programs, see if the alternate one works as expected. 
+</p><p>
+There are a variety of other programs available for specific situations.
+If your system does not have an always-on network connection, you 
+may be interested in <span class="command"><strong>rasdial.exe</strong></span> for automating dialup
+connections.  
+Users who frequently change their network 
+configuration can script these changes with <span class="command"><strong>netsh.exe</strong></span>.
+For proxy users, the open source 
+<a class="ulink" href="http://apserver.sourceforge.net" target="_top">
+NTLM Authorization Proxy Server</a> or the no-charge
+<a class="ulink" href="http://www.hummingbird.com/products/nc/socks/index.html" target="_top">
+Hummingbird SOCKS Proxy</a> may allow you to use Cygwin network
+programs in your environment.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="using-shortcuts"></a>Creating shortcuts</h3></div></div></div><p>
+By default, Cygwin does not create symlinks as .lnk files, but there's an
+option to do that, see <a class="xref" href="using-cygwinenv.html" title="The CYGWIN environment variable">the section called &#8220;The <code class="envar">CYGWIN</code> environment
+variable&#8221;</a>.
+These symlink .lnk files are compatible with Windows-created .lnk files,
+but they are still different.  They do not include much of the information
+that is available in a standard Microsoft shortcut, such as the working
+directory, an icon, etc.  The <code class="systemitem">cygutils</code>
+package includes a <span class="command"><strong>mkshortcut</strong></span> utility for creating
+standard native Microsoft .lnk files from the command line.
+</p><p>
+But here's the problem.  If Cygwin handled these native shortcuts like any
+other symlink, you could not archive Microsoft .lnk files into
+<span class="command"><strong>tar</strong></span> archives and keep all the information in them. 
+After unpacking, these shortcuts would have lost all the extra information
+and would be no different than standard Cygwin symlinks. Therefore these two
+types of links are treated differently.  Unfortunately, this means that the 
+usual Unix way of creating and using symlinks does not work with native
+Windows shortcuts. 
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="using-printing"></a>Printing</h3></div></div></div><p>
+There are several options for printing from Cygwin, including the 
+<span class="command"><strong>lpr</strong></span> found in <code class="systemitem">cygutils-extra</code>
+(not to be confused with the native Windows <span class="command"><strong>lpr.exe</strong></span>).
+The easiest way to use <code class="systemitem">cygutils-extra</code>'s
+<span class="command"><strong>lpr</strong></span> is to specify a default device name in the 
+<code class="envar">PRINTER</code> environment variable.  You may also specify a device 
+on the command line with the <code class="literal">-d</code> or <code class="literal">-P</code> 
+options, which will override the environment variable setting. 
+</p><p>
+A device name 
+may be a UNC path (<code class="literal">\\server_name\printer_name</code>), a reserved 
+DOS device name (<code class="literal">prn</code>, <code class="literal">lpt1</code>), or a 
+local port name that is mapped to a printer share. Note that forward slashes 
+may be used in a UNC path (<code class="literal">//server_name/printer_name</code>),
+which is helpful when using <span class="command"><strong>lpr</strong></span> from a shell that uses
+the backslash as an escape character. 
+</p><p>
+<span class="command"><strong>lpr</strong></span> sends raw data to the printer; no formatting is done.
+Many, but not all, printers accept plain text as input. If your printer 
+supports PostScript, packages such as 
+<code class="systemitem">a2ps</code> and <code class="systemitem">enscript</code> can prepare 
+text files for printing. The <code class="systemitem">ghostscript</code> package also 
+provides some translation
+from PostScript to various native printer languages. Additionally, a native 
+Windows application for printing PostScript, <span class="command"><strong>gsprint</strong></span>, is 
+available from the <a class="ulink" href="http://www.cs.wisc.edu/~ghost/" target="_top">Ghostscript
+website</a>.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="umount.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="programming.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">umount&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;4.&#160;Programming with Cygwin</td></tr></table></div></body></html>

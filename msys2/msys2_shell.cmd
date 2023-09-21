@@ -41,6 +41,8 @@ if "x%~1" == "x-mingw32" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=MINGW3
 if "x%~1" == "x-mingw64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=MINGW64& goto :checkparams
 if "x%~1" == "x-ucrt64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=UCRT64& goto :checkparams
 if "x%~1" == "x-clang64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=CLANG64& goto :checkparams
+if "x%~1" == "x-clang32" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=CLANG32& goto :checkparams
+if "x%~1" == "x-clangarm64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=CLANGARM64& goto :checkparams
 if "x%~1" == "x-mingw" shift& set /a msys2_shiftCounter+=1& (if exist "%WD%..\..\mingw64" (set MSYSTEM=MINGW64) else (set MSYSTEM=MINGW32))& goto :checkparams
 rem Console types
 if "x%~1" == "x-mintty" shift& set /a msys2_shiftCounter+=1& set MSYSCON=mintty.exe& goto :checkparams
@@ -108,6 +110,12 @@ if "%MSYSTEM%" == "MINGW32" (
 ) else if "%MSYSTEM%" == "CLANG64" (
   set "CONTITLE=MinGW Clang x64"
   set "CONICON=clang64.ico"
+) else if "%MSYSTEM%" == "CLANG32" (
+  set "CONTITLE=MinGW Clang x32"
+  set "CONICON=clang32.ico"
+) else if "%MSYSTEM%" == "CLANGARM64" (
+  set "CONTITLE=MinGW Clang ARM64"
+  set "CONICON=clangarm64.ico"
 ) else (
   set "CONTITLE=MSYS2 MSYS"
   set "CONICON=msys2.ico"
@@ -121,9 +129,9 @@ if NOT EXIST "%WD%mintty.exe" goto startsh
 set MSYSCON=mintty.exe
 :startmintty
 if not defined MSYS2_NOSTART (
-  start "%CONTITLE%" "%WD%mintty" -i "/%CONICON%" -t "%CONTITLE%" "/usr/bin/%LOGINSHELL%" --login !SHELL_ARGS!
+  start "%CONTITLE%" "%WD%mintty" -i "/%CONICON%" -t "%CONTITLE%" "/usr/bin/%LOGINSHELL%" -l !SHELL_ARGS!
 ) else (
-  "%WD%mintty" -i "/%CONICON%" -t "%CONTITLE%" "/usr/bin/%LOGINSHELL%" --login !SHELL_ARGS!
+  "%WD%mintty" -i "/%CONICON%" -t "%CONTITLE%" "/usr/bin/%LOGINSHELL%" -l !SHELL_ARGS!
 )
 exit /b %ERRORLEVEL%
 
@@ -133,18 +141,18 @@ call :conemudetect || (
   exit /b 1
 )
 if not defined MSYS2_NOSTART (
-  start "%CONTITLE%" "%ComEmuCommand%" /Here /Icon "%WD%..\..\%CONICON%" /cmd "%WD%\%LOGINSHELL%" --login !SHELL_ARGS!
+  start "%CONTITLE%" "%ComEmuCommand%" /Here /Icon "%WD%..\..\%CONICON%" /cmd "%WD%\%LOGINSHELL%" -l !SHELL_ARGS!
 ) else (
-  "%ComEmuCommand%" /Here /Icon "%WD%..\..\%CONICON%" /cmd "%WD%\%LOGINSHELL%" --login !SHELL_ARGS!
+  "%ComEmuCommand%" /Here /Icon "%WD%..\..\%CONICON%" /cmd "%WD%\%LOGINSHELL%" -l !SHELL_ARGS!
 )
 exit /b %ERRORLEVEL%
 
 :startsh
 set MSYSCON=
 if not defined MSYS2_NOSTART (
-  start "%CONTITLE%" "%WD%\%LOGINSHELL%" --login !SHELL_ARGS!
+  start "%CONTITLE%" "%WD%\%LOGINSHELL%" -l !SHELL_ARGS!
 ) else (
-  "%WD%\%LOGINSHELL%" --login !SHELL_ARGS!
+  "%WD%\%LOGINSHELL%" -l !SHELL_ARGS!
 )
 exit /b %ERRORLEVEL%
 

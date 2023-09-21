@@ -20,7 +20,7 @@
 shopt -s extglob
 
 declare -r myname='updpkgsums'
-declare -r myver='1.4.0'
+declare -r myver='1.9.1'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
@@ -28,19 +28,20 @@ LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 source "$LIBRARY"/util/schema.sh
 
 usage() {
-	printf "%s v%s\n" "${myname}" "${myver}"
-	echo
-	printf "%s will perform an in place update of the checksums in the\n" "${myname}"
-	echo "path specified by [build file], defaulting to PKGBUILD in the current"
-	echo "working directory."
-	echo
-	printf "Usage: %s [options] [build file]\n" "${myname}"
-	echo
-	echo "    -h, --help        display this help message and exit"
-	echo "    -V, --version     display version information and exit"
-	echo
-	echo "These options can be passed to makepkg:"
-	echo "    -m, --nocolor     disable colorized output messages"
+	cat <<EOF
+${myname} v${myver}
+
+Update checksums of a PKGBUILD file.
+
+Usage: ${myname} [options] [build file]
+
+Options:
+  -h, --help     display this help message and exit
+  -V, --version  display version information and exit
+
+These options can be passed to makepkg:
+  -m, --nocolor  do not colorize output
+EOF
 }
 
 version() {
@@ -58,8 +59,8 @@ buildfile='PKGBUILD'
 
 while (( "$#" )); do
 	case "$1" in
-		-h|--help) usage; exit ;;
 		-m|--nocolor) MAKEPKG_OPTS+=("$1"); shift ;;
+		-h|--help) usage; exit ;;
 		-V|--version) version; exit ;;
 		*) buildfile="$1"; break 2 ;;
 	esac
@@ -99,8 +100,13 @@ newbuildfile=$(mktemp "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
 trap "rm -rf '$BUILDDIR' '$newbuildfile'" EXIT
 sumtypes=$(IFS='|'; echo "${known_hash_algos[*]}")
 newsums=$(MINGW_PACKAGE_PREFIX=mingw-w64-i686 makepkg -g -p "$buildfile" "${MAKEPKG_OPTS[@]}") || die 'Failed to generate new checksums'
+
+if [[ -z $newsums ]]; then
+	die "$buildfile does not contain sources to update"
+fi
+
 awk -v sumtypes="$sumtypes" -v newsums="$newsums" '
-	$0 ~"^[[:blank:]]*(" sumtypes ")sums(_[^=]+)?=", $0 ~ "\\)[[:blank:]]*(#.*)?$" {
+	$0 ~"^[[:blank:]]*(" sumtypes ")sums(_[^=]+)?\\+?=", $0 ~ "\\)[[:blank:]]*(#.*)?$" {
 		if (!w) {
 			print newsums
 			w++
@@ -117,5 +123,3 @@ awk -v sumtypes="$sumtypes" -v newsums="$newsums" '
 if ! cat -- "$newbuildfile" >"$buildfile"; then
 	die "Failed to update %s. The file has not been modified." "$buildfile"
 fi
-
-# vim: set noet:

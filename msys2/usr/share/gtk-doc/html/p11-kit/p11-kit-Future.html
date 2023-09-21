@@ -350,7 +350,7 @@ objects, unless otherwise filtered.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>uri</p></td>
-<td class="parameter_description"><p>a PKCS#11 URI to filter on, or <code class="literal">NULL</code>. </p></td>
+<td class="parameter_description"><p>a PKCS#11 URI to filter on, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
@@ -402,7 +402,7 @@ called before iterating begins.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>uri</p></td>
-<td class="parameter_description"><p>a PKCS#11 URI to filter on, or <code class="literal">NULL</code>. </p></td>
+<td class="parameter_description"><p>a PKCS#11 URI to filter on, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 </tbody>
@@ -952,13 +952,13 @@ of that attribute retrieved from the object. After use the
 attribute value memory pointed to by the <code class="literal">pValue</code>
 of each attribute should be freed with the <code class="literal">free()</code>
 function.</p>
-<p>If the <code class="literal">pValue</code> of an attribute is not <code class="literal">NULL</code> passed
+<p>If the <code class="literal">pValue</code> of an attribute is not <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> passed
 to this function, then it will be passed to
 <code class="literal">realloc()</code> to allocate the correct amount
 of space for the attribute value.</p>
 <p>If any attribute is not present on the object, or is sensitive and
 cannot be retrieved, then the <code class="literal">pValue</code> will be NULL.
-If <code class="literal">pValue</code> was not <code class="literal">NULL</code> when passed to this function
+If <code class="literal">pValue</code> was not <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> when passed to this function
 then it will be freed with <code class="literal">free()</code>. In these
 cases <code class="literal">CKR_OK</code> is returned.</p>
 <p>This can only be called after <a class="link" href="p11-kit-Future.html#p11-kit-iter-next" title="p11_kit_iter_next ()"><code class="function">p11_kit_iter_next()</code></a> succeeds.</p>

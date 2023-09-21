@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Chapter&#160;2.&#160;Setting Up Cygwin</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="prev" href="ov-new.html" title="What's new and what changed in Cygwin"><link rel="next" href="setup-env.html" title="Environment Variables"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&#160;2.&#160;Setting Up Cygwin</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ov-new.html">Prev</a>&#160;</td><th width="60%" align="center">&#160;</th><td width="20%" align="right">&#160;<a accesskey="n" href="setup-env.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="setup-net"></a>Chapter&#160;2.&#160;Setting Up Cygwin</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="setup-net.html#internet-setup">Internet Setup</a></span></dt><dd><dl><dt><span class="sect2"><a href="setup-net.html#setup-download">Download Source</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-dir">Selecting an Install Directory</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-localdir">Local Package Directory</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-connection">Connection Method</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-mirror">Choosing Mirrors</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-packages">Choosing Packages</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-progress">Download and Installation Progress</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-icons">Shortcuts</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-postinstall">Post-Install Scripts</a></span></dt><dt><span class="sect2"><a href="setup-net.html#setup-troubleshooting">Troubleshooting</a></span></dt></dl></dd><dt><span class="sect1"><a href="setup-env.html">Environment Variables</a></span></dt><dd><dl><dt><span class="sect2"><a href="setup-env.html#setup-env-ov">Overview</a></span></dt><dt><span class="sect2"><a href="setup-env.html#setup-env-win32">Restricted Win32 environment</a></span></dt></dl></dd><dt><span class="sect1"><a href="setup-maxmem.html">Changing Cygwin's Maximum Memory</a></span></dt><dt><span class="sect1"><a href="setup-locale.html">Internationalization</a></span></dt><dd><dl><dt><span class="sect2"><a href="setup-locale.html#setup-locale-ov">Overview</a></span></dt><dt><span class="sect2"><a href="setup-locale.html#setup-locale-how">How to set the locale</a></span></dt><dt><span class="sect2"><a href="setup-locale.html#setup-locale-console">The Windows Console character set</a></span></dt><dt><span class="sect2"><a href="setup-locale.html#setup-locale-problems">Potential Problems when using Locales</a></span></dt><dt><span class="sect2"><a href="setup-locale.html#setup-locale-charsetlist">List of supported character sets</a></span></dt></dl></dd><dt><span class="sect1"><a href="setup-files.html">Customizing bash</a></span></dt></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="internet-setup"></a>Internet Setup</h2></div></div></div><p>To install the Cygwin net release, go to <a class="ulink" href="https://cygwin.com/" target="_top">https://cygwin.com/</a> and run
+<a class="ulink" href="https://cygwin.com/setup-x86_64.exe" target="_top">setup-x86_64.exe</a>
+to install the 64 bit version of Cygwin.  This will download a GUI
+installer which can be run to download a complete cygwin installation
+via the internet.  Follow the instructions on each screen to install Cygwin.
+</p><p>
+The <span class="command"><strong>setup</strong></span> installer is designed to be easy
+for new users to understand while remaining flexible for the 
+experienced. The volunteer development team is constantly working
+on <span class="command"><strong>setup</strong></span>; before requesting a new feature,
+check the wishlist in the
+<a class="ulink" href="https://sourceware.org/git/gitweb.cgi?p=cygwin-setup.git;a=blob_plain;f=README;hb=HEAD" target="_top">Git <code class="literal">README</code>
+</a>. It may already be present in the Git version!
+</p><p>
+On Windows Vista and later, <span class="command"><strong>setup</strong></span> will check by
+default if it runs with administrative privileges and, if not, will try 
+to elevate the process.  If you want to avoid this behaviour and install
+under an unprivileged account just for your own usage, run
+<span class="command"><strong>setup</strong></span> with the <code class="literal">--no-admin</code> option.
+</p><p>
+Since the default value for each option is the logical choice for
+most installations, you can get a working minimal Cygwin environment
+installed by simply clicking the <code class="literal">Next</code> button
+at each page. The only exception to this is choosing a Cygwin mirror,
+which you can choose by experimenting with those listed at
+<a class="ulink" href="https://cygwin.com/mirrors.html" target="_top">https://cygwin.com/mirrors.html</a>. For more details about each of page of the 
+<span class="command"><strong>setup</strong></span> installation, read on below.
+Please note that this guide assumes that you have a basic understanding
+of Unix (or a Unix-like OS). If you are new to Unix, you will also want 
+to make use of <a class="ulink" href="http://www.google.com/search?q=new+to+unix" target="_top">
+other resources</a>.
+</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-download"></a>Download Source</h3></div></div></div><p>
+Cygwin uses packages to manage installing various software. When
+the default <code class="literal">Install from Internet</code> option is chosen,
+<span class="command"><strong>setup</strong></span> creates a local directory to store
+the packages before actually installing the contents. 
+<code class="literal">Download from Internet</code> performs only the first
+part (storing the packages locally), while 
+<code class="literal">Install from Local Directory</code> performs only the 
+second (installing the contents of the packages). 
+</p><p>
+The <code class="literal">Download from Internet</code> option is mainly
+for creating a base Cygwin package tree on one computer for 
+installation on several machines with 
+<code class="literal">Install from Local Directory</code>; copy the
+entire local package tree to another machine with the directory
+tree intact. For example, you might create a <code class="literal">C:\cache\</code>
+directory and place <span class="command"><strong>setup</strong></span> in it. Run
+<span class="command"><strong>setup</strong></span> to <code class="literal">Install from Internet</code>
+or <code class="literal">Download from Internet</code>, then copy the whole
+<code class="literal">C:\cache\</code> to each machine and instead choose
+<code class="literal">Install from Local Directory</code>.
+</p><p>
+Though this provides some basic mirroring functionality, if you
+are managing a large Cygwin installation, to keep up to date we recommend 
+using a mirroring tool such as <span class="command"><strong>wget</strong></span>. A helpful user on 
+the Cygwin mailing list created a simple demonstration script to accomplish
+this; search the list for <span class="command"><strong>mkcygwget</strong></span> for ideas.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-dir"></a>Selecting an Install Directory</h3></div></div></div><p>
+The <code class="literal">Root Directory</code> for Cygwin (default
+<code class="literal">C:\cygwin</code>) will become <code class="literal">/</code> 
+within your Cygwin installation. You must have write access to
+the parent directory, and any ACLs on the parent directory will
+determine access to installed files.
+</p><p>
+The <code class="literal">Install For</code> options of <code class="literal">All Users</code> 
+or <code class="literal">Just Me</code> should always be left on the default
+<code class="literal">All Users</code>, unless you do not have write access to 
+<code class="literal">HKEY_LOCAL_MACHINE</code> in the registry or the All Users 
+Start Menu. This is true  even if you are the only user planning to use Cygwin 
+on the machine.  Selecting <code class="literal">Just Me</code> will cause problems 
+for programs such as <span class="command"><strong>crond</strong></span> and <span class="command"><strong>sshd</strong></span>.
+If you do not have the necessary permissions, but still want to use these
+programs, consult the Cygwin mailing list archives about others' experiences.
+
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-localdir"></a>Local Package Directory</h3></div></div></div><p>
+The <code class="literal">Local Package Directory</code> is the cache where 
+<span class="command"><strong>setup</strong></span> stores the packages before they are
+installed. The cache must not be the same folder as the Cygwin
+root. Within the cache, a separate directory is created for each
+Cygwin mirror, which allows <span class="command"><strong>setup</strong></span> to use
+multiple mirrors and custom packages. After installing Cygwin,
+the cache is no longer necessary, but you may want to retain the
+packages as backups, for installing Cygwin to another system,
+or in case you need to reinstall a package.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-connection"></a>Connection Method</h3></div></div></div><p>
+The <code class="literal">Direct Connection</code> method of downloading will
+directly connect.  If your system is configured to use a proxy server or
+auto-configuration scripts, the <code class="literal">Use System Proxy Settings</code>
+method uses those settings.  Alternatively, you can manually enter proxy
+settings into the <code class="literal">Use HTTP/FTP Proxy</code> section.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-mirror"></a>Choosing Mirrors</h3></div></div></div><p>
+Since there is no way of knowing from where you will be downloading
+Cygwin, you need to choose at least one mirror site.  Cygwin mirrors 
+are geographically distributed around the world; check the list at
+<a class="ulink" href="https://cygwin.com/mirrors.html" target="_top">https://cygwin.com/mirrors.html</a>
+to find one near you. You can select multiple mirrors by holding down
+<code class="literal">CTRL</code> and clicking on each one. If you have the URL of 
+an unlisted mirror (for example, if your organization has an internal Cygwin 
+mirror) you can add it.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-packages"></a>Choosing Packages</h3></div></div></div><p>
+For each selected mirror site, <span class="command"><strong>setup</strong></span> downloads a
+small text file called <code class="literal">setup.bz2</code> that contains a list
+of packages available from that site along with some basic information about
+each package which <span class="command"><strong>setup</strong></span> parses and uses to create the
+chooser window. For details about the format of this file, see the
+<a class="ulink" href="https://sourceware.org/cygwin-apps/setup.html" target="_top">setup homepage</a>.
+</p><p>
+The chooser is the most complex part of <span class="command"><strong>setup</strong></span>.
+Packages are grouped into categories, and one package may belong to multiple 
+categories (assigned by the volunteer package maintainer). Each package
+can be found under any of those categories in the hierarchical chooser view.
+By default, <span class="command"><strong>setup</strong></span>
+will install only the packages in the <code class="literal">Base</code> category
+and their dependencies, resulting in a minimal Cygwin installation.
+However, this will not include many commonly used tools such as 
+<span class="command"><strong>gcc</strong></span> (which you will find in the <code class="literal">Devel</code> 
+category).  Since <span class="command"><strong>setup</strong></span> automatically selects
+dependencies, be careful not to unselect any required packages. In 
+particular, everything in the <code class="literal">Base</code> category is
+required.
+</p><p>
+You can change <span class="command"><strong>setup</strong></span>'s view style, which is helpful
+if you know the name of a package you want to install but not which 
+category it is in. 
+Click on the <code class="literal">View</code> button and it will rotate between 
+<code class="literal">Category</code> (the default), <code class="literal">Full</code> (all 
+packages), and <code class="literal">Pending</code> (only packages to be
+installed, removed or upgraded).
+If you are familiar with Unix, you will probably want to at least glance 
+through the <code class="literal">Full</code> listing for your favorite tools.
+</p><p>
+Once you have an existing Cygwin installation, the <span class="command"><strong>setup</strong></span>
+chooser is also used to manage your Cygwin installation. 
+Information on installed packages is kept in the
+<code class="literal">/etc/setup/</code> directory of your Cygwin installation; if 
+<span class="command"><strong>setup</strong></span> cannot find this directory it will act as if
+you have no Cygwin installation.  If <span class="command"><strong>setup</strong></span>
+finds a newer version of an installed package available, it will automatically 
+mark it to be upgraded. 
+To <code class="literal">Uninstall</code>, <code class="literal">Reinstall</code>, or get the
+<code class="literal">Source</code> for an existing package, click on 
+<code class="literal">Keep</code> to toggle it. 
+Also, to avoid the need to reboot after upgrading, make sure
+to close all Cygwin windows and stop all Cygwin processes before 
+<span class="command"><strong>setup</strong></span> begins to install the upgraded package.
+</p><p>
+To avoid unintentionally upgrading, use the <code class="literal">Pending</code>
+view to see which packages have been marked for upgrading.  If you
+don't want to upgrade a package, click on the new version number to
+toggle it until it says <code class="literal">Keep</code>. All packages can be
+set to stay at the installed version by pressing the <code class="literal">Keep</code>
+button in the top right part of the chooser window.
+</p><p>
+A previous version of each package is usually available, in case downgrading
+is required to avoid a serious bug in the current version of the package.
+Packages also occasionally have testing (or "experimental") versions available.
+Previous and experimental versions can be chosen by clicking on the package's
+<code class="literal">New</code> column until the required version appears.
+</p><p>
+All available experimental packages can be selected by pressing the
+<code class="literal">Exp</code> in the top right part of the chooser window.
+Be warned, however, that the next time you run <span class="command"><strong>setup</strong></span>
+it will try to replace all old or experimental versions with the current
+version, unless told otherwise.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-progress"></a>Download and Installation Progress</h3></div></div></div><p>
+First, <span class="command"><strong>setup</strong></span> will download all selected packages
+to the local directory chosen earlier. Before installing, 
+<span class="command"><strong>setup</strong></span> performs a checksum on each package. If the
+local directory is a slow medium (such as a network drive) this can take
+a long time. During the download and installation, <span class="command"><strong>setup</strong></span>
+shows progress bars for the current task and total remaining disk space.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-icons"></a>Shortcuts</h3></div></div></div><p>
+You may choose to install "Cygwin Terminal" shortcuts on the Desktop
+and/or Start Menu.  These shortcuts run <span class="command"><strong>mintty</strong></span>,
+which will start your default shell as specified
+in <code class="filename">/etc/passwd</code>.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-postinstall"></a>Post-Install Scripts</h3></div></div></div><p>
+Last of all, <span class="command"><strong>setup</strong></span> will run any post-install
+scripts to finish correctly setting up installed packages.
+When the last post-install script is completed, <span class="command"><strong>setup</strong></span>
+will display a box announcing the completion. A few packages, such as
+the OpenSSH server, require some manual site-specific configuration. 
+Relevant documentation can be found in the <code class="literal">/usr/doc/Cygwin/</code> 
+or <code class="literal">/usr/share/doc/Cygwin/</code> directory.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-troubleshooting"></a>Troubleshooting</h3></div></div></div><p>
+Unfortunately, the complex setup process means that odd problems can
+occur. If you're having trouble downloading packages, it may be network
+congestion, so try a different mirror and/or a different protocol (i.e.,
+HTTP instead of FTP).  If you notice something is not working after
+running setup, you can check the <span class="command"><strong>setup</strong></span> log file
+at <code class="literal">/var/log/setup.log.full</code>. Make a backup of this
+file before running <span class="command"><strong>setup</strong></span> again, and follow the
+steps for <a class="ulink" href="https://cygwin.com/problems.html" target="_top">Reporting
+Problems with Cygwin</a>.
+</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ov-new.html">Prev</a>&#160;</td><td width="20%" align="center">&#160;</td><td width="40%" align="right">&#160;<a accesskey="n" href="setup-env.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">What's new and what changed in Cygwin&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Environment Variables</td></tr></table></div></body></html>

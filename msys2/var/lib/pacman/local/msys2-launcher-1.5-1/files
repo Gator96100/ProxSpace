@@ -1,0 +1,25 @@
+%FILES%
+clang32.exe
+clang32.ini
+clang64.exe
+clang64.ini
+clangarm64.exe
+clangarm64.ini
+mingw32.exe
+mingw32.ini
+mingw64.exe
+mingw64.ini
+msys2.exe
+msys2.ini
+ucrt64.exe
+ucrt64.ini
+
+%BACKUP%
+mingw32.ini	f8ef6c52e33bebd75421719ccd3d2e43
+mingw64.ini	24b6e4345e70c1bc6586acc2a90a4052
+msys2.ini	152346cc549c6f5dc9b8de3580cbda99
+ucrt64.ini	e7992b3977c21351c376981dc9cd7cc1
+clang64.ini	6ff29d26a693dc134dc3cc185ee4195e
+clang32.ini	a75c2c97c1acaec91536ec14bd8ee1e7
+clangarm64.ini	bf8ef3d31665778d120e7e27c7f52800
+

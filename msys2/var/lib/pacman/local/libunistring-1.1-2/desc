@@ -1,0 +1,45 @@
+%NAME%
+libunistring
+
+%VERSION%
+1.1-2
+
+%BASE%
+libunistring
+
+%DESC%
+Library for manipulating Unicode strings and C strings.
+
+%URL%
+https://www.gnu.org/software/libunistring/
+
+%ARCH%
+x86_64
+
+%BUILDDATE%
+1668364373
+
+%INSTALLDATE%
+1689650127
+
+%PACKAGER%
+CI (msys2/msys2-autobuild/59e8e1af/3456427396)
+
+%SIZE%
+2478742
+
+%REASON%
+1
+
+%GROUPS%
+libraries
+
+%LICENSE%
+spdx:LGPL-3.0-or-later OR GPL-2.0-or-later
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+libiconv
+

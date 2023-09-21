@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>tzset</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="strace.html" title="strace"><link rel="next" href="umount.html" title="umount"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">tzset</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="strace.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="umount.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="tzset"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>tzset &#8212; Print POSIX-compatible timezone ID from current Windows timezone setting</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">tzset</code>  [ -h  |   -V ]</p></div></div><div class="refsect1"><a name="tzset-options"></a><h2>Options</h2><pre class="screen">
+Options:
+  -h, --help               output usage information and exit.
+  -V, --version            output version information and exit.
+      </pre></div><div class="refsect1"><a name="tzset-desc"></a><h2>Description</h2><p>
+      Use tzset to set your TZ variable. In POSIX-compatible shells like bash,
+      dash, mksh, or zsh:
+      </p><pre class="screen">
+export TZ=$(tzset)
+      </pre><p>
+      In csh-compatible shells like tcsh:
+      </p><pre class="screen">
+setenv TZ `tzset`
+      </pre><p>
+      </p><p>The <span class="command"><strong>tzset</strong></span> tool reads the current timezone from
+      Windows and generates a POSIX-compatible timezone information for the TZ
+      environment variable from that information. That's all there is to it.
+      For the way how to use it, see the above usage information.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="strace.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="umount.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">strace&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;umount</td></tr></table></div></body></html>

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
     eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-	if $running_under_some_shell;
+	if 0; # ^ Run only under a shell
 #!perl
 
 	## shasum: filter for computing SHA digests (ref. sha1sum/md5sum)

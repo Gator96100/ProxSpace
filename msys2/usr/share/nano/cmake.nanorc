@@ -13,7 +13,10 @@ color brightgreen "[[:blank:]](OR|AND|IS_NEWER_THAN|MATCHES|(STR|VERSION_)?(LESS
 icolor brightred "^[[:blank:]]*((end)?(function|macro)|return)"
 
 icolor cyan start="\$(ENV)?\{" end="\}"
-color magenta "\<(APPLE|UNIX|WIN32|CYGWIN|MSYS|BORLAND|MINGW|MSVC(_IDE|60|71|80|90)?)\>"
+color magenta "\<(APPLE|UNIX|WIN32|CYGWIN|BORLAND|MINGW|MSVC(_IDE|60|71|80|90)?)\>"
 
+# Comments.
 color brightblue "(^|[[:blank:]])#.*"
+
+# Trailing whitespace.
 color ,green "[[:space:]]+$"

@@ -17,21 +17,21 @@ syn case match
 " pkgname
 " FIXME if '=' is in pkgname/pkgver, it highlights whole string, not just '='
 syn keyword pb_k_pkgname pkgname contained
-syn match pbValidPkgname /\([[:alnum:]]\|+\|-\|_\){,32}/ contained contains=pbIllegalPkgname
-syn match pbIllegalPkgname /[[:upper:]]\|[^[:alnum:]-+_=]\|=.*=\|=['"]\?.\{33,\}['"]\?/ contained
+syn match pbValidPkgname /[[:alnum:]@._+-]{,32}/ contained contains=pbIllegalPkgname
+syn match pbIllegalPkgname /[[:upper:]]\|[^[:alnum:]=@._+-]\|=.*=\|=['"]\?.\{33,\}['"]\?/ contained
 syn match pbPkgnameGroup /^pkgname=.*/ contains=pbIllegalPkgname,pb_k_pkgname,shDoubleQuote,shSingleQuote
 
 " pkgbase
 " FIXME if '=' is in pkgbase/pkgname/pkgver, it highlights whole string, not just '='
 syn keyword pb_k_pkgbase pkgbase contained
-syn match pbValidPkgbase /\([[:alnum:]]\|+\|-\|_\){,32}/ contained contains=pbIllegalPkgbase
-syn match pbIllegalPkgbase /[[:upper:]]\|[^[:alnum:]-+_=]\|=.*=\|=['"]\?.\{33,\}['"]\?/ contained
+syn match pbValidPkgbase /[[:alnum:]@._+-]{,32}/ contained contains=pbIllegalPkgbase
+syn match pbIllegalPkgbase /[[:upper:]]\|[^[:alnum:]=@._+-]\|=.*=\|=['"]\?.\{33,\}['"]\?/ contained
 syn match pbPkgbaseGroup /^pkgbase=.*/ contains=pbIllegalPkgbase,pb_k_pkgbase,shDoubleQuote,shSingleQuote
 
 " pkgver
 syn keyword pb_k_pkgver pkgver contained
-syn match pbValidPkgver /\([[:alnum:]]\|\.\|+\|_\)/ contained contains=pbIllegalPkgver
-syn match pbIllegalPkgver /[^[:alnum:]+=\.\_]\|=.*=/ contained
+syn match pbValidPkgver /[[:alnum:]]+._]/ contained contains=pbIllegalPkgver
+syn match pbIllegalPkgver /[^[:alnum:]=+._]\|=.*=/ contained
 syn match pbPkgverGroup /^pkgver=.*/ contains=pbIllegalPkgver,pbValidPkgver,pb_k_pkgver,shDoubleQuote,shSingleQuote
 
 " pkgrel
@@ -64,10 +64,12 @@ syn match pbUrlGroup /^url=.*/ contains=pbValidUrl,pb_k_url,pbIllegalUrl,shDoubl
 " license
 syn keyword pb_k_license license contained
 " echo $(pacman -Ql licenses | grep '/usr/share/licenses/common/' | cut -d'/' -f6 | sort -u)
-syn keyword pbLicense  AGPL AGPL3 Apache APACHE Artistic2.0 Boost CCPL CDDL CPL EPL FDL FDL1.2 FDL1.3 GPL GPL2 GPL3 LGPL LGPL2.1 LGPL3 LPPL MPL MPL2 PerlArtistic PHP PSF RUBY Unlicense W3C ZPL contained
+syn keyword pbLicense AGPL AGPL3 Apache APACHE Boost CCPL CDDL CPL EPL FDL GPL GPL2 GPL3 LGPL LGPL3 LPPL MPL MPL2 PerlArtistic PHP PSF RUBY Unlicense W3C ZPL contained
+" keywords can't contain decimals
+syn match pbLicense /Artistic2\.0\|FDL1\.2\|FDL1\.3\|LGPL2\.1/ contained
 " special cases from https://wiki.archlinux.org/index.php/PKGBUILD#license
-syn keyword pbLicenseSpecial  BSD MIT ZLIB Python contained
-syn match pbLicenseCustom /custom\(:[[:alnum:]]*\)*/ contained
+syn keyword pbLicenseSpecial  BSD ISC MIT OFL Python ZLIB contained
+syn match pbLicenseCustom /custom\(:[[:alnum:].]*\)*/ contained
 syn keyword pbLicenseUnknown unknown contained
 syn match pbIllegalLicense /[^='"() ]/ contained contains=pbLicenseUnknown,pbLicenseCustom,pbLicenseSpecial,pbLicense
 syn region pbLicenseGroup start=/^license=(/ end=/)/ contains=pb_k_license,pbLicenseCustom,pbLicenseSpecial,pbLicense,pbIllegalLicense
@@ -75,59 +77,55 @@ syn region pbLicenseGroup start=/^license=(/ end=/)/ contains=pb_k_license,pbLic
 " backup
 syn keyword pb_k_backup backup contained
 syn match pbValidBackup   /\.\?[[:alpha:]]*\/[[:alnum:]\{\}+._$-]*]*/ contained
-syn region pbBackupGroup start=/^backup=(/ end=/)/ contains=pb_k_backup,pbValidBackup,shDoubleQuote,shSingleQuote
+syn region pbBackupGroup start=/^backup=(/ end=/)/ contains=pb_k_backup,pbValidBackup,shDoubleQuote,shSingleQuote,pbComment
 
 " arch
 syn keyword pb_k_arch arch contained
-syn keyword pbArch i686 x86_64 ppc any contained
+syn keyword pbArch i686 x86_64 ppc pentium4 armv7h aarch64 any contained
 syn match pbIllegalArch /[^='"() ]/ contained contains=pbArch
-syn region pbArchGroup start=/^arch=(/ end=/)/ contains=pb_k_arch,pbArch,pbIllegalArch
+syn region pbArchGroup start=/^arch=(/ end=/)/ contains=pb_k_arch,pbArch,pbIllegalArch,pbComment
 
 " groups
 syn keyword pb_k_groups groups contained
 syn match pbValidGroups /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbGroupsGroup start=/^groups=(/ end=/)/ contains=pb_k_groups,pbValidGroups,shDoubleQuote,shSingleQuote
+syn region pbGroupsGroup start=/^groups=(/ end=/)/ contains=pb_k_groups,pbValidGroups,shDoubleQuote,shSingleQuote,pbComment
 
 " depends
 syn keyword pb_k_depends depends contained
 syn match pbValidDepends /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbDependsGroup start=/^depends=(/ end=/)/ contains=pb_k_depends,pbValidDepends,shDoubleQuote,shSingleQuote
+syn region pbDependsGroup start=/^depends=(/ end=/)/ contains=pb_k_depends,pbValidDepends,shDoubleQuote,shSingleQuote,pbComment
 
 " makedepends
 syn keyword pb_k_makedepends makedepends contained
 syn match pbValidMakedepends /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbMakedependsGroup start=/^makedepends=(/ end=/)/ contains=pb_k_makedepends,pbValidMakedepends,shDoubleQuote,shSingleQuote
+syn region pbMakedependsGroup start=/^makedepends=(/ end=/)/ contains=pb_k_makedepends,pbValidMakedepends,shDoubleQuote,shSingleQuote,pbComment
 
 " optdepends
 syn keyword pb_k_optdepends optdepends contained
 syn match pbValidOptdepends /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbOptdependsGroup start=/^optdepends=(/ end=/)/ contains=pb_k_optdepends,pbValidOptdepends,shDoubleQuote,shSingleQuote
+syn region pbOptdependsGroup start=/^optdepends=(/ end=/)/ contains=pb_k_optdepends,pbValidOptdepends,shDoubleQuote,shSingleQuote,pbComment
 
 " checkdepends
 syn keyword pb_k_ckdepends checkdepends contained
 syn match pbValidCkdepends /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbCkdependsGroup start=/^checkdepends=(/ end=/)/ contains=pb_k_ckdepends,pbValidCkdepends,shDoubleQuote,shSingleQuote
+syn region pbCkdependsGroup start=/^checkdepends=(/ end=/)/ contains=pb_k_ckdepends,pbValidCkdepends,shDoubleQuote,shSingleQuote,pbComment
 
 " conflicts
 syn keyword pb_k_conflicts conflicts contained
 syn match pbValidConflicts /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbConflictsGroup start=/^conflicts=(/ end=/)/ contains=pb_k_conflicts,pbValidConflicts,shDoubleQuote,shSingleQuote
+syn region pbConflictsGroup start=/^conflicts=(/ end=/)/ contains=pb_k_conflicts,pbValidConflicts,shDoubleQuote,shSingleQuote,pbComment
 
 " provides
 syn keyword pb_k_provides provides contained
 syn match pbValidProvides /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbProvidesGroup start=/^provides=(/ end=/)/ contains=pb_k_provides,pbValidProvides,shDoubleQuote,shSingleQuote
+syn region pbProvidesGroup start=/^provides=(/ end=/)/ contains=pb_k_provides,pbValidProvides,shDoubleQuote,shSingleQuote,pbComment
 
 " replaces
 syn keyword pb_k_replaces replaces contained
 syn match pbValidReplaces /\([[:alnum:]]\|+\|-\|_\)*/ contained
-syn region pbReplacesGroup start=/^replaces=(/  end=/)/ contains=pb_k_replaces,pbValidReplaces,shDoubleQuote,shSingleQuote
+syn region pbReplacesGroup start=/^replaces=(/  end=/)/ contains=pb_k_replaces,pbValidReplaces,shDoubleQuote,shSingleQuote,pbComment
 
 " install
-" XXX remove install from bashStatement, fix strange bug
-syn clear bashStatement
-syn keyword bashStatement chmod clear complete du egrep expr fgrep find gnufind gnugrep grep less ls mkdir mv rm rmdir rpm sed sleep sort strip tail touch
-
 syn keyword pb_k_install install contained
 syn match pbValidInstall /\([[:alnum:]]\|\$\|+\|-\|_\)*\.install/ contained
 syn match pbIllegalInstall /[^=]/ contained contains=pbValidInstall
@@ -142,7 +140,8 @@ syn match pbChangelogGroup /^changelog=.*/ contains=pb_k_changelog,pbValidChange
 " source:
 " XXX remove source from shStatement, fix strange bug
 syn clear shStatement
-syn keyword shStatement xxx wait getopts return autoload whence printf true popd nohup enable r trap readonly fc fg kill ulimit umask disown stop pushd read history logout times local exit test pwd time eval integer suspend dirs shopt hash false newgrp bg print jobs continue functions exec help cd break unalias chdir type shift builtin let bind
+syn keyword shStatement alias break cd chdir continue eval exec exit kill newgrp pwd read readonly return shift test trap ulimit umask wait
+syn keyword shStatement bg builtin disown export false fg getopts jobs let printf sleep true unalias typeset fc hash history suspend times type bind builtin caller compopt declare dirs disown enable export help logout mapfile popd pushd readarray shopt typeset
 
 syn keyword pb_k_source source contained
 syn match pbIllegalSource /\(http\|ftp\|https\).*\.\+\(dl\|download.\?\)\.\(sourceforge\|sf\).net/
@@ -150,9 +149,12 @@ syn region pbSourceGroup  start=/^source=(/ end=/)/ contains=pb_k_source,pbIlleg
 syn match pbDerefEmulation /\$[{]\?[[:alnum:]_]*[}]\?/ contained
 hi def link pbDerefEmulation PreProc
 
+" SKIP sums
+syn match pbSumsSKIP /\(SKIP\)/
+
 " md5sums
 syn keyword pb_k_md5sums md5sums contained
-syn match pbIllegalMd5sums /[^='"()\/ ]/ contained contains=pbValidMd5sums
+syn match pbIllegalMd5sums /[^='"()\/ ]/ contained contains=pbValidMd5sums,pbSumsSKIP
 syn match pbValidMd5sums /\x\{32\}/ contained
 syn region pbMd5sumsGroup start=/^md5sums/ end=/)/ contains=pb_k_md5sums,pbMd5Quotes,pbMd5Hash,pbIllegalMd5sums keepend
 syn match pbMd5Quotes /'.*'\|".*"/ contained contains=pbMd5Hash,pbIllegalMd5sums
@@ -163,7 +165,7 @@ hi def link pbValidMd5sums  Number
 
 " sha1sums
 syn keyword pb_k_sha1sums sha1sums contained
-syn match pbIllegalSha1sums /[^='"()\/ ]/ contained contains=pbValidSha1sums
+syn match pbIllegalSha1sums /[^='"()\/ ]/ contained contains=pbValidSha1sums,pbSumsSKIP
 syn match pbValidSha1sums /\x\{40\}/ contained
 syn region pbSha1sumsGroup start=/^sha1sums/ end=/)/ contains=pb_k_sha1sums,pbSha1Quotes,pbSha1Hash,pbIllegalSha1sums keepend
 syn match pbSha1Quotes /'.*'\|".*"/ contained contains=pbSha1Hash,pbIllegalSha1sums
@@ -174,7 +176,7 @@ hi def link pbValidSha1sums  Number
 
 " sha224sums
 syn keyword pb_k_sha224sums sha224sums contained
-syn match pbIllegalsha224sums /[^='"()\/ ]/ contained contains=pbValidsha224sums
+syn match pbIllegalsha224sums /[^='"()\/ ]/ contained contains=pbValidsha224sums,pbSumsSKIP
 syn match pbValidsha224sums /\x\{64\}/ contained
 syn region pbsha224sumsGroup start=/^sha224sums/ end=/)/ contains=pb_k_sha224sums,pbsha224Quotes,pbsha224Hash,pbIllegalsha224sums keepend
 syn match pbsha224Quotes /'.*'\|".*"/ contained contains=pbsha224Hash,pbIllegalsha224sums
@@ -185,7 +187,7 @@ hi def link pbValidsha224sums  Number
 
 " sha256sums
 syn keyword pb_k_sha256sums sha256sums contained
-syn match pbIllegalSha256sums /[^='"()\/ ]/ contained contains=pbValidSha256sums
+syn match pbIllegalSha256sums /[^='"()\/ ]/ contained contains=pbValidSha256sums,pbSumsSKIP
 syn match pbValidSha256sums /\x\{64\}/ contained
 syn region pbSha256sumsGroup start=/^sha256sums/ end=/)/ contains=pb_k_sha256sums,pbSha256Quotes,pbSha256Hash,pbIllegalSha256sums keepend
 syn match pbSha256Quotes /'.*'\|".*"/ contained contains=pbSha256Hash,pbIllegalSha256sums
@@ -196,7 +198,7 @@ hi def link pbValidSha256sums  Number
 
 " sha384sums
 syn keyword pb_k_sha384sums sha384sums contained
-syn match pbIllegalSha384sums /[^='"()\/ ]/ contained contains=pbValidSha384sums
+syn match pbIllegalSha384sums /[^='"()\/ ]/ contained contains=pbValidSha384sums,pbSumsSKIP
 syn match pbValidSha384sums /\x\{96\}/ contained
 syn region pbSha384sumsGroup start=/^sha384sums/ end=/)/ contains=pb_k_sha384sums,pbSha384Quotes,pbSha384Hash,pbIllegalSha384sums keepend
 syn match pbSha384Quotes /'.*'\|".*"/ contained contains=pbSha384Hash,pbIllegalSha384sums
@@ -207,7 +209,7 @@ hi def link pbValidSha384sums  Number
 
 " sha512sums
 syn keyword pb_k_sha512sums sha512sums contained
-syn match pbIllegalSha512sums /[^='"()\/ ]/ contained contains=pbValidSha512sums
+syn match pbIllegalSha512sums /[^='"()\/ ]/ contained contains=pbValidSha512sums,pbSumsSKIP
 syn match pbValidSha512sums /\x\{128\}/ contained
 syn region pbSha512sumsGroup start=/^sha512sums/ end=/)/ contains=pb_k_sha512sums,pbSha512Quotes,pbSha512Hash,pbIllegalSha512sums keepend
 syn match pbSha512Quotes /'.*'\|".*"/ contained contains=pbSha512Hash,pbIllegalSha512sums
@@ -218,7 +220,7 @@ hi def link pbValidSha512sums  Number
 
 " b2sums
 syn keyword pb_k_b2sums b2sums contained
-syn match pbIllegalB2sums /[^='"()\/ ]/ contained contains=pbValidB2sums
+syn match pbIllegalB2sums /[^='"()\/ ]/ contained contains=pbValidB2sums,pbSumsSKIP
 syn match pbValidB2sums /\x\{128\}/ contained
 syn region pbB2sumsGroup start=/^b2sums/ end=/)/ contains=pb_k_b2sums,pbB2Quotes,pbB2Hash,pbIllegalB2sums keepend
 syn match pbB2Quotes /'.*'\|".*"/ contained contains=pbB2Hash,pbIllegalB2sums
@@ -230,14 +232,14 @@ hi def link pbValidB2sums  Number
 " validpgpkeys
 syn keyword pb_k_validpgpkeys validpgpkeys contained
 syn match pbValidPGPKeys /\([[:alnum:]]\)*/ contained
-syn region pbValidPGPKeysGroup start=/^validpgpkeys=(/ end=/)/ contains=pb_k_validpgpkeys,pbValidPGPKeys,shDoubleQuote,shSingleQuote
+syn region pbValidPGPKeysGroup start=/^validpgpkeys=(/ end=/)/ contains=pb_k_validpgpkeys,pbValidPGPKeys,shDoubleQuote,shSingleQuote,pbComment
 
 " options
 syn keyword pb_k_options options contained
-syn match pbOptions /\(no\)\?\(strip\|docs\|libtool\|emptydirs\|zipman\|purge\|distcc\|color\|ccache\|check\|sign\|makeflags\|buildflags\)/ contained
+syn match pbOptions /\(no\)\?\(strip\|docs\|libtool\|emptydirs\|zipman\|purge\|distcc\|color\|ccache\|check\|sign\|makeflags\|buildflags\|lto\|debug\)/ contained
 syn match   pbOptionsNeg     /\!/ contained
 syn match   pbOptionsDeprec  /no/ contained
-syn region pbOptionsGroup start=/^options=(/ end=/)/ contains=pb_k_options,pbOptions,pbOptionsNeg,pbOptionsDeprec,pbIllegalOption
+syn region pbOptionsGroup start=/^options=(/ end=/)/ contains=pb_k_options,pbOptions,pbOptionsNeg,pbOptionsDeprec,pbIllegalOption,pbComment
 syn match pbIllegalOption /[^!"'()= ]/ contained contains=pbOptionsDeprec,pbOptions
 
 " noextract
@@ -256,7 +258,12 @@ syn keyword    pbTodo   contained       COMBAK FIXME TODO XXX
 syn match      pbComment        "^#.*$" contains=@pbCommentGroup
 syn match      pbComment        "[^0-9]#.*$"    contains=@pbCommentGroup
 
-" quotes are handled by sh.vim
+" quotes
+" XXX redefined to fix #6 & #10
+syn clear shSingleQuote
+syn clear shDoubleQuote
+syn region shSingleQuote matchgroup=shQuote start=+'+ end=+'+ contains=@Spell nextgroup=shSpecialStart,shSpecialSQ
+syn region shDoubleQuote matchgroup=shQuote start=+\%(\%(\\\\\)*\\\)\@<!"+ skip=+\\.+ end=+"+ contains=@shDblQuoteList,shStringSpecial,@Spell nextgroup=shSpecialStart
 
 hi def link pbComment Comment
 hi def link pbTodo Todo
@@ -343,5 +350,3 @@ hi def link pb_k_maintainer pbKeywords
 hi def link pbKeywords Keyword
 
 hi def link pbDate Special
-
-"let b:current_syntax = 'PKGBUILD'

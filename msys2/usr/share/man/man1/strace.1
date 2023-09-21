@@ -1,0 +1,134 @@
+'\" t
+.\"     Title: strace
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "STRACE" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+strace \- Trace system calls and signals
+.SH "SYNOPSIS"
+.HP \w'\fBstrace\fR\ 'u
+\fBstrace\fR [\-defnqtuw] [\-b\ \fISIZE\fR] [\-m\ \fIMASK\fR] [\-o\ \fIFILENAME\fR] [\-f\ \fIPERIOD\fR] {\fIcommand\-line\fR... | [\-T]\ \-p\ \fIpid\fR }
+.HP \w'\fBstrace\fR\ 'u
+\fBstrace\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-b, \-\-buffer\-size=SIZE       set size of output file buffer
+  \-d, \-\-no\-delta               don\*(Aqt display the delta\-t microsecond timestamp
+  \-e, \-\-events                 log all Windows DEBUG_EVENTS (toggle \- default true)
+  \-f, \-\-trace\-children         trace child processes (toggle \- default true)
+  \-h, \-\-help                   output usage information and exit
+  \-m, \-\-mask=MASK              set message filter mask
+  \-n, \-\-crack\-error\-numbers    output descriptive text instead of error
+                               numbers for Windows errors
+  \-o, \-\-output=FILENAME        set output file to FILENAME
+  \-p, \-\-pid=n                  attach to executing program with cygwin pid n
+  \-q, \-\-quiet                  toggle "quiet" flag\&.  Defaults to on if "\-p",
+                               off otherwise\&.
+  \-S, \-\-flush\-period=PERIOD    flush buffered strace output every PERIOD secs
+  \-t, \-\-timestamp              use an absolute hh:mm:ss timestamp insted of
+                               the default microsecond timestamp\&.  Implies \-d
+  \-T, \-\-toggle                 toggle tracing in a process already being
+                               traced\&. Requires \-p <pid>
+  \-u, \-\-usecs                  toggle printing of microseconds timestamp
+  \-V, \-\-version                output version information and exit
+  \-w, \-\-new\-window             spawn program under test in a new window
+
+    MASK can be any combination of the following mnemonics and/or hex values
+    (0x is optional)\&.  Combine masks with \*(Aq+\*(Aq or \*(Aq,\*(Aq like so:
+
+                      \-\-mask=wm+system,malloc+0x00800
+
+    Mnemonic Hex     Corresponding Def  Description
+    =========================================================================
+    all      0x000001 (_STRACE_ALL)      All strace messages\&.
+    flush    0x000002 (_STRACE_FLUSH)    Flush output buffer after each message\&.
+    inherit  0x000004 (_STRACE_INHERIT)  Children inherit mask from parent\&.
+    uhoh     0x000008 (_STRACE_UHOH)     Unusual or weird phenomenon\&.
+    syscall  0x000010 (_STRACE_SYSCALL)  System calls\&.
+    startup  0x000020 (_STRACE_STARTUP)  argc/envp printout at startup\&.
+    debug    0x000040 (_STRACE_DEBUG)    Info to help debugging\&.
+    paranoid 0x000080 (_STRACE_PARANOID) Paranoid info\&.
+    termios  0x000100 (_STRACE_TERMIOS)  Info for debugging termios stuff\&.
+    select   0x000200 (_STRACE_SELECT)   Info on ugly select internals\&.
+    wm       0x000400 (_STRACE_WM)       Trace Windows msgs (enable _strace_wm)\&.
+    sigp     0x000800 (_STRACE_SIGP)     Trace signal and process handling\&.
+    minimal  0x001000 (_STRACE_MINIMAL)  Very minimal strace output\&.
+    pthread  0x002000 (_STRACE_PTHREAD)  Pthread calls\&.
+    exitdump 0x004000 (_STRACE_EXITDUMP) Dump strace cache on exit\&.
+    system   0x008000 (_STRACE_SYSTEM)   Serious error; goes to console and log\&.
+    nomutex  0x010000 (_STRACE_NOMUTEX)  Don\*(Aqt use mutex for synchronization\&.
+    malloc   0x020000 (_STRACE_MALLOC)   Trace malloc calls\&.
+    thread   0x040000 (_STRACE_THREAD)   Thread\-locking calls\&.
+    special  0x100000 (_STRACE_SPECIAL)  Special debugging printfs for
+                                         non\-checked\-in code
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBstrace\fR
+program executes a program, and optionally the children of the program, reporting any Cygwin DLL output from the program(s) to stdout, or to a file with the
+\-o
+option\&. With the
+\-w
+option, you can start an strace session in a new window, for example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ strace \-o tracing_output \-w sh \-c \*(Aqwhile true; do echo "tracing\&.\&.\&."; done\*(Aq &
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+This is particularly useful for
+\fBstrace\fR
+sessions that take a long time to complete\&.
+.PP
+Note that
+\fBstrace\fR
+is a standalone Windows program and so does not rely on the Cygwin DLL itself (you can verify this with
+\fBcygcheck\fR)\&. As a result it does not understand symlinks\&. This program is mainly useful for debugging the Cygwin DLL itself\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

@@ -25,7 +25,7 @@ umask 022
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver='6.0.0'
+declare -r myver='6.0.2'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 

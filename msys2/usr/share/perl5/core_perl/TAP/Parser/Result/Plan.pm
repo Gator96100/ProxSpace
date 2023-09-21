@@ -11,11 +11,11 @@ TAP::Parser::Result::Plan - Plan result token.
 
 =head1 VERSION
 
-Version 3.42
+Version 3.44
 
 =cut
 
-our $VERSION = '3.42';
+our $VERSION = '3.44';
 
 =head1 DESCRIPTION
 
@@ -46,7 +46,7 @@ They keep me awake at night.
 
 =head2 Instance Methods
 
-=head3 C<plan>
+=head3 C<plan> 
 
   if ( $result->is_plan ) {
      print $result->plan;
@@ -75,7 +75,7 @@ sub tests_planned { shift->{tests_planned} }
 
 =head3 C<directive>
 
- my $directive = $plan->directive;
+ my $directive = $plan->directive; 
 
 If a SKIP directive is included with the plan, this method will return it.
 

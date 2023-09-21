@@ -21,44 +21,59 @@
 shopt -s extglob
 
 declare -r myname='pacdiff'
-declare -r myver='1.4.0'
+declare -r myver='1.9.1'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 diffprog=${DIFFPROG:-'vim -d'}
 diffsearchpath=${DIFFSEARCHPATH:-/etc}
+mergeprog=${MERGEPROG:-'diff3 -m'}
+cachedirs=()
 USE_COLOR='y'
+SUDO=''
 declare -a oldsaves
-declare -i USE_FIND=0 USE_LOCATE=0 USE_PACDB=0 OUTPUTONLY=0
+declare -i USE_FIND=0 USE_LOCATE=0 USE_PACDB=0 OUTPUTONLY=0 BACKUP=0 THREE_WAY_DIFF=0
 
 # Import libmakepkg
 source "$LIBRARY"/util/message.sh
+
+die() {
+	error "$@"
+	exit 1
+}
 
 usage() {
 	cat <<EOF
 ${myname} v${myver}
 
-A simple program to merge or remove pacnew/pacsave files.
+pacorig, pacnew and pacsave maintenance utility.
 
-Usage: $myname [-l | -f | -p] [--nocolor]
+Usage: $myname [options]
 
-Search Options:     select one (default: --pacmandb)
-  -l/--locate       scan using locate
-  -f/--find         scan using find
-  -p/--pacmandb     scan active config files from pacman database
+Search Options:   select one (default: --pacmandb)
+  -f, --find      scan using find
+  -l, --locate    scan using locate
+  -p, --pacmandb  scan active config files from pacman database
 
 General Options:
-  -o/--output       print files instead of merging them
-  --nocolor         remove colors from output
+  -b, --backup          when overwriting, save old files with .bak
+  -c, --cachedir <dir>  scan "dir" for 3-way merge base candidates
+                        (default: read from /etc/pacman.conf)
+      --nocolor         do not colorize output
+  -o, --output          print files instead of merging them
+  -s, --sudo            use sudo and sudoedit to merge/remove files
+  -3, --threeway        view diffs in 3-way fashion
+  -h, --help            show this help message and exit
+  -V, --version         display version information and exit
 
 Environment Variables:
-  DIFFPROG          override the merge program: (default: 'vim -d')
-  DIFFSEARCHPATH    override the search path. (only when using find)
-                    (default: /etc)
+  DIFFPROG        override the merge program (default: 'vim -d')
+  DIFFSEARCHPATH  override the search path (only when using find)
+                  (default: /etc)
+  MERGEPROG       override the 3-way merge program (default: 'diff3 -m')
 
-Example: DIFFPROG=meld DIFFSEARCHPATH="/boot /etc /usr" $myname
+Example: DIFFPROG=meld DIFFSEARCHPATH="/boot /etc /usr" MERGEPROG="git merge-file -p" $myname
 Example: $myname --output --locate
-
 EOF
 }
 
@@ -78,6 +93,125 @@ print_existing_pacsave(){
 	done
 }
 
+base_cache_tar() {
+	package="$1"
+
+	for cachedir in "${cachedirs[@]}"; do
+		pushd "$cachedir" &>/dev/null || {
+			error "failed to chdir to '%s', skipping" "$cachedir"
+			continue
+		}
+
+		find "$PWD" -name "$package-[0-9]*.pkg.tar*" ! -name '*.sig' |
+			pacsort --files --reverse | sed -ne '2p'
+
+		popd &>/dev/null
+	done
+}
+
+diffprog_fn() {
+	if [[ -n "$SUDO" ]]; then
+		SUDO_EDITOR="$diffprog" sudoedit "$@"
+	else
+		$diffprog "$@"
+	fi
+}
+
+view_diff() {
+	pacfile="$1"
+	file="$2"
+
+	package="$(pacman -Qoq "$file")" || return 1
+	base_tar="$(base_cache_tar "$package")"
+
+	two_way_diff() {
+		diffprog_fn "$pacfile" "$file"
+	}
+
+	three_way_diff() {
+		diffprog_fn "$pacfile" "$base" "$file"
+	}
+
+	unset tempdir
+
+	if (( ! THREE_WAY_DIFF )); then
+		two_way_diff
+	elif [[ -z $base_tar ]]; then
+		msg2 "Unable to find a base package. falling back to 2-way diff."
+		two_way_diff
+	else
+		basename="$(basename "$file")"
+		tempdir="$(mktemp -d --tmpdir "pacdiff-diff-$basename.XXX")"
+		base="$(mktemp "$tempdir"/"$basename.base.XXX")"
+		merged="$(mktemp "$tempdir"/"$basename.merged.XXX")"
+
+		if ! bsdtar -xqOf "$base_tar" "${file#/}" >"$base"; then
+			msg2 "Unable to extract the previous version of this file. falling back to 2-way diff."
+			two_way_diff
+		else
+			three_way_diff
+		fi
+	fi
+
+	ret=1
+
+	if cmp -s "$pacfile" "$file"; then
+		msg2 "Files are identical, removing..."
+		$SUDO rm -v "$pacfile"
+		ret=0
+	fi
+
+	$SUDO rm -rf "$tempdir"
+	return $ret
+}
+
+merge_file() {
+	pacfile="$1"
+	file="$2"
+
+	package="$(pacman -Qoq "$file")" || return 1
+	base_tar="$(base_cache_tar "$package")"
+
+	if [[ -z $base_tar ]]; then
+		msg2 "Unable to find a base package."
+		return 1
+	fi
+
+	basename="$(basename "$file")"
+	tempdir="$(mktemp -d --tmpdir "pacdiff-merge-$basename.XXX")"
+	base="$(mktemp "$tempdir"/"$basename.base.XXX")"
+	merged="$(mktemp "$tempdir"/"$basename.merged.XXX")"
+
+	if ! /usr/bin/bsdtar -xqOf "$base_tar" "${file#/}" >"$base"; then
+		msg2 "Unable to extract the previous version of this file."
+		return 1
+	fi
+
+	if $mergeprog "$file" "$base" "$pacfile" >"$merged"; then
+		msg2 "Merged without conflicts."
+	fi
+
+	$diffprog "$file" "$merged"
+
+	while :; do
+		ask "Would you like to use the results of the merge? [y/n] "
+
+		read c || return 1
+		case $c in
+			y|Y) break ;;
+			n|N) return 1 ;;
+			*) msg2 "Invalid answer." ;;
+		esac
+	done
+
+	if ! $SUDO cp -v "$merged" "$file"; then
+		warning "Unable to write merged file to %s. Merged file is preserved at %s" "$file" "$merged"
+		return 1
+	fi
+	$SUDO rm -rv "$pacfile" "$tempdir"
+	return 0
+}
+
 cmd() {
 	if (( USE_LOCATE )); then
 		locate -0 -e -b \*.pacnew \*.pacorig \*.pacsave '*.pacsave.[0-9]*'
@@ -87,8 +221,8 @@ cmd() {
 		awk '/^%BACKUP%$/ {
 		while (getline) {
 			if (/^$/) { nextfile }
-				print $1
-			}
+			print $1
+		}
 		}' "${pac_db}"/*/files | while read -r bkup; do
 			print_existing "/$bkup.pacnew"
 			print_existing "/$bkup.pacorig"
@@ -99,16 +233,24 @@ cmd() {
 
 while [[ -n "$1" ]]; do
 	case "$1" in
-		-l|--locate)
-			USE_LOCATE=1;;
 		-f|--find)
 			USE_FIND=1;;
+		-l|--locate)
+			USE_LOCATE=1;;
 		-p|--pacmandb)
 			USE_PACDB=1;;
-		-o|--output)
-			OUTPUTONLY=1;;
+		-b|--backup)
+			BACKUP=1;;
+		-c|--cachedir)
+			cachedirs+=("$2"); shift;;
 		--nocolor)
 			USE_COLOR='n';;
+		-o|--output)
+			OUTPUTONLY=1;;
+		-s|--sudo)
+			SUDO=sudo;;
+		-3|--threeway)
+			THREE_WAY_DIFF=1 ;;
 		-V|--version)
 			version; exit 0;;
 		-h|--help)
@@ -127,8 +269,11 @@ else
 fi
 
 if ! type -p ${diffprog%% *} >/dev/null && (( ! OUTPUTONLY )); then
-	error "Cannot find the $diffprog binary required for viewing differences."
-	exit 1
+	die "Cannot find the $diffprog binary required for viewing differences."
+fi
+
+if ! type -p ${mergeprog%% *} >/dev/null && (( ! OUTPUTONLY )); then
+	die "Cannot find the $mergeprog binary required for merging differences."
 fi
 
 case $(( USE_FIND + USE_LOCATE + USE_PACDB )) in
@@ -147,6 +292,10 @@ if (( USE_PACDB )); then
 		error "unable to read pacman database %s". "${pac_db}"
 		usage; exit 1
 	fi
+fi
+
+if [[ -z ${cachedirs[*]} ]]; then
+	readarray -t cachedirs < <(pacman-conf CacheDir)
 fi
 
 # see http://mywiki.wooledge.org/BashFAQ/020
@@ -168,26 +317,36 @@ while IFS= read -u 3 -r -d '' pacfile; do
 	msg "%s file found for %s" "$file_type" "$file"
 	if [ ! -f "$file" ]; then
 		warning "$file does not exist"
-		rm -iv "$pacfile"
+		$SUDO rm -iv "$pacfile"
 		continue
 	fi
 
 	if cmp -s "$pacfile" "$file"; then
 		msg2 "Files are identical, removing..."
-		rm -v "$pacfile"
+		$SUDO rm -v "$pacfile"
 	else
-		ask "(V)iew, (S)kip, (R)emove %s, (O)verwrite with %s, (Q)uit: [v/s/r/o/q] " "$file_type" "$file_type"
-		while read c; do
+		while :; do
+			ask "(V)iew, (M)erge, (S)kip, (R)emove %s, (O)verwrite with %s, (Q)uit: [v/m/s/r/o/q] " "$file_type" "$file_type"
+			read c || break
 			case $c in
 				q|Q) exit 0;;
-				r|R) rm -v "$pacfile"; break ;;
-				o|O) mv -v "$pacfile" "$file"; break ;;
+				r|R) $SUDO rm -v "$pacfile"; break ;;
+				o|O)
+					if (( BACKUP )); then
+						$SUDO cp -v "$file" "$file.bak"
+					fi
+					$SUDO mv -v "$pacfile" "$file"
+					break ;;
 				v|V)
-					$diffprog "$pacfile" "$file"
-					ask "(V)iew, (S)kip, (R)emove %s, (O)verwrite with %s, (Q)uit: [v/s/r/o/q] " "$file_type" "$file_type";
-					continue ;;
+					if view_diff "$pacfile" "$file"; then
+						break
+					fi ;;
+				m|M)
+					if merge_file "$pacfile" "$file"; then
+						break
+					fi ;;
 				s|S) break ;;
-				*) ask "Invalid answer. Try again: [v/s/r/o/q] "; continue ;;
+				*) msg2 "Invalid answer." ;;
 			esac
 		done
 	fi
@@ -196,5 +355,3 @@ done 3< <(cmd)
 (( ${#oldsaves[@]} )) && warning "Ignoring %s" "${oldsaves[@]}"
 
 exit 0
-
-# vim: set noet:

@@ -1,0 +1,16 @@
+#compdef pacsort
+
+declare -a args
+args=(
+	'(--files -f)'{--files,-f}'[assume inputs are file paths of packages]'
+	'(--key -k)'{--key,-k}'[sort input starting on specified column]:column index: '
+	'(--null -z)'{--null,-z}'[lines end with null bytes, not newlines]'
+	'(--reverse -r)'{--reverse,-r}'[sort in reverse order (default: oldest to newest)]'
+	'(--separator -t)'{--separator,-t}'[specify field separator (default: space)]:field separator: '
+	'(-)'{--help,-h}'[display help message and exit]'
+	'(-)'{--version,-V}'[display version information and exit]'
+
+	'*:files:_files'
+)
+
+_arguments $args

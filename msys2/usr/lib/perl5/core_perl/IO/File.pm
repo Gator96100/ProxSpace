@@ -112,7 +112,7 @@ suggested instead.
 
 =head1 SEE ALSO
 
-L<perlfunc>,
+L<perlfunc>, 
 L<perlop/"I/O Operators">,
 L<IO::Handle>,
 L<IO::Seekable>,
@@ -135,7 +135,7 @@ require Exporter;
 
 our @ISA = qw(IO::Handle IO::Seekable Exporter);
 
-our $VERSION = "1.41";
+our $VERSION = "1.48";
 
 our @EXPORT = @IO::Seekable::EXPORT;
 

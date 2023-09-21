@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Chapter&#160;4.&#160;Programming with Cygwin</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="prev" href="using-effectively.html" title="Using Cygwin effectively with Windows"><link rel="next" href="gdb.html" title="Debugging Cygwin Programs"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&#160;4.&#160;Programming with Cygwin</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-effectively.html">Prev</a>&#160;</td><th width="60%" align="center">&#160;</th><td width="20%" align="right">&#160;<a accesskey="n" href="gdb.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="programming"></a>Chapter&#160;4.&#160;Programming with Cygwin</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="programming.html#gcc">Using GCC with Cygwin</a></span></dt><dd><dl><dt><span class="sect2"><a href="programming.html#gcc-default">Standard Usage</a></span></dt><dt><span class="sect2"><a href="programming.html#gcc-64">Building applications for 64 bit Cygwin</a></span></dt><dt><span class="sect2"><a href="programming.html#gcc-gui">GUI Mode Applications</a></span></dt></dl></dd><dt><span class="sect1"><a href="gdb.html">Debugging Cygwin Programs</a></span></dt><dt><span class="sect1"><a href="dll.html">Building and Using DLLs</a></span></dt><dd><dl><dt><span class="sect2"><a href="dll.html#dll-build">Building DLLs</a></span></dt><dt><span class="sect2"><a href="dll.html#dll-link">Linking Against DLLs</a></span></dt></dl></dd><dt><span class="sect1"><a href="windres.html">Defining Windows Resources</a></span></dt><dt><span class="sect1"><a href="gprof.html">Profiling Cygwin Programs</a></span></dt><dd><dl><dt><span class="sect2"><a href="gprof.html#gprof-intro">Introduction</a></span></dt><dt><span class="sect2"><a href="gprof.html#gprof-ex">Examples</a></span></dt><dt><span class="sect2"><a href="gprof.html#gprof-ss">Special situations</a></span></dt><dd><dl><dt><span class="sect3"><a href="gprof.html#gprof-mt">Profiling multi-threaded programs</a></span></dt><dt><span class="sect3"><a href="gprof.html#gprof-fork">Profiling programs that fork</a></span></dt><dt><span class="sect3"><a href="gprof.html#gprof-res">Getting better profiling resolution</a></span></dt><dt><span class="sect3"><a href="gprof.html#gprof-lib">Profiling programs with their libraries</a></span></dt><dt><span class="sect3"><a href="gprof.html#gprof-cyg">Profiling Cygwin itself</a></span></dt></dl></dd></dl></dd></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="gcc"></a>Using GCC with Cygwin</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="gcc-default"></a>Standard Usage</h3></div></div></div><p>Use gcc to compile, just like under UNIX.  Refer to the GCC User's Guide
+for information on standard usage and options.  Here's a simple example:</p><div class="example"><a name="gcc-hello-world"></a><p class="title"><b>Example&#160;4.1.&#160;Building Hello World with GCC</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">bash$</code> <strong class="userinput"><code>gcc hello.c -o hello.exe</code></strong>
+<code class="prompt">bash$</code> <strong class="userinput"><code>hello.exe</code></strong>
+Hello, World
+
+<code class="prompt">bash$</code>
+</pre></div></div><br class="example-break"></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="gcc-64"></a>Building applications for 64 bit Cygwin</h3></div></div></div><p>The 64 bit Cygwin toolchain uses the
+<a class="ulink" href="http://en.wikipedia.org/wiki/X86_calling_convention#Microsoft_x64_calling_convention" target="_top">Microsoft x64 calling convention</a>
+by default, so you can create applications using the Win32 API just as with
+the 32 bit Cygwin toolchain.</p><p>There's just one important difference.  The 64 bit Cygwin compilers use
+a different data model than the Mingw and Microsoft compilers.  For reference,
+see the Wikipedia entry on
+<a class="ulink" href="http://en.wikipedia.org/wiki/64-bit_computing#64-bit_data_models" target="_top">64-bit computing</a>.</p><p>While the Mingw and Microsoft compilers use the <code class="literal">LLP64</code>
+data model, Cygwin compilers use the <code class="literal">LP64</code> data model, just
+like Linux.  This affects the size of the type <code class="literal">long</code>.  In the
+<code class="literal">LLP64</code> model preferred by Microsoft,
+<code class="function">sizeof(long)</code> is 4.  This applies for the related Win32
+types like <code class="literal">LONG</code>, <code class="literal">ULONG</code>,
+<code class="literal">DWORD</code>, etc., too.</p><p>In the <code class="literal">LP64</code> model used by Cygwin, <code class="function">sizeof(long)</code> is 8,
+just like the size of pointers or the types <code class="literal">size_t/ssize_t</code>.
+This simplifies porting Linux applications to 64 bit Cygwin, but it requires
+due diligence when calling Windows functions taking LONG, ULONG, DWORD, or any
+other equivalent type.  This is especially important in conjunction with
+pointers.</p><p>Here's an example.  The Win32 function <code class="function">ReadFile</code>
+returns the number of read bytes via a pointer to a DWORD variable:</p><pre class="screen">
+BOOL WINAPI ReadFile (HANDLE, PVOID, DWORD, PDWORD, LPOVERLAPPED);
+</pre><p>Note that the forth parameter is a pointer to a DWORD, thus it's a 
+pointer to a 4 byte type, on 32 as well as on 64 bit Windows.  Now we write
+our own <code class="function">my_read</code> function using ReadFile:</p><div class="example"><a name="gcc-64-ex1"></a><p class="title"><b>Example&#160;4.2.&#160;64bit-programming, Using ReadFile, 1st try</b></p><div class="example-contents"><pre class="screen">
+ssize_t
+my_read (int fd, void *buffer, size_t bytes_to_read)
+{
+  HANDLE fh = _get_osfhandle (fd);
+  ssize_t bytes_read;
+
+  if (ReadFile (fh, buffer, bytes_to_read, (PDWORD) &amp;bytes_read, NULL))
+    return bytes_read;
+  set_errno_from_get_last_error ();
+  return -1;
+}
+</pre></div></div><br class="example-break"><p>While this example code works fine on 32 bit Windows, it has in fact
+a bad bug.  The assumption that the size of ssize_t is the same as the size
+of DWORD is wrong for 64 bit.  In fact, since
+<code class="function">sizeof(ssize_t)</code> is 8, <code class="function">ReadFile</code>
+will write the number of read bytes into the lower 4 bytes of the variable
+<code class="literal">bytes_read</code>, while the upper 4 bytes will contain an
+undefined value.  <code class="function">my_read</code> will very likely return the
+wrong number of read bytes to the caller.</p><p>Here's the fixed version of <code class="function">my_read</code>:</p><div class="example"><a name="gcc-64-ex2"></a><p class="title"><b>Example&#160;4.3.&#160;64bit-programming, Using ReadFile, 2nd try</b></p><div class="example-contents"><pre class="screen">
+ssize_t
+my_read (int fd, void *buffer, size_t bytes_to_read)
+{
+  HANDLE fh = _get_osfhandle (fd);
+  DWORD bytes_read;
+
+  if (ReadFile (fh, buffer, bytes_to_read, &amp;bytes_read, NULL))
+    return (ssize_t) bytes_read;
+  set_errno_from_get_last_error ();
+  return -1;
+}
+</pre></div></div><br class="example-break"></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="gcc-gui"></a>GUI Mode Applications</h3></div></div></div><p>Cygwin comes with an X server, so usually you should compile your
+GUI applications as X applications to allow better interoperability with
+other Cygwin GUI applications.</p><p>Other than that, Cygwin allows you to build programs with full access
+to the standard Windows API, including the GUI functions as defined in
+any Microsoft or off-the-shelf publication.</p><p>The build process is similar to any other build process.  The only
+difference is that you use <span class="command"><strong>gcc -mwindows</strong></span> to link your
+program into a GUI application instead of a command-line application.
+Here's an example Makefile:</p><pre class="screen">
+
+myapp.exe : myapp.o myapp.res
+	gcc -mwindows myapp.o myapp.res -o $@
+
+myapp.res : myapp.rc resource.h
+	windres $&lt; -O coff -o $@
+
+</pre><p>Note the use of <code class="filename">windres</code> to compile the
+Windows resources into a COFF-format <code class="filename">.res</code> file.
+That will include all the bitmaps, icons, and other resources you
+need, into one handy object file.  For more information on
+<code class="filename">windres</code>, consult the Binutils manual.  </p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="using-effectively.html">Prev</a>&#160;</td><td width="20%" align="center">&#160;</td><td width="40%" align="right">&#160;<a accesskey="n" href="gdb.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Using Cygwin effectively with Windows&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Debugging Cygwin Programs</td></tr></table></div></body></html>

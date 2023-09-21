@@ -1,0 +1,118 @@
+'\" t
+.\"     Title: getconf
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "GETCONF" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+getconf \- Get configuration values
+.SH "SYNOPSIS"
+.HP \w'\fBgetconf\fR\ 'u
+\fBgetconf\fR [\-v\ \fIspecification\fR] \fIvariable_name\fR [\fIpathname\fR]
+.HP \w'\fBgetconf\fR\ 'u
+\fBgetconf\fR \-a [\fIpathname\fR]
+.HP \w'\fBgetconf\fR\ 'u
+\fBgetconf\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-v specification     Indicate specific version for which configuration
+                       values shall be fetched\&.
+  \-a, \-\-all            Print all known configuration values
+
+Other options:
+
+  \-h, \-\-help           This text
+  \-V, \-\-version        Print program version and exit
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBgetconf\fR
+utility prints the value of the configuration variable specified by
+variable_name\&. If no
+pathname
+is given,
+\fBgetconf\fR
+serves as a wrapper for the
+confstr
+and
+sysconf
+functions, supporting the symbolic constants defined in the
+limits\&.h
+and
+unistd\&.h
+headers, without their respective
+_CS_
+or
+_SC_
+prefixes\&.
+.PP
+If
+pathname
+is given,
+\fBgetconf\fR
+prints the value of the configuration variable for the specified pathname\&. In this form,
+\fBgetconf\fR
+serves as a wrapper for the
+pathconf
+function, supporting the symbolic constants defined in the
+unistd\&.h
+header, without the
+_PC_
+prefix\&.
+.PP
+If you specify the
+\-v
+option, the parameter denotes a specification for which the value of the configuration variable should be printed\&. Note that the only specifications supported by Cygwin are
+POSIX_V7_ILP32_OFFBIG
+and the legacy
+POSIX_V6_ILP32_OFFBIG
+and
+XBS5_ILP32_OFFBIG
+equivalents\&.
+.PP
+Use the
+\-a
+option to print a list of all available configuration variables for the system, or given
+pathname, and their values\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

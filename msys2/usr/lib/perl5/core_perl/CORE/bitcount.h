@@ -1,3 +1,9 @@
+/* bitcount.h:
+ * THIS FILE IS AUTO-GENERATED DURING THE BUILD by: ./generate_uudmap
+ *
+ * These values will populate PL_bitcount[]:
+ * this is a count of bits for each U8 value 0..255
+*/
 {
     0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 
     1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5, 

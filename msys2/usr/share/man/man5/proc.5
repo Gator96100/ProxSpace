@@ -1,0 +1,1428 @@
+'\" t
+.\"     Title: proc
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 2020-11-24
+.\"    Manual: Cygwin User\*(Aqs Manual
+.\"    Source: Cygwin
+.\"  Language: English
+.\"
+.TH "PROC" "5" "2020\-11\-24" "Cygwin" "Cygwin User\*(Aqs Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+proc \- process and system information pseudo\-filesystem
+.SH "DESCRIPTION"
+.PP
+The
+proc
+filesystem is a pseudo\-filesystem which provides an interface to Cygwin data structures\&. It is commonly mounted at
+/proc\&. Typically, it is mounted automatically by the system\&.
+.SS "Overview"
+.PP
+Underneath
+/proc, there are the following general groups of files and subdirectories:
+.PP
+/proc/\fI[pid]\fR subdirectories
+.RS 4
+Each one of these subdirectories contains files and subdirectories exposing information about the process with the corresponding process id\&.
+.sp
+The
+/proc/\fI[pid]\fR
+subdirectories are visible when iterating through
+/proc
+with
+\fBreaddir\fR(2)
+(and thus are visible when one uses
+\fBls\fR(1)
+to view the contents of
+/proc)\&.
+.RE
+.PP
+/proc/self
+.RS 4
+When a process accesses this magic symbolic link, it resolves to the process\*(Aqs own
+/proc/\fI[pid]\fR
+directory\&.
+.RE
+.PP
+/proc/\fI[a\-z]*\fR
+.RS 4
+Various other files and subdirectories under
+/proc
+expose system\-wide information\&.
+.RE
+.PP
+All of the above are described in more detail below\&.
+.SS "Files and directories"
+.PP
+The following list provides details of many of the files and directories under the
+/proc
+hierarchy\&.
+.PP
+/proc/\fI[pid]\fR
+.RS 4
+There is a numerical subdirectory for each running process; the subdirectory is named by the process id\&. Each
+/proc/\fI[pid]\fR
+subdirectory contains the pseudo\-files and directories described below\&.
+.sp
+The files inside each
+/proc/\fI[pid]\fR
+directory are normally owned by the effective user and effective group id of the process\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/cmdline
+.RS 4
+This read\-only file holds the complete command line for the process, unless the process is a zombie\&. In the latter case, there is nothing in this file: that is, a read on this file will return 0 characters\&. The command\-line arguments appear in this file as a set of strings followed by null bytes (\*(Aq\e0\*(Aq)\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/ctty
+.RS 4
+This read\-only file holds the name of the console or control terminal device for the process, unless the process is detached from any terminal\&. In the latter case, there is only a newline in this file\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/cwd
+.RS 4
+This is a symbolic link to the current working directory of the process\&. To find out the current working directory of process 20, for instance, you can do this:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+		  $ \fBcd /proc/20/cwd; /bin/pwd\fR
+		
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Note that the
+\fIpwd\fR
+command is often a shell built\-in, and might not work properly\&. In
+\fBbash\fR(1), you may use
+\fBpwd\ \&\-P\fR\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/environ
+.RS 4
+This read\-only file contains the current environment that may have been changed by the currently executing program\&. The entries are separated by null bytes (\*(Aq\e0\*(Aq), and there may be a null byte at the end\&. Thus, to print out the environment of process 1, you would do:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+		  $ \fBcat \-A /proc/1/environ\fR
+		
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+If, after an
+\fBexecve\fR(2), the process modifies its environment (e\&.g\&., by calling functions such as
+\fBputenv\fR(3)
+or modifying the
+\fBenviron\fR(7)
+variable directly), this file will reflect those changes\&. That may not be the case on other systems such as Linux\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/exe
+.RS 4
+This file is a symbolic link containing the actual pathname of the executed command\&. This symbolic link can be dereferenced normally; attempting to open it will open the executable\&. You can even type
+/proc/\fI[pid]\fR/exe
+to run another copy of the same executable that is being run by process
+\fI[pid]\fR\&.
+/proc/\fI[pid]\fR/exe
+is a pointer to the binary which was executed, and appears as a symbolic link\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/exename
+.RS 4
+This read\-only file contains the actual pathname of the executed command\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/fd/
+.RS 4
+This is a subdirectory containing one entry for each file which the process has open, named by its file descriptor, and which is a symbolic link to the actual file\&. Thus, 0 is standard input, 1 standard output, 2 standard error, and so on\&.
+.sp
+For file descriptors for pipes and sockets, the entries will be symbolic links whose content is the file type with the inode\&. A
+\fBreadlink\fR(2)
+call on this file returns a string in the format:
+type:\fI[inode]\fR
+.sp
+For example,
+socket:[2248868]
+will be a socket and its inode is 2248868\&.
+.sp
+Programs that take a filename as a command\-line argument, but don\*(Aqt take input from standard input if no argument is supplied, and programs that write to a file named as a command\-line argument, but don\*(Aqt send their output to standard output if no argument is supplied, can nevertheless be made to use standard input or standard output by using
+/proc/\fI[pid]\fR/fd
+files as command\-line arguments\&. For example, assuming that
+\fB\-i\fR
+is the flag designating an input file and
+\fB\-o\fR
+is the flag designating an output file:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+		  $ \fBfoobar \-i /proc/self/fd/0 \-o /proc/self/fd/1 \&.\&.\&.\fR
+		
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+and you have a working filter\&.
+.sp
+/proc/self/fd/N
+is approximately the same as
+/dev/fd/N
+in some Unix and Unix\-like systems\&. Most Linux
+\fBmakedev\fR
+scripts symbolically link
+/dev/fd
+to
+/proc/self/fd, in fact\&.
+.sp
+Most systems provide symbolic links
+/dev/stdin,
+/dev/stdout, and
+/dev/stderr, which respectively link to the files
+0,
+1, and
+2
+in
+/proc/self/fd\&. Thus the example command above could be written as:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+		  $ \fBfoobar \-i /dev/stdin \-o /dev/stdout \&.\&.\&.\fR
+		
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Note that for file descriptors referring to inodes (pipes and sockets, see above), those inodes still have permission bits and ownership information distinct from those of the
+/proc/\fI[pid]\fR/fd
+entry, and that the owner may differ from the user and group ids of the process\&. An unprivileged process may lack permissions to open them, as in this example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+		  $ \fBecho test | sudo \-u nobody cat\fR
+		  test
+		  $ \fBecho test | sudo \-u nobody cat /proc/self/fd/0\fR
+		  cat: /proc/self/fd/0: Permission denied
+		
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+File descriptor 0 refers to the pipe created by the shell and owned by that shell\*(Aqs user, which is not
+nobody, so
+\fBcat\fR
+does not have permission to create a new file descriptor to read from that inode, even though it can still read from its existing file descriptor 0\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/gid
+.RS 4
+This read\-only file contains the primary group id for the process\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/maps
+.RS 4
+A file containing the currently mapped memory regions and their access permissions\&. See
+\fBmmap\fR(2)
+for some further information about memory mappings\&.
+.sp
+The format of the file is:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+\fIaddress          perms offset   dev       inode               pathname\fR
+
+00010000\-00020000 rw\-s 00000000 0000:0000 0                   [win heap 1 default shared]
+\&.\&.\&.
+00080000\-00082000 rw\-p 00000000 0000:0000 0                   [win heap 0 default grow]
+00082000\-0009A000 ===p 00002000 0000:0000 0                   [win heap 0 default grow]
+000A0000\-000A1000 rw\-p 00000000 0000:0000 0                   [win heap 2 grow]
+000A1000\-000BA000 ===p 00001000 0000:0000 0                   [win heap 2 grow]
+000C0000\-000D9000 rw\-p 00000000 0000:0000 0                   [win heap 0 default grow]
+000D9000\-001C0000 ===p 00019000 0000:0000 0                   [win heap 0 default grow]
+00200000\-00377000 ===p 00000000 0000:0000 0
+00377000\-00378000 rw\-p 00177000 0000:0000 0                   [peb]
+00378000\-0037A000 rw\-p 00178000 0000:0000 0                   [teb (tid 8844)]
+\&.\&.\&.
+00400000\-005F9000 ===p 00000000 0000:0000 0                   [stack (tid 8884)]
+005F9000\-005FC000 rw\-g 001F9000 0000:0000 0                   [stack (tid 8884)]
+005FC000\-00600000 rw\-p 001FC000 0000:0000 0                   [stack (tid 8884)]
+00600000\-006C7000 r\-\-s 00000000 EE45:4341 281474976741117     /proc/cygdrive/c/Windows/System32/locale\&.nls
+\&.\&.\&.
+100400000\-100401000 r\-\-p 00000000 EE45:4341 281474978095037   /usr/bin/sh\&.exe
+100401000\-100413000 r\-xp 00001000 EE45:4341 281474978095037   /usr/bin/sh\&.exe
+100413000\-100414000 rw\-p 00013000 EE45:4341 281474978095037   /usr/bin/sh\&.exe
+\&.\&.\&.
+180010000\-180020000 rw\-s 00000000 0000:0000 0                 [procinfo]
+180020000\-180029000 rw\-s 00000000 0000:0000 0                 [cygwin\-user\-shared]
+180030000\-18003C000 rw\-s 00000000 0000:0000 0                 [cygwin\-shared]
+180040000\-180041000 r\-\-p 00000000 EE45:4341 2251799814294868   /usr/bin/cygwin1\&.dll
+180041000\-18022D000 r\-xp 00001000 EE45:4341 2251799814294868   /usr/bin/cygwin1\&.dll
+18022D000\-180231000 rwxp 001ED000 EE45:4341 2251799814294868   /usr/bin/cygwin1\&.dll
+180231000\-18026A000 rw\-p 001F1000 EE45:4341 2251799814294868   /usr/bin/cygwin1\&.dll
+\&.\&.\&.
+800000000\-800090000 rw\-p 00000000 0000:0000 0                 [heap]
+800090000\-820000000 ===p 00090000 0000:0000 0                 [heap]
+7FF4FDEB0000\-7FF4FDEB5000 r\-\-s 00000000 0000:0000 0
+7FF4FDEB5000\-7FF4FDFB0000 ===s 00005000 0000:0000 0
+7FF4FDFB0000\-7FF5FDFD0000 ===p 00000000 0000:0000 0
+\&.\&.\&.
+7FFBEEAC0000\-7FFBEEAC1000 r\-\-p 00000000 EE45:4341 844424934724994   /proc/cygdrive/c/Windows/System32/kernel32\&.dll
+7FFBEEAC1000\-7FFBEEB36000 r\-xp 00001000 EE45:4341 844424934724994   /proc/cygdrive/c/Windows/System32/kernel32\&.dll
+7FFBEEB36000\-7FFBEEB68000 r\-\-p 00076000 EE45:4341 844424934724994   /proc/cygdrive/c/Windows/System32/kernel32\&.dll
+7FFBEEB68000\-7FFBEEB6A000 rw\-p 000A8000 EE45:4341 844424934724994   /proc/cygdrive/c/Windows/System32/kernel32\&.dll
+7FFBEEB6A000\-7FFBEEB72000 r\-\-p 000AA000 EE45:4341 844424934724994   /proc/cygdrive/c/Windows/System32/kernel32\&.dll
+\&.\&.\&.
+
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The
+address
+field is the address space in the process that the mapping occupies\&. The
+perms
+field is a set of permissions:
+.PP
+r
+.RS 4
+read
+.RE
+.PP
+w
+.RS 4
+write
+.RE
+.PP
+x
+.RS 4
+execute
+.RE
+.PP
+===
+.RS 4
+reserved
+.RE
+.PP
+s
+.RS 4
+shared
+.RE
+.PP
+g
+.RS 4
+guard
+.RE
+.PP
+p
+.RS 4
+private
+.RE
+.sp
+The
+offset
+field is the offset into the file/whatever;
+dev
+is the device (major:minor);
+inode
+is the inode on that device\&. 0 indicates that no inode is associated with the memory region, as would be the case with BSS (uninitialized data)\&.
+.sp
+The
+pathname
+field will usually be the file that is backing the mapping\&.
+.sp
+There are additional helpful pseudo\-paths:
+.PP
+[cygwin\-shared]
+.RS 4
+Global shared Cygwin process information\&.
+.RE
+.PP
+[cygwin\-user\-shared]
+.RS 4
+Global shared Cygwin user information\&.
+.RE
+.PP
+[peb]
+.RS 4
+Windows Process Environment Block\&.
+.RE
+.PP
+[procinfo]
+.RS 4
+Cygwin process information\&.
+.RE
+.PP
+[shared\-user\-data]
+.RS 4
+Shared user information\&.
+.RE
+.PP
+[heap]
+.RS 4
+The process\*(Aqs heap\&.
+.RE
+.PP
+[stack]
+.RS 4
+The initial process\*(Aqs (also known as the main thread\*(Aqs) stack\&.
+.RE
+.PP
+[stack (tid <tid>)]
+.RS 4
+A thread\*(Aqs stack (where the
+<tid>
+is a thread id)\&.
+.RE
+.PP
+[teb (tid <tid>)]
+.RS 4
+Windows Thread Environment Block (where
+<tid>
+is a thread id)\&.
+.RE
+.PP
+[win heap <n> default shared exec grow noserial debug]
+.RS 4
+Windows extended heap (where
+<n>
+is a heap id) and the rest of the words are heap flags:
+.PP
+default
+.RS 4
+default heap flags
+.RE
+.PP
+shared
+.RS 4
+shareable and mapped heap flags
+.RE
+.PP
+exec
+.RS 4
+executable heap flag
+.RE
+.PP
+grow
+.RS 4
+growable heap flag
+.RE
+.PP
+noserial
+.RS 4
+do not serialize heap flag
+.RE
+.PP
+debug
+.RS 4
+debugged heap flag
+.RE
+.sp
+.RE
+.sp
+If the
+pathname
+field is blank, this is an anonymous mapping as obtained via
+\fBmmap\fR(2)\&. There is no easy way to coordinate this back to a process\*(Aqs source, short of running it through
+\fBgdb\fR(1),
+\fBstrace\fR(1), or similar\&.
+.sp
+pathname
+is shown unescaped except for newline characters, which are replaced with an octal escape sequence\&. As a result, it is not possible to determine whether the original
+pathname
+contained a newline character or the literal
+\ee012
+character sequence\&.
+.sp
+If the mapping is file\-backed and the file has been deleted, the string "(deleted)" is appended to the
+pathname\&. Note that this is ambiguous too\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/mountinfo
+.RS 4
+This file contains information about mount points in the process\*(Aqs mount namespace (see
+\fBmount_namespaces\fR(7))\&. It supplies various information (e\&.g\&., propagation state, root of mount for bind mounts, identifier for each mount and its parent) that is missing from the (older)
+/proc/\fI[pid]\fR/mounts
+file, and fixes various other problems with that file (e\&.g\&., nonextensibility, failure to distinguish per\-mount versus per\-superblock options)\&.
+.sp
+The file contains lines of the form:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+
+36 35 98:0 /mnt1 /mnt2 rw,noatime master:1 \- ext3 /dev/root rw,errors=continue
+(1)(2)(3)   (4)   (5)      (6)      (?)   (7) (8)   (9)         (10)
+
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The numbers in parentheses are labels for the descriptions below:
+.PP
+(1)
+.RS 4
+mount id: a unique id for the mount (may be reused after
+\fBumount\fR(2))\&.
+.RE
+.PP
+(2)
+.RS 4
+parent id: the id of the parent mount (or of self for the root of this mount namespace\*(Aqs mount tree)\&.
+.RE
+.PP
+(3)
+.RS 4
+\fBmajor\fR:\fBminor\fR: the value of
+st_dev
+for files on this filesystem (see
+\fBstat\fR(2))\&.
+.RE
+.PP
+(4)
+.RS 4
+root: the pathname of the directory in the filesystem which forms the root of this mount\&.
+.RE
+.PP
+(5)
+.RS 4
+mount point: the pathname of the mount point relative to the process\*(Aqs root directory\&.
+.RE
+.PP
+(6)
+.RS 4
+mount options: per\-mount options (see
+\fBmount\fR(2))\&.
+.RE
+.PP
+(?)
+.RS 4
+optional fields: zero or more fields of the form "\fItag\fR[:\fIvalue\fR]"; see below\&.
+.RE
+.PP
+(7)
+.RS 4
+separator: the end of the optional fields is marked by a single hyphen\&.
+.RE
+.PP
+(8)
+.RS 4
+filesystem type: the filesystem type in the form "\fItype\fR[\&.\fIsubtype\fR]"\&.
+.RE
+.PP
+(9)
+.RS 4
+mount source: filesystem\-specific information or "none"\&.
+.RE
+.PP
+(10)
+.RS 4
+super options: per\-superblock options (see
+\fBmount\fR(2))\&.
+.RE
+.sp
+.RE
+.PP
+/proc/\fI[pid]\fR/mounts
+.RS 4
+This file lists all the filesystems currently mounted in the process\*(Aqs mount namespace (see
+\fBmount_namespaces\fR(7))\&. The format of this file is documented in
+\fBfstab\fR(5)\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/pgid
+.RS 4
+This read\-only file contains the process group id for the process\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/ppid
+.RS 4
+This read\-only file contains the parent process id for the process\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/root
+.RS 4
+UNIX and Linux support the idea of a per\-process root of the filesystem, set by the
+\fBchroot\fR(2)
+system call\&. This file is a symbolic link that points to the process\*(Aqs root directory, and behaves in the same way as
+exe, and
+fd/*\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/sid
+.RS 4
+This read\-only file contains the session id for the process\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/stat
+.RS 4
+Status information about the process\&. This is used by some implementations of
+\fBps\fR(1)\&.
+.sp
+The fields, in order, with their proper
+\fBscanf\fR(3)
+format specifiers, are listed below\&.
+.PP
+(1) \fIpid\fR %d
+.RS 4
+The process id\&.
+.RE
+.PP
+(2) \fIcomm\fR %s
+.RS 4
+The filename of the executable, in parentheses\&. This is visible whether or not the executable is swapped out\&.
+.RE
+.PP
+(3) \fIstate\fR %c
+.RS 4
+One of the following characters, indicating process state:
+.PP
+R
+.RS 4
+Runnable
+.RE
+.PP
+O
+.RS 4
+Running
+.RE
+.PP
+S
+.RS 4
+Sleeping in an interruptible wait
+.RE
+.PP
+D
+.RS 4
+Waiting in uninterruptible disk sleep
+.RE
+.PP
+Z
+.RS 4
+Zombie
+.RE
+.PP
+T
+.RS 4
+Stopped (on a signal) or trace stopped
+.RE
+.RE
+.PP
+(4) \fIppid\fR %d
+.RS 4
+The PID of the parent of this process\&.
+.RE
+.PP
+(5) \fIpgrp\fR %d
+.RS 4
+The process group id of the process\&.
+.RE
+.PP
+(6) \fIsession\fR %d
+.RS 4
+The session id of the process\&.
+.RE
+.PP
+(7) \fItty_nr\fR %d
+.RS 4
+The controlling terminal of the process\&. (The minor device number is contained in the combination of bits 31 to 20 and 7 to 0; the major device number is in bits 15 to 8\&.)
+.RE
+.PP
+(8) \fItpgid\fR %d
+.RS 4
+The id of the foreground process group of the controlling terminal of the process\&.
+.RE
+.PP
+(9) \fIflags\fR %u
+.RS 4
+The kernel flags word of the process\&.
+.RE
+.PP
+(10) \fIminflt\fR %lu
+.RS 4
+The number of minor faults the process has made which have not required loading a memory page from disk\&.
+.RE
+.PP
+(11) \fIcminflt\fR %lu
+.RS 4
+The number of minor faults that the process\*(Aqs waited\-for children have made\&.
+.RE
+.PP
+(12) \fImajflt\fR %lu
+.RS 4
+The number of major faults the process has made which have required loading a memory page from disk\&.
+.RE
+.PP
+(13) \fIcmajflt\fR %lu
+.RS 4
+The number of major faults that the process\*(Aqs waited\-for children have made\&.
+.RE
+.PP
+(14) \fIutime\fR %lu
+.RS 4
+Amount of time that this process has been scheduled in user mode, measured in clock ticks (divide by
+sysconf(_SC_CLK_TCK))\&.
+.RE
+.PP
+(15) \fIstime\fR %lu
+.RS 4
+Amount of time that this process has been scheduled in kernel mode, measured in clock ticks (divide by
+sysconf(_SC_CLK_TCK))\&.
+.RE
+.PP
+(16) \fIcutime\fR %ld
+.RS 4
+Amount of time that this process\*(Aqs waited\-for children have been scheduled in user mode, measured in clock ticks (divide by
+sysconf(_SC_CLK_TCK))\&. (See also
+\fBtimes\fR(2))\&.
+.RE
+.PP
+(17) \fIcstime\fR %ld
+.RS 4
+Amount of time that this process\*(Aqs waited\-for children have been scheduled in kernel mode, measured in clock ticks (divide by
+sysconf(_SC_CLK_TCK))\&.
+.RE
+.PP
+(18) \fIpriority\fR %ld
+.RS 4
+For processes running a real\-time scheduling policy (\fIpolicy\fR
+below; see
+\fBsched_setscheduler\fR(2)), this is the negated scheduling priority, minus one; that is, a number in the range \-2 to \-100, corresponding to real\-time priorities 1 to 99\&. For processes running under a non\-real\-time scheduling policy, this is the raw nice value (\fBsetpriority\fR(2)) as represented in the kernel\&. The kernel stores nice values as numbers in the range 0 (high) to 39 (low), corresponding to the user\-visible nice range of \-20 to 19\&.
+.RE
+.PP
+(19) \fInice\fR %ld
+.RS 4
+The nice value (see
+\fBsetpriority\fR(2)), a value in the range 19 (low priority) to \-20 (high priority)\&.
+.RE
+.PP
+(20) \fInum_threads\fR %ld
+.RS 4
+Number of threads in this process\&. Currently shown as 0\&.
+.RE
+.PP
+(21) \fIitrealvalue\fR %ld
+.RS 4
+The time in jiffies before the next
+SIGALRM
+is sent to the process due to an interval timer\&. This field is no longer maintained, and is hard coded as 0\&.
+.RE
+.PP
+(22) \fIstarttime\fR %llu
+.RS 4
+The time the process started after system boot\&. The value is expressed in clock ticks (divide by
+sysconf(_SC_CLK_TCK))\&.
+.RE
+.PP
+(23) \fIvsize\fR %lu
+.RS 4
+Virtual memory size in bytes\&.
+.RE
+.PP
+(24) \fIrss\fR %ld
+.RS 4
+Resident Set Size: number of pages the process has in real memory\&. This is just the pages which count toward text, data, or stack space\&. This does not include pages which have not been demand\-loaded in, or which are swapped out\&.
+.RE
+.PP
+(25) \fIrsslim\fR %lu
+.RS 4
+Current soft limit in bytes on the rss of the process; see the description of
+RLIMIT_RSS
+in
+\fBgetrlimit\fR(2)\&.
+.RE
+.RE
+.PP
+/proc/\fI[pid]\fR/statm
+.RS 4
+Provides information about memory usage, measured in pages\&. The columns are:
+.PP
+(1) size
+.RS 4
+total program size (same as VmSize in
+/proc/\fI[pid]\fR/status)
+.RE
+.PP
+(2) resident
+.RS 4
+resident set size (same as VmRSS in
+/proc/\fI[pid]\fR/status)
+.RE
+.PP
+(3) shared
+.RS 4
+number of resident shared pages (i\&.e\&., backed by a file) (same as RssFile+RssShmem in
+/proc/\fI[pid]\fR/status)
+.RE
+.PP
+(4) text
+.RS 4
+text (code)
+.RE
+.PP
+(5) lib
+.RS 4
+library
+.RE
+.PP
+(6) data
+.RS 4
+data + stack
+.RE
+.PP
+(7) dt
+.RS 4
+dirty pages (always 0)
+.RE
+.sp
+.RE
+.PP
+/proc/\fI[pid]\fR/status
+.RS 4
+Provides much of the information in
+/proc/\fI[pid]\fR/stat
+and
+/proc/\fI[pid]\fR/statm
+in a format that\*(Aqs easier for humans to parse\&. Here\*(Aqs an example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+		  $ \fBcat /proc/$$/status\fR
+		  
+		  Name:   bash
+		  Umask:  0022
+		  State:  S (sleeping)
+		  Tgid:   17248
+		  Pid:    17248
+		  PPid:   17200
+		  Uid:    1000    1000    1000    1000
+		  Gid:    100     100     100     100
+		  VmSize:	  131168 kB
+		  VmLck:	       0 kB
+		  VmRSS:	   13484 kB
+		  VmData:	   10332 kB
+		  VmStk:	     136 kB
+		  VmExe:	     992 kB
+		  VmLib:	    2104 kB
+		  SigPnd: 0000000000000000
+		  SigBlk: 0000000000010000
+		  SigIgn: 0000000000384004
+		  
+		
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The fields are as follows:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIName\fR: Command run by this process\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIUmask\fR: Process umask, expressed in octal with a leading zero; see
+\fBumask\fR(2)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIState\fR: Current state of the process\&. One of:
+.PP
+R
+.RS 4
+runnable
+.RE
+.PP
+O
+.RS 4
+running
+.RE
+.PP
+S
+.RS 4
+sleeping
+.RE
+.PP
+D
+.RS 4
+disk sleep
+.RE
+.PP
+T
+.RS 4
+stopped or tracing stop
+.RE
+.PP
+Z
+.RS 4
+zombie
+.RE
+.sp
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fITgid\fR: Thread group id (i\&.e\&., Process id)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIPid\fR: Thread id (see
+\fBgettid\fR(2))\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIPPid\fR: PID of parent process\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIUid\fR,
+\fIGid\fR: Real, effective, saved set, and filesystem UIDs (GIDs)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIVmSize\fR: Virtual memory size\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIVmLck\fR: Locked memory size (see
+\fBmlock\fR(2))\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIVmRSS\fR: Resident set size\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIVmData\fR,
+\fIVmStk\fR,
+\fIVmExe\fR: Size of data, stack, and text segments\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fIVmLib\fR: Shared library code size\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fISigPnd\fR: Number of signals pending for process as a whole (see
+\fBpthreads\fR(7)
+and
+\fBsignal\fR(7))\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fISigBlk\fR,
+\fISigIgn\fR: Masks indicating signals being blocked and ignored (see
+\fBsignal\fR(7))\&.
+.RE
+.sp
+.RE
+.PP
+/proc/\fI[pid]\fR/uid
+.RS 4
+This read\-only file contains the user id for the process\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/winexename
+.RS 4
+This read\-only file contains the Windows pathname of the executed command\&.
+.RE
+.PP
+/proc/\fI[pid]\fR/winpid
+.RS 4
+This read\-only file contains the Windows process id for the process\&.
+.RE
+.PP
+/proc/cpuinfo
+.RS 4
+This is a collection of CPU and system architecture dependent items, for each supported architecture a different list\&. Two common entries are
+\fIprocessor\fR
+which gives CPU number and
+\fIbogomips\fR, a system constant that is calculated during kernel initialization\&. SMP machines have information for each CPU\&. The
+\fBlscpu\fR(1)
+command gathers its information from this file\&.
+.RE
+.PP
+/proc/cygdrive
+.RS 4
+This file is a symbolic link that points to the user\*(Aqs Windows mapped drive mount point, similar to
+\fIroot\fR\&.
+.RE
+.PP
+/proc/devices
+.RS 4
+Text listing of major numbers and device groups\&. This can be used by
+\fBmakedev\fR
+scripts for consistency with the system\&.
+.RE
+.PP
+/proc/filesystems
+.RS 4
+A text listing of the filesystems which are supported by Cygwin\&. (See also
+\fBfilesystems\fR(5)\&.) If a filesystem is marked with "nodev", this means that it does not require a block device to be mounted (e\&.g\&., virtual filesystem, network filesystem)\&.
+.RE
+.PP
+/proc/loadavg
+.RS 4
+The first three fields in this file are load average figures giving the number of jobs in the run queue (state R) averaged over 1, 5, and 15 minutes\&. They are the same as the load average numbers given by
+\fBuptime\fR(1)
+and other programs\&. The fourth field consists of two numbers separated by a slash (/)\&. The first of these is the number of currently runnable scheduling entities (processes, threads)\&. The value after the slash is the number of scheduling entities that currently exist on the system\&.
+.RE
+.PP
+/proc/meminfo
+.RS 4
+This file reports statistics about memory usage on the system\&. It is used by
+\fBfree\fR(1)
+to report the amount of free and used memory (both physical and swap) on the system as well as the shared memory and buffers used by the system\&. Each line of the file consists of a parameter name, followed by a colon, the value of the parameter, and an option unit of measurement (e\&.g\&., "kB")\&. The list below describes the parameter names and the format specifier required to read the field value\&. Some fields are displayed only if the system was configured with various options; those dependencies are noted in the list\&.
+.PP
+\fIMemTotal\fR %lu
+.RS 4
+Total usable RAM (i\&.e\&., physical RAM minus a few reserved bits and the system binary code)\&.
+.RE
+.PP
+\fIMemFree\fR %lu
+.RS 4
+The sum of
+\fILowFree\fR
++
+\fIHighFree\fR\&.
+.RE
+.PP
+\fIHighTotal\fR %lu
+.RS 4
+Total amount of highmem\&.
+.RE
+.PP
+\fIHighFree\fR %lu
+.RS 4
+Amount of free highmem\&.
+.RE
+.PP
+\fILowTotal\fR %lu
+.RS 4
+Total amount of lowmem\&. Lowmem is memory which can be used for everything that highmem can be used for, but it is also available for the system\*(Aqs use for its own data structures\&. Bad things happen when you\*(Aqre out of lowmem\&.
+.RE
+.PP
+\fILowFree\fR %lu
+.RS 4
+Amount of free lowmem\&.
+.RE
+.PP
+\fISwapTotal\fR %lu
+.RS 4
+Total amount of swap space available\&.
+.RE
+.PP
+\fISwapFree\fR %lu
+.RS 4
+Amount of swap space that is currently unused\&.
+.RE
+.RE
+.PP
+/proc/misc
+.RS 4
+Text listing of minor device numbers and names of devices with major device number of the
+misc
+device group\&. This can be used by
+\fBmakedev\fR
+scripts for consistency with the system\&.
+.RE
+.PP
+/proc/mounts
+.RS 4
+With the introduction of per\-process mount namespaces, this file became a link to
+/proc/self/mounts, which lists the mount points of the process\*(Aqs own mount namespace\&. The format of this file is documented in
+\fBfstab\fR(5)\&.
+.RE
+.PP
+/proc/net
+.RS 4
+This directory contains various files and subdirectories containing information about the networking layer\&. The files contain ASCII structures and are, therefore, readable with
+\fBcat\fR(1)\&. However, the standard
+\fBnetstat\fR(8)
+suite provides much cleaner access to these files\&.
+.RE
+.PP
+/proc/net/if_inet6
+.RS 4
+This file contains information about IP V6 interface adapters, if used\&. Each line represents an IP V6 interface adapter\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+
+fe800000000000002c393d3da6108636 12 40 20 80 {C6B5FBE5\-A3AC\-4DB0\-A308\-8EE94E1406A4}
+fe8000000000000039da016f76bd92bc 13 40 20 20 {E06B8972\-0918\-41FC\-851B\-090C446C7D1C}
+fe8000000000000050ba9cedf1fe1628 0b 40 20 20 {680ED6FD\-DFAC\-4398\-AA85\-FB33E17E38EA}
+fe8000000000000030c5c6a0b30f109d 11 40 20 20 {B9E39F53\-1659\-4065\-BDA5\-F41162250E03}
+20021840ac2c12343427e3b9ec6fa585 08 40 00 80 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c12342403e3b2c7a5a32f 08 80 00 20 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c1234284e8d0ecb4160cb 08 80 00 20 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c123468cb06ea72f1d678 08 80 00 80 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c12346cb59aca97c36e3b 08 80 00 20 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c123498af9881de1fb828 08 80 00 20 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c1234cd62a3d73a498611 08 80 00 20 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+20021840ac2c1234e410c873be09df93 08 80 00 20 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+fe800000000000003427e3b9ec6fa585 08 40 20 80 {4083A7F8\-99CF\-4220\-8715\-6FDF268B002F}
+00000000000000000000000000000001 01 80 10 80 {2B5345AC\-7502\-11EA\-AC73\-806E6F6E6963}
+			   (1)  (2)(3)(4)(5)  (6)
+
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The fields in each line are:
+.PP
+(1)
+.RS 4
+The IP V6 address of the interface adapter\&.
+.RE
+.PP
+(2)
+.RS 4
+The IP V6 interface adapter index\&.
+.RE
+.PP
+(3)
+.RS 4
+The prefix length of the IP V6 interface address\&.
+.RE
+.PP
+(4)
+.RS 4
+The scope of the IP V6 interface address\&.
+.RE
+.PP
+(5)
+.RS 4
+The state of the IP V6 interface address\&.
+.RE
+.PP
+(6)
+.RS 4
+The DUID/GUID/UUID of the IP V6 interface adapter\&.
+.RE
+.sp
+
+The last number exists only for compatibility reasons and is always 1\&.
+.RE
+.PP
+/proc/partitions
+.RS 4
+Contains the major and minor numbers of each partition as well as the number of 1024\-byte blocks and the partition name\&.
+.RE
+.PP
+/proc/registry
+.RS 4
+Under Cygwin, this directory contains subdirectories for registry paths, keys, and subkeys, and files named for registry values which contain registry data, for the current process\&.
+.RE
+.PP
+/proc/registry32
+.RS 4
+Under 64 bit Windows, this directory contains subdirectories for registry paths, keys, and subkeys, and files named for registry values which contain registry data, for 32 bit processes\&.
+.RE
+.PP
+/proc/registry64
+.RS 4
+Under 64 bit Windows, this directory contains subdirectories for registry paths, keys, and subkeys, and files named for registry values which contain registry data, for 64 bit processes\&.
+.RE
+.PP
+/proc/self
+.RS 4
+This directory refers to the process accessing the
+/proc
+filesystem, and is identical to the
+/proc
+directory named by the process id of the same process\&.
+.RE
+.PP
+/proc/stat
+.RS 4
+system statistics\&. Varies with architecture\&. Common entries include:
+.PP
+\fIcpu 10132153 0 3084719 46828483\fR
+.RS 4
+.RE
+.PP
+\fIcpu0 1393280 0 572056 13343292\fR
+.RS 4
+The amount of time, measured in units of USER_HZ (1/100ths of a second on most architectures, use
+sysconf(_SC_CLK_TCK)
+to obtain the right value), that the system ("cpu" line) or the specific CPU ("cpu
+\fIN\fR" line) spent in various states:
+.PP
+(1) \fIuser\fR
+.RS 4
+Time spent in user mode\&.
+.RE
+.PP
+(2) \fInice\fR
+.RS 4
+Time spent in user mode with low priority (nice)\&.
+.RE
+.PP
+(3) \fIsystem\fR
+.RS 4
+Time spent in system mode\&.
+.RE
+.PP
+(4) \fIidle\fR
+.RS 4
+Time spent in the idle task\&.
+.RE
+.sp
+.RE
+.PP
+\fIpage 5741 1808\fR
+.RS 4
+The number of pages the system paged in and the number that were paged out (from disk)\&.
+.RE
+.PP
+\fIswap 1 0\fR
+.RS 4
+The number of swap pages that have been brought in and out\&.
+.RE
+.PP
+\fIintr 1462898\fR
+.RS 4
+The number of interrupts serviced\&.
+.RE
+.PP
+\fIctxt 115315\fR
+.RS 4
+The number of context switches that the system underwent\&.
+.RE
+.PP
+\fIbtime 769041601\fR
+.RS 4
+boot time, in seconds since the Epoch, 1970\-01\-01 00:00:00 +0000 (UTC)\&.
+.RE
+.sp
+.RE
+.PP
+/proc/swaps
+.RS 4
+Swap areas in use\&. See also
+\fBswapon\fR(8)\&.
+.RE
+.PP
+/proc/sys
+.RS 4
+This directory contains a number of files and subdirectories linking to Windows objects, which can be read using these entries\&.
+.sp
+String values may be terminated by either \*(Aq\e0\*(Aq or \*(Aq\en\*(Aq\&.
+.sp
+Integer and long values may be either in decimal or in hexadecimal notation (e\&.g\&. 0x3FFF)\&. Multiple integer or long values may be separated by any of the following whitespace characters: \*(Aq\ \&\*(Aq, \*(Aq\et\*(Aq, or \*(Aq\en\*(Aq\&.
+.RE
+.PP
+/proc/sysvipc
+.RS 4
+Subdirectory containing the pseudo\-files
+msg,
+semand
+shm\&. These files list the System V Interprocess Communication (IPC) objects (respectively: message queues, semaphores, and shared memory) that currently exist on the system, providing similar information to that available via
+\fBipcs\fR(1)\&. These files are only available if the cygserver Cygwin service is running\&. These files have headers and are formatted (one IPC object per line) for easy understanding\&.
+\fBsvipc\fR(7)
+provides further background on the information shown by these files\&.
+.RE
+.PP
+/proc/uptime
+.RS 4
+This file contains two numbers (values in seconds): the uptime of the system (including time spent in suspend) and the amount of time spent in the idle process\&.
+.RE
+.PP
+/proc/version
+.RS 4
+This string identifies the Cygwin version that is currently running\&. For example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+
+CYGWIN_NT\-10\&.0\-18363 version 3\&.1\&.7\-340\&.x86_64 (corinna@calimero) (gcc version 9\&.3\&.0 20200312 (Fedora Cygwin 9\&.3\&.0\-1) (GCC) ) 2020\-08\-22 17:48 UTC
+
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.RE
+.SH "NOTES"
+.PP
+Many files contain strings (e\&.g\&., the environment and command line) that are in the internal format, with subfields terminated by null bytes (\*(Aq\e0\*(Aq)\&. When inspecting such files, you may find that the results are more readable if you use a command of the following form to display them:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+	  $ \fBcat \-A \fR\fB\fIfile\fR\fR
+	
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+This manual page is incomplete, possibly inaccurate, and is the kind of thing that needs to be updated very often\&.
+.SH "SEE ALSO"
+.PP
+\fBcat\fR(1),
+\fBfind\fR(1),
+\fBfree\fR(1),
+\fBps\fR(1),
+\fBpstree\fR(1),
+\fBtr\fR(1),
+\fBuptime\fR(1),
+\fBchroot\fR(2),
+\fBmmap\fR(2),
+\fBreadlink\fR(2),
+\fBsyslog\fR(2),
+\fBhier\fR(7),
+\fBarp\fR(8),
+\fBmount\fR(8),
+\fBnetstat\fR(8),
+\fBroute\fR(8)\&.
+.SH "AUTHOR"
+.br
+.RS 4
+Author.
+.RE
+.SH "COPYRIGHT"
+.br

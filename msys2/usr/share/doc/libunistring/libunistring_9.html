@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on May, 25 2018 by texi2html 1.78a -->
+<!-- Created on October, 16 2022 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -49,22 +49,22 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="uniwidth_002eh"></a>
 <a name="SEC53"></a>
-<h1 class="chapter"> <a href="libunistring.html#TOC53">9. Display width <code>&lt;uniwidth.h&gt;</code></a> </h1>
+<h1 class="chapter"> <a href="libunistring_toc.html#TOC53">9. Display width <code>&lt;uniwidth.h&gt;</code></a> </h1>
 
 <p>This include file declares functions that return the display width, measured
 in columns, of characters or strings, when output to a device that uses
 non-proportional fonts.
 </p>
-<a name="IDX692"></a>
+<a name="IDX758"></a>
 <p>Note that for some rarely used characters the actual fonts or terminal
 emulators can use a different width.  There is no mechanism for communicating
 the display width of characters across a Unix pseudo-terminal (tty).  Also,
@@ -76,12 +76,12 @@ most characters but can fail to represent the actual display width.
 <p>These functions are locale dependent.  The <var>encoding</var> argument identifies
 the encoding (e.g. <code>&quot;ISO-8859-2&quot;</code> for Polish).
 </p>
-<a name="IDX693"></a>
-<a name="IDX694"></a>
-<a name="IDX695"></a>
+<a name="IDX759"></a>
+<a name="IDX760"></a>
+<a name="IDX761"></a>
 <dl>
-<dt><u>Function:</u> int <b>uc_width</b><i> (ucs4_t <var>uc</var>, const char *<var>encoding</var>)</i>
-<a name="IDX696"></a>
+<dt><u>Function:</u> int <b>uc_width</b><i> (ucs4_t&nbsp;<var>uc</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX762"></a>
 </dt>
 <dd><p>Determines and returns the number of column positions required for <var>uc</var>.
 Returns -1 if <var>uc</var> is a control character that has an influence on the
@@ -89,14 +89,14 @@ column position when output.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>u8_width</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, const char *<var>encoding</var>)</i>
-<a name="IDX697"></a>
+<dt><u>Function:</u> int <b>u8_width</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX763"></a>
 </dt>
-<dt><u>Function:</u> int <b>u16_width</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, const char *<var>encoding</var>)</i>
-<a name="IDX698"></a>
+<dt><u>Function:</u> int <b>u16_width</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX764"></a>
 </dt>
-<dt><u>Function:</u> int <b>u32_width</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, const char *<var>encoding</var>)</i>
-<a name="IDX699"></a>
+<dt><u>Function:</u> int <b>u32_width</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX765"></a>
 </dt>
 <dd><p>Determines and returns the number of column positions required for first
 <var>n</var> units (or fewer if <var>s</var> ends before this) in <var>s</var>.  This
@@ -104,14 +104,14 @@ function ignores control characters in the string.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>u8_strwidth</b><i> (const uint8_t *<var>s</var>, const char *<var>encoding</var>)</i>
-<a name="IDX700"></a>
+<dt><u>Function:</u> int <b>u8_strwidth</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX766"></a>
 </dt>
-<dt><u>Function:</u> int <b>u16_strwidth</b><i> (const uint16_t *<var>s</var>, const char *<var>encoding</var>)</i>
-<a name="IDX701"></a>
+<dt><u>Function:</u> int <b>u16_strwidth</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX767"></a>
 </dt>
-<dt><u>Function:</u> int <b>u32_strwidth</b><i> (const uint32_t *<var>s</var>, const char *<var>encoding</var>)</i>
-<a name="IDX702"></a>
+<dt><u>Function:</u> int <b>u32_strwidth</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, const&nbsp;char&nbsp;*<var>encoding</var>)</i>
+<a name="IDX768"></a>
 </dt>
 <dd><p>Determines and returns the number of column positions required for <var>s</var>.
 This function ignores control characters in the string.
@@ -125,14 +125,14 @@ This function ignores control characters in the string.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Daiki Ueno</em> on <em>May, 25 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

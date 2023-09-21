@@ -1,0 +1,16 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-crypto-3.dll
+usr/bin/msys-ssl-3.dll
+usr/lib/
+usr/lib/openssl/
+usr/lib/openssl/engines-3/
+usr/lib/openssl/engines-3/capi.dll
+usr/lib/openssl/engines-3/loader_attic.dll
+usr/lib/openssl/engines-3/padlock.dll
+usr/share/
+usr/share/licenses/
+usr/share/licenses/libopenssl/
+usr/share/licenses/libopenssl/LICENSE.txt
+

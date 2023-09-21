@@ -29,10 +29,17 @@ lint_package_functions+=('check_dotfiles')
 
 check_dotfiles() {
 	local ret=0
+
+	local shellopts=$(shopt -p nullglob)
+	shopt -s nullglob
+
 	for f in "$pkgdir"/.*; do
 		[[ ${f##*/} == . || ${f##*/} == .. ]] && continue
 		error "$(gettext "Dotfile found in package root '%s'")" "$f"
 		ret=1
 	done
+
+	eval "$shellopts"
+
 	return $ret
 }

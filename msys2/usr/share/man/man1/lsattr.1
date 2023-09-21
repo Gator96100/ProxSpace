@@ -1,0 +1,100 @@
+'\" t
+.\"     Title: lsattr
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "LSATTR" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+lsattr \- List file attributes
+.SH "SYNOPSIS"
+.HP \w'\fBlsattr\fR\ 'u
+\fBlsattr\fR [\-Radln] [\fIFILE\fR...]
+.HP \w'\fBlsattr\fR\ 'u
+\fBlsattr\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-R, \-\-recursive     recursively list attributes of directories and their
+                      contents
+  \-V, \-\-version       display the program version
+  \-a, \-\-all           list all files in directories, including files that
+                      start with \*(Aq\&.\*(Aq
+  \-d, \-\-directory     list directories like other files, rather than listing
+                      their contents\&.
+  \-l, \-\-long          print options using long names instead of single
+                      character abbreviations
+  \-n, \-\-no\-headers    don\*(Aqt print directory headers when recursing
+  \-h, \-\-help          this help text
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBlsattr\fR
+program allows to list file attributes, namely DOS attributes, file sparseness, FS level encryption and compression state, as well as directories\*(Aq case sensitivity setting\&.
+.PP
+Supported attributes:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \*(Aqr\*(Aq, \*(AqReadonly\*(Aq:      file is read\-only, directory is system\-marked
+  \*(Aqh\*(Aq, \*(AqHidden\*(Aq:        file or directory is hidden
+  \*(Aqs\*(Aq, \*(AqSystem\*(Aq:        file or directory that the operating system uses
+  \*(Aqa\*(Aq, \*(AqArchive\*(Aq:       file or directory has the archive marker set
+  \*(Aqt\*(Aq, \*(AqTemporary\*(Aq:     file is being used for temporary storage
+  \*(AqS\*(Aq, \*(AqSparse\*(Aq:        file is sparse
+  \*(Aqr\*(Aq, \*(AqReparse\*(Aq:       file or directory that has a reparse point
+  \*(Aqc\*(Aq, \*(AqCompressed\*(Aq:    file or directory is compressed
+  \*(Aqo\*(Aq, \*(AqOffline\*(Aq:       the data of a file is moved to offline storage
+  \*(Aqn\*(Aq, \*(AqNotindexed\*(Aq:    file or directory is not to be indexed by the
+                        content indexing service
+  \*(Aqe\*(Aq, \*(AqEncrypted\*(Aq:     file is encrypted
+  \*(AqC\*(Aq, \*(AqCasesensitive\*(Aq: directory is handled case sensitive
+                        (Windows 10 1803 or later, local NTFS only,
+                         WSL must be installed)
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

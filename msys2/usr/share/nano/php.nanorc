@@ -25,7 +25,7 @@ color brightcyan "\<(and|or|xor)\>"
 color magenta "\<(break|continue|goto|return)\>"
 
 # Strings.
-color brightyellow ""(\.|[^"])*"" "'(\.|[^'])*'"
+color brightyellow ""([^"\]|\\.)*"|'([^'\]|\\.)*'"
 
 # Comments.
 color brightblue "(^|[[:blank:]]+)//.*"

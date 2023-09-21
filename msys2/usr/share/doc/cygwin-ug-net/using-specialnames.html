@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Special filenames</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="using-filemodes.html" title="File permissions"><link rel="next" href="proc.html" title="proc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Special filenames</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-filemodes.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="proc.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-specialnames"></a>Special filenames</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-etc"></a>Special files in /etc</h3></div></div></div><p>Certain files in Cygwin's <code class="filename">/etc</code> directory are
+read by Cygwin before the mount table has been established.  The list
+of files is</p><pre class="screen">
+  /etc/fstab
+  /etc/fstab.d/$USER
+  /etc/passwd
+  /etc/group
+</pre><p>These file are read using native Windows NT functions which have
+no notion of Cygwin symlinks or POSIX paths.  For that reason
+there are a few requirements as far as <code class="filename">/etc</code> is
+concerned.</p><p>To access these files, the Cygwin DLL evaluates it's own full
+Windows path, strips off the innermost directory component and adds
+"\etc".  Let's assume the Cygwin DLL is installed as
+<code class="filename">C:\cygwin\bin\cygwin1.dll</code>.  First the DLL name as
+well as the innermost directory (<code class="filename">bin</code>) is stripped
+off: <code class="filename">C:\cygwin\</code>.  Then "etc" and the filename to
+look for is attached: <code class="filename">C:\cygwin\etc\fstab</code>.  So the
+/etc directory must be parallel to the directory in which the cygwin1.dll
+exists and <code class="filename">/etc</code> must not be a Cygwin symlink
+pointing to another directory.  Consequentially none of the files from
+the above list, including the directory <code class="filename">/etc/fstab.d</code>
+is allowed to be a Cygwin symlink either.</p><p>However, native NTFS symlinks and reparse points are transparent
+when accessing the above files so all these files as well as
+<code class="filename">/etc</code> itself may be NTFS symlinks.</p><p>Last but not least, make sure that these files are world-readable.
+Every process of any user account has to read these files potentially,
+so world-readability is essential.  The only exception are the user
+specific files <code class="filename">/etc/fstab.d/$USER</code>, which only have
+to be readable by the $USER user account itself.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-dosdevices"></a>Invalid filenames</h3></div></div></div><p>Filenames invalid under Win32 are not necessarily invalid under Cygwin.
+There are a few rules which apply to Windows filenames.  Most notably, DOS
+device names like <code class="filename">AUX</code>, <code class="filename">COM1</code>,
+<code class="filename">LPT1</code> or <code class="filename">PRN</code> (to name a few)
+cannot be used as filename or extension in a native Win32 application.
+So filenames like <code class="filename">prn.txt</code> or <code class="filename">foo.aux</code>
+are invalid filenames for native Win32 applications.</p><p>This restriction doesn't apply to Cygwin applications.  Cygwin
+can create and access files with such names just fine.  Just don't try
+to use these files with native Win32 applications.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-specialchars"></a>Forbidden characters in filenames</h3></div></div></div><p>Some characters are disallowed in filenames on Windows filesystems.
+These forbidden characters are the ASCII control characters from ASCII
+value 1 to 31, plus the following characters which have a special meaning
+in the Win32 API:</p><pre class="screen">
+  "   *   :   &lt;   &gt;   ?   |   \
+</pre><p>Cygwin can't fix this, but it has a method to workaround this
+restriction.  All of the above characters, except for the backslash,
+are converted to special UNICODE characters in the range 0xf000 to 0xf0ff
+(the "Private use area") when creating or accessing files by adding 0xf000
+to the forbidden characters' code points.</p><p>The backslash has to be exempt from this conversion, because Cygwin
+accepts Win32 filenames including backslashes as path separators on input. 
+Converting backslashes using the above method would make this impossible.</p><p>Additionally Win32 filenames can't contain trailing dots and spaces
+for DOS backward compatibility.  When trying to create files with trailing
+dots or spaces, all of them are removed before the file is created.  This
+restriction only affects native Win32 applications.  Cygwin applications
+can create and access files with trailing dots and spaces without problems.
+</p><p>An exception from this rule are some network filesystems (NetApp,
+NWFS) which choke on these filenames.  They return with an error like
+"No such file or directory" when trying to create such files.  Cygwin
+recognizes these filesystems and works around this problem by applying
+the same rule as for the other forbidden characters.  Leading spaces and
+trailing dots and spaces will be converted to UNICODE characters in the
+private use area.  This behaviour can be switched on explicitely for a
+filesystem or a directory tree by using the mount option
+<code class="literal">dos</code>.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-unusual"></a>Filenames with unusual (foreign) characters</h3></div></div></div><p> Windows filesystems use Unicode encoded as UTF-16
+to store filename information.  If you don't use the UTF-8
+character set (see <a class="xref" href="setup-locale.html" title="Internationalization">the section called &#8220;Internationalization&#8221;</a>) then there's a
+chance that a filename is using one or more characters which have no
+representation in the character set you're using.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>In the default "C" locale, Cygwin creates filenames using
+the UTF-8 charset.  This will always result in some valid filename by
+default, but again might impose problems when switching to a non-"C"
+or non-"UTF-8" charset.</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>To avoid this scenario altogether, always use UTF-8 as the
+character set.</p></div><p>If you don't want or can't use UTF-8 as character set for whatever
+reason, you will nevertheless be able to access the file.  How does that
+work?  When Cygwin converts the filename from UTF-16 to your character
+set, it recognizes characters which can't be converted.  If that occurs,
+Cygwin replaces the non-convertible character with a special character
+sequence.  The sequence starts with an ASCII CAN character (hex code
+0x18, equivalent Control-X), followed by the UTF-8 representation of the
+character.  The result is a filename containing some ugly looking
+characters.  While it doesn't <span class="bold"><strong>look</strong></span> nice, it
+<span class="bold"><strong>is</strong></span> nice, because Cygwin knows how to convert
+this filename back to UTF-16.  The filename will be converted using your
+usual character set.  However, when Cygwin recognizes an ASCII CAN
+character, it skips over the ASCII CAN and handles the following bytes as
+a UTF-8 character.  Thus, the filename is symmetrically converted back to
+UTF-16 and you can access the file.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Please be aware that this method is not entirely foolproof.
+In some character set combinations it might not work for certain native
+characters.</p><p>Only by using the UTF-8 charset you can avoid this problem safely.
+</p></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-casesensitive"></a>Case sensitive filenames</h3></div></div></div><p>In the Win32 subsystem filenames are only case-preserved, but not
+case-sensitive.  You can't access two files in the same directory which
+only differ by case, like <code class="filename">Abc</code> and
+<code class="filename">aBc</code>.  While NTFS (and some remote filesystems)
+support case-sensitivity, the NT kernel does not support it by default.
+Rather, you have to tweak a registry setting and reboot.  For that reason,
+case-sensitivity can not be supported by Cygwin, unless you change that
+registry value.</p><p>If you really want case-sensitivity in Cygwin, you can switch it
+on by setting the registry value</p><pre class="screen">
+HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel\obcaseinsensitive
+</pre><p>to 0 and reboot the machine.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+When installing Microsoft's Services For Unix (SFU), you're asked if
+you want to use case-sensitive filenames.  If you answer "yes" at this point,
+the installer will change the aforementioned registry value to 0, too.  So, if
+you have SFU installed, there's some chance that the registry value is already
+set to case sensitivity.
+</p></div><p>After you set this registry value to 0, Cygwin will be case-sensitive
+by default on NTFS and NFS filesystems.  However, there are limitations: 
+while two <span class="bold"><strong>programs</strong></span> <code class="filename">Abc.exe</code>
+and <code class="filename">aBc.exe</code> can be created and accessed like other files,
+starting applications is still case-insensitive due to Windows limitations
+and so the program you try to launch may not be the one actually started.  Also,
+be aware that using two filenames which only differ by case might
+result in some weird interoperability issues with native Win32 applications.  
+You're using case-sensitivity at your own risk.  You have been warned! </p><p>Even if you use case-sensitivity, it might be feasible to switch to
+case-insensitivity for certain paths for better interoperability with
+native Win32 applications (even if it's just Windows Explorer).  You can do
+this on a per-mount point base, by using the "posix=0" mount option in
+<code class="filename">/etc/fstab</code>, or your <code class="filename">/etc/fstab.d/$USER</code>
+file.</p><p><code class="filename">/cygdrive</code> paths are case-insensitive by default.
+The reason is that the native Windows %PATH% environment variable is not
+always using the correct case for all paths in it.  As a result, if you use
+case-sensitivity on the <code class="filename">/cygdrive</code> prefix, your shell
+might claim that it can't find Windows commands like <span class="command"><strong>attrib</strong></span>
+or <span class="command"><strong>net</strong></span>.  To ease the pain, the <code class="filename">/cygdrive</code>
+path is case-insensitive by default and you have to use the "posix=1" setting
+explicitly in <code class="filename">/etc/fstab</code> or
+<code class="filename">/etc/fstab.d/$USER</code> to switch it to case-sensitivity,
+or you have to make sure that the native Win32 %PATH% environment variable
+is using the correct case for all paths throughout.</p><p>Note that mount points as well as device names and virtual
+paths like /proc are always case-sensitive!  The only exception are
+the subdirectories and filenames under /proc/registry, /proc/registry32
+and /proc/registry64.  Registry access is always case-insensitive.
+Read on for more information.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-casesensitivedirs"></a>Case sensitive directories</h3></div></div></div><p>Windows 10 1803 introduced a new feature: NTFS directories can be marked
+as case-sensitive, independently of the <code class="literal">obcaseinsensitive</code>
+registry key discussed in the previous section.  This new per-directory
+case-sensitivity requires setting a flag in the NTFS filesystem header which
+is, unfortunately, undocumented.  The result is that you have to activate
+<code class="literal">Windows Subsystem for Linux</code> (<code class="literal">WSL</code>), a
+feature available via <code class="literal">Programs and Features</code> -&gt;
+<code class="literal">Turn Windows features on or off</code>.  You only have to activate
+<code class="literal">WSL</code>, you don't have to install any actual Linux.  After
+turning <code class="literal">WSL</code> on and performing the compulsory reboot,
+case-sensitive directories are activated.</p><p>Of course, there's a drawback.  While these case-sensitive directories
+work like charm on the local machine, there are massive interoperability
+problems when trying to access these directories from remote machines at
+the time of writing this.  We opened a bug report for that at
+<a class="ulink" href="https://github.com/Microsoft/WSL/issues/3885" target="_top">Microsoft's WSL issue tracker</a>,
+if you're interested in the details.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>If you want case-sensitivity and need interoperability with remote
+machines, better stick to switching the kernel to case-sensitivity as
+outlined in <a class="xref" href="using-specialnames.html#pathnames-casesensitive" title="Case sensitive filenames">the section called &#8220;Case sensitive filenames&#8221;</a></p></div><p>With <code class="literal">WSL</code> activated and starting with Cygwin 3.0.0,
+Cygwin's <span class="command"><strong>mkdir</strong></span> system call automatically created all
+directories below the Cygwin installation directory as case-sensitive.
+With Cygwin 3.0.2, this feature had been disabled again for hopefully
+obvious reasons.</p><p>However, you can still use Cygwin's new
+<a class="xref" href="chattr.html" title="chattr"><span class="refentrytitle">chattr</span>(1)</a> tool with the <code class="literal">-C</code> option
+to control case-sensitivity of directories on NTFS filesystems.</p><p>Please keep in mind that switching <span class="emphasis"><em>off</em></span>
+case-sensitivity on a directory has a condition attached to it:  If
+the directory contains two files which only differ in case (e. g.,
+<code class="filename">foo</code> and <code class="filename">FOO</code>), Windows
+refuses to convert the dir back to case-insensitive.  First you have
+to fix the filename collision, i. e., you have to rename one of these
+files.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-posixdevices"></a>POSIX devices</h3></div></div></div><p>While there is no need to create a POSIX <code class="filename">/dev</code> 
+directory, the directory is automatically created as part of a Cygwin
+installation.  It's existence is often a prerequisit to run certain
+applications which create symbolic links, fifos, or UNIX sockets in
+<code class="filename">/dev</code>.  Also, the directories <code class="filename">/dev/shm</code>
+and <code class="filename">/dev/mqueue</code> are required to exist to use named POSIX
+semaphores, shared memory, and message queues, so a system without a real
+<code class="filename">/dev</code> directory is functionally crippled.
+</p><p>Apart from that, Cygwin automatically simulates POSIX devices
+internally.  The <code class="filename">/dev</code> directory is automagically
+populated with existing POSIX devices by Cygwin in a way comparable with a
+<a class="ulink" href="http://en.wikipedia.org/wiki/Udev" target="_top">udev</a> based virtual
+<code class="filename">/dev</code> directory under Linux.</p><p>
+Cygwin supports the following character devices commonly found on POSIX systems:
+</p><pre class="screen">
+/dev/null
+/dev/zero
+/dev/full
+
+/dev/console	Pseudo device name for the current console window of a session.
+		Cygwin's /dev/console is not quite comparable with the console
+		device on UNIX machines.
+
+/dev/cons0      Console sessions are numbered from  /dev/cons0 upwards.
+/dev/cons1	Console device names are pseudo device names, only accessible
+...		from processes within this very console session.  This is due
+		to a restriction in Windows.
+
+/dev/tty	The current controlling tty of a session.
+
+/dev/ptmx	Pseudo tty master device.
+
+/dev/pty0	Pseudo ttys are numbered from /dev/pty0 upwards as they are
+/dev/pty1	requested.
+...
+
+/dev/ttyS0	Serial communication devices.  ttyS0 == Win32 COM1,
+/dev/ttyS1	ttyS1 == COM2, etc.
+...
+
+/dev/pipe
+/dev/fifo
+
+/dev/kmsg	Kernel message pipe, for usage with sys logger services.
+
+/dev/random	Random number generator.
+/dev/urandom
+
+/dev/dsp	Default sound device of the system.
+</pre><p>
+Cygwin also has several Windows-specific devices:
+</p><pre class="screen">
+/dev/com1	The serial ports, starting with COM1 which is the same as ttyS0.
+/dev/com2	Please use /dev/ttySx instead.
+...
+
+/dev/conin	Same as Windows CONIN$.
+/dev/conout	Same as Windows CONOUT$.
+/dev/clipboard	The Windows clipboard, text only
+/dev/windows	The Windows message queue.
+</pre><p>
+Block devices are accessible by Cygwin processes using fixed POSIX device
+names.  These POSIX device names are generated using a direct conversion
+from the POSIX namespace to the internal NT namespace.
+E.g. the first harddisk is the NT internal device \device\harddisk0\partition0
+or the first partition on the third harddisk is \device\harddisk2\partition1.
+The first floppy in the system is \device\floppy0, the first CD-ROM is
+\device\cdrom0 and the first tape drive is \device\tape0.</p><p>The mapping from physical device to the name of the device in the
+internal NT namespace can be found in various places.  For hard disks and
+CD/DVD drives, the Windows "Disk Management" utility (part of the
+"Computer Management" console) shows that the mapping of "Disk 0" is
+\device\harddisk0.  "CD-ROM 2" is \device\cdrom2.  Another place to find
+this mapping is the "Device Management" console.  Disks have a
+"Location" number, tapes have a "Tape Symbolic Name", etc.
+Unfortunately, the places where this information is found is not very
+well-defined.</p><p>
+For external disks (USB-drives, CF-cards in a cardreader, etc) you can use
+Cygwin to show the mapping.  <code class="filename">/proc/partitions</code>
+contains a list of raw drives known to Cygwin.  The <span class="command"><strong>df</strong></span>
+command shows a list of drives and their respective sizes.  If you match
+the information between <code class="filename">/proc/partitions</code> and the
+<span class="command"><strong>df</strong></span> output, you should be able to figure out which
+external drive corresponds to which raw disk device name.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Apart from tape devices which are not block devices and are
+by default accessed directly, accessing mass storage devices raw
+is something you should only do if you know what you're doing and know how to
+handle the information.  <span class="bold"><strong>Writing</strong></span> to a raw
+mass storage device you should only do if you
+<span class="bold"><strong>really</strong></span> know what you're doing and are aware
+of the fact that any mistake can destroy important information, for the
+device, and for you.  So, please, handle this ability with care.
+<span class="bold"><strong>You have been warned.</strong></span></p></div><p>
+Last but not least, the mapping from POSIX /dev namespace to internal
+NT namespace is as follows:
+</p><pre class="screen">
+POSIX device name     Internal NT device name
+
+/dev/st0	      \device\tape0, rewind
+/dev/nst0	      \device\tape0, no-rewind
+/dev/st1	      \device\tape1
+/dev/nst1	      \device\tape1
+...
+/dev/st15
+/dev/nst15
+
+/dev/fd0	      \device\floppy0
+/dev/fd1	      \device\floppy1
+...
+/dev/fd15
+
+/dev/sr0	      \device\cdrom0
+/dev/sr1	      \device\cdrom1
+...
+/dev/sr15
+
+/dev/scd0	      \device\cdrom0
+/dev/scd1	      \device\cdrom1
+...
+/dev/scd15
+
+/dev/sda	      \device\harddisk0\partition0	(whole disk)
+/dev/sda1	      \device\harddisk0\partition1	(first partition)
+...
+/dev/sda15	      \device\harddisk0\partition15	(fifteenth partition)
+
+/dev/sdb	      \device\harddisk1\partition0
+/dev/sdb1	      \device\harddisk1\partition1
+
+[up to]
+
+/dev/sddx	      \device\harddisk127\partition0
+/dev/sddx1	      \device\harddisk127\partition1
+...
+/dev/sddx15	      \device\harddisk127\partition15
+</pre><p>
+if you don't like these device names, feel free to create symbolic
+links as they are created on Linux systems for convenience:
+</p><pre class="screen">
+ln -s /dev/sr0 /dev/cdrom
+ln -s /dev/nst0 /dev/tape
+...
+</pre></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-exe"></a>The .exe extension</h3></div></div></div><p>Win32 executable filenames end with <code class="filename">.exe</code>
+but the <code class="filename">.exe</code> need not be included in the command,
+so that traditional UNIX names can be used.  However, for programs that
+end in <code class="filename">.bat</code> and <code class="filename">.com</code>, you
+cannot omit the extension.  </p><p>As a side effect, the <span class="command"><strong> ls filename</strong></span> gives
+information about <code class="filename">filename.exe</code> if
+<code class="filename">filename.exe</code> exists and <code class="filename">filename</code>
+does not.  In the same situation the function call
+<code class="function">stat("filename",..)</code> gives information about
+<code class="filename">filename.exe</code>.  The two files can be distinguished
+by examining their inodes, as demonstrated below.
+</p><pre class="screen">
+<code class="prompt">bash$</code> <strong class="userinput"><code>ls * </code></strong>
+a      a.exe     b.exe
+<code class="prompt">bash$</code> <strong class="userinput"><code>ls -i a a.exe</code></strong>
+445885548 a       435996602 a.exe
+<code class="prompt">bash$</code> <strong class="userinput"><code>ls -i b b.exe</code></strong>
+432961010 b       432961010 b.exe
+</pre><p>
+If a shell script <code class="filename">myprog</code> and a program
+<code class="filename">myprog.exe</code> coexist in a directory, the shell
+script has precedence and is selected for execution of
+<span class="command"><strong>myprog</strong></span>.  Note that this was quite the reverse up to
+Cygwin 1.5.19.  It has been changed for consistency with the rest of Cygwin.
+</p><p>The <span class="command"><strong>gcc</strong></span> compiler produces an executable named
+<code class="filename">filename.exe</code> when asked to produce
+<code class="filename">filename</code>. This allows many makefiles written
+for UNIX systems to work well under Cygwin.</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-proc"></a>The /proc filesystem</h3></div></div></div><p>
+Cygwin, like Linux and other similar operating systems, supports the
+<code class="filename">/proc</code> virtual filesystem. The files in this
+directory are representations of various aspects of your system,
+for example the command <strong class="userinput"><code>cat /proc/cpuinfo</code></strong> 
+displays information such as what model and speed processor you have.
+</p><p>
+One unique aspect of the Cygwin <code class="filename">/proc</code> filesystem
+is <code class="filename">/proc/registry</code>, see next section.
+</p><p>
+The Cygwin <code class="filename">/proc</code> is not as complete as the
+one in Linux, but it provides significant capabilities. The
+<code class="systemitem">procps</code> package contains several utilities
+that use it.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-proc-registry"></a>The /proc/registry filesystem</h3></div></div></div><p>
+The <code class="filename">/proc/registry</code> filesystem provides read-only
+access to the Windows registry.  It displays each <code class="literal">KEY</code>
+as a directory and each <code class="literal">VALUE</code> as a file.  As anytime
+you deal with the Windows registry, use caution since changes may result
+in an unstable or broken system.  There are additionally subdirectories called
+<code class="filename">/proc/registry32</code> and <code class="filename">/proc/registry64</code>.
+They are identical to <code class="filename">/proc/registry</code> on 32 bit
+host OSes.  On 64 bit host OSes, <code class="filename">/proc/registry32</code>
+opens the 32 bit processes view on the registry, while
+<code class="filename">/proc/registry64</code> opens the 64 bit processes view.
+</p><p>
+Reserved characters ('/', '\', ':', and '%') or reserved names
+(<code class="filename">.</code> and <code class="filename">..</code>) are converted by
+percent-encoding:
+</p><pre class="screen">
+<code class="prompt">bash$</code> <strong class="userinput"><code>regtool list -v '\HKEY_LOCAL_MACHINE\SYSTEM\MountedDevices'</code></strong>
+...
+\DosDevices\C: (REG_BINARY) = cf a8 97 e8 00 08 fe f7
+...
+<code class="prompt">bash$</code> <strong class="userinput"><code>cd /proc/registry/HKEY_LOCAL_MACHINE/SYSTEM</code></strong>
+<code class="prompt">bash$</code> <strong class="userinput"><code>ls -l MountedDevices</code></strong>
+...
+-r--r----- 1 Admin SYSTEM  12 Dec 10 11:20 %5CDosDevices%5CC%3A
+...
+<code class="prompt">bash$</code> <strong class="userinput"><code>od -t x1 MountedDevices/%5CDosDevices%5CC%3A</code></strong>
+0000000 cf a8 97 e8 00 08 fe f7 01 00 00 00
+</pre><p>
+The unnamed (default) value of a key can be accessed using the filename
+<code class="filename">@</code>.
+</p><p>
+If a registry key contains a subkey and a value with the same name
+<code class="filename">foo</code>, Cygwin displays the subkey as
+<code class="filename">foo</code> and the value as <code class="filename">foo%val</code>.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-at"></a>The @pathnames</h3></div></div></div><p>To circumvent the limitations on shell line length in the native
+Windows command shells, Cygwin programs, when invoked by non-Cygwin processes, expand their arguments
+starting with "@" in a special way.  If a file
+<code class="filename">pathname</code> exists, the argument
+<code class="filename">@pathname</code> expands recursively to the content of
+<code class="filename">pathname</code>. Double quotes can be used inside the
+file to delimit strings containing blank space. 
+In the following example compare the behaviors
+<span class="command"><strong>/bin/echo</strong></span> when run from bash and from the Windows command prompt.</p><div class="example"><a name="pathnames-at-ex"></a><p class="title"><b>Example&#160;3.2.&#160; Using @pathname</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">bash$</code> <strong class="userinput"><code>/bin/echo  'This   is   "a     long"  line' &gt; mylist</code></strong>
+<code class="prompt">bash$</code> <strong class="userinput"><code>/bin/echo @mylist</code></strong>
+@mylist
+<code class="prompt">bash$</code> <strong class="userinput"><code>cmd</code></strong>
+<code class="prompt">c:\&gt;</code> <strong class="userinput"><code>c:\cygwin\bin\echo @mylist</code></strong>
+This is a     long line
+</pre></div></div><br class="example-break"></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="using-filemodes.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="proc.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">File permissions&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;proc</td></tr></table></div></body></html>

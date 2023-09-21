@@ -1,0 +1,18 @@
+#compdef rankmirrors
+
+declare -a args
+args=(
+	'-n[number of servers to output, 0 for all]:number of servers: '
+	'(--max-time -m)'{--max-time,-m}'[specify a ranking operation timeout, can be decimal number]:timeout: '
+	'(--parallel -p)'{--parallel,-p}'[run tests in parallel for all servers (may be inaccurate, depends on GNU parallel)]'
+	'(--repo -r)'{--repo,-r}'[specify a repository name instead of guessing]'
+	'(--times -t)'{--times,-t}'[only output mirrors and their response times]'
+	'(--url -u)'{--url,-u}'[test a specific UR]'
+	'(--verbose -v)'{--verbose,-v}'[be verbose in output]'
+	'(-)'{--help,-h}'[display help message and exit]'
+	'(-)'{--version,-V}'[display version information and exit]'
+
+	':mirror file or URL:{_alternative files:file:_files urls:url:_urls}'
+)
+
+_arguments $args

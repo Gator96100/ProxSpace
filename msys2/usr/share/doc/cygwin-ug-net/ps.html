@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>ps</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="profiler.html" title="profiler"><link rel="next" href="regtool.html" title="regtool"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">ps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="profiler.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="regtool.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="ps"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>ps &#8212; Report process status</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">ps</code>  [-aeflsW] [-u <em class="replaceable"><code>UID</code></em>] [-p <em class="replaceable"><code>PID</code></em>]</p></div><div class="cmdsynopsis"><p><code class="command">ps</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="ps-options"></a><h2>Options</h2><pre class="screen">
+ -a, --all       show processes of all users
+ -e, --everyone  show processes of all users
+ -f, --full      show process uids, ppids
+ -h, --help      output usage information and exit
+ -l, --long      show process uids, ppids, pgids, winpids
+ -p, --process   show information for specified PID
+ -s, --summary   show process summary
+ -u, --user      list processes owned by UID
+ -V, --version   output version information and exit
+ -W, --windows   show windows as well as cygwin processes
+With no options, ps outputs the long format by default
+</pre></div><div class="refsect1"><a name="ps-desc"></a><h2>Description</h2><p>The <span class="command"><strong>ps</strong></span> program gives the status of all the Cygwin
+      processes running on the system (ps = "process status"). Due to the
+      limitations of simulating a POSIX environment under Windows, there is
+      little information to give. </p><p> The PID column is the process ID you need to give to the
+      <span class="command"><strong>kill</strong></span> command. The PPID is the parent process ID, and
+      PGID is the process group ID. The WINPID column is the process ID
+      displayed by NT's Task Manager program. The TTY column gives which
+      pseudo-terminal a process is running on, or a <code class="literal">'?'</code> for
+      services. The UID column shows which user owns each process. STIME is the
+      time the process was started, and COMMAND gives the name of the program
+      running. Listings may also have a status flag in column zero;
+      <code class="literal">S</code> means stopped or suspended (in other words, in the
+      background), <code class="literal">I</code> means waiting for input or interactive
+      (foreground), and <code class="literal">O</code> means waiting to output. </p><p> By default, <span class="command"><strong>ps</strong></span> will only show processes owned by
+      the current user. With either the <code class="literal">-a</code> or
+      <code class="literal">-e</code> option, all user's processes (and system processes)
+      are listed. There are historical UNIX reasons for the synonomous options,
+      which are functionally identical. The <code class="literal">-f</code> option
+      outputs a "full" listing with usernames for UIDs. The
+      <code class="literal">-l</code> option is the default display mode, showing a
+      "long" listing with all the above columns. The other display option is
+      <code class="literal">-s</code>, which outputs a shorter listing of just PID, TTY,
+      STIME, and COMMAND. The <code class="literal">-u</code> option allows you to show
+      only processes owned by a specific user. The <code class="literal">-p</code> option
+      allows you to show information for only the process with the specified
+      PID. The <code class="literal">-W</code> option causes <span class="command"><strong>ps</strong></span> show
+      non-Cygwin Windows processes as well as Cygwin processes. The WINPID is
+      also the PID, and they can be killed with the Cygwin
+      <span class="command"><strong>kill</strong></span> command's <code class="literal">-f</code> option. </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="profiler.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="regtool.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">profiler&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;regtool</td></tr></table></div></body></html>

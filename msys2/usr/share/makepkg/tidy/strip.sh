@@ -31,31 +31,15 @@ packaging_options+=('strip' 'debug')
 tidy_modify+=('tidy_strip')
 
 
-source_files() {
-	LANG=C readelf "$1" --debug-dump 2>/dev/null | \
-		awk '/DW_AT_name +:/{name=$NF}/DW_AT_comp_dir +:/{{if (name == "<artificial>") next}{if (name !~ /^[<\/]/) {printf "%s/", $NF}}{print name}}'
-}
-
 strip_file() {
 	local binary=$1; shift
 
 	case "$(file -bi "$binary")" in
-	*application/x-dosexec*)
+	*application/x-dosexec* | *application/vnd.microsoft.portable-executable*)
 		if check_option "debug" "y"; then
 			if [[ -f "$dbgdir/$binary.debug" ]]; then
 				return
 			fi
-
-			# copy source files to debug directory
-			local file dest t
-			while IFS= read -r t; do
-				file=${t/${dbgsrcdir}/"$srcdir"}
-				dest="${dbgsrc/"$dbgsrcdir"/}$t"
-				if ! [[ -f $dest ]]; then
-					mkdir -p "${dest%/*}"
-					cp -- "$file" "$dest"
-				fi
-			done < <(source_files "$binary")
 
 			# copy debug symbols to debug directory
 			mkdir -p "$dbgdir/${binary%/*}"
@@ -201,9 +185,16 @@ tidy_strip() {
 			chmod 0755 "${binary}";
 
 			case "$(file -S -bi "$binary")" in
-				*application/x-dosexec*) # Windows executables and dlls
+				*application/x-dosexec*) # Windows executables and dlls (file <=5.43)
 					strip_flags="$STRIP_SHARED";;
+				*application/vnd.microsoft.portable-executable*) # Windows executables and dlls (file >=5.44)
+					strip_flags="$STRIP_SHARED";;
+				*application/x-archive*) # Static and Import Libraries (*.a and *.dll.a)
+					strip_flags="$STRIP_STATIC"
+					STRIPLTO=1;;
 				*application/x-sharedlib*)  # Libraries (.so)
+					strip_flags="$STRIP_SHARED";;
+				*Type:*'DYN (Position-Independent Executable file)'*) # Relocatable binaries
 					strip_flags="$STRIP_SHARED";;
 				*Type:*'EXEC (Executable file)'*) # Binaries
 					strip_flags="$STRIP_BINARIES";;

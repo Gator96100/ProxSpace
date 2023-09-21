@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Environment Variables</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="setup-net.html" title="Chapter&#160;2.&#160;Setting Up Cygwin"><link rel="prev" href="setup-net.html" title="Chapter&#160;2.&#160;Setting Up Cygwin"><link rel="next" href="setup-maxmem.html" title="Changing Cygwin's Maximum Memory"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Environment Variables</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="setup-net.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;2.&#160;Setting Up Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="setup-maxmem.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="setup-env"></a>Environment Variables</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-env-ov"></a>Overview</h3></div></div></div><p>
+All Windows environment variables are imported when Cygwin starts.
+Apart from that, you may wish to specify settings of several important
+environment variables that affect Cygwin's operation.</p><p>
+The <code class="envar">CYGWIN</code> variable is used to configure a few global
+settings for the Cygwin runtime system.  Typically you can leave
+<code class="envar">CYGWIN</code> unset, but if you want to set one ore more
+options, you can set it using a syntax like this, depending on the shell
+in which you're setting it.  Here is an example in CMD syntax:</p><pre class="screen">
+<code class="prompt">C:\&gt;</code> <strong class="userinput"><code>set CYGWIN=error_start:C:\cygwin\bin\gdb.exe glob</code></strong>
+</pre><p>
+This is, of course, just an example.  For the recognized settings of the
+<code class="envar">CYGWIN</code> environment variable, see
+<a class="xref" href="using-cygwinenv.html" title="The CYGWIN environment variable">the section called &#8220;The <code class="envar">CYGWIN</code> environment
+variable&#8221;</a>.
+</p><p>
+Locale support is controlled by the <code class="envar">LANG</code> and
+<code class="envar">LC_xxx</code> environment variables.  For a more detailed description
+see <a class="xref" href="setup-locale.html" title="Internationalization">the section called &#8220;Internationalization&#8221;</a>.
+</p><p>
+The <code class="envar">PATH</code> environment variable is used by Cygwin
+applications as a list of directories to search for executable files
+to run.  This environment variable is converted from Windows format
+(e.g. <code class="filename">C:\Windows\system32;C:\Windows</code>) to UNIX format
+(e.g., <code class="filename">/cygdrive/c/Windows/system32:/cygdrive/c/Windows</code>)
+when a Cygwin process first starts.
+Set it so that it contains at least the <code class="filename">x:\cygwin\bin</code>
+directory where "<code class="filename">x:\cygwin</code> is the "root" of your
+cygwin installation if you wish to use cygwin tools outside of bash.
+This is usually done by the batch file you're starting your shell with.
+</p><p> 
+The <code class="envar">HOME</code> environment variable is used by many programs to
+determine the location of your home directory.  This environment variable,
+if it exists, is converted from Windows format when a Cygwin process first
+starts.  However, it's usually set in the shell profile scripts in the /etc
+directory, and it's <span class="bold"><strong>not</strong></span> recommended to set
+the variable in your Windows environment.
+</p><p>
+The <code class="envar">TERM</code> environment variable specifies your terminal
+type.  It is automatically set to <code class="literal">cygwin</code> if you have
+not set it to something else.
+</p><p>The <code class="envar">LD_LIBRARY_PATH</code> environment variable is used by
+the Cygwin function <code class="function">dlopen ()</code> as a list of
+directories to search for .dll files to load.  This environment variable
+is converted from Windows format to UNIX format when a Cygwin process
+first starts.  Most Cygwin applications do not make use of the
+<code class="function">dlopen ()</code> call and do not need this variable.
+</p><p>The <code class="envar">GMON_OUT_PREFIX</code> environment variable is helpful
+in some situations when profiling Cygwin programs.  For more information,
+see <a class="xref" href="gprof.html#gprof-fork" title="Profiling programs that fork">the section called &#8220;Profiling programs that fork&#8221;</a>.  Only software developers with a
+need to profile their programs have a use for this variable.
+</p><p>
+In addition to <code class="envar">PATH</code>, <code class="envar">HOME</code>,
+<code class="envar">LD_LIBRARY_PATH</code>, and <code class="envar">GMON_OUT_PREFIX</code>,
+there are three other environment
+variables which, if they exist in the Windows environment, are
+converted to UNIX format: <code class="envar">TMPDIR</code>, <code class="envar">TMP</code>,
+and <code class="envar">TEMP</code>.  The first is not set by default in the
+Windows environment but the other two are, and they point to the
+default Windows temporary directory.  If set, these variables will be
+used by some Cygwin applications, possibly with unexpected results.
+You may therefore want to unset them by adding the following two lines
+to your <code class="filename">~/.bashrc</code> file:
+
+</p><pre class="screen">
+unset TMP
+unset TEMP
+</pre><p>
+
+This is done in the default <code class="filename">~/.bashrc</code> file.
+Alternatively, you could set <code class="envar">TMP</code>
+and <code class="envar">TEMP</code> to point to <code class="filename">/tmp</code> or to
+any other temporary directory of your choice.  For example:
+
+</p><pre class="screen">
+export TMP=/tmp
+export TEMP=/tmp
+</pre><p>
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="setup-env-win32"></a>Restricted Win32 environment</h3></div></div></div><p>There is a restriction when calling Win32 API functions which
+require a fully set up application environment.  Cygwin maintains its own
+environment in POSIX style.  The Win32 environment is usually stripped
+to a bare minimum and not at all kept in sync with the Cygwin POSIX
+environment.</p><p>If you need the full Win32 environment set up in a Cygwin process,
+you have to call</p><pre class="screen">
+#include &lt;sys/cygwin.h&gt;
+
+cygwin_internal (CW_SYNC_WINENV);
+</pre><p>to synchronize the Win32 environment with the Cygwin environment.
+Note that this only synchronizes the Win32 environment once with the
+Cygwin environment.  Later changes using the <code class="function">setenv</code>
+or <code class="function">putenv</code> calls are not reflected in the Win32
+environment.  In these cases, you have to call the aforementioned
+<code class="function">cygwin_internal</code> call again.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="setup-net.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="setup-net.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="setup-maxmem.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;2.&#160;Setting Up Cygwin&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Changing Cygwin's Maximum Memory</td></tr></table></div></body></html>

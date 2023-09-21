@@ -24,14 +24,16 @@ use warnings;
 use Term::ANSIColor;
 
 my $myname = 'pacsearch';
-my $myver = '1.4.0';
+my $myver = '1.9.1';
 
 sub usage {
 	print "$myname v$myver\n\n";
 	print "Perform a pacman search using both the local and the sync databases.\n\n";
 	print "Usage: $myname [-n] <pattern>\n\n";
 	print "Options:\n";
-	print "	 -n, --nocolor: turn off coloring\n\n";
+	print "	 -n, --nocolor  do not colorize output\n";
+	print "	 -h, --help     display this help message and exit\n";
+	print "	 -V, --version  display version information and exit\n\n";
 	print "Example: $myname ^gnome\n";
 }
 
@@ -121,5 +123,3 @@ my %allpkgs = map {$_->[1] . $_->[2] => 1} @sync;
 my @query = grep { not $allpkgs{$_->[1] . $_->[2]}} list_pkg('-Qs', @ARGV);
 $_->[4] = " [$LC_INSTALLED]" foreach @query;
 print_pkg (@{$_}) foreach (@sync, @query);
-
-#vim: set noet:

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>cygpath</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="cygcheck.html" title="cygcheck"><link rel="next" href="dumper.html" title="dumper"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">cygpath</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="cygcheck.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="dumper.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="cygpath"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>cygpath &#8212; Convert Unix and Windows format paths, or output system path information</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">cygpath</code>  { -d  |   -m  |   -u  |   -w  |   -t <em class="replaceable"><code>TYPE</code></em> } [-f <em class="replaceable"><code>FILE</code></em>] [-i] [<em class="replaceable"><code>CONVERSION_OPTION</code></em>...]  <em class="replaceable"><code>NAME</code></em>... </p></div><div class="cmdsynopsis"><p><code class="command">cygpath</code>  [-c <em class="replaceable"><code>HANDLE</code></em>]</p></div><div class="cmdsynopsis"><p><code class="command">cygpath</code>  [-A] { -D  |   -H  |   -O  |   -P  |   -S  |   -W  |   -F <em class="replaceable"><code>ID</code></em> }</p></div><div class="cmdsynopsis"><p><code class="command">cygpath</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="cygpath-options"></a><h2>Options</h2><pre class="screen">
+Output type options:
+
+  -d, --dos             print DOS (short) form of NAMEs (C:\PROGRA~1\)
+  -m, --mixed           like --windows, but with regular slashes (C:/WINNT)
+  -M, --mode            report on mode of file (currently binmode or textmode)
+  -u, --unix            (default) print Unix form of NAMEs (/cygdrive/c/winnt)
+  -w, --windows         print Windows form of NAMEs (C:\WINNT)
+  -t, --type TYPE       print TYPE form: 'dos', 'mixed', 'unix', or 'windows'
+
+Path conversion options:
+
+  -a, --absolute        output absolute path
+  -l, --long-name       print Windows long form of NAMEs (with -w, -m only)
+  -p, --path            NAME is a PATH list (i.e., '/bin:/usr/bin')
+  -U, --proc-cygdrive   Emit /proc/cygdrive path instead of cygdrive prefix
+                        when converting Windows path to UNIX path.
+  -s, --short-name      print DOS (short) form of NAMEs (with -w, -m only)
+  -C, --codepage CP     print DOS, Windows, or mixed pathname in Windows
+                        codepage CP.  CP can be a numeric codepage identifier,
+                        or one of the reserved words ANSI, OEM, or UTF8.
+                        If this option is missing, cygpath defaults to the
+                        character set defined by the current locale.
+
+System information:
+
+  -A, --allusers        use `All Users' instead of current user for -D, -P
+  -D, --desktop         output `Desktop' directory and exit
+  -H, --homeroot        output `Profiles' directory (home root) and exit
+  -O, --mydocs          output `My Documents' directory and exit
+  -P, --smprograms      output Start Menu `Programs' directory and exit
+  -S, --sysdir          output system directory and exit
+  -W, --windir          output `Windows' directory and exit
+  -F, --folder ID       output special folder with numeric ID and exit
+
+Other options:
+
+  -f, --file FILE       read FILE for input; use - to read from STDIN
+  -o, --option          read options from FILE as well (for use with --file)
+  -c, --close HANDLE    close HANDLE (for use in captured process)
+  -i, --ignore          ignore missing argument
+  -h, --help            output usage information and exit
+  -V, --version         output version information and exit
+</pre></div><div class="refsect1"><a name="cygpath-desc"></a><h2>Description</h2><p>The <span class="command"><strong>cygpath</strong></span> program is a utility that converts
+      Windows native filenames to Cygwin POSIX-style pathnames and vice versa.
+      It can be used when a Cygwin program needs to pass a file name to a
+      native Windows program, or expects to get a file name from a native
+      Windows program. Alternatively, <span class="command"><strong>cygpath</strong></span> can output
+      information about the location of important system directories in either
+      format. </p><p>The <code class="literal">-u</code> and <code class="literal">-w</code> options indicate
+      whether you want a conversion to UNIX (POSIX) format
+      (<code class="literal">-u</code>) or to Windows format (<code class="literal">-w</code>). Use
+      the <code class="literal">-d</code> to get DOS-style (8.3) file and path names. The
+      <code class="literal">-m</code> option will output Windows-style format but with
+      forward slashes instead of backslashes. This option is especially useful
+      in shell scripts, which use backslashes as an escape character.</p><p> In combination with the <code class="literal">-w</code> option, you can use
+      the <code class="literal">-l</code> and <code class="literal">-s</code> options to use normal
+      (long) or DOS-style (short) form. The <code class="literal">-d</code> option is
+      identical to <code class="literal">-w</code> and <code class="literal">-s</code> together. </p><p>The <code class="literal">-C</code> option allows to specify a Windows codepage
+      to print DOS and Windows paths created with one of the
+      <code class="literal">-d</code>, <code class="literal">-m</code>, or <code class="literal">-w</code>
+      options. The default is to use the character set of the current locale
+      defined by one of the internationalization environment variables
+      <code class="envar">LC_ALL</code>, <code class="envar">LC_CTYPE</code>, or <code class="envar">LANG</code>,
+      see <a class="xref" href="setup-locale.html" title="Internationalization">the section called &#8220;Internationalization&#8221;</a>. This is sometimes not sufficient for
+      interaction with native Windows tools, which might expect native,
+      non-ASCII characters in a specific Windows codepage. Console tools, for
+      instance, might expect pathnames in the current OEM codepage, while
+      graphical tools like Windows Explorer might expect pathnames in the
+      current ANSI codepage.</p><p>The <code class="literal">-U</code> option allows to use cygpath to create
+    unambiguous Unix paths pointing outside the Cygwin tree andf thus having
+    no explicit POSIX path.  Those paths usually use the cygdrive prefix.
+    However, the cygdrive prefix can be changed by the user, so symbolic links
+    created using the cygdrive prefix are not foolproof.  With
+    <code class="literal">-U</code> cygpath will generate such paths prepended by the
+    virtual <code class="filename">/proc/cygdrive</code> symbolic link, which will
+    never change, so the created path is safe against changing the cygdrive
+    prefix.</p><p>The <code class="literal">-C</code> option takes a single parameter:</p><div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: disc; "><li class="listitem"><p><code class="literal">ANSI</code>, to specify the current ANSI
+          codepage</p></li><li class="listitem"><p><code class="literal">OEM</code>, to specify the current OEM (console)
+          codepage</p></li><li class="listitem"><p><code class="literal">UTF8</code>, to specify UTF-8.</p></li><li class="listitem"><p>A numerical, decimal codepage number, for instance 936 for GBK,
+          28593 for ISO-8859-3, etc. A full list of supported codepages is
+          listed on the Microsoft MSDN page <a class="ulink" href="http://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx" target="_top">Code Page Identifiers</a>. A codepage of 0 is the same as if the
+          <code class="literal">-C</code> hasn't been specified at all.</p></li></ul></div><p>The <code class="literal">-p</code> option means that you want to convert a
+      path-style string rather than a single filename. For example, the PATH
+      environment variable is semicolon-delimited in Windows, but
+      colon-delimited in UNIX. By giving <code class="literal">-p</code> you are
+      instructing <span class="command"><strong>cygpath</strong></span> to convert between these
+      formats.</p><p>The <code class="literal">-i</code> option supresses the print out of the usage
+      message if no filename argument was given. It can be used in make file
+      rules converting variables that may be omitted to a proper format. Note
+      that <span class="command"><strong>cygpath</strong></span> output may contain spaces (C:\Program
+      Files) so should be enclosed in quotes. </p><div class="example"><a name="utils-cygpath-ex"></a><p class="title"><b>Example&#160;3.5.&#160;Example <span class="command">cygpath</span> usage</b></p><div class="example-contents"><pre class="screen">
+
+#!/bin/sh
+if [ "${1}" = "" ];
+	then
+		XPATH=".";
+	else
+		XPATH="$(cygpath -C ANSI -w "${1}")";
+fi
+explorer $XPATH &amp;
+
+</pre></div></div><br class="example-break"><p>The capital options <code class="literal">-D</code>, <code class="literal">-H</code>,
+      <code class="literal">-P</code>, <code class="literal">-S</code>, and <code class="literal">-W</code>
+      output directories used by Windows that are not the same on all systems,
+      for example <code class="literal">-S</code> might output C:\WINNT\system32 or
+      C:\Windows\System32. The <code class="literal">-H</code> shows the Windows profiles
+      directory that can be used as root of home. The <code class="literal">-A</code>
+      option forces use of the "All Users" directories instead of the current
+      user for the <code class="literal">-D</code>, <code class="literal">-O</code> and
+      <code class="literal">-P</code> options. The <code class="literal">-F</code> outputs other
+      special folders specified by their internal numeric code (decimal or
+      0x-prefixed hex). For valid codes and symbolic names, see the CSIDL_*
+      definitions in the include file /usr/include/w32api/shlobj.h from package
+      w32api. The current valid range of codes for folders is 0 (Desktop) to 59
+      (CDBurn area). By default the output is in UNIX (POSIX) format; use the
+      <code class="literal">-w</code> or <code class="literal">-d</code> options to get other
+      formats.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="cygcheck.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="dumper.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">cygcheck&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;dumper</td></tr></table></div></body></html>

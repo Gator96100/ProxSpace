@@ -13,11 +13,11 @@ TAP::Parser::Scheduler - Schedule tests during parallel testing
 
 =head1 VERSION
 
-Version 3.42
+Version 3.44
 
 =cut
 
-our $VERSION = '3.42';
+our $VERSION = '3.44';
 
 =head1 SYNOPSIS
 
@@ -161,8 +161,8 @@ sub new {
 sub _set_rules {
     my ( $self, $rules, $tests ) = @_;
 
-    # Convert all incoming tests to job objects.
-    # If no test description is provided use the file name as the description.
+    # Convert all incoming tests to job objects. 
+    # If no test description is provided use the file name as the description. 
     my @tests = map { TAP::Parser::Scheduler::Job->new(@$_) }
       map { 'ARRAY' eq ref $_ ? $_ : [ $_, $_ ] } @$tests;
     my $schedule = $self->_rule_clause( $rules, \@tests );
@@ -379,9 +379,9 @@ Return a human readable representation of the scheduling tree.
 For example:
 
     my @tests = (qw{
-        t/startup/foo.t
+        t/startup/foo.t 
         t/shutdown/foo.t
-
+    
         t/a/foo.t t/b/foo.t t/c/foo.t t/d/foo.t
     });
     my $sched = TAP::Parser::Scheduler->new(

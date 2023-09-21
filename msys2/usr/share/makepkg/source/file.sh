@@ -60,11 +60,11 @@ download_file() {
 	# replace %o by the temporary dlfile if it exists
 	if [[ ${cmdline[*]} = *%o* ]]; then
 		dlfile=$filename.part
-		cmdline=("${cmdline[@]//%o/$dlfile}")
+		cmdline=("${cmdline[@]//%o/"$dlfile"}")
 	fi
 	# add the URL, either in place of %u or at the end
 	if [[ ${cmdline[*]} = *%u* ]]; then
-		cmdline=("${cmdline[@]//%u/$url}")
+		cmdline=("${cmdline[@]//%u/"$url"}")
 	else
 		cmdline+=("$url")
 	fi

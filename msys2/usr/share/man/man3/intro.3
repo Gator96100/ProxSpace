@@ -1,0 +1,101 @@
+'\" t
+.\"     Title: intro
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin
+.\"    Source: Cygwin
+.\"  Language: English
+.\"
+.TH "INTRO" "3" "07/14/2023" "Cygwin" "Cygwin"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+intro \- Introduction to the Cygwin API
+.SH "DESCRIPTION"
+.PP
+\fICygwin\fR
+is a Linux\-like environment for Windows\&. It consists of two parts:
+.PP
+A DLL (cygwin1\&.dll) which acts as a POSIX API emulation layer providing substantial POSIX API functionality, modelled after the GNU/Linux operating system\&. This page describes the API provided by the DLL\&.
+.PP
+A collection of tools which provide Linux look and feel\&. This environment is described in the
+\fBintro\fR(1)
+man page\&.
+.SH "AVAILABILITY"
+.PP
+\fICygwin\fR
+is developed by volunteers collaborating over the Internet\&. It is distributed through the website
+\m[blue]\fB\%http://cygwin.com\fR\m[]\&. The website has extensive documentation, including FAQ, User\*(Aqs Guide, and API Reference\&. It should be considered the authoritative source of information\&. The source code, released under the
+\fIGNU General Public License, Version 3 (GPLv3+)\fR
+and
+\fILesser GNU General Public License, Version 3 (LGPLv3+)\fR, is also available from the website or one of the mirrors\&.
+.SH "COMPATIBILITY"
+.PP
+\fICygwin\fR
+policy is to attempt to adhere to
+\fIPOSIX\&.1\-2008/SUSv4\fR
+(Portable Operating System Interface for UNIX / The Single UNIX Specification, Version 4) where possible\&.
+.PP
+\fISUSv4\fR
+is available online at:
+.PP
+\m[blue]\fB\%http://pubs.opengroup.org/onlinepubs/9699919799/\fR\m[]
+.PP
+For compatibility information about specific functions, see the API Reference at:
+.PP
+\m[blue]\fB\%http://cygwin.com/cygwin-api/cygwin-api.html\fR\m[]
+.PP
+Where these standards are ambiguous, Cygwin tries to mimic
+\fILinux\fR\&. However,
+\fICygwin\fR
+uses
+\fInewlib\fR
+instead of
+\fIglibc\fR
+as its C Library, available at:
+.PP
+\m[blue]\fB\%https://sourceware.org/newlib/\fR\m[]
+.PP
+Keep in mind that there are many underlying differences between UNIX and Win32 making complete compatibility an ongoing challenge\&.
+.SH "REPORTING BUGS"
+.PP
+If you find a bug in
+\fICygwin\fR, please read
+.PP
+\m[blue]\fB\%http://cygwin.com/bugs.html\fR\m[]
+.PP
+and follow the instructions for reporting found there\&. If you are able to track down the source of the bug and can provide a fix, there are instructions for contributing patches at:
+.PP
+\m[blue]\fB\%http://cygwin.com/contrib.html\fR\m[]
+.SH "SEE ALSO"
+.PP
+\fBintro\fR(1)
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Cygserver</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="ntsec.html" title="POSIX accounts, permission, and security"><link rel="next" href="using-utils.html" title="Cygwin Utilities"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Cygserver</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ntsec.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="using-utils.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-cygserver"></a>Cygserver</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="what-is-cygserver"></a>What is Cygserver?</h3></div></div></div><p>
+  Cygserver is a program which is designed to run as a background service.
+  It provides Cygwin applications with services which require security
+  arbitration or which need to persist while no other cygwin application
+  is running.
+</p><p>
+  The implemented services so far are:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>XSI IPC Message Queues.</p></li><li class="listitem" style="list-style-type: disc"><p>XSI IPC Semaphores.</p></li><li class="listitem" style="list-style-type: disc"><p>XSI IPC Shared Memory.</p></li><li class="listitem" style="list-style-type: disc"><p>Allows non-privileged users to store obfuscated
+  passwords in the registry to be used by <span class="command"><strong>setuid</strong></span> and
+  <span class="command"><strong>seteuid</strong></span> calls to create user tokens with network
+  credentials.  This service is used by <span class="command"><strong><a class="link" href="passwd.html" title="passwd">passwd</a> -R</strong></span>.  Using the stored
+  passwords in <span class="command"><strong>set(e)uid</strong></span> does not require running
+  Cygserver.  For details, see <a class="xref" href="ntsec.html#ntsec-setuid-overview" title="Switching the user context">the section called &#8220;Switching the user context&#8221;</a>.
+  </p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="cygserver-command-line"></a>Cygserver command line options</h3></div></div></div><p>
+  Options to Cygserver take the normal UNIX-style `-X' or `--longoption' form.
+  Nearly all options have a counterpart in the configuration file (see below)
+  so setting them on the command line isn't really necessary.  Command line
+  options override settings from the Cygserver configuration file.
+</p><p>
+  The one-character options are prepended by a single dash, the long variants
+  are prepended with two dashes.  Arguments to options are marked in angle
+  brackets below.  These are not part of the actual syntax but are used only to
+  denote the arguments.  Note that all arguments are required.  Cygserver
+  has no options with optional arguments.
+</p><p>
+  The recognized options are:
+</p><div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: disc; "><li class="listitem"><pre class="screen">-f, --config-file &lt;file&gt;</pre><p>  
+    Use &lt;file&gt; as configuration file instead of the default configuration
+    line.  The default configuration file is /etc/cygserver.conf. 
+    The --help and --version options will print the default configuration
+    pathname.
+  </p><p>
+    This option has no counterpart in the configuration file, for obvious
+   reasons.
+  </p></li><li class="listitem"><pre class="screen">-c, --cleanup-threads &lt;num&gt;</pre><p>  
+    Number of threads started to perform cleanup tasks.  Default is 2.
+    Configuration file option:  kern.srv.cleanup_threads
+  </p></li><li class="listitem"><pre class="screen">-r, --request-threads &lt;num&gt;</pre><p>  
+    Number of threads started to serve application requests.  Default is 10.
+    The -c and -r options can be used to play with Cygserver's performance
+    under heavy load conditions or on slow machines.
+    Configuration file option:  kern.srv.request_threads
+  </p></li><li class="listitem"><pre class="screen">-d, --debug</pre><p>  
+    Log debug messages to stderr.  These will clutter your stderr output with
+    a lot of information, typically only useful to developers.
+  </p></li><li class="listitem"><pre class="screen">-e, --stderr</pre><p>  
+    Force logging to stderr.  This is the default if stderr is connected to
+    a tty.  Otherwise, the default is logging to the system log.  By using
+    the -e, -E, -y, -Y options (or the appropriate settings in the
+    configuration file), you can explicitly set the logging output as you
+    like, even to both, stderr and syslog.
+    Configuration file option:  kern.log.stderr
+  </p></li><li class="listitem"><pre class="screen">-E, --no-stderr</pre><p>  
+    Don't log to stderr.  Configuration file option:  kern.log.stderr
+  </p></li><li class="listitem"><pre class="screen">-y, --syslog</pre><p>  
+    Force logging to the system log.  This is the default, if stderr is not
+    connected to a tty, e. g. redirected to a file.
+    Configuration file option:  kern.log.syslog
+  </p></li><li class="listitem"><pre class="screen">-Y, --no-syslog</pre><p>  
+    Don't log to syslog.  Configuration file option:  kern.log.syslog
+  </p></li><li class="listitem"><pre class="screen">-l, --log-level &lt;level&gt;</pre><p> 
+    Set the verbosity level of the logging output.  Valid values are between
+    1 and 7.  The default level is 6, which is relatively chatty.  If you set
+    it to 1, you will get only messages which are printed under severe conditions,
+    which will result in stopping Cygserver itself.
+    Configuration file option:  kern.log.level
+  </p></li><li class="listitem"><pre class="screen">-m, --no-sharedmem</pre><p>  
+    Don't start XSI IPC Shared Memory support.  If you don't need XSI IPC
+    Shared Memory support, you can switch it off here.
+    Configuration file option:  kern.srv.sharedmem
+  </p></li><li class="listitem"><pre class="screen">-q, --no-msgqueues</pre><p>  
+    Don't start XSI IPC Message Queues. 
+    Configuration file option:  kern.srv.msgqueues
+  </p></li><li class="listitem"><pre class="screen">-s, --no-semaphores</pre><p>  
+    Don't start XSI IPC Semaphores.
+    Configuration file option:  kern.srv.semaphores
+  </p></li><li class="listitem"><pre class="screen">-S, --shutdown</pre><p>  
+    Shutdown a running daemon and exit.  Other methods are sending a SIGHUP
+    to the Cygserver PID or, if running as service, calling `net stop
+    cygserver' or `cygrunsrv -E cygserver'.
+  </p></li><li class="listitem"><pre class="screen">-h, --help</pre><p>  
+    Output usage information and exit.
+  </p></li><li class="listitem"><pre class="screen">-V, --version</pre><p>  
+    Output version information and exit.
+  </p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="install-cygserver"></a>How to install Cygserver</h3></div></div></div><p>
+  Cygserver is part of the base <span class="bold"><strong>cygwin</strong></span> package.
+  Therefore, whenever Cygwin is installed, so is Cygserver.
+</p><p>
+  You may want to install Cygserver as a service. See
+  <a class="xref" href="using-cygserver.html#start-cygserver" title="How to start Cygserver">the section called &#8220;How to start Cygserver&#8221;</a>.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="start-cygserver"></a>How to start Cygserver</h3></div></div></div><p>
+  Before you run Cygserver for the first time, you should run the
+  /usr/bin/cygserver-config script once.  It creates the default
+  configuration file and, upon request, installs Cygserver as service.
+  The script only performs a default install, with no further options
+  given to Cygserver when running as service.  Due to the wide
+  configurability by changing the configuration file, that's typically
+  not necessary.
+</p><p>
+  You should always run Cygserver as a service under LocalSystem account. 
+  This is the way it is installed for you by the /usr/bin/cygserver-config
+  script.
+</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="cygserver-config"></a>The Cygserver configuration file</h3></div></div></div><p>
+  Cygserver has many options, which allow you to customize the server
+  to your needs.  Customization is accomplished by editing the configuration
+  file, which is by default /etc/cygserver.conf.  This file is only read
+  once, at startup of Cygserver.  There's no option to re-read the file at
+  runtime by, say, sending a signal to Cygserver.
+</p><p>
+  The configuration file determines how Cygserver operates.  There are
+  options which set the number of threads running in parallel, options
+  for setting how and what to log and options to set various maximum
+  values for the IPC services.
+</p><p>
+  The default configuration file delivered with Cygserver is installed
+  to /etc/defaults/etc.  The /usr/bin/cygserver-config script copies it to
+  /etc, giving you the option to overwrite an already existing file or to
+  leave it alone.  Therefore, the /etc file is safe to be changed by you,
+  since it will not be overwritten by a later update installation.
+</p><p>
+  The default configuration file contains many comments which describe
+  everything needed to understand the settings.  A comment at the start of the
+  file describes the syntax rules for the file.  The default options are shown
+  in the file but are commented out.
+</p><p>
+  It is generally a good idea to uncomment only options which you intend to
+  change from the default values.  Since reading the options file on Cygserver
+  startup doesn't take much time, it's also considered good practice to keep
+  all other comments in the file.  This keeps you from searching for clues
+  in other sources.
+</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ntsec.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="using-utils.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">POSIX accounts, permission, and security&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Cygwin Utilities</td></tr></table></div></body></html>

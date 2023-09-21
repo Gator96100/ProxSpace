@@ -14,7 +14,7 @@ use JSON::PP::Boolean;
 use Carp ();
 #use Devel::Peek;
 
-$JSON::PP::VERSION = '4.04';
+$JSON::PP::VERSION = '4.07';
 
 @JSON::PP::EXPORT = qw(encode_json decode_json from_json to_json);
 
@@ -201,12 +201,11 @@ sub boolean_values {
         my ($false, $true) = @_;
         $self->{false} = $false;
         $self->{true} = $true;
-        return ($false, $true);
     } else {
         delete $self->{false};
         delete $self->{true};
-        return;
     }
+    return $self;
 }
 
 sub get_boolean_values {
@@ -656,7 +655,7 @@ BEGIN {
     }
 }
 
-{ # PARSE
+{ # PARSE 
 
     my %escapes = ( #  by Jeremy Muhlich <jmuhlich [at] bitflood.org>
         b    => "\x8",
@@ -690,7 +689,7 @@ BEGIN {
 
     my $allow_bignum;   # using Math::BigInt/BigFloat
     my $singlequote;    # loosely quoting
-    my $loose;          #
+    my $loose;          # 
     my $allow_barekey;  # bareKey
     my $allow_tags;
 
@@ -1564,6 +1563,11 @@ sub incr_parse {
                     }
                 }
 
+                unless ( $coder->get_utf8 ) {
+                    utf8::upgrade( $self->{incr_text} );
+                    utf8::decode( $self->{incr_text} );
+                }
+
                 my ($obj, $offset) = $coder->PP_decode_json( $self->{incr_text}, 0x00000001 );
                 push @ret, $obj;
                 use bytes;
@@ -1761,19 +1765,15 @@ JSON::PP - JSON::XS compatible pure-Perl module.
  # OO-interface
 
  $json = JSON::PP->new->ascii->pretty->allow_nonref;
-
+ 
  $pretty_printed_json_text = $json->encode( $perl_scalar );
  $perl_scalar = $json->decode( $json_text );
-
+ 
  # Note that JSON version 2.0 and above will automatically use
  # JSON::XS or JSON::PP, so you should be able to just:
-
+ 
  use JSON;
 
-
-=head1 VERSION
-
-    4.04
 
 =head1 DESCRIPTION
 
@@ -1862,7 +1862,7 @@ be chained:
 =head2 ascii
 
     $json = $json->ascii([$enable])
-
+    
     $enabled = $json->get_ascii
 
 If C<$enable> is true (or missing), then the C<encode> method will not
@@ -1889,7 +1889,7 @@ contain any 8 bit characters.
 =head2 latin1
 
     $json = $json->latin1([$enable])
-
+    
     $enabled = $json->get_latin1
 
 If C<$enable> is true (or missing), then the C<encode> method will encode
@@ -1918,7 +1918,7 @@ in files or databases, not when talking to other JSON encoders/decoders.
 =head2 utf8
 
     $json = $json->utf8([$enable])
-
+    
     $enabled = $json->get_utf8
 
 If C<$enable> is true (or missing), then the C<encode> method will encode
@@ -1957,7 +1957,7 @@ generate the most readable (or most compact) form possible.
 =head2 indent
 
     $json = $json->indent([$enable])
-
+    
     $enabled = $json->get_indent
 
 If C<$enable> is true (or missing), then the C<encode> method will use a multiline
@@ -1975,7 +1975,7 @@ You can use C<indent_length> to change the length.
 =head2 space_before
 
     $json = $json->space_before([$enable])
-
+    
     $enabled = $json->get_space_before
 
 If C<$enable> is true (or missing), then the C<encode> method will add an extra
@@ -1994,7 +1994,7 @@ Example, space_before enabled, space_after and indent disabled:
 =head2 space_after
 
     $json = $json->space_after([$enable])
-
+    
     $enabled = $json->get_space_after
 
 If C<$enable> is true (or missing), then the C<encode> method will add an extra
@@ -2014,7 +2014,7 @@ Example, space_before and indent disabled, space_after enabled:
 =head2 relaxed
 
     $json = $json->relaxed([$enable])
-
+    
     $enabled = $json->get_relaxed
 
 If C<$enable> is true (or missing), then C<decode> will accept some
@@ -2095,7 +2095,7 @@ C<\t>).
 =head2 canonical
 
     $json = $json->canonical([$enable])
-
+    
     $enabled = $json->get_canonical
 
 If C<$enable> is true (or missing), then the C<encode> method will output JSON objects
@@ -2118,7 +2118,7 @@ This setting has currently no effect on tied hashes.
 =head2 allow_nonref
 
     $json = $json->allow_nonref([$enable])
-
+    
     $enabled = $json->get_allow_nonref
 
 Unlike other boolean options, this opotion is enabled by default beginning
@@ -2143,7 +2143,7 @@ resulting in an error:
 =head2 allow_unknown
 
     $json = $json->allow_unknown([$enable])
-
+    
     $enabled = $json->get_allow_unknown
 
 If C<$enable> is true (or missing), then C<encode> will I<not> throw an
@@ -2161,7 +2161,7 @@ leave it off unless you know your communications partner.
 =head2 allow_blessed
 
     $json = $json->allow_blessed([$enable])
-
+    
     $enabled = $json->get_allow_blessed
 
 See L<OBJECT SERIALISATION> for details.
@@ -2179,7 +2179,7 @@ This setting has no effect on C<decode>.
 =head2 convert_blessed
 
     $json = $json->convert_blessed([$enable])
-
+    
     $enabled = $json->get_convert_blessed
 
 See L<OBJECT SERIALISATION> for details.
@@ -2332,7 +2332,7 @@ into the corresponding C<< $WIDGET{<id>} >> object:
 =head2 shrink
 
     $json = $json->shrink([$enable])
-
+    
     $enabled = $json->get_shrink
 
 If C<$enable> is true (or missing), the string returned by C<encode> will
@@ -2346,7 +2346,7 @@ If C<$enable> is false, then JSON::PP does nothing.
 =head2 max_depth
 
     $json = $json->max_depth([$maximum_nesting_depth])
-
+    
     $max_depth = $json->get_max_depth
 
 Sets the maximum nesting level (default C<512>) accepted while encoding
@@ -2370,7 +2370,7 @@ See L<JSON::XS/SECURITY CONSIDERATIONS> for more info on why this is useful.
 =head2 max_size
 
     $json = $json->max_size([$maximum_string_size])
-
+    
     $max_size = $json->get_max_size
 
 Set the maximum length a JSON text may have (in bytes) where decoding is
@@ -2597,9 +2597,9 @@ The following methods implement this incremental parser.
 =head2 incr_parse
 
     $json->incr_parse( [$string] ) # void context
-
+    
     $obj_or_undef = $json->incr_parse( [$string] ) # scalar context
-
+    
     @obj_or_empty = $json->incr_parse( [$string] ) # list context
 
 This is the central parsing function. It can both append new text and
@@ -3142,6 +3142,6 @@ Copyright 2007-2016 by Makamaka Hannyaharamitu
 Most of the documentation is taken from JSON::XS by Marc Lehmann
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+it under the same terms as Perl itself. 
 
 =cut

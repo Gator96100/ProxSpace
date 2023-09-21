@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>regtool</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="ps.html" title="ps"><link rel="next" href="setfacl.html" title="setfacl"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">regtool</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ps.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="setfacl.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="regtool"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>regtool &#8212; View or edit the Windows registry</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">regtool</code>  [-qvwW]  add|check|get|list|remove|unset|load|unload|save   <em class="replaceable"><code>KEY</code></em>  [ <em class="replaceable"><code>PATH</code></em>  |   <em class="replaceable"><code>DATA</code></em>... ]</p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>   add   <em class="replaceable"><code>KEY\SUBKEY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>   check   <em class="replaceable"><code>KEY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>  [-bnx]  get   <em class="replaceable"><code>KEY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>  [-klp]  list   <em class="replaceable"><code>KEY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>   remove   <em class="replaceable"><code>KEY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>  [-bDeimnQsf]  set   <em class="replaceable"><code>KEY\VALUE</code></em>  [<em class="replaceable"><code>DATA</code></em>...]</p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>  [-f]  unset   <em class="replaceable"><code>KEY\VALUE</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>   load   <em class="replaceable"><code>KEY\SUBKEY</code></em>   <em class="replaceable"><code>PATH</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>   unload   <em class="replaceable"><code>KEY\SUBKEY</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>   save   <em class="replaceable"><code>KEY\SUBKEY</code></em>   <em class="replaceable"><code>PATH</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>  [-f]  restore   <em class="replaceable"><code>KEY/SUBKEY</code></em>   <em class="replaceable"><code>PATH</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">regtool</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="regtool-options"></a><h2>Options</h2><pre class="screen">
+Actions:
+
+ add KEY\SUBKEY             add new SUBKEY
+ check KEY                  exit 0 if KEY exists, 1 if not
+ get KEY\VALUE              prints VALUE to stdout
+ list KEY                   list SUBKEYs and VALUEs
+ remove KEY                 remove KEY
+ set KEY\VALUE [data ...]   set VALUE
+ unset KEY\VALUE            removes VALUE from KEY
+ load KEY\SUBKEY PATH       load hive from PATH into new SUBKEY
+ unload KEY\SUBKEY          unload hive and remove SUBKEY
+ save KEY\SUBKEY PATH       save SUBKEY into new file PATH
+ restore KEY\SUBKEY PATH    restore SUBKEY from file PATH
+
+Options for 'list' Action:
+
+ -k, --keys           print only KEYs
+ -l, --list           print only VALUEs
+ -p, --postfix        like ls -p, appends '\' postfix to KEY names
+
+Options for 'get' Action:
+
+ -b, --binary         print REG_BINARY data as hex bytes
+ -n, --none           print data as stream of bytes as stored in registry
+ -x, --hex            print numerical data as hex numbers
+
+Options for 'set' Action:
+
+ -b, --binary         set type to REG_BINARY (hex args or '-')
+ -D, --dword-be       set type to REG_DWORD_BIG_ENDIAN
+ -e, --expand-string  set type to REG_EXPAND_SZ
+ -i, --integer        set type to REG_DWORD
+ -m, --multi-string   set type to REG_MULTI_SZ
+ -n, --none           set type to REG_NONE
+ -Q, --qword          set type to REG_QWORD
+ -s, --string         set type to REG_SZ
+
+Options for 'set' and 'unset' Actions:
+
+ -K&lt;c&gt;, --key-separator[=]&lt;c&gt;  set key separator to &lt;c&gt; instead of '\'
+
+Options for 'restore' action:
+
+ -f, --force    restore even if open handles exist at or beneath the location
+                in the registry hierarchy to which KEY\SUBKEY points
+
+Other Options:
+
+ -h, --help     output usage information and exit
+ -q, --quiet    no error output, just nonzero return if KEY/VALUE missing
+ -v, --verbose  verbose output, including VALUE contents when applicable
+ -w, --wow64    access 64 bit registry view (ignored on 32 bit Windows)
+ -W, --wow32    access 32 bit registry view (ignored on 32 bit Windows)
+ -V, --version  output version information and exit
+
+KEY is in the format [host]\prefix\KEY\KEY\VALUE, where host is optional
+remote host in either \\hostname or hostname: format and prefix is any of:
+  root     HKCR  HKEY_CLASSES_ROOT (local only)
+  config   HKCC  HKEY_CURRENT_CONFIG (local only)
+  user     HKCU  HKEY_CURRENT_USER (local only)
+  machine  HKLM  HKEY_LOCAL_MACHINE
+  users    HKU   HKEY_USERS
+
+You can use forward slash ('/') as a separator instead of backslash, in
+that case backslash is treated as an escape character.
+You can also supply the registry path prefix /proc/registry{,32,64}/ to
+use path completion.
+Example:
+  regtool list '/HKLM/SOFTWARE/Classes/MIME/Database/Content Type/audio\\/wav'
+</pre></div><div class="refsect1"><a name="regtool-desc"></a><h2>Description</h2><p>The <span class="command"><strong>regtool</strong></span> program allows shell scripts to access
+      and modify the Windows registry. Note that modifying the Windows registry
+      is dangerous, and carelessness here can result in an unusable system. Be
+      careful.</p><p>The <code class="literal">-v</code> option means "verbose". For most commands,
+      this causes additional or lengthier messages to be printed. Conversely,
+      the <code class="literal">-q</code> option supresses error messages, so you can use
+      the exit status of the program to detect if a key exists or not (for
+      example).</p><p>The <code class="literal">-w</code> option allows you to access the 64 bit view
+      of the registry. Several subkeys exist in a 32 bit and a 64 bit version
+      when running on Windows 64. Since Cygwin is running in 32 bit mode, it
+      only has access to the 32 bit view of these registry keys. When using the
+      <code class="literal">-w</code> switch, the 64 bit view is used and
+      <span class="command"><strong>regtool</strong></span> can access the entire registry. This option is
+      simply ignored when running on 32 bit Windows versions. </p><p>The <code class="literal">-W</code> option allows you to access the 32 bit view
+      on the registry. The purpose of this option is mainly for symmetry. It
+      permits creation of OS agnostic scripts which would also work in a
+      hypothetical 64 bit version of Cygwin.</p><p>You must provide <span class="command"><strong>regtool</strong></span> with an
+      <span class="emphasis"><em>action</em></span> following options (if any). Currently, the
+      action must be <code class="literal">add</code>, <code class="literal">set</code>,
+      <code class="literal">check</code>, <code class="literal">get</code>,
+      <code class="literal">list</code>, <code class="literal">remove</code>,
+      <code class="literal">set</code>, or <code class="literal">unset</code>. </p><p>The <code class="literal">add</code> action adds a new key. The
+      <code class="literal">check</code> action checks to see if a key exists (the exit
+      code of the program is zero if it does, nonzero if it does not). The
+      <code class="literal">get</code> action gets the value of a key, and prints it (and
+      nothing else) to stdout. Note: if the value doesn't exist, an error
+      message is printed and the program returns a non-zero exit code. If you
+      give <code class="literal">-q</code>, it doesn't print the message but does return
+      the non-zero exit code.</p><p> The <code class="literal">list</code> action lists the subkeys and values
+      belonging to the given key. With <code class="literal">list</code>, the
+      <code class="literal">-k</code> option instructs <span class="command"><strong>regtool</strong></span> to
+      print only KEYs, and the <code class="literal">-l</code> option to print only
+      VALUEs. The <code class="literal">-p</code> option postfixes a
+      <code class="literal">'/'</code> to each KEY, but leave VALUEs with no postfix. The
+      <code class="literal">remove</code> action removes a key. Note that you may need to
+      remove everything in the key before you may remove it, but don't rely on
+      this stopping you from accidentally removing too much. </p><p>The <code class="literal">get</code> action prints a value within a key. With
+      the <code class="literal">-b</code> option, data is printed as hex bytes.
+      <code class="literal">-n</code> allows to print the data as a typeless stream of
+      bytes. Integer values (REG_DWORD, REG_QWORD) are usually printed as
+      decimal values. The <code class="literal">-x</code> option allows to print the
+      numbers as hexadecimal values.</p><p>The <code class="literal">set</code> action sets a value within a key.
+      <code class="literal">-b</code> means it's binary data (REG_BINARY). The binary
+      values are specified as hex bytes in the argument list. If the argument
+      is <code class="literal">'-'</code>, binary data is read from stdin instead.
+      <code class="literal">-d</code> or <code class="literal">-i</code> means the value is a 32
+      bit integer value (REG_DWORD). <code class="literal">-D</code> means the value is a
+      32 bit integer value in Big Endian representation (REG_DWORD_BIG_ENDIAN).
+      <code class="literal">-Q</code> means the value is a 64 bit integer value
+      (REG_QWORD). <code class="literal">-s</code> means the value is a string (REG_SZ).
+      <code class="literal">-e</code> means it's an expanding string (REG_EXPAND_SZ) that
+      contains embedded environment variables. <code class="literal">-m</code> means it's
+      a multi-string (REG_MULTI_SZ). If you don't specify one of these,
+      <span class="command"><strong>regtool</strong></span> tries to guess the type based on the value you
+      give. If it looks like a number, it's a DWORD, unless it's value doesn't
+      fit into 32 bit, in which case it's a QWORD. If it starts with a percent,
+      it's an expanding string. If you give multiple values, it's a
+      multi-string. Else, it's a regular string.</p><p>The <code class="literal">unset</code> action removes a value from a
+      key.</p><p>The <code class="literal">load</code> action adds a new subkey and loads the
+      contents of a registry hive into it. The parent key must be
+      HKEY_LOCAL_MACHINE or HKEY_USERS. The <code class="literal">unload</code> action
+      unloads the file and removes the subkey. </p><p>The <code class="literal">save</code> action saves a subkey into a registry
+      file.  Ideally you append the suffix <code class="filename">.reg</code> to the file
+      so it gets automatically recognized as registry file by
+      <span class="command"><strong>Windows Explorer</strong></span>.</p><p>The <code class="literal">restore</code> action restores a registry subkey
+      from a file saved via the aforementioned <code class="literal">save</code> action.
+      </p><p> By default, the last "\" or "/" is assumed to be the separator
+      between the key and the value. You can use the <code class="literal">-K</code>
+      option to provide an alternate key/value separator character. </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ps.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="setfacl.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">ps&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;setfacl</td></tr></table></div></body></html>

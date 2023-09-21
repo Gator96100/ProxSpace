@@ -23,7 +23,7 @@
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver="6.0.0"
+declare -r myver="6.0.2"
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
@@ -193,7 +193,7 @@ check_keyids_exist() {
 }
 
 key_is_lsigned() {
-	secret_key=$("${GPG_PACMAN[@]}" --with-colons --list-secret-key | awk -F : 'NR==1 {print $5}')
+	secret_key=$("${GPG_PACMAN[@]}" --with-colons --list-secret-key --quiet | awk -F : 'NR==1 {print $5}')
 	while IFS=: read -r type valid _ _ sign_key _; do
 		if [[ $type != "sig" || $valid != "!" ]]; then
 			continue
@@ -201,7 +201,7 @@ key_is_lsigned() {
 		if [[ "$sign_key" == "$secret_key" ]]; then
 			return 0
 		fi
-	done < <("${GPG_PACMAN[@]}" --with-colons --check-signatures "$1")
+	done < <("${GPG_PACMAN[@]}" --with-colons --check-signatures --quiet "$1")
 	return 1
 }
 
@@ -213,7 +213,7 @@ key_is_revoked() {
 		if [[ $flags == *"D"* ]]; then
 			return 0
 		fi
-	done < <("${GPG_PACMAN[@]}" --with-colons --list-key "$1")
+	done < <("${GPG_PACMAN[@]}" --with-colons --list-key --quiet "$1")
 	return 1
 }
 
@@ -334,9 +334,26 @@ populate_keyring() {
 				# skip blank lines, comments; these are valid in this file
 				[[ -z $key_id || ${key_id:0:1} = \# ]] && continue
 
+				if key_is_lsigned "$key_id" ; then
+					continue
+				fi
+
 				# Mark this key to be lsigned
 				trusted_ids[$key_id]=$keyring
 			done < "${KEYRING_IMPORT_DIR}/${keyring}-trusted"
+		fi
+	done
+
+	local -A revoked_ids
+	for keyring in "${KEYRINGIDS[@]}"; do
+		if [[ -s $KEYRING_IMPORT_DIR/$keyring-revoked ]]; then
+			while read -r key_id; do
+				if key_is_revoked "$key_id" ; then
+					continue
+				fi
+
+				revoked_ids["$key_id"]=1
+			done <"$KEYRING_IMPORT_DIR/$keyring-revoked"
 		fi
 	done
 
@@ -351,26 +368,14 @@ populate_keyring() {
 		done
 	fi
 
-	local -A revoked_ids
-	for keyring in "${KEYRINGIDS[@]}"; do
-		if [[ -s $KEYRING_IMPORT_DIR/$keyring-revoked ]]; then
-			while read -r key_id; do
-				revoked_ids["$key_id"]=1
-			done <"$KEYRING_IMPORT_DIR/$keyring-revoked"
-		fi
-	done
-
 	if (( ${#revoked_ids[@]} > 0 )); then
 		local key_count=0
 		msg "$(gettext "Disabling revoked keys in keyring...")"
 		for key_id in "${!revoked_ids[@]}"; do
-			if key_is_revoked "$key_id" ; then
-				continue
-			fi
 			if (( VERBOSE )); then
 				msg2 "$(gettext "Disabling key %s...")" "${key_id}"
 			fi
-			printf 'disable\nquit\n' | LANG=C "${GPG_PACMAN[@]}" --command-fd 0 --quiet --batch --edit-key "${key_id}" 2>/dev/null
+			printf 'disable\nquit\n' | LANG=C "${GPG_PACMAN[@]}" --command-fd 0 --no-auto-check-trustdb --quiet --batch --edit-key "${key_id}" 2>/dev/null
 			key_count=$((key_count+1))
 		done
 		if (( key_count )); then
@@ -486,9 +491,6 @@ lsign_keys() {
 	local ret=0
 	local key_count=0
 	for key_id in "$@"; do
-		if key_is_lsigned "$key_id" ; then
-			continue
-		fi
 		if (( VERBOSE )); then
 			msg2 "$(gettext "Locally signing key %s...")" "${key_id}"
 		fi

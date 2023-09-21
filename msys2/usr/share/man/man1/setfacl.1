@@ -1,0 +1,197 @@
+'\" t
+.\"     Title: setfacl
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "SETFACL" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+setfacl \- Modify file and directory access control lists (ACLs)
+.SH "SYNOPSIS"
+.HP \w'\fBsetfacl\fR\ 'u
+\fBsetfacl\fR [\-n] {\-f\ \fIACL_FILE\fR | \-s\ \fIacl_entries\fR} \fIFILE\fR...
+.HP \w'\fBsetfacl\fR\ 'u
+\fBsetfacl\fR [\-n] {[\-bk]\ |\ [\-x\ \fIacl_entries\fR]\ [\-m\ \fIacl_entries\fR]} \fIFILE\fR...
+.HP \w'\fBsetfacl\fR\ 'u
+\fBsetfacl\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-b, \-\-remove\-all       remove all extended ACL entries
+  \-x, \-\-delete           delete one or more specified ACL entries
+  \-f, \-\-set\-file         set ACL entries for FILE to ACL entries read
+                         from ACL_FILE
+  \-k, \-\-remove\-default   remove all default ACL entries
+  \-m, \-\-modify           modify one or more specified ACL entries
+  \-n, \-\-no\-mask          don\*(Aqt recalculate the effective rights mask
+      \-\-mask             do recalculate the effective rights mask
+  \-s, \-\-set              set specified ACL entries on FILE
+  \-V, \-\-version          print version and exit
+  \-h, \-\-help             this help text
+
+At least one of (\-b, \-x, \-f, \-k, \-m, \-s) must be specified
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+For each file given as parameter,
+\fBsetfacl\fR
+will either replace its complete ACL (\-s,
+\-f), or it will add, modify, or delete ACL entries\&. For more information on Cygwin and Windows ACLs, see
+the section called \(lqPOSIX accounts, permission, and security\(rq
+in the Cygwin User\*(Aqs Guide\&.
+.PP
+Acl_entries are one or more comma\-separated ACL entries from the following list:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+         u[ser]::perm
+         u[ser]:uid:perm
+         g[roup]::perm
+         g[roup]:gid:perm
+         m[ask]::perm
+         o[ther]::perm
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Default entries are like the above with the additional default identifier\&. For example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+         d[efault]:u[ser]:uid:perm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+\fIperm\fR
+is either a 3\-char permissions string in the form "rwx" with the character
+\*(Aq\-\*(Aq
+for no permission or it is the octal representation of the permissions, a value from 0 (equivalent to "\-\-\-") to 7 ("rwx")\&.
+\fIuid\fR
+is a user name or a numerical uid\&.
+\fIgid\fR
+is a group name or a numerical gid\&.
+.PP
+The following options are supported:
+.PP
+\-b,\-\-remove\-all
+Remove all extended ACL entries\&. The base ACL entries of the owner, group and others are retained\&. This option can be combined with the
+\-k,\-\-remove\-default
+option to delete all non\-standard POSIX permissions\&.
+.PP
+\-x,\-\-delete
+Delete one or more specified entries from the file\*(Aqs ACL\&. The owner, group and others entries must not be deleted\&. Acl_entries to be deleted should be specified without permissions, as in the following list:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+         u[ser]:uid[:]
+         g[roup]:gid[:]
+         m[ask][:]
+         d[efault]:u[ser][:uid]
+         d[efault]:g[roup][:gid]
+         d[efault]:m[ask][:]
+         d[efault]:o[ther][:]
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+\-f,\-\-set\-file
+Take the Acl_entries from ACL_FILE one per line\&. Whitespace characters are ignored, and the character "#" may be used to start a comment\&. The special filename "\-" indicates reading from stdin\&. Note that you can use this with
+\fBgetfacl\fR
+and
+\fBsetfacl\fR
+to copy ACLs from one file to another:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ getfacl source_file | setfacl \-f \- target_file
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Required entries are: one user entry for the owner of the file, one group entry for the group of the file, and one other entry\&.
+.PP
+If additional user and group entries are given: a mask entry for the file group class of the file, and no duplicate user or group entries with the same uid/gid\&.
+.PP
+If it is a directory: one default user entry for the owner of the file, one default group entry for the group of the file, one default mask entry for the file group class, and one default other entry\&.
+.PP
+\-k,\-\-remove\-default
+Remove all default ACL entries\&. If no default ACL entries exist, no warnings are issued\&. This option can be combined with the
+\-b,\-\-remove\-all
+option to delete all non\-standard POSIX permissions\&.
+.PP
+\-m,\-\-modify
+Add or modify one or more specified ACL entries\&. Acl_entries is a comma\-separated list of entries from the same list as above\&.
+.PP
+\-n,\-\-no\-mask
+Valid in conjunction with \-m\&. Do not recalculate the effective rights mask\&. The default behavior of setfacl is to recalculate the ACL mask entry, unless a mask entry was explicitly given\&. The mask entry is set to the union of all permissions of the owning group, and all named user and group entries\&. (These are exactly the entries affected by the mask entry)\&.
+.PP
+\-\-mask
+Valid in conjunction with \-m\&. Do recalculate the effective rights mask, even if an ACL mask entry was explicitly given\&. (See the \-n option\&.)
+.PP
+\-s,\-\-set
+Like
+\-f, but set the file\*(Aqs ACL with Acl_entries specified in a comma\-separated list on the command line\&.
+.PP
+While the
+\-x
+and
+\-m
+options may be used in the same command, the
+\-f
+and
+\-s
+options may be used only exclusively\&.
+.PP
+Directories may contain default ACL entries\&. Files created in a directory that contains default ACL entries will have permissions according to the combination of the current umask, the explicit permissions requested and the default ACL entries\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

@@ -6,7 +6,7 @@ use Carp ();
 use Pod::Simple::Methody ();
 use Pod::Simple ();
 use vars qw( @ISA $VERSION $FREAKYMODE);
-$VERSION = '3.40';
+$VERSION = '3.43';
 @ISA = ('Pod::Simple::Methody');
 BEGIN { *DEBUG = defined(&Pod::Simple::DEBUG)
           ? \&Pod::Simple::DEBUG
@@ -86,7 +86,7 @@ sub emit_par {
   $out =~ s/$Pod::Simple::nbsp/ /g;
   print {$self->{'output_fh'}} $out, "\n";
   $self->{'Thispara'} = '';
-
+  
   return;
 }
 
@@ -99,10 +99,10 @@ sub end_Verbatim  {
 
   my $i = ' ' x ( 2 * $self->{'Indent'} + 4);
   #my $i = ' ' x (4 + $self->{'Indent'});
-
+  
   $self->{'Thispara'} =~ s/^/$i/mg;
-
-  print { $self->{'output_fh'} }   '',
+  
+  print { $self->{'output_fh'} }   '', 
     $self->{'Thispara'},
     "\n\n"
   ;

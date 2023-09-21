@@ -23,7 +23,7 @@ shopt -s nullglob
 shopt -s extglob
 
 declare -r myname='paccache'
-declare -r myver='1.4.0'
+declare -r myver='1.9.1'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
@@ -56,7 +56,7 @@ pkgfilter() {
 	}
 
 	function parse_filename(filename,
-	                        atime, mtime, parts, count, i, pkgname, arch) {
+				atime, mtime, parts, count, i, pkgname, arch) {
 
 		if (0 + min_atime + min_mtime != 0) {
 			# atime and mtime are in the first two columns and the
@@ -175,7 +175,7 @@ summarize() {
 		printf -v output "finished: %d packages moved to '%s'" "$filecount" "$movedir"
 	elif (( dryrun )); then
 		if (( verbose )); then
-			msg "Candidate packages:"
+			msg 'Candidate packages:'
 			while read -r pkg; do
 				if (( verbose >= 3 )); then
 					[[ $pkg =~ $pkg_re ]] && name=${BASH_REMATCH[1]} arch=${BASH_REMATCH[2]}
@@ -202,38 +202,38 @@ usage() {
 	cat <<EOF
 ${myname} v${myver}
 
-A flexible pacman cache cleaning utility.
+Flexible pacman cache cleaning utility.
 
-Usage: ${myname} <operation> [options] [targets...]
+Usage: ${myname} <operation> [options] [target ...]
 
-  Operations:
-    -d, --dryrun          perform a dry run, only finding candidate packages.
-    -m, --move <dir>      move candidate packages to "dir".
-    -r, --remove          remove candidate packages.
+Operations:
+  -d, --dryrun      perform a dry run, only finding candidate packages
+  -m, --move <dir>  move candidate packages to "dir"
+  -r, --remove      remove candidate packages
 
-  Options:
-    --min-atime <time>
-    --min-mtime <time>    keep packages with an atime/mtime that is not older
+Options:
+  -a, --arch <arch>       scan for "arch" (default: all architectures)
+  -c, --cachedir <dir>    scan "dir" for packages. can be used more than once
+                          (default: read from /etc/pacman.conf)
+  -f, --force             apply force to mv(1) and rm(1) operations
+  -i, --ignore <pkgs>     ignore "pkgs", comma-separated. Alternatively, specify
+                          "-" to read package names from stdin, newline-
+                          delimited
+  -k, --keep <num>        keep "num" of each package in the cache (default: 3)
+      --min-atime <time>
+      --min-mtime <time>  keep packages with an atime/mtime that is not older
                           than the time given, even if this means keeping more
                           than specified through the '--keep' option. Accepts
                           arguments according to 'info "Date input formats"',
-                          e.g. '30 days ago'.
-    -a, --arch <arch>     scan for "arch" (default: all architectures).
-    -c, --cachedir <dir>  scan "dir" for packages. can be used more than once.
-                          (default: read from /etc/pacman.conf).
-    -f, --force           apply force to mv(1) and rm(1) operations.
-    -h, --help            display this help message and exit.
-    -i, --ignore <pkgs>   ignore "pkgs", comma-separated. Alternatively, specify
-                          "-" to read package names from stdin, newline-
-                          delimited.
-    -k, --keep <num>      keep "num" of each package in the cache (default: 3).
-        --nocolor         remove color from output.
-    -q, --quiet           minimize output
-    -u, --uninstalled     target uninstalled packages.
-    -v, --verbose         increase verbosity. specify up to 3 times.
-    -z, --null            use null delimiters for candidate names (only with -v
-                          and -vv).
-
+                          e.g. '30 days ago'
+      --nocolor           do not colorize output
+  -z, --null              use null delimiters for candidate names (only with -v
+                          and -vv)
+  -q, --quiet             minimize output
+  -u, --uninstalled       target uninstalled packages
+  -v, --verbose           increase verbosity. specify up to 3 times
+  -h, --help              display this help message and exit
+  -V, --version           display version information and exit
 EOF
 }
 
@@ -255,18 +255,6 @@ unset OPT_SHORT OPT_LONG OPTRET
 
 while :; do
 	case $1 in
-		--min-atime)
-			min_atime=$(date -d "$2" +%s)
-			if (( $? )); then
-				die "argument to option --min-atime must be of the form described by 'info \"Date input formats\" '."
-			fi
-			shift ;;
-		--min-mtime)
-			min_mtime=$(date -d "$2" +%s)
-			if (( $? )); then
-				die "argument to option --min-mtime must be of the form described by 'info \"Date input formats\" '."
-			fi
-			shift ;;
 		-a|--arch)
 			scanarch=$2
 			shift ;;
@@ -277,9 +265,6 @@ while :; do
 			dryrun=1 ;;
 		-f|--force)
 			cmdopts=(-f) ;;
-		-h|--help)
-			usage
-			exit 0 ;;
 		-i|--ignore)
 			if [[ $2 = '-' ]]; then
 				[[ ! -t 0 ]] && IFS=$'\n' read -r -d '' -a ign
@@ -297,11 +282,25 @@ while :; do
 				keep=$(( 10#$keep ))
 			fi
 			shift ;;
+		--min-atime)
+			min_atime=$(date -d "$2" +%s)
+			if (( $? )); then
+				die "argument to option --min-atime must be of the form described by 'info \"Date input formats\" '."
+			fi
+			shift ;;
+		--min-mtime)
+			min_mtime=$(date -d "$2" +%s)
+			if (( $? )); then
+				die "argument to option --min-mtime must be of the form described by 'info \"Date input formats\" '."
+			fi
+			shift ;;
 		-m|--move)
 			move=1 movedir=$2
 			shift ;;
 		--nocolor)
 			USE_COLOR='n' ;;
+		-z|--null)
+			delim='\0' ;;
 		-q|--quiet)
 			QUIET=1 ;;
 		-r|--remove)
@@ -312,13 +311,14 @@ while :; do
 			(( ${#ign[@]} )) || die 'failed to retrieve the list of installed packages'
 			blacklist+=("${ign[@]}")
 			unset ign ;;
+		-v|--verbose)
+			(( ++verbose )) ;;
+		-h|--help)
+			usage
+			exit 0 ;;
 		-V|--version)
 			version
 			exit 0 ;;
-		-v|--verbose)
-			(( ++verbose )) ;;
-		-z|--null)
-			delim='\0' ;;
 		--)
 			shift
 			break 2 ;;
@@ -343,8 +343,8 @@ whitelist=("$@")
 
 # sanity checks
 case $(( dryrun+delete+move )) in
-	0) die "no operation specified (use -h for help)" ;;
-	[^1]) die "only one operation may be used at a time" ;;
+	0) die 'no operation specified (use -h for help)' ;;
+	[^1]) die 'only one operation may be used at a time' ;;
 esac
 
 [[ $movedir && ! -d $movedir ]] &&
@@ -414,5 +414,3 @@ elif (( move )); then
 fi
 
 summarize "$pkgcount" "${candidates[@]}"
-
-# vim: set noet:

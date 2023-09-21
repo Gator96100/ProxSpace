@@ -1,0 +1,17 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-ffi-8.dll
+usr/share/
+usr/share/info/
+usr/share/info/libffi.info.gz
+usr/share/licenses/
+usr/share/licenses/libffi/
+usr/share/licenses/libffi/LICENSE
+usr/share/man/
+usr/share/man/man3/
+usr/share/man/man3/ffi.3.gz
+usr/share/man/man3/ffi_call.3.gz
+usr/share/man/man3/ffi_prep_cif.3.gz
+usr/share/man/man3/ffi_prep_cif_var.3.gz
+

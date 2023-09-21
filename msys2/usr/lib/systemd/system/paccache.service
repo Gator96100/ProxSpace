@@ -4,3 +4,35 @@ Description=Remove unused cached package files
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/paccache -r
+# Lowering priority
+OOMScoreAdjust=1000
+Nice=19
+CPUSchedulingPolicy=idle
+IOSchedulingClass=idle
+IOSchedulingPriority=7
+# Sandboxing and other hardening
+ProtectProc=invisible
+ProcSubset=pid
+NoNewPrivileges=yes
+ProtectSystem=full
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+PrivateNetwork=yes
+PrivateIPC=yes
+ProtectHostname=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=none
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RemoveIPC=yes
+PrivateMounts=yes
+SystemCallFilter=@system-service @file-system
+SystemCallArchitectures=native

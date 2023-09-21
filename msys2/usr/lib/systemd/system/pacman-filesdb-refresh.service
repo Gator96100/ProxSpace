@@ -1,0 +1,12 @@
+[Unit]
+Description=Refresh pacman files databases
+RequiresMountsFor="/var/lib/pacman/sync"
+After=network-online.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pacman -Fy
+Nice=19
+StandardOutput=null
+StandardError=journal

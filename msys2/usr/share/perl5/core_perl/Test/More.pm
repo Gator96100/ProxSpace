@@ -17,7 +17,7 @@ sub _carp {
     return warn @_, " at $file line $line\n";
 }
 
-our $VERSION = '1.302175';
+our $VERSION = '1.302190';
 
 use Test::Builder::Module;
 our @ISA    = qw(Test::Builder::Module);
@@ -411,8 +411,8 @@ sub isnt ($$;$) {
     return $tb->isnt_eq(@_);
 }
 
-*isn't = \&isnt;
-# ' to unconfuse syntax higlighters
+# make this available as isn't()
+*isn::t = \&isnt;
 
 =item B<like>
 
@@ -497,7 +497,7 @@ C<is()>'s use of C<eq> will interfere:
 
     cmp_ok( $big_hairy_number, '==', $another_big_hairy_number );
 
-It's especially useful when comparing greater-than or smaller-than
+It's especially useful when comparing greater-than or smaller-than 
 relation between values:
 
     cmp_ok( $some_value, '<=', $upper_limit );
@@ -523,9 +523,9 @@ Checks to make sure the $module or $object can do these @methods
 
 is almost exactly like saying:
 
-    ok( Foo->can('this') &&
-        Foo->can('that') &&
-        Foo->can('whatever')
+    ok( Foo->can('this') && 
+        Foo->can('that') && 
+        Foo->can('whatever') 
       );
 
 only without all the typing and with a better interface.  Handy for
@@ -741,7 +741,7 @@ result of the whole subtest to determine if its ok or not ok.
 For example...
 
   use Test::More tests => 3;
-
+ 
   pass("First test");
 
   subtest 'An example subtest' => sub {
@@ -1105,7 +1105,7 @@ sub is_deeply {
     unless( @_ == 2 or @_ == 3 ) {
         my $msg = <<'WARNING';
 is_deeply() takes two or three args, you gave %d.
-This usually means you passed an array or hash instead
+This usually means you passed an array or hash instead 
 of a reference to it
 WARNING
         chop $msg;    # clip off newline so carp() will put in line/file
@@ -1288,7 +1288,7 @@ sub explain {
 
 Sometimes running a test under certain conditions will cause the
 test script to die.  A certain function or method isn't implemented
-(such as C<fork()> on MacOS), some resource isn't available (like a
+(such as C<fork()> on MacOS), some resource isn't available (like a 
 net connection) or a module isn't available.  In these cases it's
 necessary to skip tests, or declare that they are supposed to fail
 but will work in the future (a todo test).
@@ -1409,6 +1409,15 @@ and you'll know immediately when they're fixed.
 Once a todo test starts succeeding, simply move it outside the block.
 When the block is empty, delete it.
 
+Note that, if you leave $TODO unset or undef, Test::More reports failures
+as normal. This can be useful to mark the tests as expected to fail only
+in certain conditions, e.g.:
+
+    TODO: {
+        local $TODO = "$^O doesn't work yet. :(" if !_os_is_supported($^O);
+
+        ...
+    }
 
 =item B<todo_skip>
 
@@ -1507,7 +1516,7 @@ These functions are usually used inside an C<ok()>.
 
     ok( eq_array(\@got, \@expected) );
 
-C<is_deeply()> can do that better and with diagnostics.
+C<is_deeply()> can do that better and with diagnostics.  
 
     is_deeply( \@got, \@expected );
 
@@ -1820,7 +1829,7 @@ Subtests were released in Test::More 0.94, which came with Perl 5.12.0. Subtests
 
 =item C<done_testing()>
 
-This was released in Test::More 0.88 and first shipped with Perl in 5.10.1 as part of Test::More 0.92.
+This was released in Test::More 0.88 and first shipped with Perl in 5.10.1 as part of Test::More 0.92. 
 
 =item C<cmp_ok()>
 
@@ -1828,7 +1837,7 @@ Although C<cmp_ok()> was introduced in 0.40, 0.86 fixed an important bug to make
 
 =item C<new_ok()> C<note()> and C<explain()>
 
-These were was released in Test::More 0.82, and first shipped with Perl in 5.10.1 as part of Test::More 0.92.
+These were was released in Test::More 0.82, and first shipped with Perl in 5.10.1 as part of Test::More 0.92. 
 
 =back
 

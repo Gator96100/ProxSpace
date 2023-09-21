@@ -1,0 +1,271 @@
+'\" t
+.\"     Title: cygpath
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "CYGPATH" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+cygpath \- Convert Unix and Windows format paths, or output system path information
+.SH "SYNOPSIS"
+.HP \w'\fBcygpath\fR\ 'u
+\fBcygpath\fR {\-d | \-m | \-u | \-w | \-t\ \fITYPE\fR} [\-f\ \fIFILE\fR] [\-i] [\fICONVERSION_OPTION\fR...] \fINAME\fR...
+.HP \w'\fBcygpath\fR\ 'u
+\fBcygpath\fR [\-c\ \fIHANDLE\fR]
+.HP \w'\fBcygpath\fR\ 'u
+\fBcygpath\fR [\-A] {\-D | \-H | \-O | \-P | \-S | \-W | \-F\ \fIID\fR}
+.HP \w'\fBcygpath\fR\ 'u
+\fBcygpath\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Output type options:
+
+  \-d, \-\-dos             print DOS (short) form of NAMEs (C:\ePROGRA~1\e)
+  \-m, \-\-mixed           like \-\-windows, but with regular slashes (C:/WINNT)
+  \-M, \-\-mode            report on mode of file (currently binmode or textmode)
+  \-u, \-\-unix            (default) print Unix form of NAMEs (/cygdrive/c/winnt)
+  \-w, \-\-windows         print Windows form of NAMEs (C:\eWINNT)
+  \-t, \-\-type TYPE       print TYPE form: \*(Aqdos\*(Aq, \*(Aqmixed\*(Aq, \*(Aqunix\*(Aq, or \*(Aqwindows\*(Aq
+
+Path conversion options:
+
+  \-a, \-\-absolute        output absolute path
+  \-l, \-\-long\-name       print Windows long form of NAMEs (with \-w, \-m only)
+  \-p, \-\-path            NAME is a PATH list (i\&.e\&., \*(Aq/bin:/usr/bin\*(Aq)
+  \-U, \-\-proc\-cygdrive   Emit /proc/cygdrive path instead of cygdrive prefix
+                        when converting Windows path to UNIX path\&.
+  \-s, \-\-short\-name      print DOS (short) form of NAMEs (with \-w, \-m only)
+  \-C, \-\-codepage CP     print DOS, Windows, or mixed pathname in Windows
+                        codepage CP\&.  CP can be a numeric codepage identifier,
+                        or one of the reserved words ANSI, OEM, or UTF8\&.
+                        If this option is missing, cygpath defaults to the
+                        character set defined by the current locale\&.
+
+System information:
+
+  \-A, \-\-allusers        use `All Users\*(Aq instead of current user for \-D, \-P
+  \-D, \-\-desktop         output `Desktop\*(Aq directory and exit
+  \-H, \-\-homeroot        output `Profiles\*(Aq directory (home root) and exit
+  \-O, \-\-mydocs          output `My Documents\*(Aq directory and exit
+  \-P, \-\-smprograms      output Start Menu `Programs\*(Aq directory and exit
+  \-S, \-\-sysdir          output system directory and exit
+  \-W, \-\-windir          output `Windows\*(Aq directory and exit
+  \-F, \-\-folder ID       output special folder with numeric ID and exit
+
+Other options:
+
+  \-f, \-\-file FILE       read FILE for input; use \- to read from STDIN
+  \-o, \-\-option          read options from FILE as well (for use with \-\-file)
+  \-c, \-\-close HANDLE    close HANDLE (for use in captured process)
+  \-i, \-\-ignore          ignore missing argument
+  \-h, \-\-help            output usage information and exit
+  \-V, \-\-version         output version information and exit
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBcygpath\fR
+program is a utility that converts Windows native filenames to Cygwin POSIX\-style pathnames and vice versa\&. It can be used when a Cygwin program needs to pass a file name to a native Windows program, or expects to get a file name from a native Windows program\&. Alternatively,
+\fBcygpath\fR
+can output information about the location of important system directories in either format\&.
+.PP
+The
+\-u
+and
+\-w
+options indicate whether you want a conversion to UNIX (POSIX) format (\-u) or to Windows format (\-w)\&. Use the
+\-d
+to get DOS\-style (8\&.3) file and path names\&. The
+\-m
+option will output Windows\-style format but with forward slashes instead of backslashes\&. This option is especially useful in shell scripts, which use backslashes as an escape character\&.
+.PP
+In combination with the
+\-w
+option, you can use the
+\-l
+and
+\-s
+options to use normal (long) or DOS\-style (short) form\&. The
+\-d
+option is identical to
+\-w
+and
+\-s
+together\&.
+.PP
+The
+\-C
+option allows to specify a Windows codepage to print DOS and Windows paths created with one of the
+\-d,
+\-m, or
+\-w
+options\&. The default is to use the character set of the current locale defined by one of the internationalization environment variables
+\fBLC_ALL\fR,
+\fBLC_CTYPE\fR, or
+\fBLANG\fR, see
+the section called \(lqInternationalization\(rq\&. This is sometimes not sufficient for interaction with native Windows tools, which might expect native, non\-ASCII characters in a specific Windows codepage\&. Console tools, for instance, might expect pathnames in the current OEM codepage, while graphical tools like Windows Explorer might expect pathnames in the current ANSI codepage\&.
+.PP
+The
+\-U
+option allows to use cygpath to create unambiguous Unix paths pointing outside the Cygwin tree andf thus having no explicit POSIX path\&. Those paths usually use the cygdrive prefix\&. However, the cygdrive prefix can be changed by the user, so symbolic links created using the cygdrive prefix are not foolproof\&. With
+\-U
+cygpath will generate such paths prepended by the virtual
+/proc/cygdrive
+symbolic link, which will never change, so the created path is safe against changing the cygdrive prefix\&.
+.PP
+The
+\-C
+option takes a single parameter:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+ANSI, to specify the current ANSI codepage
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+OEM, to specify the current OEM (console) codepage
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+UTF8, to specify UTF\-8\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A numerical, decimal codepage number, for instance 936 for GBK, 28593 for ISO\-8859\-3, etc\&. A full list of supported codepages is listed on the Microsoft MSDN page
+\m[blue]\fBCode Page Identifiers\fR\m[]\&\s-2\u[1]\d\s+2\&. A codepage of 0 is the same as if the
+\-C
+hasn\*(Aqt been specified at all\&.
+.RE
+.PP
+The
+\-p
+option means that you want to convert a path\-style string rather than a single filename\&. For example, the PATH environment variable is semicolon\-delimited in Windows, but colon\-delimited in UNIX\&. By giving
+\-p
+you are instructing
+\fBcygpath\fR
+to convert between these formats\&.
+.PP
+The
+\-i
+option supresses the print out of the usage message if no filename argument was given\&. It can be used in make file rules converting variables that may be omitted to a proper format\&. Note that
+\fBcygpath\fR
+output may contain spaces (C:\eProgram Files) so should be enclosed in quotes\&.
+.PP
+\fBExample\ \&3.5.\ \&Example cygpath usage\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+
+#!/bin/sh
+if [ "${1}" = "" ];
+	then
+		XPATH="\&.";
+	else
+		XPATH="$(cygpath \-C ANSI \-w "${1}")";
+fi
+explorer $XPATH &
+
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+The capital options
+\-D,
+\-H,
+\-P,
+\-S, and
+\-W
+output directories used by Windows that are not the same on all systems, for example
+\-S
+might output C:\eWINNT\esystem32 or C:\eWindows\eSystem32\&. The
+\-H
+shows the Windows profiles directory that can be used as root of home\&. The
+\-A
+option forces use of the "All Users" directories instead of the current user for the
+\-D,
+\-O
+and
+\-P
+options\&. The
+\-F
+outputs other special folders specified by their internal numeric code (decimal or 0x\-prefixed hex)\&. For valid codes and symbolic names, see the CSIDL_* definitions in the include file /usr/include/w32api/shlobj\&.h from package w32api\&. The current valid range of codes for folders is 0 (Desktop) to 59 (CDBurn area)\&. By default the output is in UNIX (POSIX) format; use the
+\-w
+or
+\-d
+options to get other formats\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp
+.SH "NOTES"
+.IP " 1." 4
+Code Page Identifiers
+.RS 4
+\%http://msdn.microsoft.com/en-us/library/dd317756(VS.85).aspx
+.RE

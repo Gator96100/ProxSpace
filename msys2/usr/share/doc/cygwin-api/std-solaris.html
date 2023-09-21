@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>System interfaces compatible with Solaris or SunOS functions:</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-api.html" title="Cygwin API Reference"><link rel="up" href="compatibility.html" title="Chapter&#160;1.&#160;Compatibility"><link rel="prev" href="std-gnu.html" title="System interfaces compatible with GNU or Linux extensions:"><link rel="next" href="std-deprec.html" title="Other UNIX system interfaces, not in POSIX.1-2008 or deprecated:"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">System interfaces compatible with Solaris or SunOS functions:</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="std-gnu.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;1.&#160;Compatibility</th><td width="20%" align="right">&#160;<a accesskey="n" href="std-deprec.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-solaris"></a>System interfaces compatible with Solaris or SunOS functions:</h2></div></div></div><pre class="screen">
+    __fbufsize
+    __flbf
+    __fpending
+    __fpurge
+    __freadable
+    __freading
+    __fsetlocking
+    __fwritable
+    __fwriting
+    acl
+    aclcheck
+    aclfrommode
+    aclfrompbits
+    aclfromtext
+    aclsort
+    acltomode
+    acltopbits
+    acltotext
+    endmntent
+    facl
+    fegetprec
+    fesetprec
+    futimesat
+    getmntent
+    memalign
+    setmntent
+    sig2str
+    str2sig
+    xdr_array			(available in external "libtirpc" library)
+    xdr_bool			(available in external "libtirpc" library)
+    xdr_bytes			(available in external "libtirpc" library)
+    xdr_char			(available in external "libtirpc" library)
+    xdr_double			(available in external "libtirpc" library)
+    xdr_enum			(available in external "libtirpc" library)
+    xdr_float			(available in external "libtirpc" library)
+    xdr_free			(available in external "libtirpc" library)
+    xdr_hyper			(available in external "libtirpc" library)
+    xdr_int			(available in external "libtirpc" library)
+    xdr_int16_t			(available in external "libtirpc" library)
+    xdr_int32_t			(available in external "libtirpc" library)
+    xdr_int64_t			(available in external "libtirpc" library)
+    xdr_int8_t			(available in external "libtirpc" library)
+    xdr_long			(available in external "libtirpc" library)
+    xdr_longlong_t		(available in external "libtirpc" library)
+    xdr_netobj			(available in external "libtirpc" library)
+    xdr_opaque			(available in external "libtirpc" library)
+    xdr_pointer			(available in external "libtirpc" library)
+    xdr_reference		(available in external "libtirpc" library)
+    xdr_short			(available in external "libtirpc" library)
+    xdr_sizeof			(available in external "libtirpc" library)
+    xdr_string			(available in external "libtirpc" library)
+    xdr_u_char			(available in external "libtirpc" library)
+    xdr_u_hyper			(available in external "libtirpc" library)
+    xdr_u_int			(available in external "libtirpc" library)
+    xdr_u_int16_t		(available in external "libtirpc" library)
+    xdr_u_int32_t		(available in external "libtirpc" library)
+    xdr_u_int64_t		(available in external "libtirpc" library)
+    xdr_u_int8_t		(available in external "libtirpc" library)
+    xdr_u_long			(available in external "libtirpc" library)
+    xdr_u_longlong_t		(available in external "libtirpc" library)
+    xdr_u_short			(available in external "libtirpc" library)
+    xdr_uint16_t		(available in external "libtirpc" library)
+    xdr_uint32_t		(available in external "libtirpc" library)
+    xdr_uint64_t		(available in external "libtirpc" library)
+    xdr_uint8_t			(available in external "libtirpc" library)
+    xdr_union			(available in external "libtirpc" library)
+    xdr_vector			(available in external "libtirpc" library)
+    xdr_void			(available in external "libtirpc" library)
+    xdr_wrapstring		(available in external "libtirpc" library)
+    xdrmem_create		(available in external "libtirpc" library)
+    xdrrec_create		(available in external "libtirpc" library)
+    xdrrec_endofrecord		(available in external "libtirpc" library)
+    xdrrec_eof			(available in external "libtirpc" library)
+    xdrrec_skiprecord		(available in external "libtirpc" library)
+    __xdrrec_getrec		(available in external "libtirpc" library)
+    __xdrrec_setnonblock	(available in external "libtirpc" library)
+    xdrstdio_create		(available in external "libtirpc" library)
+</pre><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-iso"></a>System interfaces not in POSIX but compatible with ISO C requirements:</h2></div></div></div><pre class="screen">
+    aligned_alloc		(ISO C11)
+    at_quick_exit		(ISO C11)
+    call_once			(ISO C11)
+    cnd_broadcast		(ISO C11)
+    cnd_destroy			(ISO C11)
+    cnd_init			(ISO C11)
+    cnd_signal			(ISO C11)
+    cnd_timedwait		(ISO C11)
+    cnd_wait			(ISO C11)
+    mtx_destroy			(ISO C11)
+    mtx_init			(ISO C11)
+    mtx_lock			(ISO C11)
+    mtx_timedlock		(ISO C11)
+    mtx_trylock			(ISO C11)
+    mtx_unlock			(ISO C11)
+    quick_exit			(ISO C11)
+    thrd_create			(ISO C11)
+    thrd_current		(ISO C11)
+    thrd_detach			(ISO C11)
+    thrd_equal			(ISO C11)
+    thrd_exit			(ISO C11)
+    thrd_join			(ISO C11)
+    thrd_sleep			(ISO C11)
+    thrd_yield			(ISO C11)
+    tss_create			(ISO C11)
+    tss_delete			(ISO C11)
+    tss_get			(ISO C11)
+    tss_set			(ISO C11)
+</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="std-gnu.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="compatibility.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="std-deprec.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">System interfaces compatible with GNU or Linux extensions:&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-api.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Other UNIX system interfaces, not in POSIX.1-2008 or deprecated:</td></tr></table></div></body></html>

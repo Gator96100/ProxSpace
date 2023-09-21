@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Implementation Notes</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-api.html" title="Cygwin API Reference"><link rel="up" href="compatibility.html" title="Chapter&#160;1.&#160;Compatibility"><link rel="prev" href="std-notimpl.html" title="NOT implemented system interfaces from the Single Unix Specification, Volume 7:"><link rel="next" href="cygwin-functions.html" title="Chapter&#160;2.&#160;Cygwin Functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Implementation Notes</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="std-notimpl.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;1.&#160;Compatibility</th><td width="20%" align="right">&#160;<a accesskey="n" href="cygwin-functions.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-notes"></a>Implementation Notes</h2></div></div></div><p><code class="function">chroot</code> only emulates a chroot function call
+by keeping track of the current root and accomodating this in the file
+related function calls.  A real chroot functionality is not supported by
+Windows however.</p><p><code class="function">clock_nanosleep</code> currently supports only
+CLOCK_REALTIME and CLOCK_MONOTONIC.  <code class="function">clock_setres</code>,
+<code class="function">clock_settime</code>, and <code class="function">timer_create</code>
+currently support only CLOCK_REALTIME.</p><p>POSIX file locks via <code class="function">fcntl</code> or
+<code class="function">lockf</code>, as well as BSD <code class="function">flock</code> locks
+are advisory locks.  They don't interact with Windows mandatory locks, nor
+do POSIX fcntl locks interfere with BSD flock locks or vice versa.</p><p>BSD file locks created via <code class="function">flock</code> are only
+propagated to the direct parent process, not to grand parents or sibling
+processes.  The locks are only valid in the creating process, its parent
+process, and subsequently started child processes sharing the same file
+descriptor.</p><p>In very rare circumstances an application would want to use Windows
+mandatory locks to interact with non-Cygwin Windows processes accessing the
+same file (databases, etc).  For these purposes, the entire locking mechanism
+(fcntl/flock/lockf) can be switched to Windows mandatory locks on a
+per-descriptor/per-process basis.  For this purpose, use the call
+
+</p><pre class="screen">
+  fcntl (fd, F_LCK_MANDATORY, 1);
+</pre><p>
+
+After that, all file locks on this descriptor will follow Windows mandatory
+record locking semantics: Locks are per-descriptor/per-process; locks are not
+propagated to child processes, not even via <code class="function">execve</code>;
+no atomic replacement of read locks with write locks and vice versa on the
+same descriptor; locks have to be unlocked exactly as they have been locked.
+</p><p><code class="function">fpclassify</code>, <code class="function">isfinite</code>,
+<code class="function">isgreater</code>, <code class="function">isgreaterequal</code>,
+<code class="function">isinf</code>, <code class="function">isless</code>,
+<code class="function">islessequal</code>, <code class="function">islessgreater</code>,
+<code class="function">isnan</code>, <code class="function">isnormal</code>,
+<code class="function">isunordered</code>, and <code class="function">signbit</code>
+only support float and double arguments, not long double arguments.</p><p><code class="function">getitimer</code> and <code class="function">setitimer</code>
+only support ITIMER_REAL for now.</p><p><code class="function">link</code> will fail on FAT, FAT32, and other filesystems
+not supporting hardlinks, just as on Linux.</p><p><code class="function">lseek</code> only works properly on files opened in
+binary mode.  On files opened in textmode (via mount mode or explicit
+open flag) its positioning is potentially unreliable.</p><p><code class="function">setuid</code> is only safe against reverting the user
+switch after a call to one of the exec(2) functions took place.  Windows
+doesn't support a non-revertable user switch within the context of Win32
+processes.</p><p><code class="function">vfork</code> just calls <code class="function">fork</code>.</p><p><code class="function">vhangup</code> and <code class="function">revoke</code> always
+return -1 and set errno to ENOSYS.  <code class="function">grantpt</code> and
+<code class="function">unlockpt</code> always just return 0.</p><p>The XSI IPC functions <code class="function">semctl</code>,
+<code class="function">semget</code>, <code class="function">semop</code>,
+<code class="function">shmat</code>, <code class="function">shmctl</code>,
+<code class="function">shmdt</code>, <code class="function">shmget</code>,
+<code class="function">msgctl</code>, <code class="function">msgget</code>,
+<code class="function">msgrcv</code> and <code class="function">msgsnd</code> are only
+available when cygserver is running.</p><p>The Linux-specific function <code class="function">quotactl</code> only implements
+what works on Windows:  Windows only supports user block quotas on NTFS, no
+group quotas, no inode quotas, no time constraints.</p><p><code class="function">qsort_r</code> is available in both BSD and GNU flavors,
+depending on whether _BSD_SOURCE or _GNU_SOURCE is defined when compiling.</p><p>The Linux-specific function <code class="function">renameat2</code> only
+supports the RENAME_NOREPLACE flag.</p><p><code class="function">basename</code> is available in both POSIX and GNU flavors,
+depending on whether libgen.h is included or not.</p><p><code class="function">sigpause</code> is available in both BSD and SysV/XSI
+flavors, depending on whether _XOPEN_SOURCE is defined when compiling.</p><p><code class="function">strerror_r</code> is available in both POSIX and GNU
+flavors, depending on whether _GNU_SOURCE is defined when compiling.</p><p><code class="function">dladdr</code> always sets the Dl_info members dli_sname and
+dli_saddr to NULL, indicating no symbol matching addr could be found.</p><p><code class="function">getrlimit</code> resources RLIMIT_AS, RLIMIT_CPU,
+RLIMIT_FSIZE, RLIMIT_DATA always return rlim_cur and rlim_max as RLIM_INFINITY,
+so <code class="function">setrlimit</code> returns -1 and sets EINVAL if they are
+lowered, or returns 0 if unchanged.
+<code class="function">getrlimit</code> resource RLIMIT_NOFILE always returns rlim_cur
+and rlim_max as OPEN_MAX; <code class="function">setrlimit</code> returns 0 sets EINVAL
+if rlim_cur &gt; rlim_max, does not change the value if it is RLIM_INFINITY,
+otherwise returns the result from <code class="function">setdtablesize</code>.
+<code class="function">getrlimit</code>/<code class="function">setrlimit</code> resources
+RLIMIT_CORE and RLIMIT_STACK return the current values and set the requested
+values.
+All other resource arguments return -1 and set EINVAL.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="std-notimpl.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="compatibility.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="cygwin-functions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">NOT implemented system interfaces from the Single Unix Specification, Volume 7:&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-api.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;2.&#160;Cygwin Functions</td></tr></table></div></body></html>

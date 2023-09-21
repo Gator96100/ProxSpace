@@ -185,7 +185,7 @@ value to <a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-register-c
 called for every 'pin-source' attribute request for which no callback has been
 directly registered.</p>
 <p>To request a PIN for a given 'pin-source' attribute, use the
-<a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-request" title="p11_kit_pin_request ()"><code class="function">p11_kit_pin_request()</code></a> function. If this function returns <code class="literal">NULL</code> then either
+<a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-request" title="p11_kit_pin_request ()"><code class="function">p11_kit_pin_request()</code></a> function. If this function returns <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> then either
 no callbacks were registered or none of them could handle the request.</p>
 <p>If multiple callbacks are registered for the same PIN source, then they are
 called in last-registered-first-called order. They are called in turn until
@@ -214,16 +214,16 @@ attribute</p>
 8
 9
 10</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="k">static</span> <span class="n">P11KitPin</span><span class="o">*</span>
-<span class="n">my_application_pin_callback</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pin_source</span><span class="p">,</span> <span class="n">P11KitUri</span> <span class="o">*</span><span class="n">pin_uri</span><span class="p">,</span>
-                             <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pin_description</span><span class="p">,</span> <span class="n">P11KitPinFlags</span> <span class="n">pin_flags</span><span class="p">,</span>
-                             <span class="kt">void</span> <span class="o">*</span><span class="n">callback_data</span><span class="p">)</span>
+        <td class="listing_code"><pre class="programlisting"><span class="k">static</span><span class="w"> </span><span class="n">P11KitPin</span><span class="o">*</span>
+<span class="nf">my_application_pin_callback</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">pin_source</span><span class="p">,</span><span class="w"> </span><span class="n">P11KitUri</span><span class="w"> </span><span class="o">*</span><span class="n">pin_uri</span><span class="p">,</span>
+<span class="w">                             </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">pin_description</span><span class="p">,</span><span class="w"> </span><span class="n">P11KitPinFlags</span><span class="w"> </span><span class="n">pin_flags</span><span class="p">,</span>
+<span class="w">                             </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">callback_data</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="nf">p11_kit_pin_new_from_string</span> <span class="p">(</span><span class="s">&quot;pin-value&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">p11_kit_pin_new_from_string</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;pin-value&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">p11_kit_pin_register_callback</span> <span class="p">(</span><span class="s">&quot;my-application&quot;</span><span class="p">,</span> <span class="n">my_application_pin_callback</span><span class="p">,</span>
-                               <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span></pre></td>
+<span class="n">p11_kit_pin_register_callback</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;my-application&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">my_application_pin_callback</span><span class="p">,</span>
+<span class="w">                               </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -298,10 +298,10 @@ caller to use a buffer as a PIN without copying it.</p>
 2
 3
 4</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">(</span><span class="mi">128</span><span class="p">);</span>
-<span class="n">P11KitPin</span> <span class="o">*</span><span class="n">pin</span><span class="p">;</span>
- <span class="p">....</span>
-<span class="n">pin</span> <span class="o">=</span> <span class="n">p11_kit_pin_new_for_buffer</span> <span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span></pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="w"> </span><span class="p">(</span><span class="mi">128</span><span class="p">);</span>
+<span class="n">P11KitPin</span><span class="w"> </span><span class="o">*</span><span class="n">pin</span><span class="p">;</span>
+<span class="w"> </span><span class="p">....</span>
+<span class="n">pin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p11_kit_pin_new_for_buffer</span><span class="w"> </span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -329,7 +329,7 @@ caller to use a buffer as a PIN without copying it.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>destroy</p></td>
-<td class="parameter_description"><p>if not <code class="literal">NULL</code>, then called when PIN is destroyed.</p></td>
+<td class="parameter_description"><p>if not <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, then called when PIN is destroyed.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -598,7 +598,7 @@ removed.</p>
 <a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-request" title="p11_kit_pin_request ()"><code class="function">p11_kit_pin_request()</code></a>. The <em class="parameter"><code>callback_data</code></em>
  argument was the one passed to
 <a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-register-callback" title="p11_kit_pin_register_callback ()"><code class="function">p11_kit_pin_register_callback()</code></a> when registering this callback.</p>
-<p>The function should return <code class="literal">NULL</code> if it could not provide a PIN, either
+<p>The function should return <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if it could not provide a PIN, either
 because of an error or a user cancellation.</p>
 <p>If a PIN is returned, it will be unreferenced by the caller. So it should be
 either newly allocated, or referenced before returning.</p>
@@ -618,7 +618,7 @@ either newly allocated, or referenced before returning.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>pin_uri</p></td>
-<td class="parameter_description"><p>a PKCS#11 URI that the PIN is for, or <code class="literal">NULL</code></p></td>
+<td class="parameter_description"><p>a PKCS#11 URI that the PIN is for, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -641,7 +641,7 @@ either newly allocated, or referenced before returning.</p>
 </div>
 <div class="refsect3">
 <a name="p11-kit-pin-callback.returns"></a><h4>Returns</h4>
-<p> A PIN or <code class="literal">NULL</code></p>
+<p> A PIN or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
 </div>
 </div>
 <hr>
@@ -654,7 +654,7 @@ p11_kit_pin_request (<em class="parameter"><code>const <span class="type">char</
                      <em class="parameter"><code><a class="link" href="p11-kit-PIN-Callbacks.html#P11KitPinFlags" title="enum P11KitPinFlags"><span class="type">P11KitPinFlags</span></a> pin_flags</code></em>);</pre>
 <p>Request a PIN for a given 'pin-source' attribute. The result depends on the
 registered callbacks.</p>
-<p>If not <code class="literal">NULL</code>, then the <em class="parameter"><code>pin_uri</code></em>
+<p>If not <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, then the <em class="parameter"><code>pin_uri</code></em>
  attribute should point to the thing that the
 PIN is being requested for. In most use cases this should be a PKCS#11 URI
 pointing to a token.</p>
@@ -688,12 +688,12 @@ callback has been registered specifically for <em class="parameter"><code>pin_so
 </tr>
 <tr>
 <td class="parameter_name"><p>pin_uri</p></td>
-<td class="parameter_description"><p>a PKCS#11 URI that the PIN is being requested for, optionally <code class="literal">NULL</code>.</p></td>
+<td class="parameter_description"><p>a PKCS#11 URI that the PIN is being requested for, optionally <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
 <td class="parameter_name"><p>pin_description</p></td>
-<td class="parameter_description"><p>a description of what the PIN is for, must not be <code class="literal">NULL</code>.</p></td>
+<td class="parameter_description"><p>a description of what the PIN is for, must not be <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -706,7 +706,7 @@ callback has been registered specifically for <em class="parameter"><code>pin_so
 </div>
 <div class="refsect3">
 <a name="p11-kit-pin-request.returns"></a><h4>Returns</h4>
-<p> the PIN which should be released with <a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-unref" title="p11_kit_pin_unref ()"><code class="function">p11_kit_pin_unref()</code></a>, or <code class="literal">NULL</code>
+<p> the PIN which should be released with <a class="link" href="p11-kit-PIN-Callbacks.html#p11-kit-pin-unref" title="p11_kit_pin_unref ()"><code class="function">p11_kit_pin_unref()</code></a>, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 if no callback was registered or could proivde a PIN</p>
 </div>
 </div>
@@ -747,7 +747,7 @@ a file with that name. This can be used to enable the normal PKCS#11 URI
 behavior described in the RFC.</p>
 <p>If <em class="parameter"><code>pin_flags</code></em>
  contains the <a class="link" href="p11-kit-PIN-Callbacks.html#P11-KIT-PIN-FLAGS-RETRY:CAPS"><code class="literal">P11_KIT_PIN_FLAGS_RETRY</code></a> flag, then this
-callback will always return <code class="literal">NULL</code>. This is to prevent endless loops
+callback will always return <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. This is to prevent endless loops
 where an application is expecting to interact with a prompter, but
 instead is interacting with this callback reading a file over and over.</p>
 <p>This callback fails on files larger than 4 Kilobytes.</p>
@@ -760,8 +760,8 @@ in use. To register it, use code like the following:</p>
       <tr>
         <td class="listing_lines" align="right"><pre>1
 2</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="n">p11_kit_pin_register_callback</span> <span class="p">(</span><span class="n">P11_KIT_PIN_FALLBACK</span><span class="p">,</span> <span class="n">p11_kit_pin_file_callback</span><span class="p">,</span>
-                               <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span></pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="n">p11_kit_pin_register_callback</span><span class="w"> </span><span class="p">(</span><span class="n">P11_KIT_PIN_FALLBACK</span><span class="p">,</span><span class="w"> </span><span class="n">p11_kit_pin_file_callback</span><span class="p">,</span>
+<span class="w">                               </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -783,7 +783,7 @@ in use. To register it, use code like the following:</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>pin_uri</p></td>
-<td class="parameter_description"><p>a PKCS#11 URI that the PIN is for, or <code class="literal">NULL</code></p></td>
+<td class="parameter_description"><p>a PKCS#11 URI that the PIN is for, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -798,7 +798,7 @@ in use. To register it, use code like the following:</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>callback_data</p></td>
-<td class="parameter_description"><p>unused, should be <code class="literal">NULL</code></p></td>
+<td class="parameter_description"><p>unused, should be <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 </tbody>
@@ -806,7 +806,7 @@ in use. To register it, use code like the following:</p>
 </div>
 <div class="refsect3">
 <a name="p11-kit-pin-file-callback.returns"></a><h4>Returns</h4>
-<p> a referenced PIN with the file contents, or <code class="literal">NULL</code> if the file
+<p> a referenced PIN with the file contents, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the file
 could not be read</p>
 </div>
 </div>

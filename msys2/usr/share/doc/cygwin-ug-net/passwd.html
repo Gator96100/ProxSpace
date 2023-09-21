@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>passwd</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="mount.html" title="mount"><link rel="next" href="pldd.html" title="pldd"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">passwd</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="mount.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="pldd.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="passwd"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>passwd &#8212; Change password or password attributes</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">passwd</code>   [-S] |  {
+	    [ -l  |   -u ]
+	     [ -c  |   -C ]
+	     [ -e  |   -E ]
+	     [ -p  |   -P ]
+	  }  [-d <em class="replaceable"><code>SERVER</code></em>] [<em class="replaceable"><code>USER</code></em>]</p></div><div class="cmdsynopsis"><p><code class="command">passwd</code>   -R </p></div><div class="cmdsynopsis"><p><code class="command">passwd</code>    -i <em class="replaceable"><code>NUM</code></em>  |   -n <em class="replaceable"><code>MINDAYS</code></em>  |   -x <em class="replaceable"><code>MAXDAYS</code></em>  |   -L <em class="replaceable"><code>LEN</code></em>  </p></div><div class="cmdsynopsis"><p><code class="command">passwd</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="passwd-options"></a><h2>Options</h2><pre class="screen">
+User operations:
+  -l, --lock               lock USER's account.
+  -u, --unlock             unlock USER's account.
+  -c, --cannot-change      USER can't change password.
+  -C, --can-change         USER can change password.
+  -e, --never-expires      USER's password never expires.
+  -E, --expires            USER's password expires according to system's
+                           password aging rule.
+  -p, --pwd-not-required   no password required for USER.
+  -P, --pwd-required       password is required for USER.
+  -R, --reg-store-pwd      enter password to store it in the registry for
+                           later usage by services to be able to switch
+                           to this user context with network credentials.
+
+System operations:
+  -i, --inactive NUM       set NUM of days before inactive accounts are disabled
+                           (inactive accounts are those with expired passwords).
+  -n, --minage MINDAYS     set system minimum password age to MINDAYS days.
+  -x, --maxage MAXDAYS     set system maximum password age to MAXDAYS days.
+  -L, --length LEN         set system minimum password length to LEN.
+
+Other options:
+  -d, --logonserver SERVER connect to SERVER (e.g. domain controller).
+                           Usually not required.
+  -S, --status             display password status for USER (locked, expired,
+                           etc.) plus global system password settings.
+  -h, --help               output usage information and exit.
+  -V, --version            output version information and exit.
+
+If no option is given, change USER's password.  If no user name is given,
+operate on current user.  System operations must not be mixed with user
+operations.  Don't specify a USER when triggering a system operation.
+
+Don't specify a user or any other option together with the -R option.
+Non-Admin users can only store their password if cygserver is running.
+Note that storing even obfuscated passwords in the registry is not overly
+secure.  Use this feature only if the machine is adequately locked down.
+Don't use this feature if you don't need network access within a remote
+session.  You can delete your stored password by using `passwd -R' and
+specifying an empty password.
+</pre></div><div class="refsect1"><a name="passwd-desc"></a><h2>Description</h2><p> <span class="command"><strong>passwd</strong></span> changes passwords for user accounts. A
+      normal user may only change the password for their own account, but
+      administrators may change passwords on any account.
+      <span class="command"><strong>passwd</strong></span> also changes account information, such as
+      password expiry dates and intervals.</p><p>For password changes, the user is first prompted for their old
+      password, if one is present. This password is then encrypted and compared
+      against the stored password. The user has only one chance to enter the
+      correct password. The administrators are permitted to bypass this step so
+      that forgotten passwords may be changed.</p><p>The user is then prompted for a replacement password.
+      <span class="command"><strong>passwd</strong></span> will prompt twice for this replacement and
+      compare the second entry against the first. Both entries are required to
+      match in order for the password to be changed.</p><p>After the password has been entered, password aging information is
+      checked to see if the user is permitted to change their password at this
+      time. If not, <span class="command"><strong>passwd</strong></span> refuses to change the password
+      and exits.</p><p> To get current password status information, use the
+      <code class="literal">-S</code> option. Administrators can use
+      <span class="command"><strong>passwd</strong></span> to perform several account maintenance
+      functions (users may perform some of these functions on their own
+      accounts). Accounts may be locked with the <code class="literal">-l</code> flag and
+      unlocked with the <code class="literal">-u</code> flag. Similarly,
+      <code class="literal">-c</code> disables a user's ability to change passwords, and
+      <code class="literal">-C</code> allows a user to change passwords. For password
+      expiry, the <code class="literal">-e</code> option disables expiration, while the
+      <code class="literal">-E</code> option causes the password to expire according to
+      the system's normal aging rules. Use <code class="literal">-p</code> to disable the
+      password requirement for a user, or <code class="literal">-P</code> to require a
+      password. </p><p>Administrators can also use <span class="command"><strong>passwd</strong></span> to change
+      system-wide password expiry and length requirements with the
+      <code class="literal">-i</code>, <code class="literal">-n</code>, <code class="literal">-x</code>, and
+      <code class="literal">-L</code> options. The <code class="literal">-i</code> option is used
+      to disable an account after the password has been expired for a number of
+      days. After a user account has had an expired password for
+      <span class="emphasis"><em>NUM</em></span> days, the user may no longer sign on to the
+      account. The <code class="literal">-n</code> option is used to set the minimum
+      number of days before a password may be changed. The user will not be
+      permitted to change the password until <span class="emphasis"><em>MINDAYS</em></span> days
+      have elapsed. The <code class="literal">-x</code> option is used to set the maximum
+      number of days a password remains valid. After
+      <span class="emphasis"><em>MAXDAYS</em></span> days, the password is required to be
+      changed. Allowed values for the above options are 0 to 999. The
+      <code class="literal">-L</code> option sets the minimum length of allowed passwords
+      for users who don't belong to the administrators group to
+      <span class="emphasis"><em>LEN</em></span> characters. Allowed values for the minimum
+      password length are 0 to 14. In any of the above cases, a value of 0
+      means `no restrictions'.</p><p> All operations affecting the current user are by default run against
+      the logon server of the current user (taken from the environment variable
+      <code class="envar">LOGONSERVER</code>. When password or account information of other
+      users should be changed, the logon server is evaluated automatically.
+      In rare cases, it might be necessary to switch to another domain
+      controller to perform the action.  In this case, use the
+      <code class="literal">-d</code> option to specify the machine to run the command
+      against. Note that the current user must have account operator permissions
+      to perform user account changes in a domain. </p><p>Users can use the <span class="command"><strong>passwd -R</strong></span> to enter a password
+      which then gets stored in a special area of the registry on the local
+      system, which is also used by Windows to store passwords of accounts
+      running Windows services. When a privileged Cygwin application calls the
+      <span class="command"><strong>set{e}uid(user_id)</strong></span> system call, Cygwin checks if a
+      password for that user has been stored in this registry area. If so, it
+      uses this password to switch to this user account using that password.
+      This allows you to logon through, for instance, <span class="command"><strong>ssh</strong></span>
+      with public key authentication and get a full qualified user token with
+      all credentials for network access. However, the method has some
+      drawbacks security-wise. This is explained in more detail in <a class="xref" href="ntsec.html" title="POSIX accounts, permission, and security">the section called &#8220;POSIX accounts, permission, and security&#8221;</a>.</p><p>Please note that storing passwords in that registry area is a
+      privileged operation which only administrative accounts are allowed to
+      do. Administrators can enter the password for other user accounts into
+      the registry by specifying the username on the commandline. If normal,
+      non-admin users should be allowed to enter their passwords using
+      <span class="command"><strong>passwd -R</strong></span>, it's required to run
+      <span class="command"><strong>cygserver</strong></span> as a service under the LocalSystem account
+      before running <span class="command"><strong>passwd -R</strong></span>. This only affects storing
+      passwords. Using passwords in privileged processes does not require
+      <span class="command"><strong>cygserver</strong></span> to run.</p><p>Limitations: Users may not be able to change their password on some
+      systems.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="mount.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="pldd.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">mount&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;pldd</td></tr></table></div></body></html>

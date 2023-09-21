@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on May, 25 2018 by texi2html 1.78a -->
+<!-- Created on October, 16 2022 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -49,16 +49,16 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="uninorm_002eh"></a>
 <a name="SEC61"></a>
-<h1 class="chapter"> <a href="libunistring.html#TOC61">13. Normalization forms (composition and decomposition) <code>&lt;uninorm.h&gt;</code></a> </h1>
+<h1 class="chapter"> <a href="libunistring_toc.html#TOC61">13. Normalization forms (composition and decomposition) <code>&lt;uninorm.h&gt;</code></a> </h1>
 
 <p>This include file defines functions for transforming Unicode strings to one
 of the four normal forms, known as NFC, NFD, NKFC, NFKD.  These
@@ -69,28 +69,28 @@ of Unicode characters.
 <hr size="6">
 <a name="Decomposition-of-characters"></a>
 <a name="SEC62"></a>
-<h2 class="section"> <a href="libunistring.html#TOC62">13.1 Decomposition of Unicode characters</a> </h2>
+<h2 class="section"> <a href="libunistring_toc.html#TOC62">13.1 Decomposition of Unicode characters</a> </h2>
 
 <p>The following enumerated values are the possible types of decomposition of a
 Unicode character.
 </p>
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_CANONICAL</b>
-<a name="IDX774"></a>
+<a name="IDX841"></a>
 </dt>
 <dd><p>Denotes canonical decomposition.
 </p></dd></dl>
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_FONT</b>
-<a name="IDX775"></a>
+<a name="IDX842"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;font&gt;</code>.  Denotes a font variant (e.g. a blackletter form).
 </p></dd></dl>
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_NOBREAK</b>
-<a name="IDX776"></a>
+<a name="IDX843"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;noBreak&gt;</code>.
 Denotes a no-break version of a space or hyphen.
@@ -98,7 +98,7 @@ Denotes a no-break version of a space or hyphen.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_INITIAL</b>
-<a name="IDX777"></a>
+<a name="IDX844"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;initial&gt;</code>.
 Denotes an initial presentation form (Arabic).
@@ -106,7 +106,7 @@ Denotes an initial presentation form (Arabic).
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_MEDIAL</b>
-<a name="IDX778"></a>
+<a name="IDX845"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;medial&gt;</code>.
 Denotes a medial presentation form (Arabic).
@@ -114,7 +114,7 @@ Denotes a medial presentation form (Arabic).
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_FINAL</b>
-<a name="IDX779"></a>
+<a name="IDX846"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;final&gt;</code>.
 Denotes a final presentation form (Arabic).
@@ -122,7 +122,7 @@ Denotes a final presentation form (Arabic).
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_ISOLATED</b>
-<a name="IDX780"></a>
+<a name="IDX847"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;isolated&gt;</code>.
 Denotes an isolated presentation form (Arabic).
@@ -130,7 +130,7 @@ Denotes an isolated presentation form (Arabic).
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_CIRCLE</b>
-<a name="IDX781"></a>
+<a name="IDX848"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;circle&gt;</code>.
 Denotes an encircled form.
@@ -138,7 +138,7 @@ Denotes an encircled form.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_SUPER</b>
-<a name="IDX782"></a>
+<a name="IDX849"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;super&gt;</code>.
 Denotes a superscript form.
@@ -146,7 +146,7 @@ Denotes a superscript form.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_SUB</b>
-<a name="IDX783"></a>
+<a name="IDX850"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;sub&gt;</code>.
 Denotes a subscript form.
@@ -154,7 +154,7 @@ Denotes a subscript form.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_VERTICAL</b>
-<a name="IDX784"></a>
+<a name="IDX851"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;vertical&gt;</code>.
 Denotes a vertical layout presentation form.
@@ -162,7 +162,7 @@ Denotes a vertical layout presentation form.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_WIDE</b>
-<a name="IDX785"></a>
+<a name="IDX852"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;wide&gt;</code>.
 Denotes a wide (or zenkaku) compatibility character.
@@ -170,7 +170,7 @@ Denotes a wide (or zenkaku) compatibility character.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_NARROW</b>
-<a name="IDX786"></a>
+<a name="IDX853"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;narrow&gt;</code>.
 Denotes a narrow (or hankaku) compatibility character.
@@ -178,7 +178,7 @@ Denotes a narrow (or hankaku) compatibility character.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_SMALL</b>
-<a name="IDX787"></a>
+<a name="IDX854"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;small&gt;</code>.
 Denotes a small variant form (CNS compatibility).
@@ -186,7 +186,7 @@ Denotes a small variant form (CNS compatibility).
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_SQUARE</b>
-<a name="IDX788"></a>
+<a name="IDX855"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;square&gt;</code>.
 Denotes a CJK squared font variant.
@@ -194,7 +194,7 @@ Denotes a CJK squared font variant.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_FRACTION</b>
-<a name="IDX789"></a>
+<a name="IDX856"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;fraction&gt;</code>.
 Denotes a vulgar fraction form.
@@ -202,7 +202,7 @@ Denotes a vulgar fraction form.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_DECOMP_COMPAT</b>
-<a name="IDX790"></a>
+<a name="IDX857"></a>
 </dt>
 <dd><p>UCD marker: <code>&lt;compat&gt;</code>.
 Denotes an otherwise unspecified compatibility character.
@@ -213,7 +213,7 @@ Unicode character.
 </p>
 <dl>
 <dt><u>Macro:</u> unsigned int <b>UC_DECOMPOSITION_MAX_LENGTH</b>
-<a name="IDX791"></a>
+<a name="IDX858"></a>
 </dt>
 <dd><p>This macro expands to a constant that is the required size of buffer passed to
 the <code>uc_decomposition</code> and <code>uc_canonical_decomposition</code> functions.
@@ -222,8 +222,8 @@ the <code>uc_decomposition</code> and <code>uc_canonical_decomposition</code> fu
 <p>The following functions decompose a Unicode character.
 </p>
 <dl>
-<dt><u>Function:</u> int <b>uc_decomposition</b><i> (ucs4_t <var>uc</var>, int *<var>decomp_tag</var>, ucs4_t *<var>decomposition</var>)</i>
-<a name="IDX792"></a>
+<dt><u>Function:</u> int <b>uc_decomposition</b><i> (ucs4_t&nbsp;<var>uc</var>, int&nbsp;*<var>decomp_tag</var>, ucs4_t&nbsp;*<var>decomposition</var>)</i>
+<a name="IDX859"></a>
 </dt>
 <dd><p>Returns the character decomposition mapping of the Unicode character <var>uc</var>.
 <var>decomposition</var> must point to an array of at least
@@ -235,8 +235,8 @@ returned.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>uc_canonical_decomposition</b><i> (ucs4_t <var>uc</var>, ucs4_t *<var>decomposition</var>)</i>
-<a name="IDX793"></a>
+<dt><u>Function:</u> int <b>uc_canonical_decomposition</b><i> (ucs4_t&nbsp;<var>uc</var>, ucs4_t&nbsp;*<var>decomposition</var>)</i>
+<a name="IDX860"></a>
 </dt>
 <dd><p>Returns the canonical character decomposition mapping of the Unicode character
 <var>uc</var>.  <var>decomposition</var> must point to an array of at least
@@ -254,14 +254,14 @@ function <code>u*_normalize</code> with argument <code>UNINORM_NFD</code> instea
 <hr size="6">
 <a name="Composition-of-characters"></a>
 <a name="SEC63"></a>
-<h2 class="section"> <a href="libunistring.html#TOC63">13.2 Composition of Unicode characters</a> </h2>
+<h2 class="section"> <a href="libunistring_toc.html#TOC63">13.2 Composition of Unicode characters</a> </h2>
 
 <p>The following function composes a Unicode character from two Unicode
 characters.
 </p>
 <dl>
-<dt><u>Function:</u> ucs4_t <b>uc_composition</b><i> (ucs4_t <var>uc1</var>, ucs4_t <var>uc2</var>)</i>
-<a name="IDX794"></a>
+<dt><u>Function:</u> ucs4_t <b>uc_composition</b><i> (ucs4_t&nbsp;<var>uc1</var>, ucs4_t&nbsp;<var>uc2</var>)</i>
+<a name="IDX861"></a>
 </dt>
 <dd><p>Attempts to combine the Unicode characters <var>uc1</var>, <var>uc2</var>.
 <var>uc1</var> is known to have canonical combining class 0.
@@ -276,14 +276,14 @@ file &lsquo;<tt>CompositionExclusions.txt</tt>&rsquo; for details.
 <hr size="6">
 <a name="Normalization-of-strings"></a>
 <a name="SEC64"></a>
-<h2 class="section"> <a href="libunistring.html#TOC64">13.3 Normalization of strings</a> </h2>
+<h2 class="section"> <a href="libunistring_toc.html#TOC64">13.3 Normalization of strings</a> </h2>
 
 <p>The Unicode standard defines four normalization forms for Unicode strings.
 The following type is used to denote a normalization form.
 </p>
 <dl>
 <dt><u>Type:</u> <b>uninorm_t</b>
-<a name="IDX795"></a>
+<a name="IDX862"></a>
 </dt>
 <dd><p>An object of type <code>uninorm_t</code> denotes a Unicode normalization form.
 This is a scalar type; its values can be compared with <code>==</code>.
@@ -293,28 +293,28 @@ This is a scalar type; its values can be compared with <code>==</code>.
 </p>
 <dl>
 <dt><u>Macro:</u> uninorm_t <b>UNINORM_NFD</b>
-<a name="IDX796"></a>
+<a name="IDX863"></a>
 </dt>
 <dd><p>Denotes Normalization form D: canonical decomposition.
 </p></dd></dl>
 
 <dl>
 <dt><u>Macro:</u> uninorm_t <b>UNINORM_NFC</b>
-<a name="IDX797"></a>
+<a name="IDX864"></a>
 </dt>
 <dd><p>Normalization form C: canonical decomposition, then canonical composition.
 </p></dd></dl>
 
 <dl>
 <dt><u>Macro:</u> uninorm_t <b>UNINORM_NFKD</b>
-<a name="IDX798"></a>
+<a name="IDX865"></a>
 </dt>
 <dd><p>Normalization form KD: compatibility decomposition.
 </p></dd></dl>
 
 <dl>
 <dt><u>Macro:</u> uninorm_t <b>UNINORM_NFKC</b>
-<a name="IDX799"></a>
+<a name="IDX866"></a>
 </dt>
 <dd><p>Normalization form KC: compatibility decomposition, then canonical composition.
 </p></dd></dl>
@@ -322,22 +322,22 @@ This is a scalar type; its values can be compared with <code>==</code>.
 <p>The following functions operate on <code>uninorm_t</code> objects.
 </p>
 <dl>
-<dt><u>Function:</u> bool <b>uninorm_is_compat_decomposing</b><i> (uninorm_t <var>nf</var>)</i>
-<a name="IDX800"></a>
+<dt><u>Function:</u> bool <b>uninorm_is_compat_decomposing</b><i> (uninorm_t&nbsp;<var>nf</var>)</i>
+<a name="IDX867"></a>
 </dt>
 <dd><p>Tests whether the normalization form <var>nf</var> does compatibility decomposition.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> bool <b>uninorm_is_composing</b><i> (uninorm_t <var>nf</var>)</i>
-<a name="IDX801"></a>
+<dt><u>Function:</u> bool <b>uninorm_is_composing</b><i> (uninorm_t&nbsp;<var>nf</var>)</i>
+<a name="IDX868"></a>
 </dt>
 <dd><p>Tests whether the normalization form <var>nf</var> includes canonical composition.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> uninorm_t <b>uninorm_decomposing_form</b><i> (uninorm_t <var>nf</var>)</i>
-<a name="IDX802"></a>
+<dt><u>Function:</u> uninorm_t <b>uninorm_decomposing_form</b><i> (uninorm_t&nbsp;<var>nf</var>)</i>
+<a name="IDX869"></a>
 </dt>
 <dd><p>Returns the decomposing variant of the normalization form <var>nf</var>.
 This maps NFC,NFD → NFD and NFKC,NFKD → NFKD.
@@ -346,14 +346,14 @@ This maps NFC,NFD → NFD and NFKC,NFKD → NFKD.
 <p>The following functions apply a Unicode normalization form to a Unicode string.
 </p>
 <dl>
-<dt><u>Function:</u> uint8_t * <b>u8_normalize</b><i> (uninorm_t <var>nf</var>, const uint8_t *<var>s</var>, size_t <var>n</var>, uint8_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
-<a name="IDX803"></a>
+<dt><u>Function:</u> uint8_t * <b>u8_normalize</b><i> (uninorm_t&nbsp;<var>nf</var>, const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, uint8_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
+<a name="IDX870"></a>
 </dt>
-<dt><u>Function:</u> uint16_t * <b>u16_normalize</b><i> (uninorm_t <var>nf</var>, const uint16_t *<var>s</var>, size_t <var>n</var>, uint16_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
-<a name="IDX804"></a>
+<dt><u>Function:</u> uint16_t * <b>u16_normalize</b><i> (uninorm_t&nbsp;<var>nf</var>, const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, uint16_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
+<a name="IDX871"></a>
 </dt>
-<dt><u>Function:</u> uint32_t * <b>u32_normalize</b><i> (uninorm_t <var>nf</var>, const uint32_t *<var>s</var>, size_t <var>n</var>, uint32_t *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
-<a name="IDX805"></a>
+<dt><u>Function:</u> uint32_t * <b>u32_normalize</b><i> (uninorm_t&nbsp;<var>nf</var>, const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, uint32_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
+<a name="IDX872"></a>
 </dt>
 <dd><p>Returns the specified normalization form of a string.
 </p>
@@ -364,20 +364,20 @@ chapter <a href="libunistring_2.html#SEC8">Conventions</a>.
 <hr size="6">
 <a name="Normalizing-comparisons"></a>
 <a name="SEC65"></a>
-<h2 class="section"> <a href="libunistring.html#TOC65">13.4 Normalizing comparisons</a> </h2>
+<h2 class="section"> <a href="libunistring_toc.html#TOC65">13.4 Normalizing comparisons</a> </h2>
 
 <p>The following functions compare Unicode string, ignoring differences in
 normalization.
 </p>
 <dl>
-<dt><u>Function:</u> int <b>u8_normcmp</b><i> (const uint8_t *<var>s1</var>, size_t <var>n1</var>, const uint8_t *<var>s2</var>, size_t <var>n2</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
-<a name="IDX806"></a>
+<dt><u>Function:</u> int <b>u8_normcmp</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>, uninorm_t&nbsp;<var>nf</var>, int&nbsp;*<var>resultp</var>)</i>
+<a name="IDX873"></a>
 </dt>
-<dt><u>Function:</u> int <b>u16_normcmp</b><i> (const uint16_t *<var>s1</var>, size_t <var>n1</var>, const uint16_t *<var>s2</var>, size_t <var>n2</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
-<a name="IDX807"></a>
+<dt><u>Function:</u> int <b>u16_normcmp</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>, uninorm_t&nbsp;<var>nf</var>, int&nbsp;*<var>resultp</var>)</i>
+<a name="IDX874"></a>
 </dt>
-<dt><u>Function:</u> int <b>u32_normcmp</b><i> (const uint32_t *<var>s1</var>, size_t <var>n1</var>, const uint32_t *<var>s2</var>, size_t <var>n2</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
-<a name="IDX808"></a>
+<dt><u>Function:</u> int <b>u32_normcmp</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>, uninorm_t&nbsp;<var>nf</var>, int&nbsp;*<var>resultp</var>)</i>
+<a name="IDX875"></a>
 </dt>
 <dd><p>Compares <var>s1</var> and <var>s2</var>, ignoring differences in normalization.
 </p>
@@ -388,17 +388,17 @@ normalization.
 Upon failure, returns -1 with <code>errno</code> set.
 </p></dd></dl>
 
-<a name="IDX809"></a>
-<a name="IDX810"></a>
+<a name="IDX876"></a>
+<a name="IDX877"></a>
 <dl>
-<dt><u>Function:</u> char * <b>u8_normxfrm</b><i> (const uint8_t *<var>s</var>, size_t <var>n</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
-<a name="IDX811"></a>
+<dt><u>Function:</u> char * <b>u8_normxfrm</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, uninorm_t&nbsp;<var>nf</var>, char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
+<a name="IDX878"></a>
 </dt>
-<dt><u>Function:</u> char * <b>u16_normxfrm</b><i> (const uint16_t *<var>s</var>, size_t <var>n</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
-<a name="IDX812"></a>
+<dt><u>Function:</u> char * <b>u16_normxfrm</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, uninorm_t&nbsp;<var>nf</var>, char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
+<a name="IDX879"></a>
 </dt>
-<dt><u>Function:</u> char * <b>u32_normxfrm</b><i> (const uint32_t *<var>s</var>, size_t <var>n</var>, uninorm_t <var>nf</var>, char *<var>resultbuf</var>, size_t *<var>lengthp</var>)</i>
-<a name="IDX813"></a>
+<dt><u>Function:</u> char * <b>u32_normxfrm</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, uninorm_t&nbsp;<var>nf</var>, char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
+<a name="IDX880"></a>
 </dt>
 <dd><p>Converts the string <var>s</var> of length <var>n</var> to a NUL-terminated byte
 sequence, in such a way that comparing <code>u8_normxfrm (<var>s1</var>)</code> and
@@ -412,14 +412,14 @@ chapter <a href="libunistring_2.html#SEC8">Conventions</a>.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>u8_normcoll</b><i> (const uint8_t *<var>s1</var>, size_t <var>n1</var>, const uint8_t *<var>s2</var>, size_t <var>n2</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
-<a name="IDX814"></a>
+<dt><u>Function:</u> int <b>u8_normcoll</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>, uninorm_t&nbsp;<var>nf</var>, int&nbsp;*<var>resultp</var>)</i>
+<a name="IDX881"></a>
 </dt>
-<dt><u>Function:</u> int <b>u16_normcoll</b><i> (const uint16_t *<var>s1</var>, size_t <var>n1</var>, const uint16_t *<var>s2</var>, size_t <var>n2</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
-<a name="IDX815"></a>
+<dt><u>Function:</u> int <b>u16_normcoll</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>, uninorm_t&nbsp;<var>nf</var>, int&nbsp;*<var>resultp</var>)</i>
+<a name="IDX882"></a>
 </dt>
-<dt><u>Function:</u> int <b>u32_normcoll</b><i> (const uint32_t *<var>s1</var>, size_t <var>n1</var>, const uint32_t *<var>s2</var>, size_t <var>n2</var>, uninorm_t <var>nf</var>, int *<var>resultp</var>)</i>
-<a name="IDX816"></a>
+<dt><u>Function:</u> int <b>u32_normcoll</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>, uninorm_t&nbsp;<var>nf</var>, int&nbsp;*<var>resultp</var>)</i>
+<a name="IDX883"></a>
 </dt>
 <dd><p>Compares <var>s1</var> and <var>s2</var>, ignoring differences in normalization, using
 the collation rules of the current locale.
@@ -434,7 +434,7 @@ Upon failure, returns -1 with <code>errno</code> set.
 <hr size="6">
 <a name="Normalization-of-streams"></a>
 <a name="SEC66"></a>
-<h2 class="section"> <a href="libunistring.html#TOC66">13.5 Normalization of streams of Unicode characters</a> </h2>
+<h2 class="section"> <a href="libunistring_toc.html#TOC66">13.5 Normalization of streams of Unicode characters</a> </h2>
 
 <p>A &ldquo;stream of Unicode characters&rdquo; is essentially a function that accepts an
 <code>ucs4_t</code> argument repeatedly, optionally combined with a function that
@@ -442,7 +442,7 @@ Upon failure, returns -1 with <code>errno</code> set.
 </p>
 <dl>
 <dt><u>Type:</u> <b>struct uninorm_filter</b>
-<a name="IDX817"></a>
+<a name="IDX884"></a>
 </dt>
 <dd><p>This is the data type of a stream of Unicode characters that normalizes its
 input according to a given normalization form and passes the normalized
@@ -450,8 +450,8 @@ character sequence to the encapsulated stream of Unicode characters.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> struct uninorm_filter * <b>uninorm_filter_create</b><i> (uninorm_t <var>nf</var>, int (*<var>stream_func</var>) (void *<var>stream_data</var>, ucs4_t <var>uc</var>), void *<var>stream_data</var>)</i>
-<a name="IDX818"></a>
+<dt><u>Function:</u> struct uninorm_filter * <b>uninorm_filter_create</b><i> (uninorm_t&nbsp;<var>nf</var>, int&nbsp;(*<var>stream_func</var>)&nbsp;(void&nbsp;*<var>stream_data</var>, ucs4_t&nbsp;<var>uc</var>), void&nbsp;*<var>stream_data</var>)</i>
+<a name="IDX885"></a>
 </dt>
 <dd><p>Creates and returns a normalization filter for Unicode characters.
 </p>
@@ -464,16 +464,16 @@ upon failure.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>uninorm_filter_write</b><i> (struct uninorm_filter *<var>filter</var>, ucs4_t <var>uc</var>)</i>
-<a name="IDX819"></a>
+<dt><u>Function:</u> int <b>uninorm_filter_write</b><i> (struct&nbsp;uninorm_filter&nbsp;*<var>filter</var>, ucs4_t&nbsp;<var>uc</var>)</i>
+<a name="IDX886"></a>
 </dt>
 <dd><p>Stuffs a Unicode character into a normalizing filter.
 Returns 0 if successful, or -1 with <code>errno</code> set upon failure.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>uninorm_filter_flush</b><i> (struct uninorm_filter *<var>filter</var>)</i>
-<a name="IDX820"></a>
+<dt><u>Function:</u> int <b>uninorm_filter_flush</b><i> (struct&nbsp;uninorm_filter&nbsp;*<var>filter</var>)</i>
+<a name="IDX887"></a>
 </dt>
 <dd><p>Brings data buffered in the filter to its destination, the encapsulated stream.
 </p>
@@ -485,8 +485,8 @@ will not necessarily be normalized.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> int <b>uninorm_filter_free</b><i> (struct uninorm_filter *<var>filter</var>)</i>
-<a name="IDX821"></a>
+<dt><u>Function:</u> int <b>uninorm_filter_free</b><i> (struct&nbsp;uninorm_filter&nbsp;*<var>filter</var>)</i>
+<a name="IDX888"></a>
 </dt>
 <dd><p>Brings data buffered in the filter to its destination, the encapsulated stream,
 then closes and frees the filter.
@@ -502,14 +502,14 @@ then closes and frees the filter.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_20.html#SEC91" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Daiki Ueno</em> on <em>May, 25 2018</em> using <a href="http://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

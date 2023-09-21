@@ -1,6 +1,8 @@
 #ifndef PERL_TIME64_CONFIG_H_
 #    define PERL_TIME64_CONFIG_H_
 
+#include "reentr.h"
+
 /* Configuration
    -------------
    Define as appropriate for your system.
@@ -15,7 +17,7 @@
 
 
 /* INT_64_T
-   A numeric type to store time and others.
+   A numeric type to store time and others. 
    Must be defined.
 */
 #define INT_64_T                NV

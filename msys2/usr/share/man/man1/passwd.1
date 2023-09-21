@@ -1,0 +1,188 @@
+'\" t
+.\"     Title: passwd
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "PASSWD" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+passwd \- Change password or password attributes
+.SH "SYNOPSIS"
+.HP \w'\fBpasswd\fR\ 'u
+\fBpasswd\fR [\-S] | {[\-l\ |\ \-u]\ [\-c\ |\ \-C]\ [\-e\ |\ \-E]\ [\-p\ |\ \-P]}  [\-d\ \fISERVER\fR] [\fIUSER\fR]
+.HP \w'\fBpasswd\fR\ 'u
+\fBpasswd\fR \-R
+.HP \w'\fBpasswd\fR\ 'u
+\fBpasswd\fR \-i\ \fINUM\fR | \-n\ \fIMINDAYS\fR | \-x\ \fIMAXDAYS\fR | \-L\ \fILEN\fR 
+.HP \w'\fBpasswd\fR\ 'u
+\fBpasswd\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+User operations:
+  \-l, \-\-lock               lock USER\*(Aqs account\&.
+  \-u, \-\-unlock             unlock USER\*(Aqs account\&.
+  \-c, \-\-cannot\-change      USER can\*(Aqt change password\&.
+  \-C, \-\-can\-change         USER can change password\&.
+  \-e, \-\-never\-expires      USER\*(Aqs password never expires\&.
+  \-E, \-\-expires            USER\*(Aqs password expires according to system\*(Aqs
+                           password aging rule\&.
+  \-p, \-\-pwd\-not\-required   no password required for USER\&.
+  \-P, \-\-pwd\-required       password is required for USER\&.
+  \-R, \-\-reg\-store\-pwd      enter password to store it in the registry for
+                           later usage by services to be able to switch
+                           to this user context with network credentials\&.
+
+System operations:
+  \-i, \-\-inactive NUM       set NUM of days before inactive accounts are disabled
+                           (inactive accounts are those with expired passwords)\&.
+  \-n, \-\-minage MINDAYS     set system minimum password age to MINDAYS days\&.
+  \-x, \-\-maxage MAXDAYS     set system maximum password age to MAXDAYS days\&.
+  \-L, \-\-length LEN         set system minimum password length to LEN\&.
+
+Other options:
+  \-d, \-\-logonserver SERVER connect to SERVER (e\&.g\&. domain controller)\&.
+                           Usually not required\&.
+  \-S, \-\-status             display password status for USER (locked, expired,
+                           etc\&.) plus global system password settings\&.
+  \-h, \-\-help               output usage information and exit\&.
+  \-V, \-\-version            output version information and exit\&.
+
+If no option is given, change USER\*(Aqs password\&.  If no user name is given,
+operate on current user\&.  System operations must not be mixed with user
+operations\&.  Don\*(Aqt specify a USER when triggering a system operation\&.
+
+Don\*(Aqt specify a user or any other option together with the \-R option\&.
+Non\-Admin users can only store their password if cygserver is running\&.
+Note that storing even obfuscated passwords in the registry is not overly
+secure\&.  Use this feature only if the machine is adequately locked down\&.
+Don\*(Aqt use this feature if you don\*(Aqt need network access within a remote
+session\&.  You can delete your stored password by using `passwd \-R\*(Aq and
+specifying an empty password\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+\fBpasswd\fR
+changes passwords for user accounts\&. A normal user may only change the password for their own account, but administrators may change passwords on any account\&.
+\fBpasswd\fR
+also changes account information, such as password expiry dates and intervals\&.
+.PP
+For password changes, the user is first prompted for their old password, if one is present\&. This password is then encrypted and compared against the stored password\&. The user has only one chance to enter the correct password\&. The administrators are permitted to bypass this step so that forgotten passwords may be changed\&.
+.PP
+The user is then prompted for a replacement password\&.
+\fBpasswd\fR
+will prompt twice for this replacement and compare the second entry against the first\&. Both entries are required to match in order for the password to be changed\&.
+.PP
+After the password has been entered, password aging information is checked to see if the user is permitted to change their password at this time\&. If not,
+\fBpasswd\fR
+refuses to change the password and exits\&.
+.PP
+To get current password status information, use the
+\-S
+option\&. Administrators can use
+\fBpasswd\fR
+to perform several account maintenance functions (users may perform some of these functions on their own accounts)\&. Accounts may be locked with the
+\-l
+flag and unlocked with the
+\-u
+flag\&. Similarly,
+\-c
+disables a user\*(Aqs ability to change passwords, and
+\-C
+allows a user to change passwords\&. For password expiry, the
+\-e
+option disables expiration, while the
+\-E
+option causes the password to expire according to the system\*(Aqs normal aging rules\&. Use
+\-p
+to disable the password requirement for a user, or
+\-P
+to require a password\&.
+.PP
+Administrators can also use
+\fBpasswd\fR
+to change system\-wide password expiry and length requirements with the
+\-i,
+\-n,
+\-x, and
+\-L
+options\&. The
+\-i
+option is used to disable an account after the password has been expired for a number of days\&. After a user account has had an expired password for
+\fINUM\fR
+days, the user may no longer sign on to the account\&. The
+\-n
+option is used to set the minimum number of days before a password may be changed\&. The user will not be permitted to change the password until
+\fIMINDAYS\fR
+days have elapsed\&. The
+\-x
+option is used to set the maximum number of days a password remains valid\&. After
+\fIMAXDAYS\fR
+days, the password is required to be changed\&. Allowed values for the above options are 0 to 999\&. The
+\-L
+option sets the minimum length of allowed passwords for users who don\*(Aqt belong to the administrators group to
+\fILEN\fR
+characters\&. Allowed values for the minimum password length are 0 to 14\&. In any of the above cases, a value of 0 means `no restrictions\*(Aq\&.
+.PP
+All operations affecting the current user are by default run against the logon server of the current user (taken from the environment variable
+\fBLOGONSERVER\fR\&. When password or account information of other users should be changed, the logon server is evaluated automatically\&. In rare cases, it might be necessary to switch to another domain controller to perform the action\&. In this case, use the
+\-d
+option to specify the machine to run the command against\&. Note that the current user must have account operator permissions to perform user account changes in a domain\&.
+.PP
+Users can use the
+\fBpasswd \-R\fR
+to enter a password which then gets stored in a special area of the registry on the local system, which is also used by Windows to store passwords of accounts running Windows services\&. When a privileged Cygwin application calls the
+\fBset{e}uid(user_id)\fR
+system call, Cygwin checks if a password for that user has been stored in this registry area\&. If so, it uses this password to switch to this user account using that password\&. This allows you to logon through, for instance,
+\fBssh\fR
+with public key authentication and get a full qualified user token with all credentials for network access\&. However, the method has some drawbacks security\-wise\&. This is explained in more detail in
+the section called \(lqPOSIX accounts, permission, and security\(rq\&.
+.PP
+Please note that storing passwords in that registry area is a privileged operation which only administrative accounts are allowed to do\&. Administrators can enter the password for other user accounts into the registry by specifying the username on the commandline\&. If normal, non\-admin users should be allowed to enter their passwords using
+\fBpasswd \-R\fR, it\*(Aqs required to run
+\fBcygserver\fR
+as a service under the LocalSystem account before running
+\fBpasswd \-R\fR\&. This only affects storing passwords\&. Using passwords in privileged processes does not require
+\fBcygserver\fR
+to run\&.
+.PP
+Limitations: Users may not be able to change their password on some systems\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

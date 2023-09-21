@@ -22,7 +22,7 @@
  *	available to set I/O characteristics
  */
 #define	HAS_IOCTL		/**/
-
+ 
 /* HAS_UTIME:
  *	This symbol, if defined, indicates that the routine utime() is
  *	available to update the access and modification times of files.
@@ -47,7 +47,7 @@
 #define HAS_WAIT
 
 #endif /* !PERL_MICRO */
-
+  
 /* USEMYBINMODE
  *	This symbol, if defined, indicates that the program should
  *	use the routine my_binmode(FILE *fp, char iotype) to insure
@@ -71,7 +71,7 @@
 #define USE_STAT_RDEV 	/**/
 
 /* ACME_MESS:
- *	This symbol, if defined, indicates that error messages should be
+ *	This symbol, if defined, indicates that error messages should be 
  *	should be generated in a format that allows the use of the Acme
  *	GUI/editor's autofind feature.
  */
@@ -137,7 +137,7 @@ int afstat(int fd, struct stat *statb);
 
 #if defined(__amigaos4__)
 #  define PERL_SYS_INIT_BODY(c,v)					\
-	MALLOC_CHECK_TAINT2(*c,*v) PERL_FPU_INIT; PERLIO_INIT; MALLOC_INIT; amigaos4_init_fork_array(); amigaos4_init_environ_sema();
+        MALLOC_CHECK_TAINT2(*c,*v) PERL_FPU_INIT; PERLIO_INIT; MALLOC_INIT; amigaos4_init_fork_array(); amigaos4_init_environ_sema();
 #  define PERL_SYS_TERM_BODY()                         \
     HINTS_REFCNT_TERM; KEYWORD_PLUGIN_MUTEX_TERM;      \
     OP_CHECK_MUTEX_TERM; OP_REFCNT_TERM; PERLIO_TERM;  \
@@ -148,7 +148,7 @@ int afstat(int fd, struct stat *statb);
 
 #ifndef PERL_SYS_INIT_BODY
 #  define PERL_SYS_INIT_BODY(c,v)					\
-	MALLOC_CHECK_TAINT2(*c,*v) PERL_FPU_INIT; PERLIO_INIT; MALLOC_INIT
+        MALLOC_CHECK_TAINT2(*c,*v) PERL_FPU_INIT; PERLIO_INIT; MALLOC_INIT
 #endif
 
 #ifndef PERL_SYS_TERM_BODY

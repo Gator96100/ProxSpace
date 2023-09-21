@@ -1,3 +1,12 @@
+/* mg_data.h:
+ * THIS FILE IS AUTO-GENERATED DURING THE BUILD by: ./generate_uudmap
+ *
+ * These values will populate PL_magic_data[]: this is an array of
+ * per-magic U8 values containing an index into PL_magic_vtables[]
+ * plus two flags:
+ *    PERL_MAGIC_READONLY_ACCEPTABLE
+ *    PERL_MAGIC_VALUE_MAGIC
+*/
 {
     /* sv '\0' Special scalar variable */
     want_vtbl_sv | PERL_MAGIC_READONLY_ACCEPTABLE,
@@ -98,7 +107,7 @@
     0,
     0,
     /* sig 'S' %SIG hash */
-    magic_vtable_max,
+    want_vtbl_sig,
     0,
     /* uvar 'U' Available for use by extensions */
     want_vtbl_uvar,

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>chattr</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="using-utils.html" title="Cygwin Utilities"><link rel="next" href="cygcheck.html" title="cygcheck"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">chattr</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-utils.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="cygcheck.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="chattr"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>chattr &#8212; Change file attributes</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">chattr</code>  [-RVf] [
+	  { +  |   -  |   = }
+	  <em class="replaceable"><code>MODE</code></em>
+	...] [<em class="replaceable"><code>FILE</code></em>...]</p></div><div class="cmdsynopsis"><p><code class="command">chattr</code>    -H  |   -v  </p></div></div><div class="refsect1"><a name="chattr-options"></a><h2>Options</h2><pre class="screen">
+  -R, --recursive     recursively apply the changes to directories and
+                      their contents
+  -V, --verbose       Be verbose during operation
+  -f, --force         suppress error messages
+  -H, --help          this help text
+  -v, --version       display the program version
+</pre></div><div class="refsect1"><a name="chattr-desc"></a><h2>Description</h2><p>The <span class="command"><strong>chattr</strong></span> program allows to change file
+      attributes, namely DOS attributes, as well as making files sparse,
+      encrypt or compress them on FS level, or setting directories'
+      case sensitivity.
+    </p><p>The format of 'mode' is {+-=}[acCehnrsSt]</p><p>The operator '+' causes the selected attributes to be added to the
+      existing attributes of the files; '-' causes them to be removed; and
+      '=' causes them to be the only attributes that the files have.
+      A single '=' causes all attributes to be removed.</p><p>Supported attributes:</p><pre class="screen">
+  'r', 'Readonly':      file is read-only
+  'h', 'Hidden':        file or directory is hidden
+  's', 'System':        file or directory that the operating system uses
+  'a', 'Archive':       file or directory has the archive marker set
+  't', 'Temporary':     file is being used for temporary storage
+  'S', 'Sparse':        file is sparse
+  'c', 'Compressed':    file or directory is compressed
+  'n', 'Notindexed':    file or directory is not to be indexed by the
+			content indexing service
+  'e', 'Encrypted':     file is encrypted
+  'C', 'Casesensitive': directory is handled case sensitive
+			(Windows 10 1803 or later, local NTFS only,
+			 WSL must be installed)
+    </pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="using-utils.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="cygcheck.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Cygwin Utilities&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;cygcheck</td></tr></table></div></body></html>

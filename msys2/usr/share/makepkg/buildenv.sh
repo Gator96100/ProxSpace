@@ -22,6 +22,8 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_SH" ]] && return
 LIBMAKEPKG_BUILDENV_SH=1
 
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+
 declare -a buildenv_functions build_options
 
 for lib in "$LIBRARY/buildenv/"*.sh; do

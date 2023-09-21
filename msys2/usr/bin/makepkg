@@ -40,7 +40,7 @@ unset CDPATH
 # Ensure GREP_OPTIONS doesn't screw with our grep calls
 unset GREP_OPTIONS
 
-declare -r makepkg_version='6.0.0'
+declare -r makepkg_version='6.0.2'
 declare -r confdir='/etc'
 declare -r BUILDSCRIPT='PKGBUILD'
 declare -r startdir="$(pwd -P)"
@@ -711,7 +711,7 @@ create_package() {
 	msg2 "$(gettext "Compressing package...")"
 	# TODO: Maybe this can be set globally for robustness
 	shopt -s -o pipefail
-	list_package_files | LANG=C bsdtar --no-fflags --no-xattrs --uid 1 --uname root --gid 1 --gname root -cnf - --null --files-from - |
+	list_package_files | LANG=C bsdtar --no-fflags --no-read-sparse --no-xattrs --uid 1 --uname root --gid 1 --gname root -cnf - --null --files-from - |
 		compress_as "$PKGEXT" > "${pkg_file}" || ret=$?
 
 	shopt -u -o pipefail
@@ -744,7 +744,7 @@ create_debug_package() {
 		fi
 	done
 
-	pkgdesc="Detached debugging symbols for $pkgname"
+	pkgdesc="Detached debugging symbols for $pkgbase"
 	pkgname=$pkgbase-debug
 
 	create_package
@@ -806,7 +806,7 @@ create_srcpackage() {
 
 	# TODO: Maybe this can be set globally for robustness
 	shopt -s -o pipefail
-	LANG=C bsdtar --no-fflags --uid 1 --uname root --gid 1 --gname root -cLf - ${pkgbase} | compress_as "$SRCEXT" > "${pkg_file}" || ret=$?
+	LANG=C bsdtar --no-fflags --no-read-sparse --uid 1 --uname root --gid 1 --gname root -cLf - ${pkgbase} | compress_as "$SRCEXT" > "${pkg_file}" || ret=$?
 
 	shopt -u -o pipefail
 
@@ -1207,8 +1207,11 @@ fi
 
 pkgbase=${pkgbase:-${pkgname[0]}}
 
-# check the PKGBUILD for some basic requirements
-lint_pkgbuild || exit $E_PKGBUILD_ERROR
+# MSYS2: lint_pkgbuild is very slow with cygwin bash, so make it opt-in
+if (( MAKEPKG_LINT_PKGBUILD )); then
+	# check the PKGBUILD for some basic requirements
+	lint_pkgbuild || exit $E_PKGBUILD_ERROR
+fi
 
 if (( !SOURCEONLY && !PRINTSRCINFO )); then
 	merge_arch_attrs

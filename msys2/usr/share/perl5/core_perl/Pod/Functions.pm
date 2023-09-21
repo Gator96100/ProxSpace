@@ -16,7 +16,7 @@ or
 
     perl /path/to/lib/Pod/Functions.pm
 
-This will print a grouped list of Perl's functions, like the
+This will print a grouped list of Perl's functions, like the 
 L<perlfunc/"Perl Functions by Category"> section.
 
 =head1 DESCRIPTION
@@ -37,12 +37,12 @@ The category can be a comma separated list.
 
 =item %Flavor
 
-In this hash each key represents a function and the value is a short
+In this hash each key represents a function and the value is a short 
 description of that function.
 
 =item %Type_Description
 
-In this hash each key represents a category of functions and the value is
+In this hash each key represents a category of functions and the value is 
 a short description of that category.
 
 =item @Type_Order
@@ -54,11 +54,10 @@ L<perlfunc/"Perl Functions by Category"> section.
 
 =cut
 
-our $VERSION = '1.13';
+our $VERSION = '1.14';
 
-require Exporter;
+use Exporter 'import';
 
-our @ISA = qw(Exporter);
 our @EXPORT = qw(%Kinds %Type %Flavor %Type_Description @Type_Order);
 
 our(%Kinds, %Type, %Flavor, %Type_Description, @Type_Order);
@@ -104,20 +103,20 @@ while (<DATA>) {
 close DATA;
 
 my( $typedesc, $list );
-unless (caller) {
+unless (caller) { 
     foreach my $type ( @Type_Order ) {
 	$list = join(", ", sort @{$Kinds{$type}});
 	$typedesc = $Type_Description{$type} . ":";
 	write;
-    }
+    } 
 }
 
-format =
+format = 
 
 ^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    $typedesc
+    $typedesc 
 ~~ ^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    $typedesc
+    $typedesc 
  ~~  ^<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	$list
 .
@@ -339,7 +338,7 @@ unlink	File	remove one link to a file
 unpack	Binary	LIST	convert binary structure into normal perl variables
 unshift	ARRAY	prepend more elements to the beginning of a list
 untie	Objects	break a tie binding to a variable
-use	Modules	Namespace	Objects	load in a module at compile time and import its namespace
+use	Modules	Namespace	Objects	enable Perl language features and declare required version
 utime	File	set a file's last access and modify times
 values	ARRAY	HASH	return a list of the values in a hash
 vec	Binary	test or set particular bits in a string

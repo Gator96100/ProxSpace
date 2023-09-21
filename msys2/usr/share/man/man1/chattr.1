@@ -1,0 +1,97 @@
+'\" t
+.\"     Title: chattr
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "CHATTR" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+chattr \- Change file attributes
+.SH "SYNOPSIS"
+.HP \w'\fBchattr\fR\ 'u
+\fBchattr\fR [\-RVf] [{+\ |\ \-\ |\ =}\ \fIMODE\fR...] [\fIFILE\fR...]
+.HP \w'\fBchattr\fR\ 'u
+\fBchattr\fR \-H | \-v 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-R, \-\-recursive     recursively apply the changes to directories and
+                      their contents
+  \-V, \-\-verbose       Be verbose during operation
+  \-f, \-\-force         suppress error messages
+  \-H, \-\-help          this help text
+  \-v, \-\-version       display the program version
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBchattr\fR
+program allows to change file attributes, namely DOS attributes, as well as making files sparse, encrypt or compress them on FS level, or setting directories\*(Aq case sensitivity\&.
+.PP
+The format of \*(Aqmode\*(Aq is {+\-=}[acCehnrsSt]
+.PP
+The operator \*(Aq+\*(Aq causes the selected attributes to be added to the existing attributes of the files; \*(Aq\-\*(Aq causes them to be removed; and \*(Aq=\*(Aq causes them to be the only attributes that the files have\&. A single \*(Aq=\*(Aq causes all attributes to be removed\&.
+.PP
+Supported attributes:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \*(Aqr\*(Aq, \*(AqReadonly\*(Aq:      file is read\-only
+  \*(Aqh\*(Aq, \*(AqHidden\*(Aq:        file or directory is hidden
+  \*(Aqs\*(Aq, \*(AqSystem\*(Aq:        file or directory that the operating system uses
+  \*(Aqa\*(Aq, \*(AqArchive\*(Aq:       file or directory has the archive marker set
+  \*(Aqt\*(Aq, \*(AqTemporary\*(Aq:     file is being used for temporary storage
+  \*(AqS\*(Aq, \*(AqSparse\*(Aq:        file is sparse
+  \*(Aqc\*(Aq, \*(AqCompressed\*(Aq:    file or directory is compressed
+  \*(Aqn\*(Aq, \*(AqNotindexed\*(Aq:    file or directory is not to be indexed by the
+			content indexing service
+  \*(Aqe\*(Aq, \*(AqEncrypted\*(Aq:     file is encrypted
+  \*(AqC\*(Aq, \*(AqCasesensitive\*(Aq: directory is handled case sensitive
+			(Windows 10 1803 or later, local NTFS only,
+			 WSL must be installed)
+    
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

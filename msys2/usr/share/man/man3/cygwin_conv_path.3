@@ -1,0 +1,148 @@
+'\" t
+.\"     Title: cygwin_conv_path
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin API Reference
+.\"    Source: Cygwin API Reference
+.\"  Language: English
+.\"
+.TH "CYGWIN_CONV_PATH" "3" "07/14/2023" "Cygwin API Reference" "Cygwin API Reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+cygwin_conv_path
+.SH "SYNOPSIS"
+.sp
+.ft B
+.nf
+#include <sys/cygwin\&.h>
+.fi
+.ft
+.HP \w'ssize_t\ cygwin_conv_path('u
+.BI "ssize_t cygwin_conv_path(cygwin_conv_path_t\ " "what" ", const\ void\ *\ " "from" ", void\ *\ " "to" ", size_t\ " "size" ");"
+.SH "DESCRIPTION"
+.PP
+Use this function to convert POSIX paths in
+\fIfrom\fR
+to Win32 paths in
+\fIto\fR
+or, vice versa, Win32 paths in
+\fIfrom\fR
+to POSIX paths in
+\fIto\fR\&.
+\fIwhat\fR
+defines the direction of this conversion and can be any of the below values\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  CCP_POSIX_TO_WIN_A      /* from is char *posix, to is char *win32       */
+  CCP_POSIX_TO_WIN_W,     /* from is char *posix, to is wchar_t *win32    */
+  CCP_WIN_A_TO_POSIX,     /* from is char *win32, to is char *posix       */
+  CCP_WIN_W_TO_POSIX,     /* from is wchar_t *win32, to is char *posix    */
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+You can additionally or the following values to
+\fIwhat\fR, to define whether you want the resulting path in
+\fIto\fR
+to be absolute or if you want to keep relative paths in relative notation\&. Creating absolute paths is the default\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  CCP_ABSOLUTE = 0,         /* Request absolute path (default)\&.             */
+  CCP_RELATIVE = 0x100      /* Request to keep path relative\&.               */
+  CCP_PROC_CYGDRIVE = 0x200 /* Request to return /proc/cygdrive path
+                               (only with CCP_*_TO_POSIX)\&.                  */
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+\fIsize\fR
+is the size of the buffer pointed to by
+\fIto\fR
+in bytes\&. If
+\fIsize\fR
+is 0,
+\fBcygwin_conv_path\fR
+just returns the required buffer size in bytes\&. Otherwise, it returns 0 on success, or \-1 on error and errno is set to one of the below values\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+    EINVAL        what has an invalid value or from is NULL\&.
+    EFAULT        from or to point into nirvana\&.
+    ENAMETOOLONG  the resulting path is longer than 32K, or, in case
+                  of what == CCP_POSIX_TO_WIN_A, longer than MAX_PATH\&.
+    ENOSPC        size is less than required for the conversion\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SH "EXAMPLE"
+.PP
+\fBExample\ \&2.1.\ \&Example use of cygwin_conv_path\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+
+#include <sys/cygwin\&.h>
+
+/* Conversion from incoming Win32 path given as wchar_t *win32 to POSIX path\&.
+   If incoming path is a relative path, stick to it\&.  First ask how big
+   the output buffer has to be and allocate space dynamically\&. */
+ssize_t size;
+char *posix;
+size = cygwin_conv_path (CCP_WIN_W_TO_POSIX | CCP_RELATIVE, win32, NULL, 0);
+if (size < 0)
+  perror ("cygwin_conv_path");
+else
+  {
+    posix = (char *) malloc (size);
+    if (cygwin_conv_path (CCP_WIN_W_TO_POSIX | CCP_RELATIVE, win32,
+                          posix, size))
+      perror ("cygwin_conv_path");
+  }
+
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

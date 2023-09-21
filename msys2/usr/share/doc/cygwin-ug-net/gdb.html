@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Debugging Cygwin Programs</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="programming.html" title="Chapter&#160;4.&#160;Programming with Cygwin"><link rel="prev" href="programming.html" title="Chapter&#160;4.&#160;Programming with Cygwin"><link rel="next" href="dll.html" title="Building and Using DLLs"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Debugging Cygwin Programs</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="programming.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Programming with Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="dll.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="gdb"></a>Debugging Cygwin Programs</h2></div></div></div><p>When your program doesn't work right, it usually has a "bug" in
+it, meaning there's something wrong with the program itself that is
+causing unexpected results or crashes.  Diagnosing these bugs and
+fixing them is made easy by special tools called
+<span class="emphasis"><em>debuggers</em></span>.  In the case of Cygwin, the debugger
+is GDB, which stands for "GNU DeBugger".  This tool lets you run your
+program in a controlled environment where you can investigate the
+state of your program while it is running or after it crashes.
+Crashing programs sometimes create "core" files. In Cygwin these are 
+regular text files that cannot be used directly by GDB.
+</p><p>Before you can debug your program, you need to prepare your
+program for debugging.  What you need to do is add
+<code class="literal">-g</code> to all the other flags you use when compiling
+your sources to objects.</p><div class="example"><a name="gdb-g"></a><p class="title"><b>Example&#160;4.4.&#160;Compiling with -g</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">bash$</code> gcc -g -O2 -c myapp.c
+<code class="prompt">bash$</code> gcc -g myapp.c -o myapp
+</pre></div></div><br class="example-break"><p>What this does is add extra information to the objects (they get
+much bigger too) that tell the debugger about line numbers, variable
+names, and other useful things.  These extra symbols and debugging
+information give your program enough information about the original
+sources so that the debugger can make debugging much easier for
+you.</p><p>To invoke GDB, simply type <span class="command"><strong>gdb myapp.exe</strong></span> at the
+command prompt.  It will display some text telling you about itself,
+then <code class="literal">(gdb)</code> will appear to prompt you to enter
+commands.  Whenever you see this prompt, it means that gdb is waiting
+for you to type in a command, like <span class="command"><strong>run</strong></span> or
+<span class="command"><strong>help</strong></span>.  Oh <code class="literal">:-)</code> type
+<span class="command"><strong>help</strong></span> to get help on the commands you can type in, or
+read the [<span class="citation">GDB User's Manual</span>] for a complete
+description of GDB and how to use it.</p><p>If your program crashes and you're trying to figure out why it
+crashed, the best thing to do is type <span class="command"><strong>run</strong></span> and let
+your program run.  After it crashes, you can type
+<span class="command"><strong>where</strong></span> to find out where it crashed, or
+<span class="command"><strong>info locals</strong></span> to see the values of all the local
+variables.  There's also a <span class="command"><strong>print</strong></span> that lets you look
+at individual variables or what pointers point to.</p><p>If your program is doing something unexpected, you can use the
+<span class="command"><strong>break</strong></span> command to tell gdb to stop your program when it
+gets to a specific function or line number:</p><div class="example"><a name="gdb-break"></a><p class="title"><b>Example&#160;4.5.&#160;"break" in gdb</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">(gdb)</code> break my_function
+<code class="prompt">(gdb)</code> break 47
+</pre></div></div><br class="example-break"><p>Now, when you type <span class="command"><strong>run</strong></span> your program will stop
+at that "breakpoint" and you can use the other gdb commands to look at
+the state of your program at that point, modify variables, and
+<span class="command"><strong>step</strong></span> through your program's statements one at a
+time.</p><p>Note that you may specify additional arguments to the
+<span class="command"><strong>run</strong></span> command to provide command-line arguments to
+your program.  These two cases are the same as far as your program is
+concerned:</p><div class="example"><a name="gdb-cliargs"></a><p class="title"><b>Example&#160;4.6.&#160;Debugging with command line arguments</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">bash$</code> myprog -t foo --queue 47
+
+<code class="prompt">bash$</code> gdb myprog
+<code class="prompt">(gdb)</code> run -t foo --queue 47
+</pre></div></div><br class="example-break"></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="programming.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="programming.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="dll.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&#160;4.&#160;Programming with Cygwin&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Building and Using DLLs</td></tr></table></div></body></html>

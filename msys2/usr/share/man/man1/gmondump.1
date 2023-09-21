@@ -1,0 +1,97 @@
+'\" t
+.\"     Title: gmondump
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "GMONDUMP" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gmondump \- Display formatted contents of profile data files
+.SH "SYNOPSIS"
+.HP \w'\fBgmondump\fR\ 'u
+\fBgmondump\fR [\-v] [FILENAME...]
+.HP \w'\fBgmondump\fR\ 'u
+\fBgmondump\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-h, \-\-help             Display usage information and exit
+  \-v, \-\-verbose          Display more file details (toggle: default false)
+  \-V, \-\-version          Display version information and exit
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBgmondump\fR
+utility displays the contents of one or more profile data files\&. Such files usually have names starting with "gmon\&.out" and are created by a profiling program such as
+\fBprofiler\fR
+or
+\fBssp\fR\&. Compiling your gcc/g++ programs with option
+\-pg
+also works\&.
+.PP
+By default, summary information is shown\&. You can use the option
+\-v
+to get more detailed displays\&.
+.PP
+Note that
+\fBgmondump\fR
+just displays the raw data; one would usually use
+\fBgprof\fR
+to display the data in a useful form incorporating symbolic info such as function names and source line numbers\&.
+.PP
+Here is an example of
+\fBgmondump\fR
+operation:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gmondump gmon\&.out\&.21900\&.zstd\&.exe
+file gmon\&.out\&.21900\&.zstd\&.exe, gmon version 0x51879, sample rate 100
+  address range 0x100401000\&.\&.0x1004cc668
+  numbuckets 208282, hitbuckets 1199, hitcount 12124, numrawarcs 0
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>kill</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="gmondump.html" title="gmondump"><link rel="next" href="ldd.html" title="ldd"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">kill</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="gmondump.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="ldd.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="kill"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>kill &#8212; Send signals to processes</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">kill</code>  [-f] [-signal] [-s <em class="replaceable"><code>signal</code></em>]  <em class="replaceable"><code>pid</code></em>... </p></div><div class="cmdsynopsis"><p><code class="command">kill</code>   -l  [<em class="replaceable"><code>signal</code></em>]</p></div><div class="cmdsynopsis"><p><code class="command">kill</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="kill-options"></a><h2>Options</h2><pre class="screen">
+ -f, --force     force, using win32 interface if necessary
+ -l, --list      print a list of signal names
+ -s, --signal    send signal (use kill --list for a list)
+ -W, --winpid    specified pids are windows PIDs, not Cygwin PIDs
+                 (use with extreme caution!)
+ -h, --help      output usage information and exit
+ -V, --version   output version information and exit
+</pre></div><div class="refsect1"><a name="kill-desc"></a><h2>Description</h2><p>The <span class="command"><strong>kill</strong></span> program allows you to send arbitrary
+      signals to other Cygwin programs. The usual purpose is to end a running
+      program from some other window when ^C won't work, but you can also send
+      program-specified signals such as SIGUSR1 to trigger actions within the
+      program, like enabling debugging or re-opening log files. Each program
+      defines the signals they understand.</p><p>You may need to specify the full path to use <span class="command"><strong>kill</strong></span>
+      from within some shells, including <span class="command"><strong>bash</strong></span>, the default
+      Cygwin shell. This is because <span class="command"><strong>bash</strong></span> defines a
+      <span class="command"><strong>kill</strong></span> builtin function; see the <span class="command"><strong>bash</strong></span>
+      man page under <span class="emphasis"><em>BUILTIN COMMANDS</em></span> for more
+      information. To make sure you are using the Cygwin version, try
+      </p><pre class="screen">
+$ /bin/kill --version
+</pre><p> which should give the Cygwin
+      <span class="command"><strong>kill</strong></span> version number and copyright information. </p><p>The <code class="literal">-f</code> option uses Windows functions to
+      terminate processes forcefully. Use <code class="literal">-f</code> to
+      terminate native Windows processes not started by Cygwin processes.
+      <code class="literal">-f</code> can also be useful to terminate Cygwin processes
+      not answering to SIGKILL.</p><p>Unless you specific the <code class="literal">-W</code> option, the "pid"
+      values used by <span class="command"><strong>kill</strong></span> are the Cygwin pids, not the
+      Windows pids. To get a list of running programs and their Cygwin pids,
+      use the Cygwin <span class="command"><strong>ps</strong></span> program. <span class="command"><strong>ps -W</strong></span>
+      will display <span class="emphasis"><em>all</em></span> windows pids.</p><p>The <span class="command"><strong>kill -l</strong></span> option prints the name of the given
+      signal, or a list of all signal names if no signal is given.</p><p>To send a specific signal, use the <code class="literal">-signN</code> option,
+      either with a signal number or a signal name (minus the "SIG" part), as
+      shown in these examples:</p><div class="example"><a name="utils-kill-ex"></a><p class="title"><b>Example&#160;3.6.&#160;Using the kill command</b></p><div class="example-contents"><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>kill 123</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>kill -1 123</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>kill -HUP 123</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>kill -f 123</code></strong>
+</pre></div></div><br class="example-break"><p>Here is a list of available signals, their numbers, and some
+      commentary on them, from the file
+      <code class="literal">&lt;sys/signal.h&gt;</code>, which should be considered the
+      official source of this information.</p><pre class="screen">
+SIGHUP       1    hangup
+SIGINT       2    interrupt
+SIGQUIT      3    quit
+SIGILL       4    illegal instruction (not reset when caught)
+SIGTRAP      5    trace trap (not reset when caught)
+SIGABRT      6    used by abort
+SIGIOT       6    another name for SIGABRT
+SIGEMT       7    EMT instruction
+SIGFPE       8    floating point exception
+SIGKILL      9    kill (cannot be caught or ignored)
+SIGBUS      10    bus error
+SIGSEGV     11    segmentation violation
+SIGSYS      12    bad argument to system call
+SIGPIPE     13    write on a pipe with no one to read it
+SIGALRM     14    alarm clock
+SIGTERM     15    software termination signal from kill
+SIGURG      16    urgent condition on IO channel
+SIGSTOP     17    sendable stop signal not from tty
+SIGTSTP     18    stop signal from tty
+SIGCONT     19    continue a stopped process
+SIGCHLD     20    to parent on child stop or exit
+SIGCLD      20    System V name for SIGCHLD
+SIGTTIN     21    to readers pgrp upon background tty read
+SIGTTOU     22    like TTIN for output if (tp-&gt;t_local&amp;LTOSTOP)
+SIGIO       23    input/output possible
+SIGPOLL     23    System V name for SIGIO
+SIGXCPU     24    exceeded CPU time limit
+SIGXFSZ     25    exceeded file size limit
+SIGVTALRM   26    virtual time alarm
+SIGPROF     27    profiling time alarm
+SIGWINCH    28    window changed
+SIGLOST     29    resource lost (eg, record-lock lost)
+SIGPWR      29    power failure
+SIGUSR1     30    user defined signal 1
+SIGUSR2     31    user defined signal 2
+</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gmondump.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ldd.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">gmondump&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;ldd</td></tr></table></div></body></html>

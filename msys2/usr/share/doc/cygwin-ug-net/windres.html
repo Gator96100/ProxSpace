@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Defining Windows Resources</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="programming.html" title="Chapter&#160;4.&#160;Programming with Cygwin"><link rel="prev" href="dll.html" title="Building and Using DLLs"><link rel="next" href="gprof.html" title="Profiling Cygwin Programs"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Defining Windows Resources</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="dll.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;4.&#160;Programming with Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="gprof.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="windres"></a>Defining Windows Resources</h2></div></div></div><p><code class="filename">windres</code> reads a Windows resource file
+(<code class="filename">*.rc</code>) and converts it to a res or coff file.
+The syntax and semantics of the input file are the same as for any
+other resource compiler, so please refer to any publication describing
+the Windows resource format for details.  Also, the
+<code class="filename">windres</code> program itself is fully documented in the
+Binutils manual.  Here's an example of using it in a project:</p><pre class="screen">
+
+myapp.exe : myapp.o myapp.res
+	gcc -mwindows myapp.o myapp.res -o $@
+
+myapp.res : myapp.rc resource.h
+	windres $&lt; -O coff -o $@
+
+</pre><p>What follows is a quick-reference to the syntax
+<code class="filename">windres</code> supports.</p><pre class="screen">
+
+id ACCELERATORS suboptions
+BEG
+"^C" 12
+"Q" 12
+65 12
+65 12 , VIRTKEY ASCII NOINVERT SHIFT CONTROL ALT
+65 12 , VIRTKEY, ASCII, NOINVERT, SHIFT, CONTROL, ALT
+(12 is an acc_id)
+END
+
+SHIFT, CONTROL, ALT require VIRTKEY
+
+
+id BITMAP memflags "filename"
+memflags defaults to MOVEABLE
+
+
+id CURSOR memflags "filename"
+memflags defaults to MOVEABLE,DISCARDABLE
+
+
+id DIALOG memflags exstyle x,y,width,height styles BEG controls END
+id DIALOGEX memflags exstyle x,y,width,height styles BEG controls END
+id DIALOGEX memflags exstyle x,y,width,height,helpid styles BEG controls END
+
+memflags defaults to MOVEABLE
+exstyle may be EXSTYLE=number
+styles:	CAPTION "string"
+	CLASS id
+	STYLE  FOO | NOT FOO | (12)
+	EXSTYLE number
+	FONT number, "name"
+	FONT number, "name",weight,italic
+	MENU id
+	CHARACTERISTICS number
+	LANGUAGE number,number
+	VERSIONK number
+controls:
+	AUTO3STATE params
+	AUTOCHECKBOX params
+	AUTORADIOBUTTON params
+	BEDIT params
+	CHECKBOX params
+	COMBOBOX params
+	CONTROL ["name",] id, class, style, x,y,w,h [,exstyle] [data]
+	CONTROL ["name",] id, class, style, x,y,w,h, exstyle, helpid [data]
+	CTEXT params
+	DEFPUSHBUTTON params
+	EDITTEXT params
+	GROUPBOX params
+	HEDIT params
+	ICON ["name",] id, x,y [data]
+	ICON ["name",] id, x,y,w,h, style, exstyle [data]
+	ICON ["name",] id, x,y,w,h, style, exstyle, helpid [data]
+	IEDIT params
+	LISTBOX params
+	LTEXT params
+	PUSHBOX params
+	PUSHBUTTON params
+	RADIOBUTTON params
+	RTEXT params
+	SCROLLBAR params
+	STATE3 params
+	USERBUTTON "string", id, x,y,w,h, style, exstyle
+params:
+	["name",] id, x, y, w, h, [data]
+	["name",] id, x, y, w, h, style [,exstyle] [data]
+	["name",] id, x, y, w, h, style, exstyle, helpid [data]
+
+[data] is optional BEG (string|number) [,(string|number)] (etc) END
+
+
+id FONT memflags "filename"
+memflags defaults to MOVEABLE|DISCARDABLE
+
+id ICON memflags "filename"
+memflags defaults to MOVEABLE|DISCARDABLE
+
+LANGUAGE num,num
+
+id MENU options BEG items END
+items:
+	"string", id, flags
+	SEPARATOR
+	POPUP "string" flags BEG menuitems END
+flags:
+	CHECKED
+	GRAYED
+	HELP
+	INACTIVE
+	MENUBARBREAK
+	MENUBREAK
+
+id MENUEX suboptions BEG items END
+items:
+	MENUITEM "string"
+	MENUITEM "string", id
+	MENUITEM "string", id, type [,state]
+	POPUP "string" BEG items END
+	POPUP "string", id BEG items END
+	POPUP "string", id, type BEG items END
+	POPUP "string", id, type, state [,helpid] BEG items END
+
+id MESSAGETABLE memflags "filename"
+memflags defaults to MOVEABLE
+
+id RCDATA suboptions BEG (string|number) [,(string|number)] (etc) END
+
+STRINGTABLE suboptions BEG strings END
+strings:
+	id "string"
+	id, "string"
+
+(User data)
+id id suboptions BEG (string|number) [,(string|number)] (etc) END
+
+id VERSIONINFO stuffs BEG verblocks END
+stuffs:	FILEVERSION num,num,num,num
+	PRODUCTVERSION num,num,num,num
+	FILEFLAGSMASK num
+	FILEOS num
+	FILETYPE num
+	FILESUBTYPE num
+verblocks:
+	BLOCK "StringFileInfo" BEG BLOCK BEG vervals END END
+	BLOCK "VarFileInfo" BEG BLOCK BEG vertrans END END
+vervals: VALUE "foo","bar"
+vertrans: VALUE num,num
+
+
+
+suboptions:
+	memflags
+	CHARACTERISTICS num
+	LANGUAGE num,num
+	VERSIONK num
+
+memflags are MOVEABLE/FIXED PURE/IMPURE PRELOAD/LOADONCALL DISCARDABLE
+
+</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="dll.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="programming.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="gprof.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Building and Using DLLs&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Profiling Cygwin Programs</td></tr></table></div></body></html>

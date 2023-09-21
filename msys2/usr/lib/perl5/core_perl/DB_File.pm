@@ -2,7 +2,7 @@
 #
 # Written by Paul Marquess (pmqs@cpan.org)
 #
-#     Copyright (c) 1995-2020 Paul Marquess. All rights reserved.
+#     Copyright (c) 1995-2022 Paul Marquess. All rights reserved.
 #     This program is free software; you can redistribute it and/or
 #     modify it under the same terms as Perl itself.
 
@@ -165,7 +165,7 @@ use Carp;
 # Module not thread safe, so don't clone
 sub CLONE_SKIP { 1 }
 
-$VERSION = "1.853" ;
+$VERSION = "1.857" ;
 $VERSION = eval $VERSION; # needed for dev releases
 
 {
@@ -182,9 +182,9 @@ $VERSION = eval $VERSION; # needed for dev releases
 }
 
 #typedef enum { DB_BTREE, DB_HASH, DB_RECNO } DBTYPE;
-$DB_BTREE = new DB_File::BTREEINFO ;
-$DB_HASH  = new DB_File::HASHINFO ;
-$DB_RECNO = new DB_File::RECNOINFO ;
+$DB_BTREE = DB_File::BTREEINFO->new();
+$DB_HASH  = DB_File::HASHINFO->new();
+$DB_RECNO = DB_File::RECNOINFO->new();
 
 require Tie::Hash;
 require Exporter;
@@ -256,7 +256,7 @@ eval {
 if ($use_XSLoader)
   { XSLoader::load("DB_File", $VERSION)}
 else
-  { bootstrap DB_File $VERSION }
+  { DB_File->bootstrap( $VERSION ) }
 
 sub tie_hash_or_array
 {
@@ -763,7 +763,7 @@ type.
 Here are examples of the constructors and the valid options available
 for DB_HASH, DB_BTREE and DB_RECNO respectively.
 
-     $a = new DB_File::HASHINFO ;
+     $a = DB_File::HASHINFO->new();
      $a->{'bsize'} ;
      $a->{'cachesize'} ;
      $a->{'ffactor'};
@@ -771,7 +771,7 @@ for DB_HASH, DB_BTREE and DB_RECNO respectively.
      $a->{'lorder'} ;
      $a->{'nelem'} ;
 
-     $b = new DB_File::BTREEINFO ;
+     $b = DB_File::BTREEINFO->new();
      $b->{'flags'} ;
      $b->{'cachesize'} ;
      $b->{'maxkeypage'} ;
@@ -781,7 +781,7 @@ for DB_HASH, DB_BTREE and DB_RECNO respectively.
      $b->{'prefix'} ;
      $b->{'lorder'} ;
 
-     $c = new DB_File::RECNOINFO ;
+     $c = DB_File::RECNOINFO->new();
      $c->{'bval'} ;
      $c->{'cachesize'} ;
      $c->{'psize'} ;
@@ -795,7 +795,7 @@ of their C counterpart. Like their C counterparts, all are set to a
 default values - that means you don't have to set I<all> of the
 values when you only want to change one. Here is an example:
 
-     $a = new DB_File::HASHINFO ;
+     $a = DB_File::HASHINFO->new();
      $a->{'cachesize'} =  12345 ;
      tie %y, 'DB_File', "filename", $flags, 0777, $a ;
 
@@ -2325,7 +2325,7 @@ archive in F<src/misc/db.1.85.tar.gz>.
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995-2020 Paul Marquess. All rights reserved. This program
+Copyright (c) 1995-2022 Paul Marquess. All rights reserved. This program
 is free software; you can redistribute it and/or modify it under the
 same terms as Perl itself.
 

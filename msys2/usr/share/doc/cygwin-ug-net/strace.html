@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>strace</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="ssp.html" title="ssp"><link rel="next" href="tzset.html" title="tzset"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">strace</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="ssp.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="tzset.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="strace"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>strace &#8212; Trace system calls and signals</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">strace</code>  [-defnqtuw] [-b <em class="replaceable"><code>SIZE</code></em>] [-m <em class="replaceable"><code>MASK</code></em>] [-o <em class="replaceable"><code>FILENAME</code></em>] [-f <em class="replaceable"><code>PERIOD</code></em>] { <em class="replaceable"><code>command-line</code></em>...  |   
+	    [-T]
+	      -p <em class="replaceable"><code>pid</code></em> 
+	   }</p></div><div class="cmdsynopsis"><p><code class="command">strace</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="strace-options"></a><h2>Options</h2><pre class="screen">
+  -b, --buffer-size=SIZE       set size of output file buffer
+  -d, --no-delta               don't display the delta-t microsecond timestamp
+  -e, --events                 log all Windows DEBUG_EVENTS (toggle - default true)
+  -f, --trace-children         trace child processes (toggle - default true)
+  -h, --help                   output usage information and exit
+  -m, --mask=MASK              set message filter mask
+  -n, --crack-error-numbers    output descriptive text instead of error
+                               numbers for Windows errors
+  -o, --output=FILENAME        set output file to FILENAME
+  -p, --pid=n                  attach to executing program with cygwin pid n
+  -q, --quiet                  toggle "quiet" flag.  Defaults to on if "-p",
+                               off otherwise.
+  -S, --flush-period=PERIOD    flush buffered strace output every PERIOD secs
+  -t, --timestamp              use an absolute hh:mm:ss timestamp insted of
+                               the default microsecond timestamp.  Implies -d
+  -T, --toggle                 toggle tracing in a process already being
+                               traced. Requires -p &lt;pid&gt;
+  -u, --usecs                  toggle printing of microseconds timestamp
+  -V, --version                output version information and exit
+  -w, --new-window             spawn program under test in a new window
+
+    MASK can be any combination of the following mnemonics and/or hex values
+    (0x is optional).  Combine masks with '+' or ',' like so:
+
+                      --mask=wm+system,malloc+0x00800
+
+    Mnemonic Hex     Corresponding Def  Description
+    =========================================================================
+    all      0x000001 (_STRACE_ALL)      All strace messages.
+    flush    0x000002 (_STRACE_FLUSH)    Flush output buffer after each message.
+    inherit  0x000004 (_STRACE_INHERIT)  Children inherit mask from parent.
+    uhoh     0x000008 (_STRACE_UHOH)     Unusual or weird phenomenon.
+    syscall  0x000010 (_STRACE_SYSCALL)  System calls.
+    startup  0x000020 (_STRACE_STARTUP)  argc/envp printout at startup.
+    debug    0x000040 (_STRACE_DEBUG)    Info to help debugging.
+    paranoid 0x000080 (_STRACE_PARANOID) Paranoid info.
+    termios  0x000100 (_STRACE_TERMIOS)  Info for debugging termios stuff.
+    select   0x000200 (_STRACE_SELECT)   Info on ugly select internals.
+    wm       0x000400 (_STRACE_WM)       Trace Windows msgs (enable _strace_wm).
+    sigp     0x000800 (_STRACE_SIGP)     Trace signal and process handling.
+    minimal  0x001000 (_STRACE_MINIMAL)  Very minimal strace output.
+    pthread  0x002000 (_STRACE_PTHREAD)  Pthread calls.
+    exitdump 0x004000 (_STRACE_EXITDUMP) Dump strace cache on exit.
+    system   0x008000 (_STRACE_SYSTEM)   Serious error; goes to console and log.
+    nomutex  0x010000 (_STRACE_NOMUTEX)  Don't use mutex for synchronization.
+    malloc   0x020000 (_STRACE_MALLOC)   Trace malloc calls.
+    thread   0x040000 (_STRACE_THREAD)   Thread-locking calls.
+    special  0x100000 (_STRACE_SPECIAL)  Special debugging printfs for
+                                         non-checked-in code
+</pre></div><div class="refsect1"><a name="strace-desc"></a><h2>Description</h2><p>The <span class="command"><strong>strace</strong></span> program executes a program, and
+      optionally the children of the program, reporting any Cygwin DLL output
+      from the program(s) to stdout, or to a file with the
+      <code class="literal">-o</code> option. With the <code class="literal">-w</code> option, you
+      can start an strace session in a new window, for example:
+      </p><pre class="screen">
+$ strace -o tracing_output -w sh -c 'while true; do echo "tracing..."; done' &amp;
+</pre><p>
+      This is particularly useful for <span class="command"><strong>strace</strong></span> sessions that
+      take a long time to complete. </p><p> Note that <span class="command"><strong>strace</strong></span> is a standalone Windows program
+      and so does not rely on the Cygwin DLL itself (you can verify this with
+      <span class="command"><strong>cygcheck</strong></span>). As a result it does not understand
+      symlinks. This program is mainly useful for debugging the Cygwin DLL
+      itself.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ssp.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="tzset.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">ssp&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;tzset</td></tr></table></div></body></html>

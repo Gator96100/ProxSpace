@@ -1,0 +1,75 @@
+'\" t
+.\"     Title: cygwin_set_impersonation_token
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin API Reference
+.\"    Source: Cygwin API Reference
+.\"  Language: English
+.\"
+.TH "CYGWIN_SET_IMPERSONATION_TOKEN" "3" "07/14/2023" "Cygwin API Reference" "Cygwin API Reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+cygwin_set_impersonation_token
+.SH "SYNOPSIS"
+.sp
+.ft B
+.nf
+#include <sys/cygwin\&.h>
+.fi
+.ft
+.HP \w'void\ cygwin_set_impersonation_token('u
+.BI "void cygwin_set_impersonation_token(const\ HANDLE\ " "token" ");"
+.SH "DESCRIPTION"
+.PP
+Use this function to enable the token given as parameter as impersonation token for the next call to
+\fBsetuid\fR
+or
+\fBseteuid\fR\&. Use
+\fBcygwin_set_impersonation_token\fR
+together with
+\fBcygwin_logon_user\fR
+to impersonate users using password authentication\&.
+.SH "SEE ALSO"
+.PP
+See also the chapter
+\m[blue]\fBSwitching the user context\fR\m[]\&\s-2\u[1]\d\s+2
+in the Cygwin User\*(Aqs guide\&.
+.PP
+See also
+cygwin_logon_user
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp
+.SH "NOTES"
+.IP " 1." 4
+Switching the user context
+.RS 4
+\%https://cygwin.com/cygwin-ug-net/../cygwin-ug-net/ntsec.html#ntsec-setuid-overview
+.RE

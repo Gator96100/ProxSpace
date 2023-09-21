@@ -1,7 +1,7 @@
 
 require 5;
 package Pod::Simple::DumpAsXML;
-$VERSION = '3.40';
+$VERSION = '3.43';
 use Pod::Simple ();
 BEGIN {@ISA = ('Pod::Simple')}
 
@@ -28,7 +28,7 @@ sub _handle_element_start {
   my $fh = $_[0]{'output_fh'};
   my($key, $value);
   DEBUG and print STDERR "++ $_[1]\n";
-
+  
   print $fh   '  ' x ($_[0]{'indent'} || 0),  "<", $_[1];
 
   foreach my $key (sort keys %{$_[2]}) {

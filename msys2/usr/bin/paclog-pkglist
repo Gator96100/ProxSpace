@@ -18,22 +18,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 declare -r myname='paclog-pkglist'
-declare -r myver='1.4.0'
+declare -r myver='1.9.1'
 
 export TEXTDOMAIN='pacman'
 export TEXTDOMAINDIR='/usr/share/locale'
 declare logfile=${1:-/var/log/pacman.log}
 
 usage() {
-	printf "%s v%s\n" "${myname}" "${myver}"
-	echo
-	echo "Parse a log file into a list of currently installed packages"
-	echo
-	printf "Usage: %s [path to pacman log]\n" "${myname}"
-	echo
-	printf "Example: %s /var/log/pacman.log\n" "${myname}"
-	echo
-	echo 'Defaults to: /var/log/pacman.log'
+	cat <<EOF
+${myname} v${myver}
+
+Parse a log file into a list of currently installed packages.
+
+Usage: ${myname} [path to pacman log]
+
+Options:
+  -h, --help     show this help message and exit
+  -V, --version  display version information and exit
+
+Example: ${myname} /var/log/pacman.log
+
+Defaults to: /var/log/pacman.log
+EOF
 }
 
 version() {
@@ -95,5 +101,3 @@ END {
 		}
 	}
 }' | sort
-
-# vim: set noet:

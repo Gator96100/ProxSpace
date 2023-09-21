@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>cygcheck</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="chattr.html" title="chattr"><link rel="next" href="cygpath.html" title="cygpath"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">cygcheck</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="chattr.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="cygpath.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="cygcheck"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>cygcheck &#8212; List system information, check installed packages, or query package database</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">cygcheck</code>  [-v] [-h]  <em class="replaceable"><code>PROGRAM</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   -c  [-d] [<em class="replaceable"><code>PACKAGE</code></em>]</p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   -s  [-r] [-v] [-h]</p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   -k </p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   -f   <em class="replaceable"><code>FILE</code></em>... </p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   -l  [<em class="replaceable"><code>PACKAGE</code></em>...]</p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   -p <em class="replaceable"><code>REGEXP</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>   --delete-orphaned-installation-keys </p></div><div class="cmdsynopsis"><p><code class="command">cygcheck</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="cygcheck-options"></a><h2>Options</h2><pre class="screen">
+At least one command option or a PROGRAM is required, as shown above.
+
+  PROGRAM              list library (DLL) dependencies of PROGRAM
+  -c, --check-setup    show installed version of PACKAGE and verify integrity
+                       (or for all installed packages if none specified)
+  -d, --dump-only      just list packages, do not verify (with -c)
+  -s, --sysinfo        produce diagnostic system information (implies -c -d)
+  -r, --registry       also scan registry for Cygwin settings (with -s)
+  -k, --keycheck       perform a keyboard check session (must be run from a
+                       plain console only, not from a pty/rxvt/xterm)
+  -f, --find-package   find the package to which FILE belongs
+  -l, --list-package   list contents of PACKAGE (or all packages if none given)
+  -p, --package-query  search for REGEXP in the entire cygwin.com package
+                       repository (requires internet connectivity)
+  --delete-orphaned-installation-keys
+                       Delete installation keys of old, now unused
+                       installations from the registry.  Requires the right
+                       to change the registry.
+  -v, --verbose        produce more verbose output
+  -h, --help           annotate output with explanatory comments when given
+                       with another command, otherwise print this help
+  -V, --version        print the version of cygcheck and exit
+
+Note: -c, -f, and -l only report on packages that are currently installed. To
+  search all official Cygwin packages use -p instead.  The -p REGEXP matches
+  package names, descriptions, and names of files/paths within all packages.
+</pre></div><div class="refsect1"><a name="cygcheck-desc"></a><h2>Description</h2><p> The <span class="command"><strong>cygcheck</strong></span> program is a diagnostic utility for
+      dealing with Cygwin programs. If you are familiar with
+      <span class="command"><strong>dpkg</strong></span> or <span class="command"><strong>rpm</strong></span>,
+      <span class="command"><strong>cygcheck</strong></span> is similar in many ways. (The major
+      difference is that <span class="command"><strong>setup.exe</strong></span> handles installing and
+      uninstalling packages; see <a class="xref" href="setup-net.html#internet-setup" title="Internet Setup">the section called &#8220;Internet Setup&#8221;</a> for more
+      information.) </p><p> The <code class="literal">-c</code> option checks the version and status of
+      installed Cygwin packages. If you specify one or more package names,
+      <span class="command"><strong>cygcheck</strong></span> will limit its output to those packages, or
+      with no arguments it lists all packages. A package will be marked
+      <code class="literal">Incomplete</code> if files originally installed are no longer
+      present. The best thing to do in that situation is reinstall the package
+      with <span class="command"><strong>setup.exe</strong></span>. To see which files are missing, use
+      the <code class="literal">-v</code> option. If you do not need to know the status
+      of each package and want <span class="command"><strong>cygcheck</strong></span> to run faster, add
+      the <code class="literal">-d</code> option and <span class="command"><strong>cygcheck</strong></span> will
+      only output the name and version for each package. </p><p> If you list one or more programs on the command line,
+      <span class="command"><strong>cygcheck</strong></span> will diagnose the runtime environment of that
+      program or programs, providing the names of DLL files on which the
+      program depends. If you specify the <code class="literal">-s</code> option,
+      <span class="command"><strong>cygcheck</strong></span> will give general system information. If you
+      list one or more programs on the command line and specify
+      <code class="literal">-s</code>, <span class="command"><strong>cygcheck</strong></span> will report on
+      both.</p><p> The <code class="literal">-f</code> option helps you to track down which
+      package a file came from, and <code class="literal">-l</code> lists all files in a
+      package. For example, to find out about
+      <code class="filename">/usr/bin/less</code> and its package:
+    </p><div class="example"><a name="utils-cygcheck-ex"></a><p class="title"><b>Example&#160;3.3.&#160;Example <span class="command">cygcheck</span>
+      usage</b></p><div class="example-contents"><pre class="screen">
+$ cygcheck -f /usr/bin/less
+less-381-1
+
+$ cygcheck -l less
+/usr/bin/less.exe
+/usr/bin/lessecho.exe
+/usr/bin/lesskey.exe
+/usr/man/man1/less.1
+/usr/man/man1/lesskey.1
+</pre></div></div><br class="example-break"><p>The <code class="literal">-h</code> option prints additional helpful messages
+      in the report, at the beginning of each section. It also adds table
+      column headings. While this is useful information, it also adds some to
+      the size of the report, so if you want a compact report or if you know
+      what everything is already, just leave this out.</p><p>The <code class="literal">-v</code> option causes the output to be more
+      verbose. What this means is that additional information will be reported
+      which is usually not interesting, such as the internal version numbers of
+      DLLs, additional information about recursive DLL usage, and if a file in
+      one directory in the PATH also occurs in other directories on the PATH. </p><p>The <code class="literal">-r</code> option causes <span class="command"><strong>cygcheck</strong></span>
+      to search your registry for information that is relevant to Cygwin
+      programs. These registry entries are the ones that have "Cygwin" in the
+      name. If you are paranoid about privacy, you may remove information from
+      this report, but please keep in mind that doing so makes it harder to
+      diagnose your problems.</p><p>In contrast to the other options that search the packages that are
+      installed on your local system, the <code class="literal">-p</code> option can be
+      used to search the entire official Cygwin package repository. It takes as
+      argument a Perl-compatible regular expression which is used to match
+      package names, package descriptions, and path/filenames of the contents
+      of packages. This feature requires an active internet connection, since
+      it must query the <code class="literal">cygwin.com</code> web site. In fact, it is
+      equivalent to the search that is available on the <a class="ulink" href="https://cygwin.com/packages/" target="_top">Cygwin package listing</a>
+      page.</p><p>For example, perhaps you are getting an error because you are missing
+      a certain DLL and you want to know which package includes that file:
+    </p><div class="example"><a name="utils-search-ex"></a><p class="title"><b>Example&#160;3.4.&#160;Searching all packages for a
+      file</b></p><div class="example-contents"><pre class="screen">
+$ cygcheck -p 'cygintl-2\.dll'
+Found 1 matches for 'cygintl-2\.dll'.
+
+libintl2-0.12.1-3         GNU Internationalization runtime library
+
+$ cygcheck -p 'libexpat.*\.a'
+Found 2 matches for 'libexpat.*\.a'.
+
+expat-1.95.7-1            XML parser library written in C
+expat-1.95.8-1            XML parser library written in C
+
+$ cygcheck -p '/ls\.exe'
+Found 2 matches for '/ls\.exe'.
+
+coreutils-5.2.1-5         GNU core utilities (includes fileutils, sh-utils and textutils)
+coreutils-5.3.0-6         GNU core utilities (includes fileutils, sh-utils and textutils)
+</pre></div></div><br class="example-break"><p>Note that this option takes a regular expression, not a glob or
+      wildcard. This means that you need to use <code class="literal">.*</code> if you
+      want something similar to the wildcard <code class="literal">*</code> commonly used
+      in filename globbing. Similarly, to match the period character you should
+      use <code class="literal">\.</code> since the <code class="literal">.</code> character in a
+      regexp is a metacharacter that will match any character. Also be aware
+      that the characters such as <code class="literal">\</code> and <code class="literal">*</code>
+      are shell metacharacters, so they must be either escaped or quoted, as in
+      the example above.</p><p>The third example above illustrates that if you want to match a whole
+      filename, you should include the <code class="literal">/</code> path seperator. In
+      the given example this ensures that filenames that happen to end in
+      <code class="literal">ls.exe</code> such as <code class="literal">ncftpls.exe</code> are not
+      shown. Note that this use does not mean "look for packages with
+      <code class="literal">ls</code> in the root directory," since the
+      <code class="literal">/</code> can match anywhere in the path. It's just there to
+      anchor the match so that it matches a full filename.</p><p>By default the matching is case-sensitive. To get a case insensitive
+      match, begin your regexp with <code class="literal">(?i)</code> which is a
+      PCRE-specific feature. For complete documentation on Perl-compatible
+      regular expression syntax and options, read the <span class="command"><strong>perlre</strong></span>
+      manpage, or one of many websites such as <code class="literal">perldoc.com</code>
+      that document the Perl language.</p><p>The <span class="command"><strong>cygcheck</strong></span> program should be used to send
+      information about your system for troubleshooting when requested. When
+      asked to run this command save the output so that you can email it, for
+      example:</p><pre class="screen">
+<code class="prompt">$</code> <strong class="userinput"><code>cygcheck -s -v -r -h &gt; cygcheck_output.txt</code></strong>
+</pre><p> Each Cygwin DLL stores its path and installation key in the
+      registry. This allows troubleshooting of problems which could be a result
+      of having multiple concurrent Cygwin installations. However, if you're
+      experimenting a lot with different Cygwin installation paths, your
+      registry could accumulate a lot of old Cygwin installation entries for
+      which the installation doesn't exist anymore. To get rid of these
+      orphaned registry entries, use the <span class="command"><strong>cygcheck
+      --delete-orphaned-installation-keys</strong></span> command.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="chattr.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="cygpath.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">chattr&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;cygpath</td></tr></table></div></body></html>

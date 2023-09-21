@@ -5,6 +5,6 @@ includedir=${prefix}/include
 
 Name: libmagic
 Description: Magic number recognition library
-Version: 5.40
+Version: 5.44
 Libs: -L${libdir} -lmagic
-Libs.private: -lbz2 -lz 
+Libs.private: -lzstd -llzma -lbz2 -lz 

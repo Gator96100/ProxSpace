@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>The CYGWIN environment variable</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="proc.html" title="proc"><link rel="next" href="ntsec.html" title="POSIX accounts, permission, and security"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The <code class="envar">CYGWIN</code> environment
+variable</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="proc.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="ntsec.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-cygwinenv"></a>The <code class="envar">CYGWIN</code> environment
+variable</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="cygwinenv-implemented-options"></a>Implemented options</h3></div></div></div><p>The <code class="envar">CYGWIN</code> environment variable is used to configure
+many global settings for the Cygwin runtime system. It contains the options
+listed below, separated by blank characters. Many options can be turned off
+by prefixing with <code class="literal">no</code>.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)export</code> - If set, the final values of these
+settings are re-exported to the environment as <code class="envar">CYGWIN</code> again.
+Defaults to off.</p></li><li class="listitem" style="list-style-type: disc"><p>
+<code class="envar">error_start:Win32filepath</code> - if set, runs 
+<code class="filename">Win32filepath</code> when cygwin encounters a fatal error,
+which is useful for debugging.  <code class="filename">Win32filepath</code> is
+usually set to the path to <span class="command"><strong>gdb</strong></span> or
+<span class="command"><strong>dumper</strong></span>, for example
+<code class="filename">C:\cygwin\bin\gdb.exe</code>.
+There is no default set.
+</p><p>
+The filename of the executing program and it's Windows process id are appended
+to the command as arguments.
+</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)glob[:ignorecase]</code> - if set, command line arguments
+containing UNIX-style file wildcard characters (brackets, braces, question mark,
+asterisk, escaped with \) are expanded into lists of files that match 
+those wildcards.
+This is applicable only to programs run from non-Cygwin programs such as a CMD prompt.
+That means that this setting does not affect globbing operations for shells such as
+bash, sh, tcsh, zsh, etc.
+Default is set.</p><p>This option also accepts an optional <code class="literal">[no]ignorecase</code> modifer.
+If supplied, wildcard matching is case insensitive.  The default is <code class="literal">noignorecase</code></p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)pipe_byte</code> - if set, Cygwin opens pipes in byte mode rather than
+message mode.  This is the default starting with Cygwin 3.4.0.
+</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">proc_retry:n</code> - causes <code class="function">fork()</code> and
+<code class="function">exec*()</code> to retry n times when a child process fails
+due to certain windows-specific errors.  These errors usually occur when
+processes are being started while a user is logging off.
+</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)reset_com</code> - if set, serial ports are reset
+to 9600-8-N-1 with no flow control when used. This is done at open
+time and when handles are inherited.  Defaults to set.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)wincmdln</code> - if set, the windows complete command
+line (truncated to ~32K) will be passed on any processes that it creates
+in addition to the normal UNIX argv list.  Defaults to set.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">winsymlinks:{lnk,native,nativestrict,sys}</code></p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; "><li class="listitem" style="list-style-type: square"><p>If set to just
+<code class="literal">winsymlinks</code> or <code class="literal">winsymlinks:lnk</code>,
+Cygwin creates symlinks as Windows shortcuts with a special header and
+the R/O attribute set.</p></li><li class="listitem" style="list-style-type: square"><p>If set to <code class="literal">winsymlinks:native</code> or
+<code class="literal">winsymlinks:nativestrict</code>, Cygwin creates symlinks as
+native Windows symlinks on filesystems and OS versions supporting them.</p><p>The difference between <code class="literal">winsymlinks:native</code> and
+<code class="literal">winsymlinks:nativestrict</code> is this:  If the filesystem
+supports native symlinks and Cygwin fails to create a native symlink for
+some reason, it will fall back to creating Cygwin default symlinks
+with <code class="literal">winsymlinks:native</code>, while with
+<code class="literal">winsymlinks:nativestrict</code> the <code class="literal">symlink(2)</code>
+system call will immediately fail.</p></li><li class="listitem" style="list-style-type: square"><p>If set to <code class="literal">winsymlinks:sys</code>, Cygwin creates symlinks as
+plain files with the <code class="literal">system</code> attribute, containing a magic
+cookie followed by the path to which the link points.</p></li></ul></div><p>Note that this setting has no effect where Cygwin knows that the
+filesystem only supports a creating symlinks in a specific way.</p><p>For more information on symbolic links, see
+<a class="xref" href="using.html#pathnames-symlinks" title="Symbolic links">the section called &#8220;Symbolic links&#8221;</a>.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">disable_pcon</code> - if set, pseudo console support in
+pty will be disabled.  This is for programs which do not work properly
+under pty with pseudo console enabled.  Defaults to not set.</p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="cygwinenv-removed-options"></a>Obsolete options</h3></div></div></div><p>
+Certain CYGWIN options available in past releases have been removed over
+time for one reason or another.  These obsolete options are listed
+below.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)binmode</code> - This option has been removed because
+all file opens default to binary mode, unless the open mode has been specified
+explicitly in the open(2) call.
+</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)detect_bloda</code> - No case of a BLODA found by this
+option has been reported in years.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)dosfilewarning</code> - This option had been disabled for
+quite some time and nobody missed it.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">check_case</code> - This option has been removed in favor of
+real case sensitivity and the per-mount option "posix=[0|1]".  For more
+information, read the documentation in <a class="xref" href="using.html#mount-table" title="The Cygwin Mount Table">the section called &#8220;The Cygwin Mount Table&#8221;</a> and
+<a class="xref" href="using-specialnames.html#pathnames-casesensitive" title="Case sensitive filenames">the section called &#8220;Case sensitive filenames&#8221;</a>.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">codepage:[ansi|oem]</code> - This option controlled
+which character set is used for file and console operations.  Since Cygwin
+is now doing all character conversion by itself, depending on the
+application call to the <code class="function">setlocale()</code> function, and in
+turn by the setting of the environment variables <code class="envar">$LANG</code>,
+<code class="envar">$LC_ALL</code>, or <code class="envar">$LC_CTYPE</code>, this setting
+became superfluous.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)envcache</code> - Originally, <code class="envar">envcache</code>
+controlled caching of environment variable conversion between Win32 and
+POSIX.  The default setting works fine, the option was just useless.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">forkchunk:[intval]</code> - This option allowed to influence
+the <code class="function">fork()</code> function in the way the memory of the
+parent process gets copied to the child process.  This functionality was
+only useful for Windows 95/98/Me.
+</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)ntea</code> -  This option has been removed since it
+only fakes security which is considered dangerous and useless.  It also
+created an uncontrollably large file on FAT and was entirely useless
+on FAT32.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)ntsec</code> - This option has been removed in favor of
+the per-mount option "acl"/"noacl".  For more information, read the
+documentation in <a class="xref" href="using.html#mount-table" title="The Cygwin Mount Table">the section called &#8220;The Cygwin Mount Table&#8221;</a>.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)server</code> - Originally this option had to be
+enabled on the client side to use features only available when running
+<span class="command"><strong>cygserver</strong></span>.  This option has been removed because Cygwin now
+always tries to contact cygserver if a function is called which requires
+cygserver being available.  For more information, read the documentation
+in <a class="xref" href="using-cygserver.html" title="Cygserver">the section called &#8220;Cygserver&#8221;</a>.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)smbntsec</code> - This option has been removed in favor of
+the per-mount option "acl"/"noacl".  For more information, read the
+documentation in <a class="xref" href="using.html#mount-table" title="The Cygwin Mount Table">the section called &#8220;The Cygwin Mount Table&#8221;</a>.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)strip_title</code> - Removed because setting the Window title
+can be controlled by the application via Escape sequences.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)title</code> - Removed because setting the Window title
+can be controlled by the application via Escape sequences.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)transparent_exe</code> - This option has been removed
+because the behaviour it switched on is now the standard behaviour in
+Cygwin.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)traverse</code> - This option has been removed because
+traverse checking is not quite correctly implemented by Microsoft and
+it's behaviour has been getting worse with each new OS version.  This
+complicates its usage so the option has been removed for now.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)tty</code> - If set, Cygwin enabled extra support
+(i.e., termios) for UNIX-like ttys in the Windows console. This option
+has been removed because it can be easily replaced by using a terminal
+like <span class="command"><strong>mintty</strong></span>, and it does not work well with some
+Windows programs.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)upcaseenv</code> - This option could be used to convert
+all environment variables to uppercase.  This was the default behavior in
+older releases of Cygwin.  Since keeping the case of environment variables
+intact is POSIXly correct, Cygwin now does not change the case
+of environment variables, except for a restricted set to maintain minimal
+backward compatibility.  The current list of always uppercased variables is:
+</p><pre class="screen">
+  COMMONPROGRAMFILES
+  COMSPEC
+  PATH
+  SYSTEMDRIVE
+  SYSTEMROOT
+  TEMP
+  TMP
+  WINDIR
+</pre></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="proc.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ntsec.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">proc&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;POSIX accounts, permission, and security</td></tr></table></div></body></html>

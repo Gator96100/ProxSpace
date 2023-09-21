@@ -1,0 +1,46 @@
+%NAME%
+libksba
+
+%VERSION%
+1.6.4-1
+
+%BASE%
+libksba
+
+%DESC%
+A CMS and X.509 access library
+
+%URL%
+https://www.gnupg.org/related_software/libksba/
+
+%ARCH%
+x86_64
+
+%BUILDDATE%
+1688331835
+
+%INSTALLDATE%
+1689650131
+
+%PACKAGER%
+CI (msys2/msys2-autobuild/95ab14df/5438533141)
+
+%SIZE%
+274818
+
+%REASON%
+1
+
+%GROUPS%
+libraries
+
+%LICENSE%
+spdx:LGPL-3.0-or-later OR GPL-2.0-or-later
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+gcc-libs
+libgpg-error
+

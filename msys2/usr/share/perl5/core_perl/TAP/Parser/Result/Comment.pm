@@ -11,11 +11,11 @@ TAP::Parser::Result::Comment - Comment result token.
 
 =head1 VERSION
 
-Version 3.42
+Version 3.44
 
 =cut
 
-our $VERSION = '3.42';
+our $VERSION = '3.44';
 
 =head1 DESCRIPTION
 
@@ -45,7 +45,7 @@ Note that this method merely returns the comment preceded by a '# '.
 
 =head2 Instance Methods
 
-=head3 C<comment>
+=head3 C<comment> 
 
   if ( $result->is_comment ) {
       my $comment = $result->comment;

@@ -1,0 +1,271 @@
+'\" t
+.\"     Title: regtool
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "REGTOOL" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+regtool \- View or edit the Windows registry
+.SH "SYNOPSIS"
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR [\-qvwW] add|check|get|list|remove|unset|load|unload|save \fIKEY\fR [\fIPATH\fR | \fIDATA\fR...]
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR add \fIKEY\eSUBKEY\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR check \fIKEY\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR [\-bnx] get \fIKEY\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR [\-klp] list \fIKEY\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR remove \fIKEY\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR [\-bDeimnQsf] set \fIKEY\eVALUE\fR [\fIDATA\fR...]
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR [\-f] unset \fIKEY\eVALUE\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR load \fIKEY\eSUBKEY\fR \fIPATH\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR unload \fIKEY\eSUBKEY\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR save \fIKEY\eSUBKEY\fR \fIPATH\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR [\-f] restore \fIKEY/SUBKEY\fR \fIPATH\fR
+.HP \w'\fBregtool\fR\ 'u
+\fBregtool\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Actions:
+
+ add KEY\eSUBKEY             add new SUBKEY
+ check KEY                  exit 0 if KEY exists, 1 if not
+ get KEY\eVALUE              prints VALUE to stdout
+ list KEY                   list SUBKEYs and VALUEs
+ remove KEY                 remove KEY
+ set KEY\eVALUE [data \&.\&.\&.]   set VALUE
+ unset KEY\eVALUE            removes VALUE from KEY
+ load KEY\eSUBKEY PATH       load hive from PATH into new SUBKEY
+ unload KEY\eSUBKEY          unload hive and remove SUBKEY
+ save KEY\eSUBKEY PATH       save SUBKEY into new file PATH
+ restore KEY\eSUBKEY PATH    restore SUBKEY from file PATH
+
+Options for \*(Aqlist\*(Aq Action:
+
+ \-k, \-\-keys           print only KEYs
+ \-l, \-\-list           print only VALUEs
+ \-p, \-\-postfix        like ls \-p, appends \*(Aq\e\*(Aq postfix to KEY names
+
+Options for \*(Aqget\*(Aq Action:
+
+ \-b, \-\-binary         print REG_BINARY data as hex bytes
+ \-n, \-\-none           print data as stream of bytes as stored in registry
+ \-x, \-\-hex            print numerical data as hex numbers
+
+Options for \*(Aqset\*(Aq Action:
+
+ \-b, \-\-binary         set type to REG_BINARY (hex args or \*(Aq\-\*(Aq)
+ \-D, \-\-dword\-be       set type to REG_DWORD_BIG_ENDIAN
+ \-e, \-\-expand\-string  set type to REG_EXPAND_SZ
+ \-i, \-\-integer        set type to REG_DWORD
+ \-m, \-\-multi\-string   set type to REG_MULTI_SZ
+ \-n, \-\-none           set type to REG_NONE
+ \-Q, \-\-qword          set type to REG_QWORD
+ \-s, \-\-string         set type to REG_SZ
+
+Options for \*(Aqset\*(Aq and \*(Aqunset\*(Aq Actions:
+
+ \-K<c>, \-\-key\-separator[=]<c>  set key separator to <c> instead of \*(Aq\e\*(Aq
+
+Options for \*(Aqrestore\*(Aq action:
+
+ \-f, \-\-force    restore even if open handles exist at or beneath the location
+                in the registry hierarchy to which KEY\eSUBKEY points
+
+Other Options:
+
+ \-h, \-\-help     output usage information and exit
+ \-q, \-\-quiet    no error output, just nonzero return if KEY/VALUE missing
+ \-v, \-\-verbose  verbose output, including VALUE contents when applicable
+ \-w, \-\-wow64    access 64 bit registry view (ignored on 32 bit Windows)
+ \-W, \-\-wow32    access 32 bit registry view (ignored on 32 bit Windows)
+ \-V, \-\-version  output version information and exit
+
+KEY is in the format [host]\eprefix\eKEY\eKEY\eVALUE, where host is optional
+remote host in either \e\ehostname or hostname: format and prefix is any of:
+  root     HKCR  HKEY_CLASSES_ROOT (local only)
+  config   HKCC  HKEY_CURRENT_CONFIG (local only)
+  user     HKCU  HKEY_CURRENT_USER (local only)
+  machine  HKLM  HKEY_LOCAL_MACHINE
+  users    HKU   HKEY_USERS
+
+You can use forward slash (\*(Aq/\*(Aq) as a separator instead of backslash, in
+that case backslash is treated as an escape character\&.
+You can also supply the registry path prefix /proc/registry{,32,64}/ to
+use path completion\&.
+Example:
+  regtool list \*(Aq/HKLM/SOFTWARE/Classes/MIME/Database/Content Type/audio\e\e/wav\*(Aq
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBregtool\fR
+program allows shell scripts to access and modify the Windows registry\&. Note that modifying the Windows registry is dangerous, and carelessness here can result in an unusable system\&. Be careful\&.
+.PP
+The
+\-v
+option means "verbose"\&. For most commands, this causes additional or lengthier messages to be printed\&. Conversely, the
+\-q
+option supresses error messages, so you can use the exit status of the program to detect if a key exists or not (for example)\&.
+.PP
+The
+\-w
+option allows you to access the 64 bit view of the registry\&. Several subkeys exist in a 32 bit and a 64 bit version when running on Windows 64\&. Since Cygwin is running in 32 bit mode, it only has access to the 32 bit view of these registry keys\&. When using the
+\-w
+switch, the 64 bit view is used and
+\fBregtool\fR
+can access the entire registry\&. This option is simply ignored when running on 32 bit Windows versions\&.
+.PP
+The
+\-W
+option allows you to access the 32 bit view on the registry\&. The purpose of this option is mainly for symmetry\&. It permits creation of OS agnostic scripts which would also work in a hypothetical 64 bit version of Cygwin\&.
+.PP
+You must provide
+\fBregtool\fR
+with an
+\fIaction\fR
+following options (if any)\&. Currently, the action must be
+add,
+set,
+check,
+get,
+list,
+remove,
+set, or
+unset\&.
+.PP
+The
+add
+action adds a new key\&. The
+check
+action checks to see if a key exists (the exit code of the program is zero if it does, nonzero if it does not)\&. The
+get
+action gets the value of a key, and prints it (and nothing else) to stdout\&. Note: if the value doesn\*(Aqt exist, an error message is printed and the program returns a non\-zero exit code\&. If you give
+\-q, it doesn\*(Aqt print the message but does return the non\-zero exit code\&.
+.PP
+The
+list
+action lists the subkeys and values belonging to the given key\&. With
+list, the
+\-k
+option instructs
+\fBregtool\fR
+to print only KEYs, and the
+\-l
+option to print only VALUEs\&. The
+\-p
+option postfixes a
+\*(Aq/\*(Aq
+to each KEY, but leave VALUEs with no postfix\&. The
+remove
+action removes a key\&. Note that you may need to remove everything in the key before you may remove it, but don\*(Aqt rely on this stopping you from accidentally removing too much\&.
+.PP
+The
+get
+action prints a value within a key\&. With the
+\-b
+option, data is printed as hex bytes\&.
+\-n
+allows to print the data as a typeless stream of bytes\&. Integer values (REG_DWORD, REG_QWORD) are usually printed as decimal values\&. The
+\-x
+option allows to print the numbers as hexadecimal values\&.
+.PP
+The
+set
+action sets a value within a key\&.
+\-b
+means it\*(Aqs binary data (REG_BINARY)\&. The binary values are specified as hex bytes in the argument list\&. If the argument is
+\*(Aq\-\*(Aq, binary data is read from stdin instead\&.
+\-d
+or
+\-i
+means the value is a 32 bit integer value (REG_DWORD)\&.
+\-D
+means the value is a 32 bit integer value in Big Endian representation (REG_DWORD_BIG_ENDIAN)\&.
+\-Q
+means the value is a 64 bit integer value (REG_QWORD)\&.
+\-s
+means the value is a string (REG_SZ)\&.
+\-e
+means it\*(Aqs an expanding string (REG_EXPAND_SZ) that contains embedded environment variables\&.
+\-m
+means it\*(Aqs a multi\-string (REG_MULTI_SZ)\&. If you don\*(Aqt specify one of these,
+\fBregtool\fR
+tries to guess the type based on the value you give\&. If it looks like a number, it\*(Aqs a DWORD, unless it\*(Aqs value doesn\*(Aqt fit into 32 bit, in which case it\*(Aqs a QWORD\&. If it starts with a percent, it\*(Aqs an expanding string\&. If you give multiple values, it\*(Aqs a multi\-string\&. Else, it\*(Aqs a regular string\&.
+.PP
+The
+unset
+action removes a value from a key\&.
+.PP
+The
+load
+action adds a new subkey and loads the contents of a registry hive into it\&. The parent key must be HKEY_LOCAL_MACHINE or HKEY_USERS\&. The
+unload
+action unloads the file and removes the subkey\&.
+.PP
+The
+save
+action saves a subkey into a registry file\&. Ideally you append the suffix
+\&.reg
+to the file so it gets automatically recognized as registry file by
+\fBWindows Explorer\fR\&.
+.PP
+The
+restore
+action restores a registry subkey from a file saved via the aforementioned
+save
+action\&.
+.PP
+By default, the last "\e" or "/" is assumed to be the separator between the key and the value\&. You can use the
+\-K
+option to provide an alternate key/value separator character\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

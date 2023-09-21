@@ -78,7 +78,7 @@ function getopt(argc, argv, options, longopts,    thisopt, i, j)
             Optind++
             return "?"
         }
-        if (substr(longopts, i+1+length(thisopt), 1) == ":") {
+        if (substr(longopts, i-1+RLENGTH, 1) == ":") {
             if (j > 0)
                 Optarg = substr(argv[Optind], j + 1)
             else

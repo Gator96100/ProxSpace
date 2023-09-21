@@ -24,7 +24,7 @@ shopt -s extglob
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver='6.0.0'
+declare -r myver='6.0.2'
 declare -r confdir='/etc'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}

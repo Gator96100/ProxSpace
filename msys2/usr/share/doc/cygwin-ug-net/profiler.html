@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>profiler</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="pldd.html" title="pldd"><link rel="next" href="ps.html" title="ps"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">profiler</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="pldd.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="ps.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="profiler"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>profiler &#8212; Sampling profiler of Cygwin programs with their DLLs</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">profiler</code>  [-defw] [-o <em class="replaceable"><code>FILENAME</code></em>] [-s <em class="replaceable"><code>N</code></em>]   
+	     <em class="replaceable"><code>PROGRAM</code></em> 
+	      <em class="replaceable"><code>ARG</code></em>... 
+	    |   -p <em class="replaceable"><code>PID</code></em>  </p></div><div class="cmdsynopsis"><p><code class="command">profiler</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="profiler-options"></a><h2>Options</h2><pre class="screen">
+  -d, --debug            Display debugging messages (toggle: default false)
+  -e, --events           Display Windows DEBUG_EVENTS (toggle: default false)
+  -f, --fork-profile     Profiles child processes (toggle: default false)
+  -h, --help             Display usage information and exit
+  -o, --output=FILENAME  Write output to file FILENAME rather than stdout
+  -p, --pid=N            Attach to running program with Cygwin pid N
+                         ...                    or with Windows pid -N
+  -s, --sample-rate=N    Set IP sampling rate to N Hz (default 100)
+  -v, --verbose          Display more status messages (toggle: default false)
+  -V, --version          Display version information and exit
+  -w, --new-window       Launch given command in a new window
+</pre></div><div class="refsect1"><a name="profiler-desc"></a><h2>Description</h2><p>The <span class="command"><strong>profiler</strong></span> utility executes a given program and
+      any children of that program, collecting the location of the CPU
+      instruction pointer (IP) many times per second. (It is optional to
+      collect this info from child processes.) This info gives a profile
+      of the program's execution, showing where the most time is being spent.
+      This profiling technique is called "IP sampling".</p><p>A novel feature of <span class="command"><strong>profiler</strong></span> is that time spent in
+      DLLs loaded with or by your program is profiled too. You use
+      <span class="command"><strong>gprof</strong></span> to process and display the resulting profile
+      information. In this fashion you can determine whether your own code,
+      the Cygwin DLL, or another DLL has "hot spots" that might benefit from
+      tuning.</p><p>(See also <span class="command"><strong>ssp</strong></span>, another profiler that
+      operates in a different fashion: stepping by instruction. This can
+      provide a different view on your program's operation.)</p><p>Here is an example of <span class="command"><strong>profiler</strong></span> operation:</p><pre class="screen">
+$ profiler du -khs .
+22G     .
+97 samples across 83 buckets written to gmon.out.5908.cygwin1.dll
+4 samples across 4 buckets written to gmon.out.5908.KernelBase.dll
+1 sample across 1 bucket written to gmon.out.5908.kernel32.dll
+7318 samples across 42 buckets written to gmon.out.5908.ntdll.dll
+5 samples across 4 buckets written to gmon.out.5908.du.exe
+</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="pldd.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="ps.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">pldd&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;ps</td></tr></table></div></body></html>

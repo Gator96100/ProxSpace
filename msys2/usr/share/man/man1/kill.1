@@ -1,0 +1,188 @@
+'\" t
+.\"     Title: kill
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "KILL" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+kill \- Send signals to processes
+.SH "SYNOPSIS"
+.HP \w'\fBkill\fR\ 'u
+\fBkill\fR [\-f] [\-signal] [\-s\ \fIsignal\fR] \fIpid\fR...
+.HP \w'\fBkill\fR\ 'u
+\fBkill\fR \-l [\fIsignal\fR]
+.HP \w'\fBkill\fR\ 'u
+\fBkill\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+ \-f, \-\-force     force, using win32 interface if necessary
+ \-l, \-\-list      print a list of signal names
+ \-s, \-\-signal    send signal (use kill \-\-list for a list)
+ \-W, \-\-winpid    specified pids are windows PIDs, not Cygwin PIDs
+                 (use with extreme caution!)
+ \-h, \-\-help      output usage information and exit
+ \-V, \-\-version   output version information and exit
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBkill\fR
+program allows you to send arbitrary signals to other Cygwin programs\&. The usual purpose is to end a running program from some other window when ^C won\*(Aqt work, but you can also send program\-specified signals such as SIGUSR1 to trigger actions within the program, like enabling debugging or re\-opening log files\&. Each program defines the signals they understand\&.
+.PP
+You may need to specify the full path to use
+\fBkill\fR
+from within some shells, including
+\fBbash\fR, the default Cygwin shell\&. This is because
+\fBbash\fR
+defines a
+\fBkill\fR
+builtin function; see the
+\fBbash\fR
+man page under
+\fIBUILTIN COMMANDS\fR
+for more information\&. To make sure you are using the Cygwin version, try
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ /bin/kill \-\-version
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+which should give the Cygwin
+\fBkill\fR
+version number and copyright information\&.
+.PP
+The
+\-f
+option uses Windows functions to terminate processes forcefully\&. Use
+\-f
+to terminate native Windows processes not started by Cygwin processes\&.
+\-f
+can also be useful to terminate Cygwin processes not answering to SIGKILL\&.
+.PP
+Unless you specific the
+\-W
+option, the "pid" values used by
+\fBkill\fR
+are the Cygwin pids, not the Windows pids\&. To get a list of running programs and their Cygwin pids, use the Cygwin
+\fBps\fR
+program\&.
+\fBps \-W\fR
+will display
+\fIall\fR
+windows pids\&.
+.PP
+The
+\fBkill \-l\fR
+option prints the name of the given signal, or a list of all signal names if no signal is given\&.
+.PP
+To send a specific signal, use the
+\-signN
+option, either with a signal number or a signal name (minus the "SIG" part), as shown in these examples:
+.PP
+\fBExample\ \&3.6.\ \&Using the kill command\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBkill 123\fR
+$ \fBkill \-1 123\fR
+$ \fBkill \-HUP 123\fR
+$ \fBkill \-f 123\fR
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Here is a list of available signals, their numbers, and some commentary on them, from the file
+<sys/signal\&.h>, which should be considered the official source of this information\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+SIGHUP       1    hangup
+SIGINT       2    interrupt
+SIGQUIT      3    quit
+SIGILL       4    illegal instruction (not reset when caught)
+SIGTRAP      5    trace trap (not reset when caught)
+SIGABRT      6    used by abort
+SIGIOT       6    another name for SIGABRT
+SIGEMT       7    EMT instruction
+SIGFPE       8    floating point exception
+SIGKILL      9    kill (cannot be caught or ignored)
+SIGBUS      10    bus error
+SIGSEGV     11    segmentation violation
+SIGSYS      12    bad argument to system call
+SIGPIPE     13    write on a pipe with no one to read it
+SIGALRM     14    alarm clock
+SIGTERM     15    software termination signal from kill
+SIGURG      16    urgent condition on IO channel
+SIGSTOP     17    sendable stop signal not from tty
+SIGTSTP     18    stop signal from tty
+SIGCONT     19    continue a stopped process
+SIGCHLD     20    to parent on child stop or exit
+SIGCLD      20    System V name for SIGCHLD
+SIGTTIN     21    to readers pgrp upon background tty read
+SIGTTOU     22    like TTIN for output if (tp\->t_local&LTOSTOP)
+SIGIO       23    input/output possible
+SIGPOLL     23    System V name for SIGIO
+SIGXCPU     24    exceeded CPU time limit
+SIGXFSZ     25    exceeded file size limit
+SIGVTALRM   26    virtual time alarm
+SIGPROF     27    profiling time alarm
+SIGWINCH    28    window changed
+SIGLOST     29    resource lost (eg, record\-lock lost)
+SIGPWR      29    power failure
+SIGUSR1     30    user defined signal 1
+SIGUSR2     31    user defined signal 2
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

@@ -1,0 +1,24 @@
+#compdef pactree
+
+declare -a args
+args=(
+	'(--ascii -a)'{--ascii,-a}'[use ASCII characters for tree formatting]'
+	'(--color -c)'{--color,-c}'[colorize output]'
+	'--config[set an alternate configuration file]:file:_files'
+	'(--dbpath -b)'{--dbpath,-b}'[set an alternate database location]'
+	'--debug[display debug messages]'
+	'(--depth -d)'{--depth,-d}'[limit the depth of recursion]:depth (number): '
+	'--gpgdir[set an alternate home directory for GnuPG]:directory:_files -/'
+	'(--graph -g)'{--graph,-g}'[generate output for graphviz'\''s dot]'
+	'(--linear -l)'{--linear,-l}'[enable linear output]'
+	'(--optional -o)'{--optional=-,-o-}'[controls at which depth to stop printing optional deps]::depth: '
+	'(--reverse -r)'{--reverse,-r}'[list packages that depend on the named package]'
+	'(--sync -s)'{--sync,-s}'[search sync databases instead of local]'
+	'(--unique -u)'{--unique,-u}'[show dependencies with no duplicates (implies -l)]'
+	'(-)'{--help,-h}'[display help message and exit]'
+	'(-)'{--version,-V}'[display version information and exit]'
+
+	'*:package:{_values "package" $(pacman -Qq)}'
+)
+
+_arguments $args

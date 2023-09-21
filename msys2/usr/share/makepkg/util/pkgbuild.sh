@@ -21,6 +21,8 @@
 [[ -n "$LIBMAKEPKG_UTIL_PKGBUILD_SH" ]] && return
 LIBMAKEPKG_UTIL_PKGBUILD_SH=1
 
+LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+
 source "$LIBRARY/util/schema.sh"
 
 

@@ -1,0 +1,331 @@
+'\" t
+.\"     Title: mount
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "MOUNT" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+mount \- Display information about mounted filesystems, or mount a filesystem
+.SH "SYNOPSIS"
+.HP \w'\fBmount\fR\ 'u
+\fBmount\fR [\-f] [\-o\ \fIMOUNT_OPTION,\fR...] \fIWIN32PATH\fR\ \fIPOSIXPATH\fR
+.HP \w'\fBmount\fR\ 'u
+\fBmount\fR \-a
+.HP \w'\fBmount\fR\ 'u
+\fBmount\fR \fIPOSIXPATH\fR
+.HP \w'\fBmount\fR\ 'u
+\fBmount\fR [\-m]
+.HP \w'\fBmount\fR\ 'u
+\fBmount\fR \-c\ \fIPOSIXPATH\fR | \-p 
+.HP \w'\fBmount\fR\ 'u
+\fBmount\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-a, \-\-all                     mount all filesystems mentioned in fstab
+  \-c, \-\-change\-cygdrive\-prefix  change the cygdrive path prefix to <posixpath>
+  \-f, \-\-force                   force mount, don\*(Aqt warn about missing mount
+                                point directories
+  \-h, \-\-help                    output usage information and exit
+  \-m, \-\-mount\-entries           write fstab entries to replicate mount points
+                                and cygdrive prefixes
+  \-o, \-\-options X[,X\&.\&.\&.]        specify mount options
+  \-p, \-\-show\-cygdrive\-prefix    show user and/or system cygdrive path prefix
+  \-V, \-\-version                 output version information and exit
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBmount\fR
+program is used to map your drives and shares onto Cygwin\*(Aqs simulated POSIX directory tree, much like as is done by mount commands on typical UNIX systems\&. However, in contrast to mount points given in
+/etc/fstab, mount points created or changed with
+\fBmount\fR
+are not persistent\&. They disappear immediately after the last process of the current user exited\&. Please see
+the section called \(lqThe Cygwin Mount Table\(rq
+for more information on the concepts behind the Cygwin POSIX file system and strategies for using mounts\&. To remove mounts temporarily, use
+\fBumount\fR
+.SS "Using mount"
+.PP
+If you just type
+\fBmount\fR
+with no parameters, it will display the current mount table for you\&.
+.PP
+\fBExample\ \&3.9.\ \&Displaying the current set of mount points\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBmount\fR
+C:/cygwin/bin on /usr/bin type ntfs (binary)
+C:/cygwin/lib on /usr/lib type ntfs (binary)
+C:/cygwin on / type ntfs (binary)
+C: on /mnt/c type ntfs (binary,user,noumount)
+D: on /mnt/d type fat (binary,user,noumount)
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+In this example, c:/cygwin is the POSIX root and the D drive is mapped to
+/mnt/d\&. Note that in this case, the root mount is a system\-wide mount point that is visible to all users running Cygwin programs, whereas the
+/mnt/d
+mount is only visible to the current user\&.
+.PP
+The
+\fBmount\fR
+utility is also the mechanism for adding new mounts to the mount table in memory\&. The following example demonstrates how to mount the directory
+//pollux/home/joe/data
+to
+/data
+for the duration of the current session\&.
+.PP
+\fBExample\ \&3.10.\ \&Adding mount points\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBls /data\fR
+ls: /data: No such file or directory
+$ \fBmount //pollux/home/joe/data /data\fR
+mount: warning \- /data does not exist!
+$ \fBmount\fR
+//pollux/home/joe/data on /data type smbfs (binary)
+C:/cygwin/bin on /usr/bin type ntfs (binary)
+C:/cygwin/lib on /usr/lib type ntfs (binary)
+C:/cygwin on / type ntfs (binary)
+C: on /c type ntfs (binary,user,noumount)
+D: on /d type fat (binary,user,noumount)
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+A given POSIX path may only exist once in the mount table\&. Attempts to replace the mount will fail with a busy error\&. The
+\-f
+(force) option causes the old mount to be silently replaced with the new one, provided the old mount point was a user mount point\&. It\*(Aqs not valid to replace system\-wide mount points\&. Additionally, the
+\-f
+option will silence warnings about the non\-existence of directories at the Win32 path location\&.
+.PP
+The
+\-o
+option is the method via which various options about the mount point may be recorded\&. The following options are available (note that most of the options are duplicates of other mount flags):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  acl        \- Use the filesystem\*(Aqs access control lists (ACLs) to
+               implement real POSIX permissions (default)\&.
+  binary     \- Files default to binary mode (default)\&.
+  bind       \- Allows to remount part of the file hierarchy somewhere else\&.
+               Different from other mount calls, the first argument
+               specifies an absolute POSIX path, rather than a Win32 path\&.
+               This POSIX path is remounted to the POSIX path specified as
+               the second parameter\&.  The conversion to a Win32 path is done
+               within Cygwin immediately at the time of the call\&.  Note that
+               symlinks are ignored while performing this path conversion\&.
+  cygexec    \- Treat all files below mount point as cygwin executables\&.
+  dos        \- Always convert leading spaces and trailing dots and spaces to
+               characters in the UNICODE private use area\&.  This allows to use
+               broken filesystems which only allow DOS filenames, even if they
+               are not recognized as such by Cygwin\&.
+  exec       \- Treat all files below mount point as executable\&.
+  ihash      \- Always fake inode numbers rather than using the ones returned
+               by the filesystem\&.  This allows to use broken filesystems which
+               don\*(Aqt return unambiguous inode numbers, even if they are not
+               recognized as such by Cygwin\&.
+  noacl      \- Ignore ACLs and fake POSIX permissions\&.
+  nosuid     \- No suid files are allowed (currently unimplemented)
+  notexec    \- Treat all files below mount point as not executable\&.
+  override   \- Override immutable mount points\&.
+  posix=0    \- Switch off case sensitivity for paths under this mount point\&.
+  posix=1    \- Switch on case sensitivity for paths under this mount point
+               (default)\&.
+  sparse     \- Switch on support for sparse files\&.  This option only makes
+               sense on NTFS and then only if you really need sparse files\&.
+  text       \- Files default to CRLF text mode line endings\&.
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+For a more complete description of the mount options and the
+/etc/fstab
+file, see
+the section called \(lqThe Cygwin Mount Table\(rq\&.
+.PP
+Note that all mount points added with
+\fBmount\fR
+are user mount points\&. System mount points can only be specified in the
+/etc/fstab
+file\&.
+.PP
+If you added mount points to
+/etc/fstab
+or your
+/etc/fstab\&.d/<username>
+file, you can add these mount points to your current user session using the
+\-a/\-\-all
+option, or by specifing the posix path alone on the command line\&. As an example, consider you added a mount point with the POSIX path
+/my/mount\&. You can add this mount point with either one of the following two commands to your current user session\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBmount /my/mount\fR
+$ \fBmount \-a\fR
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+The first command just adds the
+/my/mount
+mount point to your current session, the
+\fBmount \-a\fR
+adds all new mount points to your user session\&.
+.PP
+If you change a mount point to point to another native path, or if you changed the flags of a mount point, you have to
+\fBumount\fR
+the mount point first, before you can add it again\&. Please note that all such added mount points are added as user mount points, and that the rule that system mount points can\*(Aqt be removed or replaced in a running session still applies\&.
+.PP
+To bind a POSIX path to another POSIX path, use the
+bind
+mount flag\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBmount \-o bind /var /usr/var\fR
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+This command makes the file hirarchy under
+/var
+additionally available under
+/usr/var\&.
+.PP
+The
+\-m
+option causes the
+\fBmount\fR
+utility to output the current mount table in a series of fstab entries\&. You can save this output as a backup when experimenting with the mount table\&. Copy the output to
+/etc/fstab
+to restore the old state\&. It also makes moving your settings to a different machine much easier\&.
+.SS "Cygdrive mount points"
+.PP
+Whenever Cygwin cannot use any of the existing mounts to convert from a particular Win32 path to a POSIX one, Cygwin will, instead, convert to a POSIX path using a default mount point:
+/cygdrive\&. For example, if Cygwin accesses
+z:\efoo
+and the z drive is not currently in the mount table, then
+z:\e
+will be accessible as
+/cygdrive/z\&. The
+\fBmount\fR
+utility can be used to change this default automount prefix through the use of the "\-\-change\-cygdrive\-prefix" option\&. In the following example, we will set the automount prefix to
+/mnt:
+.PP
+\fBExample\ \&3.11.\ \&Changing the default prefix\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBmount \-\-change\-cygdrive\-prefix /mnt\fR
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Note that the cygdrive prefix can be set both per\-user and system\-wide, and that as with all mounts, a user\-specific mount takes precedence over the system\-wide setting\&. The
+\fBmount\fR
+utility creates system\-wide mounts by default if you do not specify a type\&. You can always see the user and system cygdrive prefixes with the
+\-p
+option\&. Using the
+\-\-options
+flag with
+\-\-change\-cygdrive\-prefix
+makes all new automounted filesystems default to this set of options\&. For instance (using the short form of the command line flags)
+.PP
+\fBExample\ \&3.12.\ \&Changing the default prefix with specific mount options\fR
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ \fBmount \-c /mnt \-o binary,noacl\fR
+.fi
+.if n \{\
+.RE
+.\}
+.SS "Limitations"
+.PP
+Limitations: there is a hard\-coded limit of 64 mount points\&. Also, although you can mount to pathnames that do not start with "/", there is no way to make use of such mount points\&.
+.PP
+Normally the POSIX mount point in Cygwin is an existing empty directory, as in standard UNIX\&. If this is the case, or if there is a place\-holder for the mount point (such as a file, a symbolic link pointing anywhere, or a non\-empty directory), you will get the expected behavior\&. Files present in a mount point directory before the mount become invisible to Cygwin programs\&.
+.PP
+It is sometimes desirable to mount to a non\-existent directory, for example to avoid cluttering the root directory with names such as
+a,
+b,
+c
+pointing to disks\&. Although
+\fBmount\fR
+will give you a warning, most everything will work properly when you refer to the mount point explicitly\&. Some strange effects can occur however\&. For example if your current working directory is
+/dir, say, and
+/dir/mtpt
+is a mount point, then
+mtpt
+will not show up in an
+\fBls\fR
+or
+\fBecho *\fR
+command and
+\fBfind \&.\fR
+will not find
+mtpt\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

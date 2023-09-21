@@ -19,36 +19,63 @@
 #
 
 declare -r myname='checkupdates'
-declare -r myver='1.4.0'
+declare -r myver='1.9.1'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 DOWNLOAD_CACHE=0
-USE_COLOR=0
+USE_COLOR='y'
 
 # Import libmakepkg
 source "$LIBRARY"/util/message.sh
 source "$LIBRARY"/util/parseopts.sh
 
+die() {
+	error "$@"
+	exit 1
+}
+
+runcmd() {
+	if (( EUID != 0 )); then
+		msg 'Escalating privileges using sudo'
+		if sudo -v &>/dev/null && sudo -l &>/dev/null; then
+			sudo "$@"
+		else
+			die 'Failed to escalate'
+		fi
+	else
+		"$@"
+	fi
+}
+
 usage() {
-	cat << __EOF__
+	cat <<EOF
 ${myname} v${myver}
 
-Safely print a list of pending updates
+Safely print a list of pending updates.
 
 Usage: ${myname} [options]
 
-  Options:
-    -d, --download        download pending updates to the pacman cache.
-    -h, --help            display this help message and exit.
+Options:
+  -d, --download  download pending updates to the pacman cache
+      --nocolor   do not colorize output
+  -n, --nosync    do not sync the temporary database
+  -h, --help      display this help message and exit
+  -V, --version   display version information and exit
 
-Note: Export the "CHECKUPDATES_DB" variable to change the path of the temporary database.
-
-__EOF__
+Environment Variables:
+  CHECKUPDATES_DB  override the path of the temporary database
+                   (default: "\${TMPDIR:-/tmp}/checkup-db-\${UID}")
+  TMPDIR           override the temporary directory (default: '/tmp')
+EOF
 }
 
-OPT_SHORT='dh'
-OPT_LONG=('download' 'help' 'nocolor')
+version() {
+	printf "%s %s\n" "$myname" "$myver"
+}
+
+OPT_SHORT='dnhV'
+OPT_LONG=('download' 'nosync' 'help' 'nocolor' 'version')
 
 if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
 	exit 1
@@ -56,15 +83,21 @@ fi
 set -- "${OPTRET[@]}"
 unset OPT_SHORT OPT_LONG OPTRET
 
+SYNC=1
 while :; do
 	case $1 in
 		-d|--download)
 			DOWNLOAD_CACHE=1 ;;
+		--nocolor)
+			USE_COLOR='n';;
+		-n|--nosync)
+			SYNC=0 ;;
 		-h|--help)
 			usage
 			exit 0 ;;
-		--nocolor)
-			USE_COLOR='n';;
+		-V|--version)
+			version
+			exit 0 ;;
 		--)
 			shift
 			break ;;
@@ -90,21 +123,20 @@ if [[ -z "$DBPath" ]] || [[ ! -d "$DBPath" ]]; then
 	DBPath="/var/lib/pacman/"
 fi
 
-mkdir -p "$CHECKUPDATES_DB"
-ln -s "${DBPath}/local" "$CHECKUPDATES_DB" &> /dev/null
-if ! pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
-	error 'Cannot fetch updates'
-	exit 1
+if (( ${SYNC} )); then
+	mkdir -p "$CHECKUPDATES_DB"
+	ln -s "${DBPath}/local" "$CHECKUPDATES_DB" &> /dev/null
+	if ! pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
+	    die 'Cannot fetch updates'
+	fi
 fi
 mapfile -t updates < <(pacman -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]')
 
 if (( ${#updates[@]} )); then
 	printf '%s\n' "${updates[@]}"
 	if (( DOWNLOAD_CACHE )); then
-		sudo pacman -Sw --noconfirm "${updates[@]%% *}" --dbpath "$CHECKUPDATES_DB" --logfile /dev/null
+		runcmd pacman -Sw --noconfirm "${updates[@]%% *}" --dbpath "$CHECKUPDATES_DB" --logfile /dev/null
 	fi
 else
 	exit 2
 fi
-
-# vim: set noet:

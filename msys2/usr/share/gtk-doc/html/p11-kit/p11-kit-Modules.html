@@ -319,7 +319,7 @@ this function.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>reserved</p></td>
-<td class="parameter_description"><p>set to <code class="literal">NULL</code></p></td>
+<td class="parameter_description"><p>set to <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -333,7 +333,7 @@ this function.</p>
 <div class="refsect3">
 <a name="p11-kit-modules-load.returns"></a><h4>Returns</h4>
 <p> a null terminated list of modules represented as PKCS#11
-function lists, or <code class="literal">NULL</code> on failure</p>
+function lists, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on failure</p>
 </div>
 </div>
 <hr>
@@ -359,7 +359,7 @@ different threads.</p>
 <p>When a module fails to initialize it is removed from the <em class="parameter"><code>modules</code></em>
  list.
 If the <em class="parameter"><code>failure_callback</code></em>
- is not <code class="literal">NULL</code> then it is called with the modules that
+ is not <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> then it is called with the modules that
 fail to initialize. For example, you may pass <a class="link" href="p11-kit-Modules.html#p11-kit-module-release" title="p11_kit_module_release ()"><code class="function">p11_kit_module_release()</code></a>
 as a <em class="parameter"><code>failure_callback</code></em>
  if the <em class="parameter"><code>modules</code></em>
@@ -368,7 +368,7 @@ as a <em class="parameter"><code>failure_callback</code></em>
 module that failed to initialize. Non-critical module failures do not affect
 the return value. If no critical modules failed to initialize then the
 return value will be <code class="literal">CKR_OK</code>.</p>
-<p>When modules are removed, the list will be <code class="literal">NULL</code> terminated at the
+<p>When modules are removed, the list will be <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> terminated at the
 appropriate place so it can continue to be used as a modules list.</p>
 <p>This function does not accept a <code class="code">CK_C_INITIALIZE_ARGS</code> argument.
 Custom initialization arguments cannot be supported when multiple consumers
@@ -384,7 +384,7 @@ load the same module.</p>
 <tbody>
 <tr>
 <td class="parameter_name"><p>modules</p></td>
-<td class="parameter_description"><p>a <code class="literal">NULL</code> terminated list of modules</p></td>
+<td class="parameter_description"><p>a <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> terminated list of modules</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -520,7 +520,7 @@ usually unnecessary) to use this function on registered modules.</p>
 </div>
 <div class="refsect3">
 <a name="p11-kit-module-load.returns"></a><h4>Returns</h4>
-<p> the loaded module PKCS#11 functions or <code class="literal">NULL</code> on failure</p>
+<p> the loaded module PKCS#11 functions or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on failure</p>
 </div>
 </div>
 <hr>
@@ -666,7 +666,7 @@ managed or unmanaged.</p>
 </div>
 <div class="refsect3">
 <a name="p11-kit-module-for-name.returns"></a><h4>Returns</h4>
-<p> the module which matches the name, or <code class="literal">NULL</code> if no match.</p>
+<p> the module which matches the name, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if no match.</p>
 </div>
 </div>
 <hr>
@@ -677,7 +677,7 @@ p11_kit_module_get_name (<em class="parameter"><code><span class="type">CK_FUNCT
 <p>Get the configured name of the PKCS#11 module.</p>
 <p>Configured modules are loaded by <a class="link" href="p11-kit-Modules.html#p11-kit-modules-load" title="p11_kit_modules_load ()"><code class="function">p11_kit_modules_load()</code></a>. The module
 passed to this function can be either managed or unmanaged. Non
-configured modules will return <code class="literal">NULL</code>.</p>
+configured modules will return <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p>
 <p>Use <code class="function">free()</code> to release the return value when you're done with it.</p>
 <div class="refsect3">
 <a name="p11-kit-module-get-name.parameters"></a><h4>Parameters</h4>
@@ -740,7 +740,7 @@ p11_kit_module_get_filename (<em class="parameter"><code><span class="type">CK_F
 <p>Get the configured name of the PKCS#11 module.</p>
 <p>Configured modules are loaded by <a class="link" href="p11-kit-Modules.html#p11-kit-modules-load" title="p11_kit_modules_load ()"><code class="function">p11_kit_modules_load()</code></a>. The module
 passed to this function can be either managed or unmanaged. Non
-configured modules will return <code class="literal">NULL</code>.</p>
+configured modules will return <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</p>
 <p>Use <code class="function">free()</code> to release the return value when you're done with it.</p>
 <div class="refsect3">
 <a name="p11-kit-module-get-filename.parameters"></a><h4>Parameters</h4>
@@ -771,12 +771,12 @@ p11_kit_config_option (<em class="parameter"><code><span class="type">CK_FUNCTIO
                        <em class="parameter"><code>const <span class="type">char</span> *option</code></em>);</pre>
 <p>Retrieve the value for a configured option.</p>
 <p>If <em class="parameter"><code>module</code></em>
- is <code class="literal">NULL</code>, then the global option with the given name will
+ is <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, then the global option with the given name will
 be retrieved. Otherwise <em class="parameter"><code>module</code></em>
  should point to a configured loaded module.
 If no such <em class="parameter"><code>option</code></em>
  or configured <em class="parameter"><code>module</code></em>
- exists, then <code class="literal">NULL</code> will be returned.</p>
+ exists, then <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> will be returned.</p>
 <p>Use <code class="function">free()</code> to release the returned value.</p>
 <div class="refsect3">
 <a name="p11-kit-config-option.parameters"></a><h4>Parameters</h4>
@@ -789,7 +789,7 @@ If no such <em class="parameter"><code>option</code></em>
 <tbody>
 <tr>
 <td class="parameter_name"><p>module</p></td>
-<td class="parameter_description"><p>the module to retrieve the option for, or <code class="literal">NULL</code> for global options</p></td>
+<td class="parameter_description"><p>the module to retrieve the option for, or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> for global options</p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -802,7 +802,7 @@ If no such <em class="parameter"><code>option</code></em>
 </div>
 <div class="refsect3">
 <a name="p11-kit-config-option.returns"></a><h4>Returns</h4>
-<p> the option value or <code class="literal">NULL</code></p>
+<p> the option value or <a href="../glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a></p>
 </div>
 </div>
 </div>

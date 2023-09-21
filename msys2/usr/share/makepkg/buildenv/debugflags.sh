@@ -29,10 +29,10 @@ source "$LIBRARY/util/option.sh"
 buildenv_functions+=('buildenv_debugflags')
 
 buildenv_debugflags() {
-	if check_option "debug" "y"; then
-		DEBUG_CFLAGS+=" -fdebug-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}"
-		DEBUG_CXXFLAGS+=" -fdebug-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}"
-		DEBUG_RUSTFLAGS+=" --remap-path-prefix=$srcdir=${DBGSRCDIR:-/usr/src/debug}"
+	if check_option "debug" "y" && ! check_option "buildflags" "n"; then
+		DEBUG_CFLAGS+=" -ffile-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
+		DEBUG_CXXFLAGS+=" -ffile-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
+		DEBUG_RUSTFLAGS+=" --remap-path-prefix=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
 		CFLAGS+=" $DEBUG_CFLAGS"
 		CXXFLAGS+=" $DEBUG_CXXFLAGS"
 		RUSTFLAGS+=" $DEBUG_RUSTFLAGS"

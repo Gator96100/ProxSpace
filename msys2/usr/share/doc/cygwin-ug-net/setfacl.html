@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>setfacl</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="regtool.html" title="regtool"><link rel="next" href="setmetamode.html" title="setmetamode"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">setfacl</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="regtool.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="setmetamode.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="setfacl"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>setfacl &#8212; Modify file and directory access control lists (ACLs)</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">setfacl</code>  [-n] { -f <em class="replaceable"><code>ACL_FILE</code></em>  |   -s <em class="replaceable"><code>acl_entries</code></em> }  <em class="replaceable"><code>FILE</code></em>... </p></div><div class="cmdsynopsis"><p><code class="command">setfacl</code>  [-n] {
+	   [-bk] |  [-x <em class="replaceable"><code>acl_entries</code></em>] 
+	   [-m <em class="replaceable"><code>acl_entries</code></em>]
+	}  <em class="replaceable"><code>FILE</code></em>... </p></div><div class="cmdsynopsis"><p><code class="command">setfacl</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="setfacl-options"></a><h2>Options</h2><pre class="screen">
+  -b, --remove-all       remove all extended ACL entries
+  -x, --delete           delete one or more specified ACL entries
+  -f, --set-file         set ACL entries for FILE to ACL entries read
+                         from ACL_FILE
+  -k, --remove-default   remove all default ACL entries
+  -m, --modify           modify one or more specified ACL entries
+  -n, --no-mask          don't recalculate the effective rights mask
+      --mask             do recalculate the effective rights mask
+  -s, --set              set specified ACL entries on FILE
+  -V, --version          print version and exit
+  -h, --help             this help text
+
+At least one of (-b, -x, -f, -k, -m, -s) must be specified
+</pre></div><div class="refsect1"><a name="setfacl-desc"></a><h2>Description</h2><p> For each file given as parameter, <span class="command"><strong>setfacl</strong></span> will
+      either replace its complete ACL (<code class="literal">-s</code>,
+      <code class="literal">-f</code>), or it will add, modify, or delete ACL entries.
+      For more information on Cygwin and Windows ACLs, see
+      <a class="xref" href="ntsec.html" title="POSIX accounts, permission, and security">the section called &#8220;POSIX accounts, permission, and security&#8221;</a> in the Cygwin User's Guide. </p><p> Acl_entries are one or more comma-separated ACL entries from the
+      following list:
+      </p><pre class="screen">
+         u[ser]::perm
+         u[ser]:uid:perm
+         g[roup]::perm
+         g[roup]:gid:perm
+         m[ask]::perm
+         o[ther]::perm
+</pre><p>
+      Default entries are like the above with the additional default
+      identifier. For example:
+      </p><pre class="screen">
+         d[efault]:u[ser]:uid:perm
+</pre><p> </p><p> <span class="emphasis"><em>perm</em></span> is either a 3-char permissions string in
+      the form "rwx" with the character <code class="literal">'-'</code> for no
+      permission or it is the octal representation of the permissions, a value
+      from 0 (equivalent to "---") to 7 ("rwx"). <span class="emphasis"><em>uid</em></span> is a
+      user name or a numerical uid. <span class="emphasis"><em>gid</em></span> is a group name or
+      a numerical gid. </p><p> The following options are supported: </p><p> <code class="literal">-b</code>,<code class="literal">--remove-all</code> Remove all
+      extended ACL entries.  The base ACL entries of the owner, group and
+      others are retained.  This option can be combined with the
+      <code class="literal">-k</code>,<code class="literal">--remove-default</code> option
+      to delete all non-standard POSIX permissions.</p><p> <code class="literal">-x</code>,<code class="literal">--delete</code> Delete one or
+      more specified entries from the file's ACL. The owner, group and others
+      entries must not be deleted.  Acl_entries to be deleted should be
+      specified without permissions, as in the following list:
+      </p><pre class="screen">
+         u[ser]:uid[:]
+         g[roup]:gid[:]
+         m[ask][:]
+         d[efault]:u[ser][:uid]
+         d[efault]:g[roup][:gid]
+         d[efault]:m[ask][:]
+         d[efault]:o[ther][:]
+</pre><p> </p><p> <code class="literal">-f</code>,<code class="literal">--set-file</code> Take the Acl_entries
+      from ACL_FILE one per line. Whitespace characters are ignored, and the
+      character "#" may be used to start a comment. The special filename "-"
+      indicates reading from stdin. Note that you can use this with
+      <span class="command"><strong>getfacl</strong></span> and <span class="command"><strong>setfacl</strong></span> to copy ACLs
+      from one file to another:
+      </p><pre class="screen">
+$ getfacl source_file | setfacl -f - target_file
+</pre><p> </p><p> Required entries are: one user entry for the owner of the file, one
+      group entry for the group of the file, and one other entry. </p><p> If additional user and group entries are given: a mask entry for the
+      file group class of the file, and no duplicate user or group entries with
+      the same uid/gid. </p><p> If it is a directory: one default user entry for the owner of the
+      file, one default group entry for the group of the file, one default mask
+      entry for the file group class, and one default other entry. </p><p> <code class="literal">-k</code>,<code class="literal">--remove-default</code> Remove all
+      default ACL entries. If no default ACL entries exist, no warnings are
+      issued.  This option can be combined with the
+      <code class="literal">-b</code>,<code class="literal">--remove-all</code> option
+      to delete all non-standard POSIX permissions.</p><p> <code class="literal">-m</code>,<code class="literal">--modify</code> Add or modify one
+      or more specified ACL entries. Acl_entries is a comma-separated list of
+      entries from the same list as above. </p><p> <code class="literal">-n</code>,<code class="literal">--no-mask</code> Valid in
+      conjunction with -m.  Do not recalculate the effective rights mask.
+      The default behavior of setfacl is to recalculate the ACL mask entry,
+      unless a mask entry was explicitly given.  The mask entry is set to
+      the union of all permissions of the owning group, and all named user
+      and group entries.  (These are exactly the entries affected by the
+      mask entry). </p><p> <code class="literal">--mask</code> Valid in conjunction with -m.  Do
+      recalculate the effective rights mask, even if an ACL mask entry was
+      explicitly given. (See the -n option.) </p><p> <code class="literal">-s</code>,<code class="literal">--set</code> Like
+      <code class="literal">-f</code>, but set the file's ACL with Acl_entries
+      specified in a comma-separated list on the command line. </p><p> While the <code class="literal">-x</code> and <code class="literal">-m</code> options
+      may be used in the same command, the <code class="literal">-f</code> and
+      <code class="literal">-s</code> options may be used only exclusively. </p><p> Directories may contain default ACL entries. Files created in a
+      directory that contains default ACL entries will have permissions
+      according to the combination of the current umask, the explicit
+      permissions requested and the default ACL entries.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="regtool.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="setmetamode.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">regtool&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;setmetamode</td></tr></table></div></body></html>

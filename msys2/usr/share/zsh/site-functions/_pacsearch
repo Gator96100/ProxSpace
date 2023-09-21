@@ -1,0 +1,12 @@
+#compdef pacsearch
+
+declare -a args
+args=(
+	'(--nocolor -n)'{--nocolor,-n}'[do not colorize output]'
+	'(-)'{--help,-h}'[display help message and exit]'
+	'(-)'{--version,-V}'[display version information and exit]'
+
+	':pattern: '
+)
+
+_arguments $args

@@ -1,0 +1,15 @@
+#compdef pacscripts
+
+_pacscripts_packages() {
+	_values package $(pacman -Slq)
+}
+
+declare -a args
+args=(
+	'(-)'{--help,-h}'[display help message and exit]'
+	'(-)'{--version,-V}'[display version information and exit]'
+
+	':package:{_alternative "packages:package:_pacscripts_packages" "files:pkgfile:_files"}'
+)
+
+_arguments $args

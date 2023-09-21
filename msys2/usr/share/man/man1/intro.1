@@ -1,0 +1,136 @@
+'\" t
+.\"     Title: intro
+.\"    Author: [see the DOCUMENTATION section]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin
+.\"    Source: Cygwin
+.\"  Language: English
+.\"
+.TH "INTRO" "1" "07/14/2023" "Cygwin" "Cygwin"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+intro \- Introduction to the Cygwin Environment
+.SH "DESCRIPTION"
+.PP
+\fICygwin\fR
+is a Linux\-like environment for Windows\&. It consists of two parts:
+.PP
+A DLL (cygwin1\&.dll) which acts as a POSIX API emulation layer providing substantial POSIX API functionality, modelled after the GNU/Linux operating system\&. The
+\fBintro\fR(3)
+man page gives an introduction to this API\&.
+.PP
+A collection of tools which provide Linux look and feel\&. This man page describes the user environment\&.
+.SH "AVAILABILITY"
+.PP
+\fICygwin\fR
+is developed by volunteers collaborating over the Internet\&. It is distributed through the website
+\m[blue]\fB\%http://cygwin.com\fR\m[], where you can find extensive documentation, including FAQ, User\*(Aqs Guide, and API Reference\&. The
+\fICygwin\fR
+website should be considered the authoritative source of information\&. The source code, released under the
+\fIGNU General Public License, Version 3 (GPLv3+)\fR
+and
+\fILesser GNU General Public License, Version 3 (LGPLv3+)\fR, is also available from the website or one of the mirrors\&.
+.SH "COMPATIBILITY"
+.PP
+\fICygwin\fR
+uses the GNU versions of many of the standard UNIX command\-line utilities (\fBsed\fR,
+\fBawk\fR, etc\&.), so the user environment is more similar to a Linux system than, for example, Sun Solaris\&.
+.PP
+The default login shell and
+\fB/bin/sh\fR
+for
+\fICygwin\fR
+is
+\fBbash\fR, the GNU "Bourne\-Again Shell", but other shells such as
+\fBtcsh\fR
+(an improved
+\fBcsh\fR) are also available and can be installed using
+\fICygwin\fR\*(Aqs setup\&.
+.SH "NOTES"
+.PP
+To port applications you will need to install the development tools, which you can do by selecting
+gcc
+in
+\fIsetup\&.exe\fR
+(dependencies are automatically handled)\&. If you need a specific program or library, you can search for a
+\fICygwin\fR
+package containing it at:
+.PP
+\m[blue]\fB\%http://cygwin.com/packages/\fR\m[]
+.PP
+If you are a UNIX veteran who plans to use
+\fICygwin\fR
+extensively, you will probably find it worth your while to learn to use
+\fICygwin\fR\-specific tools that provide a UNIX\-like interface to common operations\&. For example,
+\fBcygpath\fR
+converts between UNIX and Win32\-style pathnames\&. The full documentation for these utilities is at:
+.PP
+\m[blue]\fB\%http://cygwin.com/cygwin-ug-net/using-utils.html\fR\m[]
+.PP
+The optional
+cygutils
+and
+cygutils\-extra
+packages also contain utilities that help with common problems\&.
+.SH "DOCUMENTATION"
+.PP
+In addition to man pages and texinfo documentation, many
+\fICygwin\fR
+packages provide system\-independent documentation in the
+/usr/share/doc/
+directory and
+\fICygwin\fR\-specific documentation in
+/usr/share/doc/Cygwin/
+.PP
+For example, if you have both
+\fBless\fR
+and
+\fBcron\fR
+installed, the command
+\fBless /usr/share/doc/Cygwin/cron\&.README\fR
+would display the instructions to set up
+\fBcron\fR
+on your system\&.
+.SH "REPORTING BUGS"
+.PP
+If you find a bug in
+\fICygwin\fR, please read
+.PP
+\m[blue]\fB\%http://cygwin.com/bugs.html\fR\m[]
+.PP
+and follow the instructions for reporting found there\&. If you are able to track down the source of the bug and can provide a fix, there are instructions for contributing patches at:
+.PP
+\m[blue]\fB\%http://cygwin.com/contrib.html\fR\m[]
+.SH "SEE ALSO"
+.PP
+\fBintro\fR(3)
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>ssp</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="setmetamode.html" title="setmetamode"><link rel="next" href="strace.html" title="strace"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">ssp</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="setmetamode.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="strace.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="ssp"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>ssp &#8212; The Single Step Profiler</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">ssp</code>  [-cdelstv]  <em class="replaceable"><code>low_pc</code></em>   <em class="replaceable"><code>high_pc</code></em>   <em class="replaceable"><code>command</code></em>... </p></div><div class="cmdsynopsis"><p><code class="command">ssp</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="ssp-options"></a><h2>Options</h2><pre class="screen">
+ -c, --console-trace  trace every EIP value to the console. *Lots* slower.
+ -d, --disable        disable single-stepping by default; use
+                      OutputDebugString ("ssp on") to enable stepping
+ -e, --enable         enable single-stepping by default; use
+                      OutputDebugString ("ssp off") to disable stepping
+ -h, --help           output usage information and exit
+ -l, --dll            enable dll profiling.  A chart of relative DLL usage
+                      is produced after the run.
+ -s, --sub-threads    trace sub-threads too.  Dangerous if you have
+                      race conditions.
+ -t, --trace-eip      trace every EIP value to a file TRACE.SSP.  This
+                      gets big *fast*.
+ -v, --verbose        output verbose messages about debug events.
+ -V, --version        output version information and exit
+
+Example: ssp 0x401000 0x403000 hello.exe
+</pre></div><div class="refsect1"><a name="ssp-desc"></a><h2>Description</h2><p> The SSP is a program that uses the Win32 debug API to run a program
+      one ASM instruction at a time. It records the location of each
+      instruction used, how many times that instruction is used, and all
+      function calls. The results are saved in a format that is usable by the
+      profiling program <span class="command"><strong>gprof</strong></span>, although
+      <span class="command"><strong>gprof</strong></span> will claim the values are seconds, they really
+      are instruction counts. More on that later. </p><p>(See also <span class="command"><strong>profiler</strong></span>, another profiler that
+      operates in a different fashion: IP sampling. This can provide a
+      different view on your program's operation.)</p><p> Because the SSP was originally designed to profile the Cygwin DLL,
+      it does not automatically select a block of code to report statistics on.
+      You must specify the range of memory addresses to keep track of manually,
+      but it's not hard to figure out what to specify. Use the "objdump"
+      program to determine the bounds of the target's ".text" section. Let's
+      say we're profiling cygwin1.dll. Make sure you've built it with debug
+      symbols (else <span class="command"><strong>gprof</strong></span> won't run) and run objdump like
+      this: </p><pre class="screen">
+$ objdump -h cygwin1.dll
+</pre><p> It will print a report
+      like this:
+      </p><pre class="screen">
+cygwin1.dll:     file format pei-i386
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0007ea00  61001000  61001000  00000400  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE, DATA
+  1 .data         00008000  61080000  61080000  0007ee00  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  . . .
+</pre><p> </p><p> The only information we're concerned with are the VMA of the .text
+      section and the VMA of the section after it (sections are usually
+      contiguous; you can also add the Size to the VMA to get the end address).
+      In this case, the VMA is 0x61001000 and the ending address is either
+      0x61080000 (start of .data method) or 0x6107fa00 (VMA+Size method). </p><p> There are two basic ways to use SSP - either profiling a whole
+      program, or selectively profiling parts of the program. </p><p> To profile a whole program, just run <span class="command"><strong>ssp</strong></span> without
+      options. By default, it will step the whole program. Here's a simple
+      example, using the numbers above:
+      </p><pre class="screen">
+$ ssp 0x61001000 0x61080000 hello.exe
+</pre><p> This will step
+      the whole program. It will take at least 8 minutes on a PII/300 (yes,
+      really). When it's done, it will create a file called "gmon.out". You can
+      turn this data file into a readable report with <span class="command"><strong>gprof</strong></span>:
+      </p><pre class="screen">
+$ gprof -b cygwin1.dll
+</pre><p> The "-b" means 'skip the help
+      pages'. You can omit this until you're familiar with the report layout.
+      The <span class="command"><strong>gprof</strong></span> documentation explains a lot about this
+      report, but <span class="command"><strong>ssp</strong></span> changes a few things. For example, the
+      first part of the report reports the amount of time spent in each
+      function, like this:
+      </p><pre class="screen">
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  ms/call  ms/call  name
+ 10.02    231.22    72.43       46  1574.57  1574.57  strcspn
+  7.95    288.70    57.48      130   442.15   442.15  strncasematch
+</pre><p>
+      The "seconds" columns are really CPU opcodes, 1/100 second per opcode.
+      So, "231.22" above means 23,122 opcodes. The ms/call values are 10x too
+      big; 1574.57 means 157.457 opcodes per call. Similar adjustments need to
+      be made for the "self" and "children" columns in the second part of the
+      report. </p><p> OK, so now we've got a huge report that took a long time to
+      generate, and we've identified a spot we want to work on optimizing.
+      Let's say it's the time() function. We can use SSP to selectively profile
+      this function by using OutputDebugString() to control SSP from within the
+      program. Here's a sample program:
+      </p><pre class="screen">
+	#include &lt;windows.h&gt;
+	main()
+	{
+	  time_t t;
+	  OutputDebugString("ssp on");
+	  time(&amp;t);
+	  OutputDebugString("ssp off");
+	}
+</pre><p> </p><p> Then, add the <code class="literal">-d</code> option to ssp to default to
+      *disabling* profiling. The program will run at full speed until the first
+      OutputDebugString, then step until the second. You can then use
+      <span class="command"><strong>gprof</strong></span> (as usual) to see the performance profile for
+      just that portion of the program's execution. </p><p> There are many options to ssp. Since step-profiling makes your
+      program run about 1,000 times slower than normal, it's best to understand
+      all the options so that you can narrow down the parts of your program you
+      need to single-step. </p><p> <code class="literal">-v</code> - verbose. This prints messages about threads
+      starting and stopping, OutputDebugString calls, DLLs loading, etc. </p><p> <code class="literal">-t</code> and <code class="literal">-c</code> - tracing. With
+      <code class="literal">-t</code>, *every* step's address is written to the file
+      "trace.ssp". This can be used to help debug functions, since it can trace
+      multiple threads. Clever use of scripts can match addresses with
+      disassembled opcodes if needed. Warning: creates *huge* files, very
+      quickly. <code class="literal">-c</code> prints each address to the console, useful
+      for debugging key chunks of assembler. Use <code class="literal">addr2line -C -f -s -e
+      foo.exe &lt; trace.ssp &gt; lines.ssp</code> and then <code class="literal">perl
+      cvttrace</code> to convert to symbolic traces. </p><p> <code class="literal">-s</code> - subthreads. Usually, you only need to trace
+      the main thread, but sometimes you need to trace all threads, so this
+      enables that. It's also needed when you want to profile a function that
+      only a subthread calls. However, using OutputDebugString automatically
+      enables profiling on the thread that called it, not the main thread. </p><p> <code class="literal">-l</code> - dll profiling. Generates a pretty table of
+      how much time was spent in each dll the program used. No sense optimizing
+      a function in your program if most of the time is spent in the DLL. I
+      usually use the <code class="literal">-v</code>, <code class="literal">-s</code>, and
+      <code class="literal">-l</code> options:
+      </p><pre class="screen">
+$ ssp <code class="literal">-v</code> <code class="literal">-s</code> <code class="literal">-l</code> <code class="literal">-d</code> 0x61001000 0x61080000 hello.exe
+</pre><p>
+    </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="setmetamode.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="strace.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">setmetamode&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;strace</td></tr></table></div></body></html>

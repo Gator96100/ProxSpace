@@ -5,7 +5,7 @@ use strict;
 use Carp ();
 use Pod::Simple ();
 use vars qw( $ATTR_PAD @ISA $VERSION $SORT_ATTRS);
-$VERSION = '3.40';
+$VERSION = '3.43';
 BEGIN {
   @ISA = ('Pod::Simple');
   *DEBUG = \&Pod::Simple::DEBUG unless defined &DEBUG;
@@ -61,7 +61,7 @@ __END__
 
 =head1 NAME
 
-Pod::Simple::SimpleTree -- parse Pod into a simple parse tree
+Pod::Simple::SimpleTree -- parse Pod into a simple parse tree 
 
 =head1 SYNOPSIS
 

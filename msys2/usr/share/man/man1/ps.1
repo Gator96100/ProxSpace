@@ -1,0 +1,110 @@
+'\" t
+.\"     Title: ps
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "PS" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+ps \- Report process status
+.SH "SYNOPSIS"
+.HP \w'\fBps\fR\ 'u
+\fBps\fR [\-aeflsW] [\-u\ \fIUID\fR] [\-p\ \fIPID\fR]
+.HP \w'\fBps\fR\ 'u
+\fBps\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+ \-a, \-\-all       show processes of all users
+ \-e, \-\-everyone  show processes of all users
+ \-f, \-\-full      show process uids, ppids
+ \-h, \-\-help      output usage information and exit
+ \-l, \-\-long      show process uids, ppids, pgids, winpids
+ \-p, \-\-process   show information for specified PID
+ \-s, \-\-summary   show process summary
+ \-u, \-\-user      list processes owned by UID
+ \-V, \-\-version   output version information and exit
+ \-W, \-\-windows   show windows as well as cygwin processes
+With no options, ps outputs the long format by default
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBps\fR
+program gives the status of all the Cygwin processes running on the system (ps = "process status")\&. Due to the limitations of simulating a POSIX environment under Windows, there is little information to give\&.
+.PP
+The PID column is the process ID you need to give to the
+\fBkill\fR
+command\&. The PPID is the parent process ID, and PGID is the process group ID\&. The WINPID column is the process ID displayed by NT\*(Aqs Task Manager program\&. The TTY column gives which pseudo\-terminal a process is running on, or a
+\*(Aq?\*(Aq
+for services\&. The UID column shows which user owns each process\&. STIME is the time the process was started, and COMMAND gives the name of the program running\&. Listings may also have a status flag in column zero;
+S
+means stopped or suspended (in other words, in the background),
+I
+means waiting for input or interactive (foreground), and
+O
+means waiting to output\&.
+.PP
+By default,
+\fBps\fR
+will only show processes owned by the current user\&. With either the
+\-a
+or
+\-e
+option, all user\*(Aqs processes (and system processes) are listed\&. There are historical UNIX reasons for the synonomous options, which are functionally identical\&. The
+\-f
+option outputs a "full" listing with usernames for UIDs\&. The
+\-l
+option is the default display mode, showing a "long" listing with all the above columns\&. The other display option is
+\-s, which outputs a shorter listing of just PID, TTY, STIME, and COMMAND\&. The
+\-u
+option allows you to show only processes owned by a specific user\&. The
+\-p
+option allows you to show information for only the process with the specified PID\&. The
+\-W
+option causes
+\fBps\fR
+show non\-Cygwin Windows processes as well as Cygwin processes\&. The WINPID is also the PID, and they can be killed with the Cygwin
+\fBkill\fR
+command\*(Aqs
+\-f
+option\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

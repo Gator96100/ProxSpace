@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>dumper</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="cygpath.html" title="cygpath"><link rel="next" href="getconf.html" title="getconf"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">dumper</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="cygpath.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="getconf.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="dumper"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>dumper &#8212; Dump core from WIN32PID to FILENAME.core</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">dumper</code>  [-n] [-d] [-q]  <em class="replaceable"><code>FILENAME</code></em>   <em class="replaceable"><code>WIN32PID</code></em> </p></div><div class="cmdsynopsis"><p><code class="command">dumper</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="dumper-options"></a><h2>Options</h2><pre class="screen">
+-n, --nokill   don't terminate the dumped process
+-d, --verbose  be verbose while dumping
+-h, --help     output help information and exit
+-q, --quiet    be quiet while dumping (default)
+-V, --version  output version information and exit
+</pre></div><div class="refsect1"><a name="dumper-desc"></a><h2>Description</h2><p>The <span class="command"><strong>dumper</strong></span> utility can be used to create a core
+      dump of running Windows process. This core dump can be later loaded to
+      <span class="command"><strong>gdb</strong></span> and analyzed. One common way to use
+      <span class="command"><strong>dumper</strong></span> is to plug it into cygwin's Just-In-Time
+      debugging facility by adding
+      </p><pre class="screen">
+error_start=x:\path\to\dumper.exe
+</pre><p> to the
+      <span class="emphasis"><em>CYGWIN</em></span> environment variable. Please note that
+      <code class="literal">x:\path\to\dumper.exe</code> is Windows-style and not cygwin
+      path. If <code class="literal">error_start</code> is set this way, then dumper will
+      be started whenever some program encounters a fatal error. </p><p> <span class="command"><strong>dumper</strong></span> can be also be started from the command
+      line to create a core dump of any running process.</p><p>For historical reasons, unless the <code class="literal">-n</code> option
+    is given, after the core dump is created and when the
+    <span class="command"><strong>dumper</strong></span> exits, the target process is also
+    terminated.</p><p> To save space in the core dump, <span class="command"><strong>dumper</strong></span> doesn't
+      write those portions of the target process's memory space that are loaded
+      from executable and dll files and are unchanged (e.g. program code).
+      Instead, <span class="command"><strong>dumper</strong></span> saves paths to the files which
+      contain that data. When a core dump is loaded into gdb, it uses these
+      paths to load the appropriate files. That means that if you create a core
+      dump on one machine and try to debug it on another, you'll need to place
+      identical copies of the executable and dlls in the same directories as on
+      the machine where the core dump was created. </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="cygpath.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="getconf.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">cygpath&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;getconf</td></tr></table></div></body></html>

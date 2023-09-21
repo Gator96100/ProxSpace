@@ -30,6 +30,6 @@ buildenv_functions+=('buildenv_buildflags')
 
 buildenv_buildflags() {
 	if check_option "buildflags" "n"; then
-		unset CC CXX CPPFLAGS CFLAGS DEBUG_CFLAGS CXXFLAGS DEBUG_CXXFLAGS LDFLAGS RUSTFLAGS DEBUG_RUSTFLAGS
+		unset CPPFLAGS CFLAGS DEBUG_CFLAGS CXXFLAGS DEBUG_CXXFLAGS LDFLAGS LTOFLAGS RUSTFLAGS DEBUG_RUSTFLAGS
 	fi
 }

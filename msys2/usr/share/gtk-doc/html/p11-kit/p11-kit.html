@@ -31,6 +31,13 @@
 <div class="refsynopsisdiv">
 <h2>Synopsis</h2>
 <div class="cmdsynopsis"><p><code class="command">p11-kit list-modules</code> </p></div>
+<div class="cmdsynopsis"><p><code class="command">p11-kit list-profiles</code>  ...
+	</p></div>
+<div class="cmdsynopsis"><p><code class="command">p11-kit add-profile</code>  ...
+	</p></div>
+<div class="cmdsynopsis"><p><code class="command">p11-kit delete-profile</code>  ...
+	</p></div>
+<div class="cmdsynopsis"><p><code class="command">p11-kit print-config</code> </p></div>
 <div class="cmdsynopsis"><p><code class="command">p11-kit extract</code>  ...
 	</p></div>
 <div class="cmdsynopsis"><p><code class="command">p11-kit server</code>  ...
@@ -70,6 +77,42 @@ $ p11-kit list-modules
 </pre>
 <p>The modules, information about them and the tokens present in
 	the PKCS#11 modules will be displayed.</p>
+</div>
+<div class="refsect1">
+<a name="p11-kit-list-profiles"></a><h2>List Profiles</h2>
+<p>List PKCS#11 profiles supported by the token.</p>
+<pre class="programlisting">
+$ p11-kit list-profiles pkcs11:token
+</pre>
+<p>This searches the given token for profile objects that contain profile IDs
+	which are then displayed in human-readable form.</p>
+</div>
+<div class="refsect1">
+<a name="p11-kit-add-profile"></a><h2>Add Profile</h2>
+<p>Add PKCS#11 profile to the token.</p>
+<pre class="programlisting">
+$ p11-kit add-profile --profile profile pkcs11:token
+</pre>
+<p>Creates a new PKCS#11 profile object on the token if it doesn't already exist.</p>
+</div>
+<div class="refsect1">
+<a name="p11-kit-delete-profile"></a><h2>Delete Profile</h2>
+<p>Delete PKCS#11 profile from the token.</p>
+<pre class="programlisting">
+$ p11-kit delete-profile --profile profile pkcs11:token
+</pre>
+<p>Searches the token for profile object that matches given PKCS#11
+	profile ID and attempts to destroy it.</p>
+</div>
+<div class="refsect1">
+<a name="p11-kit-print-config"></a><h2>Print Config</h2>
+<p>Print merged configuration.</p>
+<pre class="programlisting">
+$ p11-kit print-config
+</pre>
+<p>P11-kit provides 3 levels of configuration: system wide, per-module, and per-user.
+	At run-time all 3 levels are merged into a single configuration. This command displays the
+	merged configuration.</p>
 </div>
 <div class="refsect1">
 <a name="p11-kit-extract"></a><h2>Extract</h2>

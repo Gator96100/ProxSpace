@@ -1,0 +1,20 @@
+%FILES%
+etc/
+etc/pacman.d/
+etc/pacman.d/mirrorlist.clang32
+etc/pacman.d/mirrorlist.clang64
+etc/pacman.d/mirrorlist.mingw
+etc/pacman.d/mirrorlist.mingw32
+etc/pacman.d/mirrorlist.mingw64
+etc/pacman.d/mirrorlist.msys
+etc/pacman.d/mirrorlist.ucrt64
+
+%BACKUP%
+etc/pacman.d/mirrorlist.msys	0dd5860eef28c14ad23b81edc46faf5c
+etc/pacman.d/mirrorlist.mingw	b890bc423b48a8ec6c0b92f24e03b6e2
+etc/pacman.d/mirrorlist.mingw32	b1d1b9fa60827f64b3eede475f690e90
+etc/pacman.d/mirrorlist.mingw64	2a8cec208aff152909a013b388dacdd3
+etc/pacman.d/mirrorlist.ucrt64	22f886a06c78a853b0f686ba39f07e5b
+etc/pacman.d/mirrorlist.clang64	ac5db158f4de12506d188a95f036f722
+etc/pacman.d/mirrorlist.clang32	1ca691f76bea84283bb9856873980293
+

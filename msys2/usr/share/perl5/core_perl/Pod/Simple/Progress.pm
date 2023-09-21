@@ -1,7 +1,7 @@
 
 require 5;
 package Pod::Simple::Progress;
-$VERSION = '3.40';
+$VERSION = '3.43';
 use strict;
 
 # Objects of this class are used for noting progress of an
@@ -24,7 +24,7 @@ sub new {
   return $self;
 }
 
-sub copy {
+sub copy { 
   my $orig = shift;
   bless {%$orig, 'quiet_until' => 1}, ref($orig);
 }

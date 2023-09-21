@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Changing Cygwin's Maximum Memory</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="setup-net.html" title="Chapter&#160;2.&#160;Setting Up Cygwin"><link rel="prev" href="setup-env.html" title="Environment Variables"><link rel="next" href="setup-locale.html" title="Internationalization"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Changing Cygwin's Maximum Memory</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="setup-env.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;2.&#160;Setting Up Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="setup-locale.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="setup-maxmem"></a>Changing Cygwin's Maximum Memory</h2></div></div></div><p>
+Cygwin's heap is extensible.  However, it does start out at a fixed size
+and attempts to extend it may run into memory which has been previously
+allocated by Windows.  In some cases, this problem can be solved by
+changing a field in the file header which is utilized by Cygwin since
+to keep the initial size of the application heap.  If the field contains 0,
+which is the default, the application heap defaults to a size of 384 Megabyte
+on 32 bit Cygwin, 512 Megabyte on 64 bit Cygwin.  If the field is set to any
+other value between 4 and 2048, Cygwin tries to reserve as much Megabytes
+for the application heap.  The field used for this is the "LoaderFlags" field
+in the NT-specific PE header structure
+(<code class="literal">(IMAGE_NT_HEADER)-&gt;OptionalHeader.LoaderFlags</code>).</p><p>
+This value can be changed for any executable by using a more recent version
+of the <span class="command"><strong>peflags</strong></span> tool from the <code class="literal">rebase</code>
+Cygwin package.  Example:
+
+</p><pre class="screen">
+$ peflags --cygwin-heap foo.exe
+foo.exe: initial Cygwin heap size: 0 (0x0) MB
+$ peflags --cygwin-heap=500 foo.exe
+foo.exe: initial Cygwin heap size: 500 (0x1f4) MB
+</pre><p>
+</p><p>
+Heap memory can be allocated up to the size of the biggest available free
+block in the processes virtual memory (VM).  By default, the VM per process
+is 2 GB for 32 processes.  To get more VM for a process, the executable
+must have the "large address aware" flag set in the file header.  You can
+use the aforementioned <span class="command"><strong>peflags</strong></span> tool to set this flag.
+On 64 bit systems this results in a 4 GB VM for a process started from that
+executable.  On 32 bit systems you also have to prepare the system to allow
+up to 3 GB per process.  See the Microsoft article
+<a class="ulink" href="http://msdn.microsoft.com/en-us/library/bb613473%28VS.85%29.aspx" target="_top">4-Gigabyte Tuning</a>
+for more information.
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="setup-env.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="setup-net.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="setup-locale.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Environment Variables&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Internationalization</td></tr></table></div></body></html>

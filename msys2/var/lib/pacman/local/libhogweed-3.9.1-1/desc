@@ -1,0 +1,45 @@
+%NAME%
+libhogweed
+
+%VERSION%
+3.9.1-1
+
+%BASE%
+nettle
+
+%DESC%
+A low-level cryptographic library
+
+%URL%
+https://www.lysator.liu.se/~nisse/nettle/
+
+%ARCH%
+x86_64
+
+%BUILDDATE%
+1685718255
+
+%INSTALLDATE%
+1689650131
+
+%PACKAGER%
+CI (msys2/msys2-autobuild/79096b75/5156876374)
+
+%SIZE%
+270884
+
+%REASON%
+1
+
+%GROUPS%
+libraries
+
+%LICENSE%
+spdx:GPL-2.0-or-later OR LGPL-3.0-or-later
+
+%VALIDATION%
+pgp
+
+%DEPENDS%
+gmp
+

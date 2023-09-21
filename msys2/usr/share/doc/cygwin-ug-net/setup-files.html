@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Customizing bash</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="setup-net.html" title="Chapter&#160;2.&#160;Setting Up Cygwin"><link rel="prev" href="setup-locale.html" title="Internationalization"><link rel="next" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Customizing bash</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="setup-locale.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;2.&#160;Setting Up Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="using.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="setup-files"></a>Customizing bash</h2></div></div></div><p>
+To set up bash so that cut and paste work properly, click on the
+"Properties" button of the window, then on the "Misc" tab.  Make sure
+that "QuickEdit mode" and "Insert mode" are checked.  These settings
+will be remembered next time you run bash from that shortcut.
+</p><p>
+Your home directory should contain three initialization files that
+control the behavior of bash.  They are <code class="filename">.profile</code>,
+<code class="filename">.bashrc</code> and <code class="filename">.inputrc</code>.
+The Cygwin base installation creates stub files when you start bash
+for the first time.
+</p><p>
+<code class="filename">.profile</code> (other names are also valid, see the bash man
+page) contains bash commands.  It is executed when bash is started as login
+shell, e.g. from the command <span class="command"><strong>bash --login</strong></span>.
+This is a useful place to define and
+export environment variables and bash functions that will be used by bash
+and the programs invoked by bash.  It is a good place to redefine
+<code class="envar">PATH</code> if needed.  We recommend adding a ":." to the end of
+<code class="envar">PATH</code> to also search the current working directory (contrary
+to DOS, the local directory is not searched by default).  Also to avoid
+delays you should either <span class="command"><strong>unset</strong></span> <code class="envar">MAILCHECK</code> 
+or define <code class="envar">MAILPATH</code> to point to your existing mail inbox.
+</p><p>
+<code class="filename">.bashrc</code> is similar to
+<code class="filename">.profile</code> but is executed each time an interactive
+bash shell is launched.  It serves to define elements that are not
+inherited through the environment, such as aliases. If you do not use
+login shells, you may want to put the contents of
+<code class="filename">.profile</code> as discussed above in this file
+instead.
+</p><p>
+</p><pre class="screen">
+shopt -s nocaseglob
+</pre><p>
+will allow bash to glob filenames in a case-insensitive manner.
+Note that <code class="filename">.bashrc</code> is not called automatically for login 
+shells. You can source it from <code class="filename">.profile</code>.
+</p><p>
+<code class="filename">.inputrc</code> controls how programs using the readline
+library (including <span class="command"><strong>bash</strong></span>) behave.  It is loaded
+automatically.  For full details see the <code class="literal">Function and Variable
+Index</code> section of the GNU <code class="systemitem">readline</code> manual.
+Consider the following settings:
+</p><pre class="screen">
+# Ignore case while completing
+set completion-ignore-case on
+# Make Bash 8bit clean
+set meta-flag on
+set convert-meta off
+set output-meta on
+</pre><p>
+The first command makes filename completion case insensitive, which can
+be convenient in a Windows environment.  The next three commands allow
+<span class="command"><strong>bash</strong></span> to display 8-bit characters, useful for
+languages with accented characters.  Note that tools that do not use
+<code class="systemitem">readline</code> for display, such as
+<span class="command"><strong>less</strong></span> and <span class="command"><strong>ls</strong></span>, require additional
+settings, which could be put in your <code class="filename">.bashrc</code>:
+</p><pre class="screen">
+alias less='/bin/less -r'
+alias ls='/bin/ls -F --color=tty --show-control-chars'
+</pre><p>
+</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="setup-locale.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="setup-net.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="using.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Internationalization&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;3.&#160;Using Cygwin</td></tr></table></div></body></html>

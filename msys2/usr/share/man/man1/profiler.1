@@ -1,0 +1,102 @@
+'\" t
+.\"     Title: profiler
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin Utilities
+.\"    Source: Cygwin Utilities
+.\"  Language: English
+.\"
+.TH "PROFILER" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+profiler \- Sampling profiler of Cygwin programs with their DLLs
+.SH "SYNOPSIS"
+.HP \w'\fBprofiler\fR\ 'u
+\fBprofiler\fR [\-defw] [\-o\ \fIFILENAME\fR] [\-s\ \fIN\fR] \fIPROGRAM\fR\ \fIARG\fR...  | \-p\ \fIPID\fR 
+.HP \w'\fBprofiler\fR\ 'u
+\fBprofiler\fR \-h | \-V 
+.SH "OPTIONS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-d, \-\-debug            Display debugging messages (toggle: default false)
+  \-e, \-\-events           Display Windows DEBUG_EVENTS (toggle: default false)
+  \-f, \-\-fork\-profile     Profiles child processes (toggle: default false)
+  \-h, \-\-help             Display usage information and exit
+  \-o, \-\-output=FILENAME  Write output to file FILENAME rather than stdout
+  \-p, \-\-pid=N            Attach to running program with Cygwin pid N
+                         \&.\&.\&.                    or with Windows pid \-N
+  \-s, \-\-sample\-rate=N    Set IP sampling rate to N Hz (default 100)
+  \-v, \-\-verbose          Display more status messages (toggle: default false)
+  \-V, \-\-version          Display version information and exit
+  \-w, \-\-new\-window       Launch given command in a new window
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBprofiler\fR
+utility executes a given program and any children of that program, collecting the location of the CPU instruction pointer (IP) many times per second\&. (It is optional to collect this info from child processes\&.) This info gives a profile of the program\*(Aqs execution, showing where the most time is being spent\&. This profiling technique is called "IP sampling"\&.
+.PP
+A novel feature of
+\fBprofiler\fR
+is that time spent in DLLs loaded with or by your program is profiled too\&. You use
+\fBgprof\fR
+to process and display the resulting profile information\&. In this fashion you can determine whether your own code, the Cygwin DLL, or another DLL has "hot spots" that might benefit from tuning\&.
+.PP
+(See also
+\fBssp\fR, another profiler that operates in a different fashion: stepping by instruction\&. This can provide a different view on your program\*(Aqs operation\&.)
+.PP
+Here is an example of
+\fBprofiler\fR
+operation:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ profiler du \-khs \&.
+22G     \&.
+97 samples across 83 buckets written to gmon\&.out\&.5908\&.cygwin1\&.dll
+4 samples across 4 buckets written to gmon\&.out\&.5908\&.KernelBase\&.dll
+1 sample across 1 bucket written to gmon\&.out\&.5908\&.kernel32\&.dll
+7318 samples across 42 buckets written to gmon\&.out\&.5908\&.ntdll\&.dll
+5 samples across 4 buckets written to gmon\&.out\&.5908\&.du\&.exe
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

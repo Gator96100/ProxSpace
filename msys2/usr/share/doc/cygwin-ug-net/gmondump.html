@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>gmondump</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="getfacl.html" title="getfacl"><link rel="next" href="kill.html" title="kill"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">gmondump</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="getfacl.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="kill.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="gmondump"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>gmondump &#8212; Display formatted contents of profile data files</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">gmondump</code>  [-v] [FILENAME...]</p></div><div class="cmdsynopsis"><p><code class="command">gmondump</code>    -h  |   -V  </p></div></div><div class="refsect1"><a name="gmondump-options"></a><h2>Options</h2><pre class="screen">
+  -h, --help             Display usage information and exit
+  -v, --verbose          Display more file details (toggle: default false)
+  -V, --version          Display version information and exit
+</pre></div><div class="refsect1"><a name="gmondump-desc"></a><h2>Description</h2><p>The <span class="command"><strong>gmondump</strong></span> utility displays the contents of
+      one or more profile data files. Such files usually have names starting
+      with "gmon.out" and are created by a profiling program such as
+      <span class="command"><strong>profiler</strong></span> or <span class="command"><strong>ssp</strong></span>. Compiling your
+      gcc/g++ programs with option <code class="literal">-pg</code> also works.</p><p> By default, summary information is shown. You can use the
+      option <code class="literal">-v</code> to get more detailed displays.</p><p>Note that <span class="command"><strong>gmondump</strong></span> just displays the raw data;
+      one would usually use <span class="command"><strong>gprof</strong></span> to display the data in
+      a useful form incorporating symbolic info such as function names and
+      source line numbers.</p><p>Here is an example of <span class="command"><strong>gmondump</strong></span> operation:</p><pre class="screen">
+$ gmondump gmon.out.21900.zstd.exe
+file gmon.out.21900.zstd.exe, gmon version 0x51879, sample rate 100
+  address range 0x100401000..0x1004cc668
+  numbuckets 208282, hitbuckets 1199, hitcount 12124, numrawarcs 0
+</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="getfacl.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="kill.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">getfacl&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;kill</td></tr></table></div></body></html>

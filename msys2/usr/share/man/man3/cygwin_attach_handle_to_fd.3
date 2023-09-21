@@ -1,0 +1,58 @@
+'\" t
+.\"     Title: cygwin_attach_handle_to_fd
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 07/14/2023
+.\"    Manual: Cygwin API Reference
+.\"    Source: Cygwin API Reference
+.\"  Language: English
+.\"
+.TH "CYGWIN_ATTACH_HANDLE_TO_FD" "3" "07/14/2023" "Cygwin API Reference" "Cygwin API Reference"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+cygwin_attach_handle_to_fd
+.SH "SYNOPSIS"
+.sp
+.ft B
+.nf
+#include <sys/cygwin\&.h>
+.fi
+.ft
+.HP \w'int\ cygwin_attach_handle_to_fd('u
+.BI "int cygwin_attach_handle_to_fd(char\ *" "name" ", int\ " "fd" ", HANDLE\ " "handle" ", int\ " "bin" ", int\ " "access" ");"
+.SH "DESCRIPTION"
+.PP
+This function can be used to turn a Win32 "handle" into a posix\-style file handle\&.
+\fIfd\fR
+may be \-1 to make cygwin allocate a handle; the actual handle is returned in all cases\&.
+.PP
+Even after using function, Cygwin doesn\*(Aqt know anything about the underlying file or device\&. It just tries to supply the typical file functions on a "best\-effort" basis\&. Use with care\&. Don\*(Aqt expect too much\&.
+.SH "COPYRIGHT"
+.br
+.PP
+Copyright \(co Cygwin authors
+.PP
+Permission is granted to make and distribute verbatim copies of this documentation provided the copyright notice and this permission notice are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this documentation under the conditions for verbatim copying, provided that the entire resulting derived work is distributed under the terms of a permission notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this documentation into another language, under the above conditions for modified versions, except that this permission notice may be stated in a translation approved by the Free Software Foundation.
+.sp

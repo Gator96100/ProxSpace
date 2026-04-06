@@ -54,6 +54,37 @@ Please note that more detail is available on the wiki: https://github.com/RfidRe
  2. Flash the bootrom with `./pm3-flash-bootrom`.
  3. Flash the fullimage with `./pm3-flash-fullimage`.
  4. Wait for the process to complete.
- 
- ## Setup video
- [![ProxSpace Windows 10 setup](http://img.youtube.com/vi/-DLYp-yWmtQ/0.jpg)](http://www.youtube.com/watch?v=-DLYp-yWmtQ "ProxSpace Windows 10 setup")
+
+## PowerShell Build Wrapper
+
+For users who prefer PowerShell over the MSYS2 terminal, `Build-Proxmark3.ps1` provides a one-command build experience:
+
+```powershell
+# Build everything (bootrom + firmware + client)
+.\Build-Proxmark3.ps1
+
+# Build and flash
+.\Build-Proxmark3.ps1 -Flash -Port COM5
+
+# Build client only with 8 parallel jobs
+.\Build-Proxmark3.ps1 -Target client -Jobs 8
+```
+
+The wrapper automatically sets the correct `TMP`, `TEMP`, `CC`, `CXX`, and `MINGW_HOME` environment variables, avoiding linker errors that can occur when building outside the MSYS2 shell.
+
+## Known Issues
+
+### crapto1 download timeout (issue #59)
+
+The upstream tarball host `crapto1.netgarage.org` has been unreliable since 2024. If the build hangs fetching `craptev1-v1.1.tar.xz`, manually download it from a mirror:
+
+https://raw.githubusercontent.com/ApertureLabsLtd/craptern/master/craptev1-v1.1.tar.xz
+
+Place it in the expected directory before re-running the build.
+
+### System MinGW interference (issue #60)
+
+If you have a separate MinGW installation (Qt Creator, TDM-GCC, etc.) on your system, it may inject incorrect `CC`/`CXX`/`MINGW_HOME` paths into the build. This is now handled automatically by the ProxSpace setup scripts. If you still encounter issues, ensure the `setup/user_setup.sh` exports are being sourced by checking that `which gcc` inside the ProxSpace shell points to `/mingw64/bin/gcc.exe`.
+
+## Setup video
+[![ProxSpace Windows 10 setup](http://img.youtube.com/vi/-DLYp-yWmtQ/0.jpg)](http://www.youtube.com/watch?v=-DLYp-yWmtQ "ProxSpace Windows 10 setup")

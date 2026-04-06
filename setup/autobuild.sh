@@ -41,8 +41,14 @@ function copy_common {
 
 	#Copy required libraries to client/libs
 	ldd "$srcDir/client/proxmark3.exe" | grep "=> /mingw" | awk '{print $3}' | xargs -I '{}' cp -v '{}' "$dstDir/client/libs"
-	#Copy qt5 platform dll
-	cp "$mingwDir/share/qt5/plugins/platforms/qwindows.dll" "$dstDir/client/libs"
+	#Copy qt6 platform dll (updated from qt5 after Qt6 upgrade in PR #62)
+	if [ -f "$mingwDir/share/qt6/plugins/platforms/qwindows.dll" ]; then
+		cp "$mingwDir/share/qt6/plugins/platforms/qwindows.dll" "$dstDir/client/libs"
+	elif [ -f "$mingwDir/share/qt5/plugins/platforms/qwindows.dll" ]; then
+		cp "$mingwDir/share/qt5/plugins/platforms/qwindows.dll" "$dstDir/client/libs"
+	else
+		echo "WARNING: Could not find qwindows.dll in qt5 or qt6 paths"
+	fi
 	#Copy firmware
 	cp "$srcDir/armsrc/obj/fullimage.elf" "$dstDir/client"
 	cp "$srcDir/bootrom/obj/bootrom.elf" "$dstDir/client"
@@ -131,4 +137,3 @@ function loop_folders {
 check_requirements
 cd $pm3Dir
 loop_folders
-

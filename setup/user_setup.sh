@@ -18,3 +18,11 @@ GROUP_MISSING=$( grep -Fq "$GROUP_SID" /etc/group )$?
 if [ $GROUP_MISSING != 0 ]; then
   echo $MKGROUP_CURRENT >> /etc/group
 fi
+
+# ProxSpace compiler overrides — use bundled MinGW64, ignore host env.
+# Fixes issue #60: users with a system MinGW install (Qt Creator, TDM-GCC)
+# inherit incorrect compiler paths that break the Proxmark3 build.
+export MINGW_HOME=/mingw64
+export CC=/mingw64/bin/gcc.exe
+export CXX=/mingw64/bin/g++.exe
+export AR=/mingw64/bin/ar.exe

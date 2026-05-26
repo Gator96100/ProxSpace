@@ -41,8 +41,8 @@ function copy_common {
 
 	#Copy required libraries to client/libs
 	ldd "$srcDir/client/proxmark3.exe" | grep "=> /mingw" | awk '{print $3}' | xargs -I '{}' cp -v '{}' "$dstDir/client/libs"
-	#Copy qt5 platform dll
-	cp "$mingwDir/share/qt5/plugins/platforms/qwindows.dll" "$dstDir/client/libs"
+	#Copy qt6 platform dll
+	cp "$mingwDir/share/qt6/plugins/platforms/qwindows.dll" "$dstDir/client/libs"
 	#Copy firmware
 	cp "$srcDir/armsrc/obj/fullimage.elf" "$dstDir/client"
 	cp "$srcDir/bootrom/obj/bootrom.elf" "$dstDir/client"

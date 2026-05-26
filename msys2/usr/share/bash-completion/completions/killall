@@ -2,35 +2,37 @@
 
 [[ $OSTYPE == *@(linux|freebsd|darwin)* ]] || return 1
 
-_killall()
+_comp_cmd_killall()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[Zoysu]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --context | --older-than | --younger-than | --version | -!(-*)@([Zoy]|V*))
+        --context | --older-than | --younger-than | --version | -${noargopts}@([Zoy]|V*))
             return
             ;;
-        --signal | -!(-*)s)
-            _signals
+        --signal | -${noargopts}s)
+            _comp_compgen_signals
             return
             ;;
-        --user | -!(-*)u)
-            _allowed_users
+        --user | -${noargopts}u)
+            _comp_compgen_allowed_users
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
-        ((cword == 1)) && _signals -
+        _comp_compgen_help
+        ((cword == 1)) && _comp_compgen -a signals -
         return
     fi
 
-    _pnames
+    _comp_compgen_pnames
 } &&
-    complete -F _killall killall
+    complete -F _comp_cmd_killall killall
 
 # ex: filetype=sh

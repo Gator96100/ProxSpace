@@ -1,36 +1,38 @@
 # scrub(1) completion                                      -*- shell-script -*-
 
-_scrub()
+_comp_cmd_scrub()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[bsDpX]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --version | --help | --blocksize | --device-size | --dirent | -!(-*)[vhbsD])
+        --version | --help | --blocksize | --device-size | --dirent | \
+            -${noargopts}[vhbsD])
             return
             ;;
-        --pattern | -!(-*)p)
-            COMPREPLY=($(compgen -W '$("$1" --help 2>&1 |
-                awk "/^Available/{flag=1;next}/^ /&&flag{print \$1}")' \
-                -- "$cur"))
+        --pattern | -${noargopts}p)
+            _comp_compgen_split -- "$("$1" --help 2>&1 |
+                _comp_awk '/^Available/{flag=1;next}/^ /&&flag{print $1}')"
             return
             ;;
-        --freespace | -!(-*)X)
-            _filedir -d
+        --freespace | -${noargopts}X)
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _scrub scrub
+    complete -F _comp_cmd_scrub scrub
 
 # ex: filetype=sh

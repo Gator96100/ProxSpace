@@ -1,86 +1,93 @@
 # bash completion for java, javac and javadoc              -*- shell-script -*-
 
 # available path elements completion
-_java_path()
+_comp_cmd_java__classpath()
 {
-    cur=${cur##*:}
-    _filedir '@(jar|zip)'
+    _comp_compgen -c "${cur##*:}" filedir '@(jar|zip)'
 }
 
 # exact classpath determination
-_java_find_classpath()
+# @var[out] REPLY  Array to store classpaths
+# @return 0 if at least one element is generated, or otherwise 1
+_comp_cmd_java__find_classpath()
 {
     local i
+
+    REPLY=
 
     # search first in current options
     for ((i = 1; i < cword; i++)); do
         if [[ ${words[i]} == -@(cp|classpath) ]]; then
-            classpath=${words[i + 1]}
+            REPLY=${words[i + 1]}
             break
         fi
     done
 
-    # default to environment
-    [[ ! -v classpath ]] && classpath=${CLASSPATH-}
-
-    # default to current directory
-    [[ -z $classpath ]] && classpath=.
+    # fall back to environment, followed by current directory
+    _comp_split -F : REPLY "${REPLY:-${CLASSPATH:-.}}"
 }
 
 # exact sourcepath determination
-_java_find_sourcepath()
+# @var[out] REPLY  Array to store sourcepaths
+# @return 0 if at least one element is generated, or otherwise 1
+_comp_cmd_java__find_sourcepath()
 {
     local i
+
+    REPLY=
 
     # search first in current options
     for ((i = 1; i < cword; i++)); do
         if [[ ${words[i]} == -sourcepath ]]; then
-            sourcepath=${words[i + 1]}
+            REPLY=${words[i + 1]}
             break
         fi
     done
 
-    # default to classpath
-    if [[ ! -v sourcepath ]]; then
-        local classpath
-        _java_find_classpath
-        sourcepath=$classpath
+    # fall back to classpath
+    if [[ ! $REPLY ]]; then
+        _comp_cmd_java__find_classpath
+        return
     fi
+
+    _comp_split -F : REPLY "$REPLY"
 }
 
 # available classes completion
-_java_classes()
+_comp_cmd_java__classes()
 {
-    local classpath i
+    local REPLY i
 
     # find which classpath to use
-    _java_find_classpath
+    _comp_cmd_java__find_classpath
+    local -a classpaths=("${REPLY[@]}")
 
+    local -a classes=()
     # convert package syntax to path syntax
-    cur=${cur//.//}
+    local cur=${cur//.//}
     # parse each classpath element for classes
-    for i in ${classpath//:/ }; do
+    for i in "${classpaths[@]}"; do
         if [[ $i == *.@(jar|zip) && -r $i ]]; then
             if type zipinfo &>/dev/null; then
-                COMPREPLY+=($(zipinfo -1 "$i" "$cur*" 2>/dev/null |
-                    command grep '^[^$]*\.class$'))
+                _comp_split -a classes "$(zipinfo -1 "$i" "$cur*" 2>/dev/null |
+                    command grep '^[^$]*\.class$')"
             elif type unzip &>/dev/null; then
                 # Last column, between entries consisting entirely of dashes
-                COMPREPLY+=($(unzip -lq "$i" "$cur*" 2>/dev/null |
-                    awk '$NF ~ /^-+$/ { flag=!flag; next };
-                         flag && $NF ~ /^[^$]*\.class/ { print $NF }'))
+                _comp_split -a classes "$(unzip -lq "$i" "$cur*" 2>/dev/null |
+                    _comp_awk '$NF ~ /^-+$/ { flag=!flag; next };
+                         flag && $NF ~ /^[^$]*\.class/ { print $NF }')"
             elif type jar &>/dev/null; then
-                COMPREPLY+=($(jar tf "$i" "$cur" |
-                    command grep '^[^$]*\.class$'))
+                _comp_split -a classes "$(jar tf "$i" "$cur" |
+                    command grep '^[^$]*\.class$')"
             fi
 
         elif [[ -d $i ]]; then
-            COMPREPLY+=(
-                $(compgen -d -- "$i/$cur" | command sed -e "s|^$i/\(.*\)|\1.|")
-                $(compgen -f -X '!*.class' -- "$i/$cur" |
-                    command sed -e '/\$/d' -e "s|^$i/||")
-            )
-            [[ ${COMPREPLY-} == *.class ]] || compopt -o nospace
+            local tmp
+            _comp_compgen -v tmp -c "$i/$cur" -- -d -S .
+            _comp_compgen -av tmp -c "$i/$cur" -- -f -X '!*.class'
+            ((${#tmp[@]})) &&
+                _comp_compgen -av classes -- -X '*\$*' -W '"${tmp[@]#$i/}"'
+            [[ ${classes-} == *.class ]] || compopt -o nospace
 
             # FIXME: if we have foo.class and foo/, the completion
             # returns "foo/"... how to give precedence to files
@@ -88,47 +95,54 @@ _java_classes()
         fi
     done
 
-    if ((${#COMPREPLY[@]} != 0)); then
+    if ((${#classes[@]} != 0)); then
         # remove class extension
-        COMPREPLY=(${COMPREPLY[@]%.class})
+        classes=("${classes[@]%.class}")
         # convert path syntax to package syntax
-        COMPREPLY=(${COMPREPLY[@]//\//.})
+        classes=("${classes[@]//\//.}")
+        _comp_compgen -U classes -- -W '"${classes[@]}"'
     fi
 }
 
 # available packages completion
-_java_packages()
+_comp_cmd_java__packages()
 {
-    local sourcepath i
+    local REPLY i files
 
     # find which sourcepath to use
-    _java_find_sourcepath
+    _comp_cmd_java__find_sourcepath || return 0
+    local -a sourcepaths=("${REPLY[@]}")
+
+    local REPLY
+    _comp_dequote_incomplete "$cur"
+    local cur_val=${REPLY-}
 
     # convert package syntax to path syntax
-    cur=${cur//.//}
+    local cur_val=${cur_val//.//}
     # parse each sourcepath element for packages
-    for i in ${sourcepath//:/ }; do
+    for i in "${sourcepaths[@]}"; do
         if [[ -d $i ]]; then
-            COMPREPLY+=($(command ls -F -d $i/$cur* 2>/dev/null |
-                command sed -e 's|^'$i'/||'))
+            _comp_expand_glob files '"$i/$cur_val"*' || continue
+            _comp_split -la COMPREPLY "$(
+                command ls -F -d "${files[@]}" 2>/dev/null |
+                    command sed -e 's|^'"$i"'/||'
+            )"
         fi
     done
     if ((${#COMPREPLY[@]} != 0)); then
-        # keep only packages
-        COMPREPLY=($(tr " " "\n" <<<"${COMPREPLY[@]}" | command grep "/$"))
-        # remove packages extension
-        COMPREPLY=(${COMPREPLY[@]%/})
+        # keep only packages with the package suffix `/` being removed
+        _comp_split -l COMPREPLY "$(printf '%s\n' "${COMPREPLY[@]}" | command sed -n 's,/$,,p')"
         # convert path syntax to package syntax
-        cur="${COMPREPLY[*]//\//.}"
+        ((${#COMPREPLY[@]})) && COMPREPLY=("${COMPREPLY[@]//\//.}")
     fi
 }
 
 # java completion
 #
-_java()
+_comp_cmd_java()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     local i
 
@@ -142,7 +156,7 @@ _java()
                 ;;
             *)
                 # once we've seen a class, just do filename completion
-                _filedir
+                _comp_compgen_filedir
                 return
                 ;;
         esac
@@ -151,59 +165,55 @@ _java()
     case $cur in
         # standard option completions
         -verbose:*)
-            COMPREPLY=($(compgen -W 'class gc jni' -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'class gc jni'
             return
             ;;
         -javaagent:*)
-            cur=${cur#*:}
-            _filedir '@(jar|zip)'
+            _comp_compgen -c "${cur#*:}" filedir '@(jar|zip)'
             return
             ;;
         -agentpath:*)
-            cur=${cur#*:}
-            _filedir so
+            _comp_compgen -c "${cur#*:}" filedir so
             return
             ;;
         # various non-standard option completions
         -splash:*)
-            cur=${cur#*:}
-            _filedir '@(gif|jp?(e)g|png)'
+            _comp_compgen -c "${cur#*:}" filedir '@(gif|jp?(e)g|png)'
             return
             ;;
         -Xbootclasspath*:*)
-            _java_path
+            _comp_cmd_java__classpath
             return
             ;;
         -Xcheck:*)
-            COMPREPLY=($(compgen -W 'jni' -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'jni'
             return
             ;;
         -Xgc:*)
-            COMPREPLY=($(compgen -W 'singlecon gencon singlepar genpar' \
-                -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'singlecon gencon singlepar
+                genpar'
             return
             ;;
         -Xgcprio:*)
-            COMPREPLY=($(compgen -W 'throughput pausetime deterministic' \
-                -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'throughput pausetime
+                deterministic'
             return
             ;;
         -Xloggc:* | -Xverboselog:*)
-            cur=${cur#*:}
-            _filedir
+            _comp_compgen -c "${cur#*:}" filedir
             return
             ;;
         -Xshare:*)
-            COMPREPLY=($(compgen -W 'auto off on' -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'auto off on'
             return
             ;;
         -Xverbose:*)
-            COMPREPLY=($(compgen -W 'memory load jni cpuinfo codegen opt
-                gcpause gcreport' -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'memory load jni cpuinfo codegen
+                opt gcpause gcreport'
             return
             ;;
         -Xverify:*)
-            COMPREPLY=($(compgen -W 'all none remote' -- "${cur#*:}"))
+            _comp_compgen -c "${cur#*:}" -- -W 'all none remote'
             return
             ;;
         # the rest that we have no completions for
@@ -214,39 +224,42 @@ _java()
 
     case $prev in
         -cp | -classpath)
-            _java_path
+            _comp_cmd_java__classpath
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
         [[ $cur == -X* ]] &&
-            COMPREPLY+=($(compgen -W '$(_parse_help "$1" -X)' -- "$cur"))
+            _comp_compgen -a help -- -X
     else
         if [[ $prev == -jar ]]; then
             # jar file completion
-            _filedir '[jw]ar'
+            _comp_compgen_filedir '[jw]ar'
         else
             # classes completion
-            _java_classes
+            _comp_cmd_java__classes
+            # support for launching source-code
+            # programs (JEP 330, JEP 458)
+            _comp_compgen -a filedir 'java'
         fi
     fi
 
     [[ ${COMPREPLY-} == -*[:=] ]] && compopt -o nospace
 
-    __ltrim_colon_completions "$cur"
+    _comp_ltrim_colon_completions "$cur"
 } &&
-    complete -F _java java
+    complete -F _comp_cmd_java java
 
-_javadoc()
+_comp_cmd_javadoc()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -overview | -helpfile)
-            _filedir '?(x)htm?(l)'
+            _comp_compgen_filedir '?(x)htm?(l)'
             return
             ;;
         -doclet | -exclude | -subpackages | -source | -locale | -encoding | -windowtitle | \
@@ -255,49 +268,49 @@ _javadoc()
             return
             ;;
         -stylesheetfile)
-            _filedir css
+            _comp_compgen_filedir css
             return
             ;;
         -d | -link | -linkoffline)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -classpath | -cp | -bootclasspath | -docletpath | -sourcepath | -extdirs | \
             -excludedocfilessubdir)
-            _java_path
+            _comp_cmd_java__classpath
             return
             ;;
     esac
 
     # -linkoffline takes two arguments
     if [[ $cword -gt 2 && ${words[cword - 2]} == -linkoffline ]]; then
-        _filedir -d
+        _comp_compgen_filedir -d
         return
     fi
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
     else
         # source files completion
-        _filedir java
+        _comp_compgen_filedir java
         # packages completion
-        _java_packages
+        _comp_cmd_java__packages
     fi
 } &&
-    complete -F _javadoc javadoc
+    complete -F _comp_cmd_javadoc javadoc
 
-_javac()
+_comp_cmd_javac()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     case $prev in
         -d)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -cp | -classpath | -bootclasspath | -sourcepath | -extdirs)
-            _java_path
+            _comp_cmd_java__classpath
             return
             ;;
     esac
@@ -311,23 +324,23 @@ _javac()
         # the others.
         local opts=$("$1" $helpopt 2>&1 | command sed -e 's/-g:none/-g:{none}/' -ne \
             "s/^[[:space:]]*${cur%%:*}:{\([^}]\{1,\}\)}.*/\1/p")
-        COMPREPLY=($(compgen -W "${opts//,/ }" -- "${cur#*:}"))
+        _comp_compgen -c "${cur#*:}" -- -W "${opts//,/ }"
         return
     fi
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
         [[ $cur == -X* ]] &&
-            COMPREPLY+=($(compgen -W '$(_parse_help "$1" -X)' -- "$cur"))
+            _comp_compgen -a help -- -X
     else
         # source files completion
-        _filedir java
+        _comp_compgen_filedir java
     fi
 
     [[ ${COMPREPLY-} == -*[:=] ]] && compopt -o nospace
 
-    __ltrim_colon_completions "$cur"
+    _comp_ltrim_colon_completions "$cur"
 } &&
-    complete -F _javac javac
+    complete -F _comp_cmd_javac javac
 
 # ex: filetype=sh

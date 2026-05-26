@@ -1,12 +1,12 @@
 # abook(1) completion                                      -*- shell-script -*-
 
-_abook()
+_comp_cmd_abook()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     # abook only takes options, tabbing after command name adds a single dash
-    [[ $cword -eq 1 && -z $cur ]] &&
+    [[ $cword -eq 1 && ! $cur ]] &&
         {
             compopt -o nospace
             COMPREPLY=("-")
@@ -15,35 +15,33 @@ _abook()
 
     case $cur in
         -*)
-            _longopt "$1"
+            _comp_complete_longopt "$@"
             return
             ;;
     esac
 
     case $prev in
         --informat)
-            COMPREPLY=($(compgen -W "$($1 --formats |
-                command sed -n -e 's/^'$'\t''\([a-z]*\).*/\1/p' -e '/^$/q')" \
-                -- "$cur"))
+            _comp_compgen_split -- "$("$1" --formats |
+                command sed -n -e 's/^'$'\t''\([a-z]*\).*/\1/p' -e '/^$/q')"
             ;;
         --outformat)
-            COMPREPLY=($(compgen -W "$($1 --formats |
-                command sed -n -e '/^$/,$s/^'$'\t''\([a-z]*\).*/\1/p')" \
-                -- "$cur"))
+            _comp_compgen_split -- "$("$1" --formats |
+                command sed -n -e '/^$/,$s/^'$'\t''\([a-z]*\).*/\1/p')"
             ;;
         --infile)
-            COMPREPLY=($(compgen -W stdin -- "$cur"))
-            _filedir
+            _comp_compgen -- -W stdin
+            _comp_compgen -a filedir
             ;;
         --outfile)
-            COMPREPLY=($(compgen -W stdout -- "$cur"))
-            _filedir
+            _comp_compgen -- -W stdout
+            _comp_compgen -a filedir
             ;;
         --config | --datafile)
-            _filedir
+            _comp_compgen_filedir
             ;;
     esac
 } &&
-    complete -F _abook abook
+    complete -F _comp_cmd_abook abook
 
 # ex: filetype=sh

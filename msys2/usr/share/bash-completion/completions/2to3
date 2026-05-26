@@ -1,39 +1,42 @@
 # bash completion for 2to3                                 -*- shell-script -*-
 
-_2to3()
+_comp_cmd_2to3()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -h | --help | --add-suffix)
             return
             ;;
         -f | --fix | -x | --nofix)
-            COMPREPLY=($(compgen -W \
-                "$($1 --list-fixes 2>/dev/null | command sed -e 1d)" -- "$cur"))
+            _comp_compgen_split -- "$(
+                "$1" --list-fixes 2>/dev/null | command sed -e 1d
+            )"
             return
             ;;
         -j | --processes)
-            COMPREPLY=($(compgen -W "{1..$(_ncpus)}" -- "$cur"))
+            local REPLY
+            _comp_get_ncpus
+            _comp_compgen -- -W "{1..$REPLY}"
             return
             ;;
         -o | --output-dir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir py
+    _comp_compgen_filedir py
 } &&
-    complete -F _2to3 2to3
+    complete -F _comp_cmd_2to3 2to3
 
 # ex: filetype=sh

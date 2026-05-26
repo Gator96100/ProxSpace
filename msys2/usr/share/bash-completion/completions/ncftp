@@ -1,9 +1,9 @@
 # bash completion for ncftp                                -*- shell-script -*-
 
-_ncftp()
+_comp_cmd_ncftp()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -u | -p | -P | -j | -F)
@@ -12,16 +12,16 @@ _ncftp()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
         return
     fi
 
     if [[ $cword -eq 1 && -f ~/.ncftp/bookmarks ]]; then
-        COMPREPLY=($(compgen -W '$(command sed -ne "s/^\([^,]\{1,\}\),.*$/\1/p" \
-            ~/.ncftp/bookmarks)' -- "$cur"))
+        _comp_compgen_split -- "$(command sed -ne \
+            's/^\([^,]\{1,\}\),.*$/\1/p' ~/.ncftp/bookmarks)"
     fi
 
 } &&
-    complete -F _ncftp -o default ncftp
+    complete -F _comp_cmd_ncftp -o default ncftp
 
 # ex: filetype=sh

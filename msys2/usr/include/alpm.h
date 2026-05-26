@@ -1,7 +1,7 @@
 /*
  * alpm.h
  *
- *  Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
+ *  Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
  *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
  *  Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
  *  Copyright (c) 2005 by Christian Hamar <krics@linuxforum.hu>
@@ -78,7 +78,7 @@ extern "C" {
  * This struct represents an instance of libalpm.
  * @ingroup libalpm_handle
  */
-typedef struct __alpm_handle_t alpm_handle_t;
+typedef struct _alpm_handle_t alpm_handle_t;
 
 /** A database.
  *
@@ -98,7 +98,7 @@ typedef struct __alpm_handle_t alpm_handle_t;
  * Databases are automatically unregistered when the \link alpm_handle_t \endlink is released.
  * @ingroup libalpm_databases
  */
-typedef struct __alpm_db_t alpm_db_t;
+typedef struct _alpm_db_t alpm_db_t;
 
 
 /** A package.
@@ -107,17 +107,19 @@ typedef struct __alpm_db_t alpm_db_t;
  * Packages from databases are automatically freed when the database is unregistered. Packages loaded
  * from a file must be freed manually.
  *
- * Packages can then be queried for metadata or added to a \link alpm_trans_t transaction \endlink
+ * Packages can then be queried for metadata or added to a transaction
  * to be added or removed from the system.
  * @ingroup libalpm_packages
  */
-typedef struct __alpm_pkg_t alpm_pkg_t;
+typedef struct _alpm_pkg_t alpm_pkg_t;
 
-/** Transaction structure used internally by libalpm
- * @ingroup libalpm_trans
- * */
-typedef struct __alpm_trans_t alpm_trans_t;
-
+/** The extended data type used to store non-standard package data fields
+ * @ingroup libalpm_packages
+ */
+typedef struct _alpm_pkg_xdata_t {
+	char *name;
+	char *value;
+} alpm_pkg_xdata_t;
 
 /** The time type used by libalpm. Represents a unix time stamp
  * @ingroup libalpm_misc */
@@ -162,7 +164,7 @@ typedef struct _alpm_backup_t {
  * @param path the path to search for in the package
  * @return a pointer to the matching file or NULL if not found
  */
-alpm_file_t *alpm_filelist_contains(alpm_filelist_t *filelist, const char *path);
+alpm_file_t *alpm_filelist_contains(const alpm_filelist_t *filelist, const char *path);
 
 /* End of libalpm_files */
 /** @} */
@@ -486,7 +488,7 @@ typedef struct _alpm_siglist_t {
  * Check the PGP signature for the given package file.
  * @param pkg the package to check
  * @param siglist a pointer to storage for signature results
- * @return a int value : 0 (valid), 1 (invalid), -1 (an error occurred)
+ * @return 0 if valid, -1 if an error occurred or signature is invalid
  */
 int alpm_pkg_check_pgp_signature(alpm_pkg_t *pkg, alpm_siglist_t *siglist);
 
@@ -494,7 +496,7 @@ int alpm_pkg_check_pgp_signature(alpm_pkg_t *pkg, alpm_siglist_t *siglist);
  * Check the PGP signature for the given database.
  * @param db the database to check
  * @param siglist a pointer to storage for signature results
- * @return a int value : 0 (valid), 1 (invalid), -1 (an error occurred)
+ * @return 0 if valid, -1 if an error occurred or signature is invalid
  */
 int alpm_db_check_pgp_signature(alpm_db_t *db, alpm_siglist_t *siglist);
 
@@ -598,16 +600,10 @@ typedef struct _alpm_depmissing_t {
 
 /** A conflict that has occurred between two packages. */
 typedef struct _alpm_conflict_t {
-	/** Hash of the first package name
-	 * (used internally to speed up conflict checks) */
-	unsigned long package1_hash;
-	/** Hash of the second package name
-	 * (used internally to speed up conflict checks) */
-	unsigned long package2_hash;
-	/** Name of the first package */
-	char *package1;
-	/** Name of the second package */
-	char *package2;
+	/** The first package */
+	alpm_pkg_t *package1;
+	/** The second package */
+	alpm_pkg_t *package2;
 	/** The conflict */
 	alpm_depend_t *reason;
 } alpm_conflict_t;
@@ -973,7 +969,7 @@ typedef union _alpm_event_t {
  * Called when an event occurs
  * @param ctx user-provided context
  * @param event the event that occurred */
-typedef void (*alpm_cb_event)(void *ctx, alpm_event_t *);
+typedef void (*alpm_cb_event)(void *ctx, alpm_event_t *event);
 
 /**
  * Type of question.
@@ -1080,8 +1076,10 @@ typedef struct _alpm_question_import_key_t {
 	alpm_question_type_t type;
 	/** Answer: whether or not to import key */
 	int import;
-	/** The key to import */
-	alpm_pgpkey_t *key;
+	/** UID of the key to import */
+	const char *uid;
+	/** Fingerprint the key to import */
+	const char *fingerprint;
 } alpm_question_import_key_t;
 
 /**
@@ -1118,7 +1116,7 @@ typedef union _alpm_question_t {
  * @param ctx user-provided context
  * @param question the question being asked.
  */
-typedef void (*alpm_cb_question)(void *ctx, alpm_question_t *);
+typedef void (*alpm_cb_question)(void *ctx, alpm_question_t *question);
 
 /** An enum over different kinds of progress alerts. */
 typedef enum _alpm_progress_t {
@@ -1285,6 +1283,12 @@ int alpm_unregister_all_syncdbs(alpm_handle_t *handle);
  */
 int alpm_db_unregister(alpm_db_t *db);
 
+/** Get the handle of a package database.
+ * @param db pointer to the package database
+ * @return the alpm handle that the package database belongs to
+ */
+alpm_handle_t *alpm_db_get_handle(alpm_db_t *db);
+
 /** Get the name of a package database.
  * @param db pointer to the package database
  * @return the name of the package database, NULL on error
@@ -1338,6 +1342,34 @@ int alpm_db_add_server(alpm_db_t *db, const char *url);
  * -1 on error (pm_errno is set accordingly)
  */
 int alpm_db_remove_server(alpm_db_t *db, const char *url);
+
+/** Get the list of cache servers assigned to this db.
+ * @param db pointer to the database to get the servers from
+ * @return a char* list of servers
+ */
+alpm_list_t *alpm_db_get_cache_servers(const alpm_db_t *db);
+
+/** Sets the list of cache servers for the database to use.
+ * @param db the database to set the servers. The list will be duped and
+ * the original will still need to be freed by the caller.
+ * @param servers a char* list of servers.
+ */
+int alpm_db_set_cache_servers(alpm_db_t *db, alpm_list_t *servers);
+
+/** Add a download cache server to a database.
+ * @param db database pointer
+ * @param url url of the server
+ * @return 0 on success, -1 on error (pm_errno is set accordingly)
+ */
+int alpm_db_add_cache_server(alpm_db_t *db, const char *url);
+
+/** Remove a download cache server from a database.
+ * @param db database pointer
+ * @param url url of the server
+ * @return 0 on success, 1 on server not present,
+ * -1 on error (pm_errno is set accordingly)
+ */
+int alpm_db_remove_cache_server(alpm_db_t *db, const char *url);
 
 /* End of server accessors */
 /** @} */
@@ -1834,7 +1866,7 @@ const char *alpm_option_get_gpgdir(alpm_handle_t *handle);
  * @param gpgdir the gpgdir to set
  */
 int alpm_option_set_gpgdir(alpm_handle_t *handle, const char *gpgdir);
-/* End of gpdir accessors */
+/* End of gpgdir accessors */
 /** @} */
 
 
@@ -2261,7 +2293,9 @@ typedef enum _alpm_pkgreason_t {
 	/** Explicitly requested by the user. */
 	ALPM_PKG_REASON_EXPLICIT = 0,
 	/** Installed as a dependency for another package. */
-	ALPM_PKG_REASON_DEPEND = 1
+	ALPM_PKG_REASON_DEPEND = 1,
+	/** Failed parsing of local database */
+	ALPM_PKG_REASON_UNKNOWN = 2
 } alpm_pkgreason_t;
 
 /** Location a package object was loaded from. */
@@ -2389,6 +2423,12 @@ int alpm_pkg_should_ignore(alpm_handle_t *handle, alpm_pkg_t *pkg);
  * For database packages, they will be freed when the database is unregistered.
  * @{
  */
+
+/** Gets the handle of a package
+ * @param pkg a pointer to package
+ * @return the alpm handle that the package belongs to
+ */
+alpm_handle_t *alpm_pkg_get_handle(alpm_pkg_t *pkg);
 
 /** Gets the name of the file from which the package was loaded.
  * @param pkg a pointer to package
@@ -2590,6 +2630,12 @@ int alpm_pkg_get_sig(alpm_pkg_t *pkg, unsigned char **sig, size_t *sig_len);
  */
 int alpm_pkg_get_validation(alpm_pkg_t *pkg);
 
+/** Gets the extended data field of a package.
+ * @param pkg a pointer to package
+ * @return a reference to a list of alpm_pkg_xdata_t objects
+ */
+alpm_list_t *alpm_pkg_get_xdata(alpm_pkg_t *pkg);
+
 /** Returns whether the package has an install scriptlet.
  * @return 0 if FALSE, TRUE otherwise
  */
@@ -2719,7 +2765,8 @@ typedef enum _alpm_transflag_t {
 	ALPM_TRANS_FLAG_RECURSE = (1 << 5),
 	/** Modify database but do not commit changes to the filesystem. */
 	ALPM_TRANS_FLAG_DBONLY = (1 << 6),
-	/* (1 << 7) flag can go here */
+	/** Do not run hooks during a transaction */
+	ALPM_TRANS_FLAG_NOHOOKS = (1 << 7),
 	/** Use ALPM_PKG_REASON_DEPEND when installing packages. */
 	ALPM_TRANS_FLAG_ALLDEPS = (1 << 8),
 	/** Only download packages and do not actually install. */

@@ -1,21 +1,25 @@
 # mailman list_lists completion                            -*- shell-script -*-
 
-_mailman_lists()
+# @since 2.12
+_comp_xfunc_list_lists_compgen_mailman_lists()
 {
-    COMPREPLY=($(compgen -W '$(list_lists -b 2>/dev/null)' -- "$cur"))
+    _comp_compgen_split -- "$(list_lists -b 2>/dev/null)"
 }
 
-_list_lists()
+_comp_deprecate_func 2.12 _mailman_lists \
+    _comp_xfunc_list_lists_compgen_mailman_lists
+
+_comp_cmd_list_lists()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--advertised --virtual-host-overview --bare
-            --help' -- "$cur"))
+        _comp_compgen -- -W '--advertised --virtual-host-overview --bare
+            --help'
     fi
 
 } &&
-    complete -F _list_lists list_lists
+    complete -F _comp_cmd_list_lists list_lists
 
 # ex: filetype=sh

@@ -15,10 +15,10 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 declare -r myname='paclist'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 usage() {
 	cat <<EOF
@@ -32,7 +32,7 @@ Options:
   -h, --help     show this help message and exit
   -V, --version  display version information and exit
 
-Example: ${myname} testing
+Example: ${myname} core-testing
 EOF
 }
 
@@ -59,4 +59,4 @@ pacman -Sl "$@" | awk '/\[.*[[:alpha:]]+]$/ {print $2,$3};
                      /\[.*[[:digit:]]+]$/ {print $2,substr($NF, 1, length($NF) - 1)}'
 
 # exit with pacman's return value, not awk's
-exit ${PIPESTATUS[0]}
+exit "${PIPESTATUS[0]}"

@@ -1,5 +1,7 @@
 ## Syntax highlighting for CSS files.
 
+## Original author:  Simon Rupf
+
 syntax css "\.css$"
 comment "/*|*/"
 

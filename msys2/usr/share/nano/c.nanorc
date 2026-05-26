@@ -6,9 +6,9 @@ magic "^(C|C\+\+) (source|program)"
 comment "//"
 
 # Constants.
-color brightred "\<[A-Z_][0-9A-Z_]*\>"
+color brightred "\<[[:upper:]_][[:upper:][:digit:]_]*\>"
 # Labels.
-color brightmagenta "^[[:blank:]]*[A-Z_a-z][0-9A-Z_a-z]*:[[:blank:]]*$"
+color brightmagenta "^[[:blank:]]*[[:alpha:]_][[:alnum:]_]*:[[:blank:]]*$"
 color normal ":[[:blank:]]*$"
 
 # Types and related keywords.
@@ -36,7 +36,7 @@ color brightcyan start="^[[:blank:]]*#[[:blank:]]*(if(n?def)?|elif|warning|error
 color brightcyan "^[[:blank:]]*#[[:blank:]]*((define|else|endif|include(_next)?|line|undef)\>|$)"
 
 # Comments.
-color brightblue "//.*"
+color brightblue "//[^"]*$|(^|[[:blank:]])//.*"
 color brightblue start="/\*" end="\*/"
 
 # Reminders.

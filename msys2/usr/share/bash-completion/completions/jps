@@ -1,9 +1,9 @@
 # jps(1) completion                                        -*- shell-script -*-
 
-_jps()
+_comp_cmd_jps()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -J* | -help)
@@ -12,14 +12,14 @@ _jps()
     esac
 
     if [[ $cur == -* ]]; then
-        # Not using _parse_usage because output has [-help] which does not
-        # mean -h, -e, -l, -p...
-        COMPREPLY=($(compgen -W "-q -m -l -v -V -J -help" -- "$cur"))
+        # Not using _comp_compgen_usage because output has [-help] which does
+        # not mean -h, -e, -l, -p...
+        _comp_compgen -- -W "-q -m -l -v -V -J -help"
         [[ ${COMPREPLY-} == -J* ]] && compopt -o nospace
     else
-        _known_hosts_real -- "$cur"
+        _comp_compgen_known_hosts -- "$cur"
     fi
 } &&
-    complete -F _jps jps
+    complete -F _comp_cmd_jps jps
 
 # ex: filetype=sh

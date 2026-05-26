@@ -1,28 +1,27 @@
 # munin-run completion                                     -*- shell-script -*-
 
-_munin_run()
+_comp_cmd_munin_run()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --config | --sconffile)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --servicedir | --sconfdir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
     else
-        COMPREPLY=($(compgen -W \
-            '$(command ls /etc/munin/plugins 2>/dev/null)' -- "$cur"))
+        _comp_compgen_split -- "$(command ls /etc/munin/plugins 2>/dev/null)"
     fi
 } &&
-    complete -F _munin_run munin-run
+    complete -F _comp_cmd_munin_run munin-run
 
 # ex: filetype=sh

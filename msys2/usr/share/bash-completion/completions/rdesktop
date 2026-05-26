@@ -1,39 +1,34 @@
 # bash completion for rdesktop                             -*- shell-script -*-
 
-_rdesktop()
+_comp_cmd_rdesktop()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     case $prev in
         -*k)
-            COMPREPLY=($(command ls \
-                /usr/share/rdesktop/keymaps 2>/dev/null |
-                command grep -E -v '(common|modifiers)'))
-            COMPREPLY+=($(command ls $HOME/.rdesktop/keymaps 2>/dev/null))
-            COMPREPLY+=($(command ls ./keymaps 2>/dev/null))
-            COMPREPLY=($(compgen -W '${COMPREPLY[@]}' -- "$cur"))
+            _comp_expand_glob COMPREPLY '/usr/share/rdesktop/keymaps/!(*@(common|modifiers)*) {"$HOME/.rdesktop",.}/keymaps/*' &&
+                _comp_compgen -- -W '"${COMPREPLY[@]}"'
             return
             ;;
         -*a)
-            COMPREPLY=($(compgen -W '8 15 16 24' -- "$cur"))
+            _comp_compgen -- -W '8 15 16 24'
             return
             ;;
         -*x)
-            COMPREPLY=($(compgen -W 'broadband modem lan' -- "$cur"))
+            _comp_compgen -- -W 'broadband modem lan'
             return
             ;;
         -*r)
             case $cur in
                 sound:*)
-                    COMPREPLY=($(compgen -W 'local off remote' \
-                        -- "${cur#sound:}"))
+                    _comp_compgen -c "${cur#sound:}" -- -W 'local off remote'
                     ;;
                 *:*) ;;
 
                 *)
-                    COMPREPLY=($(compgen -W 'comport: disk: lptport:
-                        printer: sound: lspci scard' -- "$cur"))
+                    _comp_compgen -- -W 'comport: disk: lptport: printer:
+                        sound: lspci scard'
                     [[ ${COMPREPLY-} == *: ]] && compopt -o nospace
                     ;;
             esac
@@ -45,13 +40,15 @@ _rdesktop()
     esac
 
     if [[ $cur == -* ]]; then
-        local opts=($(_parse_help "$1"))
-        COMPREPLY=($(compgen -W '${opts[@]%:}' -- "$cur"))
+        local -a opts
+        _comp_compgen -Rv opts help
+        ((${#opts[@]})) &&
+            _comp_compgen -- -W '"${opts[@]%:}"'
     else
-        _known_hosts_real -- "$cur"
+        _comp_compgen_known_hosts -- "$cur"
     fi
 
 } &&
-    complete -F _rdesktop rdesktop
+    complete -F _comp_cmd_rdesktop rdesktop
 
 # ex: filetype=sh

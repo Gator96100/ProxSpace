@@ -1,13 +1,13 @@
 # bash completion for xmllint(1)                           -*- shell-script -*-
 
-_xmllint()
+_comp_cmd_xmllint()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -o | --output)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --path | --dtdvalidfpi | --maxmem | --pattern | --xpath)
@@ -15,39 +15,39 @@ _xmllint()
             return
             ;;
         --dtdvalid)
-            _filedir 'dtd?(.gz)'
+            _comp_compgen_filedir 'dtd?(.gz)'
             return
             ;;
         --relaxng)
-            _filedir 'rng?(.gz)'
+            _comp_compgen_filedir 'rng?(.gz)'
             return
             ;;
         --schema)
-            _filedir 'xsd?(.gz)'
+            _comp_compgen_filedir 'xsd?(.gz)'
             return
             ;;
         --schematron)
-            _filedir 'sch?(.gz)'
+            _comp_compgen_filedir 'sch?(.gz)'
             return
             ;;
         --encode)
-            _xfunc iconv _iconv_charsets
+            _comp_compgen -x iconv charsets
             return
             ;;
         --pretty)
-            COMPREPLY=($(compgen -W '{0..2}' -- "$cur"))
+            _comp_compgen -- -W '{0..2}'
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         COMPREPLY=("${COMPREPLY[@]%:}")
         return
     fi
 
-    _filedir '@(*ml|htm|svg?(z)|xs[dl]|rng|wsdl|jnlp|tld|dbk|docbook|page)?(.gz)'
+    _comp_compgen_filedir '@(*ml|htm|svg?(z)|xs[dl]|rng|wsdl|jnlp|tld|dbk|docbook|page|rss)?(.gz)'
 } &&
-    complete -F _xmllint xmllint
+    complete -F _comp_cmd_xmllint xmllint
 
 # ex: filetype=sh

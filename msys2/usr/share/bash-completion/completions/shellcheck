@@ -1,63 +1,65 @@
 # bash completion for shellcheck(1)                        -*- shell-script -*-
 
-_shellcheck_optarg()
+_comp_cmd_shellcheck__optarg()
 {
     local args=$("$1" --help 2>&1 |
-        command sed -e 's/,/ /g' -ne 's/^.*'$2'\>.*(\([^)]*\)).*/\1/p')
-    COMPREPLY+=($(compgen -W '$args' -- "$cur"))
+        command sed -e 's/,/ /g' -ne 's/^.*'"$2"'\>.*(\([^)]*\)).*/\1/p')
+    _comp_compgen -a -- -W '$args'
 }
 
-_shellcheck()
+_comp_cmd_shellcheck()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[eifCsoPW]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --version | -!(-*)V*)
+        --version | -${noargopts}V*)
             return
             ;;
-        --exclude | --include | -!(-*)[ei])
+        --exclude | --include | -${noargopts}[ei])
             return
             ;;
-        --format | -!(-*)f)
+        --format | -${noargopts}f)
             local args=$("$1" --format=nonexistent-format /dev/null 2>&1 |
                 command sed -ne '/^Supported formats/,//p' |
                 command sed -ne '/^[[:space:]]/p')
-            COMPREPLY=($(compgen -W '$args' -- "$cur"))
+            _comp_compgen -- -W '$args'
             return
             ;;
-        --color | -!(-*)C)
-            _shellcheck_optarg "$1" --color
+        --color | -${noargopts}C)
+            _comp_cmd_shellcheck__optarg "$1" --color
             return
             ;;
-        --shell | -!(-*)s)
-            _shellcheck_optarg "$1" --shell
+        --shell | -${noargopts}s)
+            _comp_cmd_shellcheck__optarg "$1" --shell
             return
             ;;
-        --enable | -!(-*)o)
-            COMPREPLY=($(compgen -W 'all' -- "$cur")) # TODO others?
+        --enable | -${noargopts}o)
+            _comp_compgen -- -W 'all' # TODO others?
             return
             ;;
-        --source-path | -!(-*)P)
-            _filedir -d
-            COMPREPLY+=($(compgen -W 'SCRIPTDIR' -- "$cur"))
+        --source-path | -${noargopts}P)
+            _comp_compgen_filedir -d
+            _comp_compgen -a -- -W 'SCRIPTDIR'
             return
             ;;
-        --wiki-link-count | -!(-*)W)
+        --wiki-link-count | -${noargopts}W)
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _shellcheck shellcheck
+    complete -F _comp_cmd_shellcheck shellcheck
 
 # ex: filetype=sh

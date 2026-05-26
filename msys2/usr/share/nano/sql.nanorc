@@ -1,5 +1,7 @@
 ## Syntax highlighting for (Postgres) SQL scripts.
 
+## Original author:  Devrim Gündüz
+
 syntax sql "\.sql$"
 comment "-- "
 

@@ -1,18 +1,18 @@
 # BitKeeper completion                                     -*- shell-script -*-
 # adapted from code by  Bart Trojanowski <bart@jukie.net>
 
-_bk()
+_comp_cmd_bk()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     local BKCMDS="$(bk help topics 2>/dev/null |
-        awk '/^  bk/ { print $2 }' | xargs printf '%s ')"
+        _comp_awk '/^  bk/ { print $2 }' | xargs printf '%s ')"
 
-    COMPREPLY=($(compgen -W "$BKCMDS" -- "$cur"))
-    _filedir
+    _comp_compgen -- -W "$BKCMDS"
+    _comp_compgen -a filedir
 
 } &&
-    complete -F _bk bk
+    complete -F _comp_cmd_bk bk
 
 # ex: filetype=sh

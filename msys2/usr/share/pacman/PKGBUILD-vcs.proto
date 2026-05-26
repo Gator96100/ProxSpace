@@ -25,7 +25,7 @@ options=()
 install=
 source=('FOLDER::VCS+URL#FRAGMENT')
 noextract=()
-md5sums=('SKIP')
+sha256sums=('SKIP')
 
 # Please refer to the 'USING VCS SOURCES' section of the PKGBUILD man page for
 # a description of each element in the source array.

@@ -1,9 +1,9 @@
 # bash completion for strace                               -*- shell-script -*-
 
-_strace()
+_comp_cmd_strace()
 {
-    local cur prev words cword
-    _init_completion -n = || return
+    local cur prev words cword comp_args
+    _comp_initialize -n = -- "$@" || return
 
     # check if we're still completing strace
     local offset=0 i
@@ -22,7 +22,7 @@ _strace()
     done
 
     if ((offset > 0)); then
-        _command_offset $offset
+        _comp_command_offset $offset
     else
 
         case $prev in
@@ -38,11 +38,11 @@ _strace()
                             local define syscall rest
                             local -A syscalls
                             while read -r define syscall rest; do
-                                [[ $define == "#define" && \
-                                $syscall =~ ^__NR_(.+) ]] &&
-                                    syscalls[${BASH_REMATCH[1]}]=1
+                                [[ $define == "#define" &&
+                                    $syscall =~ ^__NR_(.+) ]] &&
+                                    syscalls[${BASH_REMATCH[1]}]=set
                             done 2>/dev/null </usr/include/asm/unistd.h
-                            if [[ ! $syscalls ]]; then
+                            if ((${#syscalls[@]} == 0)); then
                                 local unistd arch=$(command uname -m)
                                 if [[ $arch == *86 ]]; then
                                     unistd=/usr/include/asm/unistd_32.h
@@ -50,50 +50,50 @@ _strace()
                                     unistd=/usr/include/asm/unistd_64.h
                                 fi
                                 while read -r define syscall rest; do
-                                    [[ $define == "#define" && \
-                                    $syscall =~ ^__NR_(.+) ]] &&
-                                        syscalls[${BASH_REMATCH[1]}]=1
+                                    [[ $define == "#define" &&
+                                        $syscall =~ ^__NR_(.+) ]] &&
+                                        syscalls[${BASH_REMATCH[1]}]=set
                                 done 2>/dev/null <$unistd
                             fi
 
-                            COMPREPLY=($(compgen -W '${!syscalls[@]} file
-                                process network signal ipc desc all none' \
-                                -- "$cur"))
+                            _comp_compgen -- -W \
+                                '${syscalls[@]+"${!syscalls[@]}"} file process
+                                network signal ipc desc all none'
                             return
                             ;;
                     esac
                 else
                     compopt -o nospace
-                    COMPREPLY=($(compgen -S"=" -W 'trace abbrev verbose raw
-                        signal read write' -- "$cur"))
+                    _comp_compgen -- -S"=" -W 'trace abbrev verbose raw signal
+                        read write'
                 fi
                 return
                 ;;
             -*o)
-                _filedir
+                _comp_compgen_filedir
                 return
                 ;;
             -*p)
-                _pids
+                _comp_compgen_pids
                 return
                 ;;
             -*S)
-                COMPREPLY=($(compgen -W 'time calls name nothing' -- "$cur"))
+                _comp_compgen -- -W 'time calls name nothing'
                 return
                 ;;
             -*u)
-                _allowed_users
+                _comp_compgen_allowed_users
                 return
                 ;;
         esac
 
         if [[ $cur == -* ]]; then
-            COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+            _comp_compgen_help -- -h
         else
-            COMPREPLY=($(compgen -c -- "$cur"))
+            _comp_compgen_commands
         fi
     fi
 } &&
-    complete -F _strace -o default strace
+    complete -F _comp_cmd_strace -o default strace
 
 # ex: filetype=sh

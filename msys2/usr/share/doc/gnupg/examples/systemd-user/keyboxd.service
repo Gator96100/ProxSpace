@@ -1,0 +1,8 @@
+[Unit]
+Description=GnuPG public key management service
+Documentation=man:keyboxd(8)
+Requires=keyboxd.socket
+
+[Service]
+ExecStart=/usr/lib/gnupg/keyboxd --supervised
+ExecReload=/usr/bin/gpgconf --reload keyboxd

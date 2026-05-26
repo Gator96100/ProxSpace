@@ -1,5 +1,8 @@
 ## Syntax highlighting for PHP.
 
+## Original author:  Mike Frysinger
+## License:  GPL version 3 or newer
+
 syntax php "\.(php[23457s~]?|phtml|ctp)$"
 magic "PHP script"
 comment "//"
@@ -8,9 +11,9 @@ comment "//"
 color brightgreen "(<\?(php|=)?|\?>)"
 
 # Function names.
-color white "\<[A-Za-z_][A-Za-z_0-9]*\("
+color white "\<[[:alpha:]_][[:alnum:]_]*\("
 # Variable names.
-color cyan "\$[A-Za-z_][A-Za-z_0-9]*"
+color cyan "\$[[:alpha:]_][[:alnum:]_]*"
 
 # Types.
 color green "\<(array|bool|callable|const|float|global|int|object|string|var)\>"

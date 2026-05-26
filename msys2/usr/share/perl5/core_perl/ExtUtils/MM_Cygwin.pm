@@ -10,7 +10,7 @@ require ExtUtils::MM_Unix;
 require ExtUtils::MM_Win32;
 our @ISA = qw( ExtUtils::MM_Unix );
 
-our $VERSION = '7.64';
+our $VERSION = '7.70';
 $VERSION =~ tr/_//d;
 
 
@@ -35,7 +35,7 @@ We're Unix and Cygwin.
 =cut
 
 sub os_flavor {
-    return('Unix', 'Msys');
+    return('Unix', 'Cygwin');
 }
 
 =item cflags
@@ -145,7 +145,7 @@ sub dynamic_lib {
     return $s unless %{$self->{XS}};
 
     # do an ephemeral rebase so the new DLL fits to the current rebase map
-    $s .= "\t/bin/find \$\(INST_ARCHLIB\)/auto -xdev -name \\*.$self->{DLEXT} | /bin/rebase -sOT -" if (( $Config{myarchname} eq 'i686-msys' ) and not ( exists $ENV{CYGPORT_PACKAGE_VERSION} ));
+    $s .= "\t/bin/find \$\(INST_ARCHLIB\)/auto -xdev -name \\*.$self->{DLEXT} | /bin/rebase -sOT -" if (( $Config{myarchname} eq 'i686-cygwin' ) and not ( exists $ENV{CYGPORT_PACKAGE_VERSION} ));
     $s;
 }
 
@@ -165,7 +165,7 @@ sub install {
     my $INSTALLLIB = $self->{"INSTALL". ($INSTALLDIRS eq 'perl' ? 'ARCHLIB' : uc($INSTALLDIRS)."ARCH")};
     my $dop = "\$\(DESTDIR\)$INSTALLLIB/auto/";
     my $dll = "$dop/$self->{FULLEXT}/$self->{BASEEXT}.$self->{DLEXT}";
-    $s =~ s|^(pure_install :: pure_\$\(INSTALLDIRS\)_install\n\t)\$\(NOECHO\) \$\(NOOP\)\n|$1\$(CHMOD) \$(PERM_RWX) $dll\n\t/bin/find $dop -xdev -name \\*.$self->{DLEXT} \| /bin/rebase -sOT -\n|m if (( $Config{myarchname} eq 'i686-msys') and not ( exists $ENV{CYGPORT_PACKAGE_VERSION} ));
+    $s =~ s|^(pure_install :: pure_\$\(INSTALLDIRS\)_install\n\t)\$\(NOECHO\) \$\(NOOP\)\n|$1\$(CHMOD) \$(PERM_RWX) $dll\n\t/bin/find $dop -xdev -name \\*.$self->{DLEXT} \| /bin/rebase -sOT -\n|m if (( $Config{myarchname} eq 'i686-cygwin') and not ( exists $ENV{CYGPORT_PACKAGE_VERSION} ));
     $s;
 }
 

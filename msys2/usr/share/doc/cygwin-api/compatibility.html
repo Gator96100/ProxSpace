@@ -1,20 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Chapter&#160;1.&#160;Compatibility</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-api.html" title="Cygwin API Reference"><link rel="up" href="cygwin-api.html" title="Cygwin API Reference"><link rel="prev" href="cygwin-api.html" title="Cygwin API Reference"><link rel="next" href="std-bsd.html" title="System interfaces compatible with BSD functions:"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&#160;1.&#160;Compatibility</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="cygwin-api.html">Prev</a>&#160;</td><th width="60%" align="center">&#160;</th><td width="20%" align="right">&#160;<a accesskey="n" href="std-bsd.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="compatibility"></a>Chapter&#160;1.&#160;Compatibility</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="compatibility.html#std-susv4">System interfaces compatible with the Single Unix Specification, Version 7:</a></span></dt><dt><span class="sect1"><a href="std-bsd.html">System interfaces compatible with BSD functions:</a></span></dt><dt><span class="sect1"><a href="std-gnu.html">System interfaces compatible with GNU or Linux extensions:</a></span></dt><dt><span class="sect1"><a href="std-solaris.html">System interfaces compatible with Solaris or SunOS functions:</a></span></dt><dt><span class="sect1"><a href="std-deprec.html">Other UNIX system interfaces, not in POSIX.1-2008 or deprecated:</a></span></dt><dt><span class="sect1"><a href="std-notimpl.html">NOT implemented system interfaces from the Single Unix Specification, Volume 7:</a></span></dt><dt><span class="sect1"><a href="std-notes.html">Implementation Notes</a></span></dt></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-susv4"></a>System interfaces compatible with the Single Unix Specification, Version 7:</h2></div></div></div><p>Note that the core of the Single Unix Specification, Version 7 is
-also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
+<html><head><meta charset="ANSI_X3.4-1968"><title>Chapter&#160;1.&#160;Compatibility</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-api.html" title="Cygwin API Reference"><link rel="up" href="cygwin-api.html" title="Cygwin API Reference"><link rel="prev" href="cygwin-api.html" title="Cygwin API Reference"><link rel="next" href="std-bsd.html" title="System interfaces compatible with BSD functions:"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&#160;1.&#160;Compatibility</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="cygwin-api.html">Prev</a>&#160;</td><th width="60%" align="center">&#160;</th><td width="20%" align="right">&#160;<a accesskey="n" href="std-bsd.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="compatibility"></a>Chapter&#160;1.&#160;Compatibility</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="compatibility.html#std-susv5">System interfaces compatible with the Single UNIX&#174; Specification Version 5:</a></span></dt><dt><span class="sect1"><a href="std-bsd.html">System interfaces compatible with BSD functions:</a></span></dt><dt><span class="sect1"><a href="std-gnu.html">System interfaces compatible with GNU or Linux extensions:</a></span></dt><dt><span class="sect1"><a href="std-solaris.html">System interfaces compatible with Solaris or SunOS functions:</a></span></dt><dt><span class="sect1"><a href="std-iso.html">System interfaces not in POSIX but compatible with ISO C requirements:</a></span></dt><dt><span class="sect1"><a href="std-deprec.html">Other UNIX&#174; system interfaces, not in POSIX.1-2024, or deprecated:</a></span></dt><dt><span class="sect1"><a href="std-notimpl.html">NOT implemented system interfaces from the Single UNIX&#174; Specification Version 5:</a></span></dt><dt><span class="sect1"><a href="std-other.html">Other system interfaces, some from Windows:</a></span></dt><dt><span class="sect1"><a href="std-notes.html">Implementation Notes</a></span></dt></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-susv5"></a>System interfaces compatible with the Single UNIX&#174; Specification Version 5:</h2></div></div></div><p>Note that the core of the Single UNIX&#174; Specification Version 5 is
+POSIX&#174;.1-2024 also simultaneously IEEE Std 1003.1&#8482;-2024 Edition,
+The &#174;Open Group Base Specifications Issue 8
+(see https://pubs.opengroup.org/onlinepubs/9799919799/), and
+ISO&#174;/IEC DIS 9945 Information technology
+- Portable Operating System Interface (POSIX&#174;) base specifications
+- Issue 8.</p><pre class="screen">
+    CMPLX
+    CMPLXF
+    CMPLXL
     FD_CLR
     FD_ISSET
     FD_SET
     FD_ZERO
     _Exit
     _exit
-    _longjmp
-    _setjmp
-    _tolower
-    _toupper
     a64l
     abort
     abs
     accept
+    accept4
     access
     acos
     acosf
@@ -30,6 +35,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     aio_suspend
     aio_write
     alarm
+    aligned_alloc
     alphasort
     asctime
     asctime_r
@@ -39,6 +45,9 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     asinhf
     asinhl
     asinl
+    asprintf
+    assert
+    at_quick_exit
     atan
     atan2
     atan2f
@@ -50,14 +59,48 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     atanl
     atexit
     atof
-    atoff
     atoi
     atol
     atoll
+    atomic_compare_exchange_strong
+    atomic_compare_exchange_strong_explicit
+    atomic_compare_exchange_weak
+    atomic_compare_exchange_weak_explicit
+    atomic_exchange
+    atomic_exchange_explicit
+    atomic_fetch_add
+    atomic_fetch_add_explicit
+    atomic_fetch_and
+    atomic_fetch_and_explicit
+    atomic_fetch_or
+    atomic_fetch_or_explicit
+    atomic_fetch_sub
+    atomic_fetch_sub_explicit
+    atomic_fetch_xor
+    atomic_fetch_xor_explicit
+    atomic_flag_clear
+    atomic_flag_clear_explicit
+    atomic_flag_test_and_set
+    atomic_flag_test_and_set_explicit
+    atomic_init
+    atomic_is_lock_free
+    atomic_load
+    atomic_load_explicit
+    atomic_signal_fence
+    atomic_store
+    atomic_store_explicit
+    atomic_thread_fence
     basename			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
+    be16toh
+    be32toh
+    be64toh
     bind
+    bind_textdomain_codeset
+    bindtextdomain
     bsearch
     btowc
+    c16rtomb
+    c32rtomb
     cabs
     cabsf
     cabsl
@@ -67,6 +110,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     cacoshf
     cacoshl
     cacosl
+    call_once
     calloc
     carg
     cargf
@@ -124,6 +168,12 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     close
     closedir
     closelog
+    cnd_broadcast
+    cnd_destroy
+    cnd_init
+    cnd_signal
+    cnd_timedwait
+    cnd_wait
     confstr
     conj
     conjf
@@ -148,7 +198,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     crealf
     creall
     creat
-    crypt			(available in external "crypt" library)
+    crypt			(available in external "libcrypt" library)
     csin
     csinf
     csinh
@@ -177,20 +227,26 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     dbm_nextkey			(available in external "libgdbm" library)
     dbm_open			(available in external "libgdbm" library)
     dbm_store			(available in external "libgdbm" library)
+    dcgettext			(available in external "libintl" library)
+    dcngettext			(available in external "libintl" library)
+    dgettext			(available in external "libintl" library)
     difftime
     dirfd
     dirname
     div
+    dladdr			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     dlclose
     dlerror
     dlopen
     dlsym
+    dngettext			(available in external "libintl" library)
     dprintf
     drand48
     dup
     dup2
+    dup3
     duplocale
-    encrypt			(available in external "crypt" library)
+    encrypt			(available in external "libcrypt" library)
     endgrent
     endhostent
     endprotoent
@@ -255,6 +311,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     fexecve
     fflush
     ffs
+    ffsl
+    ffsll
     fgetc
     fgetpos
     fgets
@@ -309,7 +367,6 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     ftok
     ftruncate
     ftrylockfile
-    ftw
     funlockfile
     futimens
     fwide
@@ -324,8 +381,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     getchar_unlocked
     getcwd
     getdelim
-    getdomainname
     getegid
+    getentropy
     getenv
     geteuid
     getgid
@@ -337,8 +394,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     getgroups
     gethostid
     gethostname
-    getitimer			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     getline
+    getlocalename_l
     getlogin
     getlogin_r
     getnameinfo
@@ -359,7 +416,6 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     getpwuid_r
     getrlimit			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     getrusage
-    gets
     getservbyname
     getservbyport
     getservent
@@ -367,7 +423,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     getsockname
     getsockopt
     getsubopt
-    gettimeofday
+    gettext			(available in external "libintl" library)
     getuid
     getutxent
     getutxid
@@ -382,6 +438,12 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     hcreate
     hdestroy
     hsearch
+    htobe16
+    htobe32
+    htobe64
+    htole16
+    htole32
+    htole64
     htonl
     htons
     hypot
@@ -399,18 +461,18 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     ilogbl
     imaxabs
     imaxdiv
+    in6addr_any
+    in6addr_loopback
     inet_addr
     inet_ntoa
     inet_ntop
     inet_pton
     initstate
     insque
-    ioctl
     isalnum
     isalnum_l
     isalpha
     isalpha_l
-    isascii
     isatty
     isblank
     isblank_l
@@ -473,6 +535,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     jn
     jrand48
     kill
+    kill_dependency
     killpg
     l64a
     labs
@@ -482,6 +545,9 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     ldexpf
     ldexpl
     ldiv
+    le16toh
+    le32toh
+    le64toh
     lfind
     lgamma
     lgammaf
@@ -531,6 +597,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     malloc
     mblen
     mbrlen
+    mbrtoc16
+    mbrtoc32
     mbrtowc
     mbsinit
     mbsnrtowcs
@@ -541,6 +609,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     memchr
     memcmp
     memcpy
+    memmem
     memmove
     memset
     mkdir
@@ -550,6 +619,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     mkfifoat
     mknod
     mknodat
+    mkostemp
     mkstemp
     mktime
     mlock
@@ -574,6 +644,12 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     msgrcv			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     msgsnd			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     msync
+    mtx_destroy
+    mtx_init
+    mtx_lock
+    mtx_timedlock
+    mtx_trylock
+    mtx_unlock
     munlock
     munmap
     nan
@@ -591,7 +667,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     nexttowardf
     nexttowardl
     nftw
-    nice
+    ngettext			(available in external "libintl" library)
+    nice			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     nl_langinfo
     nl_langinfo_l
     nrand48
@@ -612,16 +689,22 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pclose
     perror
     pipe
+    pipe2
     poll
     popen
+    posix_close
+    posix_devctl
     posix_fadvise
     posix_fallocate
+    posix_getdents
     posix_madvise
     posix_memalign
     posix_openpt
     posix_spawn
+    posix_spawn_file_actions_addchdir
     posix_spawn_file_actions_addclose
     posix_spawn_file_actions_adddup2
+    posix_spawn_file_actions_addfchdir
     posix_spawn_file_actions_addopen
     posix_spawn_file_actions_destroy
     posix_spawn_file_actions_init
@@ -643,6 +726,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pow
     powf
     powl
+    ppoll
     pread
     printf
     pselect
@@ -675,7 +759,10 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pthread_barrierattr_init
     pthread_barrierattr_setpshared
     pthread_cancel
+    pthread_cleanup_pop
+    pthread_cleanup_push
     pthread_cond_broadcast
+    pthread_cond_clockwait
     pthread_cond_destroy
     pthread_cond_init
     pthread_cond_signal
@@ -691,7 +778,6 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pthread_detach
     pthread_equal
     pthread_exit
-    pthread_getconcurrency
     pthread_getcpuclockid
     pthread_getschedparam
     pthread_getspecific
@@ -699,6 +785,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pthread_key_create
     pthread_key_delete
     pthread_kill
+    pthread_mutex_clocklock
     pthread_mutex_destroy
     pthread_mutex_getprioceiling
     pthread_mutex_init
@@ -718,6 +805,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pthread_mutexattr_setpshared
     pthread_mutexattr_settype
     pthread_once
+    pthread_rwlock_clockrdlock
+    pthread_rwlock_clockwrlock
     pthread_rwlock_destroy
     pthread_rwlock_init
     pthread_rwlock_rdlock
@@ -734,7 +823,6 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pthread_self
     pthread_setcancelstate
     pthread_setcanceltype
-    pthread_setconcurrency
     pthread_setschedparam
     pthread_setschedprio
     pthread_setspecific
@@ -746,6 +834,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     pthread_spin_unlock
     pthread_testcancel
     ptsname
+    ptsname_r
     putc
     putc_unlocked
     putchar
@@ -757,9 +846,10 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     putwchar
     pwrite
     qsort
+    qsort_r			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
+    quick_exit
     raise
     rand
-    rand_r
     random
     read
     readdir
@@ -768,6 +858,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     readlinkat
     readv
     realloc
+    reallocarray
     realpath
     recv
     recvfrom
@@ -778,7 +869,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     regfree
     remainder
     remainderf
-    reminderl
+    remainderl
     remove
     remque
     remquo
@@ -808,12 +899,14 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     sched_getparam
     sched_getscheduler
     sched_rr_get_interval
-    sched_setparam
-    sched_setscheduler
+    sched_setparam		(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
+    sched_setscheduler		(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     sched_yield
+    secure_getenv
     seed48
     seekdir
     select
+    sem_clockwait
     sem_close
     sem_destroy
     sem_getvalue
@@ -837,14 +930,12 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     setgid
     setgrent
     sethostent
-    setitimer			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     setjmp
-    setkey			(available in external "crypt" library)
+    setkey			(available in external "libcrypt" library)
     setlocale
     setlogmask
     setpgid
-    setpgrp
-    setpriority
+    setpriority			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     setprotoent
     setpwent
     setregid
@@ -864,26 +955,21 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     shmdt			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     shmget			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     shutdown
+    sig2str
     sigaction
     sigaddset
     sigaltstack
     sigdelset
     sigemptyset
     sigfillset
-    sighold
-    sigignore
-    siginterrupt
     sigismember
     siglongjmp
     signal
     signbit			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     signgam
-    sigpause			(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     sigpending
     sigprocmask
     sigqueue
-    sigrelse
-    sigset
     sigsetjmp
     sigsuspend
     sigtimedwait
@@ -915,6 +1001,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     stdout
     stpcpy
     stpncpy
+    str2sig
     strcasecmp
     strcasecmp_l
     strcat
@@ -932,6 +1019,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     strfmon_l
     strftime
     strftime_l
+    strlcat
+    strlcpy
     strlen
     strncasecmp
     strncasecmp_l
@@ -980,16 +1069,26 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     tcgetattr
     tcgetpgrp
     tcgetsid
+    tcgetwinsize
     tcsendbreak
     tcsetattr
     tcsetpgrp
+    tcsetwinsize
     tdelete
     telldir
-    tempnam
+    textdomain			(available in external "libintl" library)
     tfind
     tgamma
     tgammaf
     tgammal
+    thrd_create
+    thrd_current
+    thrd_detach
+    thrd_equal
+    thrd_exit
+    thrd_join
+    thrd_sleep
+    thrd_yield
     time
     timer_create		(see <a class="xref" href="std-notes.html" title="Implementation Notes">the section called &#8220;Implementation Notes&#8221;</a>)
     timer_delete
@@ -997,6 +1096,7 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     timer_gettime
     timer_settime
     times
+    timespec_get
     timezone
     tmpfile
     tmpnam
@@ -1015,6 +1115,10 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     truncf
     truncl
     tsearch
+    tss_create
+    tss_delete
+    tss_get
+    tss_set
     ttyname
     ttyname_r
     twalk
@@ -1029,13 +1133,13 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     unlockpt
     unsetenv
     uselocale
-    utime
     utimensat
     utimes
     va_arg
     va_copy
     va_end
     va_start
+    vasprintf
     vdprintf
     vfprintf
     vfscanf
@@ -1066,6 +1170,8 @@ also IEEE Std 1003.1-2017 (POSIX.1-2017).</p><pre class="screen">
     wcscspn
     wcsdup
     wcsftime
+    wcslcat
+    wcslcpy
     wcslen
     wcsncasecmp
     wcsncasecmp_l

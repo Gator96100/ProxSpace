@@ -63,16 +63,17 @@ syn match pbUrlGroup /^url=.*/ contains=pbValidUrl,pb_k_url,pbIllegalUrl,shDoubl
 
 " license
 syn keyword pb_k_license license contained
-" echo $(pacman -Ql licenses | grep '/usr/share/licenses/common/' | cut -d'/' -f6 | sort -u)
-syn keyword pbLicense AGPL AGPL3 Apache APACHE Boost CCPL CDDL CPL EPL FDL GPL GPL2 GPL3 LGPL LGPL3 LPPL MPL MPL2 PerlArtistic PHP PSF RUBY Unlicense W3C ZPL contained
 " keywords can't contain decimals
-syn match pbLicense /Artistic2\.0\|FDL1\.2\|FDL1\.3\|LGPL2\.1/ contained
+" echo /$(find /usr/share/licenses/spdx/ -type f -printf '%f\n' | sort)/ | sed 's/.txt//g; s/\ /\\|/g; s/\.\([0-9]\)/\\.\1/g'
+syn match pbLicense /AGPL-3\.0-only\|AGPL-3\.0-or-later\|Apache-2\.0\|Artistic-1\.0-Perl\|Artistic-2\.0\|BSL-1\.0\|CC0-1\.0\|CC-BY-1\.0\|CC-BY-2\.0\|CC-BY-2\.5\|CC-BY-3\.0-AT\|CC-BY-3\.0\|CC-BY-3\.0-US\|CC-BY-4\.0\|CC-BY-NC-1\.0\|CC-BY-NC-2\.0\|CC-BY-NC-2\.5\|CC-BY-NC-3\.0\|CC-BY-NC-4\.0\|CC-BY-NC-ND-1\.0\|CC-BY-NC-ND-2\.0\|CC-BY-NC-ND-2\.5\|CC-BY-NC-ND-3\.0-IGO\|CC-BY-NC-ND-3\.0\|CC-BY-NC-ND-4\.0\|CC-BY-NC-SA-1\.0\|CC-BY-NC-SA-2\.0\|CC-BY-NC-SA-2\.5\|CC-BY-NC-SA-3\.0\|CC-BY-NC-SA-4\.0\|CC-BY-ND-1\.0\|CC-BY-ND-2\.0\|CC-BY-ND-2\.5\|CC-BY-ND-3\.0\|CC-BY-ND-4\.0\|CC-BY-SA-1\.0\|CC-BY-SA-2\.0\|CC-BY-SA-2\.0-UK\|CC-BY-SA-2\.1-JP\|CC-BY-SA-2\.5\|CC-BY-SA-3\.0-AT\|CC-BY-SA-3\.0\|CC-BY-SA-4\.0\|CC-PDDC\|CDDL-1\.0\|CDDL-1\.1\|CPL-1\.0\|EPL-1\.0\|EPL-2\.0\|FSFAP\|GFDL-1\.1-invariants-only\|GFDL-1\.1-invariants-or-later\|GFDL-1\.1-no-invariants-only\|GFDL-1\.1-no-invariants-or-later\|GFDL-1\.1-only\|GFDL-1\.1-or-later\|GFDL-1\.2-invariants-only\|GFDL-1\.2-invariants-or-later\|GFDL-1\.2-no-invariants-only\|GFDL-1\.2-no-invariants-or-later\|GFDL-1\.2-only\|GFDL-1\.2-or-later\|GFDL-1\.3-invariants-only\|GFDL-1\.3-invariants-or-later\|GFDL-1\.3-no-invariants-only\|GFDL-1\.3-no-invariants-or-later\|GFDL-1\.3-only\|GFDL-1\.3-or-later\|GPL-1\.0-only\|GPL-1\.0-or-later\|GPL-2\.0-only\|GPL-2\.0-or-later\|GPL-3\.0-linking-exception\|GPL-3\.0-linking-source-exception\|GPL-3\.0-only\|GPL-3\.0-or-later\|GPL-CC-1\.0\|LGPL-2\.0-only\|LGPL-2\.0-or-later\|LGPL-2\.1-only\|LGPL-2\.1-or-later\|LGPL-3\.0-linking-exception\|LGPL-3\.0-only\|LGPL-3\.0-or-later\|LGPLLR\|Linux-syscall-note\|LLGPL\|LPPL-1\.0\|LPPL-1\.1\|LPPL-1\.2\|LPPL-1\.3a\|LPPL-1\.3c\|MPL-1\.0\|MPL-1\.1\|MPL-2\.0-no-copyleft-exception\|MPL-2\.0\|PHP-3\.01\|PHP-3\.0\|PSF-2\.0\|Ruby\|Unlicense\|W3C\|ZPL-1\.1\|ZPL-2\.0\|ZPL-2\.1/ contained
+" multiple licenses combination expressions
+syn keyword pbLicenseCombination AND OR WITH contained
 " special cases from https://wiki.archlinux.org/index.php/PKGBUILD#license
-syn keyword pbLicenseSpecial  BSD ISC MIT OFL Python ZLIB contained
-syn match pbLicenseCustom /custom\(:[[:alnum:].]*\)*/ contained
+syn keyword pbLicenseSpecial BSD-1-Clause BSD-2-Clause BSD-3-Clause ISC MIT OFL Python Zlib contained
+syn match pbLicenseCustom /custom\(:[[:alnum:].]*\)*\|LicenseRef\(-[[:alnum:].]*\)*/ contained
 syn keyword pbLicenseUnknown unknown contained
 syn match pbIllegalLicense /[^='"() ]/ contained contains=pbLicenseUnknown,pbLicenseCustom,pbLicenseSpecial,pbLicense
-syn region pbLicenseGroup start=/^license=(/ end=/)/ contains=pb_k_license,pbLicenseCustom,pbLicenseSpecial,pbLicense,pbIllegalLicense
+syn region pbLicenseGroup start=/^license=(/ end=/)/ contains=pb_k_license,pbLicenseCustom,pbLicenseSpecial,pbLicense,pbIllegalLicense,pbLicenseCombination
 
 " backup
 syn keyword pb_k_backup backup contained
@@ -81,7 +82,7 @@ syn region pbBackupGroup start=/^backup=(/ end=/)/ contains=pb_k_backup,pbValidB
 
 " arch
 syn keyword pb_k_arch arch contained
-syn keyword pbArch i686 x86_64 ppc pentium4 armv7h aarch64 any contained
+syn keyword pbArch i686 x86_64 x86_64_v3 ppc pentium4 armv7h aarch64 any contained
 syn match pbIllegalArch /[^='"() ]/ contained contains=pbArch
 syn region pbArchGroup start=/^arch=(/ end=/)/ contains=pb_k_arch,pbArch,pbIllegalArch,pbComment
 

@@ -2,7 +2,7 @@
 #
 #   verify_checksum.sh - functions for checking source checksums
 #
-#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,11 +21,12 @@
 [[ -n "$LIBMAKEPKG_INTEGRITY_VERIFY_CHECKSUM_SH" ]] && return
 LIBMAKEPKG_INTEGRITY_CHECKSUM_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
-source "$LIBRARY/util/schema.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/schema.sh"
+source "$MAKEPKG_LIBRARY/source.sh"
 
 check_checksums() {
 	local integ a
@@ -68,9 +69,9 @@ check_checksums() {
 }
 
 verify_integrity_one() {
-	local source_name=$1 integ=$2 expectedsum=$3
+	local source_name=$1 integ=$2 expectedsum=$3 file proto realsum
 
-	local file="$(get_filename "$source_name")"
+	file="$(get_filename "$source_name")"
 	printf '    %s ... ' "$file" >&2
 
 	if [[ $expectedsum = 'SKIP' ]]; then
@@ -78,20 +79,18 @@ verify_integrity_one() {
 		return
 	fi
 
-	if ! file="$(get_filepath "$file")"; then
-		printf '%s\n' "$(gettext "NOT FOUND")" >&2
-		return 1
+	proto="$(get_protocol "$source_name")"
+	if declare -f "calc_checksum_${proto}" > /dev/null; then
+		realsum=$("calc_checksum_${proto}" "$source_name" "$integ") || return 1
+	else
+		realsum=$(calc_checksum_file "$source_name" "$integ") || return 1
 	fi
 
-	local realsum="$("${integ}sum" "$file")"
-	realsum="${realsum%% *}"
-	if [[ ${expectedsum,,} = "$realsum" ]]; then
-		printf '%s\n' "$(gettext "Passed")" >&2
-	else
+	if [[ ${expectedsum,,} != "$realsum" ]]; then
 		printf '%s\n' "$(gettext "FAILED")" >&2
 		return 1
 	fi
-
+	printf '%s\n' "$(gettext "Passed")" >&2
 	return 0
 }
 

@@ -1,42 +1,42 @@
 # prelink(8) completion                                    -*- shell-script -*-
 
-_prelink()
+_comp_cmd_prelink()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -'?' | --help | --usage | -V | --version | -r | --reloc-only)
             return
             ;;
         -b | --black-list | --dynamic-linker | --undo-output)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -c | --config-file)
-            _filedir conf
+            _comp_compgen_filedir conf
             return
             ;;
         -C | --cache)
-            _filedir cache
+            _comp_compgen_filedir cache
             return
             ;;
         --ld-library-path)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _prelink prelink
+    complete -F _comp_cmd_prelink prelink
 
 # ex: filetype=sh

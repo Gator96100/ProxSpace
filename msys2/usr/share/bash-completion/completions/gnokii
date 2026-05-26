@@ -1,19 +1,19 @@
 # gnokii(1) completion                                     -*- shell-script -*-
 
-_gnokii_memory_type()
+_comp_cmd_gnokii__memory_type()
 {
     # TODO: reduce the number of choices
-    COMPREPLY=($(compgen -W "IN OU SM ME MT" -- "$cur"))
+    _comp_compgen -- -W "IN OU SM ME MT"
 }
 
-_gnokii()
+_comp_cmd_gnokii()
 {
-    local cur prev words cword pprev tprev fprev
-    _init_completion || return
+    local cur prev words cword comp_args pprev tprev fprev
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --phone)
@@ -24,15 +24,13 @@ _gnokii()
                 [[ -f $config_file ]] && break
             done
             [[ ! -f $config_file ]] && return
-            COMPREPLY=($(compgen -W \
-                "$(command sed -n 's/^\[phone_\(.*\)\]/\1/p' $config_file)" \
-                -- "$cur"))
+            _comp_compgen_split -- "$(command sed -n \
+                's/^\[phone_\(.*\)\]/\1/p' "$config_file")"
             return
             ;;
         --help)
-            COMPREPLY=($(compgen -W 'all monitor sms mms phonebook calendar
-                todo dial profile settings wap logo ringtone security file
-                other' -- "$cur"))
+            _comp_compgen -- -W 'all monitor sms mms phonebook calendar todo
+                dial profile settings wap logo ringtone security file other'
             return
             ;;
         --version | --shell | ping)
@@ -41,15 +39,14 @@ _gnokii()
 
         # MONITOR
         --monitor)
-            COMPREPLY=($(compgen -W 'delay once' -- "$cur"))
+            _comp_compgen -- -W 'delay once'
             return
             ;;
         --getdisplaystatus | --displayoutput)
             return
             ;;
         --netmonitor)
-            COMPREPLY=($(compgen -W 'reset off field devel next nr' \
-                -- "$cur"))
+            _comp_compgen -- -W 'reset off field devel next nr'
             return
             ;;
 
@@ -59,13 +56,13 @@ _gnokii()
             return
             ;;
         --savesms)
-            COMPREPLY=($(compgen -W '--sender --smsc --smscno --folder
-                --location --sent --read --deliver --datetime' -- "$cur"))
+            _comp_compgen -- -W '--sender --smsc --smscno --folder --location
+                --sent --read --deliver --datetime'
             return
             ;;
         --memory-type | --memory | --getsms | --deletesms | --getmms | --deletemms | \
             --getphonebook | --deletephonebook)
-            _gnokii_memory_type
+            _comp_cmd_gnokii__memory_type
             return
             ;;
         --getsmsc | --getcalendarnote | --deletecalendarnote | --gettodo | \
@@ -82,12 +79,12 @@ _gnokii()
             return
             ;;
         --writephonebook)
-            COMPREPLY=($(compgen -W '--overwrite --find-free --memory-type
-                --location --vcard --ldif' -- "$cur"))
+            _comp_compgen -- -W '--overwrite --find-free --memory-type
+                --location --vcard --ldif'
             return
             ;;
         --writecalendarnote | --writetodo)
-            _filedir vcf
+            _comp_compgen_filedir vcf
             return
             ;;
 
@@ -97,7 +94,7 @@ _gnokii()
             return
             ;;
         --divert)
-            COMPREPLY=($(compgen -W '--op' -- "$cur"))
+            _comp_compgen -- -W '--op'
             return
             ;;
 
@@ -112,7 +109,7 @@ _gnokii()
 
         # SETTINGS
         --reset)
-            COMPREPLY=($(compgen -W 'soft hard' -- "$cur"))
+            _comp_compgen -- -W 'soft hard'
             return
             ;;
         --setdatetime | --setalarm)
@@ -131,12 +128,11 @@ _gnokii()
 
         # LOGOS
         --sendlogo)
-            COMPREPLY=($(compgen -W 'caller op picture' -- "$cur"))
+            _comp_compgen -- -W 'caller op picture'
             return
             ;;
         --setlogo | --getlogo)
-            COMPREPLY=($(compgen -W 'op startup caller dealer text' \
-                -- "$cur"))
+            _comp_compgen -- -W 'op startup caller dealer text'
             return
             ;;
         --viewlogo)
@@ -145,7 +141,7 @@ _gnokii()
             ;;
 
         --entersecuritycode)
-            COMPREPLY=($(compgen -W 'PIN PIN2 PUK PUK2 SEC' -- "$cur"))
+            _comp_compgen -- -W 'PIN PIN2 PUK PUK2 SEC'
             return
             ;;
 
@@ -157,7 +153,7 @@ _gnokii()
         pprev=${words[cword - 2]}
         case $pprev in
             --setspeeddial)
-                _gnokii_memory_type
+                _comp_cmd_gnokii__memory_type
                 return
                 ;;
             --getsms | --deletesms | --getmms | --deletemms | --getphonebook | \
@@ -166,16 +162,15 @@ _gnokii()
                 return
                 ;;
             --gettodo | --getcalendarnote)
-                COMPREPLY=($(compgen -W '{1..9} end --vCal' -- "$cur"))
+                _comp_compgen -- -W '{1..9} end --vCal'
                 return
                 ;;
             --deletecalendarnote)
-                COMPREPLY=($(compgen -W '{1..9} end' -- "$cur"))
+                _comp_compgen -- -W '{1..9} end'
                 return
                 ;;
             --divert)
-                COMPREPLY=($(compgen -W 'register enable query disable
-                    erasure' -- "$cur"))
+                _comp_compgen -- -W 'register enable query disable erasure'
                 return
                 ;;
         esac
@@ -186,20 +181,20 @@ _gnokii()
         tprev=${words[cword - 3]}
         case $tprev in
             --deletesms | --deletemms)
-                COMPREPLY=($(compgen -W 'end' -- "$cur"))
+                _comp_compgen -- -W 'end'
                 return
                 ;;
             --getphonebook | --writetodo | --writecalendarnote)
-                COMPREPLY=($(compgen -W '{1..9} end' -- "$cur"))
+                _comp_compgen -- -W '{1..9} end'
                 return
                 ;;
             --gettodo | --getcalendarnote)
                 [[ ${words[cword - 1]} == end ]] &&
-                    COMPREPLY=($(compgen -W '--vCal' -- "$cur"))
+                    _comp_compgen -- -W '--vCal'
                 return
                 ;;
             --divert)
-                COMPREPLY=($(compgen -W '--type' -- "$cur"))
+                _comp_compgen -- -W '--type'
                 return
                 ;;
         esac
@@ -210,28 +205,32 @@ _gnokii()
         fprev=${words[cword - 4]}
         case $fprev in
             --getphonebook)
-                COMPREPLY=($(compgen -W '--raw --vcard --ldif' -- "$cur"))
+                _comp_compgen -- -W '--raw --vcard --ldif'
                 return
                 ;;
             --divert)
-                COMPREPLY=($(compgen -W 'all busy noans outofreach notavail' \
-                    -- "$cur"))
+                _comp_compgen -- -W 'all busy noans outofreach notavail'
                 return
                 ;;
         esac
     fi
 
-    # safer to use LANG=C
-    local all_cmd="$(LANG=C _parse_help $1 "--help all")"
-    # these 2 below are allowed in combination with others
-    local main_cmd=$(command grep -v -- '--config\|--phone' <<<"$all_cmd")
+    local all_cmd
+    _comp_compgen -Rv all_cmd help -- --help all
 
+    # these 2 below are allowed in combination with others
+    local main_cmd
+    _comp_split -l main_cmd "$(printf '%s\n' "${all_cmd[@]}" |
+        command sed -e '/--config/d;/--phone/d;s/[][\(){}|^$*+?.]/\\&/g')"
     # don't provide main command completions if one is
     # already on the command line
-    [[ $COMP_LINE =~ $(tr ' ' '\b|' <<<$main_cmd) ]] && return
+    local IFS='|'
+    local regex_main_cmd="(${main_cmd[*]})($|[^_[:alnum:]])"
+    IFS=$' \t\n'
+    [[ $COMP_LINE =~ $regex_main_cmd ]] && return
 
-    COMPREPLY=($(compgen -W "$all_cmd" -- "$cur"))
+    _comp_compgen -- -W '"${all_cmd[@]}"'
 } &&
-    complete -F _gnokii gnokii
+    complete -F _comp_cmd_gnokii gnokii
 
 # ex: filetype=sh

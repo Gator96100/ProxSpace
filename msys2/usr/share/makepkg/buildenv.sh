@@ -3,7 +3,7 @@
 #   buildenv.sh - functions for altering the build environment before
 #   compilation
 #
-#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,21 +22,25 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_SH" ]] && return
 LIBMAKEPKG_BUILDENV_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 declare -a buildenv_functions build_options
+buildenv_vars=('CPPFLAGS' 'CFLAGS' 'CXXFLAGS' 'LDFLAGS')
 
-for lib in "$LIBRARY/buildenv/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/buildenv/"*.sh; do
 	source "$lib"
 done
 
-readonly -a buildenv_functions build_options
+readonly -a buildenv_functions buildenv_vars build_options
 
 prepare_buildenv() {
+	# ensure this function runs first
+	buildenv_buildflags
+
 	for func in ${buildenv_functions[@]}; do
 		$func
 	done
 
 	# ensure all necessary build variables are exported
-	export CC CXX CPPFLAGS CFLAGS CXXFLAGS LDFLAGS RUSTFLAGS MAKEFLAGS CHOST
+	export ${buildenv_vars[@]} CC CXX CHOST MAKEFLAGS
 }

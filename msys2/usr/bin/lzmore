@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 # Copyright (C) 2001, 2002, 2007 Free Software Foundation
 # Copyright (C) 1992, 1993 Jean-loup Gailly
@@ -15,6 +16,8 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
+# shellcheck shell=sh
+
 
 #SET_PATH - This line is a placeholder to ease patching this script.
 
@@ -23,7 +26,7 @@
 # specified via XZ_OPT.
 xz='xz --format=auto'
 
-version='xzmore (XZ Utils) 5.4.3'
+version='xzmore (XZ Utils) 5.8.2'
 
 usage="Usage: ${0##*/} [OPTION]... [FILE]...
 Like 'more', but operate on the uncompressed contents of xz compressed FILEs.
@@ -57,7 +60,7 @@ if test $# = 0; then
 else
 	FIRST=1
 	for FILE; do
-		< "$FILE" || continue
+		true < "$FILE" || continue
 		if test $FIRST -eq 0; then
 			printf "%s--More--(Next file: %s)" "" "$FILE"
 			stty $cb -echo 2>/dev/null

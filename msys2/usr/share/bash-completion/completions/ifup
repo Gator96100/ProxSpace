@@ -1,39 +1,40 @@
 # Red Hat & Debian GNU/Linux if{up,down} completion        -*- shell-script -*-
 
-_userland GNU || return 1
+_comp_userland GNU || return 1
 
-_ifupdown()
+_comp_cmd_ifupdown()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[Xoi]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | --allow | --exclude | --option | -!(-*)[hVXo])
+        --help | --version | --allow | --exclude | --option | -${noargopts}[hVXo])
             return
             ;;
-        --interfaces | -!(-*)i)
-            _filedir
+        --interfaces | -${noargopts}i)
+            _comp_compgen_filedir
             return
             ;;
         --state-dir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    local args
-    _count_args "" "@(--allow|-i|--interfaces|--state-dir|-X|--exclude|-o)"
+    local REPLY
+    _comp_count_args -a "@(--allow|-i|--interfaces|--state-dir|-X|--exclude|-o)"
 
-    if ((args == 1)); then
-        _configured_interfaces
-        COMPREPLY=($(compgen -W '${COMPREPLY[@]}' -- "$cur"))
+    if ((REPLY == 1)); then
+        _comp_compgen_configured_interfaces
     fi
 } &&
-    complete -F _ifupdown ifup ifdown ifquery ifstatus
+    complete -F _comp_cmd_ifupdown ifup ifdown ifquery ifstatus
 
 # ex: filetype=sh

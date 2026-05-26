@@ -1,34 +1,36 @@
 # chronyc(1) completion                                    -*- shell-script -*-
 
-_chronyc_command_args()
+_comp_cmd_chronyc__command_args()
 {
     local -a args
-    args=($(compgen -W "$($1 help 2>/dev/null |
-        awk '/^'$prev'\s[^ []/ { gsub("\\|", " ", $2); print $2 }')"))
+    _comp_split args "$("$1" help 2>/dev/null |
+        _comp_awk '/^'"$prev"'[ \t][^ []/ { gsub("\\|", " ", $2); print $2 }')"
     case $args in
-        \<address\>) _known_hosts_real -- "$cur" ;;
+        \<address\>) _comp_compgen_known_hosts -- "$cur" ;;
         \<*) ;;
-        *) COMPREPLY+=($(compgen -W '${args[@]}' -- "$cur")) ;;
+        *) ((${#args[@]})) &&
+            _comp_compgen -a -- -W '"${args[@]}"' ;;
     esac
 }
 
-_chronyc()
+_comp_cmd_chronyc()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help | -*p)
             return
             ;;
         -*h)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1") -6' -- "$cur"))
+        _comp_compgen_usage
+        _comp_compgen -a -- -W '-6'
         return
     fi
 
@@ -40,22 +42,21 @@ _chronyc()
 
     case $args in
         0)
-            COMPREPLY=($(compgen -W "$($1 help 2>/dev/null |
-                awk '!/(^ |: *$)/ { sub("\\|", " ", $1); print $1 }')" \
-                -- "$cur"))
+            _comp_compgen_split -- "$("$1" help 2>/dev/null |
+                _comp_awk '!/(^ |: *$)/ { sub("\\|", " ", $1); print $1 }')"
             ;;
         1)
-            _chronyc_command_args "$1"
+            _comp_cmd_chronyc__command_args "$1"
             if [[ ! ${COMPREPLY-} && $prev == sources?(tats) ]]; then
-                # [-v] not handled by _chronyc_command_args yet
-                COMPREPLY=($(compgen -W '-v' -- "$cur"))
+                # [-v] not handled by _comp_cmd_chronyc__command_args yet
+                _comp_compgen -- -W '-v'
             fi
             ;;
         2)
-            [[ $prev == @(peer|server) ]] && _known_hosts_real -- "$cur"
+            [[ $prev == @(peer|server) ]] && _comp_compgen_known_hosts -- "$cur"
             ;;
     esac
 } &&
-    complete -F _chronyc chronyc
+    complete -F _comp_cmd_chronyc chronyc
 
 # ex: filetype=sh

@@ -2,7 +2,7 @@
 #
 #   fossil.sh - function for handling the download and extraction of Fossil sources
 #
-#   Copyright (c) 2020-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2020-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@
 LIBMAKEPKG_SOURCE_FOSSIL_SH=1
 
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
 
 download_fossil() {
 	# abort early if parent says not to fetch

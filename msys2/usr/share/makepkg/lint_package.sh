@@ -2,7 +2,7 @@
 #
 #   lint_package.sh - functions for checking for packaging errors
 #
-#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,15 +21,15 @@
 [[ -n "$LIBMAKEPKG_LINT_PACKAGE_SH" ]] && return
 LIBMAKEPKG_LINT_PACKAGE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/util.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/util.sh"
 
 
 declare -a lint_package_functions
 
-for lib in "$LIBRARY/lint_package/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/lint_package/"*.sh; do
 	source "$lib"
 done
 

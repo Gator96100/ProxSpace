@@ -1,40 +1,40 @@
 # autoconf(1) completion                                   -*- shell-script -*-
 
-_autoconf()
+_comp_cmd_autoconf()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case "$prev" in
         --help | -h | --version | -V | --trace | -t)
             return
             ;;
         --output | -o)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --warnings | -W)
             local cats=(cross obsolete syntax)
-            COMPREPLY=($(compgen -W \
-                '${cats[@]} ${cats[@]/#/no-} all none error' -- "$cur"))
+            _comp_compgen -- -W '"${cats[@]}" "${cats[@]/#/no-}" all none
+                error'
             return
             ;;
         --prepend-include | -B | --include | -I)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir '@(ac|in)'
+    _comp_compgen_filedir '@(ac|in)'
 } &&
-    complete -F _autoconf autoconf
+    complete -F _comp_cmd_autoconf autoconf
 
 # ex: filetype=sh

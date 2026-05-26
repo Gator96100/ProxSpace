@@ -1,26 +1,26 @@
 # tipc(8) completion                                       -*- shell-script -*-
 
-_tipc_media()
+_comp_cmd_tipc__media()
 {
     local optind=$1
 
     if ((cword == optind)); then
-        COMPREPLY=($(compgen -W 'media' -- $cur))
+        _comp_compgen -- -W 'media'
         return 0
     elif ((cword == optind + 1)); then
-        COMPREPLY=($(compgen -W 'udp eth ib' -- $cur))
+        _comp_compgen -- -W 'udp eth ib'
         return 0
     fi
 
     return 1
 }
 
-_tipc_bearer()
+_comp_cmd_tipc__bearer()
 {
     local optind=$1
-    local media i
+    local media="" i
 
-    if _tipc_media $optind; then
+    if _comp_cmd_tipc__media "$optind"; then
         return
     fi
 
@@ -33,52 +33,54 @@ _tipc_bearer()
     if ((cword == optind + 2)); then
         case "$media" in
             "udp")
-                COMPREPLY=($(compgen -W 'name' -- $cur))
+                _comp_compgen -- -W 'name'
                 ;;
             "eth" | "ib")
-                COMPREPLY=($(compgen -W 'device' -- $cur))
+                _comp_compgen -- -W 'device'
                 ;;
         esac
     elif ((cword == optind + 3)); then
         case "$media" in
             "udp")
-                local names=$(tipc bearer list 2>/dev/null | awk -F: '/^udp:/ {print $2}')
-                COMPREPLY=($(compgen -W '$names' -- $cur))
+                local names=$(
+                    tipc bearer list 2>/dev/null | _comp_awk -F : '/^udp:/ {print $2}'
+                )
+                _comp_compgen -- -W '$names'
                 ;;
             "eth")
                 local interfaces=$(command ls /sys/class/net/)
-                COMPREPLY=($(compgen -W '$interfaces' -- $cur))
+                _comp_compgen -- -W '$interfaces'
                 ;;
         esac
     fi
 }
 
-_tipc_link_opts()
+_comp_cmd_tipc__link_opts()
 {
-    COMPREPLY=($(compgen -W 'priority tolerance window' -- $cur))
+    _comp_compgen -- -W 'priority tolerance window'
 }
 
-_tipc_link()
+_comp_cmd_tipc__link()
 {
     local optind=$1
     local filter=$2
 
     if ((cword == optind)); then
-        COMPREPLY=($(compgen -W 'link' -- $cur))
+        _comp_compgen -- -W 'link'
     elif ((cword == optind + 1)); then
         # awk drops link state and last trailing :
         local links=$(tipc link list 2>/dev/null |
-            awk '{print substr($1, 0, length($1))}')
+            _comp_awk '{print substr($1, 0, length($1))}')
         local -a exclude
         [[ $filter == peers ]] && exclude=(-X broadcast-link)
-        COMPREPLY=($(compgen "${exclude[@]}" -W '$links' -- $cur))
+        _comp_compgen -- "${exclude[@]}" -W '$links'
     fi
 }
 
-_tipc()
+_comp_cmd_tipc()
 {
-    local cur prev words cword optind i p
-    _init_completion || return
+    local cur prev words cword comp_args optind i p
+    _comp_initialize -- "$@" || return
 
     optind=1
     COMPREPLY=()
@@ -86,13 +88,13 @@ _tipc()
     # Flags can be placed anywhere in the commandline
     case "$cur" in
         -*)
-            COMPREPLY=($(compgen -W '-h --help' -- $cur))
+            _comp_compgen -- -W '-h --help'
             return
             ;;
     esac
 
     if ((cword == 1)); then
-        COMPREPLY=($(compgen -W 'bearer link media nametable node socket' -- $cur))
+        _comp_compgen -- -W 'bearer link media nametable node socket'
         return
     fi
 
@@ -101,17 +103,17 @@ _tipc()
             ((optind++))
 
             if ((cword == optind)); then
-                COMPREPLY=($(compgen -W 'enable disable set get list' -- $cur))
+                _comp_compgen -- -W 'enable disable set get list'
                 return
             fi
 
             case "${words[optind]}" in
                 enable)
-                    local media params
+                    local media="" params
                     ((optind++))
 
                     if ((cword < optind + 4)); then
-                        _tipc_bearer $optind
+                        _comp_cmd_tipc__bearer $optind
                         return
                     fi
 
@@ -122,20 +124,20 @@ _tipc()
                     done
                     case "$media" in
                         "udp")
-                            declare -a params=("localip" "localport" "remoteip"
+                            local -a params=("localip" "localport" "remoteip"
                                 "remoteport" "domain" "priority")
                             ;;
                         "eth" | "ib")
-                            declare -a params=("domain" "priority")
+                            local -a params=("domain" "priority")
                             ;;
                         *)
                             return
                             ;;
                     esac
 
-                    # If the previous word was a known parameter, we assume a value for
-                    # that key. Note that this would break if the user attempts to use
-                    # a known key as value.
+                    # If the previous word was a known parameter, we assume a
+                    # value for that key. Note that this would break if the
+                    # user attempts to use a known key as value.
                     for i in "${params[@]}"; do
                         if [[ $prev == "$i" ]]; then
                             return
@@ -151,29 +153,29 @@ _tipc()
                         done
                     done
 
-                    COMPREPLY=($(compgen -W '${params[@]}' -- $cur))
+                    _comp_compgen -- -W '"${params[@]}"' -X ''
                     ;;
                 disable)
                     ((optind++))
 
-                    _tipc_bearer $optind
+                    _comp_cmd_tipc__bearer $optind
                     ;;
                 get)
                     ((optind++))
 
                     if ((cword == optind)); then
-                        _tipc_link_opts
+                        _comp_cmd_tipc__link_opts
                     elif ((cword >= optind + 1)); then
-                        _tipc_bearer $((optind + 1))
+                        _comp_cmd_tipc__bearer $((optind + 1))
                     fi
                     ;;
                 set)
                     ((optind++))
 
                     if ((cword == optind)); then
-                        _tipc_link_opts
+                        _comp_cmd_tipc__link_opts
                     elif ((cword >= optind + 2)); then
-                        _tipc_bearer $((optind + 2))
+                        _comp_cmd_tipc__bearer $((optind + 2))
                     fi
                     ;;
             esac
@@ -182,7 +184,7 @@ _tipc()
             ((optind++))
 
             if ((cword == optind)); then
-                COMPREPLY=($(compgen -W 'get set list statistics' -- $cur))
+                _comp_compgen -- -W 'get set list statistics'
                 return
             fi
 
@@ -191,31 +193,31 @@ _tipc()
                     ((optind++))
 
                     if ((cword == optind)); then
-                        _tipc_link_opts
+                        _comp_cmd_tipc__link_opts
                     elif ((cword >= optind + 1)); then
-                        _tipc_link $((optind + 1)) "peers"
+                        _comp_cmd_tipc__link $((optind + 1)) "peers"
                     fi
                     ;;
                 set)
                     ((optind++))
 
                     if ((cword == optind)); then
-                        _tipc_link_opts
+                        _comp_cmd_tipc__link_opts
                     elif ((cword >= optind + 2)); then
-                        _tipc_link $((optind + 2)) "peers"
+                        _comp_cmd_tipc__link $((optind + 2)) "peers"
                     fi
                     ;;
                 statistics)
                     ((optind++))
 
                     if ((cword == optind)); then
-                        COMPREPLY=($(compgen -W 'show reset' -- $cur))
+                        _comp_compgen -- -W 'show reset'
                         return
                     fi
 
                     case "${words[optind]}" in
                         show | reset)
-                            _tipc_link $((optind + 1))
+                            _comp_cmd_tipc__link $((optind + 1))
                             ;;
                     esac
                     ;;
@@ -225,7 +227,7 @@ _tipc()
             ((optind++))
 
             if ((cword == optind)); then
-                COMPREPLY=($(compgen -W 'get set list' -- $cur))
+                _comp_compgen -- -W 'get set list'
                 return
             fi
 
@@ -234,18 +236,18 @@ _tipc()
                     ((optind++))
 
                     if ((cword == optind)); then
-                        _tipc_link_opts
+                        _comp_cmd_tipc__link_opts
                     elif ((cword >= optind + 1)); then
-                        _tipc_media $((optind + 1))
+                        _comp_cmd_tipc__media $((optind + 1))
                     fi
                     ;;
                 set)
                     ((optind++))
 
                     if ((cword == optind)); then
-                        _tipc_link_opts
+                        _comp_cmd_tipc__link_opts
                     elif ((cword >= optind + 2)); then
-                        _tipc_media $((optind + 2))
+                        _comp_cmd_tipc__media $((optind + 2))
                     fi
                     ;;
             esac
@@ -254,14 +256,14 @@ _tipc()
             ((optind++))
 
             if ((cword == optind)); then
-                COMPREPLY=($(compgen -W 'show' -- $cur))
+                _comp_compgen -- -W 'show'
             fi
             ;;
         node)
             ((optind++))
 
             if ((cword == optind)); then
-                COMPREPLY=($(compgen -W 'list get set' -- $cur))
+                _comp_compgen -- -W 'list get set'
                 return
             fi
 
@@ -270,7 +272,7 @@ _tipc()
                     ((optind++))
 
                     if ((cword == optind)); then
-                        COMPREPLY=($(compgen -W 'address netid' -- $cur))
+                        _comp_compgen -- -W 'address netid'
                     fi
                     ;;
             esac
@@ -279,11 +281,11 @@ _tipc()
             ((optind++))
 
             if ((cword == optind)); then
-                COMPREPLY=($(compgen -W 'list' -- $cur))
+                _comp_compgen -- -W 'list'
             fi
             ;;
     esac
 } &&
-    complete -F _tipc tipc
+    complete -F _comp_cmd_tipc tipc
 
 # ex: filetype=sh

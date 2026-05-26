@@ -1,39 +1,34 @@
 # postcat(1) completion                                    -*- shell-script -*-
 
-_postcat()
+_comp_cmd_postcat()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -c)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
         return
     fi
 
-    local idx qfile=0
+    local idx qfile=""
     for idx in "${words[@]}"; do
-        [[ $idx == -q ]] && qfile=1 && break
+        [[ $idx == -q ]] && qfile=set && break
     done
-    if ((qfile == 1)); then
-        local len=${#cur} pval
-        for pval in $(mailq 2>/dev/null |
-            command sed -e '1d; $d; /^[^0-9A-Z]/d; /^$/d; s/[* !].*$//'); do
-            if [[ $cur == "${pval:0:len}" ]]; then
-                COMPREPLY+=($pval)
-            fi
-        done
+    if [[ $qfile ]]; then
+        _comp_compgen_split -- "$(mailq 2>/dev/null |
+            command sed -e '1d; $d; /^[^0-9A-Z]/d; /^$/d; s/[* !].*$//')"
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _postcat postcat
+    complete -F _comp_cmd_postcat postcat
 
 # ex: filetype=sh

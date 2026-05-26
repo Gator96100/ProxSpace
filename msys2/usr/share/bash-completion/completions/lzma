@@ -1,20 +1,21 @@
 # lzma(1) completion                                       -*- shell-script -*-
 # by Per Øyvind Karlsen <peroyvind@mandriva.org>
 
-_lzma()
+_comp_cmd_lzma()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1") -{1..9}' -- "$cur"))
+        _comp_compgen_help
+        _comp_compgen -a -- -W '-{1..9}'
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    local IFS=$'\n' xspec="*.@(lzma|tlz)"
+    local xspec="*.@(lzma|tlz)"
 
     if [[ $prev == --* ]]; then
         [[ $prev == --@(decompress|list|test) ]] && xspec="!"$xspec
@@ -24,11 +25,11 @@ _lzma()
         [[ $prev == -*z* ]] && xspec=
     fi
 
-    _tilde "$cur" || return
+    _comp_compgen_tilde && return
 
     compopt -o filenames
-    COMPREPLY=($(compgen -f -X "$xspec" -- "$cur") $(compgen -d -- "$cur"))
+    _comp_compgen -- -f -X "$xspec" -o plusdirs
 } &&
-    complete -F _lzma lzma
+    complete -F _comp_cmd_lzma lzma
 
 # ex: filetype=sh

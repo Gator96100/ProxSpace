@@ -2,12 +2,12 @@
 .\"     Title: ps
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin Utilities
 .\"    Source: Cygwin Utilities
 .\"  Language: English
 .\"
-.TH "PS" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.TH "PS" "1" "03/15/2026" "Cygwin Utilities" "Cygwin Utilities"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -42,7 +42,7 @@ ps \- Report process status
 .nf
  \-a, \-\-all       show processes of all users
  \-e, \-\-everyone  show processes of all users
- \-f, \-\-full      show process uids, ppids
+ \-f, \-\-full      show process uids, ppids and command line
  \-h, \-\-help      output usage information and exit
  \-l, \-\-long      show process uids, ppids, pgids, winpids
  \-p, \-\-process   show information for specified PID
@@ -81,7 +81,7 @@ or
 \-e
 option, all user\*(Aqs processes (and system processes) are listed\&. There are historical UNIX reasons for the synonomous options, which are functionally identical\&. The
 \-f
-option outputs a "full" listing with usernames for UIDs\&. The
+option outputs a "full" listing with usernames for UIDs and the command line of the process, rather than just the full path to the executable\&. The
 \-l
 option is the default display mode, showing a "long" listing with all the above columns\&. The other display option is
 \-s, which outputs a shorter listing of just PID, TTY, STIME, and COMMAND\&. The

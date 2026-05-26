@@ -1,37 +1,48 @@
 # bash completion for checksec                             -*- shell-script -*-
 
-_checksec()
+_comp_cmd_checksec()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         --version | --help)
             return
             ;;
         --file | --fortify-file)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --dir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --proc)
-            _pnames
+            _comp_compgen_pnames
             return
             ;;
         --proc-libs | --fortify-proc)
-            _pids
+            _comp_compgen_pids
             return
+            ;;
+        --format)
+            _comp_compgen_split -- "$("$1" --help 2>/dev/null |
+                command sed -ne 's/[{,}]/ /g;s/^[[:space:]]*--format=//p')"
+            ;;
+        --output)
+            _comp_compgen_split -- "$("$1" --help 2>/dev/null |
+                command sed -ne 's/[{,}]/ /g;s/^[[:space:]]*--output=//p')"
             ;;
     esac
 
+    [[ $was_split ]] && return
+
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
+        [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 } &&
-    complete -F _checksec checksec
+    complete -F _comp_cmd_checksec checksec
 
 # ex: filetype=sh

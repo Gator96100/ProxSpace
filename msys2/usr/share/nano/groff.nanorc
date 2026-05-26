@@ -1,6 +1,8 @@
 ## Syntax highlighting for groff.
 
-syntax groff "\.(m[ems]|rof|tmac)$|/tmac\.[^/]+$"
+## Original author:  Robert D. Goulding
+
+syntax groff "\.(me|mm|mom|ms|roff|tmac)$|/tmac\.[^/]+$"
 comment ".\""
 
 # The setting of a string or register
@@ -23,4 +25,4 @@ color green start="\\(\\)?\*\[" end="]"
 color brightred "\\\(.."
 color brightred start="\\\[" end="]"
 # Macro arguments
-color brightcyan "\\\\\$[1-9]"
+color brightcyan "\\\\\$[0-9]"

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on October, 16 2022 by texi2html 1.78a -->
+<!-- Created on October, 5 2025 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
@@ -297,14 +297,31 @@ Unicode strings.
 </p></dd></dl>
 
 <dl>
-<dt><u>Function:</u> uint8_t * <b>u8_move</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
+<dt><u>Function:</u> uint8_t * <b>u8_pcpy</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
 <a name="IDX47"></a>
 </dt>
-<dt><u>Function:</u> uint16_t * <b>u16_move</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
+<dt><u>Function:</u> uint16_t * <b>u16_pcpy</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
 <a name="IDX48"></a>
 </dt>
-<dt><u>Function:</u> uint32_t * <b>u32_move</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
+<dt><u>Function:</u> uint32_t * <b>u32_pcpy</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
 <a name="IDX49"></a>
+</dt>
+<dd><p>Copies <var>n</var> units from <var>src</var> to <var>dest</var>, returning a pointer
+after the last written unit.
+</p>
+<p>This function is similar to <code>mempcpy</code>, except that it operates on
+Unicode strings.
+</p></dd></dl>
+
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_move</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
+<a name="IDX50"></a>
+</dt>
+<dt><u>Function:</u> uint16_t * <b>u16_move</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
+<a name="IDX51"></a>
+</dt>
+<dt><u>Function:</u> uint32_t * <b>u32_move</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
+<a name="IDX52"></a>
 </dt>
 <dd><p>Copies <var>n</var> units from <var>src</var> to <var>dest</var>, guaranteeing correct
 behavior for overlapping memory areas.
@@ -317,13 +334,13 @@ Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_set</b><i> (uint8_t&nbsp;*<var>s</var>, ucs4_t&nbsp;<var>uc</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX50"></a>
+<a name="IDX53"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_set</b><i> (uint16_t&nbsp;*<var>s</var>, ucs4_t&nbsp;<var>uc</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX51"></a>
+<a name="IDX54"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_set</b><i> (uint32_t&nbsp;*<var>s</var>, ucs4_t&nbsp;<var>uc</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX52"></a>
+<a name="IDX55"></a>
 </dt>
 <dd><p>Sets the first <var>n</var> characters of <var>s</var> to <var>uc</var>.  <var>uc</var> should be
 a character that occupies only 1 unit.
@@ -341,13 +358,13 @@ Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_cmp</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX53"></a>
+<a name="IDX56"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_cmp</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX54"></a>
+<a name="IDX57"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_cmp</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX55"></a>
+<a name="IDX58"></a>
 </dt>
 <dd><p>Compares <var>s1</var> and <var>s2</var>, each of length <var>n</var>, lexicographically.
 Returns a negative value if <var>s1</var> compares smaller than <var>s2</var>,
@@ -363,13 +380,13 @@ lengths.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_cmp2</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>)</i>
-<a name="IDX56"></a>
+<a name="IDX59"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_cmp2</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>)</i>
-<a name="IDX57"></a>
+<a name="IDX60"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_cmp2</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, size_t&nbsp;<var>n1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n2</var>)</i>
-<a name="IDX58"></a>
+<a name="IDX61"></a>
 </dt>
 <dd><p>Compares <var>s1</var> and <var>s2</var>, lexicographically.
 Returns a negative value if <var>s1</var> compares smaller than <var>s2</var>,
@@ -389,13 +406,13 @@ operates on Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_chr</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX59"></a>
+<a name="IDX62"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_chr</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX60"></a>
+<a name="IDX63"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_chr</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX61"></a>
+<a name="IDX64"></a>
 </dt>
 <dd><p>Searches the string at <var>s</var> for <var>uc</var>.  Returns a pointer to the first
 occurrence of <var>uc</var> in <var>s</var>, or NULL if <var>uc</var> does not occur in
@@ -414,13 +431,13 @@ Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> size_t <b>u8_mbsnlen</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX62"></a>
+<a name="IDX65"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u16_mbsnlen</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX63"></a>
+<a name="IDX66"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u32_mbsnlen</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX64"></a>
+<a name="IDX67"></a>
 </dt>
 <dd><p>Counts and returns the number of Unicode characters in the <var>n</var> units
 from <var>s</var>.
@@ -438,13 +455,13 @@ it operates on Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_cpy_alloc</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX65"></a>
+<a name="IDX68"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_cpy_alloc</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX66"></a>
+<a name="IDX69"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_cpy_alloc</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX67"></a>
+<a name="IDX70"></a>
 </dt>
 <dd><p>Makes a freshly allocated copy of <var>s</var>, of length <var>n</var>.
 </p></dd></dl>
@@ -465,28 +482,28 @@ in a Unicode string.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_strmblen</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>)</i>
-<a name="IDX68"></a>
+<a name="IDX71"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_strmblen</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>)</i>
-<a name="IDX69"></a>
+<a name="IDX72"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_strmblen</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>)</i>
-<a name="IDX70"></a>
+<a name="IDX73"></a>
 </dt>
 <dd><p>Returns the length (number of units) of the first character in <var>s</var>.
 Returns 0 if it is the NUL character.  Returns -1 upon failure.
 </p></dd></dl>
 
-<a name="IDX71"></a>
+<a name="IDX74"></a>
 <dl>
 <dt><u>Function:</u> int <b>u8_strmbtouc</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint8_t&nbsp;*<var>s</var>)</i>
-<a name="IDX72"></a>
+<a name="IDX75"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_strmbtouc</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint16_t&nbsp;*<var>s</var>)</i>
-<a name="IDX73"></a>
+<a name="IDX76"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_strmbtouc</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint32_t&nbsp;*<var>s</var>)</i>
-<a name="IDX74"></a>
+<a name="IDX77"></a>
 </dt>
 <dd><p>Returns the length (number of units) of the first character in <var>s</var>,
 putting its <code>ucs4_t</code> representation in <code>*<var>puc</var></code>.  Returns 0
@@ -495,13 +512,13 @@ if it is the NUL character.  Returns -1 upon failure.
 
 <dl>
 <dt><u>Function:</u> const uint8_t * <b>u8_next</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint8_t&nbsp;*<var>s</var>)</i>
-<a name="IDX75"></a>
+<a name="IDX78"></a>
 </dt>
 <dt><u>Function:</u> const uint16_t * <b>u16_next</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint16_t&nbsp;*<var>s</var>)</i>
-<a name="IDX76"></a>
+<a name="IDX79"></a>
 </dt>
 <dt><u>Function:</u> const uint32_t * <b>u32_next</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint32_t&nbsp;*<var>s</var>)</i>
-<a name="IDX77"></a>
+<a name="IDX80"></a>
 </dt>
 <dd><p>Forward iteration step.  Advances the pointer past the next character,
 or returns NULL if the end of the string has been reached.  Puts the
@@ -513,13 +530,13 @@ character in a Unicode string.
 </p>
 <dl>
 <dt><u>Function:</u> const uint8_t * <b>u8_prev</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint8_t&nbsp;*<var>s</var>, const&nbsp;uint8_t&nbsp;*<var>start</var>)</i>
-<a name="IDX78"></a>
+<a name="IDX81"></a>
 </dt>
 <dt><u>Function:</u> const uint16_t * <b>u16_prev</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint16_t&nbsp;*<var>s</var>, const&nbsp;uint16_t&nbsp;*<var>start</var>)</i>
-<a name="IDX79"></a>
+<a name="IDX82"></a>
 </dt>
 <dt><u>Function:</u> const uint32_t * <b>u32_prev</b><i> (ucs4_t&nbsp;*<var>puc</var>, const&nbsp;uint32_t&nbsp;*<var>s</var>, const&nbsp;uint32_t&nbsp;*<var>start</var>)</i>
-<a name="IDX80"></a>
+<a name="IDX83"></a>
 </dt>
 <dd><p>Backward iteration step.  Advances the pointer to point to the previous
 character (the one that ends at <code><var>s</var></code>), or returns NULL if the
@@ -537,13 +554,13 @@ Note that this function works only on well-formed Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> size_t <b>u8_strlen</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>)</i>
-<a name="IDX81"></a>
+<a name="IDX84"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u16_strlen</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>)</i>
-<a name="IDX82"></a>
+<a name="IDX85"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u32_strlen</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>)</i>
-<a name="IDX83"></a>
+<a name="IDX86"></a>
 </dt>
 <dd><p>Returns the number of units in <var>s</var>.
 </p>
@@ -553,13 +570,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> size_t <b>u8_strnlen</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>maxlen</var>)</i>
-<a name="IDX84"></a>
+<a name="IDX87"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u16_strnlen</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>maxlen</var>)</i>
-<a name="IDX85"></a>
+<a name="IDX88"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u32_strnlen</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>maxlen</var>)</i>
-<a name="IDX86"></a>
+<a name="IDX89"></a>
 </dt>
 <dd><p>Returns the number of units in <var>s</var>, but at most <var>maxlen</var>.
 </p>
@@ -576,13 +593,13 @@ that it operates on Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strcpy</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>)</i>
-<a name="IDX87"></a>
+<a name="IDX90"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strcpy</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>)</i>
-<a name="IDX88"></a>
+<a name="IDX91"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strcpy</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>)</i>
-<a name="IDX89"></a>
+<a name="IDX92"></a>
 </dt>
 <dd><p>Copies <var>src</var> to <var>dest</var>.
 </p>
@@ -592,13 +609,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_stpcpy</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>)</i>
-<a name="IDX90"></a>
+<a name="IDX93"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_stpcpy</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>)</i>
-<a name="IDX91"></a>
+<a name="IDX94"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_stpcpy</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>)</i>
-<a name="IDX92"></a>
+<a name="IDX95"></a>
 </dt>
 <dd><p>Copies <var>src</var> to <var>dest</var>, returning the address of the terminating NUL
 in <var>dest</var>.
@@ -609,13 +626,13 @@ Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strncpy</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX93"></a>
+<a name="IDX96"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strncpy</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX94"></a>
+<a name="IDX97"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strncpy</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX95"></a>
+<a name="IDX98"></a>
 </dt>
 <dd><p>Copies no more than <var>n</var> units of <var>src</var> to <var>dest</var>.
 </p>
@@ -625,13 +642,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_stpncpy</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX96"></a>
+<a name="IDX99"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_stpncpy</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX97"></a>
+<a name="IDX100"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_stpncpy</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX98"></a>
+<a name="IDX101"></a>
 </dt>
 <dd><p>Copies no more than <var>n</var> units of <var>src</var> to <var>dest</var>.  Returns a
 pointer past the last non-NUL unit written into <var>dest</var>.  In other words,
@@ -645,13 +662,13 @@ Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strcat</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>)</i>
-<a name="IDX99"></a>
+<a name="IDX102"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strcat</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>)</i>
-<a name="IDX100"></a>
+<a name="IDX103"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strcat</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>)</i>
-<a name="IDX101"></a>
+<a name="IDX104"></a>
 </dt>
 <dd><p>Appends <var>src</var> onto <var>dest</var>.
 </p>
@@ -661,13 +678,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strncat</b><i> (uint8_t&nbsp;*<var>dest</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX102"></a>
+<a name="IDX105"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strncat</b><i> (uint16_t&nbsp;*<var>dest</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX103"></a>
+<a name="IDX106"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strncat</b><i> (uint32_t&nbsp;*<var>dest</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX104"></a>
+<a name="IDX107"></a>
 </dt>
 <dd><p>Appends no more than <var>n</var> units of <var>src</var> onto <var>dest</var>.
 </p>
@@ -681,16 +698,17 @@ that it operates on Unicode strings.
 <h3 class="subsection"> <a href="libunistring_toc.html#TOC25">4.5.4 Comparing NUL terminated Unicode strings</a> </h3>
 
 <p>The following functions compare two Unicode strings.
+They ignore locale-dependent collation rules.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_strcmp</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>)</i>
-<a name="IDX105"></a>
+<a name="IDX108"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_strcmp</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>)</i>
-<a name="IDX106"></a>
+<a name="IDX109"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_strcmp</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>)</i>
-<a name="IDX107"></a>
+<a name="IDX110"></a>
 </dt>
 <dd><p>Compares <var>s1</var> and <var>s2</var>, lexicographically.
 Returns a negative value if <var>s1</var> compares smaller than <var>s2</var>,
@@ -701,16 +719,16 @@ they compare equal.
 that it operates on Unicode strings.
 </p></dd></dl>
 
-<a name="IDX108"></a>
+<a name="IDX111"></a>
 <dl>
 <dt><u>Function:</u> int <b>u8_strcoll</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>)</i>
-<a name="IDX109"></a>
+<a name="IDX112"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_strcoll</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>)</i>
-<a name="IDX110"></a>
+<a name="IDX113"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_strcoll</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>)</i>
-<a name="IDX111"></a>
+<a name="IDX114"></a>
 </dt>
 <dd><p>Compares <var>s1</var> and <var>s2</var> using the collation rules of the current
 locale.
@@ -722,18 +740,18 @@ that it operates on Unicode strings.
 </p>
 <p>Note that this function may consider different canonical normalizations
 of the same string as having a large distance.  It is therefore better to
-use the function <code>u8_normcoll</code> instead of this one; see <a href="libunistring_13.html#SEC61">Normalization forms (composition and decomposition) <code>&lt;uninorm.h&gt;</code></a>.
+use the function <code>u8_normcoll</code> instead of this one; see <a href="libunistring_13.html#SEC63">Normalization forms (composition and decomposition) <code>&lt;uninorm.h&gt;</code></a>.
 </p></dd></dl>
 
 <dl>
 <dt><u>Function:</u> int <b>u8_strncmp</b><i> (const&nbsp;uint8_t&nbsp;*<var>s1</var>, const&nbsp;uint8_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX112"></a>
+<a name="IDX115"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_strncmp</b><i> (const&nbsp;uint16_t&nbsp;*<var>s1</var>, const&nbsp;uint16_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX113"></a>
+<a name="IDX116"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_strncmp</b><i> (const&nbsp;uint32_t&nbsp;*<var>s1</var>, const&nbsp;uint32_t&nbsp;*<var>s2</var>, size_t&nbsp;<var>n</var>)</i>
-<a name="IDX114"></a>
+<a name="IDX117"></a>
 </dt>
 <dd><p>Compares no more than <var>n</var> units of <var>s1</var> and <var>s2</var>.
 </p>
@@ -750,13 +768,13 @@ that it operates on Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strdup</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>)</i>
-<a name="IDX115"></a>
+<a name="IDX118"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strdup</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>)</i>
-<a name="IDX116"></a>
+<a name="IDX119"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strdup</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>)</i>
-<a name="IDX117"></a>
+<a name="IDX120"></a>
 </dt>
 <dd><p>Duplicates <var>s</var>, returning an identical malloc'd string.
 </p>
@@ -773,13 +791,13 @@ that it operates on Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strchr</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX118"></a>
+<a name="IDX121"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strchr</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX119"></a>
+<a name="IDX122"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strchr</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX120"></a>
+<a name="IDX123"></a>
 </dt>
 <dd><p>Finds the first occurrence of <var>uc</var> in <var>str</var>.
 </p>
@@ -789,13 +807,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strrchr</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX121"></a>
+<a name="IDX124"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strrchr</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX122"></a>
+<a name="IDX125"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strrchr</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, ucs4_t&nbsp;<var>uc</var>)</i>
-<a name="IDX123"></a>
+<a name="IDX126"></a>
 </dt>
 <dd><p>Finds the last occurrence of <var>uc</var> in <var>str</var>.
 </p>
@@ -808,13 +826,13 @@ character in or outside a given set of Unicode characters.
 </p>
 <dl>
 <dt><u>Function:</u> size_t <b>u8_strcspn</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, const&nbsp;uint8_t&nbsp;*<var>reject</var>)</i>
-<a name="IDX124"></a>
+<a name="IDX127"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u16_strcspn</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, const&nbsp;uint16_t&nbsp;*<var>reject</var>)</i>
-<a name="IDX125"></a>
+<a name="IDX128"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u32_strcspn</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, const&nbsp;uint32_t&nbsp;*<var>reject</var>)</i>
-<a name="IDX126"></a>
+<a name="IDX129"></a>
 </dt>
 <dd><p>Returns the length of the initial segment of <var>str</var> which consists entirely
 of Unicode characters not in <var>reject</var>.
@@ -825,13 +843,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> size_t <b>u8_strspn</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, const&nbsp;uint8_t&nbsp;*<var>accept</var>)</i>
-<a name="IDX127"></a>
+<a name="IDX130"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u16_strspn</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, const&nbsp;uint16_t&nbsp;*<var>accept</var>)</i>
-<a name="IDX128"></a>
+<a name="IDX131"></a>
 </dt>
 <dt><u>Function:</u> size_t <b>u32_strspn</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, const&nbsp;uint32_t&nbsp;*<var>accept</var>)</i>
-<a name="IDX129"></a>
+<a name="IDX132"></a>
 </dt>
 <dd><p>Returns the length of the initial segment of <var>str</var> which consists entirely
 of Unicode characters in <var>accept</var>.
@@ -842,13 +860,13 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strpbrk</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, const&nbsp;uint8_t&nbsp;*<var>accept</var>)</i>
-<a name="IDX130"></a>
+<a name="IDX133"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strpbrk</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, const&nbsp;uint16_t&nbsp;*<var>accept</var>)</i>
-<a name="IDX131"></a>
+<a name="IDX134"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strpbrk</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, const&nbsp;uint32_t&nbsp;*<var>accept</var>)</i>
-<a name="IDX132"></a>
+<a name="IDX135"></a>
 </dt>
 <dd><p>Finds the first occurrence in <var>str</var> of any character in <var>accept</var>.
 </p>
@@ -866,13 +884,13 @@ of another Unicode string.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strstr</b><i> (const&nbsp;uint8_t&nbsp;*<var>haystack</var>, const&nbsp;uint8_t&nbsp;*<var>needle</var>)</i>
-<a name="IDX133"></a>
+<a name="IDX136"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strstr</b><i> (const&nbsp;uint16_t&nbsp;*<var>haystack</var>, const&nbsp;uint16_t&nbsp;*<var>needle</var>)</i>
-<a name="IDX134"></a>
+<a name="IDX137"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strstr</b><i> (const&nbsp;uint32_t&nbsp;*<var>haystack</var>, const&nbsp;uint32_t&nbsp;*<var>needle</var>)</i>
-<a name="IDX135"></a>
+<a name="IDX138"></a>
 </dt>
 <dd><p>Finds the first occurrence of <var>needle</var> in <var>haystack</var>.
 </p>
@@ -882,26 +900,26 @@ that it operates on Unicode strings.
 
 <dl>
 <dt><u>Function:</u> bool <b>u8_startswith</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, const&nbsp;uint8_t&nbsp;*<var>prefix</var>)</i>
-<a name="IDX136"></a>
+<a name="IDX139"></a>
 </dt>
 <dt><u>Function:</u> bool <b>u16_startswith</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, const&nbsp;uint16_t&nbsp;*<var>prefix</var>)</i>
-<a name="IDX137"></a>
+<a name="IDX140"></a>
 </dt>
 <dt><u>Function:</u> bool <b>u32_startswith</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, const&nbsp;uint32_t&nbsp;*<var>prefix</var>)</i>
-<a name="IDX138"></a>
+<a name="IDX141"></a>
 </dt>
 <dd><p>Tests whether <var>str</var> starts with <var>prefix</var>.
 </p></dd></dl>
 
 <dl>
 <dt><u>Function:</u> bool <b>u8_endswith</b><i> (const&nbsp;uint8_t&nbsp;*<var>str</var>, const&nbsp;uint8_t&nbsp;*<var>suffix</var>)</i>
-<a name="IDX139"></a>
+<a name="IDX142"></a>
 </dt>
 <dt><u>Function:</u> bool <b>u16_endswith</b><i> (const&nbsp;uint16_t&nbsp;*<var>str</var>, const&nbsp;uint16_t&nbsp;*<var>suffix</var>)</i>
-<a name="IDX140"></a>
+<a name="IDX143"></a>
 </dt>
 <dt><u>Function:</u> bool <b>u32_endswith</b><i> (const&nbsp;uint32_t&nbsp;*<var>str</var>, const&nbsp;uint32_t&nbsp;*<var>suffix</var>)</i>
-<a name="IDX141"></a>
+<a name="IDX144"></a>
 </dt>
 <dd><p>Tests whether <var>str</var> ends with <var>suffix</var>.
 </p></dd></dl>
@@ -915,13 +933,13 @@ that it operates on Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strtok</b><i> (uint8_t&nbsp;*<var>str</var>, const&nbsp;uint8_t&nbsp;*<var>delim</var>, uint8_t&nbsp;**<var>ptr</var>)</i>
-<a name="IDX142"></a>
+<a name="IDX145"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strtok</b><i> (uint16_t&nbsp;*<var>str</var>, const&nbsp;uint16_t&nbsp;*<var>delim</var>, uint16_t&nbsp;**<var>ptr</var>)</i>
-<a name="IDX143"></a>
+<a name="IDX146"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strtok</b><i> (uint32_t&nbsp;*<var>str</var>, const&nbsp;uint32_t&nbsp;*<var>delim</var>, uint32_t&nbsp;**<var>ptr</var>)</i>
-<a name="IDX144"></a>
+<a name="IDX147"></a>
 </dt>
 <dd><p>Divides <var>str</var> into tokens separated by characters in <var>delim</var>.
 </p>
@@ -940,12 +958,12 @@ that it operates on Unicode strings.  Its interface is actually more similar to
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 5 2025</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

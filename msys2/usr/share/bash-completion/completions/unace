@@ -1,20 +1,20 @@
 # unace(1) completion                                      -*- shell-script -*-
 
-_unace()
+_comp_cmd_unace()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '-c -c- -f -f- -o -o- -p -y -y-' -- "$cur"))
+        _comp_compgen -- -W '-c -c- -f -f- -o -o- -p -y -y-'
     else
         if ((cword == 1)); then
-            COMPREPLY=($(compgen -W 'e l t v x' -- "$cur"))
+            _comp_compgen -- -W 'e l t v x'
         else
-            _filedir ace
+            _comp_compgen_filedir '@(ace|cba)'
         fi
     fi
 } &&
-    complete -F _unace unace
+    complete -F _comp_cmd_unace unace
 
 # ex: filetype=sh

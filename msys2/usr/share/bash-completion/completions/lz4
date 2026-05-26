@@ -1,25 +1,27 @@
 # lz4 completion                                           -*- shell-script -*-
 
-_lz4()
+_comp_cmd_lz4()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -b)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -X '-*#*' -W \
-            '$(_parse_help "$1" -h) -B{4..7} -i{1..9}' -- "$cur"))
+        _comp_compgen -R help -- -h
+        _comp_compgen -- -X '-*#*' -W \
+            '${COMPREPLY+"${COMPREPLY[@]}"} -B{4..7} -i{1..9}'
         return
     fi
 
-    local args word xspec="*.?(t)lz4"
-    _count_args
+    local REPLY word xspec="*.?(t)lz4"
+    _comp_count_args
+    local args=$REPLY
     ((args > 2)) && return
 
     for word in "${words[@]}"; do
@@ -41,12 +43,11 @@ _lz4()
         esac
     done
 
-    _tilde "$cur" || return
+    _comp_compgen_tilde && return
 
-    local IFS=$'\n'
     compopt -o filenames
-    COMPREPLY=($(compgen -f -X "$xspec" -- "$cur") $(compgen -d -- "$cur"))
+    _comp_compgen -- -f -X "$xspec" -o plusdirs
 } &&
-    complete -F _lz4 lz4 lz4c
+    complete -F _comp_cmd_lz4 lz4 lz4c
 
 # ex: filetype=sh

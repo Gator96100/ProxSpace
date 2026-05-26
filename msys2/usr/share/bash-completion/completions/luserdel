@@ -1,9 +1,9 @@
 # luserdel(1) completion                                   -*- shell-script -*-
 
-_luserdel()
+_comp_cmd_luserdel()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help | --usage | -!(-*)[?]*)
@@ -12,12 +12,12 @@ _luserdel()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    COMPREPLY=($(compgen -u -- "$cur"))
+    _comp_compgen -- -u
 } &&
-    complete -F _luserdel luserdel
+    complete -F _comp_cmd_luserdel luserdel
 
 # ex: filetype=sh

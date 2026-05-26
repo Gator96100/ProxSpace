@@ -1,22 +1,22 @@
 # iwlist completion                                        -*- shell-script -*-
 
-_iwlist()
+_comp_cmd_iwlist()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if ((cword == 1)); then
         if [[ $cur == -* ]]; then
-            COMPREPLY=($(compgen -W '--help --version' -- "$cur"))
+            _comp_compgen -- -W '--help --version'
         else
-            _available_interfaces -w
+            _comp_compgen_available_interfaces -w
         fi
     else
-        COMPREPLY=($(compgen -W 'scan scanning freq frequency channel rate
-            bit bitrate key enc encryption power txpower retry ap accesspoint
-            peers event' -- "$cur"))
+        _comp_compgen -- -W 'scan scanning freq frequency channel rate bit
+            bitrate key enc encryption power txpower retry ap accesspoint peers
+            event'
     fi
 } &&
-    complete -F _iwlist iwlist
+    complete -F _comp_cmd_iwlist iwlist
 
 # ex: filetype=sh

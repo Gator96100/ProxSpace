@@ -1,19 +1,19 @@
 # postconf(1) completion                                   -*- shell-script -*-
 
-_postconf()
+_comp_cmd_postconf()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     local eqext
 
     case $prev in
         -b | -t)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -c)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -e)
@@ -23,7 +23,7 @@ _postconf()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
         return
     fi
 
@@ -34,6 +34,6 @@ _postconf()
         fi
     done
 } &&
-    complete -F _postconf postconf
+    complete -F _comp_cmd_postconf postconf
 
 # ex: filetype=sh

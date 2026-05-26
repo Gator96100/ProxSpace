@@ -1,22 +1,22 @@
 # freeciv-server completion                                -*- shell-script -*-
 
-_civserver()
+_comp_cmd_civserver()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -f | -g | -l | -r | --file | --log | --gamelog | --read)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
     fi
 
 } &&
-    complete -F _civserver civserver freeciv-server
+    complete -F _comp_cmd_civserver civserver freeciv-server
 
 # ex: filetype=sh

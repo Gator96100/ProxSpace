@@ -738,7 +738,7 @@ sub FILENO {
 
 	return $self->_fileno() if defined $self->_fileno();
 
-	return -1 if ($^O eq 'cygwin' or $^O eq 'msys');
+	return -1 if $^O eq 'cygwin';
 
 # FIXME: We don't always open the handle, better to query the handle or to set
 # the right access info at TIEHANDLE time.

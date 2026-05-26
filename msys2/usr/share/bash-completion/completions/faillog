@@ -1,27 +1,29 @@
 # faillog(8) completion                                    -*- shell-script -*-
 
-_faillog()
+_comp_cmd_faillog()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[lmtu]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --lock-time | --maximum | --time | -!(-*)[hlmt])
+        --help | --lock-time | --maximum | --time | -${noargopts}[hlmt])
             return
             ;;
-        --user | -!(-*)u)
-            COMPREPLY=($(compgen -u -- "$cur"))
+        --user | -${noargopts}u)
+            _comp_compgen -- -u
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     fi
 } &&
-    complete -F _faillog faillog
+    complete -F _comp_cmd_faillog faillog
 
 # ex: filetype=sh

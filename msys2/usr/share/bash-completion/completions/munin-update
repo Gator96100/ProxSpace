@@ -1,27 +1,27 @@
 # munin-update completion                                  -*- shell-script -*-
 
-_munin_update()
+_comp_cmd_munin_update()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --host)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--force-root --noforce-root --service --host
+        _comp_compgen -- -W '--force-root --noforce-root --service --host
             --config --help --debug --nodebug --fork --nofork --stdout
-            --nostdout --timeout' -- "$cur"))
+            --nostdout --timeout'
     fi
 } &&
-    complete -F _munin_update munin-update
+    complete -F _comp_cmd_munin_update munin-update
 
 # ex: filetype=sh

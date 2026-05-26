@@ -2,7 +2,7 @@
 #
 #   srcinfo.sh - functions for writing .SRCINFO files
 #
-#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
 [[ -n "$LIBMAKEPKG_SRCINFO_SH" ]] && return
 LIBMAKEPKG_SRCINFO_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/pkgbuild.sh"
-source "$LIBRARY/util/schema.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/schema.sh"
 
 srcinfo_open_section() {
 	printf '%s = %s\n' "$1" "$2"
@@ -40,10 +40,16 @@ srcinfo_write_attr() {
 
 	local attrname=$1 attrvalues=("${@:2}")
 
+	# this function requires extglob - save current status to restore later
+	local shellopts=$(shopt -p extglob)
+	shopt -s extglob
+
 	# normalize whitespace, strip leading and trailing
 	attrvalues=("${attrvalues[@]//+([[:space:]])/ }")
 	attrvalues=("${attrvalues[@]#[[:space:]]}")
 	attrvalues=("${attrvalues[@]%[[:space:]]}")
+
+	eval "$shellopts"
 
 	printf "\t$attrname = %s\n" "${attrvalues[@]}"
 }

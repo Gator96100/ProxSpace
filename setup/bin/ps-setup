@@ -13,7 +13,7 @@ setup_proxspace ()
 		check_install $pkg
 	done
 	
-	python3 -m pip install ansicolors sslcrypto
+	python3 -m pip install ansicolors sslcrypto --break-system-packages
 	
 	yes | pacman -Sc
 	

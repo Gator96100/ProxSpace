@@ -2,7 +2,7 @@
 #
 #   generate_checksum.sh - functions for generating source checksums
 #
-#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 [[ -n "$LIBMAKEPKG_INTEGRITY_GENERATE_CHECKSUM_SH" ]] && return
 LIBMAKEPKG_INTEGRITY_GENERATE_CHECKSUM_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
-source "$LIBRARY/util/schema.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/schema.sh"
 
 generate_one_checksum() {
 	local integ=$1 arch=$2 sources numsrc indentsz idx
@@ -54,7 +54,17 @@ generate_one_checksum() {
 
 		case $proto in
 			bzr|git|hg|svn)
-				sum="SKIP"
+				if declare -f "calc_checksum_$proto" > /dev/null; then
+					if ! sum=$("calc_checksum_$proto" "$netfile" "$integ"); then
+						local name
+						name=$(get_filename "$netfile")
+						error "$(gettext "Failure while calculating %s %s checksum")" "${name}" "${proto}"
+						plainerr "$(gettext "Aborting...")"
+						exit 1
+					fi
+				else
+					sum="SKIP"
+				fi
 				;;
 			*)
 				if [[ ${netfile%%::*} != *.@(sig?(n)|asc) ]]; then

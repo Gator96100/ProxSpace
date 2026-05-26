@@ -3,7 +3,7 @@
 #   tidy.sh - functions for modifying/removing installed files before
 #   package creation
 #
-#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@
 [[ -n "$LIBMAKEPKG_TIDY_SH" ]] && return
 LIBMAKEPKG_TIDY_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
 
 
 declare -a packaging_options tidy_remove tidy_modify
 
-for lib in "$LIBRARY/tidy/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/tidy/"*.sh; do
 	source "$lib"
 done
 

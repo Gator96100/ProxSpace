@@ -2,7 +2,7 @@
 #
 #   pacman-db-upgrade - upgrade the local pacman db to a newer format
 #
-#   Copyright (c) 2010-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2010-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+set -e
+
 # Avoid creating world-unreadable files
 umask 022
 
@@ -25,13 +27,13 @@ umask 022
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver='6.0.2'
+declare -r myver='6.1.0'
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 # Import libmakepkg
-source "$LIBRARY"/util/message.sh
-source "$LIBRARY"/util/parseopts.sh
+source "$MAKEPKG_LIBRARY"/util/message.sh
+source "$MAKEPKG_LIBRARY"/util/parseopts.sh
 
 usage() {
 	printf "pacman-db-upgrade (pacman) %s\n" "${myver}"
@@ -52,7 +54,7 @@ usage() {
 
 version() {
 	printf "pacman-db-upgrade (pacman) %s\n" "$myver"
-	printf -- "Copyright (c) 2010-2021 Pacman Development Team <pacman-dev@archlinux.org>.\n"
+	printf -- "Copyright (c) 2010-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\

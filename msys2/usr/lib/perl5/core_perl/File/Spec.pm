@@ -2,7 +2,9 @@ package File::Spec;
 
 use strict;
 
-our $VERSION = '3.84';
+# Keep $VERSION consistent in all *.pm files in this distribution, including
+# Cwd.pm.
+our $VERSION = '3.91';
 $VERSION =~ tr/_//d;
 
 my %module = (
@@ -13,7 +15,6 @@ my %module = (
 	      symbian => 'Win32', # Yes, File::Spec::Win32 works on symbian.
 	      dos     => 'OS2',   # Yes, File::Spec::OS2 works on DJGPP.
 	      cygwin  => 'Cygwin',
-	      msys    => 'Cygwin',
 	      amigaos => 'AmigaOS');
 
 
@@ -34,13 +35,13 @@ File::Spec - portably perform operations on file names
 
 	use File::Spec;
 
-	$x=File::Spec->catfile('a', 'b', 'c');
+	my $x = File::Spec->catfile('a', 'b', 'c');
 
 which returns 'a/b/c' under Unix. Or:
 
 	use File::Spec::Functions;
 
-	$x = catfile('a', 'b', 'c');
+	my $x = catfile('a', 'b', 'c');
 
 =head1 DESCRIPTION
 

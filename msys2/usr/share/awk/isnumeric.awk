@@ -1,3 +1,7 @@
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+
 # isnumeric --- check whether a value is numeric
 
 function isnumeric(x,  f)

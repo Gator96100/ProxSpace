@@ -1,44 +1,45 @@
 # ccze(1) completion                                       -*- shell-script -*-
 
-_ccze()
+_comp_cmd_ccze()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[acFmop]*)'
+    # shellcheck disable=SC2254
     case $prev in
         -'?' | --help | --usage | -V | --version)
             return
             ;;
-        --argument | --color | -!(-*)[ac])
+        --argument | --color | -${noargopts}[ac])
             # TODO?
             return
             ;;
-        --rcfile | -!(-*)F)
-            _filedir
+        --rcfile | -${noargopts}F)
+            _comp_compgen_filedir
             return
             ;;
-        --mode | -!(-*)m)
-            COMPREPLY=($(compgen -W "curses ansi html" -- "$cur"))
+        --mode | -${noargopts}m)
+            _comp_compgen -- -W "curses ansi html"
             return
             ;;
-        --option | -!(-*)o)
+        --option | -${noargopts}o)
             local -a opts=(scroll wordcolor lookups transparent cssfile)
-            COMPREPLY=($(compgen -W '${opts[@]} ${opts[@]/#/no}' -- "$cur"))
+            _comp_compgen -- -W '"${opts[@]}" "${opts[@]/#/no}"'
             return
             ;;
-        --plugin | -!(-*)p)
-            COMPREPLY=($(compgen -W '$("$1" --list-plugins | command \
-                sed -ne "s/^\([a-z0-9]\{1,\}\)[[:space:]]\{1,\}|.*/\1/p")' \
-                -- "$cur"))
+        --plugin | -${noargopts}p)
+            _comp_compgen_split -- "$("$1" --list-plugins | command \
+                sed -ne 's/^\([a-z0-9]\{1,\}\)[[:space:]]\{1,\}|.*/\1/p')"
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+    _comp_compgen_help
     [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
 } &&
-    complete -F _ccze ccze
+    complete -F _comp_cmd_ccze ccze
 
 # ex: filetype=sh

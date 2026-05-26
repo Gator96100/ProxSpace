@@ -3,7 +3,7 @@
 #   repo-add - add a package to a given repo database file
 #   repo-remove - remove a package entry from a given repo database file
 #
-#   Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ shopt -s extglob
 export TEXTDOMAIN='pacman-scripts'
 export TEXTDOMAINDIR='/usr/share/locale'
 
-declare -r myver='6.0.2'
+declare -r myver='6.1.0'
 declare -r confdir='/etc'
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 QUIET=0
 ONLYADDNEW=0
@@ -42,11 +42,15 @@ LOCKFILE=
 CLEAN_LOCK=0
 USE_COLOR='y'
 PREVENT_DOWNGRADE=0
+INCLUDE_SIGS=0
+DB_MODIFIED=0
+DB_MISSING=0
 
 # Import libmakepkg
-source "$LIBRARY"/util/compress.sh
-source "$LIBRARY"/util/message.sh
-source "$LIBRARY"/utils_fixed_path.sh
+source "$MAKEPKG_LIBRARY"/util/compress.sh
+source "$MAKEPKG_LIBRARY"/util/message.sh
+source "$MAKEPKG_LIBRARY"/util/parseopts.sh
+source "$MAKEPKG_LIBRARY"/utils_fixed_path.sh
 
 # ensure we have a sane umask set
 umask 0022
@@ -97,7 +101,7 @@ See %s(8) for more details and descriptions of the available options.\n")" $cmd
 version() {
 	cmd=${0##*/}
 	printf "%s (pacman) %s\n\n" "$cmd" "$myver"
-	printf -- "Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>.\n"
+	printf -- "Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
 This is free software; see the source for copying conditions.\n\
@@ -208,7 +212,7 @@ db_write_entry() {
 	local -a _groups _licenses _replaces _depends _conflicts _provides \
 		_optdepends _makedepends _checkdepends
 	local pkgname pkgbase pkgver pkgdesc csize size url arch builddate packager \
-		md5sum sha256sum pgpsig pgpsigsize
+		sha256sum pgpsig pgpsigsize
 
 	# read info from the zipped package
 	local line var val
@@ -261,7 +265,7 @@ db_write_entry() {
 	fi
 
 	# compute base64'd PGP signature
-	if [[ -f "$pkgfile.sig" ]]; then
+	if (( INCLUDE_SIGS )) && [[ -f "$pkgfile.sig" ]]; then
 		if grep -q 'BEGIN PGP SIGNATURE' "$pkgfile.sig"; then
 			error "$(gettext "Cannot use armored signatures for packages: %s")" "$pkgfile.sig"
 			return 1
@@ -279,8 +283,6 @@ db_write_entry() {
 
 	# compute checksums
 	msg2 "$(gettext "Computing checksums...")"
-	md5sum=$(md5sum "$pkgfile")
-	md5sum=${md5sum%% *}
 	sha256sum=$(sha256sum "$pkgfile")
 	sha256sum=${sha256sum%% *}
 
@@ -305,7 +307,6 @@ db_write_entry() {
 		format_entry "ISIZE"     "$size"
 
 		# add checksums
-		format_entry "MD5SUM"    "$md5sum"
 		format_entry "SHA256SUM" "$sha256sum"
 
 		# add PGP sig
@@ -343,6 +344,8 @@ db_write_entry() {
 		rm -f ${oldfile} ${oldfile}.sig
 	fi
 
+	DB_MODIFIED=1
+
 	return 0
 } # end db_write_entry
 
@@ -362,6 +365,8 @@ db_remove_entry() {
 		# remove entries in "files" database
 		local filesentry=$(echo "$pkgentry" | sed 's/\(.*\)\/db\//\1\/files\//')
 		rm -rf "$filesentry"
+
+		DB_MODIFIED=1
 
 		pkgentry=$(find_pkgentry "$pkgname")
 	done
@@ -436,6 +441,8 @@ prepare_repo_db() {
 						exit 1
 					fi
 					rm -f "$dbfile"
+					# mark the db for unconditional update
+					DB_MISSING=1
 					;;
 			esac
 		fi
@@ -590,9 +597,9 @@ if [[ $cmd != "repo-add" && $cmd != "repo-remove" ]]; then
 	exit 1
 fi
 
-tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/repo-tools.XXXXXXXXXX") || (\
-	error "$(gettext "Cannot create temp directory for database building.")"; \
-	exit 1)
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/repo-tools.XXXXXXXXXX") || {
+	error "$(gettext "Cannot create temp directory for database building.")";
+	exit 1; }
 
 for repo in "db" "files"; do
 	mkdir "$tmpdir/$repo"
@@ -605,9 +612,19 @@ done
 trap 'trap_exit "$(gettext "Aborted by user! Exiting...")"' INT
 trap 'trap_exit "$(gettext "An unknown error has occurred. Exiting...")"' ERR
 
+
+OPT_SHORT="knpqRsv"
+OPT_LONG=('include-sigs' 'key' 'new' 'nocolor' 'quiet' 'prevent-downgrade' 'remove'
+          'sign' 'verify')
+if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
+	exit 1 # E_INVALID_OPTION
+fi
+set -- "${OPTRET[@]}"
+unset OPT_SHORT OPT_LONG OPTRET
+
 declare -a args
 # parse arguments
-while (( $# )); do
+while true; do
 	case $1 in
 		-q|--quiet) QUIET=1;;
 		-n|--new) ONLYADDNEW=1;;
@@ -627,12 +644,18 @@ while (( $# )); do
 		-p|--prevent-downgrade)
 			PREVENT_DOWNGRADE=1
 			;;
-		*)
-			args+=("$1")
+		--include-sigs)
+			INCLUDE_SIGS=1
+			;;
+		--)
+			shift
+			break
 			;;
 	esac
 	shift
 done
+
+args=("$@")
 
 # check if messages are to be printed using color
 if [[ -t 2 && $USE_COLOR != "n" ]]; then
@@ -685,13 +708,17 @@ for arg in "${args[@]:1}"; do
 done
 
 # if the whole operation was a success, re-zip and rotate databases
-if (( !fail )); then
+if (( fail )); then
+	msg "$(gettext "Package database was not modified due to errors.")"
+	exit 1
+fi
+
+if (( DB_MODIFIED || DB_MISSING )); then
 	msg "$(gettext "Creating updated database file '%s'")" "$REPO_DB_FILE"
 	create_db
 	rotate_db
 else
-	msg "$(gettext "No packages modified, nothing to do.")"
-	exit 1
+	msg "$(gettext "No changes made to package database.")"
 fi
 
 exit 0

@@ -1,9 +1,9 @@
 # automake(1) completion                                   -*- shell-script -*-
 
-_automake()
+_comp_cmd_automake()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case "$prev" in
         --help | --version)
@@ -11,26 +11,26 @@ _automake()
             ;;
         --warnings | -W)
             local cats=(gnu obsolete override portability syntax unsupported)
-            COMPREPLY=($(compgen -W \
-                '${cats[@]} ${cats[@]/#/no-} all none error' -- "$cur"))
+            _comp_compgen -- -W '"${cats[@]}" "${cats[@]/#/no-}" all none
+                error'
             return
             ;;
         --libdir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _automake automake automake-1.1{0..6}
+    complete -F _comp_cmd_automake automake automake-1.1{0..6}
 
 # ex: filetype=sh

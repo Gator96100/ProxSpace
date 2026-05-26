@@ -1,29 +1,31 @@
 # bash completion for mc                                   -*- shell-script -*-
 
-_mc()
+_comp_cmd_mc()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[evlPCD]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --edit | --view | --ftplog | --printwd | -!(-*)[evlP])
-            _filedir
+        --edit | --view | --ftplog | --printwd | -${noargopts}[evlP])
+            _comp_compgen_filedir
             return
             ;;
-        --help | --help-* | --version | --colors | --debuglevel | -!(-*)[hVCD])
+        --help | --help-* | --version | --colors | --debuglevel | -${noargopts}[hVCD])
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" --help-all)' -- "$cur"))
+        _comp_compgen_help -- --help-all
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     else
-        _filedir -d
+        _comp_compgen_filedir -d
     fi
 } &&
-    complete -F _mc mc
+    complete -F _comp_cmd_mc mc
 
 # ex: filetype=sh

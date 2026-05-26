@@ -1,36 +1,35 @@
 # POSIX sh(1) completion                                   -*- shell-script -*-
 
-_sh()
+_comp_cmd_sh()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -c)
             return
             ;;
         -o | +o)
-            COMPREPLY=($(compgen -W 'allexport errexit ignoreeof monitor
-                noclobber noglob noexec nolog notify nounset verbose vi
-                xtrace' -- "$cur"))
+            _comp_compgen -- -W 'allexport errexit ignoreeof monitor noclobber
+                noglob noexec nolog notify nounset verbose vi xtrace'
             return
             ;;
     esac
 
     local opts="-a -b -C -e -f -h -i -m -n -o -u -v -x"
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W "$opts -c -s" -- "$cur"))
+        _comp_compgen -- -W "$opts -c -s"
         return
     elif [[ $cur == +* ]]; then
-        COMPREPLY=($(compgen -W "${opts//-/+}" -- "$cur"))
+        _comp_compgen -- -W "${opts//-/+}"
         return
     fi
 
-    local args ext=
-    _count_args "" "@(-c|[-+]o)"
-    ((args == 1)) && ext="sh"
-    _filedir $ext
+    local REPLY ext=
+    _comp_count_args -a "@(-c|[-+]o)"
+    ((REPLY == 1)) && ext="sh"
+    _comp_compgen_filedir $ext
 } &&
-    complete -F _sh sh
+    complete -F _comp_cmd_sh sh
 
 # ex: filetype=sh

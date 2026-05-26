@@ -1,7 +1,10 @@
 # getlocaltime.awk --- get the time of day in a usable format
 #
-# Arnold Robbins, arnold@skeeve.com, Public Domain, May 1993
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
 #
+# Arnold Robbins, arnold@skeeve.com, Public Domain, May 1993
 
 # Returns a string in the format of output of date(1)
 # Populates the array argument time with individual values:

@@ -1,0 +1,42 @@
+%NAME%
+gcc-libs
+
+%VERSION%
+15.2.0-1
+
+%BASE%
+gcc
+
+%DESC%
+Runtime libraries shipped by GCC
+
+%URL%
+https://gcc.gnu.org/
+
+%ARCH%
+x86_64
+
+%BUILDDATE%
+1756037706
+
+%INSTALLDATE%
+1774189482
+
+%PACKAGER%
+CI (msys2/msys2-autobuild/fd77359a/17188528406)
+
+%SIZE%
+3250280
+
+%REASON%
+1
+
+%LICENSE%
+spdx:GPL-3.0-or-later AND GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-or-later AND GCC-exception-3.1 AND GFDL-1.3-or-later
+
+%VALIDATION%
+pgp
+
+%XDATA%
+pkgtype=split
+

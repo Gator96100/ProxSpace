@@ -1,26 +1,30 @@
 # iftop(8) completion                                      -*- shell-script -*-
 
-_iftop()
+_comp_cmd_iftop()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
-        -h | -f | -F | -m)
+        -h | -f | -F | -G | -m | -s | -L)
             return
             ;;
         -i)
-            _available_interfaces -a
+            _comp_compgen_available_interfaces -a
             return
             ;;
         -c)
-            _filedir
+            _comp_compgen_filedir
+            return
+            ;;
+        -o)
+            _comp_compgen -- -W "2s 10s 40s source destination"
             return
             ;;
     esac
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+    _comp_compgen_help -- -h
 } &&
-    complete -F _iftop iftop
+    complete -F _comp_cmd_iftop iftop
 
 # ex: filetype=sh

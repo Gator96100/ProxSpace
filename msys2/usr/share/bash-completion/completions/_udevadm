@@ -3,75 +3,73 @@
 # Use of this file is deprecated.  Upstream completion is available in
 # systemd >= 196, use that instead.
 
-_udevadm()
+_comp_cmd_udevadm()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
-    local i udevcmd
+    local i udevcmd="" has_udevcmd=""
     for ((i = 1; i < cword; i++)); do
         if [[ ${words[i]} != -* ]]; then
             udevcmd=${words[i]}
+            has_udevcmd=set
             break
         fi
     done
 
     case $prev in
-        --help | --version | --property | --children-max | --timeout | --seq-start | \
-            --seq-end | --attr-match | --attr-nomatch | --parent-match | --property-match | \
-            --tag-match | --subsystem-match | --subsystem-nomatch | --sysname-match | \
-            --path)
+        --help | --version | --property | --children-max | --timeout | \
+            --seq-start | --seq-end | --attr-match | --attr-nomatch | \
+            --parent-match | --property-match | --tag-match | \
+            --subsystem-match | --subsystem-nomatch | --sysname-match | --path)
             return
             ;;
         --log-priority)
-            COMPREPLY=($(compgen -W 'err info debug' -- "$cur"))
+            _comp_compgen -- -W 'err info debug'
             return
             ;;
         --query)
-            COMPREPLY=($(compgen -W 'name symlink path property all' \
-                -- "$cur"))
+            _comp_compgen -- -W 'name symlink path property all'
             return
             ;;
         --name)
-            cur=${cur:=/dev/}
-            _filedir
+            _comp_compgen -c "${cur:-/dev/}" filedir
             return
             ;;
         --device-id-of-file | --exit-if-exists)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --action)
-            COMPREPLY=($(compgen -W 'add change remove' -- "$cur"))
+            _comp_compgen -- -W 'add change remove'
             return
             ;;
         --type)
-            COMPREPLY=($(compgen -W 'devices subsystems failed' -- "$cur"))
+            _comp_compgen -- -W 'devices subsystems failed'
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
-    if [[ ! -v udevcmd ]]; then
+    if [[ ! $has_udevcmd ]]; then
         case $cur in
             -*)
-                COMPREPLY=($(compgen -W '--help --version --debug' -- "$cur"))
+                _comp_compgen -- -W '--help --version --debug'
                 ;;
             *)
-                COMPREPLY=($(compgen -W "$("$1" --help 2>/dev/null |
-                    awk '/^[ \t]/ { print $1 }')" -- "$cur"))
+                _comp_compgen_split -- "$("$1" --help 2>/dev/null |
+                    _comp_awk '/^[ \t]/ { print $1 }')"
                 ;;
         esac
         return
     fi
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W \
-            '$("$1" ${udevcmd-} --help 2>/dev/null | _parse_help -)' -- "$cur"))
+        _comp_compgen_help -- ${has_udevcmd:+"$udevcmd"} --help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     fi
 } &&
-    complete -F _udevadm udevadm
+    complete -F _comp_cmd_udevadm udevadm
 
 # ex: filetype=sh

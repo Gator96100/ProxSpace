@@ -3,10 +3,10 @@
 # Use of this file is deprecated on Linux.  Upstream completion is
 # available in util-linux >= 2.23, use that instead.
 
-_renice()
+_comp_cmd_renice()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     local command=$1 curopt i=0
 
@@ -15,18 +15,18 @@ _renice()
         curopt=${words[cword - i]}
         case "$curopt" in
             -u)
-                _allowed_users
+                _comp_compgen_allowed_users
                 ;;
             -g)
-                _pgids
+                _comp_compgen_pgids
                 ;;
             -p | "$command")
-                _pids
+                _comp_compgen_pids
                 ;;
         esac
         ((i++))
     done
 } &&
-    complete -F _renice renice
+    complete -F _comp_cmd_renice renice
 
 # ex: filetype=sh

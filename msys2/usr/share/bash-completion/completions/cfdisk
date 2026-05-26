@@ -17,7 +17,9 @@ _cfdisk_module()
 		-*)
 			OPTS="	--color
 				--zero
+				--lock
 				--help
+				--read-only
 				--version"
 			COMPREPLY=( $(compgen -W "${OPTS[*]}" -- $cur) )
 			return 0

@@ -1,0 +1,32 @@
+# truncate(1) completion                                   -*- shell-script -*-
+
+_comp_cmd_truncate()
+{
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
+
+    local noargopts='!(-*|*[sr]*)'
+    # shellcheck disable=SC2254
+    case $prev in
+        -${noargopts}s | --size | --help | --version)
+            return
+            ;;
+        -${noargopts}r | --reference)
+            _comp_compgen_filedir
+            return
+            ;;
+    esac
+
+    [[ $was_split ]] && return
+
+    if [[ $cur == -* ]]; then
+        _comp_compgen_help || _comp_compgen_usage
+        [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
+        return
+    fi
+
+    _comp_compgen_filedir
+} &&
+    complete -F _comp_cmd_truncate truncate
+
+# ex: filetype=sh

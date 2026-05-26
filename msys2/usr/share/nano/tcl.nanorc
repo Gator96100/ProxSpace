@@ -1,5 +1,8 @@
 ## Syntax highlighting for Tcl and Expect scripts.
 
+## Original author:  Mike Frysinger
+## License:  GPL version 3 or newer
+
 syntax tcl "\.(tcl|exp)$"
 magic "Tcl(/Tk)? script"
 comment "#"
@@ -29,7 +32,7 @@ color green "\<(sleep|sync|system|tclx_(findinit|fork|load_tndxs|sleep|system|wa
 color green "[!$&();<=>\`|]"
 color brightblue "\<proc[[:blank:]]|\{|\}"
 color brightyellow ""([^"\]|\\.)*"|'([^'\]|\\.)*'"
-color brightred "\$\{?[0-9A-Za-z_!@#$*?-]+\}?"
+color brightred "\$\{?[[:alnum:]_!@#$*?-]+\}?"
 
 # Trailing whitespace:
 color ,green "[[:space:]]+$"

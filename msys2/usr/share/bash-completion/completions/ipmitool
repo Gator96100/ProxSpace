@@ -1,65 +1,61 @@
 # bash completion for ipmitool                             -*- shell-script -*-
 
-_ipmitool_singleline_help()
+_comp_cmd_ipmitool__singleline_help()
 {
-    COMPREPLY=($(compgen -W "$($1 $2 2>&1 |
-        command sed -ne 's/[,\r]//g' -e 's/^.*[Cc]ommands://p')" -- "$cur"))
+    _comp_compgen_split -- "$("$1" "$2" 2>&1 |
+        command sed -ne 's/[,\r]//g' -e 's/^.*[Cc]ommands://p')"
 }
 
-_ipmitool()
+_comp_cmd_ipmitool()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*[hVpUekyPmbtBTl])
             return
             ;;
         -*d)
-            COMPREPLY=($(compgen -W "$(
-                command ls -d /dev/ipmi* /dev/ipmi/* /dev/ipmidev/* \
-                    2>/dev/null | command sed -ne 's/^[^0-9]*\([0-9]\{1,\}\)/\1/p'
-            )" \
-                -- "$cur"))
+            local -a files
+            _comp_expand_glob files '/dev/ipmi* /dev/ipmi/* /dev/ipmidev/*' &&
+                _comp_compgen -- -W '"${files[@]##*([^0-9])}"' -X '![0-9]*'
             return
             ;;
         -*I)
-            COMPREPLY=($(compgen -W "$($1 -h 2>&1 |
+            _comp_compgen_split -- "$("$1" -h 2>&1 |
                 command sed -e '/^Interfaces:/,/^[[:space:]]*$/!d' \
-                    -ne 's/^[[:space:]]\{1,\}\([^[:space:]]\{1,\}\).*/\1/p')" \
-                -- "$cur"))
+                    -ne 's/^[[:space:]]\{1,\}\([^[:space:]]\{1,\}\).*/\1/p')"
             return
             ;;
         -*H)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         -*[fSO])
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -*C)
-            COMPREPLY=($(compgen -W '{0..14}' -- "$cur"))
+            _comp_compgen -- -W '{0..14}'
             return
             ;;
         -*L)
-            COMPREPLY=($(compgen -W 'CALLBACK USER OPERATOR ADMINISTRATOR' \
-                -- "$cur"))
+            _comp_compgen -- -W 'CALLBACK USER OPERATOR ADMINISTRATOR'
             return
             ;;
         -*A)
-            COMPREPLY=($(compgen -W 'NONE PASSWORD MD2 MD5 OEM' -- "$cur"))
+            _comp_compgen -- -W 'NONE PASSWORD MD2 MD5 OEM'
             return
             ;;
         -*o)
-            COMPREPLY=($(compgen -W "$($1 -o list 2>&1 |
-                awk '/^[ \t]+/ { print $1 }') list" -- "$cur"))
+            _comp_compgen_split -- "$("$1" -o list 2>&1 |
+                _comp_awk '/^[ \t]+/ { print $1 }') list"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
         return
     fi
 
@@ -68,16 +64,16 @@ _ipmitool()
     local cmds=(raw i2c spd lan chassis power event mc sdr sensor fru gendev
         sel pef sol tsol isol user channel session sunoem kontronoem picmg fwum
         firewall shell exec set hpm ekanalyzer)
-    local i c cmd subcmd
-    for ((i = 1; i < ${#words[@]} - 1; i++)); do
-        [[ -v cmd ]] && subcmd=${words[i]} && break
+    local i c cmd="" has_cmd="" subcmd
+    for ((i = 1; i < cword; i++)); do
+        [[ $has_cmd ]] && subcmd=${words[i]} && break
         for c in "${cmds[@]}"; do
-            [[ ${words[i]} == "$c" ]] && cmd=$c && break
+            [[ ${words[i]} == "$c" ]] && cmd=$c has_cmd=set && break
         done
     done
 
-    if [[ ! -v cmd ]]; then
-        COMPREPLY=($(compgen -W '${cmds[@]}' -- "$cur"))
+    if [[ ! $has_cmd ]]; then
+        _comp_compgen -- -W '"${cmds[@]}"'
         return
     fi
 
@@ -87,13 +83,12 @@ _ipmitool()
 
         shell) ;;
 
-        \
-            exec)
-            _filedir
+        exec)
+            _comp_compgen_filedir
             ;;
 
         chassis | power | kontronoem | fwum)
-            _ipmitool_singleline_help $1 $cmd
+            _comp_cmd_ipmitool__singleline_help "$1" "$cmd"
             ;;
 
         lan)
@@ -102,15 +97,14 @@ _ipmitool()
 
                 alert)
                     [[ $prev == alert ]] &&
-                        COMPREPLY=($(compgen -W 'print set' -- "$cur"))
+                        _comp_compgen -- -W 'print set'
                     ;;
                 stats)
                     [[ $prev == stats ]] &&
-                        COMPREPLY=($(compgen -W 'print set' -- "$cur"))
+                        _comp_compgen -- -W 'print set'
                     ;;
                 *)
-                    COMPREPLY=($(compgen -W 'print set alert stats' \
-                        -- "$cur"))
+                    _comp_compgen -- -W 'print set alert stats'
                     ;;
             esac
             ;;
@@ -120,25 +114,25 @@ _ipmitool()
                 get | info | type | list | entity) ;;
 
                 elist)
-                    COMPREPLY=($(compgen -W 'all full compact event mclog fru
-                        generic' -- "$cur"))
+                    _comp_compgen -- -W 'all full compact event mclog fru
+                        generic'
                     ;;
                 dump)
-                    _filedir
+                    _comp_compgen_filedir
                     ;;
                 fill)
                     case $prev in
                         fill)
-                            COMPREPLY=($(compgen -W 'sensors file' -- "$cur"))
+                            _comp_compgen -- -W 'sensors file'
                             ;;
                         file)
-                            _filedir
+                            _comp_compgen_filedir
                             ;;
                     esac
                     ;;
                 *)
-                    COMPREPLY=($(compgen -W 'get info type list elist entity
-                        dump fill' -- "$cur"))
+                    _comp_compgen -- -W 'get info type list elist entity dump
+                        fill'
                     ;;
             esac
             ;;
@@ -148,7 +142,7 @@ _ipmitool()
                 list | get | thresh) ;;
 
                 *)
-                    COMPREPLY=($(compgen -W 'list get thresh' -- "$cur"))
+                    _comp_compgen -- -W 'list get thresh'
                     ;;
             esac
             ;;
@@ -158,15 +152,15 @@ _ipmitool()
                 info | clear | list | elist | delete) ;;
 
                 add | save | writeraw | readraw)
-                    _filedir
+                    _comp_compgen_filedir
                     ;;
                 time)
                     [[ $prev == time ]] &&
-                        COMPREPLY=($(compgen -W 'get set' -- "$cur"))
+                        _comp_compgen -- -W 'get set'
                     ;;
                 *)
-                    COMPREPLY=($(compgen -W 'info clear list elist delete add
-                        get save writeraw readraw time' -- "$cur"))
+                    _comp_compgen -- -W 'info clear list elist delete add get
+                        save writeraw readraw time'
                     ;;
             esac
             ;;
@@ -177,23 +171,23 @@ _ipmitool()
 
                 set)
                     [[ $prev == set ]] &&
-                        COMPREPLY=($(compgen -W 'name password' -- "$cur"))
+                        _comp_compgen -- -W 'name password'
                     ;;
                 *)
-                    COMPREPLY=($(compgen -W 'summary list set disable enable
-                        priv test' -- "$cur"))
+                    _comp_compgen -- -W 'summary list set disable enable priv
+                        test'
                     ;;
             esac
             ;;
 
         set)
             [[ $prev == set ]] &&
-                COMPREPLY=($(compgen -W 'hostname username password privlvl
-                    authtype localaddr targetaddr port csv verbose' -- "$cur"))
+                _comp_compgen -- -W 'hostname username password privlvl
+                    authtype localaddr targetaddr port csv verbose'
             ;;
 
     esac
 } &&
-    complete -F _ipmitool ipmitool
+    complete -F _comp_cmd_ipmitool ipmitool
 
 # ex: filetype=sh

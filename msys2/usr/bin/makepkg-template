@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 #   makepkg-template - template system for makepkg
 #
-#   Copyright (c) 2013-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2013-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -188,9 +188,9 @@ sub usage {
 
 sub version {
 	my ($exitstatus) = @_;
-	printf "makepkg-template (pacman) %s\n", '6.0.2';
+	printf "makepkg-template (pacman) %s\n", '6.1.0';
 	print gettext(
-		'Copyright (c) 2013-2021 Pacman Development Team <pacman-dev@archlinux.org>.'."\n".
+		'Copyright (c) 2013-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>.'."\n".
 		'This is free software; see the source for copying conditions.'."\n".
 		'There is NO WARRANTY, to the extent permitted by law.'."\n");
 	exit($exitstatus);

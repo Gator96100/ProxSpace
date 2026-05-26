@@ -1,18 +1,17 @@
 # pwck(8) completion                                       -*- shell-script -*-
 
-_pwck()
+_comp_cmd_pwck()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        local opts=$(_parse_help "$1")
-        COMPREPLY=($(compgen -W '${opts:-$(_parse_usage "$1")}' -- "$cur"))
+        _comp_compgen_help || _comp_compgen_usage
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _pwck pwck
+    complete -F _comp_cmd_pwck pwck
 
 # ex: filetype=sh

@@ -1,7 +1,7 @@
 /*
  *  alpm_list.h
  *
- *  Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
+ *  Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
  *  Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -48,13 +48,13 @@ extern "C" {
  */
 
 /** A doubly linked list */
-typedef struct __alpm_list_t {
+typedef struct _alpm_list_t {
 	/** data held by the list node */
 	void *data;
 	/** pointer to the previous node */
-	struct __alpm_list_t *prev;
+	struct _alpm_list_t *prev;
 	/** pointer to the next node */
-	struct __alpm_list_t *next;
+	struct _alpm_list_t *next;
 } alpm_list_t;
 
 /** Frees a list and its contents */
@@ -327,6 +327,22 @@ void *alpm_list_find_ptr(const alpm_list_t *haystack, const void *needle);
  * @return `needle` if found, NULL otherwise
  */
 char *alpm_list_find_str(const alpm_list_t *haystack, const char *needle);
+
+
+/**
+ * @brief Check if two lists contain the same data, ignoring order.
+ *
+ * Lists are considered equal if they both contain the same data regardless
+ * of order.
+ *
+ * @param left      the first list
+ * @param right     the second list
+ * @param fn        the comparison function
+ *
+ * @return 1 if the lists are equal, 0 if not equal, -1 on error.
+ */
+int alpm_list_cmp_unsorted(const alpm_list_t *left,
+		const alpm_list_t *right, alpm_list_fn_cmp fn);
 
 /**
  * @brief Find the differences between list `left` and list `right`

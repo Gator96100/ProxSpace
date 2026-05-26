@@ -22,8 +22,8 @@
 
 progname=$0
 package=gettext-tools
-version=0.22
-archive_version=0.22
+version=0.22.5
+archive_version=0.22.5
 
 # Set variables
 # - gettext_datadir     directory where the data files are stored.

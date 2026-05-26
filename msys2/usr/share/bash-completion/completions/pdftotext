@@ -1,39 +1,40 @@
 # bash completion for pdftotext(1)                         -*- shell-script -*-
 
-_pdftotext()
+_comp_cmd_pdftotext()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
-        -h | -help | --help | -'?' | -f | -l | -r | -x | -y | -W | -H | -fixed | -opw | -upw)
+        -h | -help | --help | -'?' | -f | -l | -r | -x | -y | -W | -H | \
+            -fixed | -opw | -upw)
             return
             ;;
         -enc)
-            COMPREPLY=($(compgen -W '$("$1" -listenc 2>/dev/null |
-                command sed -e 1d)' -- "$cur"))
+            _comp_compgen_split -- "$("$1" -listenc 2>/dev/null |
+                command sed -e 1d)"
             return
             ;;
         -eol)
-            COMPREPLY=($(compgen -W "unix dos mac" -- "$cur"))
+            _comp_compgen -- -W "unix dos mac"
             return
             ;;
     esac
 
     if [[ $cur == -* && ${prev,,} != *.pdf ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
     case ${prev,,} in
         - | *.txt) ;;
         *.pdf)
-            COMPREPLY=($(compgen -W '-' -- "$cur"))
-            _filedir txt
+            _comp_compgen -- -W '-'
+            _comp_compgen -a filedir txt
             ;;
-        *) _filedir pdf ;;
+        *) _comp_compgen_filedir pdf ;;
     esac
 } &&
-    complete -F _pdftotext pdftotext
+    complete -F _comp_cmd_pdftotext pdftotext
 
 # ex: filetype=sh

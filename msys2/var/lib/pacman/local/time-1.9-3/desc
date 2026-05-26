@@ -20,7 +20,7 @@ x86_64
 1652563501
 
 %INSTALLDATE%
-1689650140
+1774189497
 
 %PACKAGER%
 CI (msys2/msys2-autobuild/745e5e2c/2325205506)
@@ -35,5 +35,6 @@ CI (msys2/msys2-autobuild/745e5e2c/2325205506)
 GPL
 
 %VALIDATION%
+sha256
 pgp
 

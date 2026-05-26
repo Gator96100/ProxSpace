@@ -1,13 +1,13 @@
 # xsltproc(1) completion                                   -*- shell-script -*-
 
-_xsltproc()
+_comp_cmd_xsltproc()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --output | -o)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         # TODO : number only
@@ -16,8 +16,8 @@ _xsltproc()
             ;;
         --encoding)
             # some aliases removed
-            COMPREPLY=($(compgen -X '@(UTF[1378]|8859|ISO[0-9_])*' \
-                -W "$(iconv -l | command sed -e 's/\/.*//')" -- "$cur"))
+            local encodings=$(iconv -l | command sed -e 's/\/.*//')
+            _comp_compgen -- -X '@(UTF[1378]|8859|ISO[0-9_])*' -W '$encodings'
             return
             ;;
         --param | --stringparam)
@@ -25,25 +25,25 @@ _xsltproc()
             ;;
         # not really like --writesubtree
         --path)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --writesubtree)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    [[ $cword -gt 2 && $(_get_cword '' 2) == --?(string)param ]] && return
+    [[ $cword -gt 2 && ${words[cword - 2]} == --?(string)param ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         COMPREPLY=("${COMPREPLY[@]%:}")
     else
         # TODO: 1st file xsl|xslt, 2nd XML
-        _filedir '@(xsl|xslt|xml|dbk|docbook|page)'
+        _comp_compgen_filedir '@(xsl|xslt|xml|dbk|docbook|page)'
     fi
 } &&
-    complete -F _xsltproc xsltproc
+    complete -F _comp_cmd_xsltproc xsltproc
 
 # ex: filetype=sh

@@ -5,7 +5,7 @@ magic "OCaml"
 comment "(*|*)"
 
 # Uid:
-color red "\<[A-Z][0-9a-z_]{2,}\>"
+color red "\<[[:upper:]][[:lower:][:digit:]_]{2,}\>"
 # Declarations:
 color green "\<(let|val|method|in|and|rec|private|virtual|constraint)\>"
 # Structure items:

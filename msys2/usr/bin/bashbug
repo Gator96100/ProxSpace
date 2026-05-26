@@ -27,13 +27,13 @@
 #	these variables are filled in by the make target in Makefile
 #
 MACHINE="x86_64"
-OS="msys"
+OS="cygwin"
 CC="gcc"
 CFLAGS="-march=nocona -msahf -mtune=generic -O2 -pipe -D_STATIC_BUILD"
-RELEASE="5.2"
-PATCHLEVEL="15"
+RELEASE="5.3"
+PATCHLEVEL="9"
 RELSTATUS="release"
-MACHTYPE="x86_64-pc-msys"
+MACHTYPE="x86_64-pc-cygwin"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH
 export PATH
@@ -132,9 +132,9 @@ if [ -z "$DEFEDITOR" ] && [ -z "$EDITOR" ]; then
 		DEFEDITOR=emacs
 	elif [ -x /usr/bin/xemacs ]; then
 		DEFEDITOR=xemacs
-	elif [ -x /usr/bin/vim; then
+	elif [ -x /usr/bin/vim ]; then
 		DEFEDITOR=vim
-	elif [ -x /usr/bin/gvim; then
+	elif [ -x /usr/bin/gvim ]; then
 		DEFEDITOR=gvim
 	elif [ -x /usr/bin/nano ]; then
 		DEFEDITOR=nano

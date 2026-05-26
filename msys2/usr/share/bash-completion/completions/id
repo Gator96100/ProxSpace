@@ -1,18 +1,17 @@
 # id(1) completion                                         -*- shell-script -*-
 
-_id()
+_comp_cmd_id()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        local opts=$(_parse_help "$1")
-        [[ $opts ]] || opts="-G -g -u" # POSIX fallback
-        COMPREPLY=($(compgen -W "$opts" -- "$cur"))
+        _comp_compgen_help ||
+            _comp_compgen -- -W '-G -g -u' # POSIX fallback
     else
-        COMPREPLY=($(compgen -u "$cur"))
+        _comp_compgen -- -u
     fi
 } &&
-    complete -F _id id
+    complete -F _comp_cmd_id id
 
 # ex: filetype=sh

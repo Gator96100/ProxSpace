@@ -1,21 +1,20 @@
 # json_xs completion                                       -*- shell-script -*-
 
-_json_xs()
+_comp_cmd_json_xs()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*f)
-            COMPREPLY=($(compgen -W 'json cbor storable storable-file bencode
-                clzf eval yaml string none' -- "$cur"))
+            _comp_compgen -- -W 'json cbor storable storable-file bencode clzf
+                eval yaml string none'
             return
             ;;
         -*t)
-            COMPREPLY=($(compgen -W 'json json-utf-8 json-pretty
-                json-utf-16le json-utf-16be json-utf-32le json-utf-32be
-                cbor storable storable-file bencode clzf yaml dump dumper
-                string none' -- "$cur"))
+            _comp_compgen -- -W 'json json-utf-8 json-pretty json-utf-16le
+                json-utf-16be json-utf-32le json-utf-32be cbor storable
+                storable-file bencode clzf yaml dump dumper string none'
             return
             ;;
         -*e)
@@ -23,9 +22,11 @@ _json_xs()
             ;;
     esac
 
-    [[ $cur == -* ]] &&
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1") -f' -- "$cur"))
+    if [[ $cur == -* ]]; then
+        _comp_compgen_usage
+        _comp_compgen -a -- -W '-f'
+    fi
 } &&
-    complete -F _json_xs json_xs
+    complete -F _comp_cmd_json_xs json_xs
 
 # ex: filetype=sh

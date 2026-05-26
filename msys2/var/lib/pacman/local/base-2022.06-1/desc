@@ -20,7 +20,7 @@ any
 1655475547
 
 %INSTALLDATE%
-1689650147
+1774189500
 
 %PACKAGER%
 CI (msys2/msys2-autobuild/7d84a7e0/2516061819)
@@ -29,6 +29,7 @@ CI (msys2/msys2-autobuild/7d84a7e0/2516061819)
 GPL
 
 %VALIDATION%
+sha256
 pgp
 
 %DEPENDS%

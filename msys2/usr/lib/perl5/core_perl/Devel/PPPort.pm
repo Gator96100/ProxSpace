@@ -527,6 +527,7 @@ sorted by version> for that information.)
     PERL_SHORT_MAX
     PERL_SHORT_MIN
     PERL_SIGNALS_UNSAFE_FLAG
+    PERL_STACK_OFFSET_DEFINED
     PERL_STATIC_INLINE
     PERL_UCHAR_MAX
     PERL_UCHAR_MIN
@@ -624,6 +625,8 @@ sorted by version> for that information.)
     REPLACEMENT_CHARACTER_UTF8
     RESTORE_LC_NUMERIC
     SAVE_DEFSV
+    Stack_off_t
+    Stack_off_t_MAX
     START_EXTERN_C
     START_MY_CXT
     start_subparse
@@ -632,6 +635,7 @@ sorted by version> for that information.)
     STORE_LC_NUMERIC_SET_STANDARD
     STORE_NUMERIC_SET_STANDARD
     STR_WITH_LEN
+    sv_2pv
     sv_2pvbyte
     sv_2pvbyte_nolen
     sv_2pv_flags
@@ -3918,6 +3922,9 @@ backported, first send mail to L<mailto:perl5-porters@perl.org>.
  NUM2PTR  (undocumented)
  PERLIO_FUNCS_CAST  (undocumented)
  PERLIO_FUNCS_DECL  (undocumented)
+ PERL_STACK_OFFSET_DEFINED  (undocumented)
+ Stack_off_t  (undocumented)
+ Stack_off_t_MAX  (undocumented)
  STORE_LC_NUMERIC_SET_STANDARD  (undocumented)
  STORE_NUMERIC_SET_STANDARD  (undocumented)
  SvPV_flags_const_nolen  (undocumented)
@@ -3969,7 +3976,7 @@ modify it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-See L<h2xs>, L<ppport.h>.
+See L<h2xs>, F<ppport.h>.
 
 =cut
 
@@ -3978,7 +3985,7 @@ package Devel::PPPort;
 use strict;
 use vars qw($VERSION $data);
 
-$VERSION = '3.68';
+$VERSION = '3.72';
 
 sub _init_data
 {
@@ -9695,7 +9702,6 @@ nextargv|5.003007||Viu
 nextchar|5.005000||Viu
 NEXT_LINE_CHAR|5.007003||Viu
 NEXT_OFF|5.005000||Viu
-NEXTOPER|5.003007||Viu
 next_symbol|5.007003||Viu
 ninstr|5.003007|5.003007|n
 NL_LANGINFO_LOCK|5.033005||Viu
@@ -11103,6 +11109,7 @@ PerlSock_socket_cloexec|5.027008||Viu
 PerlSock_socketpair|5.005000||Viu
 PerlSock_socketpair_cloexec|5.027008||Viu
 Perl_sqrt|5.006000|5.006000|n
+PERL_STACK_OFFSET_DEFINED|||piu
 PERL_STACK_OVERFLOW_CHECK|5.006000||Viu
 PERL_STATIC_FORCE_INLINE|5.031011||Viu
 PERL_STATIC_FORCE_INLINE_NO_RET|5.031011||Viu
@@ -11748,7 +11755,6 @@ PREGf_VERBARG_SEEN|5.009005||Viu
 prepare_SV_for_RV|5.010001||Viu
 prescan_version|5.011004|5.011004|
 PRESCAN_VERSION|5.019008||Viu
-PREVOPER|5.003007||Viu
 PREV_RANGE_MATCHES_INVLIST|5.023002||Viu
 printbuf|5.009004||Viu
 print_bytes_for_locale|5.027002||Viu
@@ -12141,6 +12147,8 @@ reg_named_buff_nextkey|5.009005||cVu
 reg_named_buff_scalar|5.009005||cVu
 regnext|5.003007||cVu
 reg_node|5.005000||Viu
+REGNODE_AFTER|5.003007||Viu
+REGNODE_BEFORE|5.003007||Viu
 regnode_guts|5.021005||Viu
 regnode_guts_debug|||Viu
 REGNODE_MAX|5.009004||Viu
@@ -12910,6 +12918,8 @@ SSPUSHPTR|5.003007||Viu
 SSPUSHUV|5.013001||Viu
 ST|5.003007|5.003007|
 stack_grow|5.003007||cVu
+Stack_off_t_MAX|||piu
+Stack_off_t|||piu
 STANDARD_C|5.003007||Viu
 STAR|5.003007||Viu
 STAR_t8|5.035004||Viu
@@ -13035,7 +13045,7 @@ sv_2mortal|5.003007|5.003007|
 sv_2num|5.010000||xVi
 sv_2nv|5.013001||Viu
 sv_2nv_flags|5.013001|5.013001|
-sv_2pv|5.005000||cVu
+sv_2pv|5.005000||pcVu
 sv_2pvbyte|5.006000|5.003007|p
 sv_2pvbyte_flags|5.031004|5.031004|u
 sv_2pvbyte_nolen|5.009003||pcV
@@ -15582,7 +15592,7 @@ __DATA__
 #define DPPP_CAT2(x,y) CAT2(x,y)
 #define DPPP_(name) DPPP_CAT2(DPPP_NAMESPACE, name)
 
-#define D_PPP_RELEASE_DATE 1647561600 /* 2022-03-18 */
+#define D_PPP_RELEASE_DATE 1693785600 /* 2023-09-04 */
 
 #if ! defined(PERL_REVISION) && ! defined(PERL_VERSION_MAJOR)
 #  if   !   defined(__PATCHLEVEL_H_INCLUDED__)                                  \
@@ -15694,8 +15704,8 @@ __DATA__
  * is in ASCII and EBCDIC respectively */
 #ifndef PERL_VERSION_EQ
 #  define PERL_VERSION_EQ(j,n,p)         \
-              (((p) == '*') ? (   (j) == D_PPP_VERSION_MAJOR                \
-                               && (n) == D_PPP_VERSION_MINOR)               \
+              (((p) == '*') ? (   (j) == D_PPP_MAJOR                        \
+                               && (n) == D_PPP_MINOR)                       \
                             : (PERL_BCDVERSION == D_PPP_JNP_TO_BCD(j,n,p)))
 #endif
 
@@ -15704,7 +15714,7 @@ __DATA__
 #endif
 #ifndef PERL_VERSION_LT
 #  define PERL_VERSION_LT(j,n,p)         /* p=='*' means _LT(j,n,0) */     \
-    (PERL_BCDVERSION < D_PPP_JNP_TO_BCD(                    (j),            \
+    (PERL_BCDVERSION < D_PPP_JNP_TO_BCD(                     (j),           \
                                                              (n),           \
                                          (((p) == '*') ? 0 : (p))))
 #endif
@@ -15713,10 +15723,10 @@ __DATA__
 #  define PERL_VERSION_GE(j,n,p)         (! PERL_VERSION_LT(j,n,p))
 #endif
 #ifndef PERL_VERSION_LE
-#  define PERL_VERSION_LE(j,n,p)         /* p=='*' means _LT(j,n+1,0) */   \
-    (PERL_BCDVERSION < D_PPP_JNP_TO_BCD(                          (j),      \
-                                         (((p) == '*') ? ((n)+1) : (n)),    \
-                                         (((p) == '*') ?   0     : (p))))
+#  define PERL_VERSION_LE(j,n,p)         /* p=='*' means _LE(j,n,999) */   \
+    (PERL_BCDVERSION <= D_PPP_JNP_TO_BCD(                      (j),         \
+                                                               (n),         \
+                                         (((p) == '*') ? 999 : (p))))
 #endif
 
 #ifndef PERL_VERSION_GT
@@ -16785,6 +16795,12 @@ typedef NVTYPE NV;
 #    define PTR2ul(p)     INT2PTR(unsigned long,p)
 #  endif
 #endif
+
+#ifndef PERL_STACK_OFFSET_DEFINED
+  typedef I32 Stack_off_t;
+#  define Stack_off_t_MAX I32_MAX
+#  define PERL_STACK_OFFSET_DEFINED
+#endif
 #ifndef PTR2nat
 #  define PTR2nat(p)                     (PTRV)(p)
 #endif
@@ -16805,17 +16821,38 @@ typedef NVTYPE NV;
 #  define PTR2NV(p)                      NUM2PTR(NV,p)
 #endif
 
-#undef START_EXTERN_C
-#undef END_EXTERN_C
-#undef EXTERN_C
 #ifdef __cplusplus
-#  define START_EXTERN_C extern "C" {
-#  define END_EXTERN_C }
-#  define EXTERN_C extern "C"
+#undef START_EXTERN_C
+#ifndef START_EXTERN_C
+#  define START_EXTERN_C                 extern "C" {
+#endif
+
+#undef END_EXTERN_C
+#ifndef END_EXTERN_C
+#  define END_EXTERN_C                   }
+#endif
+
+#undef EXTERN_C
+#ifndef EXTERN_C
+#  define EXTERN_C                       extern "C"
+#endif
+
 #else
+#undef START_EXTERN_C
+#ifndef START_EXTERN_C
 #  define START_EXTERN_C
+#endif
+
+#undef END_EXTERN_C
+#ifndef END_EXTERN_C
 #  define END_EXTERN_C
-#  define EXTERN_C extern
+#endif
+
+#undef EXTERN_C
+#ifndef EXTERN_C
+#  define EXTERN_C                       extern
+#endif
+
 #endif
 
 #if (PERL_BCDVERSION < 0x5004000) || defined(PERL_GCC_PEDANTIC)
@@ -16835,19 +16872,28 @@ typedef NVTYPE NV;
 #  endif
 #endif
 
+#if defined(VOIDFLAGS) && (VOIDFLAGS) && (defined(sun) || defined(__sun__)) && !defined(__GNUC__)
 #undef STMT_START
+#ifndef STMT_START
+#  define STMT_START                     if (1)
+#endif
+
 #undef STMT_END
-#if defined(VOIDFLAGS) && defined(PERL_USE_GCC_BRACE_GROUPS)
-#  define STMT_START    (void)( /* gcc supports ``({ STATEMENTS; })'' */
-#  define STMT_END      )
+#ifndef STMT_END
+#  define STMT_END                       else (void)0
+#endif
+
 #else
-#  if defined(VOIDFLAGS) && (VOIDFLAGS) && (defined(sun) || defined(__sun__)) && !defined(__GNUC__)
-#    define STMT_START  if (1)
-#    define STMT_END    else (void)0
-#  else
-#    define STMT_START  do
-#    define STMT_END    while (0)
-#  endif
+#undef STMT_START
+#ifndef STMT_START
+#  define STMT_START                     do
+#endif
+
+#undef STMT_END
+#ifndef STMT_END
+#  define STMT_END                       while (0)
+#endif
+
 #endif
 #ifndef boolSV
 #  define boolSV(b)                      ((b) ? &PL_sv_yes : &PL_sv_no)
@@ -16939,12 +16985,15 @@ typedef NVTYPE NV;
 #endif
 
 #if (PERL_BCDVERSION < 0x5005000)
-#  undef XSRETURN
-#  define XSRETURN(off)                                   \
+#undef XSRETURN
+#ifndef XSRETURN
+#  define XSRETURN(off)                  \
       STMT_START {                                        \
           PL_stack_sp = PL_stack_base + ax + ((off) - 1); \
           return;                                         \
       } STMT_END
+#endif
+
 #endif
 #ifndef XSPROTO
 #  define XSPROTO(name)                  void name(pTHX_ CV* cv)
@@ -17752,7 +17801,8 @@ typedef OP* (CPERLscope(*Perl_check_t)) (pTHX_ OP*);
 #  define isPRINT_utf8_safe(s,e)         D_PPP_IS_GENERIC_UTF8_SAFE(s, e, PRINT)
 #endif
 
-#  undef isPSXSPC_utf8_safe   /* Use the modern definition */
+/* Use the modern definition */
+#undef isPSXSPC_utf8_safe
 #ifndef isPSXSPC_utf8_safe
 #  define isPSXSPC_utf8_safe(s,e)        isSPACE_utf8_safe(s,e)
 #endif
@@ -17876,7 +17926,8 @@ typedef OP* (CPERLscope(*Perl_check_t)) (pTHX_ OP*);
 #  define isPRINT_LC_utf8_safe(s,e)      D_PPP_IS_GENERIC_LC_UTF8_SAFE(s, e, PRINT)
 #endif
 
-#  undef isPSXSPC_LC_utf8_safe   /* Use the modern definition */
+/* Use the modern definition */
+#undef isPSXSPC_LC_utf8_safe
 #ifndef isPSXSPC_LC_utf8_safe
 #  define isPSXSPC_LC_utf8_safe(s,e)     isSPACE_LC_utf8_safe(s,e)
 #endif
@@ -18419,13 +18470,39 @@ DPPP_(my_sv_setpvf_mg_nocontext)(SV * const sv, const char * const pat, ...)
 #  define SV_COW_SHARED_HASH_KEYS        0
 #endif
 
+#if (PERL_BCDVERSION < 0x5007002)
+#
+/* Fix sv_2pv for Perl < 5.7.2 - view https://github.com/Dual-Life/Devel-PPPort/issues/231 */
+
+# ifdef sv_2pv
+#  undef sv_2pv
+# endif
+
+# if defined(PERL_USE_GCC_BRACE_GROUPS)
+#ifndef sv_2pv
+#  define sv_2pv(sv, lp)                 ({ SV *_sv_2pv = (sv); STRLEN sv_2pv_dummy_; STRLEN *_lp_2pv = (lp); _lp_2pv = _lp_2pv ? : &sv_2pv_dummy_; SvPOKp(_sv_2pv) ? ((*(_lp_2pv) = SvCUR(_sv_2pv)), SvPVX(_sv_2pv)) : Perl_sv_2pv(aTHX_ _sv_2pv, (_lp_2pv)); })
+#endif
+
+# else
+#ifndef sv_2pv
+#  define sv_2pv(sv, lp)                 (SvPOKp(sv) ? ((*((lp) ? (lp) : &PL_na) = SvCUR(sv)), SvPVX(sv)) : Perl_sv_2pv(aTHX_ (sv), (lp)))
+#endif
+
+# endif
+
+#endif
+
+#if (PERL_BCDVERSION < 0x5007002)
+
+/* Define sv_2pv_flags for Perl < 5.7.2 which does not have it at all */
+
 #if defined(PERL_USE_GCC_BRACE_GROUPS)
 #ifndef sv_2pv_flags
-#  define sv_2pv_flags(sv, lp, flags)    ({ SV *_sv = (sv); const I32 _flags = (flags); STRLEN *_lp = lp; _lp = _lp ? : &PL_na; (!(_flags & SV_GMAGIC) && SvGMAGICAL(_sv)) ? ({ char *_pv; SvGMAGICAL_off(_sv); _pv = sv_2pv(_sv, _lp); SvGMAGICAL_on(_sv); _pv; }) : sv_2pv(_sv, _lp); })
+#  define sv_2pv_flags(sv, lp, flags)    ({ SV *_sv = (sv); STRLEN sv_2pv_dummy_; const I32 _flags = (flags); STRLEN *_lp = lp; _lp = _lp ? : &sv_2pv_dummy_; (!(_flags & SV_GMAGIC) && SvGMAGICAL(_sv)) ? ({ char *_pv; SvGMAGICAL_off(_sv); _pv = sv_2pv(_sv, _lp); SvGMAGICAL_on(_sv); _pv; }) : sv_2pv(_sv, _lp); })
 #endif
 
 #ifndef sv_pvn_force_flags
-#  define sv_pvn_force_flags(sv, lp, flags) ({ SV *_sv = (sv); const I32 _flags = (flags); STRLEN *_lp = lp; _lp = _lp ? : &PL_na; (!(_flags & SV_GMAGIC) && SvGMAGICAL(_sv)) ? ({ char *_pv; SvGMAGICAL_off(_sv); _pv = sv_pvn_force(_sv, _lp); SvGMAGICAL_on(_sv); _pv; }) : sv_pvn_force(_sv, _lp); })
+#  define sv_pvn_force_flags(sv, lp, flags) ({ SV *_sv = (sv); STRLEN sv_2pv_dummy_; const I32 _flags = (flags); STRLEN *_lp = lp; _lp = _lp ? : &sv_2pv_dummy_; (!(_flags & SV_GMAGIC) && SvGMAGICAL(_sv)) ? ({ char *_pv; SvGMAGICAL_off(_sv); _pv = sv_pvn_force(_sv, _lp); SvGMAGICAL_on(_sv); _pv; }) : sv_pvn_force(_sv, _lp); })
 #endif
 
 #else
@@ -18436,6 +18513,28 @@ DPPP_(my_sv_setpvf_mg_nocontext)(SV * const sv, const char * const pat, ...)
 #ifndef sv_pvn_force_flags
 #  define sv_pvn_force_flags(sv, lp, flags) ((PL_Sv = (sv)), (!((flags) & SV_GMAGIC) && SvGMAGICAL(PL_Sv)) ? (SvGMAGICAL_off(PL_Sv), (PL_Xpv = (XPV *)sv_pvn_force(PL_Sv, (lp) ? (lp) : &PL_na)), SvGMAGICAL_on(PL_Sv), (char *)PL_Xpv) : sv_pvn_force(PL_Sv, (lp) ? (lp) : &PL_na))
 #endif
+
+#endif
+
+#elif (PERL_BCDVERSION < 0x5017002)
+
+/* Fix sv_2pv_flags for Perl < 5.17.2 */
+
+# ifdef sv_2pv_flags
+#  undef sv_2pv_flags
+# endif
+
+# if defined(PERL_USE_GCC_BRACE_GROUPS)
+#ifndef sv_2pv_flags
+#  define sv_2pv_flags(sv, lp, flags)    ({ SV *_sv_2pv = (sv); STRLEN sv_2pv_dummy_; const I32 _flags_2pv = (flags); STRLEN *_lp_2pv = (lp); _lp_2pv = _lp_2pv ? : &sv_2pv_dummy_; ((!(_flags_2pv & SV_GMAGIC) || !SvGMAGICAL(_sv_2pv)) && SvPOKp(_sv_2pv)) ? ((*(_lp_2pv) = SvCUR(_sv_2pv)), SvPVX(_sv_2pv)) : Perl_sv_2pv_flags(aTHX_ _sv_2pv, (_lp_2pv), (_flags_2pv)); })
+#endif
+
+# else
+#ifndef sv_2pv_flags
+#  define sv_2pv_flags(sv, lp, flags)    (((!((flags) & SV_GMAGIC) || !SvGMAGICAL(sv)) && SvPOKp(sv)) ? ((*((lp) ? (lp) : &PL_na) = SvCUR(sv)), SvPVX(sv)) : Perl_sv_2pv_flags(aTHX_ (sv), (lp), (flags)))
+#endif
+
+# endif
 
 #endif
 
@@ -19138,17 +19237,18 @@ DPPP_(my_my_strnlen)(const char *str, Size_t maxlen)
 #  else
 #    define D_PPP_FIX_UTF8_ERRSV_FOR_SV(sv) STMT_START {} STMT_END
 #  endif
-#  define croak_sv(sv)                         \
-    STMT_START {                               \
-        SV *_sv = (sv);                        \
-        if (SvROK(_sv)) {                      \
-            sv_setsv(ERRSV, _sv);              \
-            croak(NULL);                       \
-        } else {                               \
-            D_PPP_FIX_UTF8_ERRSV_FOR_SV(_sv);  \
-            croak("%" SVf, SVfARG(_sv));       \
-        }                                      \
-    } STMT_END
+PERL_STATIC_INLINE void D_PPP_croak_sv(SV *sv) {
+    dTHX;
+    SV *_sv = (sv);
+    if (SvROK(_sv)) {
+        sv_setsv(ERRSV, _sv);
+        croak(NULL);
+    } else {
+        D_PPP_FIX_UTF8_ERRSV_FOR_SV(_sv);
+        croak("%" SVf, SVfARG(_sv));
+    }
+}
+#  define croak_sv(sv) D_PPP_croak_sv(sv)
 #elif (PERL_BCDVERSION >= 0x5004000)
 #  define croak_sv(sv) croak("%" SVf, SVfARG(sv))
 #else
@@ -20459,10 +20559,10 @@ DPPP_(my_mg_findext)(const SV * sv, int type, const MGVTBL *vtbl) {
 
 #if !defined(sv_unmagicext)
 #if defined(NEED_sv_unmagicext)
-static int DPPP_(my_sv_unmagicext)(pTHX_ SV * const sv, const int type, MGVTBL * vtbl);
+static int DPPP_(my_sv_unmagicext)(pTHX_ SV * const sv, const int type, const MGVTBL * vtbl);
 static
 #else
-extern int DPPP_(my_sv_unmagicext)(pTHX_ SV * const sv, const int type, MGVTBL * vtbl);
+extern int DPPP_(my_sv_unmagicext)(pTHX_ SV * const sv, const int type, const MGVTBL * vtbl);
 #endif
 
 #if defined(NEED_sv_unmagicext) || defined(NEED_sv_unmagicext_GLOBAL)
@@ -20475,7 +20575,7 @@ extern int DPPP_(my_sv_unmagicext)(pTHX_ SV * const sv, const int type, MGVTBL *
 
 
 int
-DPPP_(my_sv_unmagicext)(pTHX_ SV *const sv, const int type, MGVTBL *vtbl)
+DPPP_(my_sv_unmagicext)(pTHX_ SV *const sv, const int type, const MGVTBL *vtbl)
 {
     MAGIC* mg;
     MAGIC** mgp;

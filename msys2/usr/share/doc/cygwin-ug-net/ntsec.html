@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>POSIX accounts, permission, and security</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="using-cygwinenv.html" title="The CYGWIN environment variable"><link rel="next" href="using-cygserver.html" title="Cygserver"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">POSIX accounts, permission, and security</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-cygwinenv.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="using-cygserver.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ntsec"></a>POSIX accounts, permission, and security</h2></div></div></div><p>This section discusses how the Windows security model is
+<html><head><meta charset="ANSI_X3.4-1968"><title>POSIX accounts, permission, and security</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="using-cygwinenv.html" title="The CYGWIN environment variable"><link rel="next" href="using-cygserver.html" title="Cygserver"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">POSIX accounts, permission, and security</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-cygwinenv.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="using-cygserver.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ntsec"></a>POSIX accounts, permission, and security</h2></div></div></div><p>This section discusses how the Windows security model is
 utilized in Cygwin to implement POSIX account information, POSIX-like
 permissions, and how the Windows authentication model is used to allow
 cygwin applications to switch users in a POSIX-like fashion.</p><p>The setting of POSIX-like file and directory permissions is
@@ -412,7 +412,7 @@ startup, you may wish to consider starting
 <span class="command"><strong><a class="link" href="using-cygserver.html" title="Cygserver">cygserver</a></strong></span> first in
 order to take advantage of this system-wide caching.  To assure that
 <span class="command"><strong><a class="link" href="using-cygserver.html" title="Cygserver">cygserver</a></strong></span> has started
-prior to starting <span class="command"><strong>sshd</strong></span> or other Cygwin processes, you may
+prior to starting <span class="command"><strong>cygsshd</strong></span> or other Cygwin services, you may
 wish to create service startup dependencies.
 <span class="command"><strong><a class="link" href="using-cygserver.html" title="Cygserver">Cygserver</a></strong></span> should
 probably wait for Windows TCPIP and AFD services before it starts, and then
@@ -430,7 +430,7 @@ shown below.  You will need an administrative prompt to run the
   # Delay sshd until after Cygserver has started
   # Again note the (odd) required space character after "depend="
 
-  sc config sshd depend= cygserver
+  sc config cygsshd depend= cygserver
 
   # View the Cygserver service details
 
@@ -686,7 +686,7 @@ the first schema returns an empty string, it skips to the second, and so
 on.  Schemata only supported on AD are silently skipped for SAM accounts
 and on non-AD machines.
 </p><p>
-Four schemata are predefined, two schemata are variable.  The predefined
+Five schemata are predefined, two schemata are variable.  The predefined
 schemata are the following:
 </p><div class="variablelist"><dl class="variablelist"><dt><span class="term"><code class="literal">windows</code></span></dt><dd>Utilizes typical Windows settings.  Supported for AD and SAM
 	      accounts.</dd><dt><span class="term"><code class="literal">cygwin</code></span></dt><dd>Utilizes the cygwinUser AD schema extension.  This schema
@@ -703,7 +703,10 @@ schemata are the following:
 	      </dd><dt><span class="term"><code class="literal">desc</code></span></dt><dd>Utilizes XML-style attributes in the description attribute.
 	      Supported for AD and SAM accounts.
 	      See <a class="xref" href="ntsec.html#ntsec-mapping-nsswitch-desc" title="The desc schema">the section called &#8220;The <code class="literal">desc</code> schema&#8221;</a>
-	      for a more detailed description.</dd></dl></div><p>
+	      for a more detailed description.</dd><dt><span class="term"><code class="literal">env</code></span></dt><dd>Utilizes the user's environment.  This schema is only supported
+	      for setting the home directory yet.
+	      See <a class="xref" href="ntsec.html#ntsec-mapping-nsswitch-home" title="The db_home setting">the section called &#8220;The <code class="literal">db_home</code> setting&#8221;</a> for
+	      the description.</dd></dl></div><p>
 The variable schemata are as follows.  Note that the leading characters
 (<code class="literal">@</code> and <code class="literal">/</code>) are an integral part of the
 definition.
@@ -758,7 +761,14 @@ of each schema when used with <code class="literal">db_home:</code>
 	      home="..." XML-alike setting in the user's
 	      <code class="literal">description</code> attribute in SAM or AD.
 	      See <a class="xref" href="ntsec.html#ntsec-mapping-nsswitch-desc" title="The desc schema">the section called &#8220;The <code class="literal">desc</code> schema&#8221;</a>
-	      for a detailed description.</dd><dt><span class="term"><code class="literal">@ad_attribute</code></span></dt><dd>AD only: The user's home directory is set to the path given
+	      for a detailed description.</dd><dt><span class="term"><code class="literal">env</code></span></dt><dd>Derives the home directory of the current user from the
+	      environment variable <code class="literal">HOME</code> (falling back to
+	      <code class="literal">HOMEDRIVE\HOMEPATH</code> and
+	      <code class="literal">USERPROFILE</code>, in that order).  This is faster
+	      than the <code class="literal">windows</code> schema at the
+	      expense of determining only the current user's home directory
+	      correctly.  This schema is skipped for any other account.
+	      </dd><dt><span class="term"><code class="literal">@ad_attribute</code></span></dt><dd>AD only: The user's home directory is set to the path given
 	      in the <code class="literal">ad_attribute</code> attribute.  The path
 	      can be given as Windows or POSIX path.</dd><dt><span class="term"><code class="literal">/path</code></span></dt><dd>The user's home directory is set to the given POSIX path.
 	      Remember the wildcards described in
@@ -1205,8 +1215,8 @@ description, see
 <a class="ulink" href="https://blogs.msdn.microsoft.com/winsdk/2015/08/28/logon-as-a-user-without-a-password/" target="_top">this blog posting</a>.  Cygwin versions prior
 to 3.0 tried to creat a user token from scratch using an officially
 undocumented function <span class="command"><strong>NtCreateToken</strong></span> which
-is now disabled.</p><p>So we just start the servers which have to switch the user context
-(<span class="command"><strong>sshd</strong></span>, <span class="command"><strong>inetd</strong></span>, <span class="command"><strong>cron</strong></span>,
+is now disabled.</p><p>So we just start the services which have to switch the user context
+(<span class="command"><strong>cygsshd</strong></span>, <span class="command"><strong>inetd</strong></span>, <span class="command"><strong>cron</strong></span>,
 ...) as Windows services under the SYSTEM (or LocalSystem in the GUI)
 account and everything just works.  Unfortunately that's too simple.
 Using <code class="literal">S4U</code> has a drawback.</p><p>Annoyingly, you don't have the usual comfortable access

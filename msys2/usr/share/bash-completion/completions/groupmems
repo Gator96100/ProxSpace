@@ -1,27 +1,27 @@
 # groupmems(8) completion                                  -*- shell-script -*-
 
-_groupmems()
+_comp_cmd_groupmems()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -a | --add | -d | --delete)
-            COMPREPLY=($(compgen -u -- "$cur"))
+            _comp_compgen -- -u
             return
             ;;
         -g | --group)
-            COMPREPLY=($(compgen -g -- "$cur"))
+            _comp_compgen -- -g
             return
             ;;
         -R | --root)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+    _comp_compgen_help
 } &&
-    complete -F _groupmems groupmems
+    complete -F _comp_cmd_groupmems groupmems
 
 # ex: filetype=sh

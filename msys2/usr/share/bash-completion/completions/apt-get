@@ -1,83 +1,93 @@
 # Debian apt-get(8) completion                             -*- shell-script -*-
 
-_apt_get()
+# @since 2.12
+_comp_xfunc_apt_get_compgen_installed_packages()
 {
-    local cur prev words cword package
-    _init_completion -n ':=' || return
+    if [[ -f /etc/debian_version ]]; then
+        # Debian system
+        _comp_compgen -x dpkg installed_packages
+    else
+        # assume RPM based
+        _comp_compgen -x rpm installed_packages
+    fi
+}
 
-    local special i
-    for ((i = 1; i < ${#words[@]} - 1; i++)); do
-        if [[ ${words[i]} == @(install|remove|autoremove|purge|source|build-dep|download|changelog) ]]; then
+_comp_cmd_apt_get()
+{
+    local cur prev words cword comp_args package
+    _comp_initialize -n ':=' -- "$@" || return
+
+    local special="" i
+    for ((i = 1; i < cword; i++)); do
+        if [[ ${words[i]} == @(install|remove|auto?(-)remove|purge|source|build-dep|download|changelog) ]]; then
             special=${words[i]}
             break
         fi
     done
 
-    if [[ -v special ]]; then
+    if [[ $special ]]; then
         case $special in
-            remove | autoremove | purge)
-                if [[ -f /etc/debian_version ]]; then
-                    # Debian system
-                    COMPREPLY=($(
-                        _xfunc dpkg _comp_dpkg_installed_packages $cur
-                    ))
-                else
-                    # assume RPM based
-                    _xfunc rpm _rpm_installed_packages
-                fi
+            remove | auto?(-)remove | purge)
+                _comp_xfunc_apt_get_compgen_installed_packages
                 ;;
             source)
-                COMPREPLY=($(_xfunc apt-cache _apt_cache_packages)
-                $(compgen -W "$(apt-cache dumpavail |
-                    awk '$1 == "Source:" { print $2 }' | sort -u)" -- "$cur"))
+                # Prefer `apt-cache` in the same dir as command
+                local pathcmd
+                pathcmd=$(type -P -- "$1") && local PATH=${pathcmd%/*}:$PATH
+                _comp_compgen -x apt-cache packages
+                _comp_compgen -a split -- "$(apt-cache dumpavail |
+                    _comp_awk '$1 == "Source:" { print $2 }' | sort -u)"
                 ;;
-            install)
-                if [[ $cur == */* ]]; then
-                    _filedir deb
+            install | reinstall)
+                if _comp_looks_like_path "$cur"; then
+                    _comp_compgen_filedir deb
                     return
                 elif [[ $cur == *=* ]]; then
                     package="${cur%%=*}"
                     cur="${cur#*=}"
-                    COMPREPLY=($(IFS=$'\n' compgen -W "$(
+                    _comp_compgen_split -l -- "$(
                         apt-cache --no-generate madison "$package" 2>/dev/null |
                             while IFS=' |' read -r _ version _; do
                                 echo "$version"
                             done
-                    )" \
-                        -- "$cur"))
-                    __ltrim_colon_completions "$cur"
+                    )"
+                    _comp_ltrim_colon_completions "$cur"
                     return
                 fi
                 ;;&
             build-dep)
-                _filedir -d
-                [[ $cur != */* ]] || return
+                _comp_compgen_filedir -d
+                _comp_looks_like_path "$cur" && return
                 ;;&
             *)
-                COMPREPLY+=($(_xfunc apt-cache _apt_cache_packages))
+                _comp_compgen -ax apt-cache packages
                 ;;
         esac
         return
     fi
 
+    local noargopts='!(-*|*[eoct]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | --option | -!(-*)[hvo])
+        --error-on | --help | --version | --option | -${noargopts}[ehvo])
             return
             ;;
-        --config-file | -!(-*)c)
-            _filedir
+        --config-file | -${noargopts}c)
+            _comp_compgen_filedir
             return
             ;;
-        --target-release | --default-release | -!(-*)t)
-            COMPREPLY=($(compgen -W "$(apt-cache policy | command sed -ne \
-                's/^ *release.*[ ,]o=\(Debian\|Ubuntu\),a=\(\w*\).*/\2/p')" \
-                -- "$cur"))
+        --target-release | --default-release | -${noargopts}t)
+            # Prefer `apt-cache` in the same dir as command
+            local pathcmd
+            pathcmd=$(type -P -- "$1") && local PATH=${pathcmd%/*}:$PATH
+            _comp_compgen_split -- "$(apt-cache policy | command sed -ne \
+                's/^ *release.*[ ,]o=\(Debian\|Ubuntu\),a=\(\w*\).*/\2/p')"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--no-install-recommends --install-suggests
+        _comp_compgen -- -W '--no-install-recommends --install-suggests
             --download-only --fix-broken --ignore-missing --fix-missing
             --no-download --quiet --simulate --just-print --dry-run --recon
             --no-act --yes --assume-yes --assume-no --no-show-upgraded
@@ -89,16 +99,15 @@ _apt_get()
             --trivial-only --no-remove --auto-remove --autoremove --only-source
             --diff-only --dsc-only --tar-only --arch-only --indep-only
             --allow-unauthenticated --no-allow-insecure-repositories
-            --allow-releaseinfo-change --show-progress --with-source --help
-            --version --config-file --option' -- "$cur"))
+            --allow-releaseinfo-change --show-progress --with-source --error-on
+            --help --version --config-file --option'
     else
-        COMPREPLY=($(compgen -W 'update upgrade dist-upgrade
-            dselect-upgrade install remove purge source build-dep check
-            download clean autoclean autoremove changelog indextargets' \
-            -- "$cur"))
+        _comp_compgen -- -W 'update upgrade dist-upgrade dselect-upgrade
+            install reinstall remove purge source build-dep satisfy check
+            download clean autoclean autoremove changelog indextargets'
     fi
 
 } &&
-    complete -F _apt_get apt-get
+    complete -F _comp_cmd_apt_get apt-get
 
 # ex: filetype=sh

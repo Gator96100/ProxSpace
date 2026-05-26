@@ -1,15 +1,15 @@
 # Linux cardctl(8) completion                              -*- shell-script -*-
 
-_cardctl()
+_comp_cmd_cardctl()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if ((cword == 1)); then
-        COMPREPLY=($(compgen -W 'status config ident suspend resume reset
-            eject insert scheme' -- "$cur"))
+        _comp_compgen -- -W 'status config ident suspend resume reset eject
+            insert scheme'
     fi
 } &&
-    complete -F _cardctl cardctl pccardctl
+    complete -F _comp_cmd_cardctl cardctl pccardctl
 
 # ex: filetype=sh

@@ -16,16 +16,19 @@ color cyan "\<(POT-Creation-Date|PO-Revision-Date|MIME-Version|Content-Type|Cont
 # Encodings and numbers.
 color yellow "\<(UTF|ISO|Windows|Mac|IBM)-[0-9]+"
 color yellow "\<((pre|rc)?[0-9]+|[0-9]bit)\>"
-# Msgids.
+# Main keywords.
 color brightblue "^(msgid|msgid_plural|msgstr)\>"
-# Tags.
+# Flags.
 color red " fuzzy(,|$)"
-color yellow " (no-)?[-[:alpha:]]+-format(,|$)"
+color yellow " (no-)?([[:lower:]-]+|c\+\+)-format(,|$)"
 # Format specifiers.
-color brightmagenta "%([1-9]\$)?[#0 +'I-]?(\*([1-9]\$)?|[1-9](\.[0-9]?)?)?[hlLjzt]?[diouxXeEfFgGaAcspnm%]"
+color brightmagenta "%([1-9]\$)?[#0 +'I-]?(\*([1-9]\$)?|[0-9]\.?|[0-9]?\.[0-9])?(hh|ll|[hlLjzt])?([diouxXbBeEfFgGaAcspnmr]|<PRI[diouxX](32|64)>)|%%"
+color rosy "%\([[:alpha:]][[:alnum:]_]*\)([0-9]\.?|[0-9]?\.[0-9])?[#0 +-]?[diouxXbBeEfFgGcrs]"
 # Quotes and escaped characters.
 color yellow """
 color cyan "\\([abcefnrtv"\]|x[[:xdigit:]]{2}|[0-7]{3})"
+# Context.
+color slate "^msgctxt.*"
 # Reminders.
 color brightwhite,yellow "\<(FIXME|TODO|XXX)\>"
 # Obsolete strings.

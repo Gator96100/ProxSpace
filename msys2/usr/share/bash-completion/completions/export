@@ -1,11 +1,11 @@
 # bash export completion                                   -*- shell-script -*-
 
-_export()
+_comp_cmd_export()
 {
-    local cur prev words cword
-    _init_completion -n = || return
+    local cur prev words cword comp_args
+    _comp_initialize -n := -- "$@" || return
 
-    local i action=variable remove=false
+    local i action=variable remove=""
     for ((i = 1; i < cword; i++)); do
         case ${words[i]} in
             -p)
@@ -15,7 +15,7 @@ _export()
                 action=function
                 ;;&
             -*n*)
-                remove=true
+                remove=set
                 ;;
             -*)
                 continue
@@ -25,41 +25,40 @@ _export()
     done
 
     if [[ $cur == *=* ]]; then
-        local ocur=$cur oprev=$prev
-        prev=${cur%%=*} cur=${cur#*=}
-        _variables && return
-        cur=$ocur prev=$oprev
+        _comp_variable_assignments "$cur" && return
     fi
 
     case $cur in
         *=)
-            local pval=$(quote "$(eval printf %s \"\$\{${cur%=}-\}\")")
+            local pname=${cur%=}
+            local REPLY
+            _comp_quote "${!pname-}"
+            local pval=$REPLY
             # Complete previous value if it's not empty.
             if [[ $pval != \'\' ]]; then
                 COMPREPLY=("$pval")
             else
-                cur=${cur#*=}
-                _filedir
+                _comp_compgen -c "${cur#*=}" filedir
             fi
             ;;
         *=*)
-            cur=${cur#*=}
-            _filedir
+            _comp_compgen -c "${cur#*=}" filedir
             ;;
         *)
             if [[ $cword -eq 1 && $cur == -* ]]; then
-                COMPREPLY=($(compgen -W '-p $(_parse_usage "$1")' -- "$cur"))
+                _comp_compgen_usage -c help -s "$1"
+                _comp_compgen -a -- -W '-p'
                 return
             fi
             local suffix=""
-            if ! $remove; then
+            if [[ ! $remove && $action != function ]]; then
                 suffix="="
                 compopt -o nospace
             fi
-            COMPREPLY=($(compgen -A $action -S "$suffix" -- "$cur"))
+            _comp_compgen -- -A $action -S "$suffix"
             ;;
     esac
 } &&
-    complete -F _export export
+    complete -F _comp_cmd_export export
 
 # ex: filetype=sh

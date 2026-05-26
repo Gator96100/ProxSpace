@@ -41,7 +41,6 @@ if "x%~1" == "x-mingw32" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=MINGW3
 if "x%~1" == "x-mingw64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=MINGW64& goto :checkparams
 if "x%~1" == "x-ucrt64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=UCRT64& goto :checkparams
 if "x%~1" == "x-clang64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=CLANG64& goto :checkparams
-if "x%~1" == "x-clang32" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=CLANG32& goto :checkparams
 if "x%~1" == "x-clangarm64" shift& set /a msys2_shiftCounter+=1& set MSYSTEM=CLANGARM64& goto :checkparams
 if "x%~1" == "x-mingw" shift& set /a msys2_shiftCounter+=1& (if exist "%WD%..\..\mingw64" (set MSYSTEM=MINGW64) else (set MSYSTEM=MINGW32))& goto :checkparams
 rem Console types
@@ -58,7 +57,7 @@ if "x%~1" == "x-where" (
     exit /b 2
   )
   cd /d "%~2" || (
-    echo Cannot set specified working diretory "%~2". 1>&2
+    echo Cannot set specified working directory "%~2". 1>&2
     exit /b 2
   )
   set CHERE_INVOKING=enabled_from_arguments
@@ -110,9 +109,6 @@ if "%MSYSTEM%" == "MINGW32" (
 ) else if "%MSYSTEM%" == "CLANG64" (
   set "CONTITLE=MinGW Clang x64"
   set "CONICON=clang64.ico"
-) else if "%MSYSTEM%" == "CLANG32" (
-  set "CONTITLE=MinGW Clang x32"
-  set "CONICON=clang32.ico"
 ) else if "%MSYSTEM%" == "CLANGARM64" (
   set "CONTITLE=MinGW Clang ARM64"
   set "CONICON=clangarm64.ico"
@@ -206,8 +202,9 @@ echo Usage:
 echo     %~1 [options] [login shell parameters]
 echo.
 echo Options:
-echo     -mingw32 ^| -mingw64 ^| -ucrt64 ^| -clang64 ^| -msys[2]   Set shell type
-echo     -defterm ^| -mintty ^| -conemu                            Set terminal type
+echo     -mingw32 ^| -mingw64 ^| -ucrt64 ^| -clang64 ^|
+echo     -msys[2] ^| -clangarm64           Set shell type
+echo     -defterm ^| -mintty ^| -conemu     Set terminal type
 echo     -here                            Use current directory as working
 echo                                      directory
 echo     -where DIRECTORY                 Use specified DIRECTORY as working

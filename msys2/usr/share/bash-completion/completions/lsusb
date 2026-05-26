@@ -1,20 +1,22 @@
 # lsusb(8) completion                                      -*- shell-script -*-
 
-_lsusb()
+_comp_cmd_lsusb()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[sD]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | -!(-*)@([sD]|[hV]*))
+        --help | --version | -${noargopts}@([sD]|[hV]*))
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
     fi
 } &&
-    complete -F _lsusb lsusb
+    complete -F _comp_cmd_lsusb lsusb
 
 # ex: filetype=sh

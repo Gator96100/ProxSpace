@@ -1,17 +1,17 @@
 # Slackware rpm2tgz completion                             -*- shell-script -*-
 
-_rpm2tgz()
+_comp_cmd_rpm2tgz()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '-s -S -n -r -d -c' -- "$cur"))
+        _comp_compgen -- -W '-s -S -n -r -d -c'
         return
     fi
 
-    _filedir "rpm"
+    _comp_compgen_filedir "rpm"
 } &&
-    complete -F _rpm2tgz rpm2tgz rpm2txz rpm2targz
+    complete -F _comp_cmd_rpm2tgz rpm2tgz rpm2txz rpm2targz
 
 # ex: filetype=sh

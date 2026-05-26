@@ -1,0 +1,11 @@
+[Unit]
+Description=GnuPG public key management service
+Documentation=man:keyboxd(8)
+
+[Socket]
+ListenStream=%t/gnupg/S.keyboxd
+SocketMode=0600
+DirectoryMode=0700
+
+[Install]
+WantedBy=sockets.target

@@ -1,40 +1,40 @@
 # bash completion for minicom                              -*- shell-script -*-
 
-_minicom()
+_comp_cmd_minicom()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[acSCp]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --attrib | --color | -!(-*)[ac])
-            COMPREPLY=($(compgen -W 'on off' -- "$cur"))
+        --attrib | --color | -${noargopts}[ac])
+            _comp_compgen -- -W 'on off'
             return
             ;;
-        --script | --capturefile | -!(-*)[SC])
-            _filedir
+        --script | --capturefile | -${noargopts}[SC])
+            _comp_compgen_filedir
             return
             ;;
-        --ptty | -!(-*)p)
-            COMPREPLY=($(printf '%s\n' /dev/tty*))
-            COMPREPLY=($(compgen -W '${COMPREPLY[@]} ${COMPREPLY[@]#/dev/}' \
-                -- "$cur"))
+        --ptty | -${noargopts}p)
+            _comp_expand_glob COMPREPLY '/dev/tty*' &&
+                _comp_compgen -- -W '"${COMPREPLY[@]}" "${COMPREPLY[@]#/dev/}"'
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    COMPREPLY=(
-        $(printf '%s\n' /etc/minirc.* /etc/minicom/minirc.* ~/.minirc.* |
-            command sed -e '/\*$/d' -e 's/^.*minirc\.//' |
-            command grep "^${cur}"))
+    local -a files
+    _comp_expand_glob files '{/etc/,/etc/minicom/,~/.}minirc.?*' &&
+        _comp_compgen -- -W '"${files[@]##*minirc.}"'
 } &&
-    complete -F _minicom -o default minicom
+    complete -F _comp_cmd_minicom -o default minicom
 
 # ex: filetype=sh

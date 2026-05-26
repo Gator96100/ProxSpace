@@ -1,58 +1,65 @@
 # cvs(1) completion                                        -*- shell-script -*-
 
-_cvs_entries()
+_comp_deprecate_var 2.12 \
+    COMP_CVS_REMOTE BASH_COMPLETION_CMD_CVS_REMOTE
+
+# Usage: _comp_cmd_cvs__compgen_entries [base_path]
+# @param[opt] $1
+# shellcheck disable=SC2120
+_comp_cmd_cvs__compgen_entries()
 {
-    local prefix=${cur%/*}/ IFS=$'\n'
-    [[ -e ${prefix:-}CVS/Entries ]] || prefix=""
-    entries=($(cut -d/ -f2 -s ${prefix:-}CVS/Entries 2>/dev/null))
-    if [[ $entries ]]; then
-        entries=("${entries[@]/#/${prefix:-}}")
+    local base_path=${1-$cur}
+    local _prefix=${base_path%/*}/
+    [[ -e ${_prefix-}CVS/Entries ]] || _prefix=""
+    _comp_compgen -c "${cur#"$_prefix"}" split -lP "$_prefix" -- "$(cut -d/ -f2 -s "${_prefix-}CVS/Entries" 2>/dev/null)" &&
         compopt -o filenames
-    fi
 }
 
-_cvs_modules()
+_comp_cmd_cvs__modules()
 {
-    if [[ -n $prefix ]]; then
-        COMPREPLY=($(command ls -d ${cvsroot}/${prefix}/!(CVSROOT)))
-    else
-        COMPREPLY=($(command ls -d ${cvsroot}/!(CVSROOT)))
-    fi
+    _comp_expand_glob COMPREPLY '"$cvsroot${prefix:+/$prefix}"/!(CVSROOT)'
 }
 
-_cvs_commands()
+_comp_cmd_cvs__compgen_commands()
 {
-    cvs --help-commands 2>&1 | awk '/^(     *|\t)/ { print $1 }'
+    _comp_compgen_split -- "$(
+        "$1" --help-commands 2>&1 | _comp_awk '/^(     *|\t)/ { print $1 }'
+    )"
 }
 
-_cvs_command_options()
+_comp_cmd_cvs__compgen_command_options()
 {
-    COMPREPLY=($(compgen -W '$(_parse_help "$1" "--help $2")' -- "$cur"))
+    _comp_compgen_help -- --help "$2"
 }
 
-_cvs_kflags()
+_comp_cmd_cvs__compgen_kflags()
 {
-    COMPREPLY=($(compgen -W 'kv kvl k o b v' -- "$cur"))
+    _comp_compgen -- -W 'kv kvl k o b v'
 }
 
-_cvs_roots()
+# @since 2.12
+_comp_xfunc_cvs_compgen_roots()
 {
-    local -a cvsroots
+    local -a cvsroots=()
     [[ -v CVSROOT ]] && cvsroots=("$CVSROOT")
-    [[ -r ~/.cvspass ]] && cvsroots+=($(awk '{ print $2 }' ~/.cvspass))
-    [[ -r CVS/Root ]] && mapfile -tO ${#cvsroots[@]} cvsroots <CVS/Root
-    COMPREPLY=($(compgen -W '${cvsroots[@]}' -- "$cur"))
-    __ltrim_colon_completions "$cur"
+    [[ -r ~/.cvspass ]] && _comp_split -a cvsroots "$(_comp_awk '{ print $2 }' ~/.cvspass)"
+    [[ -r CVS/Root ]] && mapfile -tO "${#cvsroots[@]}" cvsroots <CVS/Root
+    ((${#cvsroots[@]})) &&
+        _comp_compgen -U cvsroots -- -W '"${cvsroots[@]}"'
+    _comp_ltrim_colon_completions "$cur"
 }
 
-_cvs()
+_comp_deprecate_func 2.12 _cvs_roots _comp_xfunc_cvs_compgen_roots
+
+_comp_cmd_cvs()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
-    local count mode i cvsroot cvsroots pwd
-    local -a flags files entries changed newremoved
+    local count mode="" i cvsroot="" has_cvsroot="" pwd
+    local -a flags files entries
 
+    local noargopts='!(-*|*[d]*)'
     count=0
     for i in "${words[@]}"; do
         ((count == cword)) && break
@@ -60,15 +67,17 @@ _cvs()
         if [[ ${words[count]} == "${cvsroot-}" && ${mode-} == cvsroot ]]; then
             mode=""
         fi
-        if [[ ! -v mode ]]; then
+        if [[ ! $mode ]]; then
+            # shellcheck disable=SC2254
             case $i in
-                --help | -!(-*)H)
-                    COMPREPLY=($(compgen -W "$(_cvs_commands)" -- "$cur"))
+                --help | -${noargopts}H)
+                    _comp_cmd_cvs__compgen_commands "$1"
                     return
                     ;;
-                -!(-*)d)
+                -${noargopts}d)
                     mode=cvsroot
                     cvsroot=${words[count + 1]}
+                    has_cvsroot=set
                     ;;
                 add | ad | new)
                     mode=add
@@ -132,7 +141,7 @@ _cvs()
                     ;;
             esac
         elif [[ $i == -* ]]; then
-            flags+=($i)
+            flags+=("$i")
         fi
         ((count++))
     done
@@ -145,32 +154,36 @@ _cvs()
                     return
                     ;;
                 -*k)
-                    _cvs_kflags
+                    _comp_cmd_cvs__compgen_kflags
                     return
                     ;;
             esac
 
             if [[ $cur != -* ]]; then
-                _cvs_entries
-                [[ -z $cur ]] && files=(!(CVS)) ||
-                    files=($(command ls -d ${cur}* 2>/dev/null))
+                _comp_compgen -Rv entries -i cvs entries "${cur-}"
+                if [[ ! $cur ]]; then
+                    _comp_expand_glob files '!(CVS)'
+                else
+                    _comp_expand_glob files '"${cur}"*'
+                fi
                 local f
                 for i in "${!files[@]}"; do
                     if [[ ${files[i]} == ?(*/)CVS ]]; then
-                        unset 'files[i]'
-                    else
+                        unset -v 'files[i]'
+                    elif ((${#entries[@]})); then
                         for f in "${entries[@]}"; do
                             if [[ ${files[i]} == "$f" && ! -d $f ]]; then
-                                unset 'files[i]'
+                                unset -v 'files[i]'
                                 break
                             fi
                         done
                     fi
                 done
-                COMPREPLY=($(compgen -X "$_backup_glob" -W '${files[@]}' \
-                    -- "$cur"))
+                # shellcheck disable=SC2154 # global var _comp_backup_glob
+                ((${#files[@]})) &&
+                    _comp_compgen -- -X "$_comp_backup_glob" -W '"${files[@]}"'
             else
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             fi
             ;;
         admin)
@@ -180,30 +193,28 @@ _cvs()
                     return
                     ;;
                 -*t)
-                    _filedir
+                    _comp_compgen_filedir
                     return
                     ;;
                 -*k)
-                    _cvs_kflags
+                    _comp_cmd_cvs__compgen_kflags
                     return
                     ;;
             esac
 
             if [[ $cur == -* ]]; then
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             else
-                _cvs_entries
-                COMPREPLY=($(compgen -W '${entries[@]}' -- "$cur"))
+                _comp_cmd_cvs__compgen_entries
             fi
             ;;
         annotate)
             [[ $prev == -[rD] ]] && return
 
             if [[ $cur == -* ]]; then
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             else
-                _cvs_entries
-                COMPREPLY=($(compgen -W '${entries[@]}' -- "$cur"))
+                _comp_cmd_cvs__compgen_entries
             fi
             ;;
         checkout)
@@ -213,22 +224,21 @@ _cvs()
                     return
                     ;;
                 -*d)
-                    _filedir -d
+                    _comp_compgen_filedir -d
                     return
                     ;;
                 -*k)
-                    _cvs_kflags
+                    _comp_cmd_cvs__compgen_kflags
                     return
                     ;;
             esac
 
             if [[ $cur != -* ]]; then
-                [[ ! -v cvsroot ]] && cvsroot=${CVSROOT-}
-                COMPREPLY=($(cvs -d "$cvsroot" co -c 2>/dev/null |
-                    awk '{print $1}'))
-                COMPREPLY=($(compgen -W '${COMPREPLY[@]}' -- "$cur"))
+                [[ ! $has_cvsroot ]] && cvsroot=${CVSROOT-}
+                _comp_compgen_split -- "$(cvs -d "$cvsroot" co -c 2>/dev/null |
+                    _comp_awk '{print $1}')"
             else
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             fi
             ;;
         commit)
@@ -238,51 +248,49 @@ _cvs()
                     return
                     ;;
                 -*F)
-                    _filedir
+                    _comp_compgen_filedir
                     return
                     ;;
             esac
 
             if [[ $cur != -* ]]; then
-                # if $COMP_CVS_REMOTE is not null, 'cvs commit' will
-                # complete on remotely checked-out files (requires
+                # if $BASH_COMPLETION_CMD_CVS_REMOTE is not null, 'cvs commit'
+                # will complete on remotely checked-out files (requires
                 # passwordless access to the remote repository
-                if [[ -n ${COMP_CVS_REMOTE:-} ]]; then
+                if [[ ${BASH_COMPLETION_CMD_CVS_REMOTE-} ]]; then
                     # this is the least computationally intensive way found so
                     # far, but other changes (something other than
-                    # changed/removed/new) may be missing
-                    changed=($(cvs -q diff --brief 2>&1 |
-                        command sed -ne 's/^Files [^ ]* and \([^ ]*\) differ$/\1/p'))
-                    newremoved=($(cvs -q diff --brief 2>&1 |
-                        command sed -ne 's/^cvs diff: \([^ ]*\) .*, no comparison available$/\1/p'))
-                    COMPREPLY=($(compgen -W '${changed[@]:-} \
-                        ${newremoved[@]:-}' -- "$cur"))
+                    # changed/removed/new) may be missing.
+                    _comp_compgen -a split -- "$(cvs -q diff --brief 2>&1 |
+                        command sed -ne '
+                            # changed
+                            s/^Files [^ ]* and \([^ ]*\) differ$/\1/p
+                            # new/removed
+                            s/^cvs diff: \([^ ]*\) .*, no comparison available$/\1/p
+                        ')"
                 else
-                    _cvs_entries
-                    COMPREPLY=($(compgen -W '${entries[@]}' -- "$cur"))
+                    _comp_cmd_cvs__compgen_entries
                 fi
             else
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             fi
             ;;
         cvsroot)
-            _cvs_roots
+            _comp_xfunc_cvs_compgen_roots
             ;;
-        diff | log)
+        diff | log | status)
             if [[ $cur == -* ]]; then
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
                 [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
             else
-                _cvs_entries
-                COMPREPLY=($(compgen -W '${entries[@]:-}' -- "$cur"))
+                _comp_cmd_cvs__compgen_entries
             fi
             ;;
         editors | watchers)
             if [[ $cur == -* ]]; then
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             else
-                _cvs_entries
-                COMPREPLY=($(compgen -W '${entries[@]}' -- "$cur"))
+                _comp_cmd_cvs__compgen_entries
             fi
             ;;
         export)
@@ -292,21 +300,21 @@ _cvs()
                     return
                     ;;
                 -*d)
-                    _filedir -d
+                    _comp_compgen_filedir -d
                     return
                     ;;
                 -*k)
-                    _cvs_kflags
+                    _comp_cmd_cvs__compgen_kflags
                     return
                     ;;
             esac
 
             if [[ $cur != -* ]]; then
-                [[ ! -v cvsroot ]] && cvsroot=${CVSROOT-}
-                COMPREPLY=($(cvs -d "$cvsroot" co -c | awk '{print $1}'))
-                COMPREPLY=($(compgen -W '${COMPREPLY[@]}' -- "$cur"))
+                [[ ! $has_cvsroot ]] && cvsroot=${CVSROOT-}
+                _comp_compgen_split -- "$(cvs -d "$cvsroot" co -c |
+                    _comp_awk '{print $1}')"
             else
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             fi
             ;;
         import)
@@ -316,39 +324,42 @@ _cvs()
                     return
                     ;;
                 -*k)
-                    _cvs_kflags
+                    _comp_cmd_cvs__compgen_kflags
                     return
                     ;;
             esac
 
             if [[ $cur != -* ]]; then
                 # starts with same algorithm as checkout
-                [[ ! -v cvsroot ]] && cvsroot=${CVSROOT-}
+                [[ ! $has_cvsroot ]] && cvsroot=${CVSROOT-}
                 local prefix=${cur%/*}
                 if [[ -r ${cvsroot}/${prefix} ]]; then
-                    _cvs_modules
-                    COMPREPLY=(${COMPREPLY[@]#$cvsroot})
-                    COMPREPLY=(${COMPREPLY[@]#\/})
+                    _comp_cmd_cvs__modules
+                    COMPREPLY=("${COMPREPLY[@]#"$cvsroot"}")
+                    COMPREPLY=("${COMPREPLY[@]#\/}")
                 fi
                 pwd=$(pwd)
                 pwd=${pwd##*/}
-                COMPREPLY=($(compgen -W '${COMPREPLY[@]} $pwd' -- "$cur"))
+                [[ $pwd ]] && COMPREPLY+=("$pwd")
+                ((${#COMPREPLY[@]})) &&
+                    _comp_compgen -- -W '"${COMPREPLY[@]}"'
             else
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             fi
             ;;
         remove)
             if [[ $cur != -* ]]; then
-                _cvs_entries
+                _comp_compgen -Rv entries -i cvs entries "${cur-}"
                 if [[ $prev != -f ]]; then
                     # find out what files are missing
                     for i in "${!entries[@]}"; do
-                        [[ -r ${entries[i]} ]] && unset 'entries[i]'
+                        [[ -r ${entries[i]} ]] && unset -v 'entries[i]'
                     done
                 fi
-                COMPREPLY=($(compgen -W '${entries[@]:-}' -- "$cur"))
+                ((${#entries[@]})) &&
+                    _comp_compgen -- -W '"${entries[@]}"'
             else
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             fi
             ;;
         update)
@@ -358,41 +369,41 @@ _cvs()
                     return
                     ;;
                 -*k)
-                    _cvs_kflags
+                    _comp_cmd_cvs__compgen_kflags
                     return
                     ;;
             esac
 
             if [[ $cur == -* ]]; then
-                _cvs_command_options "$1" $mode
+                _comp_cmd_cvs__compgen_command_options "$1" "$mode"
             else
-                _cvs_entries
-                COMPREPLY=($(compgen -W '${entries[@]}' -- "$cur"))
+                _comp_cmd_cvs__compgen_entries
             fi
             ;;
         "")
             case $prev in
                 --*) ;;
                 -*T)
-                    _filedir -d
+                    _comp_compgen_filedir -d
                     return
                     ;;
                 -*[es])
                     return
                     ;;
                 -*z)
-                    COMPREPLY=($(compgen -W '{1..9}' -- "$cur"))
+                    _comp_compgen -- -W '{1..9}'
                     return
                     ;;
             esac
 
-            COMPREPLY=($(compgen -W '$(_cvs_commands)
-                $(_parse_help "$1" --help-options) --help --help-commands
-                --help-options --version' -- "$cur"))
+            _comp_compgen_help -- --help-options
+            _comp_compgen -a -i cvs commands "$1"
+            _comp_compgen -a -- -W \
+                "--help --help-commands --help-options --version"
             ;;
     esac
 
 } &&
-    complete -F _cvs cvs
+    complete -F _comp_cmd_cvs cvs
 
 # ex: filetype=sh

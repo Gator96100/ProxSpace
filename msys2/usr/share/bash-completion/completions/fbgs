@@ -1,30 +1,29 @@
 # bash completion for fbgs(1)                              -*- shell-script -*-
 
-_fbgs()
+_comp_cmd_fbgs()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case "$prev" in
         -f | --font)
-            local IFS=$'\n'
-            COMPREPLY=($(compgen -W '$(fc-list 2>/dev/null)' -- "$cur"))
+            _comp_compgen_split -l -- "$(fc-list 2>/dev/null)"
             return
             ;;
         -m | --mode)
-            COMPREPLY=($(compgen -W '$(command sed \
-                -n "/^mode/{s/^mode \{1,\}\"\([^\"]\{1,\}\)\"/\1/g;p}" \
-                /etc/fb.modes 2>/dev/null)' -- "$cur"))
+            _comp_compgen_split -- "$(command sed \
+                -n '/^mode/{s/^mode \{1,\}"\([^"]\{1,\}\)"/\1/g;p}' \
+                /etc/fb.modes 2>/dev/null)"
             return
             ;;
         -d | --device)
-            COMPREPLY=($(compgen -f -d -- "${cur:-/dev/}"))
+            _comp_compgen -c "${cur:-/dev/}" -- -f -d
             return
             ;;
         -fp | --firstpage | -lp | --lastpage | -r | --resolution | -s | --scroll | -t | \
             --timeout)
             # expect integer value
-            COMPREPLY+=($(compgen -W '{0..9}'))
+            _comp_compgen -aR -- -W '{0..9}'
             compopt -o nospace
             return
             ;;
@@ -35,16 +34,16 @@ _fbgs()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--bell --help --password -fp --firstpage
-            -lp --lastpage --color -l -xl -xxl --resolution --autozoom
+        _comp_compgen -- -W '--bell --help --password -fp --firstpage -lp
+            --lastpage --color -l -xl -xxl --resolution --autozoom
             --{,no}autoup --{,no}autodown --{,no}fitwidth --{,no}verbose
             --{,no}random --vt --scroll --timeout --{,no}once --gamma --font
-            --device --mode' -- "$cur"))
+            --device --mode'
         [[ ${COMPREPLY-} ]] && return
     fi
 
-    _filedir '?(e)ps|pdf'
+    _comp_compgen_filedir '?(e)ps|pdf'
 } &&
-    complete -F _fbgs fbgs
+    complete -F _comp_cmd_fbgs fbgs
 
 # ex: filetype=sh

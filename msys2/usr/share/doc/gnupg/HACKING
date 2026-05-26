@@ -3,6 +3,7 @@
 #+TEXT: Some notes on GnuPG internals
 #+STARTUP: showall
 #+OPTIONS: ^:{}
+# Note: This might be a copy; the original lives in gnupg/doc/HACKING.
 
 * How to contribute
 
@@ -33,9 +34,9 @@ not be copied to the ChangeLog, separate it by a line consisting of
 two dashes at the begin of a line.
 
 The one-line summary usually starts with a keyword to identify the
-mainly affected subsystem.  If more than one keyword is required the
-are delimited by a comma (e.g. =scd,w32:=). Commonly found keywords
-are
+mainly affected subsystem (that is not the directory).  If more than
+one keyword is required they are delimited by a comma
+(e.g. =scd,w32:=). Commonly found keywords are
 
  - agent   :: The gpg-agent component
  - build   :: Changes to the build system
@@ -119,7 +120,8 @@ Note that such a comment will be removed if the git commit option
 
   - That's it.  From now on you only need to add a "Signed-off-by:"
     line with your name and mail address to the commit message.  It is
-    recommended to send the patches using a PGP/MIME signed mail.
+    recommended to send the patches using a PGP/MIME signed mail.  See
+    below on how to send patches.
 
 ** Coding standards
 
@@ -150,7 +152,7 @@ Note that such a comment will be removed if the git commit option
       if ( 42 == foo )
 #+end_src
     this is harder to read and modern compilers are pretty good in
-    detecing accidential assignments.  It is also suggested not to
+    detecing accidental assignments.  It is also suggested not to
     compare to 0 or NULL but to test the value direct or with a '!';
     this makes it easier to see that a boolean test is done.
   - We use our own printf style functions like =es_printf=, and
@@ -182,12 +184,11 @@ Note that such a comment will be removed if the git commit option
 ** Variable names
 
   Follow the GNU standards.  Here are some conventions you may want to
-  stick to (do not rename existing "wrong" uses without a goog
-  reason).
+  stick to (do not rename existing "wrong" uses without a good reason).
 
   - err :: This conveys an error code of type =gpg_error_t= which is
            compatible to an =int=.  To compare such a variable to a
-           GPG_ERR_ constant, it is necessary to map the value like
+           GPG_ERR_ constant, it is necessary to access the value like
            this: =gpg_err_code(err)=.
   - ec  :: This is used for a gpg-error code which has no source part
            (=gpg_err_code_t=) and will eventually be used as input to
@@ -207,10 +208,6 @@ Note that such a comment will be removed if the git commit option
   - The predefined macro =__func__=:
     : log_debug ("%s: Problem with foo\n", __func__);
 
-  - Variable declaration inside a for():
-    : for (int i = 0; i < 5; ++)
-    :   bar (i);
-
   Although we usually make use of the =u16=, =u32=, and =u64= types,
   it is also possible to include =<stdint.h>= and use =int16_t=,
   =int32_t=, =int64_t=, =uint16_t=, =uint32_t=, and =uint64_t=.  But do
@@ -225,6 +222,7 @@ Note that such a comment will be removed if the git commit option
   - Regression-due-to :: Commit id of the regression fixed by this commit.
   - Fixes-commit :: Commit id this commit fixes.
   - Updates-commit :: Commit id this commit updates.
+  - See-commit :: Commit id of a related commit.
   - Reported-by :: Value is a name or mail address of a bug reporte.
   - Suggested-by :: Value is a name or mail address of someone how
                     suggested this change.
@@ -232,7 +230,47 @@ Note that such a comment will be removed if the git commit option
   - Some-comments-by :: Name or mail address of the author of
                         additional comments (commit log or code).
   - Proofread-by :: Sometimes used by translation commits.
-  - Signed-off-by :: Name or mail address of the developer
+  - Signed-off-by :: Name or mail address of the developer.
+  - Backported-from-master :: Value is the commit id of the original patch.
+  - Ported-from-stable :: Value is the commit id of the original patch.
+
+** Sending patches
+Submitting patches, and subsequent discussions around them,
+happens via the gnupg-devel@gnupg.org public mailing list.
+
+Send your patches to that list, preferably PGP/MIME signed.  Make sure
+to include a mention of 'gnupg' (or gpgme, libassuan, etc) in the
+subject line; the list is used for several different projects.
+
+In general you should send patches only for the master branch; we may
+later decide to backport to another branch.  Please ask first before
+sending pacthes for another branch.
+
+If you're working from the Git repo, here's a suggested workflow:
+
+  - Configure git send-email defaults:
+
+    : git config format.subjectPrefix 'PATCH gnupg'
+    : git config sendemail.to gnupg-devel@gnupg.org
+
+    (For other sub-projects adjust accordingly)
+
+  - hack hack hack
+
+  - Commit your changes; group changes into easily-reviewable commit
+    units, feel free to submit several patches at once.
+
+    e.g. if you want to submit a single patch on top of master, do:
+    : git send-email --annotate -1
+
+    e.g. if you have two commits on top of master, do:
+    : git send-email --annotate --cover-letter -2
+
+   (that prompts you for a summary mail to precede your actual patch
+    mails)
+
+  - use Git's --dry-run option to test your setup
+
 
 * Windows
 ** How to build an installer for Windows
@@ -272,30 +310,6 @@ Note that such a comment will be removed if the git commit option
 * Debug hints
 
   See the manual for some hints.
-
-* Standards
-** RFCs
-
-1423  Privacy Enhancement for Internet Electronic Mail:
-      Part III: Algorithms, Modes, and Identifiers.
-
-1489  Registration of a Cyrillic Character Set.
-
-1750  Randomness Recommendations for Security.
-
-1991  PGP Message Exchange Formats (obsolete)
-
-2144  The CAST-128 Encryption Algorithm.
-
-2279  UTF-8, a transformation format of ISO 10646.
-
-2440  OpenPGP (obsolete).
-
-3156  MIME Security with Pretty Good Privacy (PGP).
-
-4880  Current OpenPGP specification.
-
-6337  Elliptic Curve Cryptography (ECC) in OpenPGP
 
 * Various information
 
@@ -346,7 +360,7 @@ Note that such a comment will be removed if the git commit option
   - g10/main.h     :: Prototypes and some constants
   - g10/mainproc.c :: Message processing
   - g10/armor.c    :: Ascii armor filter
-  - g10/mdfilter.c :: Filter to calculate hashs
+  - g10/mdfilter.c :: Filter to calculate hashes
   - g10/textfilter.c :: Filter to handle CR/LF and trailing white space
   - g10/cipher.c   :: En-/Decryption filter
   - g10/misc.c     :: Utility functions
@@ -399,7 +413,7 @@ The *secure versions allocate memory in the secure memory.  That is,
 swapping out of this memory is avoided and is gets overwritten on
 free.  Use this for passphrases, session keys and other sensitive
 material.  This memory set aside for secure memory is linited to a few
-k.  In general the function don't print a memeory message and
+k.  In general the function don't print a memory message and
 terminate the process if there is not enough memory available.  The
 "try" versions of the functions return NULL instead.
 
@@ -429,5 +443,3 @@ plaintext packets and so on.  The file g10/encode.c might be a good
 starting point to see how it is used - actually this is the other way:
 constructing messages using pushed filters but it may be easier to
 understand.
-
-

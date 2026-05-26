@@ -1,15 +1,14 @@
 # hid2hci completion                                       -*- shell-script -*-
 
-_hid2hci()
+_comp_cmd_hid2hci()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--help --quiet -0 --tohci -1 --tohid' \
-            -- "$cur"))
+        _comp_compgen -- -W '--help --quiet -0 --tohci -1 --tohid'
     fi
 } &&
-    complete -F _hid2hci hid2hci
+    complete -F _comp_cmd_hid2hci hid2hci
 
 # ex: filetype=sh

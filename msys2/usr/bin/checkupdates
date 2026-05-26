@@ -15,19 +15,22 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
 declare -r myname='checkupdates'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 DOWNLOAD_CACHE=0
-USE_COLOR='y'
+SYNC=1
+USE_COLOR=1
 
 # Import libmakepkg
+# shellcheck source=/dev/null
 source "$LIBRARY"/util/message.sh
+# shellcheck source=/dev/null
 source "$LIBRARY"/util/parseopts.sh
 
 die() {
@@ -57,16 +60,21 @@ Safely print a list of pending updates.
 Usage: ${myname} [options]
 
 Options:
+  -c, --change    print only when available updates differ from the last --change run
   -d, --download  download pending updates to the pacman cache
-      --nocolor   do not colorize output
+      --nocolor   do not colorize output (listing color also dependent on Color
+                  option in pacman.conf)
   -n, --nosync    do not sync the temporary database
   -h, --help      display this help message and exit
   -V, --version   display version information and exit
 
 Environment Variables:
-  CHECKUPDATES_DB  override the path of the temporary database
-                   (default: "\${TMPDIR:-/tmp}/checkup-db-\${UID}")
-  TMPDIR           override the temporary directory (default: '/tmp')
+  CHECKUPDATES_DB      override the path of the temporary database
+                       (default: "\${TMPDIR:-/tmp}/checkup-db-\${UID}")
+  CHECKUPDATES_CHANGE  override the path of the temporary files for the "change" option
+                       (default: "\${XDG_STATE_HOME:-\$HOME/.local/state}/${myname}")
+  TMPDIR               override the temporary directory (default: '/tmp')
+  XDG_STATE_HOME       override the state directory (default: '\$HOME/.local/state')
 EOF
 }
 
@@ -74,8 +82,8 @@ version() {
 	printf "%s %s\n" "$myname" "$myver"
 }
 
-OPT_SHORT='dnhV'
-OPT_LONG=('download' 'nosync' 'help' 'nocolor' 'version')
+OPT_SHORT='dnchV'
+OPT_LONG=('download' 'nocolor' 'nosync' 'change' 'help' 'version')
 
 if ! parseopts "$OPT_SHORT" "${OPT_LONG[@]}" -- "$@"; then
 	exit 1
@@ -83,15 +91,16 @@ fi
 set -- "${OPTRET[@]}"
 unset OPT_SHORT OPT_LONG OPTRET
 
-SYNC=1
 while :; do
 	case $1 in
 		-d|--download)
 			DOWNLOAD_CACHE=1 ;;
 		--nocolor)
-			USE_COLOR='n';;
+			USE_COLOR=0 ;;
 		-n|--nosync)
 			SYNC=0 ;;
+		-c|--change)
+			CHANGE=1 ;;
 		-h|--help)
 			usage
 			exit 0 ;;
@@ -106,8 +115,13 @@ while :; do
 done
 
 # check if messages are to be printed using color
-if [[ -t 2 && $USE_COLOR != "n" ]]; then
+if [[ -t 2 ]] && (( USE_COLOR )); then
 	colorize
+
+	# check if pacman colors are to be kept in the updates array
+	if pacman-conf | grep -q Color; then
+		PACMAN_COLOR=1
+	fi
 else
 	unset ALL_OFF BOLD BLUE GREEN RED YELLOW
 fi
@@ -118,25 +132,52 @@ fi
 
 trap 'rm -f $CHECKUPDATES_DB/db.lck' INT TERM EXIT
 
+if [[ -z $CHECKUPDATES_CHANGE ]]; then
+	CHECKUPDATES_CHANGE="${XDG_STATE_HOME:-$HOME/.local/state}/${myname}/"
+fi
+
 DBPath="$(pacman-conf DBPath)"
 if [[ -z "$DBPath" ]] || [[ ! -d "$DBPath" ]]; then
 	DBPath="/var/lib/pacman/"
 fi
 
-if (( ${SYNC} )); then
+if (( SYNC )); then
 	mkdir -p "$CHECKUPDATES_DB"
 	ln -s "${DBPath}/local" "$CHECKUPDATES_DB" &> /dev/null
 	if ! pacman -Sy --dbpath "$CHECKUPDATES_DB" --logfile /dev/null &> /dev/null; then
-	    die 'Cannot fetch updates'
+		die 'Cannot fetch updates'
 	fi
 fi
-mapfile -t updates < <(pacman -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]')
+
+if (( PACMAN_COLOR )); then
+	mapfile -t updates < <(pacman --color always -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]')
+else
+	mapfile -t updates < <(pacman -Qu --dbpath "$CHECKUPDATES_DB" 2> /dev/null | grep -v '\[.*\]')
+fi
 
 if (( ${#updates[@]} )); then
-	printf '%s\n' "${updates[@]}"
-	if (( DOWNLOAD_CACHE )); then
-		runcmd pacman -Sw --noconfirm "${updates[@]%% *}" --dbpath "$CHECKUPDATES_DB" --logfile /dev/null
+	if (( CHANGE )); then
+		mkdir -p "$CHECKUPDATES_CHANGE"
+		printf '%s\n' "${updates[@]}" > "$CHECKUPDATES_CHANGE/current_check"
+
+		if ! diff "$CHECKUPDATES_CHANGE/current_check" "$CHECKUPDATES_CHANGE/last_check" &>/dev/null; then
+			cat "$CHECKUPDATES_CHANGE/current_check"
+		fi
+
+		mv -f "$CHECKUPDATES_CHANGE/current_check" "$CHECKUPDATES_CHANGE/last_check"
+	else
+		printf '%s\n' "${updates[@]}"
+		if (( DOWNLOAD_CACHE )); then
+			if (( PACMAN_COLOR )); then
+				updates=("${updates[@]#*m}")
+			fi
+			runcmd pacman -Sw --noconfirm "${updates[@]%% *}" --dbpath "$CHECKUPDATES_DB" --logfile /dev/null
+		fi
 	fi
 else
+	if (( CHANGE )); then
+		mkdir -p "$CHECKUPDATES_CHANGE"
+		true > "$CHECKUPDATES_CHANGE/last_check"
+	fi
 	exit 2
 fi

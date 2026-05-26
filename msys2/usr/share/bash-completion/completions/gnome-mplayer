@@ -1,38 +1,38 @@
 # gnome-mplayer(1) completion                              -*- shell-script -*-
 
-_gnome_mplayer()
+_comp_cmd_gnome_mplayer()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -'?' | --help | --help-all | --help-gtk)
             return
             ;;
         --showcontrols | --showsubtitles | --autostart)
-            COMPREPLY=($(compgen -w '0 1' -- "$cur"))
+            _comp_compgen -- -W '0 1'
             return
             ;;
         --subtitle)
-            _filedir '@(srt|sub|txt|utf|rar|mpsub|smi|js|ssa|ass)'
+            _comp_compgen_filedir '@(srt|sub|txt|utf|rar|mpsub|smi|js|ssa|ass)'
             return
             ;;
         --tvdriver)
-            COMPREPLY=($(compgen -W 'v4l v4l2' -- "$cur"))
+            _comp_compgen -- -W 'v4l v4l2'
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" --help-all)' -- "$cur"))
+        _comp_compgen_help -- --help-all
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _gnome_mplayer gnome-mplayer
+    complete -F _comp_cmd_gnome_mplayer gnome-mplayer
 
 # ex: filetype=sh

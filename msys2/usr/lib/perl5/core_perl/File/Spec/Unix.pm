@@ -3,7 +3,7 @@ package File::Spec::Unix;
 use strict;
 use Cwd ();
 
-our $VERSION = '3.84';
+our $VERSION = '3.91';
 $VERSION =~ tr/_//d;
 
 =head1 NAME
@@ -57,7 +57,7 @@ sub _pp_canonpath {
       $node = $1;
     }
     # This used to be
-    # $path =~ s|/+|/|g unless ($^O eq 'cygwin' || $^O eq 'msys');
+    # $path =~ s|/+|/|g unless ($^O eq 'cygwin');
     # but that made tests 29, 30, 35, 46, and 213 (as of #13272) to fail
     # (Mainly because trailing "" directories didn't get stripped).
     # Why would cygwin avoid collapsing multiple slashes into one? --jhi

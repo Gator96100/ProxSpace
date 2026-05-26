@@ -1,6 +1,10 @@
 # getopt.awk --- Do C library getopt(3) function in awk
 #                Also supports long options.
 #
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+#
 # Arnold Robbins, arnold@skeeve.com, Public Domain
 #
 # Initial version: March, 1991

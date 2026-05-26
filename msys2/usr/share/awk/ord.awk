@@ -1,12 +1,16 @@
 # ord.awk --- do ord and chr
-
-# Global identifiers:
-#    _ord_:        numerical values indexed by characters
-#    _ord_init:    function to initialize _ord_
+#
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
 #
 # Arnold Robbins, arnold@skeeve.com, Public Domain
 # 16 January, 1992
 # 20 July, 1992, revised
+
+# Global identifiers:
+#    _ord_:        numerical values indexed by characters
+#    _ord_init:    function to initialize _ord_
 
 BEGIN    { _ord_init() }
 

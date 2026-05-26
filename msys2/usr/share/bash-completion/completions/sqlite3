@@ -1,24 +1,23 @@
 # sqlite3(1) completion                                    -*- shell-script -*-
 
-_sqlite3()
+_comp_cmd_sqlite3()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     local dbexts='@(sqlite?(3)|?(s?(3))db)'
 
     case $prev in
-        -help | -version | -lookaside | -mmap | -newline | -nullvalue | -pagecache | \
-            -scratch | -separator | *.$dbexts)
+        -help | -version | -lookaside | -maxsize | -mmap | -newline | \
+            -nullvalue | -pagecache | -scratch | -separator | -vfs | *.$dbexts)
             return
             ;;
         -init)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -cmd)
-            compopt -o filenames
-            COMPREPLY=($(compgen -c -- "$cur"))
+            _comp_compgen_commands
             return
             ;;
     esac
@@ -27,12 +26,12 @@ _sqlite3()
         return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
         return
     fi
 
-    _filedir "$dbexts"
+    _comp_compgen_filedir "$dbexts"
 } &&
-    complete -F _sqlite3 sqlite3
+    complete -F _comp_cmd_sqlite3 sqlite3
 
 # ex: filetype=sh

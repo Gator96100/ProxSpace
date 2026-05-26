@@ -20,7 +20,7 @@ x86_64
 1656228447
 
 %INSTALLDATE%
-1689650105
+1774189482
 
 %PACKAGER%
 CI (msys2/msys2-autobuild/7d84a7e0/2563370831)
@@ -38,6 +38,7 @@ libraries
 custom
 
 %VALIDATION%
+sha256
 pgp
 
 %DEPENDS%

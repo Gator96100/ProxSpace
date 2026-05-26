@@ -1,19 +1,9 @@
 package UNIVERSAL;
 
-our $VERSION = '1.14';
+our $VERSION = '1.17';
 
-# UNIVERSAL should not contain any extra subs/methods beyond those
-# that it exists to define. The existence of import() below is a historical
-# accident that can't be fixed without breaking code.
-
-# Make sure that even though the import method is called, it doesn't do
-# anything unless called on UNIVERSAL.
-sub import {
-    return unless $_[0] eq __PACKAGE__;
-    return unless @_ > 1;
-    require Carp;
-    Carp::croak("UNIVERSAL does not export anything");
-}
+# UNIVERSAL.pm should not contain any methods/subs, they
+# are all defined in universal.c
 
 1;
 __END__
@@ -24,21 +14,21 @@ UNIVERSAL - base class for ALL classes (blessed references)
 
 =head1 SYNOPSIS
 
-    $is_io    = $fd->isa("IO::Handle");
-    $is_io    = Class->isa("IO::Handle");
+    my $obj_is_io    = $fd->isa("IO::Handle");
+    my $cls_is_io    = Class->isa("IO::Handle");
 
-    $does_log = $obj->DOES("Logger");
-    $does_log = Class->DOES("Logger");
+    my $obj_does_log = $obj->DOES("Logger");
+    my $cls_does_log = Class->DOES("Logger");
 
-    $sub      = $obj->can("print");
-    $sub      = Class->can("print");
+    my $obj_sub      = $obj->can("print");
+    my $cls_sub      = Class->can("print");
 
-    $sub      = eval { $ref->can("fandango") };
-    $ver      = $obj->VERSION;
+    my $eval_sub     = eval { $ref->can("fandango") };
+    my $ver          = $obj->VERSION;
 
     # but never do this!
-    $is_io    = UNIVERSAL::isa($fd, "IO::Handle");
-    $sub      = UNIVERSAL::can($obj, "print");
+    my $is_io        = UNIVERSAL::isa($fd, "IO::Handle");
+    my $sub          = UNIVERSAL::can($obj, "print");
 
 =head1 DESCRIPTION
 
@@ -92,8 +82,8 @@ reference. The L<C<isa> operator|perlop/"Class Instance Operator"> is an
 alternative that simply returns false in this case, so the C<eval> is not
 needed.
 
-If you want to be sure that you're calling C<isa> as a method, not a class,
-check the invocand with C<blessed> from L<Scalar::Util> first:
+If you want to be sure that you're calling C<isa> on an instance, not a class,
+check the invocant with C<blessed> from L<Scalar::Util> first:
 
   use Scalar::Util 'blessed';
 

@@ -13,7 +13,7 @@
 # On Ultrix, /bin/sh is too buggy, change the first line to: #!/bin/sh5
 
 
-# Copyright (C) 1998, 2002, 2004, 2006-2007, 2010-2022 Free Software
+# Copyright (C) 1998, 2002, 2004, 2006-2007, 2010-2025 Free Software
 # Foundation, Inc.
 # Copyright (C) 1993 Jean-loup Gailly
 
@@ -27,17 +27,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 tab='	'
 nl='
 '
 IFS=" $tab$nl"
 
-version='gzexe (gzip) 1.12
-Copyright (C) 2007, 2011-2018 Free Software Foundation, Inc.
+version='gzexe (gzip) 1.14
+Copyright (C) 2025 Free Software Foundation, Inc.
 This is free software.  You may redistribute copies of it under the terms of
 the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.
 There is NO WARRANTY, to the extent permitted by law.
@@ -117,7 +116,7 @@ for i do
   test -d "$dir" && test -w "$dir" && test -x "$dir" || dir=/tmp
   test -n "$tmp" && rm -f "$tmp"
   if test -z "$mktemp_status"; then
-    type mktemp >/dev/null 2>&1
+    command -v mktemp >/dev/null 2>&1
     mktemp_status=$?
   fi
   case $dir in
@@ -167,7 +166,7 @@ case $TMPDIR in
   /*) TMPDIR=$TMPDIR/;;
   *) TMPDIR=/tmp/;;
 esac
-if type mktemp >/dev/null 2>&1; then
+if command -v mktemp >/dev/null 2>&1; then
   gztmpdir=`mktemp -d "${TMPDIR}gztmpXXXXXXXXX"`
 else
   gztmpdir=${TMPDIR}gztmp$$; mkdir $gztmpdir

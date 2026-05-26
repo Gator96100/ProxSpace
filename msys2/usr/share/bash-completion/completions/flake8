@@ -1,42 +1,46 @@
 # flake8 completion                                        -*- shell-script -*-
 
-_flake8()
+_comp_cmd_flake8()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[j]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | -!(-*)h)
+        --help | --version | -${noargopts}h)
             return
             ;;
         --format)
-            COMPREPLY=($(compgen -W 'default pylint' -- "$cur"))
+            _comp_compgen -- -W 'default pylint'
             return
             ;;
-        --jobs | -!(-*)j)
-            COMPREPLY=($(compgen -W "auto {1..$(_ncpus)}" -- "$cur"))
+        --jobs | -${noargopts}j)
+            local REPLY
+            _comp_get_ncpus
+            _comp_compgen -- -W "auto {1..$REPLY}"
             return
             ;;
         --output-file | --append-config | --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --include-in-doctest | --exclude-from-doctest)
-            _filedir py
+            _comp_compgen_filedir py
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir py
+    _comp_compgen_filedir py
 } &&
-    complete -F _flake8 flake8
+    complete -F _comp_cmd_flake8 flake8
 
 # ex: filetype=sh

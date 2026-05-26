@@ -15,7 +15,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 # Expand to nothing if there are no matches
@@ -23,20 +23,22 @@ shopt -s nullglob
 shopt -s extglob
 
 declare -r myname='paccache'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 declare -a cachedirs=() candidates=() cmdopts=() whitelist=() blacklist=()
 declare -i delete=0 dryrun=0 filecount=0 move=0 totalsaved=0 verbose=0
 declare -i min_atime=0 min_mtime=0
-declare    delim=$'\n' keep=3 movedir= scanarch=
+declare    delim=$'\n' keep=3 movedir='' scanarch=''
 
 QUIET=0
 USE_COLOR='y'
 
 # Import libmakepkg
+# shellcheck source=/dev/null
 source "$LIBRARY"/util/message.sh
+# shellcheck source=/dev/null
 source "$LIBRARY"/util/parseopts.sh
 
 die() {
@@ -134,6 +136,9 @@ pkgfilter() {
 	}' "${@:5}"
 }
 
+# shellcheck disable=SC1073,SC1065,SC1064,SC1072
+#!/bin/bash
+
 size_to_human() {
 	awk -v size="$1" '
 	BEGIN {
@@ -166,7 +171,7 @@ summarize() {
 	(( QUIET )) && return
 
 	local -i filecount=$1; shift
-	local seenarch= seen= arch= name=
+	local seenarch='' seen='' arch='' name=''
 	local -r pkg_re='(.+)-[^-]+-[0-9]+-([^.]+)\.pkg.*'
 
 	if (( delete )); then
@@ -284,13 +289,15 @@ while :; do
 			shift ;;
 		--min-atime)
 			min_atime=$(date -d "$2" +%s)
-			if (( $? )); then
+			min_atime_status=$?
+			if (( min_atime_status )); then
 				die "argument to option --min-atime must be of the form described by 'info \"Date input formats\" '."
 			fi
 			shift ;;
 		--min-mtime)
 			min_mtime=$(date -d "$2" +%s)
-			if (( $? )); then
+			min_mtime_status=$?
+			if (( min_mtime_status )); then
 				die "argument to option --min-mtime must be of the form described by 'info \"Date input formats\" '."
 			fi
 			shift ;;
@@ -334,8 +341,8 @@ else
 fi
 
 # setting default cachedirs
-if [[ -z $cachedirs ]]; then
-	cachedirs=($(pacman-conf CacheDir))
+if [[ -z "${cachedirs[0]}" ]]; then
+	mapfile -t cachedirs < <(pacman-conf CacheDir)
 fi
 
 # remaining args are a whitelist

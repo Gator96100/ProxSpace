@@ -1,5 +1,8 @@
 # assert --- assert that a condition is true. Otherwise, exit.
-
+#
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
 #
 # Arnold Robbins, arnold@skeeve.com, Public Domain
 # May, 1993

@@ -1,8 +1,8 @@
 # bash completion for update-alternatives                  -*- shell-script -*-
 
-_installed_alternatives()
+_comp_cmd_update_alternatives__installed()
 {
-    local admindir
+    local i admindir
     # find the admin dir
     for i in alternatives dpkg/alternatives rpm/alternatives; do
         [[ -d /var/lib/$i ]] && admindir=/var/lib/$i && break
@@ -13,17 +13,17 @@ _installed_alternatives()
             break
         fi
     done
-    COMPREPLY=($(compgen -W '$(command ls $admindir)' -- "$cur"))
+    [[ -d $admindir ]] && _comp_compgen_split -- "$(command ls "$admindir")"
 }
 
-_update_alternatives()
+_comp_cmd_update_alternatives()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --altdir | --admindir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --help | --usage | --version)
@@ -31,7 +31,7 @@ _update_alternatives()
             ;;
     esac
 
-    local mode args i
+    local mode="" args i
 
     # find which mode to use and how many real args used so far
     for ((i = 1; i < cword; i++)); do
@@ -46,10 +46,10 @@ _update_alternatives()
         --install)
             case $args in
                 1 | 3)
-                    _filedir
+                    _comp_compgen_filedir
                     ;;
                 2)
-                    _installed_alternatives
+                    _comp_cmd_update_alternatives__installed
                     ;;
                 4)
                     # priority - no completions
@@ -57,13 +57,13 @@ _update_alternatives()
                 *)
                     case $((args % 4)) in
                         0 | 2)
-                            _filedir
+                            _comp_compgen_filedir
                             ;;
                         1)
-                            COMPREPLY=($(compgen -W '--slave' -- "$cur"))
+                            _comp_compgen -- -W '--slave'
                             ;;
                         3)
-                            _installed_alternatives
+                            _comp_cmd_update_alternatives__installed
                             ;;
                     esac
                     ;;
@@ -72,21 +72,26 @@ _update_alternatives()
         --remove | --set)
             case $args in
                 1)
-                    _installed_alternatives
+                    _comp_cmd_update_alternatives__installed
                     ;;
                 2)
-                    _filedir
+                    _comp_compgen_filedir
                     ;;
             esac
             ;;
         --auto | --remove-all | --display | --config)
-            _installed_alternatives
+            _comp_cmd_update_alternatives__installed
             ;;
         *)
-            COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+            _comp_compgen_help - <<<"$(LANG=C "$1" --help 2>&1 | command sed '
+                /usage:/,/^[[:space:]]*$/{
+                  s/^\([[:space:]]*usage:\)\{0,1\}[[:space:]]*[^[:space:]]*alternatives /  /
+                  s/^[[:space:]]*\[\(-.*\)\]/  \1/
+                }
+                /common options:/,$s/ --/\n --/g')"
             ;;
     esac
 } &&
-    complete -F _update_alternatives update-alternatives alternatives
+    complete -F _comp_cmd_update_alternatives update-alternatives alternatives
 
 # ex: filetype=sh

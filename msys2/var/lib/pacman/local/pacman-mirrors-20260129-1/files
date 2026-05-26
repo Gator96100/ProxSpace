@@ -1,0 +1,10 @@
+%FILES%
+etc/
+etc/pacman.d/
+etc/pacman.d/mirrorlist.mingw
+etc/pacman.d/mirrorlist.msys
+
+%BACKUP%
+etc/pacman.d/mirrorlist.msys	47ceb86874e3f1fb0fbe15ae349ede66
+etc/pacman.d/mirrorlist.mingw	e1a8f70bb7bc75a0d1cfd94a8ab498b0
+

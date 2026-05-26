@@ -1,30 +1,26 @@
 # Slackware Linux upgradepkg completion                    -*- shell-script -*-
 
-_upgradepkg()
+_comp_cmd_upgradepkg()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--dry-run --install-new --reinstall
-            --verbose' -- "$cur"))
+        _comp_compgen -- -W '--dry-run --install-new --reinstall --verbose'
         return
     fi
 
-    if [[ $cur == ?*%* ]]; then
-        prev="${cur%%?(\\)%*}"
-        cur="${cur#*%}"
-        local nofiles IFS=$'\n'
+    if [[ $cur =~ ^[^%]+% ]]; then
+        local prefix=$BASH_REMATCH nofiles=""
         compopt -o filenames
-        COMPREPLY=($(compgen -P "$prev%" -f -X "!*.@(t[bgxl]z)" -- "$cur"))
-        [[ ${COMPREPLY-} ]] || nofiles=1
-        COMPREPLY+=($(compgen -P "$prev%" -S '/' -d -- "$cur"))
-        [[ -v nofiles ]] && compopt -o nospace
+        _comp_compgen -P "$prefix" -- -f -X "!*.t[bgxl]z" || nofiles=set
+        _comp_compgen -aP "$prefix" -- -S '/' -d
+        [[ $nofiles ]] && compopt -o nospace
         return
     fi
 
-    _filedir 't[bglx]z'
+    _comp_compgen_filedir 't[bglx]z'
 } &&
-    complete -F _upgradepkg upgradepkg
+    complete -F _comp_cmd_upgradepkg upgradepkg
 
 # ex: filetype=sh

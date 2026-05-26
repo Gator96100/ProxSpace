@@ -2,7 +2,7 @@
 #
 #   source.sh - functions for downloading and extracting sources
 #
-#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
 [[ -n "$LIBMAKEPKG_SOURCE_SH" ]] && return
 LIBMAKEPKG_SOURCE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
-source "$LIBRARY/util/source.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/source.sh"
 
 
-for lib in "$LIBRARY/source/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/source/"*.sh; do
 	source "$lib"
 done
 

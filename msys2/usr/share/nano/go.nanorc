@@ -42,7 +42,7 @@ color brightblue "//.*"
 color brightblue start="/\*" end="\*/"
 
 # Special comments.
-color brightcyan "//[[:blank:]]*\+build[[:blank:]]+(([a-zA-Z_0-9]+[[:blank:]]*)+,[[:blank:]]*)*[a-zA-Z_0-9]+"
+color brightcyan "//[[:blank:]]*\+build[[:blank:]]+(([[:alnum:]_]+[[:blank:]]*)+,[[:blank:]]*)*[[:alnum:]_]+"
 
 # Trailing whitespace.
 color ,green "[[:space:]]+$"

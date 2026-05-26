@@ -29,6 +29,7 @@ syn keyword srcInfoField
             \ validpgpkeys
             \ source
             \ source_x86_64
+            \ source_x86_64_v3
             \ source_i686
             \ source_pentium4
             \ source_ppc
@@ -36,6 +37,7 @@ syn keyword srcInfoField
             \ source_armv7h
             \ depends
             \ depends_x86_64
+            \ depends_x86_64_v3
             \ depends_i686
             \ depends_pentium4
             \ depends_ppc
@@ -43,6 +45,7 @@ syn keyword srcInfoField
             \ depends_armv7h
             \ checkdepends
             \ checkdepends_x86_64
+            \ checkdepends_x86_64_v3
             \ checkdepends_i686
             \ checkdepends_pentium4
             \ checkdepends_ppc
@@ -50,6 +53,7 @@ syn keyword srcInfoField
             \ checkdepends_armv7h
             \ makedepends
             \ makedepends_x86_64
+            \ makedepends_x86_64_v3
             \ makedepends_i686
             \ makedepends_pentium4
             \ makedepends_ppc
@@ -57,6 +61,7 @@ syn keyword srcInfoField
             \ makedepends_armv7h
             \ optdepends
             \ optdepends_x86_64
+            \ optdepends_x86_64_v3
             \ optdepends_i686
             \ optdepends_pentium4
             \ optdepends_ppc
@@ -64,6 +69,7 @@ syn keyword srcInfoField
             \ optdepends_armv7h
             \ provides
             \ provides_x86_64
+            \ provides_x86_64_v3
             \ provides_i686
             \ provides_pentium4
             \ provides_ppc
@@ -71,6 +77,7 @@ syn keyword srcInfoField
             \ provides_armv7h
             \ conflicts
             \ conflicts_x86_64
+            \ conflicts_x86_64_v3
             \ conflicts_i686
             \ conflicts_pentium4
             \ conflicts_ppc
@@ -78,6 +85,7 @@ syn keyword srcInfoField
             \ conflicts_armv7h
             \ replaces
             \ replaces_x86_64
+            \ replaces_x86_64_v3
             \ replaces_i686
             \ replaces_pentium4
             \ replaces_ppc
@@ -85,6 +93,7 @@ syn keyword srcInfoField
             \ replaces_armv7h
             \ md5sums
             \ md5sums_x86_64
+            \ md5sums_x86_64_v3
             \ md5sums_i686
             \ md5sums_pentium4
             \ md5sums_ppc
@@ -92,6 +101,7 @@ syn keyword srcInfoField
             \ md5sums_armv7h
             \ sha1sums
             \ sha1sums_x86_64
+            \ sha1sums_x86_64_v3
             \ sha1sums_i686
             \ sha1sums_pentium4
             \ sha1sums_ppc
@@ -99,6 +109,7 @@ syn keyword srcInfoField
             \ sha1sums_armv7h
             \ sha224sums
             \ sha224sums_x86_64
+            \ sha224sums_x86_64_v3
             \ sha224sums_i686
             \ sha224sums_pentium4
             \ sha224sums_ppc
@@ -106,6 +117,7 @@ syn keyword srcInfoField
             \ sha224sums_armv7h
             \ sha256sums
             \ sha256sums_x86_64
+            \ sha256sums_x86_64_v3
             \ sha256sums_i686
             \ sha256sums_pentium4
             \ sha256sums_ppc
@@ -113,6 +125,7 @@ syn keyword srcInfoField
             \ sha256sums_armv7h
             \ sha384sums
             \ sha384sums_x86_64
+            \ sha384sums_x86_64_v3
             \ sha384sums_i686
             \ sha384sums_pentium4
             \ sha384sums_ppc
@@ -120,6 +133,7 @@ syn keyword srcInfoField
             \ sha384sums_armv7h
             \ sha512sums
             \ sha512sums_x86_64
+            \ sha512sums_x86_64_v3
             \ sha512sums_i686
             \ sha512sums_pentium4
             \ sha512sums_ppc
@@ -127,6 +141,7 @@ syn keyword srcInfoField
             \ sha512sums_armv7h
             \ b2sums
             \ b2sums_x86_64
+            \ b2sums_x86_64_v3
             \ b2sums_i686
             \ b2sums_pentium4
             \ b2sums_ppc

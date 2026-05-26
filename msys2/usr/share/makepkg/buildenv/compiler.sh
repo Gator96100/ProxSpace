@@ -4,7 +4,7 @@
 #   ccache - Cache compilations and reuse them to save time on repetitions
 #   distcc - Distribute compilation of C and C++ across machines
 #
-#   Copyright (c) 2007-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2007-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_COMPILER_SH" ]] && return
 LIBMAKEPKG_BUILDENV_COMPILER_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/option.sh"
 
 build_options+=('ccache' 'distcc')
 buildenv_functions+=('buildenv_ccache' 'buildenv_distcc')

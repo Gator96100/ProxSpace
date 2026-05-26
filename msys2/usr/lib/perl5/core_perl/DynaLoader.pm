@@ -18,7 +18,7 @@ package DynaLoader;
 # Tim.Bunce@ig.co.uk, August 1994
 
 BEGIN {
-    our $VERSION = '1.52';
+    our $VERSION = '1.56';
 }
 
 # Note: in almost any other piece of code "our" would have been a better
@@ -265,8 +265,8 @@ sub dl_findfile {
             push(@names,"$_.$dl_dlext")    unless m/\.$dl_dlext$/o;
             push(@names,"$_.$dl_so")     unless m/\.$dl_so$/o;
 	    
-	    
             push(@names,"msys-$_.$dl_so")  unless m:/:;
+            push(@names,"cyg$_.$dl_so")  unless m:/:;
 	    
             push(@names,"lib$_.$dl_so")  unless m:/:;
             push(@names, $_);

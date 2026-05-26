@@ -2,7 +2,7 @@
 #
 #   verify_signature.sh - functions for checking PGP signatures
 #
-#   Copyright (c) 2011-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,10 +21,16 @@
 [[ -n "$LIBMAKEPKG_INTEGRITY_VERIFY_SIGNATURE_SH" ]] && return
 LIBMAKEPKG_INTEGRITY_VERIFY_SIGNATURE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+
+# Filter the contents of a GnuPG statusfile to only contain understood terms to narrow the file's scope and circumvent
+# the use of terms (e.g. NOTATION_DATA) that may contain unescaped binary data
+filter_gnupg_statusfile() {
+	grep -E "(.*SIG| TRUST_.*)"
+}
 
 check_pgpsigs() {
 	(( SKIPPGPCHECK )) && return 0
@@ -35,6 +41,7 @@ check_pgpsigs() {
 	local netfile proto pubkey success status fingerprint trusted
 	local warnings=0
 	local errors=0
+	local statusfile_raw="$(mktemp)"
 	local statusfile=$(mktemp)
 	local all_sources
 
@@ -103,7 +110,7 @@ check_pgpsigs() {
 		printf '\n' >&2
 	done
 
-	rm -f "$statusfile"
+	rm -f "$statusfile" "$statusfile_raw"
 
 	if (( errors )); then
 		error "$(gettext "One or more PGP signatures could not be verified!")"
@@ -157,7 +164,10 @@ verify_file_signature() {
 		"")  decompress="cat" ;;
 	esac
 
-	$decompress < "$sourcefile" | gpg --quiet --batch --status-file "$statusfile" --verify "$file" - 2> /dev/null
+	# create a statusfile that contains only understood terms
+	$decompress < "$sourcefile" | gpg --quiet --batch --status-file "$statusfile_raw" --verify "$file" - 2> /dev/null
+	filter_gnupg_statusfile > "$statusfile" < "$statusfile_raw"
+
 	return 0
 }
 
@@ -189,17 +199,22 @@ verify_git_signature() {
 
 	printf "    %s git repo ... " "${dir##*/}" >&2
 
-	git -C "$dir" verify-$fragtype --raw "$fragval" > "$statusfile" 2>&1
-	if ! grep -qs NEWSIG "$statusfile"; then
-		printf '%s\n' "$(gettext "SIGNATURE NOT FOUND")" >&2
-		errors=1
-		return 1
-	fi
+	# create a statusfile that contains only understood terms
+	git -C "$dir" verify-$fragtype --raw "$fragval" > "$statusfile_raw" 2>&1
+	filter_gnupg_statusfile > "$statusfile" < "$statusfile_raw"
+
 	return 0
 }
 
 parse_gpg_statusfile() {
 	local type arg1 arg6 arg10
+
+	# ensure the NEWSIG keyword is part of the metadata
+	if ! grep -qs NEWSIG "$statusfile"; then
+		printf '%s\n' "$(gettext "SIGNATURE NOT FOUND")" >&2
+		errors=1
+		return 1
+	fi
 
 	while read -r _ type arg1 _ _ _ _ arg6 _ _ _ arg10 _; do
 		case "$type" in

@@ -11,7 +11,7 @@ ProxSpace comes with 2 different executables .bat files.
 ProxSpace will automatically download and update to the latest required packages. All tools will be contained within the ProxSpace folder.
 
 ProxSpace is based on:
- - msys2-x86_64-20210725
+ - msys2-x86_64-20260322   
  
  Following packages will be automatically download or updated:
  - arm-none-eabi-gcc
@@ -22,7 +22,7 @@ ProxSpace is based on:
  - cmake
  - gcc
  - gdb
- - Qt5
+ - Qt6
  - readline
  - pkg-config
  - libsndfile

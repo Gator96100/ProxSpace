@@ -828,7 +828,7 @@ sub _can_do_level {
   return 1 if $level == STANDARD;
 
   # Currently, the systems that can do HIGH or MEDIUM are identical
-  if ( $^O eq 'MSWin32' || $^O eq 'os2' || $^O eq 'cygwin' || $^O eq 'msys' || $^O eq 'dos' || $^O eq 'MacOS' || $^O eq 'mpeix') {
+  if ( $^O eq 'MSWin32' || $^O eq 'os2' || $^O eq 'cygwin' || $^O eq 'dos' || $^O eq 'MacOS' || $^O eq 'mpeix') {
     return 0;
   } else {
     return 1;
@@ -2157,7 +2157,7 @@ sub unlink0 {
     # On NFS the link count may still be 1 but we can't know that
     # we are on NFS.  Since we can't be sure, we'll defer it
 
-    return 1 if $fh[3] == 0 || $^O eq 'cygwin' || $^O eq 'msys';
+    return 1 if $fh[3] == 0 || $^O eq 'cygwin';
   }
   # fall-through if we can't unlink now
   _deferred_unlink($fh, $path, 0);

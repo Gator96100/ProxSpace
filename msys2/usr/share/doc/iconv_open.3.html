@@ -90,9 +90,10 @@ ISO-2022&minus;JP&minus;MS</p>
 <p style="margin-left:11%;">Chinese</p>
 
 <p style="margin-left:22%;">EUC&minus;CN, HZ, GBK, CP936,
-GB18030, EUC&minus;TW, BIG5, CP950, BIG5&minus;HKSCS,
-BIG5&minus;HKSCS:2004, BIG5&minus;HKSCS:2001,
-BIG5&minus;HKSCS:1999, ISO&minus;2022&minus;CN,
+GB18030, GB18030:2022, EUC&minus;TW, BIG5, CP950,
+BIG5&minus;HKSCS, BIG5&minus;HKSCS:2004,
+BIG5&minus;HKSCS:2001, BIG5&minus;HKSCS:1999,
+ISO&minus;2022&minus;CN,
 ISO&minus;2022&minus;CN&minus;EXT</p>
 
 <table width="100%" border="0" rules="none" frame="void"
@@ -273,9 +274,15 @@ it can be approximated through one or several characters
 that look similar to the original character.</p>
 
 <p style="margin-left:11%; margin-top: 1em">When the string
-&quot;//IGNORE&quot; is appended to <i>tocode</i>,
-characters that cannot be represented in the target
-character set will be silently discarded.</p>
+&quot;//IGNORE&quot; is appended to <i>tocode</i>, invalid
+multibyte sequences in the input and characters that cannot
+be represented in the target character set will be silently
+discarded.</p>
+
+<p style="margin-left:11%; margin-top: 1em">When the string
+&quot;//NON_IDENTICAL_DISCARD&quot; is appended to
+<i>tocode</i>, characters that cannot be represented in the
+target character set will be silently discarded.</p>
 
 <p style="margin-left:11%; margin-top: 1em">The resulting
 conversion descriptor can be used with <b>iconv</b> any
@@ -330,7 +337,7 @@ not supported by the implementation.</p></td></tr>
 </h2>
 
 
-<p style="margin-left:11%; margin-top: 1em">POSIX:2001</p>
+<p style="margin-left:11%; margin-top: 1em">POSIX:2024</p>
 
 <h2>SEE ALSO
 <a name="SEE ALSO"></a>

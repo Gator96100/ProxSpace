@@ -1,28 +1,32 @@
 # bash completion for bzip2                                -*- shell-script -*-
 
-_bzip2()
+_comp_cmd_bzip2()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[bpn]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | -!(-*)[bhp])
+        --help | -${noargopts}[bhp])
             return
             ;;
-        -!(-*)n)
-            COMPREPLY=($(compgen -W "{1..$(_ncpus)}" -- "$cur"))
+        -${noargopts}n)
+            local REPLY
+            _comp_get_ncpus
+            _comp_compgen -- -W "{1..$REPLY}"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        local helpopts=$(_parse_help "$1")
-        COMPREPLY=($(compgen -W "${helpopts//#/} -2 -3 -4 -5 -6 -7 -8 -9" \
-            -- "$cur"))
+        local helpopts
+        _comp_compgen -Rv helpopts help
+        _comp_compgen -- -W '${helpopts[*]//#/} -{2..9}'
         return
     fi
 
-    local IFS=$'\n' xspec="*.?(t)bz2"
+    local xspec="*.?(t)bz2"
 
     if [[ $prev == --* ]]; then
         [[ $prev == --@(decompress|list|test) ]] && xspec="!"$xspec
@@ -32,11 +36,11 @@ _bzip2()
         [[ $prev == -*z* ]] && xspec=
     fi
 
-    _tilde "$cur" || return
+    _comp_compgen_tilde && return
 
     compopt -o filenames
-    COMPREPLY=($(compgen -f -X "$xspec" -- "$cur") $(compgen -d -- "$cur"))
+    _comp_compgen -- -f -X "$xspec" -o plusdirs
 } &&
-    complete -F _bzip2 bzip2 pbzip2 lbzip2
+    complete -F _comp_cmd_bzip2 bzip2 pbzip2 lbzip2
 
 # ex: filetype=sh

@@ -1,55 +1,52 @@
 # bash completion for gphoto2(1)                           -*- shell-script -*-
 
-_gphoto2()
+_comp_cmd_gphoto2()
 {
-    local cur prev words cword split
-    _init_completion -s -n : || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -n : -- "$@" || return
 
     case $prev in
         --debug-logfile)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --hook-script)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --filename)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -u | --upload-file)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --port)
-            COMPREPLY=($(compgen -W "$($1 --list-ports 2>/dev/null |
-                awk 'NR>3 { print $1 }')" -- "$cur"))
-            __ltrim_colon_completions "$cur"
+            _comp_compgen_split -- "$("$1" --list-ports 2>/dev/null |
+                _comp_awk 'NR>3 { print $1 }')"
+            _comp_ltrim_colon_completions "$cur"
             return
             ;;
         --camera)
-            local IFS=$'\n'
-            COMPREPLY=($(compgen -W "$($1 --list-cameras 2>/dev/null |
-                awk -F'"' 'NR>2 { print $2 }')" -- "$cur"))
+            _comp_compgen_split -l -- "$("$1" --list-cameras 2>/dev/null |
+                _comp_awk -F '"' 'NR>2 { print $2 }')"
             return
             ;;
         --get-config | --set-config | --set-config-index | --set-config-value)
-            COMPREPLY=($(compgen -W "$(
-                $1 --list-config 2>/dev/null
-            )" -- "$cur"))
+            _comp_compgen_split -- "$("$1" --list-config 2>/dev/null)"
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     fi
 
 } &&
-    complete -F _gphoto2 gphoto2
+    complete -F _comp_cmd_gphoto2 gphoto2
 
 # ex: filetype=sh

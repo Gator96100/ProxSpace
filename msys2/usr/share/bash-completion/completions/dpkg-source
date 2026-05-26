@@ -1,9 +1,9 @@
 # Debian dpkg-source completion                            -*- shell-script -*-
 
-_dpkg_source()
+_comp_cmd_dpkg_source()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     local options word action packopts unpackopts fields
 
@@ -29,13 +29,11 @@ _dpkg_source()
         unpack)
             case $prev in
                 -x)
-                    _filedir -d
-                    _filedir 'dsc'
+                    _comp_compgen_filedir 'dsc'
                     ;;
                 *)
-                    COMPREPLY=($(compgen -W "$unpackopts" -- "$cur"))
-                    _filedir -d
-                    _filedir
+                    _comp_compgen -- -W "$unpackopts"
+                    _comp_compgen -a filedir
                     ;;
             esac
             return
@@ -43,7 +41,7 @@ _dpkg_source()
         pack)
             case $prev in
                 -b)
-                    _filedir -d
+                    _comp_compgen_filedir -d
                     ;;
                 -c | -l | -T | -i | -I)
                     # -c: get controlfile
@@ -52,12 +50,11 @@ _dpkg_source()
                     # -i: <regexp> filter out files to ignore diffs of.
                     # -I: filter out files when building tarballs.
                     # return directory names and file names
-                    _filedir -d
-                    _filedir
+                    _comp_compgen_filedir
                     ;;
                 -F)
                     # -F: force change log format
-                    COMPREPLY=($(command ls /usr/lib/dpkg/parsechangelog))
+                    _comp_compgen_split -- "$(command ls /usr/lib/dpkg/parsechangelog)"
                     ;;
                 -V)
                     # -V: set a substitution variable
@@ -72,27 +69,26 @@ _dpkg_source()
                         # $cur contains a "="
                         COMPREPLY=()
                     else
-                        COMPREPLY=($(compgen -W "$fields" -- "$cur"))
+                        _comp_compgen -- -W "$fields"
                     fi
                     ;;
                 -U)
                     # -U: remove a field
                     # Suggest possible fieldnames
-                    COMPREPLY=($(compgen -W "$fields" -- "$cur"))
+                    _comp_compgen -- -W "$fields"
                     ;;
                 *)
-                    COMPREPLY=($(compgen -W "$packopts $unpackopts" \
-                        -- "$cur"))
+                    _comp_compgen -- -W '$packopts $unpackopts'
                     ;;
             esac
             return
             ;;
         *)
-            COMPREPLY=($(compgen -W "$options" -- "$cur"))
+            _comp_compgen -- -W "$options"
             return
             ;;
     esac
 } &&
-    complete -F _dpkg_source dpkg-source
+    complete -F _comp_cmd_dpkg_source dpkg-source
 
 # ex: filetype=sh

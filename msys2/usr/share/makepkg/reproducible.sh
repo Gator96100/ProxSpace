@@ -2,7 +2,7 @@
 #
 #   reproducible.sh - utilities for improving package reproducibility
 #
-#   Copyright (c) 2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2021-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 [[ -n "$LIBMAKEPKG_REPRODUCIBLE_SH" ]] && return
 LIBMAKEPKG_REPRODUCIBLE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 
-for lib in "$LIBRARY/reproducible/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/reproducible/"*.sh; do
 	source "$lib"
 done

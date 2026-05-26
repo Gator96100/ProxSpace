@@ -2,13 +2,13 @@
 
 [[ $OSTYPE == *linux* ]] || return 1
 
-_route()
+_comp_cmd_route()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $prev == dev ]]; then
-        _available_interfaces
+        _comp_compgen_available_interfaces
         return
     fi
 
@@ -16,15 +16,16 @@ _route()
     local opt found i
     for opt in add del -host -net netmask metric mss window irtt reject mod \
         dyn reinstate dev default gw; do
-        found=false
-        for ((i = 1; i < ${#words[@]} - 1; i++)); do
-            [[ ${words[i]} == "$opt" ]] && found=true && break
+        found=""
+        for ((i = 1; i < cword; i++)); do
+            [[ ${words[i]} == "$opt" ]] && found=set && break
         done
-        $found || COMPREPLY+=("$opt")
+        [[ $found ]] || COMPREPLY+=("$opt")
     done
 
-    COMPREPLY=($(compgen -W '"${COMPREPLY[@]}"' -- "$cur"))
+    ((${#COMPREPLY[@]})) &&
+        _comp_compgen -- -W '"${COMPREPLY[@]}"'
 } &&
-    complete -F _route route
+    complete -F _comp_cmd_route route
 
 # ex: filetype=sh

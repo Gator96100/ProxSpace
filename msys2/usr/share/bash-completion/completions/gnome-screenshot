@@ -1,31 +1,33 @@
 # gnome-screenshot(1) completion                           -*- shell-script -*-
 
-_gnome_screenshot()
+_comp_cmd_gnome_screenshot()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[def]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --help-* | --version | --delay | --display | -!(-*)[hd])
+        --help | --help-* | --version | --delay | --display | -${noargopts}[hd])
             return
             ;;
-        --border-effect | -!(-*)e)
-            COMPREPLY=($(compgen -W 'shadow border vintage none' -- "$cur"))
+        --border-effect | -${noargopts}e)
+            _comp_compgen -- -W 'shadow border vintage none'
             return
             ;;
-        --file | -!(-*)f)
-            _filedir '@(jp?(e)|pn)g'
+        --file | -${noargopts}f)
+            _comp_compgen_filedir '@(jp?(e)|pn)g'
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     fi
 } &&
-    complete -F _gnome_screenshot gnome-screenshot
+    complete -F _comp_cmd_gnome_screenshot gnome-screenshot
 
 # ex: filetype=sh

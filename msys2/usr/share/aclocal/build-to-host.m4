@@ -1,5 +1,5 @@
-# build-to-host.m4 serial 1
-dnl Copyright (C) 2023 Free Software Foundation, Inc.
+# build-to-host.m4 serial 3
+dnl Copyright (C) 2023-2024 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -41,18 +41,18 @@ AC_DEFUN([gl_BUILD_TO_HOST],
   case "$build_os" in
     cygwin* | msys*)
       case "$host_os" in
-        mingw*)
+        mingw* | windows*)
           gl_final_[$1]=`cygpath -w "$gl_final_[$1]"` ;;
       esac
       ;;
   esac
   dnl Convert it to C string syntax.
-  [$1]_c=`echo "$gl_final_[$1]" | sed -e "$gl_sed_double_backslashes" -e "$gl_sed_escape_doublequotes"`
+  [$1]_c=`printf '%s\n' "$gl_final_[$1]" | sed -e "$gl_sed_double_backslashes" -e "$gl_sed_escape_doublequotes" | tr -d "$gl_tr_cr"`
   [$1]_c='"'"$[$1]_c"'"'
   AC_SUBST([$1_c])
 
   dnl Define somedir_c_make.
-  [$1]_c_make=`echo "$[$1]_c" | sed -e "$gl_sed_escape_for_make_1" -e "$gl_sed_escape_for_make_2"`
+  [$1]_c_make=`printf '%s\n' "$[$1]_c" | sed -e "$gl_sed_escape_for_make_1" -e "$gl_sed_escape_for_make_2" | tr -d "$gl_tr_cr"`
   dnl Use the substituted somedir variable, when possible, so that the user
   dnl may adjust somedir a posteriori when there are no special characters.
   if test "$[$1]_c_make" = '\"'"${gl_final_[$1]}"'\"'; then
@@ -70,4 +70,10 @@ changequote(,)dnl
   gl_sed_escape_for_make_1="s,\\([ \"&'();<>\\\\\`|]\\),\\\\\\1,g"
 changequote([,])dnl
   gl_sed_escape_for_make_2='s,\$,\\$$,g'
+  dnl Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
+  dnl does not understand '\r'.
+  case `echo r | tr -d '\r'` in
+    '') gl_tr_cr='\015' ;;
+    *)  gl_tr_cr='\r' ;;
+  esac
 ])

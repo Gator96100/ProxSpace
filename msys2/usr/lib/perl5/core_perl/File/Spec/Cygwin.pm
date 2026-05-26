@@ -3,7 +3,7 @@ package File::Spec::Cygwin;
 use strict;
 require File::Spec::Unix;
 
-our $VERSION = '3.84';
+our $VERSION = '3.91';
 $VERSION =~ tr/_//d;
 
 our @ISA = qw(File::Spec::Unix);
@@ -117,12 +117,12 @@ Default: 1
 =cut
 
 sub case_tolerant {
-  return 1 unless ($^O eq 'cygwin' || $^O eq 'msys')
+  return 1 unless $^O eq 'cygwin'
     and defined &Cygwin::mount_flags;
 
   my $drive = shift;
   if (! $drive) {
-      my @flags = split(/,/, Cygwin::mount_flags('/msys'));
+      my @flags = split(/,/, Cygwin::mount_flags('/cygwin'));
       my $prefix = pop(@flags);
       if (! $prefix || $prefix eq 'cygdrive') {
           $drive = '/cygdrive/c';

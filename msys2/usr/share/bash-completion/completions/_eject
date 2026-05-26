@@ -3,31 +3,31 @@
 # Use of this file is deprecated on Linux.  Upstream completion is
 # available in util-linux >= 2.23, use that instead.
 
-_eject()
+_comp_cmd_eject()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -h | --help | -V | --version | -c | --changerslot | -x | --cdspeed)
             return
             ;;
         -a | --auto | -i | --manualeject)
-            COMPREPLY=($(compgen -W 'on off' -- "$cur"))
+            _comp_compgen -- -W 'on off'
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     elif [[ $prev == @(-d|--default) ]]; then
         return
     fi
 
-    _cd_devices
-    _dvd_devices
+    _comp_compgen_cd_devices
+    _comp_compgen -a dvd_devices
 } &&
-    complete -F _eject eject
+    complete -F _comp_cmd_eject eject
 
 # ex: filetype=sh

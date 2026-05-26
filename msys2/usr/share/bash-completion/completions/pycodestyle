@@ -1,34 +1,34 @@
 # pycodestyle completion                                   -*- shell-script -*-
 
-_pycodestyle()
+_comp_cmd_pycodestyle()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -h | --help | --version)
             return
             ;;
         --format)
-            COMPREPLY=($(compgen -W 'default pylint' -- "$cur"))
+            _comp_compgen -- -W 'default pylint'
             return
             ;;
         --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir py
+    _comp_compgen_filedir py
 } &&
-    complete -F _pycodestyle pycodestyle
+    complete -F _comp_cmd_pycodestyle pycodestyle
 
 # ex: filetype=sh

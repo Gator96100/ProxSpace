@@ -5,7 +5,7 @@ use warnings;
 
 use Carp qw< carp croak >;
 
-our $VERSION = '0.65';
+our $VERSION = '0.67';
 
 use Exporter;
 our @ISA            = qw( Exporter );
@@ -263,16 +263,16 @@ sub _override {
 }
 
 sub unimport {
-    $^H{bigint} = undef;        # no longer in effect
+    delete $^H{bigint};         # no longer in effect
     overload::remove_constant('binary', '', 'float', '', 'integer');
 }
 
 sub import {
     my $class = shift;
 
-    $^H{bigint}   = 1;                  # we are in effect
-    $^H{bigfloat} = undef;
-    $^H{bigrat}   = undef;
+    $^H{bigint} = 1;            # we are in effect
+    delete $^H{bigfloat};
+    delete $^H{bigrat};
 
     # for newer Perls always override hex() and oct() with a lexical version:
     if (LEXICAL) {
@@ -553,8 +553,8 @@ Load a different math lib, see L<Math Library>.
 
 Override the built-in hex() method with a version that can handle big numbers.
 This overrides it by exporting it to the current package. Under Perl v5.10.0 and
-higher, this is not so necessary, as hex() is lexically overridden in the
-current scope whenever the C<bigint> pragma is active.
+higher, this is not necessary, as hex() is lexically overridden in the current
+scope whenever the C<bigint> pragma is active.
 
 =item oct
 
@@ -800,8 +800,8 @@ Some cool command line examples to impress the Python crowd ;) You might want
 to compare them to the results under -Mbigfloat or -Mbigrat:
 
     perl -Mbigint -le 'print sqrt(33)'
-    perl -Mbigint -le 'print 2*255'
-    perl -Mbigint -le 'print 4.5+2*255'
+    perl -Mbigint -le 'print 2**255'
+    perl -Mbigint -le 'print 4.5+2**255'
     perl -Mbigint -le 'print 123->is_odd()'
     perl -Mbigint=l,GMP -le 'print 7 ** 7777'
 
@@ -838,10 +838,6 @@ L<https://metacpan.org/release/bignum>
 =item * CPAN Testers Matrix
 
 L<http://matrix.cpantesters.org/?dist=bignum>
-
-=item * CPAN Ratings
-
-L<https://cpanratings.perl.org/dist/bignum>
 
 =back
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on October, 16 2022 by texi2html 1.78a -->
+<!-- Created on October, 5 2025 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
@@ -63,12 +63,12 @@ ul.toc {list-style: none}
 <p>This include file declares functions for converting between Unicode strings
 and <code>char *</code> strings in locale encoding or in other specified encodings.
 </p>
-<a name="IDX145"></a>
+<a name="IDX148"></a>
 <p>The following function returns the locale encoding.
 </p>
 <dl>
 <dt><u>Function:</u> const char * <b>locale_charset</b><i> ()</i>
-<a name="IDX146"></a>
+<a name="IDX149"></a>
 </dt>
 <dd><p>Determines the current locale's character encoding, and canonicalizes it
 into one of the canonical names listed in &lsquo;<tt>localcharset.h</tt>&rsquo;.
@@ -88,14 +88,14 @@ parametrized through the following enumeration type:
 </p>
 <dl>
 <dt><u>Type:</u> <b>enum iconv_ilseq_handler</b>
-<a name="IDX147"></a>
+<a name="IDX150"></a>
 </dt>
 <dd><p>This type specifies how unconvertible characters in the input are handled.
 </p></dd></dl>
 
 <dl>
 <dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_error</b>
-<a name="IDX148"></a>
+<a name="IDX151"></a>
 </dt>
 <dd><p>This handler causes the function to return with <code>errno</code> set to
 <code>EILSEQ</code>.
@@ -103,14 +103,14 @@ parametrized through the following enumeration type:
 
 <dl>
 <dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_question_mark</b>
-<a name="IDX149"></a>
+<a name="IDX152"></a>
 </dt>
 <dd><p>This handler produces one question mark &lsquo;<samp>?</samp>&rsquo; per unconvertible character.
 </p></dd></dl>
 
 <dl>
 <dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_question_replacement_character</b>
-<a name="IDX150"></a>
+<a name="IDX153"></a>
 </dt>
 <dd><p>This handler produces one U+FFFD per unconvertible character if that
 fits in the target encoding, otherwise one question mark &lsquo;<samp>?</samp>&rsquo; per
@@ -119,25 +119,25 @@ unconvertible character.
 
 <dl>
 <dt><u>Constant:</u> enum iconv_ilseq_handler <b>iconveh_escape_sequence</b>
-<a name="IDX151"></a>
+<a name="IDX154"></a>
 </dt>
 <dd><p>This handler produces an escape sequence <code>\u<var>xxxx</var></code> or
 <code>\U<var>xxxxxxxx</var></code> for each unconvertible character.
 </p></dd></dl>
 
-<a name="IDX152"></a>
+<a name="IDX155"></a>
 <p>The following functions convert between strings in a specified encoding and
 Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_conv_from_encoding</b><i> (const&nbsp;char&nbsp;*<var>fromcode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>, const&nbsp;char&nbsp;*<var>src</var>, size_t&nbsp;<var>srclen</var>, size_t&nbsp;*<var>offsets</var>, uint8_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
-<a name="IDX153"></a>
+<a name="IDX156"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_conv_from_encoding</b><i> (const&nbsp;char&nbsp;*<var>fromcode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>, const&nbsp;char&nbsp;*<var>src</var>, size_t&nbsp;<var>srclen</var>, size_t&nbsp;*<var>offsets</var>, uint16_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
-<a name="IDX154"></a>
+<a name="IDX157"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_conv_from_encoding</b><i> (const&nbsp;char&nbsp;*<var>fromcode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>, const&nbsp;char&nbsp;*<var>src</var>, size_t&nbsp;<var>srclen</var>, size_t&nbsp;*<var>offsets</var>, uint32_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
-<a name="IDX155"></a>
+<a name="IDX158"></a>
 </dt>
 <dd><p>Converts an entire string, possibly including NUL bytes, from one encoding
 to UTF-8 encoding.
@@ -170,13 +170,13 @@ Particular <code>errno</code> values: <code>EINVAL</code>, <code>EILSEQ</code>, 
 
 <dl>
 <dt><u>Function:</u> char * <b>u8_conv_to_encoding</b><i> (const&nbsp;char&nbsp;*<var>tocode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>, const&nbsp;uint8_t&nbsp;*<var>src</var>, size_t&nbsp;<var>srclen</var>, size_t&nbsp;*<var>offsets</var>, char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
-<a name="IDX156"></a>
+<a name="IDX159"></a>
 </dt>
 <dt><u>Function:</u> char * <b>u16_conv_to_encoding</b><i> (const&nbsp;char&nbsp;*<var>tocode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>, const&nbsp;uint16_t&nbsp;*<var>src</var>, size_t&nbsp;<var>srclen</var>, size_t&nbsp;*<var>offsets</var>, char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
-<a name="IDX157"></a>
+<a name="IDX160"></a>
 </dt>
 <dt><u>Function:</u> char * <b>u32_conv_to_encoding</b><i> (const&nbsp;char&nbsp;*<var>tocode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>, const&nbsp;uint32_t&nbsp;*<var>src</var>, size_t&nbsp;<var>srclen</var>, size_t&nbsp;*<var>offsets</var>, char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>)</i>
-<a name="IDX158"></a>
+<a name="IDX161"></a>
 </dt>
 <dd><p>Converts an entire Unicode string, possibly including NUL units, from UTF-8
 encoding to a given encoding.
@@ -212,13 +212,13 @@ encoding and NUL terminated Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strconv_from_encoding</b><i> (const&nbsp;char&nbsp;*<var>string</var>, const&nbsp;char&nbsp;*<var>fromcode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>)</i>
-<a name="IDX159"></a>
+<a name="IDX162"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strconv_from_encoding</b><i> (const&nbsp;char&nbsp;*<var>string</var>, const&nbsp;char&nbsp;*<var>fromcode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>)</i>
-<a name="IDX160"></a>
+<a name="IDX163"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strconv_from_encoding</b><i> (const&nbsp;char&nbsp;*<var>string</var>, const&nbsp;char&nbsp;*<var>fromcode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>)</i>
-<a name="IDX161"></a>
+<a name="IDX164"></a>
 </dt>
 <dd><p>Converts a NUL terminated string from a given encoding.
 </p>
@@ -229,13 +229,13 @@ encoding and NUL terminated Unicode strings.
 
 <dl>
 <dt><u>Function:</u> char * <b>u8_strconv_to_encoding</b><i> (const&nbsp;uint8_t&nbsp;*<var>string</var>, const&nbsp;char&nbsp;*<var>tocode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>)</i>
-<a name="IDX162"></a>
+<a name="IDX165"></a>
 </dt>
 <dt><u>Function:</u> char * <b>u16_strconv_to_encoding</b><i> (const&nbsp;uint16_t&nbsp;*<var>string</var>, const&nbsp;char&nbsp;*<var>tocode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>)</i>
-<a name="IDX163"></a>
+<a name="IDX166"></a>
 </dt>
 <dt><u>Function:</u> char * <b>u32_strconv_to_encoding</b><i> (const&nbsp;uint32_t&nbsp;*<var>string</var>, const&nbsp;char&nbsp;*<var>tocode</var>, enum&nbsp;iconv_ilseq_handler&nbsp;<var>handler</var>)</i>
-<a name="IDX164"></a>
+<a name="IDX167"></a>
 </dt>
 <dd><p>Converts a NUL terminated string to a given encoding.
 </p>
@@ -249,13 +249,13 @@ strings in locale encoding and NUL terminated Unicode strings.
 </p>
 <dl>
 <dt><u>Function:</u> uint8_t * <b>u8_strconv_from_locale</b><i> (const&nbsp;char&nbsp;*<var>string</var>)</i>
-<a name="IDX165"></a>
+<a name="IDX168"></a>
 </dt>
 <dt><u>Function:</u> uint16_t * <b>u16_strconv_from_locale</b><i> (const&nbsp;char&nbsp;*<var>string</var>)</i>
-<a name="IDX166"></a>
+<a name="IDX169"></a>
 </dt>
 <dt><u>Function:</u> uint32_t * <b>u32_strconv_from_locale</b><i> (const&nbsp;char&nbsp;*<var>string</var>)</i>
-<a name="IDX167"></a>
+<a name="IDX170"></a>
 </dt>
 <dd><p>Converts a NUL terminated string from the locale encoding.
 </p>
@@ -266,13 +266,13 @@ strings in locale encoding and NUL terminated Unicode strings.
 
 <dl>
 <dt><u>Function:</u> char * <b>u8_strconv_to_locale</b><i> (const&nbsp;uint8_t&nbsp;*<var>string</var>)</i>
-<a name="IDX168"></a>
+<a name="IDX171"></a>
 </dt>
 <dt><u>Function:</u> char * <b>u16_strconv_to_locale</b><i> (const&nbsp;uint16_t&nbsp;*<var>string</var>)</i>
-<a name="IDX169"></a>
+<a name="IDX172"></a>
 </dt>
 <dt><u>Function:</u> char * <b>u32_strconv_to_locale</b><i> (const&nbsp;uint32_t&nbsp;*<var>string</var>)</i>
-<a name="IDX170"></a>
+<a name="IDX173"></a>
 </dt>
 <dd><p>Converts a NUL terminated string to the locale encoding.
 </p>
@@ -291,12 +291,12 @@ strings in locale encoding and NUL terminated Unicode strings.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 5 2025</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

@@ -2,12 +2,12 @@
 .\"     Title: cygwin_conv_path
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin API Reference
 .\"    Source: Cygwin API Reference
 .\"  Language: English
 .\"
-.TH "CYGWIN_CONV_PATH" "3" "07/14/2023" "Cygwin API Reference" "Cygwin API Reference"
+.TH "CYGWIN_CONV_PATH" "3" "03/15/2026" "Cygwin API Reference" "Cygwin API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -40,13 +40,13 @@ cygwin_conv_path
 .BI "ssize_t cygwin_conv_path(cygwin_conv_path_t\ " "what" ", const\ void\ *\ " "from" ", void\ *\ " "to" ", size_t\ " "size" ");"
 .SH "DESCRIPTION"
 .PP
-Use this function to convert POSIX paths in
+Use this function to convert NUL\-terminated POSIX paths in
 \fIfrom\fR
-to Win32 paths in
+to NUL\-terminated Win32 paths in
 \fIto\fR
-or, vice versa, Win32 paths in
+or, vice versa, NUL\-terminated Win32 paths in
 \fIfrom\fR
-to POSIX paths in
+to NUL\-terminated POSIX paths in
 \fIto\fR\&.
 \fIwhat\fR
 defines the direction of this conversion and can be any of the below values\&.
@@ -88,6 +88,8 @@ is the size of the buffer pointed to by
 in bytes\&. If
 \fIsize\fR
 is 0,
+\fIto\fR
+may be NULL and
 \fBcygwin_conv_path\fR
 just returns the required buffer size in bytes\&. Otherwise, it returns 0 on success, or \-1 on error and errno is set to one of the below values\&.
 .sp
@@ -104,6 +106,15 @@ just returns the required buffer size in bytes\&. Otherwise, it returns 0 on suc
 .if n \{\
 .RE
 .\}
+.PP
+In the event of an error, the memory at
+\fIto\fR
+is not modified unless the error is
+\fBEFAULT\fR
+writing to the memory at
+\fIto\fR, which may happen if
+\fIsize\fR
+is incorrectly specified\&.
 .SH "EXAMPLE"
 .PP
 \fBExample\ \&2.1.\ \&Example use of cygwin_conv_path\fR

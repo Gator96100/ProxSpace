@@ -1,23 +1,28 @@
 # xxd(1) completion                                        -*- shell-script -*-
 
-_xxd()
+_comp_cmd_xxd()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
-        -h | -help | -c | -cols | -g | -groupsize | -l | -len | -s | -seek | -v | -version)
+        -h | -help | -c | -cols | -g | -groupsize | -l | -len | -n | -name | \
+            -o | -s | -seek | -v | -version)
+            return
+            ;;
+        -R)
+            _comp_compgen -- -W "always auto never"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _xxd xxd
+    complete -F _comp_cmd_xxd xxd
 
 # ex: filetype=sh

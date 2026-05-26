@@ -19,7 +19,7 @@ use Net::Config;
 
 our @ISA       = qw(Exporter);
 our @EXPORT_OK = qw(hostname hostdomain hostfqdn domainname);
-our $VERSION = "3.14";
+our $VERSION = "3.15";
 
 my ($host, $domain, $fqdn) = (undef, undef, undef);
 
@@ -171,7 +171,7 @@ sub _hostdomain {
     }
 
     chop($dom = `domainname 2>/dev/null`)
-      unless (defined $dom || $^O =~ /^(?:cygwin|msys|MSWin32|android)/);
+      unless (defined $dom || $^O =~ /^(?:cygwin|MSWin32|android)/);
 
     if (defined $dom) {
       my @h = ();
@@ -395,11 +395,11 @@ License or the Artistic License, as specified in the F<LICENCE> file.
 
 =head1 VERSION
 
-Version 3.14
+Version 3.15
 
 =head1 DATE
 
-23 Dec 2020
+20 March 2023
 
 =head1 HISTORY
 

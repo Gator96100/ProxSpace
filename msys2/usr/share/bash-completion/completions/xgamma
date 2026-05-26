@@ -1,15 +1,15 @@
 # bash completion for xgamma(1)                            -*- shell-script -*-
 
-_xgamma()
+_comp_cmd_xgamma()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     case "$prev" in
         -screen)
             local screens=$(xrandr --query 2>/dev/null | command sed -n \
                 '/^Screen /s|^Screen \{1,\}\(.*\):.*$|\1|p' 2>/dev/null)
-            COMPREPLY=($(compgen -W "$screens" -- "$cur"))
+            _comp_compgen -- -W "$screens"
             return
             ;;
         -gamma | -rgamma | -ggamma | -bgamma)
@@ -17,7 +17,7 @@ _xgamma()
             if [[ $cur && $cur != *.* ]]; then
                 COMPREPLY=(.)
             fi
-            COMPREPLY+=($(compgen -W "{0..9}"))
+            _comp_compgen -aR -- -W "{0..9}"
             compopt -o nospace
             return
             ;;
@@ -26,18 +26,17 @@ _xgamma()
             if [[ $cur == :* && $cur != :*.* ]]; then
                 # FIXME: where to get local display numbers?
                 local display=${cur#:}
-                COMPREPLY=($(compgen -W "${display:-0}."))
+                _comp_compgen -R -- -W "${display:-0}."
                 compopt -o nospace
             elif [[ $cur == :*.* ]]; then
                 # local screen numbers
-                local t screens=$(xrandr --query 2>/dev/null | command sed -ne \
+                local screens=$(xrandr --query 2>/dev/null | command sed -ne \
                     '/^Screen /s|^Screen \{1,\}\(.*\):.*$|\1|p' 2>/dev/null)
-                t="${cur#:}"
-                COMPREPLY=($(compgen -P "${t%.*}." -W "$screens" -- \
-                    "${cur##*.}"))
+                cur=${cur#:}
+                _comp_compgen -P "${cur%.*}." -- -W '$screens'
             elif [[ $cur != *:* ]]; then
                 # complete hostnames
-                _known_hosts_real -c -- "$cur"
+                _comp_compgen_known_hosts -c -- "$cur"
                 if [[ ! $cur ]]; then
                     COMPREPLY+=(:)
                 fi
@@ -49,13 +48,13 @@ _xgamma()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
         if [[ ${COMPREPLY-} ]]; then
             [[ $COMPREPLY == *= ]] && compopt -o nospace
             return
         fi
     fi
 } &&
-    complete -F _xgamma xgamma
+    complete -F _comp_cmd_xgamma xgamma
 
 # ex: filetype=sh

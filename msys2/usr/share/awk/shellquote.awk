@@ -1,5 +1,9 @@
 # shell_quote --- quote an argument for passing to the shell
 #
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+#
 # Michael Brennan
 # brennan@madronabluff.com
 # September 2014

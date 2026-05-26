@@ -23,8 +23,8 @@ color magenta "\<(and|cmp|eq|ge|gt|isa|le|lt|ne|not|or|x|xor)\>"
 color magenta "\<(my|no|our|package|sub|use)\>"
 
 # Variable names.
-color cyan "[$%&@]([A-Za-z_][0-9A-Za-z_]*|\^[][A-Z?\^_]|[0-9]+)\>"
-color cyan "[$%&@]\{(\^?[A-Za-z_][0-9A-Za-z_]*|\^[][?\^][0-9]+)\}"
+color cyan "[$%&@]([[:alpha:]_][[:alnum:]_]*|\^[][[:upper:]?\^_]|[[:digit:]]+)\>"
+color cyan "[$%&@]\{(\^?[[:alpha:]_][[:alnum:]_]*|\^[][?\^][[:digit:]]+)\}"
 color cyan "[$%&@]([][!"#'()*+,.:;<=>?`|~-]|\{[][!-/:-@\`|~]\})|\$[$%&@]"
 color cyan "(^|[[:blank:]])[$%@][/\]"
 

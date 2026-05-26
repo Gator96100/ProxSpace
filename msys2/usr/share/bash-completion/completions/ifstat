@@ -1,43 +1,45 @@
 # bash completion for ifstat(1)                            -*- shell-script -*-
 
-_ifstat()
+_comp_cmd_ifstat()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[idstx]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | --scan | --interval | -!(-*)[hvV])
+        --help | --version | --scan | --interval | -${noargopts}[hvV])
             return
             ;;
-        -!(-*)i)
+        -${noargopts}i)
             # TODO comma separated
-            _available_interfaces -a
+            _comp_compgen_available_interfaces -a
             return
             ;;
-        -!(-*)d)
+        -${noargopts}d)
             # iproute2: no completion (scan delay)
             # traditional: parse driver
             if ! {
                 "$1" --help 2>&1 || :
             } |
                 command grep -q -- '-d.*--scan'; then
-                COMPREPLY=($(compgen -W '$("$1" -v | command \
-                    sed -e "s/[,.]//g" -ne "s/^.*drivers://p")' -- "$cur"))
+                _comp_compgen_split -- "$("$1" -v | command sed -e 's/[,.]//g' \
+                    -ne 's/^.*drivers://p')"
             fi
             return
             ;;
-        --noupdate | -!(-*)s)
+        --noupdate | -${noargopts}s)
             # iproute2: pass through (skip history update)
             # traditional: hostnames (snmp)
             if ! {
                 "$1" --help 2>&1 || :
             } |
                 command grep -q -- '-s.*--noupdate'; then
-                _known_hosts_real -- "$cur"
+                _comp_compgen_known_hosts -- "$cur"
                 return
             fi
             ;;
-        -!(-*)t)
+        -${noargopts}t)
             # iproute2: no completion (interval)
             # traditional: pass through (add timestamp)
             ! {
@@ -45,24 +47,22 @@ _ifstat()
             } |
                 command grep -q -- '-t.*--interval' || return
             ;;
-        --extended | -!(-*)x)
+        --extended | -${noargopts}x)
             # iproute2: parse xstat types
-            COMPREPLY=($(compgen -W '$("$1" -x nonexistent-xstat 2>&1 |
-                awk "found { print \$1 } /supported xstats:/ { found=1 }")' \
-                -- "$cur"))
+            _comp_compgen_split -- "$("$1" -x nonexistent-xstat 2>&1 |
+                _comp_awk 'found { print $1 } /supported xstats:/ { found=1 }')"
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        local opts=$(_parse_help "$1")
-        COMPREPLY=($(compgen -W '${opts:-$(_parse_usage "$1")}' -- "$cur"))
+        _comp_compgen_help || _comp_compgen_usage
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 } &&
-    complete -F _ifstat ifstat
+    complete -F _comp_cmd_ifstat ifstat
 
 # ex: filetype=sh

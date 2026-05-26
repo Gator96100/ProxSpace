@@ -1,28 +1,27 @@
 # fusermount completion                                    -*- shell-script -*-
 
-_fusermount()
+_comp_cmd_fusermount()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*[hVo])
             return
             ;;
         -*u)
-            COMPREPLY=($(compgen -W "$(awk \
-                '{ if ($3 ~ /^fuse(\.|$)/) print $2 }' /etc/mtab \
-                2>/dev/null)" -- "$cur"))
+            _comp_compgen_split -- "$(_comp_awk \
+                '{ if ($3 ~ /^fuse(\.|$)/) print $2 }' /etc/mtab 2>/dev/null)"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
     else
-        _filedir -d
+        _comp_compgen_filedir -d
     fi
 } &&
-    complete -F _fusermount fusermount
+    complete -F _comp_cmd_fusermount fusermount
 
 # ex: filetype=sh

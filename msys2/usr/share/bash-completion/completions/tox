@@ -1,9 +1,9 @@
 # tox completion                                           -*- shell-script -*-
 
-_tox()
+_comp_cmd_tox()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     # Complete defaults following a "--"
     if [[ "${words[*]:0:cword} " == *\ --\ * && $cur != -- ]]; then
@@ -11,19 +11,22 @@ _tox()
         return
     fi
 
+    local noargopts='!(-*|*[nice]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | --num | --index-url | --hashseed | --force-dep | -!(-*)[hni])
+        --help | --version | --num | --index-url | --hashseed | --force-dep | \
+            -${noargopts}[hni])
             return
             ;;
-        -!(-*)c)
-            _filedir ini
+        -${noargopts}c)
+            _comp_compgen_filedir ini
             return
             ;;
         --installpkg | --result-json | --workdir)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
-        -!(-*)e)
+        -${noargopts}e)
             local envs=$(
                 {
                     "$1" --listenvs-all || "$1" --listenvs
@@ -33,19 +36,17 @@ _tox()
                 command sed -e 's/,/ /g' -ne 's/^envlist[[:space:]]*=//p' \
                     tox.ini 2>/dev/null
             )
-            local prefix=""
-            [[ $cur == *,* ]] && prefix="${cur%,*},"
-            COMPREPLY=($(compgen -X '*[{}]*' -W "$envs ALL" -- "${cur##*,}"))
-            ((${#COMPREPLY[@]} == 1)) && COMPREPLY=(${COMPREPLY/#/$prefix})
+            _comp_delimited , -X '*[{}]*' -W "$envs ALL"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1") --' -- "$cur"))
+        _comp_compgen_help
+        _comp_compgen -a -- -W '--'
         return
     fi
 } &&
-    complete -F _tox tox
+    complete -F _comp_cmd_tox tox
 
 # ex: filetype=sh

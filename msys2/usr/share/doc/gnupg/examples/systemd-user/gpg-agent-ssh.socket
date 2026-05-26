@@ -3,7 +3,16 @@ Description=GnuPG cryptographic agent (ssh-agent emulation)
 Documentation=man:gpg-agent(1) man:ssh-add(1) man:ssh-agent(1) man:ssh(1)
 
 [Socket]
+# If you change ListenStream, change the name in ExecStartPost below as well.
 ListenStream=%t/gnupg/S.gpg-agent.ssh
+
+# After creating and binding the service notify environment
+# Don't get location from config file because systemd directly passes fd, overriding the config file
+ExecStartPost=sh -c '[ -z "$$(gpgconf --list-options gpg-agent | awk -F: \'/^enable-ssh-support:/{print$$10}\')" ] || systemctl --user set-environment "$$@"' - "SSH_AUTH_SOCK=%t/gnupg/S.gpg-agent.ssh"
+
+# before unbinding stop exporting that we listen to socket
+ExecStopPre=sh -c '[ -z "$$(gpgconf --list-options gpg-agent | awk -F: \'/^enable-ssh-support:/{print$$10}\')" ] || systemctl --user unset-environment SSH_AUTH_SOCK'
+
 FileDescriptorName=ssh
 Service=gpg-agent.service
 SocketMode=0600

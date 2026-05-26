@@ -2,12 +2,12 @@
 .\"     Title: minidumper
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin Utilities
 .\"    Source: Cygwin Utilities
 .\"  Language: English
 .\"
-.TH "MINIDUMPER" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.TH "MINIDUMPER" "1" "03/15/2026" "Cygwin Utilities" "Cygwin Utilities"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -58,10 +58,15 @@ The
 utility can be used to create a minidump of a running Windows process\&. This minidump can be later analysed using breakpad or Windows debugging tools\&.
 .PP
 \fBminidumper\fR
-can be used with cygwin\*(Aqs Just\-In\-Time debugging facility in exactly the same way as
-\fBdumper\fR
-(See
-dumper(1))\&.
+can be used with cygwin\*(Aqs Just\-In\-Time debugging facility by adding
+error_start=minidumper
+to the
+CYGWIN
+environment variable\&. If
+CYGWIN
+is set this way, then
+\fBminidumper\fR
+will be started whenever a program encounters a fatal exception\&.
 .PP
 \fBminidumper\fR
 can also be started from the command line to create a minidump of any running process\&. For compatibility with

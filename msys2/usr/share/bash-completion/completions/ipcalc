@@ -1,9 +1,9 @@
 # ipcalc(1) completion                                     -*- shell-script -*-
 
-_ipcalc()
+_comp_cmd_ipcalc()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help | --version | --split | -[hs])
@@ -18,8 +18,8 @@ _ipcalc()
     done
 
     [[ $cur != -* ]] ||
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
 } &&
-    complete -F _ipcalc ipcalc
+    complete -F _comp_cmd_ipcalc ipcalc
 
 # ex: filetype=sh

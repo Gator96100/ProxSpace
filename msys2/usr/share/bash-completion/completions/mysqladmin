@@ -1,63 +1,65 @@
 # bash completion for mysqladmin                           -*- shell-script -*-
 
-_mysqladmin()
+_comp_cmd_mysqladmin()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[uhScPOiw]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --user | -!(-*)u)
-            COMPREPLY=($(compgen -u -- "$cur"))
+        --user | -${noargopts}u)
+            _comp_compgen -- -u
             return
             ;;
-        --host | -!(-*)h)
-            _known_hosts_real -- "$cur"
+        --host | -${noargopts}h)
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         --character-sets-dir | --ssl-capath)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --default-character-set)
-            _xfunc mysql _mysql_character_sets
+            _comp_compgen -x mysql character_sets
             return
             ;;
-        --socket | -!(-*)S)
-            _filedir sock
+        --socket | -${noargopts}S)
+            _comp_compgen_filedir sock
             return
             ;;
         --defaults-file | --defaults-extra-file)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --ssl-ca | --ssl-cert)
-            _filedir '@(pem|cer|c?(e)rt)'
+            _comp_compgen_filedir '@(pem|cer|c?(e)rt)'
             return
             ;;
         --ssl-key)
-            _filedir '@(pem|key)'
+            _comp_compgen_filedir '@(pem|key)'
             return
             ;;
         --count | --port | --set-variable | --sleep | --ssl-cipher | --wait | \
-            --connect_timeout | --shutdown_timeout | -!(-*)[cPOiw])
+            --connect_timeout | --shutdown_timeout | -${noargopts}[cPOiw])
             return
             ;;
-        --help | --version | -!(-*)[?V])
+        --help | --version | -${noargopts}[?V])
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+    _comp_compgen_help
 
-    COMPREPLY+=($(compgen -W 'create debug drop extended-status flush-hosts
+    _comp_compgen -a -- -W 'create debug drop extended-status flush-hosts
         flush-logs flush-status flush-tables flush-threads flush-privileges
         kill password old-password ping processlist reload refresh shutdown
-        status start-slave stop-slave variables version' -- "$cur"))
+        status start-slave stop-slave variables version'
 
     [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
 } &&
-    complete -F _mysqladmin mysqladmin
+    complete -F _comp_cmd_mysqladmin mysqladmin
 
 # ex: filetype=sh

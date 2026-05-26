@@ -22,6 +22,7 @@ mingw-w64-x86_64-bzip2
 mingw-w64-x86_64-python
 mingw-w64-x86_64-python-pip
 mingw-w64-x86_64-python-setuptools
+mingw-w64-x86_64-python-cryptography
 mingw-w64-x86_64-jansson
 mingw-w64-x86_64-qt6-base
 mingw-w64-x86_64-gdb
@@ -29,6 +30,7 @@ mingw-w64-x86_64-openocd
 mingw-w64-x86_64-opencl-icd
 mingw-w64-x86_64-lz4
 mingw-w64-x86_64-libgd
+mingw-w64-x86_64-openssl
 ##############################
 #         ChameleonMini      #
 ##############################

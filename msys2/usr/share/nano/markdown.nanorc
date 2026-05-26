@@ -10,7 +10,7 @@ comment "<!--|-->"
 color magenta "^[ 	]*>.*"
 
 # List-item markers:
-color brightmagenta "^(    |	)* ? ? ?(\*|\+|-|[1-9]+\.)( +|	)"
+color brightmagenta "^(    |	)* ? ? ?(\*|\+|-|[0-9]+\.)( +|	)"
 
 # Emphasis and strong:
 color green "\*[^* 	][^*]*\*|_[^_ 	][^_]*_"

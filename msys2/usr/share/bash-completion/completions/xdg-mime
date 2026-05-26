@@ -1,74 +1,85 @@
 # xdg-mime(1) completion                                   -*- shell-script -*-
 
-_xdg_mime_mimetype()
+_comp_cmd_xdg_mime__mimetype()
 {
-    COMPREPLY+=($(compgen -S / -W 'application audio font image message model
-                                    multipart text video' -- "$cur"))
-    [[ ${COMPREPLY-} == */ ]] && compopt -o nospace
+    local d i
+    local -a arr
+    for d in /usr/share/mime /usr/local/share/mime; do
+        _comp_compgen -v arr -C "$d" -- -f -o plusdirs -X "!*.xml" || continue
+        for i in "${!arr[@]}"; do
+            case ${arr[i]} in
+                packages*) unset -v "arr[i]" ;; # not a MIME type dir
+                *.xml) arr[i]=${arr[i]%.xml} ;;
+                */*) ;;
+                *) arr[i]+=/ ;;
+            esac
+        done
+        ((${#arr[@]})) &&
+            COMPREPLY+=("${arr[@]}")
+    done
+    [[ ${COMPREPLY-} != */ ]] || compopt -o nospace
 }
 
-_xdg_mime()
+_comp_cmd_xdg_mime()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
-    local args
-    _count_args
-
+    local REPLY
+    _comp_count_args
+    local args=$REPLY
     if ((args == 1)); then
         if [[ $cur == -* ]]; then
-            COMPREPLY=($(compgen -W '--help --manual --version' -- "$cur"))
+            _comp_compgen -- -W '--help --manual --version'
             return
         fi
-        COMPREPLY=($(compgen -W \
-            'query default install uninstall' -- "$cur"))
+        _comp_compgen -- -W 'query default install uninstall'
         return
     fi
 
     case ${words[1]} in
         query)
             if ((args == 2)); then
-                COMPREPLY=($(compgen -W 'filetype default' -- "$cur"))
+                _comp_compgen -- -W 'filetype default'
                 return
             fi
-            case ${words[2]} in # TODO and args == 3 (takes only one arg!)
-                filetype) _filedir ;;
-                default) _xdg_mime_mimetype ;;
+            ((args == 3)) || return
+            case ${words[2]} in
+                filetype) _comp_compgen_filedir ;;
+                default) _comp_cmd_xdg_mime__mimetype ;;
             esac
             ;;
         default)
             if ((args == 2)); then
-                local IFS=$' \t\n' reset=$(shopt -p nullglob)
-                shopt -s nullglob
-                local -a desktops=(/usr/share/applications/*.desktop)
-                desktops=("${desktops[@]##*/}")
-                $reset
-                IFS=$'\n'
-                COMPREPLY=($(compgen -W '${desktops[@]}' -- "$cur"))
+                local -a desktops
+                if _comp_expand_glob desktops '/usr/share/applications/*.desktop'; then
+                    desktops=("${desktops[@]##*/}")
+                    _comp_compgen -- -W '"${desktops[@]}"'
+                fi
             else
-                _xdg_mime_mimetype
+                _comp_cmd_xdg_mime__mimetype
             fi
             ;;
         install)
             if [[ $cur == -* ]]; then
-                COMPREPLY=($(compgen -W '--mode --novendor' -- "$cur"))
+                _comp_compgen -- -W '--mode --novendor'
             elif [[ $prev == --mode ]]; then
-                COMPREPLY=($(compgen -W 'user system' -- "$cur"))
+                _comp_compgen -- -W 'user system'
             else
-                _filedir xml
+                _comp_compgen_filedir xml
             fi
             ;;
         uninstall)
             if [[ $cur == -* ]]; then
-                COMPREPLY=($(compgen -W '--mode' -- "$cur"))
+                _comp_compgen -- -W '--mode'
             elif [[ $prev == --mode ]]; then
-                COMPREPLY=($(compgen -W 'user system' -- "$cur"))
+                _comp_compgen -- -W 'user system'
             else
-                _filedir xml
+                _comp_compgen_filedir xml
             fi
             ;;
     esac
 } &&
-    complete -F _xdg_mime xdg-mime
+    complete -F _comp_cmd_xdg_mime xdg-mime
 
 # ex: filetype=sh

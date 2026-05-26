@@ -1,30 +1,31 @@
 # chpasswd(8) completion                                   -*- shell-script -*-
 
-_chpasswd()
+_comp_cmd_chpasswd()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[csR]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --crypt | -!(-*)c)
-            COMPREPLY=($(compgen -W 'DES MD5 NONE SHA256 SHA512' \
-                -- "$cur"))
+        --crypt | -${noargopts}c)
+            _comp_compgen -- -W 'DES MD5 NONE SHA256 SHA512'
             return
             ;;
-        --sha-rounds | -!(-*)s)
+        --sha-rounds | -${noargopts}s)
             return
             ;;
-        --root | -!(-*)R)
-            _filedir -d
+        --root | -${noargopts}R)
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+    _comp_compgen_help
     [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
 } &&
-    complete -F _chpasswd chpasswd
+    complete -F _comp_cmd_chpasswd chpasswd
 
 # ex: filetype=sh

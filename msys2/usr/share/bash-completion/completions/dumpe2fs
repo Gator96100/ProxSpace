@@ -1,28 +1,27 @@
 # dumpe2fs(8) completion                                   -*- shell-script -*-
 
-_dumpe2fs()
+_comp_cmd_dumpe2fs()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*[oV])
             return
             ;;
         -*i)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
         return
     fi
 
-    cur=${cur:=/dev/}
-    _filedir
+    _comp_compgen -c "${cur:-/dev/}" filedir
 } &&
-    complete -F _dumpe2fs dumpe2fs
+    complete -F _comp_cmd_dumpe2fs dumpe2fs
 
 # ex: filetype=sh

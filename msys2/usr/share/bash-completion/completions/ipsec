@@ -3,87 +3,86 @@
 # Complete ipsec.conf conn entries.
 #
 # Reads a file from stdin in the ipsec.conf(5) format.
-_ipsec_connections()
+_comp_cmd_ipsec__connections()
 {
     local keyword name
     while read -r keyword name; do
         if [[ $keyword == [#]* ]]; then continue; fi
         [[ $keyword == conn && $name != '%default' ]] && COMPREPLY+=("$name")
     done
-    COMPREPLY=($(compgen -W '${COMPREPLY[@]}' -- "$cur"))
+    ((${#COMPREPLY[@]})) &&
+        _comp_compgen -- -W '"${COMPREPLY[@]}"'
 }
 
-_ipsec_freeswan()
+_comp_cmd_ipsec__freeswan()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if ((cword == 1)); then
-        COMPREPLY=($(compgen -W 'auto barf eroute klipsdebug look manual
-            pluto ranbits rsasigkey setup showdefaults showhostkey spi spigrp
-            tncfg whack' -- "$cur"))
+        _comp_compgen -- -W 'auto barf eroute klipsdebug look manual pluto
+            ranbits rsasigkey setup showdefaults showhostkey spi spigrp tncfg
+            whack'
         return
     fi
 
     case ${words[1]} in
         auto)
-            COMPREPLY=($(compgen -W '--asynchronous --up --add --delete
-                --replace --down --route --unroute --ready --status
-                --rereadsecrets' -- "$cur"))
+            _comp_compgen -- -W '--asynchronous --up --add --delete --replace
+                --down --route --unroute --ready --status --rereadsecrets'
             ;;
         manual)
-            COMPREPLY=($(compgen -W '--up --down --route --unroute --union' \
-                -- "$cur"))
+            _comp_compgen -- -W '--up --down --route --unroute --union'
             ;;
         ranbits)
-            COMPREPLY=($(compgen -W '--quick --continuous --bytes' -- "$cur"))
+            _comp_compgen -- -W '--quick --continuous --bytes'
             ;;
         setup)
-            COMPREPLY=($(compgen -W '--start --stop --restart' -- "$cur"))
+            _comp_compgen -- -W '--start --stop --restart'
             ;;
         *) ;;
 
     esac
 }
 
-_ipsec_strongswan()
+_comp_cmd_ipsec__strongswan()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if ((cword == 1)); then
-        COMPREPLY=($(compgen -W 'down irdumm leases listaacerts listacerts
-            listalgs listall listcacerts listcainfos listcards listcerts
-            listcrls listgroups listocsp listocspcerts listpubkeys openac pki
-            pluto pool purgecerts purgecrls purgeike purgeocsp ready reload
-            rereadaacerts rereadacerts rereadall rereadcacerts rereadcrls
-            rereadgroups rereadocspcerts rereadsecrets restart route scdecrypt
-            scencrypt scepclient secrets start starter status statusall stop
-            stroke unroute uci up update version whack --confdir --copyright
-            --directory --help --version --versioncode' -- "$cur"))
+        _comp_compgen -- -W 'down irdumm leases listaacerts listacerts listalgs
+            listall listcacerts listcainfos listcards listcerts listcrls
+            listgroups listocsp listocspcerts listpubkeys openac pki pluto pool
+            purgecerts purgecrls purgeike purgeocsp ready reload rereadaacerts
+            rereadacerts rereadall rereadcacerts rereadcrls rereadgroups
+            rereadocspcerts rereadsecrets restart route scdecrypt scencrypt
+            scepclient secrets start starter status statusall stop stroke
+            unroute uci up update version whack --confdir --copyright
+            --directory --help --version --versioncode'
         return
     fi
 
     case ${words[1]} in
         down | route | status | statusall | unroute | up)
             local confdir=$(ipsec --confdir)
-            _ipsec_connections <"$confdir/ipsec.conf"
+            _comp_cmd_ipsec__connections <"$confdir/ipsec.conf"
             ;;
         list*)
-            COMPREPLY=($(compgen -W '--utc' -- "$cur"))
+            _comp_compgen -- -W '--utc'
             ;;
         restart | start)
-            COMPREPLY=($(compgen -W '--attach-gdb --auto-update --debug
-                --debug-all --debug-more --nofork' -- "$cur"))
+            _comp_compgen -- -W '--attach-gdb --auto-update --debug --debug-all
+                --debug-more --nofork'
             ;;
         pki)
-            COMPREPLY=($(compgen -W '--gen --issue --keyid --print --pub
-                --req --self --signcrl --verify' -- "$cur"))
+            _comp_compgen -- -W '--gen --issue --keyid --print --pub --req
+                --self --signcrl --verify'
             ;;
         pool) ;;
 
         irdumm)
-            _filedir 'rb'
+            _comp_compgen_filedir 'rb'
             ;;
         *) ;;
 
@@ -92,10 +91,10 @@ _ipsec_strongswan()
 
 case "$(ipsec --version 2>/dev/null)" in
     *strongSwan*)
-        complete -F _ipsec_strongswan ipsec
+        complete -F _comp_cmd_ipsec__strongswan ipsec
         ;;
     *)
-        complete -F _ipsec_freeswan ipsec
+        complete -F _comp_cmd_ipsec__freeswan ipsec
         ;;
 esac
 

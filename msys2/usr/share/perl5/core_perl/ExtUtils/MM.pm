@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker::Config;
 
-our $VERSION = '7.64';
+our $VERSION = '7.70';
 $VERSION =~ tr/_//d;
 
 require ExtUtils::Liblist;
@@ -59,7 +59,7 @@ if( $^O eq 'MSWin32' ) {
     _is_win95() ? $Is{Win95} = 1 : $Is{Win32} = 1;
 }
 $Is{UWIN}   = $^O =~ /^uwin(-nt)?$/;
-$Is{Cygwin} = ($^O eq 'cygwin' or $^O eq 'msys');
+$Is{Cygwin} = $^O eq 'cygwin';
 $Is{NW5}    = $Config{osname} eq 'NetWare';  # intentional
 $Is{BeOS}   = ($^O =~ /beos/i or $^O eq 'haiku');
 $Is{DOS}    = $^O eq 'dos';

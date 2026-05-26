@@ -1,5 +1,5 @@
-Copyright 2000-2023 Free Software Foundation, Inc.
-Contributed by the AriC and Caramba projects, INRIA.
+Copyright 2000-2025 Free Software Foundation, Inc.
+Contributed by the Pascaline and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
 
@@ -14,11 +14,37 @@ or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
 License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with the GNU MPFR Library; see the file COPYING.LESSER.  If not, see
-https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
-51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+along with the GNU MPFR Library; see the file COPYING.LESSER.
+If not, see <https://www.gnu.org/licenses/>.
 
 ##############################################################################
+
+Changes from version 4.2.1 to version 4.2.2:
+- In order to resolve a portability issue with the _Float128 fallback to
+  __float128 for binary128 support (e.g. with Clang and glibc 2.41), the
+  prototypes of the corresponding conversion functions had to be changed,
+  with _Float128 replaced by mpfr_float128, where mpfr_float128 is a macro
+  defined as _Float128 by default. This changes neither the ABI nor the API
+  (except that the end user of MPFR would need to define mpfr_float128 as
+  the actual type for the binary128 format if this is not the standard
+  _Float128 type).
+- Other bug fixes (see <https://www.mpfr.org/mpfr-4.2.1/#fixed> and/or the
+  ChangeLog file). In particular, the formatted output functions behaved
+  incorrectly with %c on the value 0; such a use is uncommon, but this bug
+  may have security implications.
+- Improved MPFR manual.
+- Detect the use of GMP's buggy vsnprintf replacement at configure time.
+  With it, the tests of "%a" will be disabled to avoid an assertion failure
+  in the MPFR testsuite. A warning will be displayed in the configure output
+  in such a case.
+
+Changes from version 4.2.0 to version 4.2.1:
+- Bug fixes (see <https://www.mpfr.org/mpfr-4.2.0/#fixed> and/or the
+  ChangeLog file).
+- Improved MPFR manual.
+- Configure tests: replaced the test of the link with GMP, in order to
+  avoid the use of a function without a prototype (Autoconf issue), as
+  this is obsolescent in ISO C. The new test should be more robust.
 
 Changes from versions 4.1.* to version 4.2.0:
 - The "fondue savoyarde" release.

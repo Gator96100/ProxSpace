@@ -1,5 +1,11 @@
 # zerofile.awk --- library file to process empty input files
 #
+# user supplies zerofile() function
+#
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+#
 # Arnold Robbins, arnold@skeeve.com, Public Domain
 # June 2003
 

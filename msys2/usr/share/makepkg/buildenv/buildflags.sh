@@ -2,7 +2,7 @@
 #
 #   buildflags.sh - Clear user-specified buildflags if requested
 #
-#   Copyright (c) 2011-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,15 +21,14 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_BUILDFLAGS_SH" ]] && return
 LIBMAKEPKG_BUILDENV_BUILDFLAGS_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/option.sh"
 
 build_options+=('buildflags')
-buildenv_functions+=('buildenv_buildflags')
 
 buildenv_buildflags() {
 	if check_option "buildflags" "n"; then
-		unset CPPFLAGS CFLAGS DEBUG_CFLAGS CXXFLAGS DEBUG_CXXFLAGS LDFLAGS LTOFLAGS RUSTFLAGS DEBUG_RUSTFLAGS
+		unset ${buildenv_vars[@]}
 	fi
 }

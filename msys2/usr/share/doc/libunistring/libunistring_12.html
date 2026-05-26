@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on October, 16 2022 by texi2html 1.78a -->
+<!-- Created on October, 5 2025 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -42,8 +42,8 @@ ul.toc {list-style: none}
 <body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
 
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_11.html#SEC57" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_13.html#SEC61" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_11.html#SEC59" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_13.html#SEC63" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -51,14 +51,14 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="unilbrk_002eh"></a>
-<a name="SEC60"></a>
-<h1 class="chapter"> <a href="libunistring_toc.html#TOC60">12. Line breaking <code>&lt;unilbrk.h&gt;</code></a> </h1>
+<a name="SEC62"></a>
+<h1 class="chapter"> <a href="libunistring_toc.html#TOC62">12. Line breaking <code>&lt;unilbrk.h&gt;</code></a> </h1>
 
 <p>This include file declares functions for determining where in a string
 line breaks could or should be introduced, in order to make the displayed
@@ -74,14 +74,14 @@ following meanings:
 </p>
 <dl>
 <dt><u>Constant:</u> int <b>UC_BREAK_MANDATORY</b>
-<a name="IDX827"></a>
+<a name="IDX849"></a>
 </dt>
 <dd><p>This value indicates that <code><var>s</var>[<var>i</var>]</code> is a line break character.
 </p></dd></dl>
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_BREAK_CR_BEFORE_LF</b>
-<a name="IDX828"></a>
+<a name="IDX850"></a>
 </dt>
 <dd><p>This value is a variant of <code>UC_BREAK_MANDATORY</code>.  It indicates that
 <code><var>s</var>[<var>i</var>]</code> is a CR character and that <code><var>s</var>[<var>i+1</var>]</code>
@@ -90,7 +90,7 @@ is a LF character.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_BREAK_POSSIBLE</b>
-<a name="IDX829"></a>
+<a name="IDX851"></a>
 </dt>
 <dd><p>This value indicates that a line break may be inserted between
 <code><var>s</var>[<var>i</var>-1]</code> and <code><var>s</var>[<var>i</var>]</code>.
@@ -98,7 +98,7 @@ is a LF character.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_BREAK_HYPHENATION</b>
-<a name="IDX830"></a>
+<a name="IDX852"></a>
 </dt>
 <dd><p>This value indicates that a hyphen and a line break may be inserted between
 <code><var>s</var>[<var>i</var>-1]</code> and <code><var>s</var>[<var>i</var>]</code>.  But beware of language
@@ -107,7 +107,7 @@ dependent hyphenation rules.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_BREAK_PROHIBITED</b>
-<a name="IDX831"></a>
+<a name="IDX853"></a>
 </dt>
 <dd><p>This value indicates that <code><var>s</var>[<var>i</var>-1]</code> and <code><var>s</var>[<var>i</var>]</code>
 must not be separated.
@@ -115,7 +115,7 @@ must not be separated.
 
 <dl>
 <dt><u>Constant:</u> int <b>UC_BREAK_UNDEFINED</b>
-<a name="IDX832"></a>
+<a name="IDX854"></a>
 </dt>
 <dd><p>This value is not used as a return value; rather, in the overriding argument of
 the <code>u*_width_linebreaks</code> functions, it indicates the absence of an
@@ -127,16 +127,16 @@ possible.
 </p>
 <dl>
 <dt><u>Function:</u> void <b>u8_possible_linebreaks</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX833"></a>
+<a name="IDX855"></a>
 </dt>
 <dt><u>Function:</u> void <b>u16_possible_linebreaks</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX834"></a>
+<a name="IDX856"></a>
 </dt>
 <dt><u>Function:</u> void <b>u32_possible_linebreaks</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX835"></a>
+<a name="IDX857"></a>
 </dt>
 <dt><u>Function:</u> void <b>ulc_possible_linebreaks</b><i> (const&nbsp;char&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX836"></a>
+<a name="IDX858"></a>
 </dt>
 <dd><p>Determines the line break points in <var>s</var>, and stores the result at
 <code><var>p</var>[0..<var>n</var>-1]</code>.  Every <code><var>p</var>[<var>i</var>]</code> is assigned one of
@@ -151,19 +151,19 @@ non-proportional fonts.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_width_linebreaks</b><i> (const&nbsp;uint8_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, int&nbsp;<var>width</var>, int&nbsp;<var>start_column</var>, int&nbsp;<var>at_end_columns</var>, const&nbsp;char&nbsp;*<var>override</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX837"></a>
+<a name="IDX859"></a>
 </dt>
 <dt><u>Function:</u> int <b>u16_width_linebreaks</b><i> (const&nbsp;uint16_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, int&nbsp;<var>width</var>, int&nbsp;<var>start_column</var>, int&nbsp;<var>at_end_columns</var>, const&nbsp;char&nbsp;*<var>override</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX838"></a>
+<a name="IDX860"></a>
 </dt>
 <dt><u>Function:</u> int <b>u32_width_linebreaks</b><i> (const&nbsp;uint32_t&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, int&nbsp;<var>width</var>, int&nbsp;<var>start_column</var>, int&nbsp;<var>at_end_columns</var>, const&nbsp;char&nbsp;*<var>override</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX839"></a>
+<a name="IDX861"></a>
 </dt>
 <dt><u>Function:</u> int <b>ulc_width_linebreaks</b><i> (const&nbsp;char&nbsp;*<var>s</var>, size_t&nbsp;<var>n</var>, int&nbsp;<var>width</var>, int&nbsp;<var>start_column</var>, int&nbsp;<var>at_end_columns</var>, const&nbsp;char&nbsp;*<var>override</var>, const&nbsp;char&nbsp;*<var>encoding</var>, char&nbsp;*<var>p</var>)</i>
-<a name="IDX840"></a>
+<a name="IDX862"></a>
 </dt>
 <dd><p>Chooses the best line breaks, assuming that every character occupies a width
-given by the <code>uc_width</code> function (see <a href="libunistring_9.html#SEC53">Display width <code>&lt;uniwidth.h&gt;</code></a>).
+given by the <code>uc_width</code> function (see <a href="libunistring_9.html#SEC55">Display width <code>&lt;uniwidth.h&gt;</code></a>).
 </p>
 <p>The string is <code><var>s</var>[0..<var>n</var>-1]</code>.
 </p>
@@ -188,8 +188,8 @@ that a line break <em>should</em> be inserted.
 </p></dd></dl>
 <hr size="6">
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_11.html#SEC57" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_13.html#SEC61" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_11.html#SEC59" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_13.html#SEC63" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -197,12 +197,12 @@ that a line break <em>should</em> be inserted.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 5 2025</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

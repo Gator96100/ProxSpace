@@ -1,13 +1,13 @@
 # larch(1) completion                                      -*- shell-script -*-
 # by Alex Shinn <foof@synthcode.com>
 
-_larch()
+_comp_cmd_larch()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if [[ $cword -eq 1 || $prev == -* ]]; then
-        COMPREPLY=($(compgen -W ' \
+        _comp_compgen -- -W ' \
             my-id my-default-archive register-archive whereis-archive archives \
             init-tree tree-root tree-version set-tree-version inventory \
             tagging-method tree-lint missing-tags add delete \
@@ -29,11 +29,10 @@ _larch()
             touched-files-prereqs patch-set-web update-distributions \
             distribution-name notify my-notifier mail-new-categories \
             mail-new-branches mail-new-versions mail-new-revisions \
-            notify-library notify-browser push-new-revisions sendmail-mailx' \
-            "$cur"))
+            notify-library notify-browser push-new-revisions sendmail-mailx'
     fi
 
 } &&
-    complete -F _larch -o default larch
+    complete -F _comp_cmd_larch -o default larch
 
 # ex: filetype=sh

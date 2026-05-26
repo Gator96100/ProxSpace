@@ -1,24 +1,24 @@
 # bash completion for wvdial                               -*- shell-script -*-
 
-_wvdial()
+_comp_cmd_wvdial()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     local config i IFS=$'\n'
 
     case $cur in
         -*)
-            COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+            _comp_compgen_help
             [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
             ;;
         *)
@@ -33,14 +33,14 @@ _wvdial()
             done
             # parse config files for sections and
             # remove default section
-            COMPREPLY=($(command sed -ne "s|^\[Dialer \($cur.*\)\]$|\1|p" $config \
-                2>/dev/null | command grep -v '^Defaults$'))
+            _comp_compgen_split -l -X 'Defaults' -- "$(command sed -ne \
+                's/^\[Dialer \(.*\)\]$/\1/p' "$config" 2>/dev/null)"
             # escape spaces
-            COMPREPLY=(${COMPREPLY[@]// /\\ })
+            COMPREPLY=("${COMPREPLY[@]// /\\ }")
             ;;
     esac
 
 } &&
-    complete -F _wvdial wvdial
+    complete -F _comp_cmd_wvdial wvdial
 
 # ex: filetype=sh

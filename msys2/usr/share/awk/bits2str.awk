@@ -1,3 +1,7 @@
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+
 # bits2str --- turn an integer into readable ones and zeros
 
 function bits2str(bits,        data, mask)

@@ -1,6 +1,10 @@
 # noassign.awk --- library file to avoid the need for a
 # special option that disables command-line assignments
 #
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+#
 # Arnold Robbins, arnold@skeeve.com, Public Domain
 # October 1999
 

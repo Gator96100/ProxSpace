@@ -1,46 +1,53 @@
 # firefox completion                                       -*- shell-script -*-
 
-_firefox()
+_comp_cmd_firefox()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
-    [[ $cur == -MOZ_LOG*=* ]] && prev=${cur%%=*} cur=${cur#*=}
+    [[ ! $was_split && $cur == -MOZ_LOG*=* ]] && prev=${cur%%=*} cur=${cur#*=}
 
     case $prev in
         --help | --version | --display | --UILocale | -MOZ_LOG | --new-window | --new-tab | \
             --private-window | --window-size | --search | --start-debugger-server | \
-            --recording | --debugger-args | -[hvPa])
+            --recording | --debugger-args | -[hva])
+            return
+            ;;
+        -P)
+            _comp_compgen_split -- "$(
+                _comp_awk -F = '$1 == "Name" { print $2 }' \
+                    ~/.mozilla/firefox/profiles.ini 2>/dev/null
+            )"
             return
             ;;
         --profile | --screenshot)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -MOZ_LOG_FILE)
-            _filedir log
+            _comp_compgen_filedir log
             return
             ;;
-        --recording-file)
-            _filedir
+        --recording-output | --recording-file)
+            _comp_compgen_filedir
             return
             ;;
         --debugger | -d)
-            COMPREPLY=($(compgen -c -- "$cur"))
+            _comp_compgen_commands
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir "@(?([xs])htm?(l)|pdf|txt)"
+    _comp_compgen_filedir "@(?([xs])htm?(l)|pdf|txt|svg)"
 } &&
-    complete -F _firefox firefox mozilla-firefox iceweasel
+    complete -F _comp_cmd_firefox firefox firefox-esr iceweasel mozilla-firefox
 
 # ex: filetype=sh

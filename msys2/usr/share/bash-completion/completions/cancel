@@ -1,27 +1,26 @@
 # cancel(1) completion                                     -*- shell-script -*-
 
-_cancel()
+_comp_cmd_cancel()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -h)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         -U)
             return
             ;;
         -u)
-            COMPREPLY=($(compgen -u -- "$cur"))
+            _comp_compgen -- -u
             return
             ;;
     esac
 
-    COMPREPLY=($(compgen -W \
-        "$(lpstat 2>/dev/null | cut -d' ' -f1)" -- "$cur"))
+    _comp_compgen_split -- "$(lpstat 2>/dev/null | cut -d' ' -f1)"
 } &&
-    complete -F _cancel cancel
+    complete -F _comp_cmd_cancel cancel
 
 # ex: filetype=sh

@@ -8,6 +8,12 @@
 ## Inside string parameters, quotes should not be escaped -- the last
 ## double quote on the line will be seen as the closing quote.
 
+## If you want ^F, ^B, M-F and M-B to do what they did before version 8.0:
+# bind ^F forward main
+# bind ^B back main
+# bind M-F formatter main
+# bind M-B linter main
+
 ## Make 'nextword' (Ctrl+Right) and 'chopwordright' (Ctrl+Delete)
 ## stop at word ends instead of at beginnings.
 # set afterends
@@ -44,7 +50,11 @@
 ## Do case-sensitive searches by default.
 # set casesensitive
 
-## Constantly display the cursor position in the status bar or minibar.
+## Interpret digits given on the command line after a colon after a filename
+## as the line number to go to in that file.
+# set colonparsing
+
+## Constantly report the cursor position, in the status bar or minibar.
 # set constantshow
 
 ## Use cut-from-cursor-to-end-of-line by default.
@@ -92,8 +102,8 @@
 # set minibar
 
 ## Enable mouse support, if available for your system.  When enabled,
-## mouse clicks can be used to place the cursor, set the mark (with a
-## double click), and execute shortcuts.  The mouse will work in the
+## mouse clicks can be used to place the cursor, set the mark (with
+## two clicks), and execute shortcuts.  The mouse will work in the
 ## X Window System, and on the console when gpm is running.
 # set mouse
 
@@ -116,14 +126,14 @@
 ## string means the operating-directory feature is turned off.
 # set operatingdir ""
 
-## Remember the cursor position in each file for the next editing session.
+## Remember the position of cursor and anchors for the next editing session.
 # set positionlog
 
 ## Preserve the XON and XOFF keys (^Q and ^S).
 # set preserve
 
 ## The characters treated as closing punctuation when justifying paragraphs.
-## This may not contain blank characters.  Only these closing punctuations,
+## This may not contain blank characters.  Only these terminating characters,
 ## optionally followed by closing brackets, can end sentences.
 # set punct "!.?"
 
@@ -214,9 +224,9 @@
 # set statuscolor bold,white,green
 # set errorcolor bold,white,red
 # set spotlightcolor black,lightyellow
-# set selectedcolor lightwhite,magenta
-# set stripecolor ,yellow
-# set scrollercolor cyan
+# set selectedcolor lightwhite,#804
+# set stripecolor ,#444
+# set scrollercolor slate,#222
 # set numbercolor cyan
 # set keycolor cyan
 # set functioncolor green
@@ -239,12 +249,12 @@
 ## For all details, see 'man nanorc', section SYNTAX HIGHLIGHTING.
 
 ## To include most of the existing syntax definitions, you can do:
-# include "/usr/share/nano/*.nanorc"
+# include /usr/share/nano/*.nanorc
 
 ## Or you can select just the ones you need.  For example:
-# include "/usr/share/nano/html.nanorc"
-# include "/usr/share/nano/python.nanorc"
-# include "/usr/share/nano/sh.nanorc"
+# include /usr/share/nano/html.nanorc
+# include /usr/share/nano/python.nanorc
+# include /usr/share/nano/sh.nanorc
 
 ## In /usr/share/nano/extra/ you can find some syntaxes that are
 ## specific for certain distros or for some less common languages.
@@ -253,9 +263,6 @@
 ## If <Tab> should always produce four spaces when editing a Python file,
 ## independent of the settings of 'tabsize' and 'tabstospaces':
 # extendsyntax python tabgives "    "
-
-## If <Tab> should always produce an actual TAB when editing a Makefile:
-# extendsyntax makefile tabgives "	"
 
 
 ## === Key bindings ===
@@ -284,13 +291,22 @@
 # unbind M-T main
 ## (Those functions are still accessible through ^T^J and ^T^V.)
 
-## For quickly uppercasing or lowercasing the word under or after the cursor.
+## For quickly uppercasing or lowercasing the word that the cursor is on.
 ## (These effectively select a word and pipe it through a sed command.)
-#bind Sh-M-U "{nextword}{mark}{prevword}{execute}|sed 's/.*/\U&/'{enter}" main
-#bind Sh-M-L "{nextword}{mark}{prevword}{execute}|sed 's/.*/\L&/'{enter}" main
+# bind Sh-M-U "{nextword}{mark}{prevword}{execute}| sed 's/.*/\U&/' {enter}" main
+# bind Sh-M-L "{nextword}{mark}{prevword}{execute}| sed 's/.*/\L&/' {enter}" main
 
 ## For copying a marked region to the system clipboard:
-# bind Sh-M-T "{execute}|xsel -ib{enter}{undo}" main
+# bind Sh-M-C "{execute}| xsel -ib {enter}{undo}" main
+
+## For copying text to the local clipboard via OSC 52 (if terminal supports it):
+# bind M-* "{execute}|| printf "\033]52;c;%s\007" "$(base64 | tr -d '\n')" {enter}{undo}" main
+
+## For normalizing Unicode to precomposed characters:
+# bind Sh-M-N "{execute}| uconv -x nfc {enter}" main
+
+## For wiping all anchors in a buffer:
+# bind Sh-M-W "{execute}| cat {enter}" main
 
 ## For snipping trailing blanks when you save a file:
 # bind ^S "{execute}| sed 's/\s\+$//' {enter}{savefile}" main
@@ -298,34 +314,34 @@
 ## If you would like nano to have keybindings that are more "usual",
 ## such as ^O for Open, ^F for Find, ^H for Help, and ^Q for Quit,
 ## then uncomment these:
-#bind ^X cut main
-#bind ^C copy main
-#bind ^V paste all
-#bind ^Q exit all
-#bind ^S savefile main
-#bind ^W writeout main
-#bind ^O insert main
-#set multibuffer
-#bind ^H help all
-#bind ^H exit help
-#bind ^F whereis all
-#bind ^G findnext all
-#bind ^B wherewas all
-#bind ^D findprevious all
-#bind ^R replace main
-#unbind ^U all
-#unbind ^N main
-#unbind ^Y all
-#unbind M-J main
-#unbind M-T main
-#bind ^A mark main
-#bind ^P location main
-#bind ^T gotoline main
-#bind ^T gotodir browser
-#bind ^T cutrestoffile execute
-#bind ^L linter execute
-#bind ^E execute main
-#bind ^K "{mark}{end}{zap}" main
-#bind ^U "{mark}{home}{zap}" main
-#bind ^Z undo main
-#bind ^Y redo main
+# bind ^X cut main
+# bind ^C copy main
+# bind ^V paste all
+# bind ^Q exit all
+# bind ^S savefile main
+# bind ^W writeout main
+# bind ^O insert main
+# set multibuffer
+# bind ^H help all
+# bind ^H exit help
+# bind ^F whereis all
+# bind ^G findnext all
+# bind ^B wherewas all
+# bind ^D findprevious all
+# bind ^R replace main
+# unbind ^U all
+# unbind ^N main
+# unbind ^Y all
+# unbind M-J main
+# unbind M-T main
+# bind ^A mark main
+# bind ^P location main
+# bind ^T gotoline main
+# bind ^T gotodir browser
+# bind ^T cutrestoffile execute
+# bind ^L linter execute
+# bind ^E execute main
+# bind ^K "{mark}{end}{zap}" main
+# bind ^U "{mark}{home}{zap}" main
+# bind ^Z undo main
+# bind ^Y redo main

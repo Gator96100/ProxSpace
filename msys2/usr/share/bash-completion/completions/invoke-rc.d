@@ -2,37 +2,37 @@
 #
 # Copyright (C) 2004 Servilio Afre Puentes <servilio@gmail.com>
 
-_invoke_rc_d()
+_comp_cmd_invoke_rc_d()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
-    local sysvdir services options valid_options
+    local sysvdir services options
 
     [[ -d /etc/rc.d/init.d ]] && sysvdir=/etc/rc.d/init.d ||
         sysvdir=/etc/init.d
 
-    services=($(printf '%s ' $sysvdir/!(README*|*.sh|$_backup_glob)))
-    services=(${services[@]#$sysvdir/})
     options=(--help --quiet --force --try-anyway --disclose-deny --query
         --no-fallback)
 
     if [[ $cword -eq 1 || $prev == --* ]]; then
-        valid_options=($(
+        # generate valid_options
+        _comp_compgen_split -- "$(
             tr " " "\n" <<<"${words[*]} ${options[*]}" |
                 command sed -ne "/$(command sed 's/ /\\|/g' <<<"${options[*]}")/p" |
                 sort | uniq -u
-        ))
-        COMPREPLY=($(compgen -W '${valid_options[@]} ${services[@]}' -- "$cur"))
+        )"
+        _comp_expand_glob services '"$sysvdir"/!(README*|*.sh|$_comp_backup_glob)' &&
+            _comp_compgen -a -- -W '"${services[@]#"$sysvdir"/}"'
     elif [[ -x $sysvdir/$prev ]]; then
-        COMPREPLY=($(compgen -W '`command sed -e "y/|/ /" \
-            -ne "s/^.*Usage:[ ]*[^ ]*[ ]*{*\([^}\"]*\).*$/\1/p" \
-            $sysvdir/$prev`' -- "$cur"))
+        _comp_compgen_split -- "$(command sed -e 'y/|/ /' \
+            -ne 's/^.*Usage:[ ]*[^ ]*[ ]*{*\([^}"]*\).*$/\1/p' \
+            "$sysvdir/$prev")"
     else
         COMPREPLY=()
     fi
 
 } &&
-    complete -F _invoke_rc_d invoke-rc.d
+    complete -F _comp_cmd_invoke_rc_d invoke-rc.d
 
 # ex: filetype=sh

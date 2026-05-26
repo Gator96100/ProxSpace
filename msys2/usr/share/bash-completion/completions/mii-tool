@@ -1,32 +1,34 @@
 # mii-tool(8) completion                                   -*- shell-script -*-
 
-_mii_tool()
+_comp_cmd_mii_tool()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[FA]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --force | -!(-*)F)
-            COMPREPLY=($(compgen -W '100baseTx-FD 100baseTx-HD 10baseT-FD
-                10baseT-HD' -- "$cur"))
+        --force | -${noargopts}F)
+            _comp_compgen -- -W '100baseTx-FD 100baseTx-HD 10baseT-FD
+                10baseT-HD'
             return
             ;;
-        --advertise | -!(-*)A)
-            COMPREPLY=($(compgen -W '100baseT4 100baseTx-FD 100baseTx-HD
-                10baseT-FD 10baseT-HD' -- "$cur"))
+        --advertise | -${noargopts}A)
+            _comp_compgen -- -W '100baseT4 100baseTx-FD 100baseTx-HD 10baseT-FD
+                10baseT-HD'
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     else
-        _available_interfaces -a
+        _comp_compgen_available_interfaces -a
     fi
 } &&
-    complete -F _mii_tool -o default mii-tool
+    complete -F _comp_cmd_mii_tool -o default mii-tool
 
 # ex: filetype=sh

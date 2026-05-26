@@ -2,7 +2,7 @@
 #
 #   util.sh - general utility functions
 #
-#   Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
@@ -22,10 +22,10 @@
 [[ -n "$LIBMAKEPKG_UTIL_UTIL_SH" ]] && return
 LIBMAKEPKG_UTIL_UTIL_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/error.sh"
-source "$LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/error.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
 
 ##
 #  usage : in_array( $needle, $haystack )
@@ -111,4 +111,14 @@ source_safe() {
 	fi
 
 	eval "$shellopts"
+}
+
+# Append a string to a variable if the value is not already contained.
+# usage : append_once( $ref, $value )
+append_once() {
+	local -n var=$1
+	local value=$2
+	if [[ ! $var =~ (^| )"$value"($| ) ]]; then
+		var+=" $value"
+	fi
 }

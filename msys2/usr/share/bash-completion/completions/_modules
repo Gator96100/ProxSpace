@@ -19,67 +19,66 @@
 
 # Test for existence of /etc/profile.d/modules.sh too because we may end up
 # being sourced before it and thus before the `module' alias has been defined.
-[ -f /etc/profile.d/modules.sh ] || return 1
+[[ -f /etc/profile.d/modules.sh ]] || return 1
 
-_module_list()
+_comp_cmd_module__compgen_list()
 {
-    local modules="$(command sed 's/:/ /g' <<<$LOADEDMODULES | sort)"
-    compgen -W "$modules" -- $1
+    local modules="$(command sed 's/:/ /g' <<<"$LOADEDMODULES" | sort)"
+    _comp_compgen -- -W "$modules"
 }
 
-_module_path()
+_comp_cmd_module__compgen_path()
 {
-    local modules="$(command sed 's/:/ /g' <<<$MODULEPATH | sort)"
-    compgen -W "$modules" -- $1
+    local modules="$(command sed 's/:/ /g' <<<"$MODULEPATH" | sort)"
+    _comp_compgen -- -W "$modules"
 }
 
-_module_avail()
+_comp_cmd_module__compgen_avail()
 {
     local modules="$(
         module avail 2>&1 |
             command grep -E -v '^(-|$)' |
             xargs printf '%s\n' | command sed -e 's/(default)//g' | sort
     )"
-
-    compgen -W "$modules" -- $1
+    _comp_compgen -- -W "$modules"
 }
 
 # A completion function for the module alias
-_module()
+_comp_cmd_module()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if ((cword == 1)); then
         # First parameter on line -- we expect it to be a mode selection
 
         local options
         options="$(module help 2>&1 | command grep -E '^[[:space:]]*\+' |
-            awk '{print $2}' | command sed -e 's/|/ /g' | sort)"
+            _comp_awk '{print $2}' | command sed -e 's/|/ /g' | sort)"
 
-        COMPREPLY=($(compgen -W "$options" -- "$cur"))
+        _comp_compgen -- -W "$options"
 
     elif ((cword == 2)); then
         case $prev in
             add | display | help | load | show | whatis)
-                COMPREPLY=($(_module_avail "$cur"))
+                _comp_cmd_module__compgen_avail
                 ;;
             rm | switch | swap | unload | update)
-                COMPREPLY=($(_module_list "$cur"))
+                _comp_cmd_module__compgen_list
                 ;;
             unuse)
-                COMPREPLY=($(_module_path "$cur"))
+                _comp_cmd_module__compgen_path
                 ;;
         esac
     elif ((cword == 3)); then
         case ${words[1]} in
             swap | switch)
-                COMPREPLY=($(_module_avail "$cur"))
+                _comp_cmd_module__compgen_avail
                 ;;
         esac
     fi
 
 } &&
-    complete -F _module -o default module
+    complete -F _comp_cmd_module -o default module
 
 # ex: filetype=sh

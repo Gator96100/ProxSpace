@@ -2,7 +2,7 @@
 #
 #   gpg.sh - Confirm presence of gpg binary
 #
-#   Copyright (c) 2011-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
 [[ -n "$LIBMAKEPKG_EXECUTABLE_GPG_SH" ]] && return
 LIBMAKEPKG_EXECUTABLE_GPG_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/option.sh"
 
 executable_functions+=('executable_gpg')
 

@@ -1,13 +1,13 @@
 # newusers(8) completion                                   -*- shell-script -*-
 
-_newusers()
+_comp_cmd_newusers()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -c | --crypt)
-            COMPREPLY=($(compgen -W 'DES MD5 NONE SHA256 SHA512' -- "$cur"))
+            _comp_compgen -- -W 'DES MD5 NONE SHA256 SHA512'
             return
             ;;
         -s | --sha-rounds)
@@ -15,16 +15,16 @@ _newusers()
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _newusers newusers
+    complete -F _comp_cmd_newusers newusers
 
 # ex: filetype=sh

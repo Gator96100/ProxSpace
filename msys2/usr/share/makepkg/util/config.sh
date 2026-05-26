@@ -2,7 +2,7 @@
 #
 #   config.sh - functions for handling makepkg config files
 #
-#   Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
@@ -22,11 +22,11 @@
 [[ -n "$LIBMAKEPKG_UTIL_CONFIG_SH" ]] && return
 LIBMAKEPKG_UTIL_CONFIG_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/error.sh"
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/util.sh"
+source "$MAKEPKG_LIBRARY/util/error.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/util.sh"
 
 # correctly source makepkg.conf, respecting user precedence and the system conf
 source_makepkg_config() {
@@ -37,6 +37,11 @@ source_makepkg_config() {
 	# Source the config file; fail if it is not found
 	if [[ -r $MAKEPKG_CONF ]]; then
 		source_safe "$MAKEPKG_CONF"
+		if [[ -d "$MAKEPKG_CONF.d" ]]; then
+			for c in "$MAKEPKG_CONF.d"/*.conf; do
+				source_safe $c
+			done
+		fi
 	else
 		error "$(gettext "%s not found.")" "$MAKEPKG_CONF"
 		plainerr "$(gettext "Aborting...")"

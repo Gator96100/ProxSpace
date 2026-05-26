@@ -1,48 +1,48 @@
 # bash completion for k3b                                  -*- shell-script -*-
 
-_k3b()
+_comp_cmd_k3b()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help* | --author | -v | --version | --license | --lang)
             return
             ;;
         --datacd | --audiocd | --videocd | --mixedcd | --emovixcd | --videodvd)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --copydvd | --formatdvd | --videodvdrip)
-            _dvd_devices
+            _comp_compgen_dvd_devices
             return
             ;;
         --copycd | --erasecd | --cddarip | --videocdrip)
-            _cd_devices
-            _dvd_devices
+            _comp_compgen_cd_devices
+            _comp_compgen -a dvd_devices
             return
             ;;
         --cdimage | --image)
-            _filedir '@(cue|iso|toc)'
+            _comp_compgen_filedir '@(cue|iso|toc)'
             return
             ;;
         --dvdimage)
-            _filedir iso
+            _comp_compgen_filedir iso
             return
             ;;
         --ao)
-            COMPREPLY=($(compgen -W 'alsa arts' -- "$cur"))
+            _comp_compgen -- -W 'alsa arts'
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W "$(_parse_help "$1")" -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     else
-        _filedir
+        _comp_compgen_filedir
     fi
 } &&
-    complete -F _k3b k3b
+    complete -F _comp_cmd_k3b k3b
 
 # ex: filetype=sh

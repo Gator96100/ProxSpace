@@ -1,33 +1,33 @@
 # munin-node-configure completion                          -*- shell-script -*-
 
-_munin_node_configure()
+_comp_cmd_munin_node_configure()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --servicedir | --libdir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --snmp)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         --snmpversion)
-            COMPREPLY=($(compgen -W '1 2c 3' -- "$cur"))
+            _comp_compgen -- -W '1 2c 3'
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
     fi
 } &&
-    complete -F _munin_node_configure munin-node-configure
+    complete -F _comp_cmd_munin_node_configure munin-node-configure
 
 # ex: filetype=sh

@@ -10,7 +10,7 @@
       <sub name="Multiple consumers of PKCS#11 in a process" link="sharing.html#sharing-problem"/>
       <sub name="Managed modules" link="sharing-managed.html"/>
     </sub>
-    <sub name="Proxy Module" link="sharing.html"/>
+    <sub name="Proxy Module" link="proxy.html"/>
     <sub name="Remoting / Forwarding" link="remoting.html"/>
     <sub name="Trust Policy Module" link="trust-module.html">
       <sub name="Paths loaded by the Module" link="trust-module.html#trust-files"/>
@@ -195,6 +195,7 @@
     <keyword type="constant" name="P11_KIT_ITER_KIND_SLOT" link="p11-kit-Future.html#P11-KIT-ITER-KIND-SLOT:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_KIND_TOKEN" link="p11-kit-Future.html#P11-KIT-ITER-KIND-TOKEN:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_KIND_OBJECT" link="p11-kit-Future.html#P11-KIT-ITER-KIND-OBJECT:CAPS"/>
+    <keyword type="constant" name="P11_KIT_ITER_KIND_SESSION" link="p11-kit-Future.html#P11-KIT-ITER-KIND-SESSION:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_KIND_UNKNOWN" link="p11-kit-Future.html#P11-KIT-ITER-KIND-UNKNOWN:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_BUSY_SESSIONS" link="p11-kit-Future.html#P11-KIT-ITER-BUSY-SESSIONS:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_WANT_WRITABLE" link="p11-kit-Future.html#P11-KIT-ITER-WANT-WRITABLE:CAPS"/>
@@ -202,5 +203,7 @@
     <keyword type="constant" name="P11_KIT_ITER_WITH_SLOTS" link="p11-kit-Future.html#P11-KIT-ITER-WITH-SLOTS:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_WITH_TOKENS" link="p11-kit-Future.html#P11-KIT-ITER-WITH-TOKENS:CAPS"/>
     <keyword type="constant" name="P11_KIT_ITER_WITHOUT_OBJECTS" link="p11-kit-Future.html#P11-KIT-ITER-WITHOUT-OBJECTS:CAPS"/>
+    <keyword type="constant" name="P11_KIT_ITER_WITH_LOGIN" link="p11-kit-Future.html#P11-KIT-ITER-WITH-LOGIN:CAPS"/>
+    <keyword type="constant" name="P11_KIT_ITER_WITH_SESSIONS" link="p11-kit-Future.html#P11-KIT-ITER-WITH-SESSIONS:CAPS"/>
   </functions>
 </book>

@@ -1,38 +1,40 @@
 # hddtemp(8) completion                                    -*- shell-script -*-
 
-_hddtemp()
+_comp_cmd_hddtemp()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[flupsS]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --file | -!(-*)f)
-            _filedir db
+        --file | -${noargopts}f)
+            _comp_compgen_filedir db
             return
             ;;
-        --listen | -!(-*)l)
-            _ip_addresses
+        --listen | -${noargopts}l)
+            _comp_compgen_ip_addresses
             return
             ;;
-        --unit | -!(-*)u)
-            COMPREPLY=($(compgen -W 'C F' -- "$cur"))
+        --unit | -${noargopts}u)
+            _comp_compgen -- -W 'C F'
             return
             ;;
-        --port | --separator | --syslog | --version | --help | -!(-*)[psSvh?])
+        --port | --separator | --syslog | --version | --help | -${noargopts}[psSvh?])
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1") --help' -- "$cur"))
+        _comp_compgen_help
+        _comp_compgen -a -- -W '--help'
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     else
-        cur=${cur:=/dev/}
-        _filedir
+        _comp_compgen -c "${cur:-/dev/}" filedir
     fi
 } &&
-    complete -F _hddtemp hddtemp
+    complete -F _comp_cmd_hddtemp hddtemp
 
 # ex: filetype=sh

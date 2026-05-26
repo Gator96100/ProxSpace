@@ -2,12 +2,12 @@
 .\"     Title: cygwin_stackdump
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin API Reference
 .\"    Source: Cygwin API Reference
 .\"  Language: English
 .\"
-.TH "CYGWIN_STACKDUMP" "3" "07/14/2023" "Cygwin API Reference" "Cygwin API Reference"
+.TH "CYGWIN_STACKDUMP" "3" "03/15/2026" "Cygwin API Reference" "Cygwin API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -41,6 +41,10 @@ cygwin_stackdump
 .SH "DESCRIPTION"
 .PP
 Outputs a stackdump to stderr from the called location\&.
+.PP
+Note: This function only has an effect the first time it is called by a process\&.
+.PP
+Note: This function is deprecated\&.
 .SH "COPYRIGHT"
 .br
 .PP

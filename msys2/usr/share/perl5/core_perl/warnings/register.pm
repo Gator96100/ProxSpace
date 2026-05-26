@@ -1,6 +1,5 @@
-package warnings::register;
+package warnings::register 1.06;
 
-our $VERSION = '1.04';
 require warnings;
 
 # left here as cruft in case other users were using this undocumented routine
@@ -19,7 +18,7 @@ sub import
     shift;
     my @categories = @_;
 
-    my $package = (caller(0))[0];
+    my $package = caller;
     warnings::register_categories($package);
 
     warnings::register_categories($package . "::$_") for @categories;
@@ -41,6 +40,7 @@ warnings::register - warnings import function
 
 Creates a warnings category with the same name as the current package.
 
-See L<warnings> for more information on this module's usage.
+See L<warnings/"Reporting Warnings from a Module"> for more information
+on this module's usage.
 
 =cut

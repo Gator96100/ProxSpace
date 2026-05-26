@@ -1,9 +1,9 @@
 # bash completion for zopfli                               -*- shell-script -*-
 
-_zopfli()
+_comp_cmd_zopfli()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -h)
@@ -12,18 +12,19 @@ _zopfli()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W \
-            '$(_parse_help "$1" -h | command sed -e "s/#$//")' -- "$cur"))
+        _comp_compgen -R help -- -h
+        ((${#COMPREPLY[@]})) &&
+            _comp_compgen -- -W '"${COMPREPLY[@]%#}"'
         [[ ${COMPREPLY-} == --i ]] && compopt -o nospace
         return
     fi
 
-    _tilde "$cur" || return
+    _comp_compgen_tilde && return
 
-    local IFS=$'\n' xspec="*.@(gz|t[ag]z)"
+    local xspec="*.@(gz|t[ag]z)"
     compopt -o filenames
-    COMPREPLY=($(compgen -f -X "$xspec" -- "$cur") $(compgen -d -- "$cur"))
+    _comp_compgen -- -f -X "$xspec" -o plusdirs
 } &&
-    complete -F _zopfli zopfli
+    complete -F _comp_cmd_zopfli zopfli
 
 # ex: filetype=sh

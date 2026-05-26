@@ -1,27 +1,29 @@
 # userdel(8) completion                                    -*- shell-script -*-
 
-_userdel()
+_comp_cmd_userdel()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[R]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | -!(-*)h)
+        --help | -${noargopts}h)
             return
             ;;
-        --root | -!(-*)R)
-            _filedir -d
+        --root | -${noargopts}R)
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    COMPREPLY=($(compgen -u -- "$cur"))
+    _comp_compgen -- -u
 } &&
-    complete -F _userdel userdel
+    complete -F _comp_cmd_userdel userdel
 
 # ex: filetype=sh

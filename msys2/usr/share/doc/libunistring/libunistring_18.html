@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on October, 16 2022 by texi2html 1.78a -->
+<!-- Created on October, 5 2025 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -42,8 +42,8 @@ ul.toc {list-style: none}
 <body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
 
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_17.html#SEC80" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC82" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_17.html#SEC82" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC84" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -51,14 +51,14 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
 <hr size="2">
 <a name="The-wchar_005ft-mess"></a>
-<a name="SEC81"></a>
-<h1 class="appendix"> <a href="libunistring_toc.html#TOC81">A. The <code>wchar_t</code> mess</a> </h1>
+<a name="SEC83"></a>
+<h1 class="appendix"> <a href="libunistring_toc.html#TOC83">A. The <code>wchar_t</code> mess</a> </h1>
 
 <p>The ISO C and POSIX standard creators made an attempt to fix the first
 problem mentioned in the section <a href="libunistring_1.html#SEC6">&lsquo;<samp>char *</samp>&rsquo; strings</a>.  They introduced
@@ -66,7 +66,8 @@ problem mentioned in the section <a href="libunistring_1.html#SEC6">&lsquo;<samp
 <li>
 a type &lsquo;<samp>wchar_t</samp>&rsquo;, designed to encapsulate an entire character,
 </li><li>
-a &ldquo;wide string&rdquo; type &lsquo;<samp>wchar_t *</samp>&rsquo;, and
+a &ldquo;wide string&rdquo; type &lsquo;<samp>wchar_t *</samp>&rsquo;, with some API functions declared in
+<a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wchar.h.html"><code>&lt;wchar.h&gt;</code></a>, and
 </li><li>
 functions declared in <a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wctype.h.html"><code>&lt;wctype.h&gt;</code></a> that were meant to supplant the
 ones in <a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html"><code>&lt;ctype.h&gt;</code></a>.
@@ -76,8 +77,8 @@ ones in <a href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.
 </p>
 <ul>
 <li>
-On AIX and Windows platforms, <code>wchar_t</code> is a 16-bit type.  This
-means that it can never accommodate an entire Unicode character.  Either
+On Windows platforms and on AIX in 32-bit mode, <code>wchar_t</code> is a 16-bit type.
+This means that it can never accommodate an entire Unicode character.  Either
 the <code>wchar_t *</code> strings are limited to characters in UCS-2 (the
 &ldquo;Basic Multilingual Plane&rdquo; of Unicode), or &mdash; if <code>wchar_t *</code>
 strings are encoded in UTF-16 &mdash; a <code>wchar_t</code> represents only half
@@ -110,8 +111,8 @@ the program to produce garbage or abort.
 </p>
 <hr size="6">
 <table cellpadding="1" cellspacing="1" border="0">
-<tr><td valign="middle" align="left">[<a href="libunistring_17.html#SEC80" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_19.html#SEC82" title="Next chapter"> &gt;&gt; </a>]</td>
+<tr><td valign="middle" align="left">[<a href="libunistring_17.html#SEC82" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_19.html#SEC84" title="Next chapter"> &gt;&gt; </a>]</td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left"> &nbsp; </td>
@@ -119,12 +120,12 @@ the program to produce garbage or abort.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 5 2025</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

@@ -29,18 +29,22 @@
  * GSAR 97-03-27
  */
 
+MSVC_DIAG_IGNORE(4324)
+
 struct jmpenv {
     struct jmpenv *	je_prev;
     Sigjmp_buf		je_buf;		/* uninit if je_prev is NULL */
     int			je_ret;		/* last exception thrown */
-    bool		je_mustcatch;	/* need to call longjmp()? */
+    bool		je_mustcatch;	/* longjmp()s must be caught locally */
     U16                 je_old_delaymagic; /* saved PL_delaymagic */
     SSize_t             je_old_stack_hwm;
 };
 
+MSVC_DIAG_RESTORE
+
 typedef struct jmpenv JMPENV;
 
-#if defined DEBUGGING && !defined DEBUGGING_RE_ONLY
+#if defined PERL_USE_HWM
 #  define JE_OLD_STACK_HWM_zero      PL_start_env.je_old_stack_hwm = 0
 #  define JE_OLD_STACK_HWM_save(je)  \
         (je).je_old_stack_hwm = PL_curstackinfo->si_stack_hwm
@@ -110,30 +114,47 @@ typedef struct jmpenv JMPENV;
 
 #define dJMPENV		JMPENV cur_env
 
-#define JMPENV_PUSH(v) \
+#define JMPENV_PUSH(v)                                                  \
     STMT_START {							\
-        DEBUG_l({							\
-            int i = 0; JMPENV *p = PL_top_env;				\
+        DEBUG_l({                                                       \
+            int i = 0;                                                  \
+            JMPENV *p = PL_top_env;                                     \
             while (p) { i++; p = p->je_prev; }				\
-            Perl_deb(aTHX_ "JUMPENV_PUSH level=%d at %s:%d\n",		\
-                         i,  __FILE__, __LINE__);})			\
+            Perl_deb(aTHX_ "JMPENV_PUSH pre level=%d in %s at %s:%d\n", \
+                         i,  SAFE_FUNCTION__, __FILE__, __LINE__);      \
+        });                                                             \
         cur_env.je_prev = PL_top_env;					\
         JE_OLD_STACK_HWM_save(cur_env);                                 \
-        cur_env.je_ret = PerlProc_setjmp(cur_env.je_buf, SCOPE_SAVES_SIGNAL_MASK);		\
+        /* setjmp() is callable in limited contexts which does not */	\
+        /* include assignment, so switch() instead */			\
+        switch (PerlProc_setjmp(cur_env.je_buf, SCOPE_SAVES_SIGNAL_MASK)) { \
+        case 0: cur_env.je_ret = 0; break;				\
+        case 1: cur_env.je_ret = 1; break;				\
+        case 2: cur_env.je_ret = 2; break;				\
+        case 3: cur_env.je_ret = 3; break;				\
+        default: Perl_croak(aTHX_ "panic: unexpected setjmp() result\n"); \
+        }								\
         JE_OLD_STACK_HWM_restore(cur_env);                              \
         PL_top_env = &cur_env;						\
         cur_env.je_mustcatch = FALSE;					\
         cur_env.je_old_delaymagic = PL_delaymagic;			\
+        DEBUG_l({                                                       \
+            int i = 0;                                                  \
+            JMPENV *p = PL_top_env;                                     \
+            while (p) { i++; p = p->je_prev; }				\
+            Perl_deb(aTHX_ "JMPENV_PUSH level=%d ret=%d in %s at %s:%d\n",    \
+                         i, cur_env.je_ret, SAFE_FUNCTION__,  __FILE__, __LINE__); \
+        });                                                             \
         (v) = cur_env.je_ret;						\
     } STMT_END
 
 #define JMPENV_POP \
     STMT_START {							\
-        DEBUG_l({							\
+        DEBUG_l({                                                       \
             int i = -1; JMPENV *p = PL_top_env;				\
             while (p) { i++; p = p->je_prev; }				\
-            Perl_deb(aTHX_ "JUMPENV_POP level=%d at %s:%d\n",		\
-                         i, __FILE__, __LINE__);})			\
+            Perl_deb(aTHX_ "JMPENV_POP level=%d in %s at %s:%d\n",        \
+                         i, SAFE_FUNCTION__, __FILE__, __LINE__);})        \
         assert(PL_top_env == &cur_env);					\
         PL_delaymagic = cur_env.je_old_delaymagic;			\
         PL_top_env = cur_env.je_prev;					\
@@ -141,27 +162,29 @@ typedef struct jmpenv JMPENV;
 
 #define JMPENV_JUMP(v) \
     STMT_START {						\
-        DEBUG_l({						\
+        DEBUG_l({                                               \
             int i = -1; JMPENV *p = PL_top_env;			\
             while (p) { i++; p = p->je_prev; }			\
-            Perl_deb(aTHX_ "JUMPENV_JUMP(%d) level=%d at %s:%d\n", \
-                         (int)v, i, __FILE__, __LINE__);})	\
-        if (PL_top_env->je_prev)				\
+            Perl_deb(aTHX_ "JMPENV_JUMP(%d) level=%d in %s at %s:%d\n",         \
+                         (int)(v), i, SAFE_FUNCTION__, __FILE__, __LINE__);})   \
+        if (PL_top_env->je_prev) {				\
+            assert((v) >= 0 && (v) <= 3);			\
             PerlProc_longjmp(PL_top_env->je_buf, (v));		\
+        }    							\
         if ((v) == 2)						\
             PerlProc_exit(STATUS_EXIT);		                \
-        PerlIO_printf(PerlIO_stderr(), "panic: top_env, v=%d\n", (int)v); \
+        PerlIO_printf(PerlIO_stderr(), "panic: top_env, v=%d\n", (int)(v)); \
         PerlProc_exit(1);					\
     } STMT_END
 
 #define CATCH_GET		(PL_top_env->je_mustcatch)
 #define CATCH_SET(v) \
     STMT_START {							\
-        DEBUG_l(							\
+        DEBUG_l(                                                        \
             Perl_deb(aTHX_						\
-                "JUMPLEVEL set catch %d => %d (for %p) at %s:%d\n",	\
-                 PL_top_env->je_mustcatch, v, (void*)PL_top_env,	\
-                 __FILE__, __LINE__);)					\
+                "JUMPLEVEL set catch %d => %d (for %p) in %s at %s:%d\n",   \
+                 PL_top_env->je_mustcatch, (v), (void*)PL_top_env,      \
+                 SAFE_FUNCTION__, __FILE__, __LINE__);)			\
         PL_top_env->je_mustcatch = (v);					\
     } STMT_END
 
@@ -175,8 +198,8 @@ typedef struct refcounted_he COPHH;
 #define COPHH_EXISTS REFCOUNTED_HE_EXISTS
 
 /*
-=for apidoc  Amx|SV *|cophh_fetch_pvn|const COPHH *cophh|const char *key|STRLEN keylen|U32 hash|U32 flags
-=for apidoc_item|SV *|cophh_fetch_pv |const COPHH *cophh|const char *key              |U32 hash|U32 flags
+=for apidoc  Amx|SV *|cophh_fetch_pv |const COPHH *cophh|const char *key              |U32 hash|U32 flags
+=for apidoc_item|SV *|cophh_fetch_pvn|const COPHH *cophh|const char *key|STRLEN keylen|U32 hash|U32 flags
 =for apidoc_item|SV *|cophh_fetch_pvs|const COPHH *cophh|           "key"                      |U32 flags
 =for apidoc_item|SV *|cophh_fetch_sv |const COPHH *cophh|        SV *key              |U32 hash|U32 flags
 
@@ -206,19 +229,24 @@ the octets.
 =for apidoc Amnh||COPHH_KEY_UTF8
 
 =cut
+
 */
 
-#define cophh_fetch_pvn(cophh, key, keylen, hash, flags) \
-    Perl_refcounted_he_fetch_pvn(aTHX_ cophh, key, keylen, hash, flags)
+#define cophh_fetch_pvn(cophh, key, keylen, hash, flags)                    \
+    Perl_refcounted_he_fetch_pvn(aTHX_ cophh, key, keylen, hash,            \
+                                       (flags & COPHH_KEY_UTF8))
 
-#define cophh_fetch_pvs(cophh, key, flags) \
-    Perl_refcounted_he_fetch_pvn(aTHX_ cophh, STR_WITH_LEN(key), 0, flags)
+#define cophh_fetch_pvs(cophh, key, flags)                                  \
+    Perl_refcounted_he_fetch_pvn(aTHX_ cophh, STR_WITH_LEN(key), 0,         \
+                                       (flags & COPHH_KEY_UTF8))
 
-#define cophh_fetch_pv(cophh, key, hash, flags) \
-    Perl_refcounted_he_fetch_pv(aTHX_ cophh, key, hash, flags)
+#define cophh_fetch_pv(cophh, key, hash, flags)                             \
+    Perl_refcounted_he_fetch_pv(aTHX_ cophh, key, hash,                     \
+                                      (flags & COPHH_KEY_UTF8))
 
-#define cophh_fetch_sv(cophh, key, hash, flags) \
-    Perl_refcounted_he_fetch_sv(aTHX_ cophh, key, hash, flags)
+#define cophh_fetch_sv(cophh, key, hash, flags)                             \
+    Perl_refcounted_he_fetch_sv(aTHX_ cophh, key, hash,                     \
+                                      (flags & COPHH_KEY_UTF8))
 
 /*
 =for apidoc Amx|bool|cophh_exists_pvn|const COPHH *cophh|const char *key|STRLEN keylen|U32 hash|U32 flags
@@ -305,8 +333,8 @@ Generate and return a fresh cop hints hash containing no entries.
 #define cophh_new_empty() ((COPHH *)NULL)
 
 /*
-=for apidoc  Amx|COPHH *|cophh_store_pvn|COPHH *cophh|const char *key|STRLEN keylen|U32 hash|SV *value|U32 flags
-=for apidoc_item|COPHH *|cophh_store_pv |COPHH *cophh|const char *key              |U32 hash|SV *value|U32 flags
+=for apidoc  Amx|COPHH *|cophh_store_pv |COPHH *cophh|const char *key              |U32 hash|SV *value|U32 flags
+=for apidoc_item|COPHH *|cophh_store_pvn|COPHH *cophh|const char *key|STRLEN keylen|U32 hash|SV *value|U32 flags
 =for apidoc_item|COPHH *|cophh_store_pvs|COPHH *cophh|           "key"                      |SV *value|U32 flags
 =for apidoc_item|COPHH *|cophh_store_sv |COPHH *cophh|        SV *key              |U32 hash|SV *value|U32 flags
 
@@ -357,8 +385,8 @@ the octets.
     Perl_refcounted_he_new_sv(aTHX_ cophh, key, hash, value, flags)
 
 /*
-=for apidoc  Amx|COPHH *|cophh_delete_pvn|COPHH *cophh|const char *key|STRLEN keylen|U32 hash|U32 flags
-=for apidoc_item|COPHH *|cophh_delete_pv |COPHH *cophh|const char *key              |U32 hash|U32 flags
+=for apidoc  Amx|COPHH *|cophh_delete_pv |COPHH *cophh|const char *key              |U32 hash|U32 flags
+=for apidoc_item|COPHH *|cophh_delete_pvn|COPHH *cophh|const char *key|STRLEN keylen|U32 hash|U32 flags
 =for apidoc_item|COPHH *|cophh_delete_pvs|COPHH *cophh|           "key"                      |U32 flags
 =for apidoc_item|COPHH *|cophh_delete_sv |COPHH *cophh|        SV *key              |U32 hash|U32 flags
 
@@ -415,15 +443,20 @@ struct cop {
 #ifdef USE_ITHREADS
     PADOFFSET	cop_stashoff;	/* offset into PL_stashpad, for the
                                    package the line was compiled in */
-    char *	cop_file;	/* name of file this command is from */
+    char *      cop_file;       /* rcpv containing name of file this command is from */
 #else
     HV *	cop_stash;	/* package line was compiled in */
     GV *	cop_filegv;	/* name of GV file this command is from */
 #endif
     U32		cop_hints;	/* hints bits from pragmata */
     U32		cop_seq;	/* parse sequence number */
-    /* Beware. mg.c and warnings.pl assume the type of this is STRLEN *:  */
-    STRLEN *	cop_warnings;	/* lexical warnings bitmask */
+    char *      cop_warnings;   /* Lexical warnings bitmask vector.
+                                   Refcounted shared copy of ${^WARNING_BITS}.
+                                   This pointer either points at one of the
+                                   magic values for warnings, or it points
+                                   at a buffer constructed with rcpv_new().
+                                   Use the RCPV_LEN() macro to get its length.
+                                 */
     /* compile time state of %^H.  See the comment in op.c for how this is
        used to recreate a hash to return from caller.  */
     COPHH *	cop_hints_hash;
@@ -439,7 +472,10 @@ struct cop {
 =for apidoc Am|const char *|CopFILE|const COP * c
 Returns the name of the file associated with the C<COP> C<c>
 
-=for apidoc Am|STRLEN|CopLINE|const COP * c
+=for apidoc Am|const char *|CopFILE_LEN|const COP * c
+Returns the length of the file associated with the C<COP> C<c>
+
+=for apidoc Am|line_t|CopLINE|const COP * c
 Returns the line number in the source code associated with the C<COP> C<c>
 
 =for apidoc Am|AV *|CopFILEAV|const COP * c
@@ -454,6 +490,17 @@ Returns the SV associated with the C<COP> C<c>
 
 =for apidoc Am|void|CopFILE_set|COP * c|const char * pv
 Makes C<pv> the name of the file associated with the C<COP> C<c>
+
+=for apidoc Am|void|CopFILE_setn|COP * c|const char * pv|STRLEN len
+Makes C<pv> the name of the file associated with the C<COP> C<c>
+
+=for apidoc Am|void|CopFILE_copy|COP * dst|COP * src
+Efficiently copies the cop file name from one COP to another. Wraps
+the required logic to do a refcounted copy under threads or not.
+
+=for apidoc Am|void|CopFILE_free|COP * c
+Frees the file data in a cop. Under the hood this is a refcounting
+operation.
 
 =for apidoc Am|GV *|CopFILEGV|const COP * c
 Returns the GV associated with the C<COP> C<c>
@@ -482,14 +529,113 @@ string C<p>, creating the package if necessary.
 =cut
 */
 
+/*
+=for apidoc Am|RCPV *|RCPVx|char *pv
+Returns the RCPV structure (struct rcpv) for a refcounted
+string pv created with C<rcpv_new()>.
+No checks are performed to ensure that C<pv> was actually allocated
+with C<rcpv_new()>, it is the callers responsibility to ensure that
+this is the case.
+
+=for apidoc Am|RCPV *|RCPV_REFCOUNT|char *pv
+Returns the refcount for a pv created with C<rcpv_new()>. 
+No checks are performed to ensure that C<pv> was actually allocated
+with C<rcpv_new()>, it is the callers responsibility to ensure that
+this is the case.
+
+=for apidoc Am|RCPV *|RCPV_REFCNT_inc|char *pv
+Increments the refcount for a C<char *> pointer which was created
+with a call to C<rcpv_new()>. Same as calling rcpv_copy().
+No checks are performed to ensure that C<pv> was actually allocated
+with C<rcpv_new()>, it is the callers responsibility to ensure that
+this is the case.
+
+=for apidoc Am|RCPV *|RCPV_REFCNT_dec|char *pv
+Decrements the refcount for a C<char *> pointer which was created
+with a call to C<rcpv_new()>. Same as calling rcpv_free().
+No checks are performed to ensure that C<pv> was actually allocated
+with C<rcpv_new()>, it is the callers responsibility to ensure that
+this is the case.
+
+=for apidoc Am|RCPV *|RCPV_LEN|char *pv
+Returns the length of a pv created with C<rcpv_new()>.
+Note that this reflects the length of the string from the callers
+point of view, it does not include the mandatory null which is
+always injected at the end of the string by rcpv_new().
+No checks are performed to ensure that C<pv> was actually allocated
+with C<rcpv_new()>, it is the callers responsibility to ensure that
+this is the case.
+
+=cut
+*/
+
+struct rcpv {
+    STRLEN  refcount;  /* UV would mean a 64 refcnt on
+                          32 bit builds with -Duse64bitint */
+    STRLEN  len;       /* length of string including mandatory
+                          null byte at end */
+    char    pv[1];
+};
+typedef struct rcpv RCPV;
+
+#define RCPVf_USE_STRLEN    (1 << 0)
+#define RCPVf_NO_COPY       (1 << 1)
+#define RCPVf_ALLOW_EMPTY   (1 << 2)
+
+#define RCPVx(pv_arg)       ((RCPV *)((pv_arg) - STRUCT_OFFSET(struct rcpv, pv)))
+#define RCPV_REFCOUNT(pv)   (RCPVx(pv)->refcount)
+#define RCPV_LEN(pv)        (RCPVx(pv)->len-1) /* len always includes space for a null */
+#define RCPV_REFCNT_inc(pv) rcpv_copy(pv)
+#define RCPV_REFCNT_dec(pv) rcpv_free(pv)
+
 #ifdef USE_ITHREADS
 
-#  define CopFILE(c)		((c)->cop_file)
+#  define CopFILE(c)            ((c)->cop_file)
+#  define CopFILE_LEN(c)        (CopFILE(c) ? RCPV_LEN(CopFILE(c)) : 0)
 #  define CopFILEGV(c)		(CopFILE(c) \
                                  ? gv_fetchfile(CopFILE(c)) : NULL)
 
-#  define CopFILE_set(c,pv)	((c)->cop_file = savesharedpv(pv))
-#  define CopFILE_setn(c,pv,l)  ((c)->cop_file = savesharedpvn((pv),(l)))
+#  define CopFILE_set_x(c,pv)       ((c)->cop_file = rcpv_new((pv),0,RCPVf_USE_STRLEN))
+#  define CopFILE_setn_x(c,pv,l)    ((c)->cop_file = rcpv_new((pv),(l),0))
+#  define CopFILE_free_x(c)         ((c)->cop_file = rcpv_free((c)->cop_file))
+#  define CopFILE_copy_x(dst,src)   ((dst)->cop_file = rcpv_copy((src)->cop_file))
+
+/* change condition to 1 && to enable this debugging */
+#  define CopFILE_debug(c,t,rk)                 \
+    if (0 && (c)->cop_file)                     \
+        PerlIO_printf(Perl_debug_log,           \
+            "%-14s THX:%p OP:%p PV:%p rc: "     \
+            "%6zu fn: '%.*s' at %s line %d\n",  \
+            (t), aTHX, (c), (c)->cop_file,      \
+            RCPV_REFCOUNT((c)->cop_file)-rk,    \
+            (int)RCPV_LEN((c)->cop_file),       \
+            (c)->cop_file,__FILE__,__LINE__)    \
+
+
+#  define CopFILE_set(c,pv)                     \
+    STMT_START {                                \
+        CopFILE_set_x(c,pv);                    \
+        CopFILE_debug(c,"CopFILE_set", 0);      \
+    } STMT_END
+
+#  define CopFILE_setn(c,pv,l)                  \
+    STMT_START {                                \
+        CopFILE_setn_x(c,pv,l);                 \
+        CopFILE_debug(c,"CopFILE_setn", 0);     \
+    } STMT_END
+
+#  define CopFILE_copy(dst,src)                 \
+    STMT_START {                                \
+        CopFILE_copy_x((dst),(src));            \
+        CopFILE_debug((dst),"CopFILE_copy", 0); \
+    } STMT_END
+
+#  define CopFILE_free(c)                       \
+    STMT_START {                                \
+        CopFILE_debug((c),"CopFILE_free", 1);   \
+        CopFILE_free_x(c);                      \
+    } STMT_END
+
 
 #  define CopFILESV(c)		(CopFILE(c) \
                                  ? GvSV(gv_fetchfile(CopFILE(c))) : NULL)
@@ -502,13 +648,13 @@ string C<p>, creating the package if necessary.
 #  define CopSTASH_set(c,hv)	((c)->cop_stashoff = (hv)		\
                                     ? alloccopstash(hv)			\
                                     : 0)
-#  define CopFILE_free(c)	(PerlMemShared_free(CopFILE(c)),(CopFILE(c) = NULL))
 
 #else /* Above: yes threads; Below no threads */
 
 #  define CopFILEGV(c)		((c)->cop_filegv)
 #  define CopFILEGV_set(c,gv)	((c)->cop_filegv = (GV*)SvREFCNT_inc(gv))
 #  define CopFILE_set(c,pv)	CopFILEGV_set((c), gv_fetchfile(pv))
+#  define CopFILE_copy(dst,src) CopFILEGV_set((dst),CopFILEGV(src))
 #  define CopFILE_setn(c,pv,l)	CopFILEGV_set((c), gv_fetchfile_flags((pv),(l),0))
 #  define CopFILESV(c)		(CopFILEGV(c) ? GvSV(CopFILEGV(c)) : NULL)
 #  define CopFILEAV(c)		(CopFILEGV(c) ? GvAV(CopFILEGV(c)) : NULL)
@@ -520,6 +666,8 @@ string C<p>, creating the package if necessary.
 #  define CopFILEAVn(c)         (CopFILEGV(c) ? GvAVn(CopFILEGV(c)) : NULL)
 #  define CopFILE(c)		(CopFILEGV(c) /* +2 for '_<' */         \
                                     ? GvNAME(CopFILEGV(c))+2 : NULL)
+#  define CopFILE_LEN(c)	(CopFILEGV(c) /* -2 for '_<' */         \
+                                    ? GvNAMELEN(CopFILEGV(c))-2 : 0)
 #  define CopSTASH(c)		((c)->cop_stash)
 #  define CopSTASH_set(c,hv)	((c)->cop_stash = (hv))
 #  define CopFILE_free(c)	(SvREFCNT_dec(CopFILEGV(c)),(CopFILEGV(c) = NULL))
@@ -534,10 +682,12 @@ string C<p>, creating the package if necessary.
 #define CopHINTHASH_get(c)	((COPHH*)((c)->cop_hints_hash))
 #define CopHINTHASH_set(c,h)	((c)->cop_hints_hash = (h))
 
+#define CopFEATURES_setfrom(dst, src) ((dst)->cop_features = (src)->cop_features)
+
 /*
-=for apidoc   Am|SV *|cop_hints_fetch_pvn|const COP *cop|const char *key|STRLEN keylen|U32 hash|U32 flags
-=for apidoc_item|SV *|cop_hints_fetch_pv |const COP *cop|const char *key              |U32 hash|U32 flags
-=for apidoc_item|SV *|cop_hints_fetch_pvs|const COP *cop|           "key"                      |U32 flags
+=for apidoc   Am|SV *|cop_hints_fetch_pv |const COP *cop|const char *key              |U32 hash|U32 flags
+=for apidoc_item|SV *|cop_hints_fetch_pvn|const COP *cop|const char *key|STRLEN keylen|U32 hash|U32 flags
+=for apidoc_item|SV *|cop_hints_fetch_pvs|const COP *cop|           "key"             |U32 flags
 =for apidoc_item|SV *|cop_hints_fetch_sv |const COP *cop|        SV *key              |U32 hash|U32 flags
 
 These look up the hint entry in the cop C<cop> with the key specified by
@@ -579,8 +729,8 @@ the octets.
     cophh_fetch_sv(CopHINTHASH_get(cop), key, hash, flags)
 
 /*
-=for apidoc   Am|bool|cop_hints_exists_pvn|const COP *cop|const char *key|STRLEN keylen|U32 hash|U32 flags
-=for apidoc_item|bool|cop_hints_exists_pv |const COP *cop|const char *key              |U32 hash|U32 flags
+=for apidoc  Am|bool|cop_hints_exists_pv |const COP *cop|const char *key|U32 hash               |U32 flags
+=for apidoc_item|bool|cop_hints_exists_pvn|const COP *cop|const char *key|STRLEN keylen|U32 hash|U32 flags
 =for apidoc_item|bool|cop_hints_exists_pvs|const COP *cop|           "key"                      |U32 flags
 =for apidoc_item|bool|cop_hints_exists_sv |const COP *cop|        SV *key              |U32 hash|U32 flags
 
@@ -739,12 +889,14 @@ struct block_format {
     } STMT_END
 
 /* junk in @_ spells trouble when cloning CVs and in pp_caller(), so don't
- * leave any (a fast av_clear(ary), basically) */
+ * leave any (a fast av_clear(ary), basically).
+ * New code should probably be using Perl_clear_defarray_simple()
+ * and/or Perl_clear_defarray()
+ */
 #define CLEAR_ARGARRAY(ary) \
     STMT_START {							\
-        AvMAX(ary) += AvARRAY(ary) - AvALLOC(ary);			\
-        AvARRAY(ary) = AvALLOC(ary);					\
         AvFILLp(ary) = -1;						\
+        av_remove_offset(ary);                                          \
     } STMT_END
 
 
@@ -766,7 +918,7 @@ struct block_eval {
 
 /* blk_u16 bit usage for eval contexts: */
 
-#define CxOLD_IN_EVAL(cx)	(((cx)->blk_u16) & 0x3F) /* saved PL in_eval */
+#define CxOLD_IN_EVAL(cx)	(((cx)->blk_u16) & 0x3F) /* saved PL_in_eval */
 #define CxEVAL_TXT_REFCNTED(cx)	(((cx)->blk_u16) & 0x40) /* cur_text rc++ */
 #define CxOLD_OP_TYPE(cx)	(((cx)->blk_u16) >> 7)   /* type of eval op */
 
@@ -784,7 +936,7 @@ struct block_loop {
             IV  ix;   /* index relative to base of array */
         } ary;
         struct { /* CXt_LOOP_LIST, C<for (list)> */
-            I32 basesp; /* first element of list on stack */
+            SSize_t basesp; /* first element of list on stack */
             IV  ix;      /* index relative to basesp */
         } stack;
         struct { /* CXt_LOOP_LAZYIV, C<for (1..9)> */
@@ -793,7 +945,7 @@ struct block_loop {
         } lazyiv;
         struct { /* CXt_LOOP_LAZYSV C<for ('a'..'z')> */
             SV * cur;
-            SV * end; /* maxiumum value (or minimum in reverse) */
+            SV * end; /* maximum value (or minimum in reverse) */
         } lazysv;
     } state_u;
 #ifdef USE_ITHREADS
@@ -808,9 +960,9 @@ struct block_loop {
                 ? &GvSV((c)->blk_loop.itervar_u.gv)     \
                 : (SV **)&(c)->blk_loop.itervar_u.gv)
 
-#define CxLABEL(c)	(0 + CopLABEL((c)->blk_oldcop))
-#define CxLABEL_len(c,len)	(0 + CopLABEL_len((c)->blk_oldcop, len))
-#define CxLABEL_len_flags(c,len,flags)	(0 + CopLABEL_len_flags((c)->blk_oldcop, len, flags))
+#define CxLABEL(c)	(CopLABEL((c)->blk_oldcop))
+#define CxLABEL_len(c,len)	(CopLABEL_len((c)->blk_oldcop, len))
+#define CxLABEL_len_flags(c,len,flags)	((const char *)CopLABEL_len_flags((c)->blk_oldcop, len, flags))
 #define CxHASARGS(c)	(((c)->cx_type & CXp_HASARGS) == CXp_HASARGS)
 
 /* CxLVAL(): the lval flags of the call site: the relevant flag bits from
@@ -843,12 +995,12 @@ struct block {
     U16		blku_u16;	/* used by block_sub and block_eval (so far) */
     I32		blku_oldsaveix; /* saved PL_savestack_ix */
     /* all the fields above must be aligned with same-sized fields as sbu */
-    I32		blku_oldsp;	/* current sp floor: where nextstate pops to */
-    I32		blku_oldmarksp;	/* mark stack index */
+    SSize_t	blku_oldsp;	/* current sp floor: where nextstate pops to */
     COP *	blku_oldcop;	/* old curcop pointer */
     PMOP *	blku_oldpm;	/* values of pattern match vars */
     SSize_t     blku_old_tmpsfloor;     /* saved PL_tmps_floor */
     I32		blku_oldscopesp;	/* scope stack index */
+    I32		blku_oldmarksp;	/* mark stack index */
 
     union {
         struct block_sub	blku_sub;
@@ -875,7 +1027,7 @@ struct block {
 
 #define CX_DEBUG(cx, action)						\
     DEBUG_l(								\
-        Perl_deb(aTHX_ "CX %ld %s %s (scope %ld,%ld) (save %ld,%ld) at %s:%d\n",\
+        Perl_deb(aTHX_ "CX %ld %s %s (scope %ld,%ld) (save %ld,%ld) in %s at %s:%d\n",\
                     (long)cxstack_ix,					\
                     action,						\
                     PL_block_type[CxTYPE(cx)],	                        \
@@ -883,7 +1035,7 @@ struct block {
                     (long)(cx->blk_oldscopesp),		                \
                     (long)PL_savestack_ix,				\
                     (long)(cx->blk_oldsaveix),                          \
-                    __FILE__, __LINE__));
+                    SAFE_FUNCTION__, __FILE__, __LINE__));
 
 
 
@@ -1067,6 +1219,7 @@ struct context {
 #define G_RE_REPARSING  0x800   /* compiling a run-time /(?{..})/ */
 #define G_METHOD_NAMED 0x1000	/* calling named method, eg without :: or ' */
 #define G_RETHROW      0x2000	/* eval_sv(): re-throw any error */
+#define G_USEHINTS     0x4000   /* eval_sv(): use current hints/features */
 
 /* flag bits for PL_in_eval */
 #define EVAL_NULL	0	/* not in an eval */
@@ -1109,7 +1262,16 @@ struct stackinfo {
     I32			si_markoff;	/* offset where markstack begins for us.
                                          * currently used only with DEBUGGING,
                                          * but not #ifdef-ed for bincompat */
-#if defined DEBUGGING && !defined DEBUGGING_RE_ONLY
+
+#ifdef PERL_RC_STACK
+                                        /* index of first entry in the argument
+                                           stack which is not ref-counted. If
+                                           set to 0 (default), all stack
+                                           elements are ref-counted */
+    I32                 si_stack_nonrc_base;
+#endif
+
+#ifdef PERL_USE_HWM
 /* high water mark: for checking if the stack was correctly extended /
  * tested for extension by each pp function */
     SSize_t             si_stack_hwm;
@@ -1130,66 +1292,43 @@ typedef struct stackinfo PERL_SI;
 #define cxstack_max	(PL_curstackinfo->si_cxmax)
 
 #ifdef DEBUGGING
-#  define	SET_MARK_OFFSET \
+#  define SET_MARK_OFFSET \
     PL_curstackinfo->si_markoff = PL_markstack_ptr - PL_markstack
 #else
-#  define	SET_MARK_OFFSET NOOP
+#  define SET_MARK_OFFSET NOOP
 #endif
 
-#if defined DEBUGGING && !defined DEBUGGING_RE_ONLY
+#ifdef PERL_USE_HWM
 #  define PUSHSTACK_INIT_HWM(si) ((si)->si_stack_hwm = 0)
 #else
 #  define PUSHSTACK_INIT_HWM(si) NOOP
 #endif
 
+/* for backcompat; use push_stackinfo() instead */
+
 #define PUSHSTACKi(type) \
-    STMT_START {							\
-        PERL_SI *next = PL_curstackinfo->si_next;			\
-        DEBUG_l({							\
-            int i = 0; PERL_SI *p = PL_curstackinfo;			\
-            while (p) { i++; p = p->si_prev; }				\
-            Perl_deb(aTHX_ "push STACKINFO %d at %s:%d\n",		\
-                         i, __FILE__, __LINE__);})			\
-        if (!next) {							\
-            next = new_stackinfo(32, 2048/sizeof(PERL_CONTEXT) - 1);	\
-            next->si_prev = PL_curstackinfo;				\
-            PL_curstackinfo->si_next = next;				\
-        }								\
-        next->si_type = type;						\
-        next->si_cxix = -1;						\
-        next->si_cxsubix = -1;						\
-        PUSHSTACK_INIT_HWM(next);                                       \
-        AvFILLp(next->si_stack) = 0;					\
-        SWITCHSTACK(PL_curstack,next->si_stack);			\
-        PL_curstackinfo = next;						\
-        SET_MARK_OFFSET;						\
+    STMT_START {		\
+        PL_stack_sp = sp;       \
+        push_stackinfo(type, 0);\
+        sp = PL_stack_sp ;      \
     } STMT_END
 
 #define PUSHSTACK PUSHSTACKi(PERLSI_UNKNOWN)
 
-/* POPSTACK works with PL_stack_sp, so it may need to be bracketed by
+
+/* for backcompat; use pop_stackinfo() instead.
+ *
+ * POPSTACK works with PL_stack_sp, so it may need to be bracketed by
  * PUTBACK/SPAGAIN to flush/refresh any local SP that may be active */
-#define POPSTACK \
-    STMT_START {							\
-        dSP;								\
-        PERL_SI * const prev = PL_curstackinfo->si_prev;		\
-        DEBUG_l({							\
-            int i = -1; PERL_SI *p = PL_curstackinfo;			\
-            while (p) { i++; p = p->si_prev; }				\
-            Perl_deb(aTHX_ "pop  STACKINFO %d at %s:%d\n",		\
-                         i, __FILE__, __LINE__);})			\
-        if (!prev) {							\
-            Perl_croak_popstack();					\
-        }								\
-        SWITCHSTACK(PL_curstack,prev->si_stack);			\
-        /* don't free prev here, free them all at the END{} */		\
-        PL_curstackinfo = prev;						\
-    } STMT_END
+
+#define POPSTACK pop_stackinfo()
+
 
 #define POPSTACK_TO(s) \
     STMT_START {							\
         while (PL_curstack != s) {					\
             dounwind(-1);						\
+            rpp_obliterate_stack_to(0);					\
             POPSTACK;							\
         }								\
     } STMT_END
@@ -1212,17 +1351,17 @@ program; otherwise 0;
 /*
 =for apidoc_section $multicall
 
-=for apidoc Amns||dMULTICALL
+=for apidoc Amn;||dMULTICALL
 Declare local variables for a multicall.  See L<perlcall/LIGHTWEIGHT CALLBACKS>.
 
-=for apidoc Ams||PUSH_MULTICALL|CV* the_cv
+=for apidoc Am;||PUSH_MULTICALL|CV* the_cv
 Opening bracket for a lightweight callback.
 See L<perlcall/LIGHTWEIGHT CALLBACKS>.
 
-=for apidoc Amns||MULTICALL
+=for apidoc Amn;||MULTICALL
 Make a lightweight callback.  See L<perlcall/LIGHTWEIGHT CALLBACKS>.
 
-=for apidoc Amns||POP_MULTICALL
+=for apidoc Amn;||POP_MULTICALL
 Closing bracket for a lightweight callback.
 See L<perlcall/LIGHTWEIGHT CALLBACKS>.
 

@@ -1,17 +1,16 @@
 # bash completion for perl                                 -*- shell-script -*-
 
-_perl_helper()
+_comp_cmd_perl__helper()
 {
-    COMPREPLY=($(compgen -P "$prefix" -W \
-        "$(${2:-perl} ${BASH_SOURCE[0]%/*}/../helpers/perl $1 $cur)" \
-        -- "$cur"))
-    [[ $1 == functions ]] || __ltrim_colon_completions "$prefix$cur"
+    _comp_compgen_split -P "$prefix" -- "$("${1:-perl}" \
+        "${BASH_SOURCE[0]%/*}/../helpers/perl" "$2" "$cur")"
+    [[ $2 == functions ]] || _comp_ltrim_colon_completions "$prefix$cur"
 }
 
-_perl()
+_comp_cmd_perl()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     local prefix="" temp optPrefix optSuffix
 
@@ -33,36 +32,35 @@ _perl()
                 return
                 ;;
             -*[Ix])
-                local IFS=$'\n'
                 compopt -o filenames
-                COMPREPLY=($(compgen -d $optPrefix $optSuffix -- "$cur"))
+                _comp_compgen -- -d "$optPrefix" $optSuffix
                 return
                 ;;
             -*[mM])
                 temp="${cur#-}"
-                prefix+="${cur%$temp}"
+                prefix+=${cur%"$temp"}
                 cur="$temp"
-                _perl_helper modules $1
+                _comp_cmd_perl__helper "$1" modules
                 return
                 ;;
             -*V)
                 if [[ $cur == :* ]]; then
                     temp="${cur##+(:)}"
-                    prefix+="${cur%$temp}"
-                    local IFS=$'\n'
-                    COMPREPLY=($(compgen -P "$prefix" -W \
-                        '$($1 -MConfig -e "print join \"\\n\",
-                           keys %Config::Config" 2>/dev/null)' -- "$temp"))
-                    __ltrim_colon_completions "$prefix$temp"
+                    prefix+=${cur%"$temp"}
+                    _comp_compgen -c "$temp" split -lP "$prefix" -- "$(
+                        "$1" -MConfig -e 'print join "\n",
+                           keys %Config::Config' 2>/dev/null
+                    )"
+                    _comp_ltrim_colon_completions "$prefix$temp"
                 fi
                 return
                 ;;
             -*d | -*dt)
                 if [[ $cur == :* ]]; then
                     temp="${cur#:}"
-                    prefix="$prefix${cur%$temp}"
+                    prefix=$prefix${cur%"$temp"}
                     cur="Devel::$temp"
-                    _perl_helper modules $1
+                    _comp_cmd_perl__helper "$1" modules
                 fi
                 ;;
         esac
@@ -71,31 +69,31 @@ _perl()
     # `-E' options and their arguments, e.g. `perl -e "exit 2"', is
     # valid syntax.  However, the argument is neither a filename nor a
     # directory, but one line of perl program, thus do not suggest
-    # _filedir completion.
+    # _comp_compgen_filedir completion.
     elif [[ $prev == -e ]] || [[ $prev == -E ]]; then
         return
 
     # Likewise, `-I' also accepts a space between option and argument
     # and it takes a directory as value.
     elif [[ $prev == -I ]]; then
-        local IFS=$'\n'
         compopt -o filenames
-        COMPREPLY=($(compgen -d ${optPrefix-} ${optSuffix-} -- "$cur"))
+        # shellcheck disable=SC2086
+        _comp_compgen -- -d ${optPrefix-} ${optSuffix-}
         return
 
     elif [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '-C -s -T -u -U -W -X -h -v -V -c -w -d -D -p
-            -n -a -F -l -0 -I -m -M -P -S -x -i -e' -- "$cur"))
+        _comp_compgen -- -W '-C -s -T -u -U -W -X -h -v -V -c -w -d -D -p -n -a
+            -F -l -0 -I -m -M -P -S -x -i -e'
     else
-        _filedir
+        _comp_compgen_filedir
     fi
 } &&
-    complete -F _perl perl
+    complete -F _comp_cmd_perl perl
 
-_perldoc()
+_comp_cmd_perldoc()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     local prefix="" temp
 
@@ -107,40 +105,39 @@ _perldoc()
         prefix=$prev
     fi
 
-    local perl="${1%doc}"
-    [[ $perl == "$1" ]] || ! type $perl &>/dev/null && perl=
+    # Prefer `perl` in the same dir in utility functions
+    local pathcmd
+    pathcmd=$(type -P -- "$1") && local PATH=${pathcmd%/*}:$PATH
 
     case $prev in
         -*[hVnoMwL])
             return
             ;;
         -*d)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -*f)
-            _perl_helper functions $perl
+            _comp_cmd_perl__helper "" functions
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
     else
         # return available modules (unless it is clearly a file)
         if [[ $cur != @(*/|[.~])* ]]; then
-            _perl_helper perldocs $perl
+            _comp_cmd_perl__helper "" perldocs
             if [[ $cur == p* ]]; then
-                COMPREPLY+=($(compgen -W \
-                    '$(PERLDOC_PAGER=cat "$1" -u perl |  \
-                       command sed -ne "/perl.*Perl overview/,/perlwin32/p" | \
-                       awk "\$NF=2 && \$1 ~ /^perl/ { print \$1 }")' \
-                    -- "$cur"))
+                _comp_compgen -a split -- "$(PERLDOC_PAGER=cat "$1" -u perl |
+                    command sed -ne '/perl.*Perl overview/,/perlwin32/p' |
+                    _comp_awk 'NF >= 2 && $1 ~ /^perl/ { print $1 }')"
             fi
         fi
-        _filedir 'p@([lm]|od)'
+        _comp_compgen -a filedir 'p@([lm]|od)'
     fi
 } &&
-    complete -F _perldoc -o bashdefault perldoc
+    complete -F _comp_cmd_perldoc -o bashdefault perldoc
 
 # ex: filetype=sh

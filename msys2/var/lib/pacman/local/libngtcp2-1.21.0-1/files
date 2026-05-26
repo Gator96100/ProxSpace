@@ -1,0 +1,11 @@
+%FILES%
+usr/
+usr/bin/
+usr/bin/msys-ngtcp2-16.dll
+usr/bin/msys-ngtcp2_crypto_ossl-0.dll
+usr/bin/msys-ngtcp2_crypto_ossl.dll
+usr/share/
+usr/share/licenses/
+usr/share/licenses/libngtcp2/
+usr/share/licenses/libngtcp2/COPYING
+

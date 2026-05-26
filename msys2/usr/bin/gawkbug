@@ -27,8 +27,8 @@
 MACHINE="x86_64"
 OS="msys"
 CC="gcc"
-CFLAGS="-march=nocona -msahf -mtune=generic -O2 -pipe -DNDEBUG"
-VERSION="5.2.2"
+CFLAGS="-march=nocona -msahf -mtune=generic -O2 -pipe"
+VERSION="5.4.0"
 MACHTYPE="x86_64-pc-msys"
 
 PATH=/bin:/usr/bin:/usr/local/bin:$PATH

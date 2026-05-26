@@ -15,13 +15,13 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
 shopt -s extglob
 
 declare -r myname='pacdiff'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
@@ -35,6 +35,7 @@ declare -a oldsaves
 declare -i USE_FIND=0 USE_LOCATE=0 USE_PACDB=0 OUTPUTONLY=0 BACKUP=0 THREE_WAY_DIFF=0
 
 # Import libmakepkg
+# shellcheck source=/dev/null
 source "$LIBRARY"/util/message.sh
 
 die() {
@@ -105,7 +106,7 @@ base_cache_tar() {
 		find "$PWD" -name "$package-[0-9]*.pkg.tar*" ! -name '*.sig' |
 			pacsort --files --reverse | sed -ne '2p'
 
-		popd &>/dev/null
+		popd &>/dev/null || exit
 	done
 }
 
@@ -196,7 +197,7 @@ merge_file() {
 	while :; do
 		ask "Would you like to use the results of the merge? [y/n] "
 
-		read c || return 1
+		read -r c || return 1
 		case $c in
 			y|Y) break ;;
 			n|N) return 1 ;;
@@ -214,9 +215,16 @@ merge_file() {
 
 cmd() {
 	if (( USE_LOCATE )); then
-		locate -0 -e -b \*.pacnew \*.pacorig \*.pacsave '*.pacsave.[0-9]*'
+		# plocate searches for files that match all patterns whereas mlocate searches for files that match one or more patterns
+		if type -p plocate >/dev/null; then
+			for p in \*.pacnew \*.pacorig \*.pacsave '*.pacsave.[0-9]*'; do
+				locate -0 -e -b "$p"
+			done
+		else
+			locate -0 -e -b \*.pacnew \*.pacorig \*.pacsave '*.pacsave.[0-9]*'
+		fi
 	elif (( USE_FIND )); then
-		find $diffsearchpath \( -name \*.pacnew -o -name \*.pacorig -o -name \*.pacsave -o -name '*.pacsave.[0-9]*' \) -print0
+		find "$diffsearchpath" \( -name \*.pacnew -o -name \*.pacorig -o -name \*.pacsave -o -name '*.pacsave.[0-9]*' \) -print0
 	elif (( USE_PACDB )); then
 		awk '/^%BACKUP%$/ {
 		while (getline) {
@@ -268,11 +276,11 @@ else
 	unset ALL_OFF BOLD BLUE GREEN RED YELLOW
 fi
 
-if ! type -p ${diffprog%% *} >/dev/null && (( ! OUTPUTONLY )); then
+if ! type -p "${diffprog%% *}" >/dev/null && (( ! OUTPUTONLY )); then
 	die "Cannot find the $diffprog binary required for viewing differences."
 fi
 
-if ! type -p ${mergeprog%% *} >/dev/null && (( ! OUTPUTONLY )); then
+if ! type -p "${mergeprog%% *}" >/dev/null && (( ! OUTPUTONLY )); then
 	die "Cannot find the $mergeprog binary required for merging differences."
 fi
 
@@ -298,7 +306,7 @@ if [[ -z ${cachedirs[*]} ]]; then
 	readarray -t cachedirs < <(pacman-conf CacheDir)
 fi
 
-# see http://mywiki.wooledge.org/BashFAQ/020
+# see https://mywiki.wooledge.org/BashFAQ/020
 while IFS= read -u 3 -r -d '' pacfile; do
 	file="${pacfile%.pac*}"
 	file_type="pac${pacfile##*.pac}"
@@ -327,7 +335,7 @@ while IFS= read -u 3 -r -d '' pacfile; do
 	else
 		while :; do
 			ask "(V)iew, (M)erge, (S)kip, (R)emove %s, (O)verwrite with %s, (Q)uit: [v/m/s/r/o/q] " "$file_type" "$file_type"
-			read c || break
+			read -r c || break
 			case $c in
 				q|Q) exit 0;;
 				r|R) $SUDO rm -v "$pacfile"; break ;;

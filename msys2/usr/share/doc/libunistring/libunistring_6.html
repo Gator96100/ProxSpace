@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
 <html>
-<!-- Created on October, 16 2022 by texi2html 1.78a -->
+<!-- Created on October, 5 2025 by texi2html 1.78a -->
 <!--
 Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
             Karl Berry  <karl@freefriends.org>
@@ -51,7 +51,7 @@ ul.toc {list-style: none}
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 
@@ -75,6 +75,8 @@ The format directive &lsquo;<samp>lU</samp>&rsquo; takes an UTF-16 string
 </li><li>
 The format directive &lsquo;<samp>llU</samp>&rsquo; takes an UTF-32 string
 (<code>const uint32_t *</code>).
+</li><li>
+The format directive &lsquo;<samp>n</samp>&rsquo; is not supported, for security reasons.
 </li></ul>
 
 <p>A function name with an infix &lsquo;<samp>v</samp>&rsquo; indicates that a <code>va_list</code> is
@@ -103,49 +105,49 @@ is a <code>char *</code> string in locale encoding.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>ulc_sprintf</b><i> (char&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX171"></a>
-</dt>
-</dl>
-
-<dl>
-<dt><u>Function:</u> int <b>ulc_snprintf</b><i> (char&nbsp;*<var>buf</var>, size_t&nbsp;size, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX172"></a>
-</dt>
-</dl>
-
-<dl>
-<dt><u>Function:</u> int <b>ulc_asprintf</b><i> (char&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX173"></a>
-</dt>
-</dl>
-
-<dl>
-<dt><u>Function:</u> char * <b>ulc_asnprintf</b><i> (char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX174"></a>
 </dt>
 </dl>
 
 <dl>
-<dt><u>Function:</u> int <b>ulc_vsprintf</b><i> (char&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>ulc_snprintf</b><i> (char&nbsp;*<var>buf</var>, size_t&nbsp;size, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX175"></a>
 </dt>
 </dl>
 
 <dl>
-<dt><u>Function:</u> int <b>ulc_vsnprintf</b><i> (char&nbsp;*<var>buf</var>, size_t&nbsp;size, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>ulc_asprintf</b><i> (char&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX176"></a>
 </dt>
 </dl>
 
 <dl>
-<dt><u>Function:</u> int <b>ulc_vasprintf</b><i> (char&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> char * <b>ulc_asnprintf</b><i> (char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX177"></a>
 </dt>
 </dl>
 
 <dl>
-<dt><u>Function:</u> char * <b>ulc_vasnprintf</b><i> (char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>ulc_vsprintf</b><i> (char&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
 <a name="IDX178"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_vsnprintf</b><i> (char&nbsp;*<var>buf</var>, size_t&nbsp;size, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX179"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> int <b>ulc_vasprintf</b><i> (char&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX180"></a>
+</dt>
+</dl>
+
+<dl>
+<dt><u>Function:</u> char * <b>ulc_vasnprintf</b><i> (char&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX181"></a>
 </dt>
 </dl>
 
@@ -154,42 +156,42 @@ UTF-8 format.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_sprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX179"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u8_snprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX180"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u8_asprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX181"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> uint8_t * <b>u8_asnprintf</b><i> (uint8_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX182"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u8_vsprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;ap)</i>
+<dt><u>Function:</u> int <b>u8_snprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX183"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u8_vsnprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u8_asprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX184"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u8_vasprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> uint8_t * <b>u8_asnprintf</b><i> (uint8_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX185"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> uint8_t * <b>u8_vasnprintf</b><i> (uint8_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u8_vsprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;ap)</i>
 <a name="IDX186"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_vsnprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX187"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_vasprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX188"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_vasnprintf</b><i> (uint8_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX189"></a>
 </dt>
 </dl>
 
@@ -198,42 +200,42 @@ UTF-8 format.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u8_u8_sprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX187"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u8_u8_snprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX188"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u8_u8_asprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX189"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> uint8_t * <b>u8_u8_asnprintf</b><i> (uint8_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX190"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u8_u8_vsprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u8_u8_snprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX191"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u8_u8_vsnprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u8_u8_asprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX192"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u8_u8_vasprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> uint8_t * <b>u8_u8_asnprintf</b><i> (uint8_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX193"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> uint8_t * <b>u8_u8_vasnprintf</b><i> (uint8_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u8_u8_vsprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
 <a name="IDX194"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_vsnprintf</b><i> (uint8_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX195"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u8_u8_vasprintf</b><i> (uint8_t&nbsp;**<var>resultp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX196"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint8_t * <b>u8_u8_vasnprintf</b><i> (uint8_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint8_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX197"></a>
 </dt>
 </dl>
 
@@ -242,42 +244,42 @@ UTF-16 format.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u16_sprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX195"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u16_snprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX196"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u16_asprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX197"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> uint16_t * <b>u16_asnprintf</b><i> (uint16_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX198"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u16_vsprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;ap)</i>
+<dt><u>Function:</u> int <b>u16_snprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX199"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u16_vsnprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u16_asprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX200"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u16_vasprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> uint16_t * <b>u16_asnprintf</b><i> (uint16_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX201"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> uint16_t * <b>u16_vasnprintf</b><i> (uint16_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u16_vsprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;ap)</i>
 <a name="IDX202"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_vsnprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX203"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_vasprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX204"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u16_vasnprintf</b><i> (uint16_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX205"></a>
 </dt>
 </dl>
 
@@ -286,42 +288,42 @@ UTF-16 format.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u16_u16_sprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX203"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u16_u16_snprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX204"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u16_u16_asprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX205"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> uint16_t * <b>u16_u16_asnprintf</b><i> (uint16_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX206"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u16_u16_vsprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u16_u16_snprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX207"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u16_u16_vsnprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u16_u16_asprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX208"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u16_u16_vasprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> uint16_t * <b>u16_u16_asnprintf</b><i> (uint16_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX209"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> uint16_t * <b>u16_u16_vasnprintf</b><i> (uint16_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u16_u16_vsprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
 <a name="IDX210"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_vsnprintf</b><i> (uint16_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX211"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u16_u16_vasprintf</b><i> (uint16_t&nbsp;**<var>resultp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX212"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint16_t * <b>u16_u16_vasnprintf</b><i> (uint16_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint16_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX213"></a>
 </dt>
 </dl>
 
@@ -330,42 +332,42 @@ UTF-32 format.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u32_sprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX211"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u32_snprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX212"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u32_asprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX213"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> uint32_t * <b>u32_asnprintf</b><i> (uint32_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX214"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u32_vsprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;ap)</i>
+<dt><u>Function:</u> int <b>u32_snprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX215"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u32_vsnprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u32_asprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX216"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u32_vasprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> uint32_t * <b>u32_asnprintf</b><i> (uint32_t&nbsp;*<var>resultbuf</var>, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX217"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> uint32_t * <b>u32_vasnprintf</b><i> (uint32_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u32_vsprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;ap)</i>
 <a name="IDX218"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_vsnprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX219"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_vasprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX220"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u32_vasnprintf</b><i> (uint32_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX221"></a>
 </dt>
 </dl>
 
@@ -374,42 +376,42 @@ UTF-32 format.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>u32_u32_sprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX219"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u32_u32_snprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX220"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> int <b>u32_u32_asprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX221"></a>
-</dt>
-</dl>
-<dl>
-<dt><u>Function:</u> uint32_t * <b>u32_u32_asnprintf</b><i> (uint32_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX222"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u32_u32_vsprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u32_u32_snprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX223"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u32_u32_vsnprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u32_u32_asprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX224"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> int <b>u32_u32_vasprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> uint32_t * <b>u32_u32_asnprintf</b><i> (uint32_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, ...)</i>
 <a name="IDX225"></a>
 </dt>
 </dl>
 <dl>
-<dt><u>Function:</u> uint32_t * <b>u32_u32_vasnprintf</b><i> (uint32_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<dt><u>Function:</u> int <b>u32_u32_vsprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
 <a name="IDX226"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_vsnprintf</b><i> (uint32_t&nbsp;*<var>buf</var>, size_t&nbsp;<var>size</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX227"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> int <b>u32_u32_vasprintf</b><i> (uint32_t&nbsp;**<var>resultp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX228"></a>
+</dt>
+</dl>
+<dl>
+<dt><u>Function:</u> uint32_t * <b>u32_u32_vasnprintf</b><i> (uint32_t&nbsp;*resultbuf, size_t&nbsp;*<var>lengthp</var>, const&nbsp;uint32_t&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
+<a name="IDX229"></a>
 </dt>
 </dl>
 
@@ -418,12 +420,12 @@ locale encoding to a <code>FILE</code> stream.
 </p>
 <dl>
 <dt><u>Function:</u> int <b>ulc_fprintf</b><i> (FILE&nbsp;*<var>stream</var>, const&nbsp;char&nbsp;*<var>format</var>, ...)</i>
-<a name="IDX227"></a>
+<a name="IDX230"></a>
 </dt>
 </dl>
 <dl>
 <dt><u>Function:</u> int <b>ulc_vfprintf</b><i> (FILE&nbsp;*<var>stream</var>, const&nbsp;char&nbsp;*<var>format</var>, va_list&nbsp;<var>ap</var>)</i>
-<a name="IDX228"></a>
+<a name="IDX231"></a>
 </dt>
 </dl>
 <hr size="6">
@@ -437,12 +439,12 @@ locale encoding to a <code>FILE</code> stream.
 <td valign="middle" align="left"> &nbsp; </td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
-<td valign="middle" align="left">[<a href="libunistring_21.html#SEC92" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="libunistring_21.html#SEC94" title="Index">Index</a>]</td>
 <td valign="middle" align="left">[<a href="libunistring_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
 </tr></table>
 <p>
  <font size="-1">
-  This document was generated by <em>Bruno Haible</em> on <em>October, 16 2022</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
+  This document was generated by <em>Bruno Haible</em> on <em>October, 5 2025</em> using <a href="https://www.nongnu.org/texi2html/"><em>texi2html 1.78a</em></a>.
  </font>
  <br>
 

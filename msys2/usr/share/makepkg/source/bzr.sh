@@ -2,7 +2,7 @@
 #
 #   bzr.sh - function for handling the download and "extraction" of Bazaar sources
 #
-#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@
 LIBMAKEPKG_SOURCE_BZR_SH=1
 
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
 
 
 download_bzr() {
@@ -108,4 +108,30 @@ extract_bzr() {
 	fi
 
 	popd &>/dev/null
+}
+
+calc_checksum_bzr() {
+	local netfile=$1 integ=$2 ret=0 shellopts dir url fragment fragval sum
+
+	# this function requires pipefail - save current status to restore later
+	shellopts=$(shopt -p -o pipefail)
+	shopt -s -o pipefail
+
+	dir=$(get_filepath "$netfile")
+	url=$(get_url "$netfile")
+	fragment=$(get_uri_fragment "$url")
+
+	case ${fragment%%=*} in
+		revision)
+			fragval=${fragment##*=}
+			sum=$(bzr export --directory "$dir" --format tar --revision "$fragval" - | "${integ}sum" 2>&1) || ret=1
+			sum="${sum%% *}"
+			;;
+		*)
+			sum="SKIP"
+	esac
+
+	eval "$shellopts"
+	printf '%s' "$sum"
+	return $ret
 }

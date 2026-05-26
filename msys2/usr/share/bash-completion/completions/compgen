@@ -1,49 +1,49 @@
 # bash complete completion                                 -*- shell-script -*-
 
-_complete()
+_comp_cmd_complete()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*o)
-            COMPREPLY=($(compgen -W 'bashdefault default dirnames filenames
-                nospace plusdirs' -- "$cur"))
+            _comp_compgen -- -W 'bashdefault default dirnames filenames nospace
+                plusdirs'
             return
             ;;
 
         -*A)
-            COMPREPLY=($(compgen -W 'alias arrayvar binding builtin command
+            _comp_compgen -- -W 'alias arrayvar binding builtin command
                 directory disabled enabled export file function group helptopic
                 hostname job keyword running service setopt shopt signal
-                stopped user variable' -- "$cur"))
+                stopped user variable'
             return
             ;;
 
         -*C)
-            COMPREPLY=($(compgen -A command -- "$cur"))
+            _comp_compgen -- -A command
             return
             ;;
         -*F)
-            COMPREPLY=($(compgen -A function -- "$cur"))
+            _comp_compgen -- -A function
             return
             ;;
         -*p | -*r)
-            COMPREPLY=($(complete -p | command sed -e 's|.* ||'))
-            COMPREPLY=($(compgen -W '${COMPREPLY[@]}' -- "$cur"))
+            _comp_compgen_split -l -- "$(complete -p | command sed -e 's|.* ||')"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        # relevant options completion
-        local opts="-a -b -c -d -e -f -g -j -k -o -s -u -v -A -G -W -P -S -X"
-        [[ $1 != compgen ]] && opts+=" -F -C"
-        COMPREPLY=($(compgen -W "$opts" -- "$cur"))
+        local -a opts
+        _comp_compgen -v opts usage -c help -s "$1"
+        # -F, -C do not work the expected way with compgen
+        [[ $1 != *compgen ]] || opts=("${opts[@]//-[FC]/}")
+        _comp_compgen -- -W '"${opts[@]}"' -X ''
     else
-        COMPREPLY=($(compgen -A command -- "$cur"))
+        _comp_compgen -- -A command
     fi
 } &&
-    complete -F _complete compgen complete
+    complete -F _comp_cmd_complete compgen complete
 
 # ex: filetype=sh

@@ -141,6 +141,8 @@ chop	String	remove the last character from a string
 chown	File	change the ownership on a list of files
 chr	String	get character this number represents
 chroot	File	make directory new root for path lookups
+class	Namespace	Objects	declare a separate global namespace that is an object class
+__CLASS__	Objects	the class name of the current instance.
 close	I/O	close file (or pipe or socket) handle
 closedir	I/O	close directory handle
 connect	Socket	connect to a remote socket
@@ -170,6 +172,7 @@ exit	Flow	terminate this program
 exp	Math	raise I<e> to a power
 fc	String	return casefolded version of a string
 fcntl	File	file control system call
+field	Namespace	Objects	declare a field variable of the current class
 __FILE__	Flow	the name of the current source file
 fileno	I/O	return file descriptor from filehandle
 flock	I/O	lock an entire file with an advisory lock
@@ -228,6 +231,7 @@ log	Math	retrieve the natural logarithm for a number
 lstat	File	stat a symbolic link
 m//	Regexp	match a string with a regular expression pattern
 map	LIST	apply a change to a list to get back a new list with the changes
+method	Flow	Objects	declare a method of a class
 mkdir	File	create a directory
 msgctl	SysV	SysV IPC message control operations
 msgget	SysV	get SysV IPC message queue
@@ -239,7 +243,7 @@ no	Modules	unimport some module symbols or semantics at compile time
 oct	Math	String	convert a string to an octal number
 open	File	open a file, pipe, or descriptor
 opendir	File	open a directory
-ord	String	find a character's numeric representation
+ord	String	find a character's code point
 our	Namespace	declare and assign a package variable (lexical scoping)
 pack	Binary	String	convert a list into a binary representation
 package	Modules	Namespace	Objects	declare a separate global namespace
@@ -331,7 +335,7 @@ times	Process	Time	return elapsed time for self and child processes
 tr///	String	transliterate a string
 truncate	I/O	shorten a file
 uc	String	return upper-case version of a string
-ucfirst	String	return a string with just the next letter in upper case
+ucfirst	String	return a string with the first letter in upper case
 umask	File	set file creation mode mask
 undef	Misc	remove a variable or function definition
 unlink	File	remove one link to a file

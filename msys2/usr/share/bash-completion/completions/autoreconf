@@ -1,9 +1,9 @@
 # autoreconf(1) completion                                 -*- shell-script -*-
 
-_autoreconf()
+_comp_cmd_autoreconf()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case "$prev" in
         --help | -h | --version | -V)
@@ -12,30 +12,30 @@ _autoreconf()
         --warnings | -W)
             local cats=(cross gnu obsolete override portability syntax
                 unsupported)
-            COMPREPLY=($(compgen -W \
-                '${cats[@]} ${cats[@]/#/no-} all none error' -- "$cur"))
+            _comp_compgen -- -W '"${cats[@]}" "${cats[@]/#/no-}" all none
+                error'
             return
             ;;
         --prepend-include | -B | --include | -I)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
     if [[ $1 == *autoheader ]]; then
-        _filedir '@(ac|in)'
+        _comp_compgen_filedir '@(ac|in)'
     else
-        _filedir -d
+        _comp_compgen_filedir -d
     fi
 } &&
-    complete -F _autoreconf autoreconf autoheader
+    complete -F _comp_cmd_autoreconf autoreconf autoheader
 
 # ex: filetype=sh

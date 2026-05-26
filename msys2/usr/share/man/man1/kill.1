@@ -2,12 +2,12 @@
 .\"     Title: kill
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin Utilities
 .\"    Source: Cygwin Utilities
 .\"  Language: English
 .\"
-.TH "KILL" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.TH "KILL" "1" "03/15/2026" "Cygwin Utilities" "Cygwin Utilities"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -33,7 +33,7 @@ kill \- Send signals to processes
 .HP \w'\fBkill\fR\ 'u
 \fBkill\fR [\-f] [\-signal] [\-s\ \fIsignal\fR] \fIpid\fR...
 .HP \w'\fBkill\fR\ 'u
-\fBkill\fR \-l [\fIsignal\fR]
+\fBkill\fR \-l\ \fIsignal\fR | \-L 
 .HP \w'\fBkill\fR\ 'u
 \fBkill\fR \-h | \-V 
 .SH "OPTIONS"
@@ -44,6 +44,7 @@ kill \- Send signals to processes
 .nf
  \-f, \-\-force     force, using win32 interface if necessary
  \-l, \-\-list      print a list of signal names
+ \-L, \-\-table     print a formatted table of signal names
  \-s, \-\-signal    send signal (use kill \-\-list for a list)
  \-W, \-\-winpid    specified pids are windows PIDs, not Cygwin PIDs
                  (use with extreme caution!)
@@ -110,11 +111,16 @@ The
 \fBkill \-l\fR
 option prints the name of the given signal, or a list of all signal names if no signal is given\&.
 .PP
+The
+\fBkill \-L\fR
+option is similar to
+\-l, but it will print signal names and their corresponding numbers\&.
+.PP
 To send a specific signal, use the
 \-signN
 option, either with a signal number or a signal name (minus the "SIG" part), as shown in these examples:
 .PP
-\fBExample\ \&3.6.\ \&Using the kill command\fR
+\fBExample\ \&3.8.\ \&Using the kill command\fR
 .sp
 .if n \{\
 .RS 4

@@ -3,7 +3,7 @@
 #   lto.sh - Specify flags for building a package with link-time
 #            optimisation
 #
-#   Copyright (c) 2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2021-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,21 +22,22 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_LTO_SH" ]] && return
 LIBMAKEPKG_BUILDENV_LTO_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/util.sh"
 
 build_options+=('lto')
 buildenv_functions+=('buildenv_lto')
 
 buildenv_lto() {
 	if check_option "lto" "y" && ! check_option "buildflags" "n"; then
-		CFLAGS+=" ${LTOFLAGS:--flto}"
-		CXXFLAGS+=" ${LTOFLAGS:--flto}"
-		LDFLAGS+=" ${LTOFLAGS:--flto}"
+		append_once CFLAGS "${LTOFLAGS:--flto}"
+		append_once CXXFLAGS "${LTOFLAGS:--flto}"
+		append_once LDFLAGS "${LTOFLAGS:--flto}"
 		if check_option "staticlibs" "y"; then
-			CFLAGS+=" -ffat-lto-objects"
-			CXXFLAGS+=" -ffat-lto-objects"
+			append_once CFLAGS "-ffat-lto-objects"
+			append_once CXXFLAGS "-ffat-lto-objects"
 		fi
 	fi
 }

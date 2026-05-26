@@ -3,30 +3,30 @@
 # Use of this file is deprecated.  Upstream completion is available in
 # util-linux >= 2.23, use that instead.
 
-_rtcwake()
+_comp_cmd_rtcwake()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case "$prev" in
         --help | -h | --version | -V | --seconds | -s | --time | -t)
             return
             ;;
         --mode | -m)
-            COMPREPLY=($(compgen -W 'standby mem disk on no off' -- "$cur"))
+            _comp_compgen -- -W 'standby mem disk on no off'
             return
             ;;
         --device | -d)
-            COMPREPLY=($(command ls -d /dev/rtc?* 2>/dev/null))
-            COMPREPLY=($(compgen -W '${COMPREPLY[@]#/dev/}' -- "$cur"))
+            _comp_expand_glob COMPREPLY '/dev/rtc?*' &&
+                _comp_compgen -- -W '"${COMPREPLY[@]#/dev/}"'
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+    _comp_compgen_help
 } &&
-    complete -F _rtcwake rtcwake
+    complete -F _comp_cmd_rtcwake rtcwake
 
 # ex: filetype=sh

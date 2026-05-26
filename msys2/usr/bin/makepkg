@@ -2,7 +2,7 @@
 #
 #   makepkg - make packages compatible for use with pacman
 #
-#   Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #   Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
 #   Copyright (c) 2005 by Aurelien Foret <orelien@chez.com>
 #   Copyright (c) 2006 by Miklos Vajna <vmiklos@frugalware.org>
@@ -40,17 +40,17 @@ unset CDPATH
 # Ensure GREP_OPTIONS doesn't screw with our grep calls
 unset GREP_OPTIONS
 
-declare -r makepkg_version='6.0.2'
+declare -r makepkg_version='6.1.0'
 declare -r confdir='/etc'
 declare -r BUILDSCRIPT='PKGBUILD'
-declare -r startdir="$(pwd -P)"
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 # Options
 ASDEPS=0
 BUILDFUNC=0
 BUILDPKG=1
+CHDIR=''
 CHECKFUNC=0
 CLEANBUILD=0
 CLEANUP=0
@@ -93,7 +93,7 @@ shopt -s extglob
 ### SUBROUTINES ###
 
 # Import libmakepkg
-for lib in "$LIBRARY"/*.sh; do
+for lib in "$MAKEPKG_LIBRARY"/*.sh; do
 	source "$lib"
 done
 
@@ -136,6 +136,9 @@ clean_up() {
 			# Can't do this unless the BUILDSCRIPT has been sourced.
 			if (( PKGVERFUNC )); then
 				rm -f "${pkgbase}-${fullver}-${CARCH}-pkgver.log"*
+			fi
+			if (( VERIFYFUNC )); then
+				rm -f "${pkgbase}-${fullver}-${CARCH}-verify.log"*
 			fi
 			if (( PREPAREFUNC )); then
 				rm -f "${pkgbase}-${fullver}-${CARCH}-prepare.log"*
@@ -382,7 +385,7 @@ run_function_safe() {
 	restoretrap=$(trap -p ERR)
 	trap "error_function '$1'" ERR
 
-	run_function "$1"
+	run_function "$1" "$2"
 
 	trap - ERR
 	eval "$restoretrap"
@@ -394,11 +397,12 @@ run_function() {
 		return 1
 	fi
 	local pkgfunc="$1"
+	local workingdir="${2:-$srcdir}"
 
 	if (( ! BASH_SUBSHELL )); then
 		msg "$(gettext "Starting %s()...")" "$pkgfunc"
 	fi
-	cd_safe "$srcdir"
+	cd_safe "$workingdir"
 
 	local ret=0
 	if (( LOGGING )); then
@@ -424,11 +428,15 @@ run_function() {
 
 		$pkgfunc &>"$logpipe"
 
-		wait $teepid
+		wait -f $teepid
 		rm "$logpipe"
 	else
 		"$pkgfunc"
 	fi
+}
+
+run_verify() {
+	run_function_safe "verify" "$startdir"
 }
 
 run_prepare() {
@@ -445,119 +453,6 @@ run_check() {
 
 run_package() {
 	run_function_safe "package${1:+_$1}"
-}
-
-find_libdepends() {
-	local d sodepends
-
-	sodepends=0
-	for d in "${depends[@]}"; do
-		if [[ $d = *.dll ]]; then
-			sodepends=1
-			break
-		fi
-	done
-
-	if (( sodepends == 0 )); then
-		(( ${#depends[@]} )) && printf '%s\n' "${depends[@]}"
-		return 0
-	fi
-
-	local libdeps filename soarch sofile soname
-	declare -A libdeps
-
-	while IFS= read -rd '' filename; do
-		# get architecture of the file; if soarch is empty it's not an binary
-		soarch=$(LANG=en_US.UTF-8 LC_ALL=C objdump -a "$filename" | sed -n 's/.*file format.*pei-\(i386\|x86-64\)/\1/p')
-		[[ -n "$soarch" ]] || continue
-		case "$soarch" in
-			i386)
-				soarch=i686
-			;;
-			x86-64)
-				soarch=x86_64
-			;;
-		esac
-
-		# process all libraries needed by the binary
-		for sofile in $(LC_ALL=C objdump -x "$filename" 2>/dev/null | sed -nr 's/.*DLL Name: (.*).*/\1/p')
-		do
-			soname=${sofile}
-
-			if [[ ${libdeps[$soname]} ]]; then
-				if [[ ${libdeps[$soname]} != *${soarch}* ]]; then
-					libdeps[$soname]+=" ${soarch}"
-				fi
-			else
-				libdeps[$soname]="${soarch}"
-			fi
-		done
-	done < <(find "$pkgdir" -type f -perm -u+x -print0)
-
-	local libdepends v
-	for d in "${depends[@]}"; do
-		case "$d" in
-			*.dll)
-				if [[ ${libdeps[$d]} ]]; then
-					for v in ${libdeps[$d]}; do
-						libdepends+=("$d=$v")
-					done
-				else
-					warning "$(gettext "Library listed in %s is not required by any files: %s")" "'depends'" "$d"
-					libdepends+=("$d")
-				fi
-				;;
-			*)
-				libdepends+=("$d")
-				;;
-		esac
-	done
-
-	(( ${#libdepends[@]} )) && printf '%s\n' "${libdepends[@]}"
-}
-
-
-find_libprovides() {
-	local p versioned_provides libprovides missing
-	for p in "${provides[@]}"; do
-		missing=0
-		versioned_provides=()
-		case "$p" in
-			*.dll)
-				mapfile -t filename < <(find "$pkgdir" -type f -name $p)
-				if [[ $filename ]]; then
-					# packages may provide multiple versions of the same library
-					for fn in "${filename[@]}"; do
-						# get the library architecture (32 or 64 bit)
-						local soarch=$(LC_ALL=C objdump -a "$fn" | sed -n 's/.*file format.*pei-\(i386\|x86-64\)/\1/p')
-						case "$soarch" in
-							i386)
-								soarch=i686
-							;;
-							x86-64)
-								soarch=x86_64
-							;;
-						esac
-
-						versioned_provides+=("${p}=${soarch}")
-					done
-				else
-					missing=1
-				fi
-				;;
-		esac
-
-		if (( missing )); then
-			warning "$(gettext "Cannot find library listed in %s: %s")" "'provides'" "$p"
-		fi
-		if (( ${#versioned_provides[@]} > 0 )); then
-			libprovides+=("${versioned_provides[@]}")
-		else
-			libprovides+=("$p")
-		fi
-	done
-
-	(( ${#libprovides[@]} )) && printf '%s\n' "${libprovides[@]}"
 }
 
 write_kv_pair() {
@@ -577,11 +472,13 @@ write_pkginfo() {
 	local size=$(dirsize)
 
 	merge_arch_attrs
+	generate_autodeps
 
 	printf "# Generated by makepkg %s\n" "$makepkg_version"
 
 	write_kv_pair "pkgname" "$pkgname"
 	write_kv_pair "pkgbase" "$pkgbase"
+	write_kv_pair "xdata" "pkgtype=$pkgtype"
 
 	local fullver=$(get_full_version)
 	write_kv_pair "pkgver" "$fullver"
@@ -597,9 +494,6 @@ write_pkginfo() {
 	write_kv_pair "packager" "$PACKAGER"
 	write_kv_pair "size" "$size"
 	write_kv_pair "arch" "$pkgarch"
-
-	mapfile -t provides < <(find_libprovides)
-	mapfile -t depends < <(find_libdepends)
 
 	write_kv_pair "license"     "${license[@]}"
 	write_kv_pair "replaces"    "${replaces[@]}"
@@ -662,6 +556,8 @@ list_package_files() {
 create_package() {
 	(( NOARCHIVE )) && return 0
 
+	pkgtype=${pkgtype:-pkg}
+
 	if [[ ! -d $pkgdir ]]; then
 		error "$(gettext "Missing %s directory.")" "\$pkgdir/"
 		plainerr "$(gettext "Aborting...")"
@@ -704,7 +600,7 @@ create_package() {
 
 	msg2 "$(gettext "Generating .MTREE file...")"
 	list_package_files | LANG=C bsdtar -cnf - --format=mtree \
-		--options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' \
+		--options='!all,use-set,type,uid,gid,mode,time,size,sha256,link' \
 		--null --files-from - --exclude .MTREE | gzip -c -f -n > .MTREE
 	touch -d @$SOURCE_DATE_EPOCH .MTREE
 
@@ -746,6 +642,7 @@ create_debug_package() {
 
 	pkgdesc="Detached debugging symbols for $pkgbase"
 	pkgname=$pkgbase-debug
+	pkgtype=debug
 
 	create_package
 }
@@ -755,6 +652,8 @@ create_srcpackage() {
 	msg "$(gettext "Creating source package...")"
 	local srclinks="$(mktemp -d "$startdir"/srclinks.XXXXXXXXX)"
 	mkdir "${srclinks}"/${pkgbase}
+
+	pkgtype=src
 
 	msg2 "$(gettext "Adding %s...")" "$BUILDSCRIPT"
 	ln -s "${BUILDFILE}" "${srclinks}/${pkgbase}/${BUILDSCRIPT}"
@@ -796,6 +695,16 @@ create_srcpackage() {
 		done
 	done
 	pkgname=(${pkgname_backup[@]})
+
+	# add a copy of source PGP signing public keys if availabe in keys/pgp/<fingerprint>.asc
+	local key
+	for key in ${validpgpkeys[@]}; do
+		if [[ -f keys/pgp/$key.asc ]]; then
+			mkdir -p "${srclinks}/${pkgbase}/keys/pgp/"
+			ln -s "${startdir}/keys/pgp/$key.asc" "${srclinks}/${pkgbase}/keys/pgp/"
+		fi
+	done
+
 
 	local fullver=$(get_full_version)
 	local pkg_file="$SRCPKGDEST/${pkgbase}-${fullver}${SRCEXT}"
@@ -936,6 +845,9 @@ run_single_packaging() {
 
 run_split_packaging() {
 	local pkgname_backup=("${pkgname[@]}")
+	# We might run this function when we only have package_pkgname
+	# and we don't want that marked as a split package
+	(( ${#pkgname[@]} > 1 )) && pkgtype=split
 	backup_package_variables
 	for pkgname in ${pkgname_backup[@]}; do
 		run_single_packaging $pkgname
@@ -1000,7 +912,7 @@ usage() {
 
 version() {
 	printf "makepkg (pacman) %s\n" "$makepkg_version"
-	printf -- "Copyright (c) 2006-2021 Pacman Development Team <pacman-dev@archlinux.org>.\n"
+	printf -- "Copyright (c) 2006-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>.\n"
 	printf -- "Copyright (C) 2002-2006 Judd Vinet <jvinet@zeroflux.org>.\n"
 	printf '\n'
 	printf -- "$(gettext "\
@@ -1027,8 +939,8 @@ fi
 ARGLIST=("$@")
 
 # Parse Command Line Options.
-OPT_SHORT="AcCdefghiLmop:rRsSV"
-OPT_LONG=('allsource' 'check' 'clean' 'cleanbuild' 'config:' 'force' 'geninteg'
+OPT_SHORT="AcCdD:efghiLmop:rRsSV"
+OPT_LONG=('allsource' 'check' 'clean' 'cleanbuild' 'config:' 'dir:' 'force' 'geninteg'
           'help' 'holdver' 'ignorearch' 'install' 'key:' 'log' 'noarchive' 'nobuild'
           'nocolor' 'nocheck' 'nodeps' 'noextract' 'noprepare' 'nosign' 'packagelist'
           'printsrcinfo' 'repackage' 'rmdeps' 'sign' 'skipchecksums' 'skipinteg'
@@ -1059,6 +971,7 @@ while true; do
 		--check)          RUN_CHECK='y' ;;
 		--config)         shift; MAKEPKG_CONF=$1 ;;
 		-d|--nodeps)      NODEPS=1 ;;
+		-D|--dir)         shift; CHDIR=$1 ;;
 		-e|--noextract)   NOEXTRACT=1 ;;
 		-f|--force)       FORCE=1 ;;
 		# generating integrity checks does not depend on architecture
@@ -1070,6 +983,7 @@ while true; do
 		-m|--nocolor)     USE_COLOR='n'; PACMAN_OPTS+=("--color" "never") ;;
 		--noarchive)      NOARCHIVE=1 ;;
 		--nocheck)        RUN_CHECK='n' ;;
+		--noverify)       RUN_VERIFY='n' ;;
 		--noprepare)      RUN_PREPARE='n' ;;
 		--nosign)         SIGNPKG='n' ;;
 		-o|--nobuild)     BUILDPKG=0 NOBUILD=1 ;;
@@ -1103,6 +1017,12 @@ while [[ $1 ]]; do
 	fi
 	shift
 done
+
+if [[ -n $CHDIR ]]; then
+	cd_safe "$CHDIR"
+fi
+
+declare -r startdir="$(pwd -P)"
 
 # setup signal traps
 trap 'clean_up' 0
@@ -1177,7 +1097,7 @@ fi
 
 unset pkgname "${pkgbuild_schema_strings[@]}" "${pkgbuild_schema_arrays[@]}"
 unset "${known_hash_algos[@]/%/sums}"
-unset -f pkgver prepare build check package "${!package_@}"
+unset -f pkgver verify prepare build check package "${!package_@}"
 unset "${!makedepends_@}" "${!depends_@}" "${!source_@}" "${!checkdepends_@}"
 unset "${!optdepends_@}" "${!conflicts_@}" "${!provides_@}" "${!replaces_@}"
 unset "${!cksums_@}" "${!md5sums_@}" "${!sha1sums_@}" "${!sha224sums_@}"
@@ -1235,7 +1155,7 @@ if (( GENINTEG )); then
 	mkdir -p "$srcdir"
 	chmod a-s "$srcdir"
 	cd_safe "$srcdir"
-	download_sources novcs allarch >&2
+	download_sources allarch >&2
 	generate_checksums
 	exit $E_OK
 fi
@@ -1244,14 +1164,17 @@ if have_function pkgver; then
 	PKGVERFUNC=1
 fi
 
-# check we have the software required to process the PKGBUILD
-check_software || exit $E_MISSING_MAKEPKG_DEPS
-
 if (( ${#pkgname[@]} > 1 )) || have_function package_${pkgname}; then
 	SPLITPKG=1
 fi
 
 # test for available PKGBUILD functions
+if have_function verify; then
+	# "Hide" verify() function if not going to be run
+	if [[ $RUN_VERIFY != "n" ]] && (( ! SKIPCHECKSUMS && ! SKIPPGPCHECK )); then
+		VERIFYFUNC=1
+	fi
+fi
 if have_function prepare; then
 	# "Hide" prepare() function if not going to be run
 	if [[ $RUN_PREPARE != "n" ]]; then
@@ -1271,19 +1194,6 @@ if have_function package; then
 	PKGFUNC=1
 fi
 
-# check if gpg signature is to be created and if signing key is valid
-if { [[ -z $SIGNPKG ]] && check_buildenv "sign" "y"; } || [[ $SIGNPKG == 'y' ]]; then
-	SIGNPKG='y'
-	if ! gpg --list-secret-key ${GPGKEY:+"$GPGKEY"} &>/dev/null; then
-		if [[ ! -z $GPGKEY ]]; then
-			error "$(gettext "The key %s does not exist in your keyring.")" "${GPGKEY}"
-		else
-			error "$(gettext "There is no key in your keyring.")"
-		fi
-		exit $E_PRETTY_BAD_PRIVACY
-	fi
-fi
-
 if (( PACKAGELIST )); then
 	print_all_package_names
 	exit $E_OK
@@ -1296,6 +1206,22 @@ fi
 
 if (( ! PKGVERFUNC )); then
 	check_build_status
+fi
+
+# check we have the software required to process the PKGBUILD
+check_software || exit $E_MISSING_MAKEPKG_DEPS
+
+# check if gpg signature is to be created and if signing key is valid
+if { [[ -z $SIGNPKG ]] && check_buildenv "sign" "y"; } || [[ $SIGNPKG == 'y' ]]; then
+	SIGNPKG='y'
+	if ! gpg --list-secret-key ${GPGKEY:+"$GPGKEY"} &>/dev/null; then
+		if [[ ! -z $GPGKEY ]]; then
+			error "$(gettext "The key %s does not exist in your keyring.")" "${GPGKEY}"
+		else
+			error "$(gettext "There is no key in your keyring.")"
+		fi
+		exit $E_PRETTY_BAD_PRIVACY
+	fi
 fi
 
 msg "$(gettext "Making package: %s")" "$pkgbase $basever ($(date +%c))"
@@ -1316,7 +1242,7 @@ if (( SOURCEONLY )); then
 		download_sources allarch
 	elif ( (( ! SKIPCHECKSUMS )) || \
 			( (( ! SKIPPGPCHECK )) && source_has_signatures ) ); then
-		download_sources allarch novcs
+		download_sources allarch
 	fi
 	check_source_integrity all
 	cd_safe "$startdir"
@@ -1366,10 +1292,9 @@ else
 	fi
 fi
 
-# get back to our src directory so we can begin with sources
+# ensure existence of our src directory so we can begin with sources
 mkdir -p "$srcdir"
 chmod a-s "$srcdir"
-cd_safe "$srcdir"
 
 export MINGW_CHOST MINGW_PREFIX MINGW_PACKAGE_PREFIX
 export DXSDK_DIR ACLOCAL_PATH PKG_CONFIG_PATH
@@ -1384,9 +1309,12 @@ if (( !REPKG )); then
 
 		if (( CLEANBUILD )); then
 			msg "$(gettext "Removing existing %s directory...")" "\$srcdir/"
-			rm -rf "$srcdir"/*
+			rm -rf "$srcdir"
+			mkdir -p "$srcdir"
+			chmod a-s "$srcdir"
 		fi
 
+		cd_safe "$srcdir"
 		extract_sources
 		if (( PREPAREFUNC )); then
 			run_prepare

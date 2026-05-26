@@ -2,7 +2,7 @@
 #
 #   python.sh - creating reproducible python packages
 #
-#   Copyright (c) 2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2021-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 LIBMAKEPKG_REPRODUCIBLE_PYTHON_SH=1
 
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 
 # disable hash randomization when creating .pyc files

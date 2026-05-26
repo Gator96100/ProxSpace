@@ -1,10 +1,10 @@
 # mtx completion                                           -*- shell-script -*-
 # by Jon Middleton <jjm@ixtab.org.uk>
 
-_mtx()
+_comp_cmd_mtx()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     local options tapes drives
 
@@ -12,21 +12,21 @@ _mtx()
         inventory status load unload eepos first last next"
 
     tapes=$(mtx status 2>/dev/null |
-        awk '/Storage Element [0-9]+:Full/ { printf "%s ", $3 }')
+        _comp_awk '/Storage Element [0-9]+:Full/ { printf "%s ", $3 }')
     tapes=${tapes//:Full/}
 
     drives=$(mtx status 2>/dev/null |
-        awk '/Data Transfer Element [0-9]+:(Full|Empty)/ { printf "%s ", $4 }')
+        _comp_awk '/Data Transfer Element [0-9]+:(Full|Empty)/ { printf "%s ", $4 }')
     drives=${drives//:Full/}
     drives=${drives//:Empty/}
 
     if ((cword > 1)); then
         case $prev in
             load)
-                COMPREPLY=($(compgen -W "$tapes" -- "$cur"))
+                _comp_compgen -- -W "$tapes"
                 ;;
             unload | first | last | next)
-                COMPREPLY=($(compgen -W "$drives" -- "$cur"))
+                _comp_compgen -- -W "$drives"
                 ;;
             -f)
                 true
@@ -36,9 +36,9 @@ _mtx()
                 ;;
         esac
     else
-        COMPREPLY=($(compgen -W "$options" -- "$cur"))
+        _comp_compgen -- -W "$options"
     fi
 } &&
-    complete -F _mtx mtx
+    complete -F _comp_cmd_mtx mtx
 
 # ex: filetype=sh

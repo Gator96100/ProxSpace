@@ -1,39 +1,39 @@
 # chgrp(1) completion                                      -*- shell-script -*-
 
-_chgrp()
+_comp_cmd_chgrp()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     cur=${cur//\\\\/}
 
     if [[ $prev == --reference ]]; then
-        _filedir
+        _comp_compgen_filedir
         return
     fi
 
-    $split && return
+    [[ $was_split ]] && return
 
     # options completion
     if [[ $cur == -* ]]; then
-        local w opts
+        local w opts=""
         for w in "${words[@]}"; do
             [[ $w == -@(R|-recursive) ]] && opts="-H -L -P" && break
         done
-        COMPREPLY=($(compgen -W '-c -h -f -R -v --changes --dereference
+        _comp_compgen -- -W '-c -h -f -R -v --changes --dereference --from
             --no-dereference --silent --quiet --reference --recursive --verbose
-            --help --version $opts' -- "$cur"))
+            --help --version $opts'
         return
     fi
 
     # first parameter on line or first since an option?
     if [[ $cword -eq 1 && $cur != -* || $prev == -* ]]; then
-        _allowed_groups "$cur"
+        _comp_compgen_allowed_groups
     else
-        _filedir
+        _comp_compgen_filedir
     fi
 
 } &&
-    complete -F _chgrp chgrp
+    complete -F _comp_cmd_chgrp chgrp
 
 # ex: filetype=sh

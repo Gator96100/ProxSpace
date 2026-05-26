@@ -2,7 +2,7 @@
 #
 #   variable.sh - Check that variables are or are not arrays as appropriate
 #
-#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
 [[ -n "$LIBMAKEPKG_LINT_PKGBUILD_VARIABLE_SH" ]] && return
 LIBMAKEPKG_LINT_PKGBUILD_VARIABLE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
-source "$LIBRARY/util/schema.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/schema.sh"
 
 lint_pkgbuild_functions+=('lint_variable')
-
+lint_pkgbuild_functions+=('lint_array')
 
 lint_variable() {
 	local i a pkg out bad ret=0
@@ -88,6 +88,24 @@ lint_variable() {
 		for i in ${pkgbuild_schema_strings[@]}; do
 			if extract_function_variable "package_$pkg" $i 1 out; then
 				error "$(gettext "%s should not be an array")" "$i"
+				ret=1
+			fi
+		done
+	done
+
+	return $ret
+}
+
+lint_array() {
+	local i var ret=0
+
+	for i in ${pkgbuild_schema_arrays[@]}; do
+		local l=()
+		get_pkgbuild_all_split_attributes $i l
+
+		for var in "${l[@]}"; do
+			if [[ -z $var ]]; then
+				error "$(gettext "%s does not allow empty values.")" "$i"
 				ret=1
 			fi
 		done

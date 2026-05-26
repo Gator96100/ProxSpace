@@ -1,9 +1,9 @@
 # mailman newlist completion                               -*- shell-script -*-
 
-_newlist()
+_comp_cmd_newlist()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -l | --language | -u | --urlhost | -e | --emailhost | --help)
@@ -11,15 +11,18 @@ _newlist()
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     else
-        _xfunc list_lists _mailman_lists
+        # Prefer `list_lists` in the same dir as command
+        local pathcmd
+        pathcmd=$(type -P -- "$1") && local PATH=${pathcmd%/*}:$PATH
+        _comp_compgen -x list_lists mailman_lists
     fi
 } &&
-    complete -F _newlist newlist
+    complete -F _comp_cmd_newlist newlist
 
 # ex: filetype=sh

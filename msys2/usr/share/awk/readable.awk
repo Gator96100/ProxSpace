@@ -1,5 +1,9 @@
 # readable.awk --- library file to skip over unreadable files
 #
+# This file and how to use it are described in the manual.
+# Therefore, we respectfully advise you to Read The Fine Manual
+# for more information.
+#
 # Arnold Robbins, arnold@skeeve.com, Public Domain
 # October 2000
 # December 2010

@@ -1,42 +1,38 @@
 # bash completion for msynctool                            -*- shell-script -*-
 
-_msynctool()
+_comp_cmd_msynctool()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $words in
         --configure)
-            COMPREPLY=($(compgen -W "$($1 --showgroup \
-                $prev | awk '/^Member/ {print $2}' | command sed \
-                -e 's/:$//')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" --showgroup "$prev" |
+                _comp_awk '/^Member/ {print $2}' | command sed -e 's/:$//')"
             return
             ;;
         --addmember)
-            COMPREPLY=($(compgen -W '$($1 --listplugins \
-                | command sed -e 1d)' -- "$cur"))
+            _comp_compgen_split -- "$("$1" --listplugins | command sed -e 1d)"
             return
             ;;
     esac
 
     case $prev in
         --configure | --addgroup | --delgroup | --showgroup | --sync | --addmember)
-            COMPREPLY=($(compgen -W '$($1 --listgroups \
-                | command sed -e 1d)' -- "$cur"))
+            _comp_compgen_split -- "$("$1" --listgroups | command sed -e 1d)"
             return
             ;;
         --showformats | --filter-objtype | --slow-sync)
-            COMPREPLY=($(compgen -W '$($1 --listobjects \
-                | command sed -e 1d)' -- "$cur"))
+            _comp_compgen_split -- "$("$1" --listobjects | command sed -e 1d)"
             return
             ;;
     esac
 
-    COMPREPLY=($(compgen -W '--listgroups --listplugins --listobjects
-        --showformats --showgroup --sync --filter-objtype --slow-sync --wait
-        --multi --addgroup --delgroup --addmember --configure --manual
-        --configdir --conflict' -- "$cur"))
+    _comp_compgen -- -W '--listgroups --listplugins --listobjects --showformats
+        --showgroup --sync --filter-objtype --slow-sync --wait --multi
+        --addgroup --delgroup --addmember --configure --manual --configdir
+        --conflict'
 } &&
-    complete -F _msynctool msynctool
+    complete -F _comp_cmd_msynctool msynctool
 
 # ex: filetype=sh

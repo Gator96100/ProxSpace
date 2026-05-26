@@ -1,31 +1,33 @@
 # bash completion for sysctl                               -*- shell-script -*-
 
-_sysctl()
+_comp_cmd_sysctl()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[rpf]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --version | --pattern | -!(-*)[hVr])
+        --help | --version | --pattern | -${noargopts}[hVr])
             return
             ;;
-        --load | -!(-*)[pf])
-            _filedir conf
+        --load | -${noargopts}[pf])
+            _comp_compgen_filedir conf
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        local opts="$(_parse_help "$1")"
-        COMPREPLY=($(compgen -W '${opts:-$(_parse_usage "$1")}' -- "$cur"))
+        _comp_compgen_help || _comp_compgen_usage
     else
         local suffix=
         [[ $prev == -w ]] && suffix="="
-        COMPREPLY=($(compgen -S "$suffix" -W \
-            "$(PATH="$PATH:/sbin" $1 -N -a 2>/dev/null)" -- "$cur"))
+        _comp_compgen_split -S "$suffix" -- "$(
+            PATH="$PATH:/sbin" $1 -N -a 2>/dev/null
+        )"
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
     fi
 } &&
-    complete -F _sysctl sysctl
+    complete -F _comp_cmd_sysctl sysctl
 
 # ex: filetype=sh

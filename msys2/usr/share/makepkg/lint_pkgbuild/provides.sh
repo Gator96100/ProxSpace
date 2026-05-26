@@ -2,7 +2,7 @@
 #
 #   provides.sh - Check the 'provides' array conforms to requirements.
 #
-#   Copyright (c) 2014-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2014-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
 [[ -n "$LIBMAKEPKG_LINT_PKGBUILD_PROVIDES_SH" ]] && return
 LIBMAKEPKG_LINT_PKGBUILD_PROVIDES_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/lint_pkgbuild/fullpkgver.sh"
-source "$LIBRARY/lint_pkgbuild/pkgname.sh"
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/lint_pkgbuild/fullpkgver.sh"
+source "$MAKEPKG_LIBRARY/lint_pkgbuild/pkgname.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
 
 
 lint_pkgbuild_functions+=('lint_provides')

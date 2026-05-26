@@ -1,5 +1,5 @@
-Copyright 1999, 2001-2023 Free Software Foundation, Inc.
-Contributed by the AriC and Caramba projects, INRIA.
+Copyright 1999, 2001-2025 Free Software Foundation, Inc.
+Contributed by the Pascaline and Caramba projects, INRIA.
 
 This file is part of the GNU MPFR Library.
 
@@ -14,9 +14,8 @@ or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
 License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with the GNU MPFR Library; see the file COPYING.LESSER.  If not, see
-https://www.gnu.org/licenses/ or write to the Free Software Foundation, Inc.,
-51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+along with the GNU MPFR Library; see the file COPYING.LESSER.
+If not, see <https://www.gnu.org/licenses/>.
 
 ##############################################################################
 
@@ -39,6 +38,9 @@ Known bugs:
   between parameters' exponents is near 2*MPFR_EMAX_MAX and on the other hand
   the output precision or the precision of the parameter with greatest
   absolute value is greater than 2*MPFR_EMAX_MAX-4.
+  Note: Such huge precisions are not possible as they would be larger than
+  MPFR_PREC_MAX, unless the types for mpfr_exp_t and/or mpfr_prec_t are
+  changed (only for developers or expert users, not officially supported).
 
 Potential bugs:
 

@@ -2,12 +2,12 @@
 .\"     Title: chattr
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin Utilities
 .\"    Source: Cygwin Utilities
 .\"  Language: English
 .\"
-.TH "CHATTR" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.TH "CHATTR" "1" "03/15/2026" "Cygwin Utilities" "Cygwin Utilities"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -56,7 +56,7 @@ The
 \fBchattr\fR
 program allows to change file attributes, namely DOS attributes, as well as making files sparse, encrypt or compress them on FS level, or setting directories\*(Aq case sensitivity\&.
 .PP
-The format of \*(Aqmode\*(Aq is {+\-=}[acCehnrsSt]
+The format of \*(Aqmode\*(Aq is {+\-=}[acCehnprsStu]
 .PP
 The operator \*(Aq+\*(Aq causes the selected attributes to be added to the existing attributes of the files; \*(Aq\-\*(Aq causes them to be removed; and \*(Aq=\*(Aq causes them to be the only attributes that the files have\&. A single \*(Aq=\*(Aq causes all attributes to be removed\&.
 .PP
@@ -76,14 +76,25 @@ Supported attributes:
   \*(Aqn\*(Aq, \*(AqNotindexed\*(Aq:    file or directory is not to be indexed by the
 			content indexing service
   \*(Aqe\*(Aq, \*(AqEncrypted\*(Aq:     file is encrypted
+  \*(Aqp\*(Aq, \*(AqPinned\*(Aq:        file is pinned
+  \*(Aqu\*(Aq, \*(AqUnpinned\*(Aq:      file is unpinned
   \*(AqC\*(Aq, \*(AqCasesensitive\*(Aq: directory is handled case sensitive
-			(Windows 10 1803 or later, local NTFS only,
-			 WSL must be installed)
     
 .fi
 .if n \{\
 .RE
 .\}
+.SH "CASE\-SENSITIVE DIRECTORIES"
+.PP
+Case\-sensitive directories are supported starting with Windows 10 1803\&. They are only supported on local NTFS filesystems\&.
+.PP
+The system\-wide availability of case\-sensitive directories depends on the setting of the registry value of type DWORD called HKEY_LOCAL_MACHINE\eSYSTEM\eCurrentControlSet\eControl\eFileSystem\eNtfsEnableDirCaseSensitivity\&. The value 0 disables case\-sensitive directories\&. The value 1 enables case\-sensitive directories\&. The value 3 enables case\-sensitive directories, too, with the additional requirement that a directory can only be set to case\-sensitive if it\*(Aqs empty\&. No other value is supported\&.
+.PP
+Removing case\-sensitivity on a directory requires that the directory does not contain files only differing by case\&.
+.PP
+Trying to access a case\-sensitive directory on a remote NTFS leads to all kinds of weird errors and is therefore
+\fInot\fR
+recommended\&.
 .SH "COPYRIGHT"
 .br
 .PP

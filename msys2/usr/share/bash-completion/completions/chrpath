@@ -1,27 +1,29 @@
 # chrpath(1) completion                                    -*- shell-script -*-
 
-_chrpath()
+_comp_cmd_chrpath()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[r]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --version | --help | -!(-*)[vh])
+        --version | --help | -${noargopts}[vh])
             return
             ;;
-        --replace | -!(-*)r)
-            _filedir -d
+        --replace | -${noargopts}r)
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _chrpath chrpath
+    complete -F _comp_cmd_chrpath chrpath
 
 # ex: filetype=sh

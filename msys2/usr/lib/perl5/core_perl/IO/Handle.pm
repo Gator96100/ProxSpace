@@ -8,20 +8,20 @@ IO::Handle - supply object methods for I/O handles
 
     use IO::Handle;
 
-    $io = IO::Handle->new();
+    my $io = IO::Handle->new();
     if ($io->fdopen(fileno(STDIN),"r")) {
         print $io->getline;
         $io->close;
     }
 
-    $io = IO::Handle->new();
+    my $io = IO::Handle->new();
     if ($io->fdopen(fileno(STDOUT),"w")) {
         $io->print("Some text\n");
     }
 
     # setvbuf is not available by default on Perls 5.8.0 and later.
     use IO::Handle '_IOLBF';
-    $io->setvbuf($buffer_var, _IOLBF, 1024);
+    $io->setvbuf(my $buffer_var, _IOLBF, 1024);
 
     undef $io;       # automatically closes the file if it's open
 
@@ -191,6 +191,14 @@ current setting if C<BOOL> is not given.
 
 If an error occurs C<blocking> will return undef and C<$!> will be set.
 
+=item binmode( [LAYER] )
+
+C<binmode> sets C<binmode> on the underlying C<IO> object, as documented
+in C<perldoc -f binmode>.
+
+C<binmode> accepts one optional parameter, which is the layer to be
+passed on to the C<binmode> call.
+
 =back
 
 
@@ -234,7 +242,7 @@ the taint-clean flag failed. (eg invalid handle)
 =head1 NOTE
 
 An C<IO::Handle> object is a reference to a symbol/GLOB reference (see
-the C<Symbol> package).  Some modules that
+the L<Symbol> package).  Some modules that
 inherit from C<IO::Handle> may want to keep object related variables
 in the hash table part of the GLOB. In an attempt to prevent modules
 trampling on each other I propose the that any such module should prefix
@@ -270,7 +278,7 @@ use IO ();	# Load the XS module
 require Exporter;
 our @ISA = qw(Exporter);
 
-our $VERSION = "1.48";
+our $VERSION = "1.55";
 
 our @EXPORT_OK = qw(
     autoflush
@@ -626,6 +634,19 @@ sub printflush {
     else {
 	print @_;
     }
+}
+
+################################################
+## Binmode
+##
+
+sub binmode {
+    ( @_ == 1 or @_ == 2 ) or croak 'usage $fh->binmode([LAYER])';
+
+    my($fh, $layer) = @_;
+
+    return binmode $$fh unless $layer;
+    return binmode $$fh, $layer;
 }
 
 1;

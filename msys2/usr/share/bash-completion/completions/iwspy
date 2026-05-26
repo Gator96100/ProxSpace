@@ -1,20 +1,20 @@
 # iwspy completion                                         -*- shell-script -*-
 
-_iwspy()
+_comp_cmd_iwspy()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     if ((cword == 1)); then
         if [[ $cur == -* ]]; then
-            COMPREPLY=($(compgen -W '--help --version' -- "$cur"))
+            _comp_compgen -- -W '--help --version'
         else
-            _available_interfaces -w
+            _comp_compgen_available_interfaces -w
         fi
     else
-        COMPREPLY=($(compgen -W 'setthr getthr off' -- "$cur"))
+        _comp_compgen -- -W 'setthr getthr off'
     fi
 } &&
-    complete -F _iwspy iwspy
+    complete -F _comp_cmd_iwspy iwspy
 
 # ex: filetype=sh

@@ -1,34 +1,34 @@
 # bash completion for dhclient                             -*- shell-script -*-
 
-_dhclient()
+_comp_cmd_dhclient()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -p | -e)
             return
             ;;
         -D)
-            COMPREPLY=($(compgen -W 'LL LLT' -- "$cur"))
+            _comp_compgen -- -W 'LL LLT'
             return
             ;;
         -*f)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -s)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
     else
-        _available_interfaces
+        _comp_compgen_available_interfaces
     fi
 } &&
-    complete -F _dhclient dhclient
+    complete -F _comp_cmd_dhclient dhclient
 
 # ex: filetype=sh

@@ -1,52 +1,60 @@
 # asciidoc(1) completion                                   -*- shell-script -*-
 
-_asciidoc_doctype()
+# @since 2.12
+_comp_xfunc_asciidoc_compgen_doctype()
 {
-    COMPREPLY+=($(compgen -W 'article book manpage' -- "$cur"))
+    _comp_compgen -- -W 'article book manpage'
 }
 
-_asciidoc()
+# @deprecated 2.12
+_asciidoc_doctype()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    _comp_compgen -ax asciidoc doctype
+}
 
+_comp_cmd_asciidoc()
+{
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
+
+    local noargopts='!(-*|*[abfdo]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --attribute | -!(-*)a)
+        --attribute | -${noargopts}a)
             return
             ;;
-        --backend | -!(-*)b)
-            COMPREPLY=($(compgen -W 'docbook html4 xhtml11' -- "$cur"))
+        --backend | -${noargopts}b)
+            _comp_compgen -- -W 'docbook html4 xhtml11'
             return
             ;;
-        --conf-file | -!(-*)f)
-            _filedir conf
+        --conf-file | -${noargopts}f)
+            _comp_compgen_filedir conf
             return
             ;;
-        --doctype | -!(-*)d)
-            _asciidoc_doctype
+        --doctype | -${noargopts}d)
+            _comp_xfunc_asciidoc_compgen_doctype
             return
             ;;
-        --help | -!(-*)h)
-            COMPREPLY=($(compgen -W 'manpage syntax topics' -- "$cur"))
+        --help | -${noargopts}h)
+            _comp_compgen -- -W 'manpage syntax topics'
             return
             ;;
-        --out-file | -!(-*)o)
-            _filedir
+        --out-file | -${noargopts}o)
+            _comp_compgen_filedir
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" "--help manpage")' \
-            -- "$cur"))
+        _comp_compgen_help -- --help manpage
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _asciidoc asciidoc asciidoc.py
+    complete -F _comp_cmd_asciidoc asciidoc asciidoc.py
 
 # ex: filetype=sh

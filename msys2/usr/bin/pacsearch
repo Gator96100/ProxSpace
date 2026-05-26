@@ -17,14 +17,14 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use strict;
 use warnings;
 use Term::ANSIColor;
 
 my $myname = 'pacsearch';
-my $myver = '1.9.1';
+my $myver = '1.10.6';
 
 sub usage {
 	print "$myname v$myver\n\n";

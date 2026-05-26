@@ -1,38 +1,38 @@
 # bash completion for mkisofs/genisoimage                  -*- shell-script -*-
 
-_mkisofs()
+_comp_cmd_mkisofs()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -o | -abstract | -biblio | -check-session | -copyright | -log-file | \
             -root-info | -prep-boot | -*-list)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -*-charset)
-            COMPREPLY=($(compgen -W '$(mkisofs -input-charset \
-                    help 2>&1 | tail -n +3)' -- "$cur"))
+            _comp_compgen_split -- "$(mkisofs -input-charset help 2>&1 |
+                tail -n +3)"
             return
             ;;
         -uid)
-            _uids
+            _comp_compgen_uids
             return
             ;;
         -gid)
-            _gids
+            _comp_compgen_gids
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
     else
-        _filedir
+        _comp_compgen_filedir
     fi
 
 } &&
-    complete -F _mkisofs mkisofs genisoimage
+    complete -F _comp_cmd_mkisofs mkisofs genisoimage
 
 # ex: filetype=sh

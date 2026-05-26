@@ -16,13 +16,13 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # traps interrupt key to spit out pre-interrupt info
 trap finaloutput INT
 
 declare -r myname='rankmirrors'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 usage() {
 	cat <<EOF
@@ -44,6 +44,7 @@ Options:
   -t, --times           only output mirrors and their response times
   -u, --url             test a specific URL
   -v, --verbose         be verbose in output
+  -w, --working-only    only output mirrors that respond within the timeout
   -h, --help            display this help message and exit
   -V, --version         display version information and exit
 EOF
@@ -66,36 +67,40 @@ err() {
 	exit 1
 }
 
-# gettime fetchurl (e.g gettime http://foo.com/core/os/i686/core.db.tar.gz)
+# gettime fetchurl (e.g gettime https://foo.com/core/os/i686/core.db.tar.gz)
 # returns the fetching time, or timeout, or unreachable
 gettime() {
-	IFS=' ' output=( $(curl -s -m $MAX_TIME -w "%{time_total} %{http_code}" "$1" -o/dev/null) )
-	(( $? == 28 )) && echo timeout && return
-	(( ${output[1]} >= 400 || ! ${output[1]} )) && echo unreachable && return
+	IFS=' ' read -ra output <<< "$(curl -s -m "$MAX_TIME" -w "%{time_total} %{http_code}" "$1" -o/dev/null)"
+	(( $? == 28 )) && { echo timeout; return 1; }
+	(( output[1] >= 400 || ! output[1] )) && { echo unreachable; return 1; }
 	echo "${output[0]}"
+	return 0
 }
 
-# getfetchurl serverurl (e.g. getturl http://foo.com/core/os/i686)
+# getfetchurl serverurl (e.g. getturl https://foo.com/core/os/i686)
 # if $repo is in the line, then assumes core
 # if $arch is in the line, then assumes $(uname -m)
-# returns a fetchurl (e.g. http://foo.com/core/os/i686/core.db.tar.gz)
+# returns a fetchurl (e.g. https://foo.com/core/os/i686/core.db.tar.gz)
 ARCH="$(uname -m)"
 getfetchurl() {
 	local strippedurl="${1%/}"
 
+	# shellcheck disable=SC2016
 	local replacedurl="${strippedurl//'$arch'/$ARCH}"
 	if [[ ! $TARGETREPO ]]; then
+		# shellcheck disable=SC2016
 		replacedurl="${replacedurl//'$repo'/core}"
 		local tmp="${replacedurl%/*}"
 		tmp="${tmp%/*}"
 
 		local reponame="${tmp##*/}"
 	else
+		# shellcheck disable=SC2016
 		replacedurl="${replacedurl//'$repo'/$TARGETREPO}"
 		local reponame="$TARGETREPO"
 	fi
 
-	if [[ -z $reponame || $reponame = $replacedurl ]]; then
+	if [[ -z $reponame || $reponame = "$replacedurl" ]]; then
 		echo "fail"
 	else
 		local fetchurl="${replacedurl}/$reponame.db"
@@ -107,8 +112,8 @@ getfetchurl() {
 finaloutput() {
 	local -a timesarray=()
 	if [[ -f "$tmpfile" ]]; then
-		readarray -t timesarray <$tmpfile
-		rm $tmpfile
+		readarray -t timesarray <"$tmpfile"
+		rm "$tmpfile"
 	fi
 	IFS=$'\n' read -r -d '' -a sortedarray < \
 		<(printf '%s\n' "${timesarray[@]}" | LC_COLLATE=C sort)
@@ -155,6 +160,7 @@ while [[ $1 ]]; do
 				URL="$2";
 				shift 2;;
 			verbose) VERBOSE=1 ; shift ;;
+			working-only) WORKING_ONLY=1 ; shift ;;
 			help) usage ;;
 			version) version ;;
 			*) err "'$1' is an invalid argument."
@@ -163,7 +169,9 @@ while [[ $1 ]]; do
 
 		if [[ ! ${1:1:1} ]]; then
 			[[ -t 0 ]] && err "Stdin is empty."
-			IFS=$'\n' linearray=( $(</dev/stdin) )
+			while read -r value; do
+				linearray+=( "$value" )
+			done
 			STDIN=1
 			shift
 		else
@@ -190,6 +198,7 @@ while [[ $1 ]]; do
 						URL="$2";
 						snum=2;;
 					v) VERBOSE=1 ;;
+					w) WORKING_ONLY=1 ;;
 					h) usage ;;
 					V) version ;;
 					*) err "'$1' is an invalid argument." ;;
@@ -199,8 +208,10 @@ while [[ $1 ]]; do
 		fi
 	elif [[ -f $1 ]]; then
 		FILE="1"
-		IFS=$'\n' linearray=( $(<$1) )
-		[[ $linearray ]] || err "File is empty."
+		while read -r value; do
+			linearray+=( "$value" )
+		done < "$1"
+		[[ ${linearray[*]} ]] || err "File is empty."
 		shift
 	else
 		err "'$1' does not exist."
@@ -235,8 +246,9 @@ get_url_time() {
 	server=$1
 	url="$(getfetchurl "$server")"
 	[[ $url = fail ]] && err "URL '$server' is malformed."
-	time=$(gettime "$url")
-	echo "$time $server" >>$tmpfile
+	if time=$(gettime "$url") || ! [[ $WORKING_ONLY ]]; then
+		echo "$time $server" >>"$tmpfile"
+	fi
 
 	# Output
 	if [[ $VERBOSE && $TIMESONLY ]]; then
@@ -252,12 +264,12 @@ tmpfile=$(mktemp)
 if [[ $PARALLEL ]]; then
 	servers=()
 	# Exports for GNU parallel
-	export MAX_TIME ARCH TARGETREPO VERBOSE TIMESONLY tmpfile
+	export MAX_TIME ARCH TARGETREPO VERBOSE TIMESONLY WORKING_ONLY tmpfile
 	export -f getfetchurl gettime get_url_time
 fi
 for line in "${linearray[@]}"; do
 	if [[ $line =~ ^[[:space:]]*# ]]; then
-		[[ $TIMESONLY ]] || echo $line
+		[[ $TIMESONLY ]] || echo "$line"
 	elif [[ $line =~ ^[[:space:]]*Server ]]; then
 
 		# Getting values and times and such
@@ -265,9 +277,9 @@ for line in "${linearray[@]}"; do
 		server="${server%%#*}"
 
 		if [[ $PARALLEL ]]; then
-			servers+=($server)
+			servers+=("$server")
 		else
-			get_url_time $server
+			get_url_time "$server"
 		fi
 	fi
 done

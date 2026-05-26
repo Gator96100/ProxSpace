@@ -1,13 +1,13 @@
 # ether-wake(8) completion                                 -*- shell-script -*-
 
-_ether_wake()
+_comp_cmd_ether_wake()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     case $prev in
         -i)
-            _available_interfaces -a
+            _comp_compgen_available_interfaces -a
             return
             ;;
         -p)
@@ -16,12 +16,13 @@ _ether_wake()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -u) -V' -- "$cur"))
+        _comp_compgen_help -- -u
+        _comp_compgen -a -- -W '-V'
         return
     fi
 
-    _mac_addresses
+    _comp_compgen_mac_addresses
 } &&
-    complete -F _ether_wake ether-wake etherwake
+    complete -F _comp_cmd_ether_wake ether-wake etherwake
 
 # ex: filetype=sh

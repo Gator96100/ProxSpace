@@ -2,7 +2,7 @@
 #
 #   git.sh - function for handling the download and "extraction" of Git sources
 #
-#   Copyright (c) 2015-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2015-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@
 LIBMAKEPKG_SOURCE_GIT_SH=1
 
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
-source "$LIBRARY/util/pkgbuild.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/pkgbuild.sh"
 
 
 download_git() {
@@ -48,7 +48,7 @@ download_git() {
 
 	if [[ ! -d "$dir" ]] || dir_is_empty "$dir" ; then
 		msg2 "$(gettext "Cloning %s %s repo...")" "${repo}" "git"
-		if ! git clone --mirror "$url" "$dir"; then
+		if ! git clone --origin=origin ${GITFLAGS:---mirror} "$url" "$dir"; then
 			error "$(gettext "Failure while downloading %s %s repo")" "${repo}" "git"
 			plainerr "$(gettext "Aborting...")"
 			exit 1
@@ -56,7 +56,8 @@ download_git() {
 	elif (( ! HOLDVER )); then
 		cd_safe "$dir"
 		# Make sure we are fetching the right repo
-		if [[ "$url" != "$(git config --get remote.origin.url)" ]] ; then
+		local remote_url="$(git config --get remote.origin.url)"
+		if [[ "${url%%.git}" != "${remote_url%%.git}" ]] ; then
 			error "$(gettext "%s is not a clone of %s")" "$dir" "$url"
 			plainerr "$(gettext "Aborting...")"
 			exit 1
@@ -91,7 +92,7 @@ extract_git() {
 			exit 1
 		fi
 		cd_safe "$srcdir"
-	elif ! git clone -s "$dir" "${dir##*/}"; then
+	elif ! git clone --origin=origin -s "$dir" "${dir##*/}"; then
 		error "$(gettext "Failure while creating working copy of %s %s repo")" "${repo}" "git"
 		plainerr "$(gettext "Aborting...")"
 		exit 1
@@ -133,4 +134,31 @@ extract_git() {
 	fi
 
 	popd &>/dev/null
+}
+
+calc_checksum_git() {
+	local netfile=$1 integ=$2 ret=0 shellopts dir url fragment sum
+
+	# this function requires pipefail - save current status to restore later
+	shellopts=$(shopt -p -o pipefail)
+	shopt -s -o pipefail
+
+	dir=$(get_filepath "$netfile")
+	url=$(get_url "$netfile")
+	fragment=$(get_uri_fragment "$url")
+
+	case ${fragment%%=*} in
+		tag|commit)
+			fragval=${fragment##*=}
+			sum=$(git -c core.abbrev=no -C "$dir" archive --format tar "$fragval" | "${integ}sum" 2>&1) || ret=1
+			sum="${sum%% *}"
+			;;
+		*)
+			sum="SKIP"
+			;;
+	esac
+
+	eval "$shellopts"
+	printf '%s' "$sum"
+	return $ret
 }

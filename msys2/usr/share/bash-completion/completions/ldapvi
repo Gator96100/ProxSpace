@@ -1,51 +1,52 @@
 # bash completion for ldapvi                               -*- shell-script -*-
 
-_ldapvi()
+_comp_cmd_ldapvi()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[Y]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --host | -!(-*)h)
-            _known_hosts_real -- "$cur"
+        --host | -${noargopts}h)
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
-        --sasl-mech | -!(-*)Y)
-            COMPREPLY=($(compgen -W 'EXTERNAL GSSAPI DIGEST-MD5 CRAM-MD5
-                PLAIN ANONYMOUS' -- "$cur"))
+        --sasl-mech | -${noargopts}Y)
+            _comp_compgen -- -W 'EXTERNAL GSSAPI DIGEST-MD5 CRAM-MD5 PLAIN
+                ANONYMOUS'
             return
             ;;
         --bind)
-            COMPREPLY=($(compgen -W 'simple sasl' -- "$cur"))
+            _comp_compgen -- -W 'simple sasl'
             return
             ;;
         --bind-dialog)
-            COMPREPLY=($(compgen -W 'never auto always' -- "$cur"))
+            _comp_compgen -- -W 'never auto always'
             return
             ;;
         --scope)
-            COMPREPLY=($(compgen -W 'base one sub' -- "$cur"))
+            _comp_compgen -- -W 'base one sub'
             return
             ;;
         --deref)
-            COMPREPLY=($(compgen -W 'never searching finding always' \
-                -- "$cur"))
+            _comp_compgen -- -W 'never searching finding always'
             return
             ;;
         --encoding)
-            COMPREPLY=($(compgen -W 'ASCII UTF-8 binary' -- "$cur"))
+            _comp_compgen -- -W 'ASCII UTF-8 binary'
             return
             ;;
         --tls)
-            COMPREPLY=($(compgen -W 'never allow try strict' -- "$cur"))
+            _comp_compgen -- -W 'never allow try strict'
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
     fi
 } &&
-    complete -F _ldapvi ldapvi
+    complete -F _comp_cmd_ldapvi ldapvi
 
 # ex: filetype=sh

@@ -1,38 +1,38 @@
 # bash completion for jshint                               -*- shell-script -*-
 
-_jshint()
+_comp_cmd_jshint()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -v | --version | -h | --help | --exclude | --filename | -e | --extra-ext)
             return
             ;;
         -c | --config)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --reporter)
-            COMPREPLY=($(compgen -W "jslint checkstyle unix" -- "$cur"))
+            _comp_compgen -- -W "jslint checkstyle unix"
             return
             ;;
         --extract)
-            COMPREPLY=($(compgen -W "auto always never" -- "$cur"))
+            _comp_compgen -- -W "auto always never"
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir js
+    _comp_compgen_filedir js
 } &&
-    complete -F _jshint jshint
+    complete -F _comp_cmd_jshint jshint
 
 # ex: filetype=sh

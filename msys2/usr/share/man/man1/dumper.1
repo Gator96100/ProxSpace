@@ -2,12 +2,12 @@
 .\"     Title: dumper
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin Utilities
 .\"    Source: Cygwin Utilities
 .\"  Language: English
 .\"
-.TH "DUMPER" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.TH "DUMPER" "1" "03/15/2026" "Cygwin Utilities" "Cygwin Utilities"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -53,29 +53,18 @@ dumper \- Dump core from WIN32PID to FILENAME\&.core
 .PP
 The
 \fBdumper\fR
-utility can be used to create a core dump of running Windows process\&. This core dump can be later loaded to
+utility can be used to create a core dump of running Windows process\&. This core dump can be later loaded into
 \fBgdb\fR
-and analyzed\&. One common way to use
-\fBdumper\fR
-is to plug it into cygwin\*(Aqs Just\-In\-Time debugging facility by adding
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-error_start=x:\epath\eto\edumper\&.exe
-.fi
-.if n \{\
-.RE
-.\}
-.sp
-to the
-\fICYGWIN\fR
-environment variable\&. Please note that
-x:\epath\eto\edumper\&.exe
-is Windows\-style and not cygwin path\&. If
+and analyzed\&.
+.PP
+If the core file size limit is set to unlimited (e\&.g\&.
+\fBulimit \-c unlimited\fR) and an
 error_start
-is set this way, then dumper will be started whenever some program encounters a fatal error\&.
+executable hasn\*(Aqt been configured in the
+CYGWIN
+environment variable, Cygwin will automatically run
+\fBdumper\fR
+when a fatal error occurs\&.
 .PP
 \fBdumper\fR
 can be also be started from the command line to create a core dump of any running process\&.
@@ -88,9 +77,12 @@ exits, the target process is also terminated\&.
 .PP
 To save space in the core dump,
 \fBdumper\fR
-doesn\*(Aqt write those portions of the target process\*(Aqs memory space that are loaded from executable and dll files and are unchanged (e\&.g\&. program code)\&. Instead,
+doesn\*(Aqt write those portions of the target process\*(Aqs memory space that were loaded from executable and dll files and are unchanged (e\&.g\&. program code)\&. Instead,
 \fBdumper\fR
 saves paths to the files which contain that data\&. When a core dump is loaded into gdb, it uses these paths to load the appropriate files\&. That means that if you create a core dump on one machine and try to debug it on another, you\*(Aqll need to place identical copies of the executable and dlls in the same directories as on the machine where the core dump was created\&.
+.SH "NOTES"
+.PP
+A Cygwin "core dump file" is an ELF file containing the mutable parts of the process memory and special note sections which capture the process, thread and loaded module context needed to recreate the process image in a debugger\&.
 .SH "COPYRIGHT"
 .br
 .PP

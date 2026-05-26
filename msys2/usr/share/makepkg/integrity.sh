@@ -2,7 +2,7 @@
 #
 #   integrity.sh - functions relating to source integrity checking
 #
-#   Copyright (c) 2011-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2011-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 [[ -n "$LIBMAKEPKG_INTEGRITY_SH" ]] && return
 LIBMAKEPKG_INTEGRITY_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
 
-for lib in "$LIBRARY/integrity/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/integrity/"*.sh; do
 	source "$lib"
 done
 
@@ -41,5 +41,8 @@ check_source_integrity() {
 	else
 		check_checksums "$@"
 		check_pgpsigs "$@"
+	fi
+	if (( VERIFYFUNC )); then
+		run_verify
 	fi
 }

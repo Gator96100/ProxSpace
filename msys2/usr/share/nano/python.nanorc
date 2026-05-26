@@ -9,11 +9,11 @@ comment "#"
 linter pyflakes
 
 # Function definitions.
-color brightblue "def [0-9A-Za-z_]+"
+color brightblue "def [[:alnum:]_]+"
 # Keywords.
-color brightcyan "\<(and|as|assert|async|await|break|class|continue)\>"
+color brightcyan "\<(and|as|assert|async|await|break|case|class|continue)\>"
 color brightcyan "\<(def|del|elif|else|except|finally|for|from)\>"
-color brightcyan "\<(global|if|import|in|is|lambda|nonlocal|not|or)\>"
+color brightcyan "\<(global|if|import|in|is|match|lambda|nonlocal|not|or)\>"
 color brightcyan "\<(pass|raise|return|try|while|with|yield)\>"
 
 # These two are keywords in Python 2, but functions in Python 3,
@@ -23,6 +23,9 @@ color brightcyan "\<(exec|print)([[:blank:]]|$)"
 
 # Special values.
 color brightmagenta "\<(False|None|True)\>"
+
+# Decorators.
+color cyan "@[[:alpha:]_][[:alnum:]_.]*"
 
 # Mono-quoted strings.
 color brightgreen "'([^'\]|\\.)*'|"([^"\]|\\.)*"|'''|""""

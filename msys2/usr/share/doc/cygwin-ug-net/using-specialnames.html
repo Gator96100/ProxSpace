@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Special filenames</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="using-filemodes.html" title="File permissions"><link rel="next" href="proc.html" title="proc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Special filenames</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-filemodes.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="proc.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-specialnames"></a>Special filenames</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-etc"></a>Special files in /etc</h3></div></div></div><p>Certain files in Cygwin's <code class="filename">/etc</code> directory are
+<html><head><meta charset="ANSI_X3.4-1968"><title>Special filenames</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="using-filemodes.html" title="File permissions"><link rel="next" href="proc.html" title="proc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Special filenames</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="using-filemodes.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="proc.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-specialnames"></a>Special filenames</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="pathnames-etc"></a>Special files in /etc</h3></div></div></div><p>Certain files in Cygwin's <code class="filename">/etc</code> directory are
 read by Cygwin before the mount table has been established.  The list
 of files is</p><pre class="screen">
   /etc/fstab
@@ -244,7 +244,13 @@ handle the information.  <span class="bold"><strong>Writing</strong></span> to a
 mass storage device you should only do if you
 <span class="bold"><strong>really</strong></span> know what you're doing and are aware
 of the fact that any mistake can destroy important information, for the
-device, and for you.  So, please, handle this ability with care.
+device, and for you.  So, please, handle this ability with care.</p><p><span class="bold"><strong>Important:</strong></span> Windows may allow raw read
+<span class="bold"><strong>and write</strong></span> access to partitions (for example
+<code class="filename">/dev/sda2</code>) even from unprivileged processes.  This is
+usually the case for partitions on "removable" drives like USB flash drives
+or regular SATA/NVMe drives behind USB docking stations.  If
+<span class="command"><strong>chkdsk X:</strong></span> works, raw access to the same partition is
+possible from the same user account.
 <span class="bold"><strong>You have been warned.</strong></span></p></div><p>
 Last but not least, the mapping from POSIX /dev namespace to internal
 NT namespace is as follows:
@@ -378,7 +384,7 @@ starting with "@" in a special way.  If a file
 <code class="filename">pathname</code>. Double quotes can be used inside the
 file to delimit strings containing blank space. 
 In the following example compare the behaviors
-<span class="command"><strong>/bin/echo</strong></span> when run from bash and from the Windows command prompt.</p><div class="example"><a name="pathnames-at-ex"></a><p class="title"><b>Example&#160;3.2.&#160; Using @pathname</b></p><div class="example-contents"><pre class="screen">
+<span class="command"><strong>/bin/echo</strong></span> when run from bash and from the Windows command prompt.</p><div class="example"><a name="pathnames-at-ex"></a><p class="title"><b>Example&#160;3.3.&#160; Using @pathname</b></p><div class="example-contents"><pre class="screen">
 <code class="prompt">bash$</code> <strong class="userinput"><code>/bin/echo  'This   is   "a     long"  line' &gt; mylist</code></strong>
 <code class="prompt">bash$</code> <strong class="userinput"><code>/bin/echo @mylist</code></strong>
 @mylist

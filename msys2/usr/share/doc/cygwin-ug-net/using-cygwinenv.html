@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>The CYGWIN environment variable</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="proc.html" title="proc"><link rel="next" href="ntsec.html" title="POSIX accounts, permission, and security"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The <code class="envar">CYGWIN</code> environment
+<html><head><meta charset="ANSI_X3.4-1968"><title>The CYGWIN environment variable</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using.html" title="Chapter&#160;3.&#160;Using Cygwin"><link rel="prev" href="proc.html" title="proc"><link rel="next" href="ntsec.html" title="POSIX accounts, permission, and security"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">The <code class="envar">CYGWIN</code> environment
 variable</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="proc.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;3.&#160;Using Cygwin</th><td width="20%" align="right">&#160;<a accesskey="n" href="ntsec.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="using-cygwinenv"></a>The <code class="envar">CYGWIN</code> environment
 variable</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="cygwinenv-implemented-options"></a>Implemented options</h3></div></div></div><p>The <code class="envar">CYGWIN</code> environment variable is used to configure
 many global settings for the Cygwin runtime system. It contains the options
@@ -7,16 +7,29 @@ listed below, separated by blank characters. Many options can be turned off
 by prefixing with <code class="literal">no</code>.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)export</code> - If set, the final values of these
 settings are re-exported to the environment as <code class="envar">CYGWIN</code> again.
 Defaults to off.</p></li><li class="listitem" style="list-style-type: disc"><p>
-<code class="envar">error_start:Win32filepath</code> - if set, runs 
-<code class="filename">Win32filepath</code> when cygwin encounters a fatal error,
-which is useful for debugging.  <code class="filename">Win32filepath</code> is
-usually set to the path to <span class="command"><strong>gdb</strong></span> or
-<span class="command"><strong>dumper</strong></span>, for example
-<code class="filename">C:\cygwin\bin\gdb.exe</code>.
-There is no default set.
+<code class="envar">error_start:Win32filepath</code> - if set, runs
+<code class="filename">Win32filepath</code> when cygwin encounters a fatal error, which
+can be useful for debugging. Defaults to not set.
+</p><p>
+<code class="filename">Win32filepath</code> is typically set to <span class="command"><strong>gdb</strong></span> or
+<span class="command"><strong>dumper</strong></span>.  If giving a path in
+<code class="filename">Win32filepath</code>, note that it is a Windows-style path and not
+a Cygwin path.
 </p><p>
 The filename of the executing program and it's Windows process id are appended
 to the command as arguments.
+</p><p>
+  Note: This takes priority over writing core dump or .stackdump files, if
+  enabled by <code class="function">setrlimit(RLIMIT_CORE)</code> (e.g. via
+  <span class="command"><strong>ulimit -c</strong></span>).
+</p><p>
+  Note: This has no effect if a debugger is already attached when the fatal
+  error occurs.
+</p><p>
+  Note: The command invoked must either (i) attach to the errored process with
+  <code class="function">DebugActiveProcess()</code>, or (ii) forcibly terminate the
+  errored process (with <code class="function">TerminateProcess()</code> or similar), as
+  otherwise the errored process will wait forever for a debugger to attach.
 </p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)glob[:ignorecase]</code> - if set, command line arguments
 containing UNIX-style file wildcard characters (brackets, braces, question mark,
 asterisk, escaped with \) are expanded into lists of files that match 
@@ -35,7 +48,13 @@ processes are being started while a user is logging off.
 to 9600-8-N-1 with no flow control when used. This is done at open
 time and when handles are inherited.  Defaults to set.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)wincmdln</code> - if set, the windows complete command
 line (truncated to ~32K) will be passed on any processes that it creates
-in addition to the normal UNIX argv list.  Defaults to set.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">winsymlinks:{lnk,native,nativestrict,sys}</code></p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; "><li class="listitem" style="list-style-type: square"><p>If set to just
+in addition to the normal UNIX argv list.  Defaults to set.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">(no)winjitdebug</code> - if set, non-Cygwin executables
+started from a Cygwin process will have their error mode reset to the
+system default.  That means, if they don't call SetErrorMode()
+explicitly, the OS will display error dialog boxes in the GUI if some
+fatal error occurs.  Defaults to not set, so fatal errors in a
+non-Cygwin child process will just result in an error code be propagated
+back to the parent process.</p></li><li class="listitem" style="list-style-type: disc"><p><code class="envar">winsymlinks:{lnk,native,nativestrict,sys}</code></p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; "><li class="listitem" style="list-style-type: square"><p>If set to just
 <code class="literal">winsymlinks</code> or <code class="literal">winsymlinks:lnk</code>,
 Cygwin creates symlinks as Windows shortcuts with a special header and
 the R/O attribute set.</p></li><li class="listitem" style="list-style-type: square"><p>If set to <code class="literal">winsymlinks:native</code> or

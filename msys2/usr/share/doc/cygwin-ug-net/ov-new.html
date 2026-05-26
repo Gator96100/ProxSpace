@@ -1,5 +1,176 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>What's new and what changed in Cygwin</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="overview.html" title="Chapter&#160;1.&#160;Cygwin Overview"><link rel="prev" href="highlights.html" title="Highlights of Cygwin Functionality"><link rel="next" href="setup-net.html" title="Chapter&#160;2.&#160;Setting Up Cygwin"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">What's new and what changed in Cygwin</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="highlights.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;1.&#160;Cygwin Overview</th><td width="20%" align="right">&#160;<a accesskey="n" href="setup-net.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ov-new"></a>What's new and what changed in Cygwin</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="ov-new3.4"></a>What's new and what changed in 3.4</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
+<html><head><meta charset="ANSI_X3.4-1968"><title>What's new and what changed in Cygwin</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="overview.html" title="Chapter&#160;1.&#160;Cygwin Overview"><link rel="prev" href="highlights.html" title="Highlights of Cygwin Functionality"><link rel="next" href="setup-net.html" title="Chapter&#160;2.&#160;Setting Up Cygwin"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">What's new and what changed in Cygwin</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="highlights.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;1.&#160;Cygwin Overview</th><td width="20%" align="right">&#160;<a accesskey="n" href="setup-net.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ov-new"></a>What's new and what changed in Cygwin</h2></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="ov-new3.6"></a>What's new and what changed in 3.6</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
+New API calls: tcgetwinsize, tcsetwinsize.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API call: getlocalename_l.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API calls: fdclosedir, posix_getdents.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API call: setproctitle.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API call: timespec_get.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API calls: tcgetwinsize, tcsetwinsize.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API call: posix_close.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New POSIX-defined entry points posix_spawn_file_actions_addchdir and
+posix_spawn_file_actions_addfchdir.  These are the same as the already
+exported posix_spawn_file_actions_addchdir_np and
+posix_spawn_file_actions_addfchdir_np.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Add FS_IOC_[GS]ETFLAGS FS_PINNED_FL and FS_UNPINNED_FL flags to handle
+Windows attributes FILE_ATTRIBUTE_PINNED and FILE_ATTRIBUTE_UNPINNED.
+Add matching 'p' and 'u' mode bits in chattr(1) and lsattr(1).
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New libaio.a provided for projects checking for POSIX aio support by
+looking for this library at configure time.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+cygpath -r option allows to generate all Windows paths with root-local
+path prefix \\?\.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+ps -f now prints the commandline rather than the full path to the
+executable.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Drop workarounds for connecting with NT4 and Samba &lt; 3.0.22 shares.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Now that SMBv1 is ultimately deprecated and not installed by default on
+latest Windows versions, use Network Discovery (i. e. WSD, "Web Service
+Discovery") for enumerating network servers in //, just like Windows
+Explorer.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+If "server" is given as FQDN, and if "server" is an NFS server, ls
+//server now also enumerates NFS shares.  If "server" is given as a flat
+name, only SMB shares are enumerated.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Expose WebDav shares, //tsclient (Microsoft Terminal Services) shares as
+well as //wsl$ (Plan 9 Network Provider) shares, i. e., WSL installation
+root dirs.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Redesign pipe handling to minimize toggling blocking mode.  The
+query_hdl stuff is no longer needed in new implementation.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Now using AVX/AVX2/AVX-512 instructions in signal handler does not break
+their context.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+nice(2), setpriority(2) and sched_setparam(2) now fail with EACCES or
+EPERM if Windows would silently set a lower priority
+(HIGH_PRIORITY_CLASS instead of REALTIME_PRIORITY_CLASS) due to missing
+administrator privileges.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+nice(2) now returns the new nice value instead of 0 on success and sets
+errno to EPERM instead of EACCES on failure.  This confirms to POSIX and
+Linux (glibc &gt;= 2.2.4) behavior.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+sched_setscheduler(2) now emulates changes between SCHED_OTHER,
+SCHED_BATCH, SCHED_IDLE, SCHED_FIFO and SCHED_RR.  If SCHED_OTHER or
+SCHED_BATCH is selected, the Windows priority is set according to the
+nice value where SCHED_BATCH sets a one step lower priority.  If
+SCHED_IDLE is selected, the nice value is preserved and the Windows
+priority is set to IDLE_PRIORITY_CLASS.  If SCHED_FIFO or SCHED_RR is
+selected, the nice value is preserved and the Windows priority is set
+according to the realtime priority.  If the SCHED_RESET_ON_FORK flag is
+set, SCHED_FIFO and SCHED_RR are reset to SCHED_OTHER and negative nice
+values are reset to zero in each child process created with fork(2).
+Note: Windows does not offer alternative scheduling policies so this
+could only emulate API behavior.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+If SCHED_FIFO or SCHED_RR is selected, the /proc/&lt;PID&gt;/stat field '(18)
+priority' is now set to the negated sched_policy minus one.  If
+SCHED_IDLE is selected, this field is set to 39.  The '(19) nice' field
+is now set to the originally requested nice value.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Raise maximum pid from 65536 to 4194304 to account for scenarios with
+lots of CPUs and lots of tasks.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Allow mmap with MAP_FIXED to succeed on an address range contained in
+the chunk of an existing anonymous mapping, provided the
+MAP_SHARED/MAP_PRIVATE flags agree and MAP_NORESERVE is not set for
+either mapping.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Fix a long-standing hang issue when running on ARM64 under emulation.
+This was due to a thread being terminated while the emulation was
+holding an internal lock.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Add a host machine tag to uname(2)'s sysname field.  This echoes what
+used to be done with -WOW64 (when that was supported), but now with
+-ARM64 when running on an ARM64 host under emulation.  The Cygwin DLL's
+own architecture continues to be reported in the machine field.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Escape special characters in /proc/&lt;PID&gt;/mount*.  This allows the
+contents to be parsed consistently, and matches what is done on Linux.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Expose all Windows volume mount points via getmntent(3).  This also
+exposes them via /proc/&gt;PID&gt;/mount*.  A change in behavior from
+previous Cygwin versions is that volumes whose root is mounted
+explicitly in Cygwin will now also show up as mounted under the cygdrive
+prefix, whereas before that entry would have been suppressed.
+</p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="ov-new3.5"></a>What's new and what changed in 3.5</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
+Drop support for Windows 7, Windows 8, Server 2008 R2 and Server 2012.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Console devices (/dev/consN) are now accessible by processes attached to other
+consoles or ptys. Thanks to this new feature, GNU screen and tmux now work in
+the console.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+newgrp(1) tool.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+cygcheck has new options searching for available packages in the
+cygwin distro, as well as getting extended info on available and
+installed packages.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+fnmatch(3) and glob(3) now support named character classes, equivalence
+class expressions, and collating symbols in the search pattern, i.e.,
+[:alnum:], [=a=], [.aa.].
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Introduce /dev/disk directory with various by-* subdirectories which
+provide symlinks to disk and partition raw devices:
+  </p><pre class="screen">
+  by-drive/DRIVE_LETTER -&gt;  ../../sdXN
+  by-label/VOLUME_LABEL -&gt;  ../../sdXN
+  by-id/BUSTYPE-[VENDOR_]PRODUCT_[SERIAL|0xHASH][-partN] -&gt; ../../sdX[N]
+  by-partuuid/MBR_SERIAL-OFFSET -&gt; ../../sdXN
+  by-partuuid/GPT_GUID -&gt; ../../sdXN
+  by-uuid/VOLUME_SERIAL -&gt; ../../sdXN
+  by-voluuid/MBR_SERIAL-OFFSET -&gt; ../../sdXN
+  by-voluuid/VOLUME_GUID -&gt; ../../sdXN
+  </pre><p>
+The subdirectories by-drive and by-voluuid are Cygwin specific.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Introduce /proc/codesets and /proc/locales with information on supported
+codesets and locales for all interested parties.  Locale(1) opens these
+files and uses the info for printing locale info like any other process
+could do.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Add support for GB18030 codeset.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Add support for lseek flags SEEK_DATA and SEEK_HOLE, a GNU extension.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API calls: posix_spawn_file_actions_addchdir_np,
+posix_spawn_file_actions_addfchdir_np.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API calls: c8rtomb, c16rtomb, c32rtomb, mbrtoc8, mbrtoc16, mbrtoc32.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API call: close_range (available on FreeBSD and Linux).
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+New API call: fallocate (Linux-specific).
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+posix_spawnp no longer falls back to starting the shell for unrecognized
+files as execvp.  For the reasoning, see
+https://www.austingroupbugs.net/view.php?id=1674
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+FIFOs now also work on NFS filesystems.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+Enable automatic sparsifying of files on SSDs, independent of the
+"sparse" mount mode.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+When RLIMIT_CORE is more than 1MB, a core dump file which can be loaded by gdb
+is now written on a fatal error. Otherwise, if it's greater than zero, a text
+format .stackdump file is written, as previously.
+</p></li><li class="listitem" style="list-style-type: disc"><p>
+The default RLIMIT_CORE is now 0, disabling the generation of core dump or
+stackdump files. Use e.g. <code class="code">ulimit -c unlimited</code> or <code class="code">ulimit -c
+1024</code> to enable them again.
+</p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="ov-new3.4"></a>What's new and what changed in 3.4</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
 Drop support for Vista and Server 2008.
 </p></li><li class="listitem" style="list-style-type: disc"><p>
 Drop support for 32 bit Windows and WOW64.
@@ -11,7 +182,7 @@ be used always explicitely.
 </p></li><li class="listitem" style="list-style-type: disc"><p>
 Add code to handle setrlimit(RLIMIT_AS).
 </p></li><li class="listitem" style="list-style-type: disc"><p>
-- Add code to handle signal masks in /proc/&lt;PID&gt;/status.
+Add code to handle signal masks in /proc/&lt;PID&gt;/status.
 </p></li><li class="listitem" style="list-style-type: disc"><p>
 The CYGWIN=pipe_byte option is now set by default, so that pipes are
 opened in byte mode rather than message mode.
@@ -290,7 +461,7 @@ Try harder supporting Netapp drives.
 </p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="ov-new2.7"></a>What's new and what changed in 2.7</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
 Support for /proc/&lt;PID&gt;/environ.
 </p></li><li class="listitem" style="list-style-type: disc"><p>
-- New API: getentropy, getrandom.
+New API: getentropy, getrandom.
 </p></li></ul></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="ov-new2.6"></a>What's new and what changed in 2.6</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc"><p>
 Support for POSIX-1.2008 locale objects and per-thread locales.
 </p><p>

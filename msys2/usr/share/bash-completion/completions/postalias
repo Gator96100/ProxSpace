@@ -1,13 +1,13 @@
 # postalias(1) and postmap(1) completion                   -*- shell-script -*-
 
-_postmap()
+_comp_cmd_postmap()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -c)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -[dq])
@@ -16,13 +16,13 @@ _postmap()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
         return
     fi
 
     if [[ $cur == *:* ]]; then
         compopt -o filenames
-        COMPREPLY=($(compgen -f -- "${cur#*:}"))
+        _comp_compgen -c "${cur#*:}" -- -f
     else
         local len=${#cur} pval
         for pval in $(/usr/sbin/postconf -m 2>/dev/null); do
@@ -32,10 +32,10 @@ _postmap()
         done
         if [[ ! ${COMPREPLY-} ]]; then
             compopt -o filenames
-            COMPREPLY=($(compgen -f -- "$cur"))
+            _comp_compgen -- -f
         fi
     fi
 } &&
-    complete -F _postmap postmap postalias
+    complete -F _comp_cmd_postmap postmap postalias
 
 # ex: filetype=sh

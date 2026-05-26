@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta charset="ANSI_X3.4-1968"><title>newgrp</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-ug-net.html" title="Cygwin User's Guide"><link rel="up" href="using-utils.html" title="Cygwin Utilities"><link rel="prev" href="mount.html" title="mount"><link rel="next" href="passwd.html" title="passwd"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">newgrp</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="mount.html">Prev</a>&#160;</td><th width="60%" align="center">Cygwin Utilities</th><td width="20%" align="right">&#160;<a accesskey="n" href="passwd.html">Next</a></td></tr></table><hr></div><div class="refentry"><a name="newgrp"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>newgrp &#8212; change to a new primary group</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">newgrp</code>  [-l] [<em class="replaceable"><code>group</code></em>] [<em class="replaceable"><code>command</code></em>
+	 [<em class="replaceable"><code>args</code></em>...]
+	]</p></div></div><div class="refsect1"><a name="newgrp-desc"></a><h2>Description</h2><p><span class="command"><strong>newgrp</strong></span> starts a new shell environment under
+      a new primary group.</p><p>If the <code class="option">-l</code> flag is given as first argument, the
+	user's environment will be reinitialized as though the user had logged
+	in, otherwise the current environment, including current working
+	directory, remains unchanged.  For Linux compatibility, the flag
+	<code class="option">-</code> is allowed as well.</p><p><span class="command"><strong>newgrp</strong></span> changes the current primary group to the
+        named group, or to the default group listed in /etc/passwd if no group
+	name is given.  The user's standard shell is started, called as login
+        shell if the <code class="option">-l</code> or <code class="option">-</code> flag has been
+	specified.</p><p>The group argument can be specified as group name from the
+      group database or a non-negative numeric group ID.</p><p> If a group has been given as argument, a command and its
+	arguments can be specified on the command line.  Note that this
+	usage is Cygwin-only and incompatible with POSIX and Linux.</p><p>The new primary group must be either the old primary group, or
+        it must be part of the supplementary group list.  Setting the primary
+	group to an arbitrary group is not allowed in Windows.</p></div><div class="refsect1"><a name="newgrp-seealso"></a><h2>See also</h2><p><span class="command"><strong>id</strong></span>(1), <span class="command"><strong>login</strong></span>(1).</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="mount.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="using-utils.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="passwd.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">mount&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-ug-net.html">Home</a></td><td width="40%" align="right" valign="top">&#160;passwd</td></tr></table></div></body></html>

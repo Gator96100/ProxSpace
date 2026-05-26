@@ -1,9 +1,9 @@
 # xmodmap(1) completion                                    -*- shell-script -*-
 
-_xmodmap()
+_comp_cmd_xmodmap()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -display | -e)
@@ -12,12 +12,12 @@ _xmodmap()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help)' -- "$cur"))
+        _comp_compgen_help -- -help
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _xmodmap xmodmap
+    complete -F _comp_cmd_xmodmap xmodmap
 
 # ex: filetype=sh

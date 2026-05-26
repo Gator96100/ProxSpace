@@ -1,9 +1,9 @@
 # perlcritic(1) completion                                 -*- shell-script -*-
 
-_perlcritic()
+_comp_cmd_perlcritic()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help | --version | --top | --include | --exclude | --single-policy | \
@@ -11,41 +11,38 @@ _perlcritic()
             return
             ;;
         --severity)
-            COMPREPLY=($(compgen -W "{1..5} brutal cruel harsh stern gentle" \
-                -- "$cur"))
+            _comp_compgen -- -W '{1..5} brutal cruel harsh stern gentle'
             return
             ;;
         --profile | -p)
-            _filedir perlcriticrc
+            _comp_compgen_filedir perlcriticrc
             return
             ;;
         --theme)
-            COMPREPLY=($(compgen -W '$("$1" --list-themes 2>/dev/null)' \
-                -- "$cur"))
+            _comp_compgen_split -- "$("$1" --list-themes 2>/dev/null)"
             return
             ;;
         --profile-strictness)
-            COMPREPLY=($(compgen -W 'warn fatal quiet' -- "$cur"))
+            _comp_compgen -- -W 'warn fatal quiet'
             return
             ;;
         --verbose)
-            COMPREPLY=($(compgen -W '{1..11}' -- "$cur"))
+            _comp_compgen -- -W '{1..11}'
             return
             ;;
         --pager)
-            compopt -o filenames
-            COMPREPLY=($(compgen -c -- "$cur"))
+            _comp_compgen_commands
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
         return
     fi
 
-    _filedir 'p[lm]'
+    _comp_compgen_filedir 'p[lm]'
 } &&
-    complete -F _perlcritic perlcritic
+    complete -F _comp_cmd_perlcritic perlcritic
 
 # ex: filetype=sh

@@ -28,7 +28,7 @@ struct gp {
 
 #if defined (DEBUGGING) && defined(PERL_USE_GCC_BRACE_GROUPS) && !defined(__INTEL_COMPILER)
 #  define GvGP(gv)							\
-        (0+(*({GV *const _gvgp = (GV *) (gv);				\
+        ((GP *)(*({GV *const _gvgp = (GV *) (gv);				\
             assert(SvTYPE(_gvgp) == SVt_PVGV || SvTYPE(_gvgp) == SVt_PVLV); \
             assert(isGV_with_GP(_gvgp));				\
             &((_gvgp)->sv_u.svu_gp);})))
@@ -134,7 +134,7 @@ Return the CV from the GV.
                          GvGP(gv)->gp_hv : \
                          GvGP(gv_HVadd(gv))->gp_hv)
 
-#define GvCV(gv)	(0+GvGP(gv)->gp_cv)
+#define GvCV(gv)	((CV*)GvGP(gv)->gp_cv)
 #define GvCV_set(gv,cv)	(GvGP(gv)->gp_cv = (cv))
 #define GvCVGEN(gv)	(GvGP(gv)->gp_cvgen)
 #define GvCVu(gv)	(GvGP(gv)->gp_cvgen ? NULL : GvGP(gv)->gp_cv)
@@ -158,16 +158,26 @@ Return the CV from the GV.
 /* GVf_INTRO is one-shot flag which indicates that the next assignment
    of a reference to the glob is to be localised; it distinguishes
    'local *g = $ref' from '*g = $ref'.
+
+   GVf_MULTI is used to implement the "used only once" warning.  It is
+   always set on a glob when an existing name is referenced, and when
+   a name is created when the warning is disabled.  A post parse scan
+   in gv_check() then reports any names where this isn't set.
+
+   GVf_ONCE_FATAL is set on a glob when it is created and fatal "used
+   only once" warnings are enabled, since PL_curcop no longer has the
+   fatal flag set at the point where the warnings are reported.
 */
 #define GVf_INTRO	0x01
 #define GVf_MULTI	0x02
 #define GVf_ASSUMECV	0x04
-/*	UNUSED		0x08 */
+#define GVf_RESERVED    0x08   /* unused */
 #define GVf_IMPORTED	0xF0
 #define GVf_IMPORTED_SV	  0x10
 #define GVf_IMPORTED_AV	  0x20
 #define GVf_IMPORTED_HV	  0x40
 #define GVf_IMPORTED_CV	  0x80
+#define GVf_ONCE_FATAL	0x100
 
 #define GvINTRO(gv)		(GvFLAGS(gv) & GVf_INTRO)
 #define GvINTRO_on(gv)		(GvFLAGS(gv) |= GVf_INTRO)
@@ -200,6 +210,10 @@ Return the CV from the GV.
 #define GvIMPORTED_CV(gv)	(GvFLAGS(gv) & GVf_IMPORTED_CV)
 #define GvIMPORTED_CV_on(gv)	(GvFLAGS(gv) |= GVf_IMPORTED_CV)
 #define GvIMPORTED_CV_off(gv)	(GvFLAGS(gv) &= ~GVf_IMPORTED_CV)
+
+#define GvONCE_FATAL(gv)	(GvFLAGS(gv) & GVf_ONCE_FATAL)
+#define GvONCE_FATAL_on(gv)	(GvFLAGS(gv) |= GVf_ONCE_FATAL)
+#define GvONCE_FATAL_off(gv)	(GvFLAGS(gv) &= ~GVf_ONCE_FATAL)
 
 #ifndef PERL_CORE
 #  define GvIN_PAD(gv)		0
@@ -269,7 +283,7 @@ Return the CV from the GV.
 #define gv_fetchmethod(stash, name) gv_fetchmethod_autoload(stash, name, TRUE)
 #define gv_fetchsv_nomg(n,f,t) gv_fetchsv(n,(f)|GV_NO_SVGMAGIC,t)
 #define gv_init(gv,stash,name,len,multi) \
-        gv_init_pvn(gv,stash,name,len,GV_ADDMULTI*!!(multi))
+        gv_init_pvn(gv,stash,name,len,GV_ADDMULTI*cBOOL(multi))
 #define gv_fetchmeth(stash,name,len,level) gv_fetchmeth_pvn(stash, name, len, level, 0)
 #define gv_fetchmeth_autoload(stash,name,len,level) gv_fetchmeth_pvn_autoload(stash, name, len, level, 0)
 #define gv_fetchmethod_flags(stash,name,flags) gv_fetchmethod_pv_flags(stash, name, flags)
@@ -281,7 +295,7 @@ Equivalent to C<L</gv_autoload_pvn>>.
 =cut
 */
 #define gv_autoload4(stash, name, len, autoload) \
-        gv_autoload_pvn(stash, name, len, !!(autoload))
+        gv_autoload_pvn(stash, name, len, cBOOL(autoload))
 #define newGVgen(pack)  newGVgen_flags(pack, 0)
 #define gv_method_changed(gv)		    \
     (					     \

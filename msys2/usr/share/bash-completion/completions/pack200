@@ -1,74 +1,74 @@
 # pack200(1) completion                                    -*- shell-script -*-
 
-_pack200()
+_comp_cmd_pack200()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         -S | --segment-limit | -P | --pass-file | -C | --class-attribute | \
-            -F | --field-attribute | -M | --method-attribute | -D | --code-attribute | \
-            '-?' | -h | --help | -V | --version | -J)
+            -F | --field-attribute | -M | --method-attribute | -D | \
+            --code-attribute | '-?' | -h | --help | -V | --version | -J)
             return
             ;;
         -E | --effort)
-            COMPREPLY=($(compgen -W '{0..9}' -- "$cur"))
+            _comp_compgen -- -W '{0..9}'
             return
             ;;
         -H | --deflate-hint)
-            COMPREPLY=($(compgen -W 'true false keep' -- "$cur"))
+            _comp_compgen -- -W 'true false keep'
             return
             ;;
         -m | --modification-time)
-            COMPREPLY=($(compgen -W 'latest keep' -- "$cur"))
+            _comp_compgen -- -W 'latest keep'
             return
             ;;
         -U | --unknown-attribute)
-            COMPREPLY=($(compgen -W 'error strip pass' -- "$cur"))
+            _comp_compgen -- -W 'error strip pass'
             return
             ;;
         -f | --config-file)
-            _filedir properties
+            _comp_compgen_filedir properties
             return
             ;;
         -l | --log-file)
-            COMPREPLY=($(compgen -W '-' -- "$cur"))
-            _filedir log
+            _comp_compgen -- -W '-'
+            _comp_compgen -a filedir log
             return
             ;;
         -r | --repack)
-            _filedir jar
+            _comp_compgen_filedir jar
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     # Check if a pack or a jar was already given.
-    local i pack=false jar=false
-    for ((i = 1; i < ${#words[@]} - 1; i++)); do
+    local i pack="" jar=""
+    for ((i = 1; i < cword; i++)); do
         case ${words[i]} in
-            *.pack | *.pack.gz) pack=true ;;
-            *.jar) jar=true ;;
+            *.pack | *.pack.gz) pack=set ;;
+            *.jar) jar=set ;;
         esac
     done
 
-    if ! $pack; then
+    if [[ ! $pack ]]; then
         if [[ $cur == -* ]]; then
-            COMPREPLY=($(compgen -W '--no-gzip --gzip --strip-debug
+            _comp_compgen -- -W '--no-gzip --gzip --strip-debug
                 --no-keep-file-order --segment-limit= --effort= --deflate-hint=
                 --modification-time= --pass-file= --unknown-attribute=
                 --class-attribute= --field-attribute= --method-attribute=
                 --code-attribute= --config-file= --verbose --quiet --log-file=
-                --help --version -J --repack' -- "$cur"))
+                --help --version -J --repack'
             [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         else
-            _filedir 'pack?(.gz)'
+            _comp_compgen_filedir 'pack?(.gz)'
         fi
-    elif ! $jar; then
-        _filedir jar
+    elif [[ ! $jar ]]; then
+        _comp_compgen_filedir jar
     fi
 } &&
-    complete -F _pack200 pack200
+    complete -F _comp_cmd_pack200 pack200
 
 # ex: filetype=sh

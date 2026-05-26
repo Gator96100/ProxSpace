@@ -1,47 +1,49 @@
 # bash completion for inotifywait(1) and inotifywatch(1)   -*- shell-script -*-
 
-_inotifywait_events()
+_comp_cmd_inotifywait__events()
 {
     # Expecting line with "Events:", followed by ones starting with one
     # tab. Word following the tab is event name, others are line
     # wrapped explanations.
-    COMPREPLY+=($(compgen -W "$($1 --help 2>/dev/null |
+    _comp_compgen -a split -- "$("$1" --help 2>/dev/null |
         command sed -e '/^Events:/,/^[^'$'\t'']/!d' \
-            -ne 's/^'$'\t''\([^ '$'\t'']\{1,\}\)[ '$'\t''].*/\1/p')" \
-        -- "$cur"))
+            -ne 's/^'$'\t''\([^ '$'\t'']\{1,\}\)[ '$'\t''].*/\1/p')"
 }
 
-_inotifywait()
+_comp_cmd_inotifywait()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
+    local noargopts='!(-*|*[oe]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --exclude | --excludei | --format | --timefmt | --timeout | -!(-*)[ht])
+        --help | --exclude | --excludei | --include | --includei | --format | --timefmt | --timeout | -${noargopts}[ht])
             return
             ;;
-        --fromfile | --outfile | -!(-*)o)
-            _filedir
+        --fromfile | --outfile | -${noargopts}o)
+            _comp_compgen_filedir
             return
             ;;
-        --event | -!(-*)e)
-            _inotifywait_events "$1"
+        --event | -${noargopts}e)
+            _comp_cmd_inotifywait__events "$1"
             return
             ;;
         --ascending | --descending)
-            COMPREPLY=($(compgen -W 'total' -- "$cur"))
-            _inotifywait_events "$1"
+            _comp_compgen -- -W 'total'
+            _comp_cmd_inotifywait__events "$1"
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _inotifywait inotifywait inotifywatch
+    complete -F _comp_cmd_inotifywait inotifywait inotifywatch fsnotifywait \
+        fsnotifywatch
 
 # ex: filetype=sh

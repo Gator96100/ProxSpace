@@ -1,25 +1,25 @@
 # gkrellm(1) completion                                    -*- shell-script -*-
 
-_gkrellm()
+_comp_cmd_gkrellm()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -t | --theme)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -p | --plugin)
-            _filedir so
+            _comp_compgen_filedir so
             return
             ;;
         -s | --server)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         -l | --logfile)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -g | --geometry | -c | --config | -P | --port | -d | --debug-level)
@@ -32,8 +32,8 @@ _gkrellm()
             ;;
     esac
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+    _comp_compgen_help
 } &&
-    complete -F _gkrellm gkrellm gkrellm2
+    complete -F _comp_cmd_gkrellm gkrellm gkrellm2
 
 # ex: filetype=sh

@@ -3,7 +3,7 @@
 #   debugflags.sh - Specify flags for building a package with debugging
 #   symbols
 #
-#   Copyright (c) 2012-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2012-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -22,19 +22,18 @@
 [[ -n "$LIBMAKEPKG_BUILDENV_DEBUGFLAGS_SH" ]] && return
 LIBMAKEPKG_BUILDENV_DEBUGFLAGS_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/option.sh"
+source "$MAKEPKG_LIBRARY/util/util.sh"
 
 buildenv_functions+=('buildenv_debugflags')
 
 buildenv_debugflags() {
 	if check_option "debug" "y" && ! check_option "buildflags" "n"; then
-		DEBUG_CFLAGS+=" -ffile-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
-		DEBUG_CXXFLAGS+=" -ffile-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
-		DEBUG_RUSTFLAGS+=" --remap-path-prefix=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
-		CFLAGS+=" $DEBUG_CFLAGS"
-		CXXFLAGS+=" $DEBUG_CXXFLAGS"
-		RUSTFLAGS+=" $DEBUG_RUSTFLAGS"
+		append_once DEBUG_CFLAGS "-ffile-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
+		append_once DEBUG_CXXFLAGS "-ffile-prefix-map=$srcdir=${DBGSRCDIR:-/usr/src/debug}/${pkgbase}"
+		append_once CFLAGS "$DEBUG_CFLAGS"
+		append_once CXXFLAGS "$DEBUG_CXXFLAGS"
 	fi
 }

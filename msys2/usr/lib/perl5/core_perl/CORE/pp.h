@@ -8,6 +8,57 @@
  *
  */
 
+/*
+=for apidoc_section $rpp
+
+=for apidoc Amux||XSPP_wrapped|xsppw_name|I32 xsppw_nargs|I32 xsppw_nlists
+Declare and wrap a non-reference-counted PP-style function.
+On traditional perl builds where the stack isn't reference-counted, this
+just produces a function declaration like
+
+  OP * xsppw_name(pTHX)
+
+Conversely, in ref-counted builds it creates xsppw_name() as a small
+wrapper function which calls the real function via a wrapper which
+processes the args and return values to ensure that reference counts are
+properly handled for code which uses old-style dSP, PUSHs(), POPs() etc,
+which don't adjust the reference counts of the items they manipulate.
+
+xsppw_nargs indicates how many arguments the function consumes off the
+stack. It can be a constant value or an expression, such as
+
+    ((PL_op->op_flags & OPf_STACKED) ? 2 : 1)
+
+Alternatively if xsppw_nlists is 1, it indicates that the PP function
+consumes a list (or - rarely - if 2, consumes two lists, like
+pp_aassign()), as indicated by the top markstack position.
+
+This is intended as a temporary fix when converting XS code to run under
+PERL_RC_STACK builds. In the longer term, the PP function should be
+rewritten to replace PUSHs() etc with rpp_push_1() etc.
+
+=cut
+*/
+
+#ifdef PERL_RC_STACK
+#  define XSPP_wrapped(xsppw_name, xsppw_nargs, xsppw_nlists)  \
+                                                               \
+STATIC OP* S_##xsppw_name##_norc(pTHX);                        \
+OP* xsppw_name(pTHX)                                           \
+{                                                              \
+    return Perl_pp_wrap(aTHX_ S_##xsppw_name##_norc,           \
+                        (xsppw_nargs), (xsppw_nlists));        \
+}                                                              \
+STATIC OP* S_##xsppw_name##_norc(pTHX)
+
+#else
+#  define XSPP_wrapped(xsppw_name, xsppw_nargs, xsppw_nlists)  \
+        OP * xsppw_name(pTHX)
+#endif
+
+#define PP_wrapped(ppw_name, ppw_nargs, ppw_nlists)    \
+    XSPP_wrapped(Perl_##ppw_name, ppw_nargs, ppw_nlists)
+
 #define PP(s) OP * Perl_##s(pTHX)
 
 /*
@@ -24,28 +75,28 @@ Stack marker variable for the XSUB.  See C<L</dMARK>>.
 Opening bracket for arguments on a callback.  See C<L</PUTBACK>> and
 L<perlcall>.
 
-=for apidoc Amns||dSP
+=for apidoc Amn;||dSP
 Declares a local copy of perl's stack pointer for the XSUB, available via
 the C<SP> macro.  See C<L</SP>>.
 
-=for apidoc ms||djSP
+=for apidoc m;||djSP
 
 Declare Just C<SP>.  This is actually identical to C<dSP>, and declares
 a local copy of perl's stack pointer, available via the C<SP> macro.
 See C<L<perlapi/SP>>.  (Available for backward source code compatibility with
 the old (Perl 5.005) thread model.)
 
-=for apidoc Amns||dMARK
+=for apidoc Amn;||dMARK
 Declare a stack marker variable, C<mark>, for the XSUB.  See C<L</MARK>> and
 C<L</dORIGMARK>>.
 
-=for apidoc Amns||dORIGMARK
+=for apidoc Amn;||dORIGMARK
 Saves the original stack mark for the XSUB.  See C<L</ORIGMARK>>.
 
 =for apidoc AmnU||ORIGMARK
 The original stack mark for the XSUB.  See C<L</dORIGMARK>>.
 
-=for apidoc Amns||SPAGAIN
+=for apidoc Amn;||SPAGAIN
 Refetch the stack pointer.  Used after a callback.  See L<perlcall>.
 
 =cut */
@@ -55,7 +106,7 @@ Refetch the stack pointer.  Used after a callback.  See L<perlcall>.
 #define MARK mark
 
 /*
-=for apidoc Amns||TARG
+=for apidoc Amn;||TARG
 
 C<TARG> is short for "target".  It is an entry in the pad that an OPs
 C<op_targ> refers to.  It is scratchpad space, often used as a return
@@ -67,11 +118,11 @@ value for the OP, but some use it for other purposes.
 
 #define PUSHMARK(p) \
     STMT_START {                                                      \
-        I32 * mark_stack_entry;                                       \
+        Stack_off_t * mark_stack_entry;                               \
         if (UNLIKELY((mark_stack_entry = ++PL_markstack_ptr)          \
                                            == PL_markstack_max))      \
             mark_stack_entry = markstack_grow();                      \
-        *mark_stack_entry  = (I32)((p) - PL_stack_base);              \
+        *mark_stack_entry  = (Stack_off_t)((p) - PL_stack_base);      \
         DEBUG_s(DEBUG_v(PerlIO_printf(Perl_debug_log,                 \
                 "MARK push %p %" IVdf "\n",                           \
                 PL_markstack_ptr, (IV)*mark_stack_entry)));           \
@@ -91,7 +142,7 @@ value for the OP, but some use it for other purposes.
 #define dSP		SV **sp = PL_stack_sp
 #define djSP		dSP
 #define dMARK		SV **mark = PL_stack_base + POPMARK
-#define dORIGMARK	const I32 origmark = (I32)(mark - PL_stack_base)
+#define dORIGMARK	const SSize_t origmark = (SSize_t)(mark - PL_stack_base)
 #define ORIGMARK	(PL_stack_base + origmark)
 
 #define SPAGAIN		sp = PL_stack_sp
@@ -103,8 +154,8 @@ value for the OP, but some use it for other purposes.
 #define GETTARGET targ = PAD_SV(PL_op->op_targ)
 
 /*
-=for apidoc Amns||dTARGET
-Declare that this function uses C<TARG>
+=for apidoc Amn;||dTARGET
+Declare that this function uses C<TARG>, and initializes it
 
 =cut
 */
@@ -119,7 +170,7 @@ Declare that this function uses C<TARG>
 #define DIE return Perl_die
 
 /*
-=for apidoc Amns||PUTBACK
+=for apidoc Amn;||PUTBACK
 Closing bracket for XSUB arguments.  This is usually handled by C<xsubpp>.
 See C<L</PUSHMARK>> and L<perlcall> for other uses.
 
@@ -159,7 +210,12 @@ Pops an unsigned long off the stack.
 #define RETURNOP(o)	return (PUTBACK, o)
 #define RETURNX(x)	return (x, PUTBACK, NORMAL)
 
-#define POPs		(*sp--)
+#ifdef PERL_RC_STACK
+#  define POPs		(assert(!rpp_stack_is_rc()), *sp--)
+#else
+#  define POPs		(*sp--)
+#endif
+
 #define POPp		POPpx
 #define POPpx		(SvPVx_nolen(POPs))
 #define POPpconstx	(SvPVx_nolen_const(POPs))
@@ -201,6 +257,10 @@ C<TARG>, so C<dTARGET> or C<dXSTARG> should be called to declare it.  Do not
 call multiple C<TARG>-oriented macros to return lists from XSUB's - see
 C<L</mPUSHp>> instead.  See also C<L</XPUSHp>> and C<L</mXPUSHp>>.
 
+=for apidoc Am|void|PUSHpvs|"literal string"
+A variation on C<PUSHp> that takes a literal string and calculates its size
+directly.
+
 =for apidoc Am|void|PUSHn|NV nv
 Push a double onto the stack.  The stack must have room for this element.
 Handles 'set' magic.  Uses C<TARG>, so C<dTARGET> or C<dXSTARG> should be
@@ -233,6 +293,10 @@ indicates the length of the string.  Handles 'set' magic.  Uses C<TARG>, so
 C<dTARGET> or C<dXSTARG> should be called to declare it.  Do not call
 multiple C<TARG>-oriented macros to return lists from XSUB's - see
 C<L</mXPUSHp>> instead.  See also C<L</PUSHp>> and C<L</mPUSHp>>.
+
+=for apidoc Am|void|XPUSHpvs|"literal string"
+A variation on C<XPUSHp> that takes a literal string and calculates its size
+directly.
 
 =for apidoc Am|void|XPUSHn|NV nv
 Push a double onto the stack, extending the stack if necessary.  Handles
@@ -270,6 +334,10 @@ Push a string onto the stack.  The stack must have room for this element.
 The C<len> indicates the length of the string.  Does not use C<TARG>.
 See also C<L</PUSHp>>, C<L</mXPUSHp>> and C<L</XPUSHp>>.
 
+=for apidoc Am|void|mPUSHpvs|"literal string"
+A variation on C<mPUSHp> that takes a literal string and calculates its size
+directly.
+
 =for apidoc Am|void|mPUSHn|NV nv
 Push a double onto the stack.  The stack must have room for this element.
 Does not use C<TARG>.  See also C<L</PUSHn>>, C<L</mXPUSHn>> and C<L</XPUSHn>>.
@@ -297,6 +365,10 @@ Push a string onto the stack, extending the stack if necessary.  The C<len>
 indicates the length of the string.  Does not use C<TARG>.  See also
 C<L</XPUSHp>>, C<mPUSHp> and C<PUSHp>.
 
+=for apidoc Am|void|mXPUSHpvs|"literal string"
+A variation on C<mXPUSHp> that takes a literal string and calculates its size
+directly.
+
 =for apidoc Am|void|mXPUSHn|NV nv
 Push a double onto the stack, extending the stack if necessary.
 Does not use C<TARG>.  See also C<L</XPUSHn>>, C<L</mPUSHn>> and C<L</PUSHn>>.
@@ -315,12 +387,12 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
 /* EXTEND_HWM_SET: note the high-water-mark to which the stack has been
  * requested to be extended (which is likely to be less than PL_stack_max)
  */
-#if defined DEBUGGING && !defined DEBUGGING_RE_ONLY
-#  define EXTEND_HWM_SET(p, n)                      \
-        STMT_START {                                \
-            SSize_t ix = (p) - PL_stack_base + (n); \
-            if (ix > PL_curstackinfo->si_stack_hwm) \
-                PL_curstackinfo->si_stack_hwm = ix; \
+#ifdef PERL_USE_HWM
+#  define EXTEND_HWM_SET(p, n)                                     \
+        STMT_START {                                               \
+            SSize_t extend_hwm_set_ix = (p) - PL_stack_base + (n); \
+            if (extend_hwm_set_ix > PL_curstackinfo->si_stack_hwm) \
+                PL_curstackinfo->si_stack_hwm = extend_hwm_set_ix; \
         } STMT_END
 #else
 #  define EXTEND_HWM_SET(p, n) NOOP
@@ -382,7 +454,7 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
 #  define EXTEND_SKIP(p, n) STMT_START {                                \
                                 EXTEND_HWM_SET(p, n);                   \
                                 assert(!_EXTEND_NEEDS_GROW(p,n));       \
-                          } STMT_END
+                            } STMT_END
 
 
 #  define EXTEND(p,n)   STMT_START {                                    \
@@ -390,7 +462,8 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
                          if (UNLIKELY(_EXTEND_NEEDS_GROW(p,n))) {       \
                            sp = stack_grow(sp,p,_EXTEND_SAFE_N(n));     \
                            PERL_UNUSED_VAR(sp);                         \
-                         } } STMT_END
+                         }                                              \
+                        } STMT_END
 /* Same thing, but update mark register too. */
 #  define MEXTEND(p,n)  STMT_START {                                    \
                          EXTEND_HWM_SET(p, n);                          \
@@ -399,7 +472,8 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
                            sp = stack_grow(sp,p,_EXTEND_SAFE_N(n));     \
                            mark = PL_stack_base + markoff;              \
                            PERL_UNUSED_VAR(sp);                         \
-                         } } STMT_END
+                         }                                              \
+                        } STMT_END
 #endif
 
 
@@ -469,16 +543,23 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
             sv_setnv_mg(targ, TARGn_nv);                                \
     } STMT_END
 
-#define PUSHs(s)	(*++sp = (s))
+#ifdef PERL_RC_STACK
+#  define PUSHs(s)	(assert(!rpp_stack_is_rc()), *++sp = (s))
+#else
+#  define PUSHs(s)	(*++sp = (s))
+#endif
+
 #define PUSHTARG	STMT_START { SvSETMAGIC(TARG); PUSHs(TARG); } STMT_END
 #define PUSHp(p,l)	STMT_START { sv_setpvn(TARG, (p), (l)); PUSHTARG; } STMT_END
+#define PUSHpvs(s)      PUSHp("" s "", sizeof(s)-1)
 #define PUSHn(n)	STMT_START { TARGn(n,1); PUSHs(TARG); } STMT_END
 #define PUSHi(i)	STMT_START { TARGi(i,1); PUSHs(TARG); } STMT_END
 #define PUSHu(u)	STMT_START { TARGu(u,1); PUSHs(TARG); } STMT_END
 
-#define XPUSHs(s)	STMT_START { EXTEND(sp,1); *++sp = (s); } STMT_END
+#define XPUSHs(s)	STMT_START { EXTEND(sp,1); PUSHs(s); } STMT_END
 #define XPUSHTARG	STMT_START { SvSETMAGIC(TARG); XPUSHs(TARG); } STMT_END
 #define XPUSHp(p,l)	STMT_START { sv_setpvn(TARG, (p), (l)); XPUSHTARG; } STMT_END
+#define XPUSHpvs(s)     XPUSHp("" s "", sizeof(s)-1)
 #define XPUSHn(n)	STMT_START { TARGn(n,1); XPUSHs(TARG); } STMT_END
 #define XPUSHi(i)	STMT_START { TARGi(i,1); XPUSHs(TARG); } STMT_END
 #define XPUSHu(u)	STMT_START { TARGu(u,1); XPUSHs(TARG); } STMT_END
@@ -487,6 +568,7 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
 #define mPUSHs(s)	PUSHs(sv_2mortal(s))
 #define PUSHmortal	PUSHs(sv_newmortal())
 #define mPUSHp(p,l)	PUSHs(newSVpvn_flags((p), (l), SVs_TEMP))
+#define mPUSHpvs(s)     mPUSHp("" s "", sizeof(s)-1)
 #define mPUSHn(n)	sv_setnv(PUSHmortal, (NV)(n))
 #define mPUSHi(i)	sv_setiv(PUSHmortal, (IV)(i))
 #define mPUSHu(u)	sv_setuv(PUSHmortal, (UV)(u))
@@ -494,6 +576,7 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
 #define mXPUSHs(s)	XPUSHs(sv_2mortal(s))
 #define XPUSHmortal	XPUSHs(sv_newmortal())
 #define mXPUSHp(p,l)	STMT_START { EXTEND(sp,1); mPUSHp((p), (l)); } STMT_END
+#define mXPUSHpvs(s)    mXPUSHp("" s "", sizeof(s)-1)
 #define mXPUSHn(n)	STMT_START { EXTEND(sp,1); mPUSHn(n); } STMT_END
 #define mXPUSHi(i)	STMT_START { EXTEND(sp,1); mPUSHi(i); } STMT_END
 #define mXPUSHu(u)	STMT_START { EXTEND(sp,1); mPUSHu(u); } STMT_END
@@ -552,13 +635,14 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
 
 #define MAXARG		(PL_op->op_private & OPpARG4_MASK)
 
+/* for backcompat - use switch_argstack() instead */
+
 #define SWITCHSTACK(f,t) \
-    STMT_START {							\
-        AvFILLp(f) = sp - PL_stack_base;				\
-        PL_stack_base = AvARRAY(t);					\
-        PL_stack_max = PL_stack_base + AvMAX(t);			\
-        sp = PL_stack_sp = PL_stack_base + AvFILLp(t);			\
-        PL_curstack = t;						\
+    STMT_START {		\
+        PL_curstack = f;        \
+        PL_stack_sp = sp;       \
+        switch_argstack(t);     \
+        sp = PL_stack_sp;       \
     } STMT_END
 
 #define EXTEND_MORTAL(n) \
@@ -596,51 +680,6 @@ Does not use C<TARG>.  See also C<L</XPUSHu>>, C<L</mPUSHu>> and C<L</PUSHu>>.
 
 /* No longer used in core. Use AMG_CALLunary instead */
 #define AMG_CALLun(sv,meth) AMG_CALLunary(sv, CAT2(meth,_amg))
-
-#define tryAMAGICunTARGETlist(meth, jump)			\
-    STMT_START {						\
-        dSP;							\
-        SV *tmpsv;						\
-        SV *arg= *sp;						\
-        U8 gimme = GIMME_V;                                    \
-        if (UNLIKELY(SvAMAGIC(arg) &&				\
-            (tmpsv = amagic_call(arg, &PL_sv_undef, meth,	\
-                                 AMGf_want_list | AMGf_noright	\
-                                |AMGf_unary))))                 \
-        {                                       		\
-            SPAGAIN;						\
-            if (gimme == G_VOID) {                              \
-                NOOP;                                           \
-            }                                                   \
-            else if (gimme == G_LIST) {				\
-                SSize_t i;                                      \
-                SSize_t len;                                    \
-                assert(SvTYPE(tmpsv) == SVt_PVAV);              \
-                len = av_count((AV *)tmpsv);                    \
-                (void)POPs; /* get rid of the arg */            \
-                EXTEND(sp, len);                                \
-                for (i = 0; i < len; ++i)                       \
-                    PUSHs(av_shift((AV *)tmpsv));               \
-            }                                                   \
-            else { /* AMGf_want_scalar */                       \
-                dATARGET; /* just use the arg's location */     \
-                sv_setsv(TARG, tmpsv);                          \
-                if (PL_op->op_flags & OPf_STACKED)              \
-                    sp--;                                       \
-                SETTARG;                                        \
-            }                                                   \
-            PUTBACK;						\
-            if (jump) {						\
-                OP *jump_o = NORMAL->op_next;                   \
-                while (jump_o->op_type == OP_NULL)		\
-                    jump_o = jump_o->op_next;			\
-                assert(jump_o->op_type == OP_ENTERSUB);		\
-                (void)POPMARK;                                        \
-                return jump_o->op_next;				\
-            }							\
-            return NORMAL;					\
-        }							\
-    } STMT_END
 
 /* This is no longer used anywhere in the core. You might wish to consider
    calling amagic_deref_call() directly, as it has a cleaner interface.  */
@@ -682,7 +721,7 @@ True if this op will be the return value of an lvalue subroutine
 /* Used in various places that need to dereference a glob or globref */
 #  define MAYBE_DEREF_GV_flags(sv,phlags)                          \
     (                                                               \
-        (void)(phlags & SV_GMAGIC && (SvGETMAGIC(sv),0)),            \
+        (void)(((phlags) & SV_GMAGIC) && (SvGETMAGIC(sv),0)),        \
         isGV_with_GP(sv)                                              \
           ? (GV *)(sv)                                                \
           : SvROK(sv) && SvTYPE(SvRV(sv)) <= SVt_PVLV &&               \

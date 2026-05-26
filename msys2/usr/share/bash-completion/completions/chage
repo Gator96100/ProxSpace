@@ -1,30 +1,32 @@
 # chage(1) completion                                      -*- shell-script -*-
 
-_chage()
+_comp_cmd_chage()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[dEImMWR]*)'
+    # shellcheck disable=SC2254
     case $prev in
         --lastday | --expiredate | --help | --inactive | --mindays | --maxdays | \
-            --warndays | -!(-*)[dEhImMW])
+            --warndays | -${noargopts}[dEhImMW])
             return
             ;;
-        --root | -!(-*)R)
-            _filedir -d
+        --root | -${noargopts}R)
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    COMPREPLY=($(compgen -u -- "$cur"))
+    _comp_compgen -- -u
 } &&
-    complete -F _chage chage
+    complete -F _comp_cmd_chage chage
 
 # ex: filetype=sh

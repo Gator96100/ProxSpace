@@ -1,33 +1,35 @@
 # htop(1) completion                                       -*- shell-script -*-
 
-_htop()
+_comp_cmd_htop()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[sud]*)'
+    # shellcheck disable=SC2254
     case "$prev" in
-        --sort-key | -!(-*)s)
-            COMPREPLY=($(compgen -W '$("$1" -s help)' -- "$cur"))
+        --sort-key | -${noargopts}s)
+            _comp_compgen_split -- "$("$1" -s help)"
             return
             ;;
-        --user | -!(-*)u)
-            COMPREPLY=($(compgen -u -- "$cur"))
+        --user | -${noargopts}u)
+            _comp_compgen -- -u
             return
             ;;
-        --delay | -!(-*)d)
+        --delay | -${noargopts}d)
             # argument required but no completions available
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" --help)' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 } &&
-    complete -F _htop htop
+    complete -F _comp_cmd_htop htop
 
 # ex: filetype=sh

@@ -1,9 +1,9 @@
 # pyflakes(1) completion                                   -*- shell-script -*-
 
-_pyflakes()
+_comp_cmd_pyflakes()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -h | --help | --version)
@@ -12,12 +12,12 @@ _pyflakes()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    _filedir py
+    _comp_compgen_filedir py
 } &&
-    complete -F _pyflakes pyflakes
+    complete -F _comp_cmd_pyflakes pyflakes
 
 # ex: filetype=sh

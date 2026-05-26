@@ -32,11 +32,11 @@ ExtUtils::Install - install files from here to there
 
 =head1 VERSION
 
-2.20
+2.22
 
 =cut
 
-our $VERSION = '2.20';  # <-- do not forget to update the POD section just above this line!
+our $VERSION = '2.22';  # <-- do not forget to update the POD section just above this line!
 $VERSION = eval $VERSION;
 
 =pod
@@ -88,8 +88,8 @@ Dies with a special message.
 BEGIN {
     *_Is_VMS        = $^O eq 'VMS'     ? sub(){1} : sub(){0};
     *_Is_Win32      = $^O eq 'MSWin32' ? sub(){1} : sub(){0};
-    *_Is_cygwin     = ($^O eq 'cygwin' || $^O eq 'msys') ? sub(){1} : sub(){0};
-    *_CanMoveAtBoot = ($^O eq 'MSWin32' || $^O eq 'cygwin' || $^O eq 'msys') ? sub(){1} : sub(){0};
+    *_Is_cygwin     = $^O eq 'cygwin'  ? sub(){1} : sub(){0};
+    *_CanMoveAtBoot = ($^O eq 'MSWin32' || $^O eq 'cygwin') ? sub(){1} : sub(){0};
 }
 
 my $Inc_uninstall_warn_handler;

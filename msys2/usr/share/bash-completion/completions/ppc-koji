@@ -1,74 +1,76 @@
 # koji completion                                          -*- shell-script -*-
 
-_koji_search()
+_comp_cmd_koji__search()
 {
-    COMPREPLY+=($(compgen -W \
-        '$("$1" -q search $2 "$cur*" 2>/dev/null)' -- "$cur"))
+    _comp_compgen -a split -- "$("$1" -q search "$2" "$cur*" 2>/dev/null)"
 }
 
-_koji_build()
+_comp_cmd_koji__build()
 {
-    _koji_search "$1" build
+    _comp_cmd_koji__search "$1" build
 }
 
-_koji_package()
+_comp_cmd_koji__package()
 {
-    _koji_search "$1" package
+    _comp_cmd_koji__search "$1" package
 }
 
-_koji_user()
+_comp_cmd_koji__user()
 {
-    _koji_search "$1" user
+    _comp_cmd_koji__search "$1" user
 }
 
-_koji_tag()
+_comp_cmd_koji__tag()
 {
-    COMPREPLY+=($(compgen -W '$("$1" -q list-tags 2>/dev/null)' -- "$cur"))
+    _comp_compgen -a split -- "$("$1" -q list-tags 2>/dev/null)"
 }
 
-_koji_target()
+_comp_cmd_koji__target()
 {
-    COMPREPLY+=($(compgen -W '$("$1" -q list-targets 2>/dev/null |
-        awk "{ print \$1 }")' -- "$cur"))
+    _comp_compgen -a split -- "$("$1" -q list-targets 2>/dev/null |
+        _comp_awk '{ print $1 }')"
 }
 
-_koji()
+_comp_cmd_koji()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
-    local commandix command
+    local commandix command="" has_command=""
     for ((commandix = 1; commandix < cword; commandix++)); do
         if [[ ${words[commandix]} != -* ]]; then
             command=${words[commandix]}
+            has_command=set
             break
         fi
     done
 
+    local noargopts='!(-*|*[co]*)'
+    # shellcheck disable=SC2254
     case $prev in
-        --help | --help-commands | -!(-*)h*)
+        --help | --help-commands | -${noargopts}h*)
             return
             ;;
-        --config | --keytab | -!(-*)[co])
-            _filedir
+        --config | --keytab | -${noargopts}[co])
+            _comp_compgen_filedir
             return
             ;;
         --runas | --user | --editor | --by)
-            _koji_user "$1"
+            _comp_cmd_koji__user "$1"
             return
             ;;
         --authtype)
-            COMPREPLY=($(compgen -W 'noauth ssl password kerberos' -- "$cur"))
+            _comp_compgen -- -W 'noauth ssl password kerberos'
             return
             ;;
         --topdir)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --type)
             case ${command-} in
                 latest-pkg | list-tagged)
-                    COMPREPLY=($(compgen -W 'maven' -- "$cur"))
+                    _comp_compgen -- -W 'maven'
                     ;;
             esac
             return
@@ -76,39 +78,38 @@ _koji()
         --name)
             case ${command-} in
                 list-targets)
-                    _koji_target "$1"
+                    _comp_cmd_koji__target "$1"
                     ;;
             esac
             return
             ;;
         --owner)
-            _koji_user "$1"
+            _comp_cmd_koji__user "$1"
             return
             ;;
         --tag | --latestfrom)
-            _koji_tag "$1"
+            _comp_cmd_koji__tag "$1"
             return
             ;;
         --package)
-            _koji_package "$1"
+            _comp_cmd_koji__package "$1"
             return
             ;;
         --build)
-            _koji_build "$1"
+            _comp_cmd_koji__build "$1"
             return
             ;;
         --build-target)
-            _koji_target "$1"
+            _comp_cmd_koji__target "$1"
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
-    if [[ -v command ]]; then
+    if [[ $has_command ]]; then
         if [[ $cur == -* ]]; then
-            COMPREPLY=($(compgen -W \
-                '$(_parse_help "$1" "$command --help")' -- "$cur"))
+            _comp_compgen_help -- "$command" --help
             [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
             return
         fi
@@ -123,108 +124,108 @@ _koji()
             build | maven-build | win-build)
                 case $nth in
                     1)
-                        _koji_target "$1"
+                        _comp_cmd_koji__target "$1"
                         ;;
                     2)
-                        _filedir src.rpm
+                        _comp_compgen_filedir src.rpm
                         ;;
                 esac
                 ;;
             cancel)
-                _koji_build "$1"
+                _comp_cmd_koji__build "$1"
                 ;;
             chain-build)
                 case $nth in
                     1)
-                        _koji_target "$1"
+                        _comp_cmd_koji__target "$1"
                         ;;
                 esac
                 ;;
             download-build)
                 case $nth in
                     1)
-                        _koji_build "$1"
+                        _comp_cmd_koji__build "$1"
                         ;;
                 esac
                 ;;
             import-comps)
                 case $nth in
                     1)
-                        _filedir xml
+                        _comp_compgen_filedir xml
                         ;;
                     2)
-                        _koji_tag "$1"
+                        _comp_cmd_koji__tag "$1"
                         ;;
                 esac
                 ;;
             latest-by-tag)
-                _koji_package "$1"
+                _comp_cmd_koji__package "$1"
                 ;;
             latest-pkg | list-groups | list-tag-inheritance | show-groups)
                 case $nth in
                     1)
-                        _koji_tag "$1"
+                        _comp_cmd_koji__tag "$1"
                         ;;
                 esac
                 ;;
             list-tagged)
                 case $nth in
                     1)
-                        _koji_tag "$1"
+                        _comp_cmd_koji__tag "$1"
                         ;;
                     2)
-                        _koji_package "$1"
+                        _comp_cmd_koji__package "$1"
                         ;;
                 esac
                 ;;
             list-untagged)
                 case $nth in
                     1)
-                        _koji_package "$1"
+                        _comp_cmd_koji__package "$1"
                         ;;
                 esac
                 ;;
             move-pkg)
                 case $nth in
                     1 | 2)
-                        _koji_tag "$1"
+                        _comp_cmd_koji__tag "$1"
                         ;;
                     *)
-                        _koji_package "$1"
+                        _comp_cmd_koji__package "$1"
                         ;;
                 esac
                 ;;
             search)
                 case $nth in
                     1)
-                        COMPREPLY=($(compgen -W 'package build tag target
-                            user host rpm' -- "$cur"))
+                        _comp_compgen -- -W 'package build tag target user host
+                            rpm'
                         ;;
                 esac
                 ;;
             tag-pkg | untag-pkg)
                 case $nth in
                     1)
-                        _koji_tag "$1"
+                        _comp_cmd_koji__tag "$1"
                         ;;
                     *)
-                        _koji_package "$1"
+                        _comp_cmd_koji__package "$1"
                         ;;
                 esac
                 ;;
             taginfo)
-                _koji_tag "$1"
+                _comp_cmd_koji__tag "$1"
                 ;;
             wait-repo)
                 case $nth in
                     1)
                         for ((i = commandix + 1; i < cword; i++)); do
                             if [[ ${words[i]} == --target ]]; then
-                                _koji_target "$1"
+                                _comp_cmd_koji__target "$1"
                                 return
                             fi
                         done
-                        _koji_tag "$1"
+                        _comp_cmd_koji__tag "$1"
                         ;;
                 esac
                 ;;
@@ -233,13 +234,13 @@ _koji()
     fi
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
-    elif [[ ! -v command ]]; then
-        COMPREPLY=($(compgen -W '$("$1" --help-commands 2>/dev/null | \
-            awk "/^(  +|\t)/ { print \$1 }")' -- "$cur"))
+    elif [[ ! $has_command ]]; then
+        _comp_compgen_split -- "$("$1" --help-commands 2>/dev/null |
+            _comp_awk '/^(  +|\t)/ { print $1 }')"
     fi
 } &&
-    complete -F _koji koji arm-koji ppc-koji s390-koji sparc-koji
+    complete -F _comp_cmd_koji koji arm-koji ppc-koji s390-koji sparc-koji
 
 # ex: filetype=sh

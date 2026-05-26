@@ -1,9 +1,9 @@
 # tracepath(8) completion                                  -*- shell-script -*-
 
-_tracepath()
+_comp_cmd_tracepath()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*[lmp])
@@ -12,15 +12,14 @@ _tracepath()
     esac
 
     if [[ $cur == -* ]]; then
-        local opts=$(_parse_help "$1")
-        COMPREPLY=($(compgen -W '${opts:-$(_parse_usage "$1")}' -- "$cur"))
+        _comp_compgen_help || _comp_compgen_usage
         return
     fi
 
     local ipvx
     [[ $1 == *6 ]] && ipvx=-6
-    _known_hosts_real ${ipvx-} -- "$cur"
+    _comp_compgen_known_hosts ${ipvx-} -- "$cur"
 } &&
-    complete -F _tracepath tracepath tracepath6
+    complete -F _comp_cmd_tracepath tracepath tracepath6
 
 # ex: filetype=sh

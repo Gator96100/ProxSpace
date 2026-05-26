@@ -1,42 +1,38 @@
 # bash completion for dd                                   -*- shell-script -*-
 
-_dd()
+_comp_cmd_dd()
 {
-    local cur prev words cword
-    _init_completion -n = || return
+    local cur prev words cword comp_args
+    _comp_initialize -n = -- "$@" || return
 
     case $cur in
         if=* | of=*)
-            cur=${cur#*=}
-            _filedir
+            _comp_compgen -c "${cur#*=}" filedir
             return
             ;;
         conv=*)
-            cur=${cur#*=}
-            COMPREPLY=($(compgen -W 'ascii ebcdic ibm block unblock lcase
-                ucase sparse swab sync excl nocreat notrunc noerror fdatasync
-                fsync' -- "$cur"))
+            _comp_compgen -c "${cur#*=}" -- -W 'ascii ebcdic ibm block unblock
+                lcase ucase sparse swab sync excl nocreat notrunc noerror
+                fdatasync fsync'
             return
             ;;
         iflag=* | oflag=*)
-            cur=${cur#*=}
-            COMPREPLY=($(compgen -W 'append direct directory dsync sync
-                fullblock nonblock noatime nocache noctty nofollow count_bytes
-                skip_bytes seek_bytes' -- "$cur"))
+            _comp_compgen -c "${cur#*=}" -- -W 'append direct directory dsync
+                sync fullblock nonblock noatime nocache noctty nofollow'
             return
             ;;
         status=*)
             cur=${cur#*=}
-            COMPREPLY=($(compgen -W 'none noxfer progress' -- "$cur"))
+            _comp_compgen -- -W 'none noxfer progress'
             return
             ;;
     esac
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur")
-    $(compgen -W 'bs cbs conv count ibs if iflag obs of oflag
-                              seek skip status' -S '=' -- "$cur"))
+    _comp_compgen_help
+    _comp_compgen -a -- -W 'bs cbs conv count ibs if iflag obs of oflag
+        seek skip status' -S '='
     [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
 } &&
-    complete -F _dd dd
+    complete -F _comp_cmd_dd dd
 
 # ex: filetype=sh

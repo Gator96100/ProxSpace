@@ -1,25 +1,22 @@
 # Slackware Linux removepkg completion                     -*- shell-script -*-
 
-_removepkg()
+_comp_cmd_removepkg()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '-copy -keep -preserve -warn' -- "$cur"))
+        _comp_compgen -- -W '-copy -keep -preserve -warn'
         return
     fi
 
-    if [[ $cur == */* ]]; then
-        _filedir
+    if _comp_looks_like_path "$cur"; then
+        _comp_compgen_filedir
         return
     fi
 
     local root=${ROOT:-/}
-    COMPREPLY=($(
-        cd "$root/var/log/packages" 2>/dev/null || return 1
-        compgen -f -- "$cur"
-    ))
+    _comp_compgen -C "$root/var/log/packages" filedir -f
 } &&
-    complete -F _removepkg removepkg
+    complete -F _comp_cmd_removepkg removepkg
 
 # ex: filetype=sh

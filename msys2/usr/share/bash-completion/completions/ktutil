@@ -1,55 +1,54 @@
 # ktutil completion                                        -*- shell-script -*-
 
-_heimdal_principals()
+_comp_cmd_ktutil__heimdal_principals()
 {
-    COMPREPLY=($(compgen -W "$(kadmin -l dump 2>/dev/null |
-        awk '{print $1}')" -- "$cur"))
+    _comp_compgen_split -- "$(kadmin -l dump 2>/dev/null |
+        _comp_awk '{print $1}')"
 }
 
-_heimdal_realms()
+_comp_cmd_ktutil__heimdal_realms()
 {
-    COMPREPLY=($(compgen -W "$(kadmin -l dump 2>/dev/null |
-        awk '{print $1}' | awk -F@ '{print $2}')" -- "$cur"))
+    _comp_compgen_split -- "$(kadmin -l dump 2>/dev/null |
+        _comp_awk '{print $1}' | _comp_awk -F @ '{print $2}')"
 }
 
-_heimdal_encodings()
+_comp_cmd_ktutil__heimdal_encodings()
 {
-    COMPREPLY=($(compgen -W 'des-cbc-mcrc des-cbc-md4 des-cbc-md5
-        des3-cbc-sha1 arcfour-hmac-md5 aes128-cts-hmac-sha1-96
-        aes256-cts-hmac-sha1-96' -- "$cur"))
+    _comp_compgen -- -W 'des-cbc-mcrc des-cbc-md4 des-cbc-md5 des3-cbc-sha1
+        arcfour-hmac-md5 aes128-cts-hmac-sha1-96 aes256-cts-hmac-sha1-96'
 }
 
-_ktutil()
+_comp_cmd_ktutil()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     local command commands i options
 
     case $prev in
         -p | --principal)
-            _heimdal_principals
+            _comp_cmd_ktutil__heimdal_principals
             return
             ;;
         -e | --enctype)
-            _heimdal_encodings
+            _comp_cmd_ktutil__heimdal_encodings
             return
             ;;
         -a | --admin-server)
-            _known_hosts_real -- "$cur"
+            _comp_compgen_known_hosts -- "$cur"
             return
             ;;
         -r | --realm)
-            _heimdal_realms
+            _comp_cmd_ktutil__heimdal_realms
             return
             ;;
         -s | -k | --srvtab | --keytab)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     commands='add change copy get list remove rename purge srvconvert
         srv2keytab srvcreate key2srvtab'
@@ -97,24 +96,24 @@ _ktutil()
                 options='-k --keytab -v --verbose --version -v --help'
                 ;;
         esac
-        COMPREPLY=($(compgen -W "$options" -- "$cur"))
+        _comp_compgen -- -W "$options"
     else
         case ${command-} in
             copy)
-                _filedir
+                _comp_compgen_filedir
                 ;;
             get)
-                _heimdal_principals
+                _comp_cmd_ktutil__heimdal_principals
                 ;;
             rename)
-                _heimdal_principals
+                _comp_cmd_ktutil__heimdal_principals
                 ;;
             *)
-                COMPREPLY=($(compgen -W "$commands" -- "$cur"))
+                _comp_compgen -- -W "$commands"
                 ;;
         esac
     fi
 } &&
-    complete -F _ktutil ktutil
+    complete -F _comp_cmd_ktutil ktutil
 
 # ex: filetype=sh

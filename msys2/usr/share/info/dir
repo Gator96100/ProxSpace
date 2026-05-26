@@ -49,9 +49,9 @@ GNU Gettext Utilities
                                 Copy gettext infrastructure.
 * envsubst: (gettext)envsubst Invocation.
                                 Expand environment variables.
+* gettext: (gettext).           GNU gettext utilities.
 * gettextize: (gettext)gettextize Invocation.
                                 Prepare a package for gettext.
-* gettext: (gettext).           GNU gettext utilities.
 * ISO3166: (gettext)Country Codes.
                                 ISO 3166 country codes.
 * ISO639: (gettext)Language Codes.
@@ -91,8 +91,6 @@ GNU Gettext Utilities
 
 GNU Libraries
 * Assuan: (assuan).             An IPC library for non-persistent servers.
-* GPGME: (gpgme).               Adding support for cryptography to your 
-                                  program.
 * libgcrypt: (gcrypt).          Cryptographic function library.
 * libgomp: (libgomp).           GNU Offloading and Multi Processing Runtime 
                                   Library.
@@ -110,8 +108,8 @@ GNU Utilities
 * dirmngr: (gnupg).             X.509 CRL and OCSP server.
 * dirmngr-client: (gnupg).      X.509 CRL and OCSP client.
 * gpg-agent: (gnupg).           The secret key daemon.
-* gpg2: (gnupg).                OpenPGP encryption and signing tool.
 * gpgsm: (gnupg).               S/MIME encryption and signing tool.
+* gpg2: (gnupg).                OpenPGP encryption and signing tool.
 * pinentry: (pinentry).         Securely ask for a passphrase or PIN.
 
 Individual utilities
@@ -138,9 +136,11 @@ Individual utilities
 * date: (coreutils)date invocation.             Print/set system date and time.
 * dd: (coreutils)dd invocation.                 Copy and convert a file.
 * df: (coreutils)df invocation.                 Report file system disk usage.
-* dircolors: (coreutils)dircolors invocation.   Color setup for ls.
 * dir: (coreutils)dir invocation.               List directories briefly.
+* dircolors: (coreutils)dircolors invocation.   Color setup for ls.
 * dirname: (coreutils)dirname invocation.       Strip last file name component.
+* dnsdomainname: (inetutils)dnsdomainname invocation.
+                                                Show DNS domain name.
 * du: (coreutils)du invocation.                 Report on disk usage.
 * echo: (coreutils)echo invocation.             Print a line of text.
 * env: (coreutils)env invocation.               Modify the environment.
@@ -148,7 +148,7 @@ Individual utilities
 * expr: (coreutils)expr invocation.             Evaluate expressions.
 * factor: (coreutils)factor invocation.         Print prime factors
 * false: (coreutils)false invocation.           Do nothing, unsuccessfully.
-* find: (find)Invoking find.                    Finding and acting on files.
+* find: (find)Finding Files.                    Finding and acting on files.
 * fmt: (coreutils)fmt invocation.               Reformat paragraph text.
 * fold: (coreutils)fold invocation.             Wrap long input lines.
 * ftp: (inetutils)ftp invocation.               FTP client.
@@ -158,7 +158,7 @@ Individual utilities
 * gzexe: (gzip)Overview.                        Compress executables.
 * head: (coreutils)head invocation.             Output the first part of files.
 * hostid: (coreutils)hostid invocation.         Print numeric host identifier.
-* hostname: (coreutils)hostname invocation.     Print or set system name.
+* hostname: (inetutils)hostname invocation.     Show or set system host name.
 * id: (coreutils)id invocation.                 Print user identity.
 * ifconfig: (inetutils)ifconfig invocation.     Configure network interfaces.
 * inetd: (inetutils)inetd invocation.           Internet super-server.
@@ -168,6 +168,8 @@ Individual utilities
 * link: (coreutils)link invocation.             Make hard links between files.
 * ln: (coreutils)ln invocation.                 Make links between files.
 * locate: (find)Invoking locate.                Finding files in a database.
+* logger: (inetutils)logger invocation.         Send messages to the system 
+                                                  log.
 * logname: (coreutils)logname invocation.       Print current login name.
 * ls: (coreutils)ls invocation.                 List directory contents.
 * md5sum: (coreutils)md5sum invocation.         Print or check MD5 digests.
@@ -184,15 +186,24 @@ Individual utilities
 * od: (coreutils)od invocation.                 Dump files in octal, etc.
 * paste: (coreutils)paste invocation.           Merge lines of files.
 * pathchk: (coreutils)pathchk invocation.       Check file name portability.
+* ping: (inetutils)ping invocation.             Packets to network hosts.
+* ping6: (inetutils)ping6 invocation.           Packets to IPv6 network hosts.
 * pr: (coreutils)pr invocation.                 Paginate or columnate files.
 * printenv: (coreutils)printenv invocation.     Print environment variables.
 * printf: (coreutils)printf invocation.         Format and print data.
 * ptx: (coreutils)ptx invocation.               Produce permuted indexes.
 * pwd: (coreutils)pwd invocation.               Print working directory.
+* rcp: (inetutils)rcp invocation.               Remote copy
 * readlink: (coreutils)readlink invocation.     Print referent of a symlink.
 * realpath: (coreutils)realpath invocation.     Print resolved file names.
+* rexec: (inetutils)rexec invocation.           Remote execution client.
+* rexecd: (inetutils)rexecd invocation.         Remote execution server.
+* rlogin: (inetutils)rlogin invocation.         Remote login.
+* rlogind: (inetutils)rlogind invocation.       Remote login server.
 * rm: (coreutils)rm invocation.                 Remove files.
 * rmdir: (coreutils)rmdir invocation.           Remove empty directories.
+* rsh: (inetutils)rsh invocation.               Remote shell.
+* rshd: (inetutils)rshd invocation.             Remote shell server.
 * runcon: (coreutils)runcon invocation.         Run in specified SELinux CTX.
 * seq: (coreutils)seq invocation.               Print numeric sequences
 * sha1sum: (coreutils)sha1sum invocation.       Print or check SHA-1 digests.
@@ -212,14 +223,17 @@ Individual utilities
 * tail: (coreutils)tail invocation.             Output the last part of files.
 * talk: (inetutils)talk invocation.             Talk client.
 * talkd: (inetutils)talkd invocation.           Talk server.
-* tar: (tar)tar invocation.                     Invoking GNU 'tar'.
+* tar: (tar)tar invocation.                     Invoking GNU ‘tar’.
 * tee: (coreutils)tee invocation.               Redirect to multiple files.
 * telnet: (inetutils)telnet invocation.         User interface to TELNET.
 * telnetd: (inetutils)telnetd invocation.       Telnet server.
 * test: (coreutils)test invocation.             File/string tests.
+* tftp: (inetutils)tftp invocation.             TFTP client.
+* tftpd: (inetutils)tftpd invocation.           TFTP server.
 * timeout: (coreutils)timeout invocation.       Run with time limit.
 * touch: (coreutils)touch invocation.           Change file timestamps.
 * tr: (coreutils)tr invocation.                 Translate characters.
+* traceroute: (inetutils)traceroute invocation. Trace the route to a host.
 * true: (coreutils)true invocation.             Do nothing, successfully.
 * truncate: (coreutils)truncate invocation.     Shrink/extend size of a file.
 * tsort: (coreutils)tsort invocation.           Topological sort.
@@ -236,6 +250,7 @@ Individual utilities
 * wc: (coreutils)wc invocation.                 Line, word, and byte counts.
 * who: (coreutils)who invocation.               Print who is logged in.
 * whoami: (coreutils)whoami invocation.         Print effective user ID.
+* whois: (inetutils)whois invocation.           Whois user interface.
 * xargs: (find)Invoking xargs.                  Operating on many files.
 * yes: (coreutils)yes invocation.               Print a string indefinitely.
 * zcat: (gzip)Overview.                         Decompression to stdout.
@@ -255,13 +270,13 @@ Localization
 
 Network applications
 * Wget: (wget).                 Non-interactive network downloader.
-* awkinet: (gawkinet).          TCP/IP Internetworking With ‘gawk’.
+* awkinet: (gawkinet).          TCP/IP Internetworking With 'gawk'.
 
 Programming & development tools
+* GDBM: (gdbm).                 The GNU database manager.
 * gdbm_dump: (gdbm) gdbm_dump.  Dump the GDBM database into a flat file.
 * gdbm_load: (gdbm) gdbm_load.  Load the database from a flat file.
 * gdbmtool: (gdbm) gdbmtool.    Examine and modify a GDBM database.
-* GDBM: (gdbm).                 The GNU database manager.
 
 Software development
 * GNU libunistring: (libunistring).

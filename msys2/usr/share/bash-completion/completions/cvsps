@@ -1,58 +1,58 @@
 # bash completion for cvsps                                -*- shell-script -*-
 
-_cvsps()
+_comp_cmd_cvsps()
 {
-    local cur prev words cword
-    _init_completion -n : || return
+    local cur prev words cword comp_args
+    _comp_initialize -n : -- "$@" || return
 
     case $prev in
         -h | -z | -f | -d | -l | --diff-opts | --debuglvl)
             return
             ;;
         -s)
-            COMPREPLY=($(compgen -W "$($1 2>/dev/null |
-                awk '/^PatchSet:?[ \t]/ { print $2 }')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" 2>/dev/null |
+                _comp_awk '/^PatchSet:?[ \t]/ { print $2 }')"
             return
             ;;
         -a)
-            COMPREPLY=($(compgen -W "$($1 2>/dev/null |
-                awk '/^Author:[ \t]/ { print $2 }')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" 2>/dev/null |
+                _comp_awk '/^Author:[ \t]/ { print $2 }')"
             return
             ;;
         -b)
-            COMPREPLY=($(compgen -W "$($1 2>/dev/null |
-                awk '/^Branch:[ \t]/ { print $2 }')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" 2>/dev/null |
+                _comp_awk '/^Branch:[ \t]/ { print $2 }')"
             return
             ;;
         -r)
-            COMPREPLY=($(compgen -W "$($1 2>/dev/null |
-                awk '/^Tag:[ \t]+[^(]/ { print $2 }')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" 2>/dev/null |
+                _comp_awk '/^Tag:[ \t]+[^(]/ { print $2 }')"
             return
             ;;
         -p)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --test-log)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -Z)
-            COMPREPLY=($(compgen -W '{1..9}' -- "$cur"))
+            _comp_compgen -- -W '{1..9}'
             return
             ;;
         --root)
-            _xfunc cvs _cvs_roots
+            _comp_compgen -x cvs roots
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
     else
-        _xfunc cvs _cvs_roots
+        _comp_compgen -x cvs roots
     fi
 } &&
-    complete -F _cvsps cvsps
+    complete -F _comp_cmd_cvsps cvsps
 
 # ex: filetype=sh

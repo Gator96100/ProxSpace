@@ -1,9 +1,9 @@
 # printenv(1) completion                                   -*- shell-script -*-
 
-_printenv()
+_comp_cmd_printenv()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help | --version)
@@ -12,12 +12,12 @@ _printenv()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    COMPREPLY=($(compgen -v -- "$cur"))
+    _comp_compgen -- -v
 } &&
-    complete -F _printenv printenv
+    complete -F _comp_cmd_printenv printenv
 
 # ex: filetype=sh

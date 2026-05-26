@@ -1,38 +1,38 @@
 # ngrep(8) completion                                      -*- shell-script -*-
 
-_ngrep()
+_comp_cmd_ngrep()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -h | -V | -n | -A | -s | -S | -c | -P)
             return
             ;;
         -I | -O)
-            _filedir 'pcap?(ng)'
+            _comp_compgen_filedir 'pcap?(ng)'
             return
             ;;
         -d)
-            _available_interfaces -a
-            COMPREPLY+=($(compgen -W 'any' -- "$cur"))
+            _comp_compgen_available_interfaces -a
+            _comp_compgen -a -- -W 'any'
             return
             ;;
         -W)
-            COMPREPLY=($(compgen -W 'normal byline single none' -- "$cur"))
+            _comp_compgen -- -W 'normal byline single none'
             return
             ;;
         -F)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -h)' -- "$cur"))
+        _comp_compgen_help -- -h
         return
     fi
 } &&
-    complete -F _ngrep ngrep
+    complete -F _comp_cmd_ngrep ngrep
 
 # ex: filetype=sh

@@ -1,39 +1,41 @@
 # a2x(1) completion                                        -*- shell-script -*-
 
-_a2x()
+_comp_cmd_a2x()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
+    local noargopts='!(-*|*[aDd]*)'
+    # shellcheck disable=SC2254
     case $prev in
         --attribute | --asciidoc-opts | --dblatex-opts | --fop-opts | --help | \
-            --version | --xsltproc-opts | -!(-*)[ah])
+            --version | --xsltproc-opts | -${noargopts}[ah])
             return
             ;;
-        --destination-dir | --icons-dir | -!(-*)D)
-            _filedir -d
+        --destination-dir | --icons-dir | -${noargopts}D)
+            _comp_compgen_filedir -d
             return
             ;;
-        --doctype | -!(-*)d)
-            _xfunc asciidoc _asciidoc_doctype
+        --doctype | -${noargopts}d)
+            _comp_compgen -x asciidoc doctype
             return
             ;;
         --stylesheet)
-            _filedir css
+            _comp_compgen_filedir css
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" --help)' -- "$cur"))
+        _comp_compgen_help
         [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
         return
     fi
 
-    _filedir
+    _comp_compgen_filedir
 } &&
-    complete -F _a2x a2x
+    complete -F _comp_cmd_a2x a2x
 
 # ex: filetype=sh

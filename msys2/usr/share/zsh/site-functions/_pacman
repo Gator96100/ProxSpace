@@ -553,7 +553,7 @@ _pacman_conf_directive() {
 
 _pacman_conf_commands=(
 	{-l,--repo-list}'[List configured repositories]:*: :->repo_list'
-	{-h,--help}'[Output systax and command line options]:*: :->complete'
+	{-h,--help}'[Output syntax and command line options]:*: :->complete'
 	{-V,--version}'[Display version and exit]:*: :->complete'
 )
 
@@ -564,7 +564,7 @@ _pacman_conf_options=(
 
 _pacman_conf_options_common=(
 	'*'{-c,--config=}'[Specify an alternate configuration file]: :_files'
-	'*'{-R,--rootdir=}'[Specify an alternate insallation root]: :_files'
+	'*'{-R,--rootdir=}'[Specify an alternate installation root]: :_files'
 )
 
 _pacman_conf() {
@@ -586,38 +586,38 @@ _pacman_conf() {
 	esac
 }
 
-_key_shortopts=(
+_pacman_key_shortopts=(
 	'-h[show help]'
 	'-a[Add the specified keys (empty for stdin)]: :_files'
-	'-d[Remove the Specified keyids]:*: :_keys'
-	'-e[Export the specified or all keyids]:*: :_keys'
-	'-f[List fingerprint for specified or all keyids]:*: :_keys'
-	'-l[List the specified or all keys]:*: :_keys'
-	'-r[Fetch the specified keyids]:*: :_keys'
+	'-d[Remove the Specified keyids]:*: :_pacman_key_list'
+	'-e[Export the specified or all keyids]:*: :_pacman_key_list'
+	'-f[List fingerprint for specified or all keyids]:*: :_pacman_key_list'
+	'-l[List the specified or all keys]:*: :_pacman_key_list'
+	'-r[Fetch the specified keyids]:*: :_pacman_key_list'
 	'-u[Update the trustdb of pacman]'
 	'-v[Verify the file specified by the signature]: :_files -g "*.sig"'
 	'-V[Show program version]'
 )
 
-_key_longopts=(
+_pacman_key_longopts=(
 	'--help[show help]'
 	'--add[Add the specified keys (empty for stdin)]: :_files'
-	'--delete[Remove the Specified keyids]:*: :_keys'
-	'--export[Export the specified or all keyids]:*: :_keys'
-	'--finger[List fingerprint for specified or all keyids]:*: :_keys'
-	'--list-keys[List the specified or all keys]:*: :_keys'
-	'--recv-keys[Fetch the specified keyids]:*: :_keys'
+	'--delete[Remove the Specified keyids]:*: :_pacman_key_list'
+	'--export[Export the specified or all keyids]:*: :_pacman_key_list'
+	'--finger[List fingerprint for specified or all keyids]:*: :_pacman_key_list'
+	'--list-keys[List the specified or all keys]:*: :_pacman_key_list'
+	'--recv-keys[Fetch the specified keyids]:*: :_pacman_key_list'
 	'--updatedb[Update the trustdb of pacman]'
 	'--verify[Verify the file specified by the signature]: :_files -g "*.sig"'
 	'--version[Show program version]'
-	'--edit-key[Present a menu for key management task on keyids]:*: :_keys'
+	'--edit-key[Present a menu for key management task on keyids]:*: :_pacman_key_list'
 	'--import[Imports pubring.gpg from dir(s)]: :_files -g "*.gpg"'
 	'--import-tb[Imports ownertrust values from trustdb.gpg in dir(s)]: :_files -g "*.gpg"'
 	'--init[Ensure the keyring is properly initialized]'
-	'--list-sigs[List keys and their signatures]:*: :_keys'
-	'--lsign-key[Locally sign the specified keyid]:*: :_keys'
+	'--list-sigs[List keys and their signatures]:*: :_pacman_key_list'
+	'--lsign-key[Locally sign the specified keyid]:*: :_pacman_key_list'
 	'--populate[Reload the default keys from the (given) keyrings in '/usr/share/pacman/keyrings']: :_path_files -W /usr/share/pacman/keyrings'
-	'--refresh-keys[Update specified or all keys from a keyserver]:*: :_keys'
+	'--refresh-keys[Update specified or all keys from a keyserver]:*: :_pacman_key_list'
 )
 
 _pacman_key_options=(
@@ -631,13 +631,13 @@ _pacman_key() {
 		--*)
 			_arguments -s : \
 				"$_pacman_key_options[@]" \
-				"$_key_longopts[@]"
+				"$_pacman_key_longopts[@]"
 			;;
 		-*)
 			_arguments -s : \
 				"$_pacman_key_options[@]" \
-				"$_key_shortopts[@]" \
-				"$_key_longopts[@]"
+				"$_pacman_key_shortopts[@]" \
+				"$_pacman_key_longopts[@]"
 			;;
 		*)
 			i=$#
@@ -648,13 +648,13 @@ _pacman_key() {
 				--*)
 					_arguments -s : \
 						"$_pacman_key_options[@]" \
-						"$_key_longopts[@]"
+						"$_pacman_key_longopts[@]"
 					;;
 				-*)
 					_arguments -s : \
 						"$_pacman_key_options[@]" \
-						"$_key_shortopts[@]" \
-						"$_key_longopts[@]"
+						"$_pacman_key_shortopts[@]" \
+						"$_pacman_key_longopts[@]"
 					;;
 				*)
 					return 1
@@ -664,7 +664,7 @@ _pacman_key() {
 	esac
 }
 
-_keys() {
+_pacman_key_list() {
 	local keylist keys
 	keylist=$(pacman-key --list-keys 2>/dev/null | awk '
 		$1 == "pub" {
@@ -733,7 +733,7 @@ _makepkg_longopts=(
 	'--check[Run check() function in the PKGBUILD]'
 	'--config[Use an alternate config file instead of '/etc/makepkg.conf']: :_files'
 	'--holdver[Do not update VCS sources]'
-	'--key[Specify key to use for gpg signing instead of the default]: :_keys'
+	'--key[Specify key to use for gpg signing instead of the default]: :_pacman_key_list'
 	'--noarchive[Do not create package archive]'
 	'--nocheck[Do not run the check() function in the PKGBUILD]'
 	'--noprepare[Do not run the prepare() function in the PKGBUILD]'

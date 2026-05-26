@@ -28,7 +28,7 @@ changelog=
 source=("$pkgbase-$pkgver.tar.gz"
         "$pkgname-$pkgver.patch")
 noextract=()
-md5sums=()
+sha256sums=()
 validpgpkeys=()
 
 prepare() {

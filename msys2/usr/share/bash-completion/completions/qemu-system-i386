@@ -1,108 +1,106 @@
 # bash completion for qemu                                 -*- shell-script -*-
 
-_qemu()
+_comp_cmd_qemu()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
-        -fd[ab] | -hd[abcd] | -cdrom | -option-rom | -kernel | -initrd | -bootp | -pidfile | \
-            -loadvm | -mtdblock | -sd | -pflash | -bios)
-            _filedir
+        -fd[ab] | -hd[abcd] | -cdrom | -option-rom | -kernel | -initrd | \
+            -bootp | -pidfile | -loadvm | -mtdblock | -sd | -pflash | -bios)
+            _comp_compgen_filedir
             return
             ;;
         -tftp | -smb | -L | -chroot)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -boot)
-            COMPREPLY=($(compgen -W 'a c d n' -- "$cur"))
+            _comp_compgen -- -W 'a c d n'
             return
             ;;
         -k)
-            COMPREPLY=($(compgen -W 'ar de-ch es fo fr-ca hu ja mk no pt-br
-                sv da en-gb et fr fr-ch is lt nl pl ru th de en-us fi fr-be hr
-                it lv nl-be pt sl tr' -- "$cur"))
+            local -a keymaps
+            _comp_expand_glob keymaps '/usr/{local/,}share/qemu/keymaps/!(common|modifiers)' &&
+                _comp_compgen -- -W '"${keymaps[@]##*/}"'
             return
             ;;
         -soundhw)
-            COMPREPLY=($(compgen -W "$($1 -soundhw help | awk \
-                '/^[[:lower:]]/ {print $1}') all" -- "$cur"))
+            _comp_compgen_split -- "$("$1" -soundhw help | _comp_awk '
+                function islower(s) { return length(s) > 0 && s == tolower(s); }
+                islower(substr($0, 1, 1)) {print $1}') all"
             return
             ;;
         -machine | -M)
-            COMPREPLY=($(compgen -W "$($1 $prev help | awk \
-                '/^[[:lower:]]/ {print $1}')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" "$prev" help | _comp_awk '
+                function islower(s) { return length(s) > 0 && s == tolower(s); }
+                islower(substr($0, 1, 1)) {print $1}')"
             return
             ;;
         -cpu)
-            COMPREPLY=($(compgen -W "$($1 -cpu help | awk '{print $2}')" \
-                -- "$cur"))
+            _comp_compgen_split -- "$("$1" -cpu help | _comp_awk '{print $2}')"
             return
             ;;
         -usbdevice)
-            COMPREPLY=($(compgen -W 'mouse tablet disk: host: serial: braille
-                net' -- "$cur"))
+            _comp_compgen -- -W 'mouse tablet disk: host: serial: braille net'
             return
             ;;
         -net)
-            COMPREPLY=($(compgen -W 'nic user tap socket vde none dump' \
-                -- "$cur"))
+            _comp_compgen -- -W 'nic user tap socket vde none dump'
             return
             ;;
         -serial | -parallel | -monitor)
-            COMPREPLY=($(compgen -W 'vc pty none null /dev/ file: stdio pipe:
-                COM udp: tcp: telnet: unix: mon: braille' -- "$cur"))
+            _comp_compgen -- -W 'vc pty none null /dev/ file: stdio pipe: COM
+                udp: tcp: telnet: unix: mon: braille'
             return
             ;;
         -redir)
-            COMPREPLY=($(compgen -S":" -W 'tcp udp' -- "$cur"))
+            _comp_compgen -- -S":" -W 'tcp udp'
             return
             ;;
         -bt)
-            COMPREPLY=($(compgen -W 'hci vhci device' -- "$cur"))
+            _comp_compgen -- -W 'hci vhci device'
             return
             ;;
         -vga)
-            COMPREPLY=($(compgen -W 'cirrus std vmware xenfb none' -- "$cur"))
+            _comp_compgen -- -W 'cirrus std vmware xenfb none'
             return
             ;;
         -drive)
-            COMPREPLY=($(compgen -S"=" -W 'file if bus unit index media cyls
-                snapshot cache format serial addr' -- "$cur"))
+            _comp_compgen -- -S"=" -W 'file if bus unit index media cyls
+                snapshot cache format serial addr'
             return
             ;;
         -balloon)
-            COMPREPLY=($(compgen -W 'none virtio' -- "$cur"))
+            _comp_compgen -- -W 'none virtio'
             return
             ;;
         -smbios)
-            COMPREPLY=($(compgen -W 'file type' -- "$cur"))
+            _comp_compgen -- -W 'file type'
             return
             ;;
         -watchdog)
-            COMPREPLY=($(compgen -W "$($1 -watchdog help 2>&1 |
-                awk '{print $1}')" -- "$cur"))
+            _comp_compgen_split -- "$("$1" -watchdog help 2>&1 |
+                _comp_awk '{print $1}')"
             return
             ;;
         -watchdog-action)
-            COMPREPLY=($(compgen -W 'reset shutdown poweroff pause debug
-                none' -- "$cur"))
+            _comp_compgen -- -W 'reset shutdown poweroff pause debug none'
             return
             ;;
         -runas)
-            _allowed_users
+            _comp_compgen_allowed_users
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1" -help) -fd{a,b}
-            -hd{a..d}' -- "$cur"))
+        _comp_compgen_help -- -help
+        _comp_compgen -a -- -W '-fd{a,b} -hd{a..d}'
     else
-        _filedir
+        _comp_compgen_filedir
     fi
 } &&
-    complete -F _qemu qemu qemu-kvm qemu-system-i386 qemu-system-x86_64
+    complete -F _comp_cmd_qemu qemu qemu-kvm qemu-system-i386 qemu-system-x86_64
 
 # ex: filetype=sh

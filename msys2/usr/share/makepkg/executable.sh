@@ -2,7 +2,7 @@
 #
 #   executable.sh - confirm presence of dependent executables
 #
-#   Copyright (c) 2018-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2018-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 [[ -n "$LIBMAKEPKG_EXECUTABLE_SH" ]] && return
 LIBMAKEPKG_EXECUTABLE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
 declare -a executable_functions
 
-for lib in "$LIBRARY/executable/"*.sh; do
+for lib in "$MAKEPKG_LIBRARY/executable/"*.sh; do
 	source "$lib"
 done
 

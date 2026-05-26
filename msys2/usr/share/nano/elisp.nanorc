@@ -1,5 +1,7 @@
 ## Syntax highlighting for Emacs Lisp.
 
+## Original author:  Mark Oteiza
+
 syntax elisp "\.el$"
 magic "Lisp/Scheme program"
 comment ";"

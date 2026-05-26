@@ -1,5 +1,7 @@
 ## Syntax highlighting for XML files.
 
+## Original author:  Josef Schugt
+
 syntax xml "\.([jrsx]html?|jnlp|mml|pom|rng|sgml?|svg|w[as]dl|wsdd|xjb|xml|xs(d|lt?)|xul)$"
 header "<\?xml.*version=.*\?>"
 magic "(XML|SGML) (sub)?document"

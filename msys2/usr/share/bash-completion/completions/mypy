@@ -1,57 +1,60 @@
 # mypy completion                                          -*- shell-script -*-
 
-_mypy()
+_comp_cmd_mypy()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     [[ $cword -gt 2 && ${words[cword - 2]} == --shadow-file ]] &&
         prev=--shadow-file # hack; takes two args
 
+    local noargopts='!(-*|*[pcm]*)'
+    # shellcheck disable=SC2254
     case $prev in
         --help | --version | --python-version | --platform | --always-true | \
-            --always-false | --find-occurrences | --package | --command | -!(-*)[hVpc])
+            --always-false | --@(dis|en)able-error-code | --find-occurrences | \
+            --exclude | --package | --command | -${noargopts}[hVpc])
             return
             ;;
         --config-file)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --follow-imports)
-            COMPREPLY=($(compgen -W 'normal silent skip error' -- "$cur"))
+            _comp_compgen -- -W 'normal silent skip error'
             return
             ;;
         --python-executable)
-            COMPREPLY=($(compgen -c -- "${cur:-py}"))
+            _comp_compgen -c "${cur:-py}" commands
             return
             ;;
         --*-dir | --*-report)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
-        --custom-typing | --module | -!(-*)m)
-            _xfunc python _python_modules
+        --custom-typing-module | --module | -${noargopts}m)
+            _comp_compgen -x python modules
             return
             ;;
         --shadow-file)
-            _filedir '@(py|pyi)'
+            _comp_compgen_filedir '@(py|pyi)'
             return
             ;;
         --junit-xml)
-            _filedir xml
+            _comp_compgen_filedir xml
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+        _comp_compgen_help
         return
     fi
 
-    _filedir '@(py|pyi)'
+    _comp_compgen_filedir '@(py|pyi)'
 } &&
-    complete -F _mypy mypy
+    complete -F _comp_cmd_mypy mypy
 
 # ex: filetype=sh

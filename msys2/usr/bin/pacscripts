@@ -17,7 +17,7 @@
 #   GNU General Public License for more details.
 #
 #   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
 # bash options
@@ -25,10 +25,11 @@ set -o nounset
 set -o errexit
 
 declare -r myname='pacscripts'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 error() {
 	local mesg=$1; shift
+	# shellcheck disable=SC2059
 	printf "==> $(/usr/bin/gettext "ERROR:") ${mesg}\n" "$@" >&2
 }
 
@@ -69,14 +70,16 @@ spacman() {
 print_db() {
 	pkg=$(pacman -Q "$1")
 	pkg=${pkg/ /-}
-	if [ -f $pac_db/$pkg*/install ]; then
-		cat $pac_db/$pkg*/install
-		echo
-		return 0
-	else
-		error "Package $1 does not include any .INSTALL script"
-		return 1
-	fi
+	for file in "$pac_db"/"$pkg"*/install; do
+		if [ -f "$file" ]; then
+			cat "$pac_db/$pkg"*/install
+			echo
+			return 0
+		else
+			error "Package $1 does not include any .INSTALL script"
+			return 1
+		fi
+	done
 }
 
 print_pkg() {
@@ -98,18 +101,18 @@ print_scriptlet() {
 		print_db "$1"
 		return
 	fi
-	if ! pacman -Si $1 &>/dev/null; then
+	if ! pacman -Si "$1" &>/dev/null; then
 		error "Package $1 not found"
 		return 1
 	fi
-	url=$(pacman -Sddp $1)
+	url=$(pacman -Sddp "$1")
 	if [[ $url != file://* ]]; then
-		if ! spacman -Sddw --logfile /dev/null --noconfirm $1 >&2; then
+		if ! spacman -Sddw --logfile /dev/null --noconfirm "$1" >&2; then
 			error "Failed to download $1"
 			return 1
 		fi
 		echo >&2
-		url=$(pacman -Sddp $1)
+		url=$(pacman -Sddp "$1")
 	fi
 	print_pkg "${url#file://}"
 	return
@@ -123,5 +126,5 @@ fi
 case "$1" in
 	--help|-h) usage; exit 0 ;;
 	--version|-V) version; exit 0 ;;
-	*) print_scriptlet $1 ;;
+	*) print_scriptlet "$1" ;;
 esac

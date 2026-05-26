@@ -2,7 +2,7 @@
 #
 #   variable.sh - Check that variables are or are not arrays as appropriate
 #
-#   Copyright (c) 2018-2021 Pacman Development Team <pacman-dev@archlinux.org>
+#   Copyright (c) 2018-2024 Pacman Development Team <pacman-dev@lists.archlinux.org>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 [[ -n "$LIBMAKEPKG_LINT_CONFIG_VARIABLE_SH" ]] && return
 LIBMAKEPKG_LINT_CONFIG_VARIABLE_SH=1
 
-LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
+MAKEPKG_LIBRARY=${MAKEPKG_LIBRARY:-'/usr/share/makepkg'}
 
-source "$LIBRARY/util/message.sh"
+source "$MAKEPKG_LIBRARY/util/message.sh"
 
 lint_config_functions+=('lint_config_variables')
 
@@ -32,10 +32,10 @@ lint_config_variables() {
 	local array=(DLAGENTS VCSCLIENTS BUILDENV OPTIONS INTEGRITY_CHECK MAN_DIRS
 	             DOC_DIRS PURGE_TARGETS COMPRESSGZ COMPRESSBZ2 COMPRESSXZ
 	             COMPRESSLRZ COMPRESSLZO COMPRESSZ)
-	local string=(CARCH CHOST CPPFLAGS CFLAGS CXXFLAGS RUSTFLAGS LDFLAGS LTOFLAGS
-	              DEBUG_CFLAGS DEBUG_CXXFLAGS DEBUG_RUSTFLAGS DISTCC_HOSTS BUILDDIR
-	              STRIP_BINARIES STRIP_SHARED STRIP_STATIC PKGDEST SRCDEST SRCPKGDEST
-	              LOGDEST PACKAGER GPGKEY PKGEXT SRCEXT)
+	local string=(CARCH CHOST CPPFLAGS CFLAGS CXXFLAGS LDFLAGS LTOFLAGS DEBUG_CFLAGS
+	              DEBUG_CXXFLAGS DISTCC_HOSTS BUILDDIR STRIP_BINARIES STRIP_SHARED
+	              STRIP_STATIC PKGDEST SRCDEST SRCPKGDEST LOGDEST PACKAGER GPGKEY
+	              PKGEXT SRCEXT)
 
 	local i keys ret=0
 

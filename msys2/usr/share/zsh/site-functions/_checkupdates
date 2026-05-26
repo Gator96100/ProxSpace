@@ -2,6 +2,7 @@
 
 declare -a args
 args=(
+	'(--change -c)'{--change,-c}'[print only when available updates differ from the last --change run]'
 	'(--download -d)'{--download,-d}'[download pending updates to the pacman cache]'
 	'--nocolor[do not colorize output]'
 	'(--nosync -n)'{--nosync,-n}'[do not sync the temporary database]'

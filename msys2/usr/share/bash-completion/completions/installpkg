@@ -1,33 +1,33 @@
 # Slackware Linux installpkg completion                    -*- shell-script -*-
 
-_installpkg()
+_comp_cmd_installpkg()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case "$prev" in
         --root)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         --priority)
-            COMPREPLY=($(compgen -W 'ADD REC OPT SKP' -- "$cur"))
+            _comp_compgen -- -W 'ADD REC OPT SKP'
             return
             ;;
         --tagfile)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--warn --md5sum --root --infobox --terse
-            --menu --ask --priority --tagfile' -- "$cur"))
+        _comp_compgen -- -W '--warn --md5sum --root --infobox --terse --menu
+            --ask --priority --tagfile'
         return
     fi
 
-    _filedir 't[bglx]z'
+    _comp_compgen_filedir 't[bglx]z'
 } &&
-    complete -F _installpkg installpkg
+    complete -F _comp_cmd_installpkg installpkg
 
 # ex: filetype=sh

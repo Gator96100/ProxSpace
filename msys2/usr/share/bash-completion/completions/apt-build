@@ -1,26 +1,25 @@
 # Debian apt-build(1) completion                           -*- shell-script -*-
 
-_apt_build()
+_comp_cmd_apt_build()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
-    local special i
-    for ((i = 1; i < ${#words[@]} - 1; i++)); do
+    local special="" i
+    for ((i = 1; i < cword; i++)); do
         if [[ ${words[i]} == @(install|remove|source|info|clean) ]]; then
             special=${words[i]}
             break
         fi
     done
 
-    if [[ -v special ]]; then
+    if [[ $special ]]; then
         case $special in
             install | source | info)
-                COMPREPLY=($(_xfunc apt-cache _apt_cache_packages))
+                _comp_compgen -x apt-cache packages
                 ;;
             remove)
-                COMPREPLY=(
-                    $(_xfunc dpkg _comp_dpkg_installed_packages "$cur"))
+                _comp_compgen -x dpkg installed_packages
                 ;;
         esac
         return
@@ -28,7 +27,7 @@ _apt_build()
 
     case $prev in
         --patch | --build-dir | --repository-dir)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         -h | --help)
@@ -37,18 +36,17 @@ _apt_build()
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '--help --show-upgraded -u --build-dir
+        _comp_compgen -- -W '--help --show-upgraded -u --build-dir
             --repository-dir --build-only --build-command --reinstall --rebuild
             --remove-builddep --no-wrapper --purge --patch --patch-strip -p
-            --yes -y --version -v --no-source' -- "$cur"))
+            --yes -y --version -v --no-source'
 
     else
-        COMPREPLY=($(compgen -W 'update upgrade install remove source
-            dist-upgrade world clean info clean-build update-repository' \
-            -- "$cur"))
+        _comp_compgen -- -W 'update upgrade install remove source dist-upgrade
+            world clean info clean-build update-repository'
     fi
 
 } &&
-    complete -F _apt_build apt-build
+    complete -F _comp_cmd_apt_build apt-build
 
 # ex: filetype=sh

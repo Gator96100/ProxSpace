@@ -1,63 +1,56 @@
 # protoc completion                                        -*- shell-script -*-
 
-_protoc()
+_comp_cmd_protoc()
 {
-    local cur prev words cword split
-    _init_completion -s || return
+    local cur prev words cword was_split comp_args
+    _comp_initialize -s -- "$@" || return
 
     case $prev in
         --version | -h | --help | --encode | --decode)
             return
             ;;
         --descriptor_set_out)
-            _filedir
+            _comp_compgen_filedir
             return
             ;;
         --error_format)
-            COMPREPLY=($(compgen -W 'gcc msvs' -- "$cur"))
+            _comp_compgen -- -W 'gcc msvs'
             return
             ;;
         --plugin)
-            if [[ $cur != *=* ]]; then
-                compopt -o filenames
-                COMPREPLY=($(compgen -c -- "$cur"))
-            fi
+            [[ $cur == *=* ]] || _comp_compgen_commands
             return
             ;;
         --proto_path | --*_out)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
     esac
 
-    $split && return
+    [[ $was_split ]] && return
 
     case $cur in
         -o*)
-            cur=${cur:2}
-            _filedir
-            COMPREPLY=("${COMPREPLY[@]/#/-o}")
+            _comp_compgen -P "-o" filedir
             return
             ;;
         -I*)
-            cur=${cur:2}
-            _filedir -d
-            COMPREPLY=("${COMPREPLY[@]/#/-I}")
+            _comp_compgen -P "-I" filedir -d
             return
             ;;
         -*)
-            COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
+            _comp_compgen_help
             local i
             for i in "${!COMPREPLY[@]}"; do
-                [[ ${COMPREPLY[i]} == -oFILE ]] && unset 'COMPREPLY[i]'
+                [[ ${COMPREPLY[i]} == -oFILE ]] && unset -v 'COMPREPLY[i]'
             done
             [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
             return
             ;;
     esac
 
-    _filedir proto
+    _comp_compgen_filedir proto
 } &&
-    complete -F _protoc protoc
+    complete -F _comp_cmd_protoc protoc
 
 # ex: filetype=sh

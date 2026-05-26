@@ -2,12 +2,12 @@
 .\"     Title: mount
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 07/14/2023
+.\"      Date: 03/15/2026
 .\"    Manual: Cygwin Utilities
 .\"    Source: Cygwin Utilities
 .\"  Language: English
 .\"
-.TH "MOUNT" "1" "07/14/2023" "Cygwin Utilities" "Cygwin Utilities"
+.TH "MOUNT" "1" "03/15/2026" "Cygwin Utilities" "Cygwin Utilities"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -79,7 +79,7 @@ If you just type
 \fBmount\fR
 with no parameters, it will display the current mount table for you\&.
 .PP
-\fBExample\ \&3.9.\ \&Displaying the current set of mount points\fR
+\fBExample\ \&3.11.\ \&Displaying the current set of mount points\fR
 .sp
 .if n \{\
 .RS 4
@@ -109,7 +109,7 @@ to
 /data
 for the duration of the current session\&.
 .PP
-\fBExample\ \&3.10.\ \&Adding mount points\fR
+\fBExample\ \&3.12.\ \&Adding mount points\fR
 .sp
 .if n \{\
 .RS 4
@@ -174,6 +174,7 @@ option is the method via which various options about the mount point may be reco
                (default)\&.
   sparse     \- Switch on support for sparse files\&.  This option only makes
                sense on NTFS and then only if you really need sparse files\&.
+	       This flag is always silently enabled on SSD drives\&.
   text       \- Files default to CRLF text mode line endings\&.
 .fi
 .if n \{\
@@ -260,7 +261,7 @@ will be accessible as
 utility can be used to change this default automount prefix through the use of the "\-\-change\-cygdrive\-prefix" option\&. In the following example, we will set the automount prefix to
 /mnt:
 .PP
-\fBExample\ \&3.11.\ \&Changing the default prefix\fR
+\fBExample\ \&3.13.\ \&Changing the default prefix\fR
 .sp
 .if n \{\
 .RS 4
@@ -282,7 +283,7 @@ flag with
 \-\-change\-cygdrive\-prefix
 makes all new automounted filesystems default to this set of options\&. For instance (using the short form of the command line flags)
 .PP
-\fBExample\ \&3.12.\ \&Changing the default prefix with specific mount options\fR
+\fBExample\ \&3.14.\ \&Changing the default prefix with specific mount options\fR
 .sp
 .if n \{\
 .RS 4

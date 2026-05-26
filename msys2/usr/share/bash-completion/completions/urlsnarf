@@ -1,26 +1,26 @@
 # urlsnarf completion                                      -*- shell-script -*-
 
-_urlsnarf()
+_comp_cmd_urlsnarf()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -*i)
-            _available_interfaces -a
+            _comp_compgen_available_interfaces -a
             return
             ;;
         -*p)
-            _filedir pcap
+            _comp_compgen_filedir pcap
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+        _comp_compgen_usage
     fi
 
 } &&
-    complete -F _urlsnarf urlsnarf
+    complete -F _comp_cmd_urlsnarf urlsnarf
 
 # ex: filetype=sh

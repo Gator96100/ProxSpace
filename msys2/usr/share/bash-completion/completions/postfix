@@ -1,33 +1,29 @@
 # postfix(1) completion                                    -*- shell-script -*-
 
-_postfix()
+_comp_cmd_postfix()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -c)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -D)
-            COMPREPLY=($(compgen -W 'start' -- "$cur"))
+            _comp_compgen -- -W 'start'
             return
             ;;
     esac
 
     if [[ $cur == -* ]]; then
-        COMPREPLY=($(
-            compgen -W \
-                '$(_bashcomp_try_faketty "$1" --help 2>&1 | _parse_usage -)' \
-                -- "$cur"
-        ))
+        _comp_compgen_usage -c _comp_try_faketty "$1" --help
         return
     fi
 
-    COMPREPLY=($(compgen -W 'check start stop abort flush reload status
-        set-permissions upgrade-configuration' -- "$cur"))
+    _comp_compgen -- -W 'check start stop abort flush reload status
+        set-permissions upgrade-configuration'
 } &&
-    complete -F _postfix postfix
+    complete -F _comp_cmd_postfix postfix
 
 # ex: filetype=sh

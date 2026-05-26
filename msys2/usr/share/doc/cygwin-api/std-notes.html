@@ -1,11 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ANSI_X3.4-1968"><title>Implementation Notes</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-api.html" title="Cygwin API Reference"><link rel="up" href="compatibility.html" title="Chapter&#160;1.&#160;Compatibility"><link rel="prev" href="std-notimpl.html" title="NOT implemented system interfaces from the Single Unix Specification, Volume 7:"><link rel="next" href="cygwin-functions.html" title="Chapter&#160;2.&#160;Cygwin Functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Implementation Notes</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="std-notimpl.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;1.&#160;Compatibility</th><td width="20%" align="right">&#160;<a accesskey="n" href="cygwin-functions.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-notes"></a>Implementation Notes</h2></div></div></div><p><code class="function">chroot</code> only emulates a chroot function call
+<html><head><meta charset="ANSI_X3.4-1968"><title>Implementation Notes</title><link rel="stylesheet" type="text/css" href="docbook.css"><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"><link rel="home" href="cygwin-api.html" title="Cygwin API Reference"><link rel="up" href="compatibility.html" title="Chapter&#160;1.&#160;Compatibility"><link rel="prev" href="std-other.html" title="Other system interfaces, some from Windows:"><link rel="next" href="cygwin-functions.html" title="Chapter&#160;2.&#160;Cygwin Functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Implementation Notes</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="std-other.html">Prev</a>&#160;</td><th width="60%" align="center">Chapter&#160;1.&#160;Compatibility</th><td width="20%" align="right">&#160;<a accesskey="n" href="cygwin-functions.html">Next</a></td></tr></table><hr></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="std-notes"></a>Implementation Notes</h2></div></div></div><p><code class="function">chroot</code> only emulates a chroot function call
 by keeping track of the current root and accomodating this in the file
 related function calls.  A real chroot functionality is not supported by
 Windows however.</p><p><code class="function">clock_nanosleep</code> currently supports only
 CLOCK_REALTIME and CLOCK_MONOTONIC.  <code class="function">clock_setres</code>,
 <code class="function">clock_settime</code>, and <code class="function">timer_create</code>
-currently support only CLOCK_REALTIME.</p><p>POSIX file locks via <code class="function">fcntl</code> or
+currently support only CLOCK_REALTIME.</p><p><code class="function">close_range</code> does not support the Linux-specific
+flag CLOSE_RANGE_UNSHARE.</p><p>The Solaris-invented ACL functions <code class="function">acl</code>,
+<code class="function">facl</code>, <code class="function">aclcheck</code>,
+<code class="function">aclfrommode</code>, <code class="function">aclfrompbits</code>,
+<code class="function">aclfromtext</code>, <code class="function">aclsort</code>,
+<code class="function">acltomode</code>, <code class="function">acltopbits</code> and
+<code class="function">acltotext</code> and the belonging macros and datatypes
+are defined in &lt;cygwin/acl.h&gt; since they collide with the
+Linux-compatible POSIX.1e draft macros in &lt;sys/acl.h&gt;.  Just
+include &lt;cygwin/acl.h&gt; if you prefer them over the POSIX.1e
+functions.</p><p>POSIX file locks via <code class="function">fcntl</code> or
 <code class="function">lockf</code>, as well as BSD <code class="function">flock</code> locks
 are advisory locks.  They don't interact with Windows mandatory locks, nor
 do POSIX fcntl locks interfere with BSD flock locks or vice versa.</p><p>BSD file locks created via <code class="function">flock</code> are only
@@ -67,4 +77,40 @@ otherwise returns the result from <code class="function">setdtablesize</code>.
 <code class="function">getrlimit</code>/<code class="function">setrlimit</code> resources
 RLIMIT_CORE and RLIMIT_STACK return the current values and set the requested
 values.
-All other resource arguments return -1 and set EINVAL.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="std-notimpl.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="compatibility.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="cygwin-functions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">NOT implemented system interfaces from the Single Unix Specification, Volume 7:&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-api.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;2.&#160;Cygwin Functions</td></tr></table></div></body></html>
+All other resource arguments return -1 and set EINVAL.</p><p><code class="function">fallocate</code> has a few Windows quirks: The
+FALLOC_FL_ZERO_RANGE operation is NOT atomic.  With flags set to 0 and
+FALLOC_FL_KEEP_SIZE, sparse blocks in the given range are re-allocated
+as per the POSIX requirements.  This re-allocation operation isn't
+atomic either.  Over-allocation with FALLOC_FL_KEEP_SIZE is only
+temporary on Windows until the last handle to the file is closed.
+Over-allocation on sparse files is entirely ignored on Windows.</p><p><code class="function">sched_setscheduler</code> only emulates API behavior
+because Windows does not offer alternative scheduling policies.
+If <code class="literal">SCHED_OTHER</code> or <code class="literal">SCHED_BATCH</code> is
+selected, the Windows priority is set according to the nice value.
+If <code class="literal">SCHED_IDLE</code> is selected, the Windows priority is
+set to <code class="literal">IDLE_PRIORITY_CLASS</code>.
+If <code class="literal">SCHED_FIFO</code> or <code class="literal">SCHED_RR</code> is
+selected, the nice value is preserved and the Windows priority is set
+according to the <code class="literal">sched_priority</code> value.
+If the <code class="literal">SCHED_RESET_ON_FORK</code> flag is set, realtime
+policies and negative nice values are dropped on
+<code class="function">fork</code>.</p><p><code class="function">nice</code>, <code class="function">setpriority</code>,
+<code class="function">sched_setparam</code> and <code class="function">sched_setscheduler</code>
+map the nice value (<code class="literal">SCHED_OTHER</code>,
+<code class="literal">SCHED_BATCH</code>) or the <code class="literal">sched_priority</code>
+(<code class="literal">SCHED_FIFO</code>, <code class="literal">SCHED_RR</code>) to Windows
+priority classes as follows:</p><pre class="screen">
+    SCHED_OTHER  SCHED_BATCH  SCHED_FIFO/RR
+    nice value   nice value   sched_priority   Windows priority class
+     12...19       4...19      1....6          IDLE_PRIORITY_CLASS
+      4...11      -4....3      7...12          BELOW_NORMAL_PRIORITY_CLASS
+     -4....3     -12...-5     13...18          NORMAL_PRIORITY_CLASS
+    -12...-5     -13..-19     19...24          ABOVE_NORMAL_PRIORITY_CLASS
+    -13..-19          -20     25...30          HIGH_PRIORITY_CLASS
+         -20            -     31...32          REALTIME_PRIORITY_CLASS
+</pre>
+The use of values which are mapped to the
+<code class="literal">REALTIME_PRIORITY_CLASS</code> require administrative
+privileges.
+
+</div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="std-other.html">Prev</a>&#160;</td><td width="20%" align="center"><a accesskey="u" href="compatibility.html">Up</a></td><td width="40%" align="right">&#160;<a accesskey="n" href="cygwin-functions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Other system interfaces, some from Windows:&#160;</td><td width="20%" align="center"><a accesskey="h" href="cygwin-api.html">Home</a></td><td width="40%" align="right" valign="top">&#160;Chapter&#160;2.&#160;Cygwin Functions</td></tr></table></div></body></html>

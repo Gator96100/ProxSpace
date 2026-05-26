@@ -15,16 +15,17 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 shopt -s extglob
 
 declare -r myname='updpkgsums'
-declare -r myver='1.9.1'
+declare -r myver='1.10.6'
 
 LIBRARY=${LIBRARY:-'/usr/share/makepkg'}
 
 # Import libmakepkg
+# shellcheck source=/dev/null
 source "$LIBRARY"/util/schema.sh
 
 usage() {
@@ -50,6 +51,7 @@ version() {
 }
 
 die() {
+	# shellcheck disable=SC2059
 	printf "==> ERROR: $1\n" "${@:2}" >&2
 	exit 1
 }
@@ -75,7 +77,7 @@ fi
 while [[ -L $buildfile ]]; do
 	buildfile=$(readlink "$buildfile")
 	if [[ $buildfile = */* ]]; then
-		cd "${buildfile%/*}"
+		cd "${buildfile%/*}" || exit
 		buildfile=${buildfile##*/}
 	fi
 done
@@ -84,7 +86,7 @@ done
 # directories scattered about the filesystem, and avoids cases where we might
 # not be able to write in the $PWD.
 if [[ $buildfile = */* ]]; then
-	cd "${buildfile%/*}"
+	cd "${buildfile%/*}" || exit
 	buildfile=${buildfile##*/}
 fi
 
@@ -94,10 +96,12 @@ if [[ ! -w . ]]; then
 fi
 
 # Generate the new sums
-export BUILDDIR=$(mktemp -d  "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
+BUILDDIR=$(mktemp -d  "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
+export BUILDDIR
 newbuildfile=$(mktemp "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
 
-trap "rm -rf '$BUILDDIR' '$newbuildfile'" EXIT
+trap 'rm -rf "$BUILDDIR" "$newbuildfile"' EXIT
+# shellcheck disable=SC2154 # known_hash_algos imported via libmakepkg
 sumtypes=$(IFS='|'; echo "${known_hash_algos[*]}")
 newsums=$(MINGW_PACKAGE_PREFIX=mingw-w64-i686 makepkg -g -p "$buildfile" "${MAKEPKG_OPTS[@]}") || die 'Failed to generate new checksums'
 

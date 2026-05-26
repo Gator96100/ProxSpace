@@ -1,9 +1,9 @@
 # pwd(1) completion                                        -*- shell-script -*-
 
-_pwd()
+_comp_cmd_pwd()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         --help | --version)
@@ -11,10 +11,8 @@ _pwd()
             ;;
     esac
 
-    COMPREPLY=($(compgen -W '$(_parse_help "$1")' -- "$cur"))
-    [[ ${COMPREPLY-} ]] ||
-        COMPREPLY=($(compgen -W '$(_parse_usage "$1")' -- "$cur"))
+    _comp_compgen_usage -c help -s "$1"
 } &&
-    complete -F _pwd pwd
+    complete -F _comp_cmd_pwd pwd
 
 # ex: filetype=sh

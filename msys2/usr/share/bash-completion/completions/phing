@@ -1,6 +1,6 @@
 # bash completion for ant and phing                        -*- shell-script -*-
 
-_ant_parse_targets()
+_comp_cmd_ant__targets()
 {
     local line basedir
 
@@ -9,9 +9,9 @@ _ant_parse_targets()
     # parse buildfile for targets
     while read -rd '>' line; do
         if [[ $line =~ \<(target|extension-point)[[:space:]].*name=[\"\']([^\"\']+) ]]; then
-            targets+=" ${BASH_REMATCH[2]}"
+            REPLY+=("${BASH_REMATCH[2]}")
         fi
-    done <$1
+    done <"$1"
 
     # parse imports
     while read -rd '>' line; do
@@ -19,39 +19,39 @@ _ant_parse_targets()
             local imported_buildfile
             imported_buildfile="${basedir}/${BASH_REMATCH[1]}"
             if [[ -f $imported_buildfile ]]; then
-                _ant_parse_targets $imported_buildfile
+                "$FUNCNAME" "$imported_buildfile"
             fi
         fi
-    done <$1
+    done <"$1"
 }
 
-_ant()
+_comp_cmd_ant()
 {
-    local cur prev words cword
-    _init_completion || return
+    local cur prev words cword comp_args
+    _comp_initialize -- "$@" || return
 
     case $prev in
         -h | -help | --h | --help | -projecthelp | -p | -version | -diagnostics)
             return
             ;;
         -buildfile | -file | -f)
-            _filedir 'xml'
+            _comp_compgen_filedir 'xml'
             return
             ;;
         -logfile | -l)
-            [[ $1 != *phing || $prev != -l ]] && _filedir
+            [[ $1 != *phing || $prev != -l ]] && _comp_compgen_filedir
             return
             ;;
         -propertyfile)
-            _filedir properties
+            _comp_compgen_filedir properties
             return
             ;;
         -nice)
-            COMPREPLY=($(compgen -W '{1..10}' -- "$cur"))
+            _comp_compgen -- -W '{1..10}'
             return
             ;;
         -lib)
-            _filedir -d
+            _comp_compgen_filedir -d
             return
             ;;
         -logger | -listener | -inputhandler | -main | -find | -s)
@@ -64,8 +64,7 @@ _ant()
     elif [[ $cur == -* ]]; then
         # The </dev/null prevents "phing -" weirdness/getting just a literal
         # tab displayed on complete on CentOS 6 with phing 2.6.1.
-        COMPREPLY=(
-            $(compgen -W '$(_parse_help "$1" -h </dev/null)' -- "$cur"))
+        _comp_compgen_help -- -h </dev/null
     else
         # available targets completion
         # find which buildfile to use
@@ -77,6 +76,7 @@ _ant()
             fi
         done
         if ((i == cword)); then
+            local IFS=$' \t\n'
             for i in ${ANT_ARGS-}; do
                 if [[ $prev == -@(?(build)file|f) ]]; then
                     buildfile=$i
@@ -87,16 +87,17 @@ _ant()
         fi
         [[ ! -f $buildfile ]] && return
 
-        local targets
+        local REPLY=()
 
         # fill targets
-        _ant_parse_targets $buildfile
+        _comp_cmd_ant__targets "$buildfile"
 
-        COMPREPLY=($(compgen -W '$targets' -- "$cur"))
+        _comp_compgen -- -W '"${REPLY[@]}"'
     fi
 } &&
-    complete -F _ant ant phing
-type complete-ant-cmd.pl &>/dev/null &&
-    complete -C complete-ant-cmd.pl -F _ant ant || :
+    complete -F _comp_cmd_ant ant phing
+if type complete-ant-cmd.pl &>/dev/null; then
+    complete -C complete-ant-cmd.pl -F _comp_cmd_ant ant
+fi
 
 # ex: filetype=sh
